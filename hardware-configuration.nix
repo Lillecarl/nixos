@@ -52,6 +52,13 @@
     };
   };
 
+  #security = {
+  #  tpm = {
+  #    enable = true;
+  #    abrmd.enable = true;
+  #  };
+  #};
+
   boot = {
     # boot with grub rather than systemd-boot because we want mirrored bootloaders
     # set EFI variables to look for kernels where we want (NVRAM), disabled since we install as removeable
@@ -71,13 +78,22 @@
       # https://search.nixos.org/options?show=boot.loader.grub.efiInstallAsRemovable&type=packages&query=efi
       efiInstallAsRemovable = true;
       mirroredBoots = [
+        #{
+        #  "devices" = [ "nodev" ];
+        #  "path" = "/boot";
+        #  "efiSysMountPoint" = "/boot";
+        #}
         {
           "devices" = [ "nodev" ];
           "path" = "/boot-fallback";
-          #"efiSysMountPoint" = "/boot-fallback";
+          "efiSysMountPoint" = "/boot-fallback";
         }
       ];
     };
+
+    # Plymouth, shows a splash screen rather than systemd boot sequence
+    # since our system boots to bloody fast this is barely noticeable
+    plymouth.enable = true;
 
     # initrd = initial ramdisk.
     initrd = {
@@ -91,9 +107,16 @@
       kernelModules = [ ];
       # Decrypt our mdadm data RAID parition (/dev/md/1337p2)
       luks.devices."crypt0".device = "/dev/disk/by-uuid/7932002d-70fe-4966-abec-6a679a5ebd91";
+      luks.devices."crypt0".fallbackToPassword = true;
     };
 
-    kernelModules = [ "kvm-intel" ];
+    kernelModules = [ "udl" "evdi" "kvm-intel" "vfio_virqfd" "vfio_pci" "vfio_iommu_type1" "vfio" ];
+    kernelParams = [ "intel_iommu=on" ];
+    # For passing thunderbolt through to VM, didn't work as we'd like it to
+    #extraModprobeConfig = "options vfio-pci ids=8086:9a13,8086:9a1b";
+    # This can be used for extra performance if needed some time
+    # probably not though, this machine is fast
+    #kernelParams = [ "intel_iommu=on" "mitigations=off" ];
     extraModulePackages = [ ];
   };
 
@@ -107,12 +130,18 @@
   fileSystems."/boot" = {
     device = "/dev/disk/by-uuid/B0B5-42A2";
     fsType = "vfat";
+    # Write to disk "as soon as reasonable"
+    # seems to be required to not fuck the bootloader (using a sync script atm)
+    options = [ "defaults" "flush" ];
   };
 
   # Secondary bootloader
   fileSystems."/boot-fallback" = {
     device = "/dev/disk/by-uuid/1D41-D24F";
     fsType = "vfat";
+    # Write to disk "as soon as reasonable"
+    # seems to be required to not fuck the bootloader (using a sync script atm)
+    options = [ "defaults" "flush" ];
   };
 
   # Swap device, this is raided

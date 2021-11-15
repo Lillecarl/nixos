@@ -5,7 +5,7 @@
 { config, pkgs, ... }:
 
 let
-  unstable = import <unstable> { config.allowUnfree = true; };
+  unstable = import <unstable> { config = config.nixpkgs.config; };
 in rec
 {
   imports = [
@@ -42,6 +42,23 @@ in rec
     hostName = "lemur"; # System hostname
     networkmanager.enable = true; # Laptops do well with networkmanager
     useDHCP = false; # deprecated, should be false
+
+    wireguard = {
+      enable = true;
+      interfaces."ovpn" = {
+        privateKey = "gLwT/gGP+oG1MTGBciRpxVPqceDyXGtXJkOzHAYAFXI=";
+        ips = [ "172.25.172.124/32" "fd00:0000:1337:cafe:1111:1111:9562:0542/128" ];
+        table = "1337";
+        peers = [
+          {
+            publicKey = "UPKLcNO8+oav7Bsc8afNeN482pnieYLOBAh4vXdWFT0=";
+            allowedIPs = [ "0.0.0.0/0" "::/0" ];
+            endpoint = "vpn12.prd.kista.ovpn.com:9929";
+            persistentKeepalive = 25;
+          }
+        ];
+      };
+    };
  
     # Open ports in the firewall.
     #networking.firewall.allowedTCPPorts = [ ... ];
@@ -97,6 +114,7 @@ in rec
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.lillecarl = {
+    uid = 1000;
     shell = pkgs.zsh;
     isNormalUser = true;
     extraGroups = [
@@ -104,6 +122,7 @@ in rec
       "libvirtd" # allow use of libvirt without sudo
       "networkmanager" # allow editing network connections without sudo
       "lxd" # allow userspace container management without sudo
+      "flatpak" # allow managing flatpak
     ];
   };
 
@@ -138,8 +157,13 @@ in rec
     vlc # Media Player
     ytmdesktop # YouTube Music Player
     # Commandline tools
+    mailutils # Sending mail from commandline 
     vim # Modal CLI text editor
     neovim # Modal CLI text editor, modern version of Vim
+    amp # Modal CLI text editor, modern, rust
+    emacs # well, it's emacs...
+    fd # not sure, doom-emacs recommends it
+    ripgrep # Modern rusty grep
     wget # Fetch things quicly with HTTP
     gnufdisk # CLI partition management
     curl # All things HTTP and other web transfer protocols
@@ -191,6 +215,16 @@ in rec
     imagemagick # CLI for doing image stuff
     xbindkeys # Binding keys for X
     xorg.xev # Monitor Keypresses, useful when troubleshooting keylayouts
+    conntrack_tools # Connection tracking userspace tools
+    iptstate # Conntrack "top like" tool
+    nixos-generators # Tools for generating nixos images (AWS, Azure, ISO etc..)
+    archiver # "Generic" decompression tool
+    unzip # Decompress zip files
+    unrar # Decompress rar files
+    libressl # Crypto library, userspace tools
+    libsecret # Library for storing secrets securely in userspace
+    fsql # Query the filesystem with SQL
+    pstree # Show process tree as a tree
     # Programming tools
     vscode # Programming editor, growing into an IDE
     kdiff3 # Well know diffing tool
@@ -214,6 +248,9 @@ in rec
     hardinfo # Hardware information
     # Productivity tools
     thunderbird # Mail client
+    claws-mail # Mail client
+    evolution # Mail client
+    mailspring # Mail client
     libreoffice # MS office compatible productivity suite
     obs-studio # Screen recording/streaming utility
     freerdp # Remote Desktop Protocol client
@@ -223,12 +260,19 @@ in rec
     notepadqq # Notepad++ "clone" for Linux
     geany # Supposed to be like Notepad++
     ghostwriter # Markdown editor
+    teamviewer # Remote Desktop Solution
     #electronim # This isn't yet packaged for NixOS, but put it here as a reminder of the future
     #latte-dock # Alternative KDE dock (Mac style)
     qbittorrent # OpenSource Qt Bittorrent client
     okular # PDF viewer
     # Misc
     wineWowPackages.full
+    libsForQt5.kdeconnect-kde # Integrate your DE with things
+    libsForQt5.plasma-browser-integration # Integrate KDE with 
+    libsForQt5.kcalc # KDE calculator
+    krita # KDE alternative to GIMP
+    gimp # Photoshop alternative
+    kdenlive # KDE alternative to Windows Movie Maker
     webcamoid # Webcam application
     # Unstable tools, grouped in case we don't have access to the channels,
     # (while reinstalling) we can just comment them all out with a visual block.
@@ -243,6 +287,8 @@ in rec
     unstable.azure-cli # Azure CLI tooling
     unstable.awscli # AWS CLI tooling
     unstable.brave # Web brower, Chromium based
+    unstable.nyxt # Hackable "power-browser"
+    unstable.qutebrowser # Keyboard driven browser, Python and PyQt based
     unstable.terraform # Cloud orchestrator
     unstable.dbeaver # SQL database GUI
     unstable.displaylink # Driver for DisplayLink docks, works like shit
@@ -254,6 +300,18 @@ in rec
     EDITOR = "vim";
     VISUAL = "vim";
     ARM_THREEPOINTZERO_BETA_RESOURCES = "true";
+  };
+
+  environment.etc."X11/xorg.conf.d/20-evdi.conf" = {
+    enable = true;
+    text = ''
+      Section "OutputClass"
+      	Identifier "DisplayLink"
+      	MatchDriver "evdi"
+      	Driver "modesetting"
+      	Option "AccelMethod" "none"
+      EndSection
+    '';
   };
 
   # Enable zsh
@@ -273,41 +331,79 @@ in rec
   #   enableSSHSupport = true;
   # };
   systemd = {
+    network = {
+      enable = true;
+      #networks."vpn" = {
+      #  enable = true;
+      #  vrf = [ "vpnvrf" ];
+      #};
+      netdevs."vpn" = {
+        enable = true;
+        vrfConfig = {
+          Table = 1337;
+        };
+        netdevConfig = {
+          Kind = "vrf";
+          Name = "vpn";
+        };
+      };
+    };
     services.mdmonitor1 = {
       description = "Monitor RAID disks";
       wantedBy = [ "multi-user.target" ];
       script = "${pkgs.mdadm}/bin/mdadm --monitor -m root /dev/md1337";
     };
 
+    # This breaks the mdmonitor service nixos installs by appending bogus to the end
+    # the effect is that we don't have this unit as failed in systemctl --failed
     services.mdmonitor = {
       description = "Monitor RAID disks";
       wantedBy = [ "multi-user.target" ];
       script = "${pkgs.mdadm}/bin/mdadm --monitor -m root /dev/md1337";
     };
 
-    # Restart bluetooth after hibernation
-    services.bluerestart = {
-      after = [ "hibernate.target" ];
-      serviceConfig = {
-        Type = "simple";
+    # This service works be executing before sleeping stays running while
+    # the sleep target is active, and kills itself when sleep target dies.
+    # This works with the combination of:
+    #   before sleep.target
+    #   unitConfig.StopWhenUnneeded
+    #   serviceConfig.Type
+    #   serviceConfig.RemainAfterExit
+    # 
+    # It also runs as my user (lillecarl, uid 1000)
+    # XDG_RUNTIME_DIR must be set for systemctl to work, see https://serverfault.com/a/937012
+    services.HibernatePipeWireState = {
+      before = [ "sleep.target" ];
+      wantedBy = [ "sleep.target" ];
+      description = "Start pipewire after hibernation";
+      stopIfChanged = true;
+      unitConfig = {
+        StopWhenUnneeded = "yes";
       };
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = "yes";
+        User = "1000";
+      };
+
+      # ExecStop =
+      preStop = ''
+        echo "Starting pipewire services"
+        # Required to get systemctl --user working
+        export XDG_RUNTIME_DIR=/run/user/$(id -u)
+        # For some reason this starts pipewire up properly
+        systemctl --user stop pipewire-pulse || true
+      '';
+
+      # ExecStart =
       script = ''
-        systemctl restart bluetooth
+        echo "Stopping pipewire services"
+        # Required to get systemctl --user working
+        export XDG_RUNTIME_DIR=/run/user/$(id -u)
+        # Stop pipewire daemon
+        systemctl --user stop pipewire || true
       '';
     };
-
-    # Restart pipewrire services after hibernation
-    user.services.piperestart = {
-      after = [ "hibernate.target" ];
-      serviceConfig = {
-        Type = "simple";
-      };
-      script = ''
-        systemctl --user restart pipewire.service
-        systemctl --user restart pipewire-pulse.service
-      '';
-    };
-
     #sleep.extraConfig = '' 
     #  HibernateDelaySec=1h
     #  #AllowSuspend=no
@@ -326,6 +422,22 @@ in rec
       "* * * * * lillecarl sed -i \"/.*sudo systemctl reboot.*/d\" /home/lillecarl/.zsh_history"
     ];
   };
+
+  # Enable Flatpak
+  services.flatpak.enable = true;
+  # xdg desktop intergration (required for flatpak)
+  xdg.portal = {
+    enable = true;
+    gtkUsePortal = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  };
+  # Adding gnome-keyring, seems like KDE wallet isn't supported with mailspring?
+  services.gnome.gnome-keyring.enable = true;
+  #programs.seahorse.enable = true;
+  # Enables upower daemon
+  services.upower.enable = true;
+  # Enabled fwupd daemon, allows applications to update firmware
+  services.fwupd.enable = true;
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
   services.pipewire = {
@@ -335,6 +447,12 @@ in rec
     jack.enable = true;
     pulse.enable = true;
     socketActivation = true;
+  };
+
+  # TODO configure this to relay messages out on the internet too
+  services.postfix = {
+    enable = true;
+    setSendmail = true;
   };
 
   # This value determines the NixOS release from which the default
