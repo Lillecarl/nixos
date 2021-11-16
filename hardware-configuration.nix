@@ -3,7 +3,7 @@
 # to /etc/nixos/configuration.nix instead.
 { config, lib, pkgs, modulesPath, ... }:
 
-{
+rec {
   imports = [
     (
       modulesPath + "/installer/scan/not-detected.nix"
@@ -110,14 +110,20 @@
       luks.devices."crypt0".fallbackToPassword = true;
     };
 
-    kernelModules = [ "udl" "evdi" "kvm-intel" "vfio_virqfd" "vfio_pci" "vfio_iommu_type1" "vfio" ];
+    #kernelPackages = pkgs.linuxPackages_5_14;
+    #kernelPackages = pkgs.linuxPackages_latest;
+    extraModulePackages = with config.boot.kernelPackages; [
+      v4l2loopback
+      evdi
+      akvcam
+      cryptodev
+      system76
+      system76-io
+      system76-acpi
+    ];
+    # udl was here, which is the old displaylink driver
+    kernelModules = [ "evdi" "kvm-intel" "vfio_virqfd" "vfio_pci" "vfio_iommu_type1" "vfio" ];
     kernelParams = [ "intel_iommu=on" ];
-    # For passing thunderbolt through to VM, didn't work as we'd like it to
-    #extraModprobeConfig = "options vfio-pci ids=8086:9a13,8086:9a1b";
-    # This can be used for extra performance if needed some time
-    # probably not though, this machine is fast
-    #kernelParams = [ "intel_iommu=on" "mitigations=off" ];
-    extraModulePackages = [ ];
   };
 
   # Root BTRFS filesystem, let's hope ZFS implements support for hibernation soon!

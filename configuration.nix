@@ -6,6 +6,7 @@
 
 let
   unstable = import <unstable> { config = config.nixpkgs.config; };
+  custom = import /etc/nixos/nixpkgs { config = config.nixpkgs.config; };
 in rec
 {
   imports = [
@@ -43,22 +44,22 @@ in rec
     networkmanager.enable = true; # Laptops do well with networkmanager
     useDHCP = false; # deprecated, should be false
 
-    wireguard = {
-      enable = true;
-      interfaces."ovpn" = {
-        privateKey = "gLwT/gGP+oG1MTGBciRpxVPqceDyXGtXJkOzHAYAFXI=";
-        ips = [ "172.25.172.124/32" "fd00:0000:1337:cafe:1111:1111:9562:0542/128" ];
-        table = "1337";
-        peers = [
-          {
-            publicKey = "UPKLcNO8+oav7Bsc8afNeN482pnieYLOBAh4vXdWFT0=";
-            allowedIPs = [ "0.0.0.0/0" "::/0" ];
-            endpoint = "vpn12.prd.kista.ovpn.com:9929";
-            persistentKeepalive = 25;
-          }
-        ];
-      };
-    };
+    #wireguard = {
+    #  enable = true;
+    #  interfaces."ovpn" = {
+    #    privateKey = "gLwT/gGP+oG1MTGBciRpxVPqceDyXGtXJkOzHAYAFXI=";
+    #    ips = [ "172.25.172.124/32" "fd00:0000:1337:cafe:1111:1111:9562:0542/128" ];
+    #    table = "1337";
+    #    peers = [
+    #      {
+    #        publicKey = "UPKLcNO8+oav7Bsc8afNeN482pnieYLOBAh4vXdWFT0=";
+    #        allowedIPs = [ "0.0.0.0/0" "::/0" ];
+    #        endpoint = "vpn12.prd.kista.ovpn.com:9929";
+    #        persistentKeepalive = 25;
+    #      }
+    #    ];
+    #  };
+    #};
  
     # Open ports in the firewall.
     #networking.firewall.allowedTCPPorts = [ ... ];
@@ -112,6 +113,8 @@ in rec
   # Enable touchpad support (enabled default in most desktopManager).
   services.xserver.libinput.enable = true;
 
+  programs.adb.enable = true;
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.lillecarl = {
     uid = 1000;
@@ -123,6 +126,7 @@ in rec
       "networkmanager" # allow editing network connections without sudo
       "lxd" # allow userspace container management without sudo
       "flatpak" # allow managing flatpak
+      "adbusers" # allow usage of adb
     ];
   };
 
@@ -157,6 +161,8 @@ in rec
     vlc # Media Player
     ytmdesktop # YouTube Music Player
     # Commandline tools
+    cmatrix # Just scrolling to look really cool
+    system76-firmware # System76 firmware tools
     mailutils # Sending mail from commandline 
     vim # Modal CLI text editor
     neovim # Modal CLI text editor, modern version of Vim
@@ -164,6 +170,7 @@ in rec
     emacs # well, it's emacs...
     fd # not sure, doom-emacs recommends it
     ripgrep # Modern rusty grep
+    lsof # Check who uses file
     wget # Fetch things quicly with HTTP
     gnufdisk # CLI partition management
     curl # All things HTTP and other web transfer protocols
@@ -173,6 +180,9 @@ in rec
     powertop # See power information
     iotop # See disk IO information
     nix-tree # visualize the Nix store interactively
+    nix-update # Tool to help updating nix packages
+    nix-prefetch-github # fetch nix package from github
+    niv # Dependency manager for Nix, which is a dependency manager (wat)
     vulnix # Nix vulnerability scanner
     gitFull
     tig
@@ -181,7 +191,6 @@ in rec
     git-cola
     git-fire # Save your code, then your life
     alacritty # Fast crossplatform terminal emulator
-    wezterm # Crossplatform terminal emulator, supports ligatures
     xclip # | "xclip -sel clip" is what you want
     ansible # Server automation tool
     iftop # Show interface throughput and which IP's
@@ -190,12 +199,14 @@ in rec
     lm_sensors # Read sensors
     file # Show information about files
     jq # CLI JSON utility, piping JSON here will always pretty-print it
+    desktop-file-utils # Required for VS Code live share
     powershell # Microsofts shell implementation
     ncdu # NCurses Disk Utility (TUI way of finding big files and folders)
     scrot # Commandline print-screen tool, use with GnuPG for automatic screenshotting
     pulseaudio # For pactl
     dmidecode # system information
     pciutils # PCI(e) utilities (lspci for example)
+    usbutils # USB utils
     xdotool # Tools to automate mouse and keyboard in X
     wtype # Wayland version of xdotools
     libsForQt5.qt5.qttools # qdbus command comes from here
@@ -225,6 +236,7 @@ in rec
     libsecret # Library for storing secrets securely in userspace
     fsql # Query the filesystem with SQL
     pstree # Show process tree as a tree
+    gist # Tool to post files to gist.github.com straight away
     # Programming tools
     vscode # Programming editor, growing into an IDE
     kdiff3 # Well know diffing tool
@@ -266,6 +278,7 @@ in rec
     qbittorrent # OpenSource Qt Bittorrent client
     okular # PDF viewer
     # Misc
+    unstable.scrcpy
     wineWowPackages.full
     libsForQt5.kdeconnect-kde # Integrate your DE with things
     libsForQt5.plasma-browser-integration # Integrate KDE with 
@@ -277,6 +290,8 @@ in rec
     # Unstable tools, grouped in case we don't have access to the channels,
     # (while reinstalling) we can just comment them all out with a visual block.
     unstable.youtube-dl # Download media from a lot of different websites
+    unstable.zellij # discoverable terminal multiplexer written in rust
+    unstable.wezterm # Crossplatform terminal emulator, supports ligatures
     unstable.rofi # Searchable window title window switcher
     unstable.rofimoji # Emoji/Char picker for rofi
     unstable.ungoogled-chromium # Chromium without Google
@@ -291,7 +306,7 @@ in rec
     unstable.qutebrowser # Keyboard driven browser, Python and PyQt based
     unstable.terraform # Cloud orchestrator
     unstable.dbeaver # SQL database GUI
-    unstable.displaylink # Driver for DisplayLink docks, works like shit
+    #unstable.displaylink # Driver for DisplayLink docks, works like shit
     #unstable.anbox # look into what's blocking anbox from running a late kernel
   ];
 
@@ -302,17 +317,17 @@ in rec
     ARM_THREEPOINTZERO_BETA_RESOURCES = "true";
   };
 
-  environment.etc."X11/xorg.conf.d/20-evdi.conf" = {
-    enable = true;
-    text = ''
-      Section "OutputClass"
-      	Identifier "DisplayLink"
-      	MatchDriver "evdi"
-      	Driver "modesetting"
-      	Option "AccelMethod" "none"
-      EndSection
-    '';
-  };
+  #environment.etc."X11/xorg.conf.d/20-evdi.conf" = {
+  #  enable = true;
+  #  text = ''
+  #    Section "OutputClass"
+  #    	Identifier "DisplayLink"
+  #    	MatchDriver "evdi"
+  #    	Driver "modesetting"
+  #    	Option "AccelMethod" "none"
+  #    EndSection
+  #  '';
+  #};
 
   # Enable zsh
   programs.zsh.enable = true;
