@@ -15,9 +15,12 @@ in rec
     <nixos-hardware/common/pc/ssd> # FStrim, paging
     <nixos-hardware/common/cpu/intel> # Intel/i915 stuff (research more)
     ./hardware-configuration.nix
+    ./cachix.nix
   ];
 
   #disabledModules = [ "hardware/video/displaylink.nix" ];
+
+  nix.autoOptimiseStore = true;
 
   nixpkgs = {
     # Allow proprietary software to be installed
@@ -92,15 +95,17 @@ in rec
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
-
   # Enable the Plasma 5 Desktop Environment.
   services.xserver.displayManager.sddm.enable = true;
   services.xserver.desktopManager.plasma5.enable = true;
   services.xserver.videoDrivers = [
-    "displaylink" # For the DELL docks at work
+    #"displaylink" # For the DELL docks at work
     "modesetting" # Standard driver
     "fbdev" # Enabled by default in NixOS
   ];
+  services.xserver.displayManager.setupCommands = ''
+    xhost +local:
+  '';
   #services.xserver.videoDrivers = [ "modesetting" "fbdev" ];
 
   # Configure keymap in X11
@@ -115,6 +120,22 @@ in rec
 
   programs.adb.enable = true;
 
+  # Allow root to map to LilleCarl user
+  users.users.root = {
+    subUidRanges = [
+      {
+        count = 1;
+        startUid = users.users.lillecarl.uid;
+      }
+    ];
+    subGidRanges = [
+      {
+        count = 1;
+        startGid = 1000;
+      }
+    ];
+  };
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.lillecarl = {
     uid = 1000;
@@ -127,6 +148,7 @@ in rec
       "lxd" # allow userspace container management without sudo
       "flatpak" # allow managing flatpak
       "adbusers" # allow usage of adb
+      "podman" # allow usage of adb
     ];
   };
 
@@ -136,7 +158,12 @@ in rec
     };
     lxd = {
       enable = true;
+      package = unstable.lxd;
       recommendedSysctlSettings = true;
+    };
+    podman = {
+      enable = true;
+      dockerCompat = true;
     };
     #virtualbox = {
     #  host = {
@@ -156,6 +183,7 @@ in rec
     teams # Microsoft Teams collaboration suite (Electron)
     slack # Team collaboration chat (Electron)
     discord # Gaming chat application
+    signal-desktop # Secure messenger
     zoom # Meetings application
     # Media apps
     vlc # Media Player
@@ -175,14 +203,16 @@ in rec
     gnufdisk # CLI partition management
     curl # All things HTTP and other web transfer protocols
     tmux # terminal multiplexer
-    zellij # discoverable terminal multiplexer written in rust
+    # zellij # discoverable terminal multiplexer written in rust
     htop # NCurses "task manager"
     powertop # See power information
     iotop # See disk IO information
+    nix-top # See what nix is doing when it's doing things
     nix-tree # visualize the Nix store interactively
     nix-update # Tool to help updating nix packages
     nix-prefetch-github # fetch nix package from github
     niv # Dependency manager for Nix, which is a dependency manager (wat)
+    cachix # Nix binary cache
     vulnix # Nix vulnerability scanner
     gitFull
     tig
@@ -226,6 +256,7 @@ in rec
     imagemagick # CLI for doing image stuff
     xbindkeys # Binding keys for X
     xorg.xev # Monitor Keypresses, useful when troubleshooting keylayouts
+    xorg.xhost # Not sure, used for X11 socket forwarding
     conntrack_tools # Connection tracking userspace tools
     iptstate # Conntrack "top like" tool
     nixos-generators # Tools for generating nixos images (AWS, Azure, ISO etc..)
@@ -263,8 +294,9 @@ in rec
     claws-mail # Mail client
     evolution # Mail client
     mailspring # Mail client
+    mucommander # file manager, written in Java
     libreoffice # MS office compatible productivity suite
-    obs-studio # Screen recording/streaming utility
+    unstable.obs-studio # Screen recording/streaming utility
     freerdp # Remote Desktop Protocol client
     kgpg # KDE pgp tool
     copyq # Clipboard manager
@@ -302,12 +334,19 @@ in rec
     unstable.azure-cli # Azure CLI tooling
     unstable.awscli # AWS CLI tooling
     unstable.brave # Web brower, Chromium based
+    #unstable.tangram # Web-App runner
     unstable.nyxt # Hackable "power-browser"
     unstable.qutebrowser # Keyboard driven browser, Python and PyQt based
     unstable.terraform # Cloud orchestrator
     unstable.dbeaver # SQL database GUI
     #unstable.displaylink # Driver for DisplayLink docks, works like shit
     #unstable.anbox # look into what's blocking anbox from running a late kernel
+    # Kernel modules with userspace commands
+    config.boot.kernelPackages.cpupower
+    config.boot.kernelPackages.turbostat
+    config.boot.kernelPackages.system76
+    config.boot.kernelPackages.system76-io
+    config.boot.kernelPackages.system76-acpi
   ];
 
   environment.variables = 
@@ -316,6 +355,11 @@ in rec
     VISUAL = "vim";
     ARM_THREEPOINTZERO_BETA_RESOURCES = "true";
   };
+
+  # SDDM setupCommands is used instead, should do the trick.
+  #environment.extraInit = ''
+  #  xhost +local:
+  #'';
 
   #environment.etc."X11/xorg.conf.d/20-evdi.conf" = {
   #  enable = true;
@@ -371,23 +415,28 @@ in rec
 
     # This breaks the mdmonitor service nixos installs by appending bogus to the end
     # the effect is that we don't have this unit as failed in systemctl --failed
-    services.mdmonitor = {
-      description = "Monitor RAID disks";
-      wantedBy = [ "multi-user.target" ];
-      script = "${pkgs.mdadm}/bin/mdadm --monitor -m root /dev/md1337";
-    };
+    services.mdmonitor.enable = false;
+    #services.mdmonitor = {
+    #  description = "Monitor RAID disks";
+    #  wantedBy = [ "multi-user.target" ];
+    #  script = "${pkgs.mdadm}/bin/mdadm --monitor -m root /dev/md1337";
+    #};
+
+    # upower systemd service
+    services.upower.enable = true;
 
     # This service works be executing before sleeping stays running while
     # the sleep target is active, and kills itself when sleep target dies.
-    # This works with the combination of:
+    # this works with the combination of:
     #   before sleep.target
-    #   unitConfig.StopWhenUnneeded
-    #   serviceConfig.Type
-    #   serviceConfig.RemainAfterExit
+    #   unitconfig.stopwhenunneeded
+    #   serviceconfig.type
+    #   serviceconfig.remainafterexit
     # 
     # It also runs as my user (lillecarl, uid 1000)
     # XDG_RUNTIME_DIR must be set for systemctl to work, see https://serverfault.com/a/937012
-    services.HibernatePipeWireState = {
+
+    services.HibernatePipeWireReset = {
       before = [ "sleep.target" ];
       wantedBy = [ "sleep.target" ];
       description = "Start pipewire after hibernation";
@@ -407,7 +456,9 @@ in rec
         # Required to get systemctl --user working
         export XDG_RUNTIME_DIR=/run/user/$(id -u)
         # For some reason this starts pipewire up properly
-        systemctl --user stop pipewire-pulse || true
+        #systemctl --user stop pipewire-pulse || true
+        systemctl --user restart pipewire || true
+        systemctl --user restart pipewire-pulse || true
       '';
 
       # ExecStart =
@@ -416,9 +467,91 @@ in rec
         # Required to get systemctl --user working
         export XDG_RUNTIME_DIR=/run/user/$(id -u)
         # Stop pipewire daemon
-        systemctl --user stop pipewire || true
+        systemctl --user stop pipewire.service || true
+        #systemctl --user stop pipewire-pulse.service || true
       '';
     };
+
+    # This service works be executing before sleeping stays running while
+    # the sleep target is active, and kills itself when sleep target dies.
+    # this works with the combination of:
+    #   before sleep.target
+    #   unitconfig.stopwhenunneeded
+    #   serviceconfig.type
+    #   serviceconfig.remainafterexit
+
+    services.HibernateBluetoothReset = {
+      before = [ "sleep.target" ];
+      wantedBy = [ "sleep.target" ];
+      description = "Start pipewire after hibernation";
+      stopIfChanged = true;
+      unitConfig = {
+        StopWhenUnneeded = "yes";
+      };
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = "yes";
+      };
+
+      # ExecStop =
+      preStop = ''
+        echo "Starting bluetooth service"
+        # Start bluetooth service
+        systemctl start bluetooth.service || true
+      '';
+
+      # ExecStart =
+      script = ''
+        echo "Stopping bluetooth service"
+        # Stop bluetooth daemon
+        systemctl stop bluetooth.service || true
+      '';
+    };
+
+    services.powerTopTune = {
+      enable = true;
+      stopIfChanged = true;
+      script = ''
+        powertop --auto-tune || true
+        echo "powersave" | sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
+      '';
+    };
+
+    timers.powerTopTune = {
+      enable = true;
+      wantedBy = [ "multi-user.target" ];
+      timerConfig = {
+        OnBootSec = "3m";
+        OnUnitActiveSec = "3m";
+        AccuracySec = "1m";
+        Unit = "powerTopTune.service";
+      };
+    };
+
+    # Clone everything from /sys-persist into /sys, no error handling
+    services.sysPersist = {
+      enable = true;
+      stopIfChanged = true;
+      path = with pkgs; [ findutils gnused ];
+      script = ''
+        for file in $(find /sys-persist -type f)
+        do
+          cat $file > $(echo $file | sed "s/sys-persist/sys/")
+        done
+      '';
+    };
+
+    timers.sysPersist = {
+      enable = true;
+      wantedBy = [ "multi-user.target" ];
+      timerConfig = {
+        OnBootSec = "3m";
+        OnUnitActiveSec = "3m";
+        AccuracySec = "1m";
+        Unit = "sysPersist.service";
+      };
+    };   
+
     #sleep.extraConfig = '' 
     #  HibernateDelaySec=1h
     #  #AllowSuspend=no
@@ -428,16 +561,9 @@ in rec
     #'';
   };
 
+  services.blueman.enable = true;
   # rtkit for pipewire? (Recommended on NixOS wiki)
   security.rtkit.enable = true;
-  # Remove reboot commands from history for user lillecarl to prevent accidental reboots
-  services.cron = {
-    enable = true;
-    systemCronJobs = [
-      "* * * * * lillecarl sed -i \"/.*sudo systemctl reboot.*/d\" /home/lillecarl/.zsh_history"
-    ];
-  };
-
   # Enable Flatpak
   services.flatpak.enable = true;
   # xdg desktop intergration (required for flatpak)
@@ -446,20 +572,19 @@ in rec
     gtkUsePortal = true;
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   };
-  # Adding gnome-keyring, seems like KDE wallet isn't supported with mailspring?
-  services.gnome.gnome-keyring.enable = true;
-  #programs.seahorse.enable = true;
   # Enables upower daemon
   services.upower.enable = true;
   # Enabled fwupd daemon, allows applications to update firmware
   services.fwupd.enable = true;
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
+  # Enable PipeWire A/V daemon
+  # replaces all other sound daemons
   services.pipewire = {
     enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    jack.enable = true;
+    #alsa.enable = true;
+    #alsa.support32Bit = true;
+    #jack.enable = true;
     pulse.enable = true;
     socketActivation = true;
   };

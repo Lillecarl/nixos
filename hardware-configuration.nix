@@ -13,13 +13,14 @@ rec {
   services.tlp = {
     enable = true;
     settings = {
-      "CPU_SCALING_GOVENOR_ON_AC" = "performance";
+      "CPU_SCALING_GOVENOR_ON_AC" = "powersave";
       "CPU_SCALING_GOVENOR_ON_BAT" = "powersave";
       "START_CHARGE_THRESH_BAT0" = 75;
       "STOP_CHARGE_THRESH_BAT0" = 80;
     };
   };
   powerManagement.powertop.enable = true;
+  services.thermald.enable = true;
 
   nixpkgs.config.packageOverrides = pkgs: {
     vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
@@ -117,6 +118,9 @@ rec {
       evdi
       akvcam
       cryptodev
+      cpupower
+      turbostat
+      x86_energy_perf_policy
       system76
       system76-io
       system76-acpi
@@ -124,6 +128,44 @@ rec {
     # udl was here, which is the old displaylink driver
     kernelModules = [ "evdi" "kvm-intel" "vfio_virqfd" "vfio_pci" "vfio_iommu_type1" "vfio" ];
     kernelParams = [ "intel_iommu=on" ];
+
+    kernelPatches = [
+      {
+        name = "s76_1";
+        patch = builtins.fetchurl {
+          url = "https://github.com/torvalds/linux/commit/95563d45b5da9cdd07496bf54f0d83f25d679847.patch";
+          sha256 = "0b3b8bdam9d3hba34pfdqsd932f76v18hawg6jr1gj3iy1z64fdi";
+        };
+      }
+      {
+        name = "s76_2";
+        patch = builtins.fetchurl {
+          url = "https://github.com/torvalds/linux/commit/0de30fc684b3883be73602b7557661951319a9b9.patch";
+          sha256 = "0kwmxm4qxcbs0s30n791df50kkiphnwp6wis95j0dsfmsf9ilw0l";
+        };
+      }
+      {
+        name = "s76_3";
+        patch = builtins.fetchurl {
+          url = "https://github.com/torvalds/linux/commit/76f7eba3e0a248af4cc4f302d95031fa2fb65fab.patch";
+          sha256 = "0d4gcgjswy3g89asi7d2hhk2gsgzw6f6dvjzsbr6516arr5gvjaq";
+        };
+      }
+      {
+        name = "s76_4";
+        patch = builtins.fetchurl {
+          url = "https://github.com/torvalds/linux/commit/603a7dd08f881e1b5c754429dac5af6c29992528.patch";
+          sha256 = "1lf4g40ijp7kjns1z2cqkwzfd2nb6yf71003d5hvbapy3av5151a";
+        };
+      }
+      {
+        name = "s76_5";
+        patch = builtins.fetchurl {
+          url = "https://github.com/torvalds/linux/commit/97ae45953ea957887170078f488fd629dd1ce786.patch";
+          sha256 = "0rk60ab2qwirnrw936mbnvzilqkdm9rxs854hcm6x5sp2c135bhg";
+        };
+      }
+    ];
   };
 
   # Root BTRFS filesystem, let's hope ZFS implements support for hibernation soon!
