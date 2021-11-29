@@ -7,6 +7,9 @@
 let
   unstable = import <unstable> { config = config.nixpkgs.config; };
   custom = import /etc/nixos/nixpkgs { config = config.nixpkgs.config; };
+  kubeMasterIP = "192.168.122.1";
+  kubeMasterHostname = "api.kube";
+  kubeMasterAPIServerPort = 6443;
 in rec
 {
   imports = [
@@ -46,6 +49,7 @@ in rec
     hostName = "lemur"; # System hostname
     networkmanager.enable = true; # Laptops do well with networkmanager
     useDHCP = false; # deprecated, should be false
+    extraHosts = "${kubeMasterIP} ${kubeMasterHostname}";
 
     #wireguard = {
     #  enable = true;
@@ -120,6 +124,23 @@ in rec
 
   programs.adb.enable = true;
 
+  #services.kubernetes = {
+  #  roles = ["master" "node"];
+  #  masterAddress = kubeMasterHostname;
+  #  apiserverAddress = "https://${kubeMasterHostname}:${toString kubeMasterAPIServerPort}";
+  #  easyCerts = true;
+  #  apiserver = {
+  #    securePort = kubeMasterAPIServerPort;
+  #    advertiseAddress = kubeMasterIP;
+  #  };
+
+  #  # use coredns
+  #  addons.dns.enable = true;
+
+  #  # needed if you use swap
+  #  kubelet.extraOpts = "--fail-swap-on=false";
+  #};
+
   # Allow root to map to LilleCarl user
   users.users.root = {
     subUidRanges = [
@@ -189,6 +210,11 @@ in rec
     vlc # Media Player
     ytmdesktop # YouTube Music Player
     # Commandline tools
+    kompose # Kubernetes docker-compose like tool
+    kubectl # Kubernetes management cli
+    kubernetes # Kubernetes packages
+    bind # brings the dig command
+    entr # Run commands when files change
     cmatrix # Just scrolling to look really cool
     system76-firmware # System76 firmware tools
     mailutils # Sending mail from commandline 
@@ -203,15 +229,18 @@ in rec
     gnufdisk # CLI partition management
     curl # All things HTTP and other web transfer protocols
     tmux # terminal multiplexer
-    # zellij # discoverable terminal multiplexer written in rust
     htop # NCurses "task manager"
     powertop # See power information
     iotop # See disk IO information
+    nixpkgs-fmt # Format Nix like the Nix project wants
     nix-top # See what nix is doing when it's doing things
     nix-tree # visualize the Nix store interactively
     nix-update # Tool to help updating nix packages
+    nix-direnv # Nix direnv implementation
     nix-prefetch-github # fetch nix package from github
     niv # Dependency manager for Nix, which is a dependency manager (wat)
+    lorri # nix-shell alternative
+    direnv # Do environment things based on cd
     cachix # Nix binary cache
     vulnix # Nix vulnerability scanner
     gitFull
@@ -233,6 +262,7 @@ in rec
     powershell # Microsofts shell implementation
     ncdu # NCurses Disk Utility (TUI way of finding big files and folders)
     scrot # Commandline print-screen tool, use with GnuPG for automatic screenshotting
+    maim # Commandline print-screen tool, use with GnuPG for automatic screenshotting
     pulseaudio # For pactl
     dmidecode # system information
     pciutils # PCI(e) utilities (lspci for example)
@@ -249,7 +279,7 @@ in rec
     ranger # file manager
     fzf # fuzzy finder, pipe to this for nice search
     unipicker # unicode char finder
-    bitwarden-cli # Password manager CLI
+    unstable.bitwarden-cli # Password manager CLI
     thefuck # Command that corrects your previous command
     speedtest-cli # Speedtest from the commandline
     poppler_utils # Utilities for PDF rendering
@@ -373,6 +403,12 @@ in rec
   #  '';
   #};
 
+
+  # gnupg settings
+  programs.gnupg.agent = {
+    enable = true;
+    pinentryFlavor = "qt";
+  };
   # Enable zsh
   programs.zsh.enable = true;
 
@@ -508,23 +544,24 @@ in rec
       '';
     };
 
-    services.powerTopTune = {
+    services.powerTune = {
       enable = true;
+      path = with pkgs; [ powertop ];
       stopIfChanged = true;
       script = ''
         powertop --auto-tune || true
-        echo "powersave" | sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
+        echo "powersave" | tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor || true
       '';
     };
 
-    timers.powerTopTune = {
+    timers.powerTune = {
       enable = true;
       wantedBy = [ "multi-user.target" ];
       timerConfig = {
         OnBootSec = "3m";
         OnUnitActiveSec = "3m";
         AccuracySec = "1m";
-        Unit = "powerTopTune.service";
+        Unit = "powerTune.service";
       };
     };
 
@@ -552,14 +589,20 @@ in rec
       };
     };   
 
-    #sleep.extraConfig = '' 
+    sleep.extraConfig = ''
+      SuspendMode=suspend
+      SuspendState=disk
     #  HibernateDelaySec=1h
     #  #AllowSuspend=no
     #  #AllowSuspendThenHibernate=yes
     #  #AllowHibernate=yes
     #  #AllowHybridSleep=no
-    #'';
+    '';
   };
+
+  # enable tailscale daemon
+  services.tailscale.enable = true;
+  services.tailscale.package = unstable.pkgs.tailscale;
 
   services.blueman.enable = true;
   # rtkit for pipewire? (Recommended on NixOS wiki)

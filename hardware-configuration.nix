@@ -19,7 +19,12 @@ rec {
       "STOP_CHARGE_THRESH_BAT0" = 80;
     };
   };
-  powerManagement.powertop.enable = true;
+  powerManagement = {
+    enable = true;
+    powertop.enable = true;
+    cpuFreqGovernor = "powersave";
+  };
+
   services.thermald.enable = true;
 
   nixpkgs.config.packageOverrides = pkgs: {
@@ -27,6 +32,11 @@ rec {
   };
 
   hardware = {
+    cpu = {
+      intel = {
+        updateMicrocode = true;
+      };
+    };
     opengl = {
       enable = true;
       extraPackages = with pkgs; [
@@ -44,6 +54,7 @@ rec {
     # Enables bluetooth
     bluetooth = {
       enable = true;
+      package = pkgs.bluezFull;
       # This enables a2dp-sink, which is HQ audio w/o mic. (Needed for pairing WH-1000XM3)
       settings = {
         General = {
@@ -64,7 +75,7 @@ rec {
     # boot with grub rather than systemd-boot because we want mirrored bootloaders
     # set EFI variables to look for kernels where we want (NVRAM), disabled since we install as removeable
     # must set this to true and disable efiInstallAsRemovable to do system76 firmware updates
-    # boot.loader.efi.canTouchEfiVariables = true;
+    loader.efi.canTouchEfiVariables = true;
     loader.grub = {
       enable = true;
       # We use GPT and our boot partitions are FAT32
@@ -77,7 +88,7 @@ rec {
       copyKernels = true;
       # efi standard makes sure we boot from these even if NVRAM dies or we fail to update it
       # https://search.nixos.org/options?show=boot.loader.grub.efiInstallAsRemovable&type=packages&query=efi
-      efiInstallAsRemovable = true;
+      #efiInstallAsRemovable = true;
       mirroredBoots = [
         #{
         #  "devices" = [ "nodev" ];
