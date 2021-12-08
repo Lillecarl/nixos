@@ -2,14 +2,19 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 let
   unstable = import <unstable> { config = config.nixpkgs.config; };
+  #master = import <master> { config = config.nixpkgs.config; };
   custom = import /etc/nixos/nixpkgs { config = config.nixpkgs.config; };
+
+  kubeEnable = false;
   kubeMasterIP = "192.168.122.1";
   kubeMasterHostname = "api.kube";
   kubeMasterAPIServerPort = 6443;
+
+  prometheusEnable = true;
 in rec
 {
   imports = [
@@ -97,51 +102,53 @@ in rec
     keyMap = "us";
   };
 
+  # Eanble xwayland, not everything is wayland yet.
+  programs.xwayland.enable = true;
   # Enable the X11 windowing system.
   services.xserver.enable = true;
   # Enable the Plasma 5 Desktop Environment.
   services.xserver.displayManager.sddm.enable = true;
   services.xserver.desktopManager.plasma5.enable = true;
+  # Enable touchpad support (enabled default in most desktopManager).
+  services.xserver.libinput.enable = true;
+  # Configure keymap in X11
+  services.xserver.layout = "us";
+  # Available videodrivers
   services.xserver.videoDrivers = [
     #"displaylink" # For the DELL docks at work
     "modesetting" # Standard driver
     "fbdev" # Enabled by default in NixOS
   ];
-  services.xserver.displayManager.setupCommands = ''
-    xhost +local:
-  '';
-  #services.xserver.videoDrivers = [ "modesetting" "fbdev" ];
+  #services.xserver.xkbOptions = "eurosign:e";
+  #services.xserver.displayManager.sessionCommands = ''
+  #  xhost +local:
+  #'';
 
-  # Configure keymap in X11
-  services.xserver.layout = "us";
-  # services.xserver.xkbOptions = "eurosign:e";
 
   # Enable CUPS to print documents.
   # services.printing.enable = true;
 
-  # Enable touchpad support (enabled default in most desktopManager).
-  services.xserver.libinput.enable = true;
 
   programs.adb.enable = true;
 
-  #services.kubernetes = {
-  #  roles = ["master" "node"];
-  #  masterAddress = kubeMasterHostname;
-  #  apiserverAddress = "https://${kubeMasterHostname}:${toString kubeMasterAPIServerPort}";
-  #  easyCerts = true;
-  #  apiserver = {
-  #    securePort = kubeMasterAPIServerPort;
-  #    advertiseAddress = kubeMasterIP;
-  #  };
+  services.kubernetes = lib.mkIf kubeEnable {
+    roles = ["master" "node"];
+    masterAddress = kubeMasterHostname;
+    apiserverAddress = "https://${kubeMasterHostname}:${toString kubeMasterAPIServerPort}";
+    easyCerts = true;
+    apiserver = {
+      securePort = kubeMasterAPIServerPort;
+      advertiseAddress = kubeMasterIP;
+    };
 
-  #  # use coredns
-  #  addons.dns.enable = true;
+    # use coredns
+    addons.dns.enable = true;
 
-  #  # needed if you use swap
-  #  kubelet.extraOpts = "--fail-swap-on=false";
-  #};
+    # needed if you use swap
+    kubelet.extraOpts = "--fail-swap-on=false";
+  };
 
-  # Allow root to map to LilleCarl user
+  # Allow root to map to LilleCarl user in LXD container
   users.users.root = {
     subUidRanges = [
       {
@@ -186,15 +193,6 @@ in rec
       enable = true;
       dockerCompat = true;
     };
-    #virtualbox = {
-    #  host = {
-    #    enable = true;
-    #    enableExtensionPack = true;
-    #  };
-    #};
-    #anbox = {
-    #  enable = true;
-    #};
   };
 
   # List packages installed in system profile. To search, run:
@@ -210,6 +208,8 @@ in rec
     vlc # Media Player
     ytmdesktop # YouTube Music Player
     # Commandline tools
+    sshfs # Mount SFTP as filesystem
+    rclone # rsync for clouds (+ loads of other cool things)
     kompose # Kubernetes docker-compose like tool
     kubectl # Kubernetes management cli
     kubernetes # Kubernetes packages
@@ -218,18 +218,22 @@ in rec
     cmatrix # Just scrolling to look really cool
     system76-firmware # System76 firmware tools
     mailutils # Sending mail from commandline 
+    libnotify # Cli utils for sending KDE notifications
     vim # Modal CLI text editor
     neovim # Modal CLI text editor, modern version of Vim
     amp # Modal CLI text editor, modern, rust
+    kakoune # Modal editor, faster because of fewer keystrokes
     emacs # well, it's emacs...
     fd # not sure, doom-emacs recommends it
     ripgrep # Modern rusty grep
     lsof # Check who uses file
+    ripgrep # Rust grep implmenetation, not POSIX compliant
     wget # Fetch things quicly with HTTP
     gnufdisk # CLI partition management
     curl # All things HTTP and other web transfer protocols
     tmux # terminal multiplexer
     htop # NCurses "task manager"
+    unstable.bottom # Task Manager written in Rust
     powertop # See power information
     iotop # See disk IO information
     nixpkgs-fmt # Format Nix like the Nix project wants
@@ -244,6 +248,9 @@ in rec
     cachix # Nix binary cache
     vulnix # Nix vulnerability scanner
     gitFull
+    unstable.lazygit # Git TUI, golang
+    unstable.gitui # Git TUI, rust
+    overcommit # Git hooks manager
     tig
     git-imerge # interactive and incremental git merging utility
     git-trim
@@ -277,6 +284,7 @@ in rec
     swtpm # needed to emulate TPM on QEMU
     gnupg # PGP implementation
     ranger # file manager
+    nnn # file manager
     fzf # fuzzy finder, pipe to this for nice search
     unipicker # unicode char finder
     unstable.bitwarden-cli # Password manager CLI
@@ -287,6 +295,7 @@ in rec
     xbindkeys # Binding keys for X
     xorg.xev # Monitor Keypresses, useful when troubleshooting keylayouts
     xorg.xhost # Not sure, used for X11 socket forwarding
+    xorg.xinit # Well starting x?
     conntrack_tools # Connection tracking userspace tools
     iptstate # Conntrack "top like" tool
     nixos-generators # Tools for generating nixos images (AWS, Azure, ISO etc..)
@@ -301,14 +310,14 @@ in rec
     # Programming tools
     vscode # Programming editor, growing into an IDE
     kdiff3 # Well know diffing tool
-    kompare # KDE diffing tool
+    ruby # Ruby programming language
     python3 # Language interpreter
     python39Packages.boto3 # AWS Python library
     nodejs # Javascript with OS access
     gnumake # GNU make
     clang # Cool modular C/C++ compiler
     gcc # Old but gold C/C++ and others compiler
-    falkon # Qt web browser
+    adoptopenjdk-jre-bin # Java runtime
     # System tools
     ark # Archiving tool
     gparted # GUI partition manager
@@ -326,6 +335,8 @@ in rec
     mailspring # Mail client
     mucommander # file manager, written in Java
     libreoffice # MS office compatible productivity suite
+    vlc # Media Player
+    mpv # Media Player
     unstable.obs-studio # Screen recording/streaming utility
     freerdp # Remote Desktop Protocol client
     kgpg # KDE pgp tool
@@ -336,15 +347,15 @@ in rec
     ghostwriter # Markdown editor
     teamviewer # Remote Desktop Solution
     #electronim # This isn't yet packaged for NixOS, but put it here as a reminder of the future
-    #latte-dock # Alternative KDE dock (Mac style)
     qbittorrent # OpenSource Qt Bittorrent client
     okular # PDF viewer
+    unstable.ytmdesktop # Youtube Music player
     # Misc
     unstable.scrcpy
     wineWowPackages.full
-    libsForQt5.kdeconnect-kde # Integrate your DE with things
-    libsForQt5.plasma-browser-integration # Integrate KDE with 
-    libsForQt5.kcalc # KDE calculator
+    #libsForQt5.kdeconnect-kde # Integrate your DE with things
+    #libsForQt5.plasma-browser-integration # Integrate KDE with 
+    #libsForQt5.kcalc # KDE calculator
     krita # KDE alternative to GIMP
     gimp # Photoshop alternative
     kdenlive # KDE alternative to Windows Movie Maker
@@ -363,11 +374,14 @@ in rec
     unstable.gitkraken # Git GUI
     unstable.azure-cli # Azure CLI tooling
     unstable.awscli # AWS CLI tooling
+    unstable.aws-nuke # Nuke AWS account completely
     unstable.brave # Web brower, Chromium based
     #unstable.tangram # Web-App runner
     unstable.nyxt # Hackable "power-browser"
     unstable.qutebrowser # Keyboard driven browser, Python and PyQt based
     unstable.terraform # Cloud orchestrator
+    unstable.terragrunt # Terraform Wrapper that does nice things
+    unstable.terraform-lsp # Terraform Language Server
     unstable.dbeaver # SQL database GUI
     #unstable.displaylink # Driver for DisplayLink docks, works like shit
     #unstable.anbox # look into what's blocking anbox from running a late kernel
@@ -381,8 +395,8 @@ in rec
 
   environment.variables = 
   {
-    EDITOR = "vim";
-    VISUAL = "vim";
+    EDITOR = "nvim";
+    VISUAL = "nvim";
     ARM_THREEPOINTZERO_BETA_RESOURCES = "true";
   };
 
@@ -390,19 +404,6 @@ in rec
   #environment.extraInit = ''
   #  xhost +local:
   #'';
-
-  #environment.etc."X11/xorg.conf.d/20-evdi.conf" = {
-  #  enable = true;
-  #  text = ''
-  #    Section "OutputClass"
-  #    	Identifier "DisplayLink"
-  #    	MatchDriver "evdi"
-  #    	Driver "modesetting"
-  #    	Option "AccelMethod" "none"
-  #    EndSection
-  #  '';
-  #};
-
 
   # gnupg settings
   programs.gnupg.agent = {
@@ -472,77 +473,78 @@ in rec
     # It also runs as my user (lillecarl, uid 1000)
     # XDG_RUNTIME_DIR must be set for systemctl to work, see https://serverfault.com/a/937012
 
-    services.HibernatePipeWireReset = {
-      before = [ "sleep.target" ];
-      wantedBy = [ "sleep.target" ];
-      description = "Start pipewire after hibernation";
-      stopIfChanged = true;
-      unitConfig = {
-        StopWhenUnneeded = "yes";
-      };
-      serviceConfig = {
-        Type = "oneshot";
-        RemainAfterExit = "yes";
-        User = "1000";
-      };
+    #services.HibernatePipeWireReset = {
+    #  before = [ "sleep.target" ];
+    #  wantedBy = [ "sleep.target" ];
+    #  description = "Start pipewire after hibernation";
+    #  stopIfChanged = true;
+    #  unitConfig = {
+    #    StopWhenUnneeded = "yes";
+    #  };
+    #  serviceConfig = {
+    #    Type = "oneshot";
+    #    RemainAfterExit = "yes";
+    #    User = "1000";
+    #  };
 
-      # ExecStop =
-      preStop = ''
-        echo "Starting pipewire services"
-        # Required to get systemctl --user working
-        export XDG_RUNTIME_DIR=/run/user/$(id -u)
-        # For some reason this starts pipewire up properly
-        #systemctl --user stop pipewire-pulse || true
-        systemctl --user restart pipewire || true
-        systemctl --user restart pipewire-pulse || true
-      '';
+    #  # ExecStop =
+    #  preStop = ''
+    #    echo "Starting pipewire services"
+    #    # Required to get systemctl --user working
+    #    export XDG_RUNTIME_DIR=/run/user/$(id -u)
+    #    # For some reason this starts pipewire up properly
+    #    #systemctl --user stop pipewire-pulse || true
+    #    #systemctl --user restart pipewire || true
+    #    #systemctl --user restart pipewire-pulse || true
+    #    (sleep 5; (systemctl --user restart pipewire || systemctl --user restart pipewire-pulse) || true) &
+    #  '';
 
-      # ExecStart =
-      script = ''
-        echo "Stopping pipewire services"
-        # Required to get systemctl --user working
-        export XDG_RUNTIME_DIR=/run/user/$(id -u)
-        # Stop pipewire daemon
-        systemctl --user stop pipewire.service || true
-        #systemctl --user stop pipewire-pulse.service || true
-      '';
-    };
+    #  # ExecStart =
+    #  script = ''
+    #    echo "Stopping pipewire services"
+    #    # Required to get systemctl --user working
+    #    export XDG_RUNTIME_DIR=/run/user/$(id -u)
+    #    # Stop pipewire daemon
+    #    systemctl --user stop pipewire.service || true
+    #    #systemctl --user stop pipewire-pulse.service || true
+    #  '';
+    #};
 
-    # This service works be executing before sleeping stays running while
-    # the sleep target is active, and kills itself when sleep target dies.
-    # this works with the combination of:
-    #   before sleep.target
-    #   unitconfig.stopwhenunneeded
-    #   serviceconfig.type
-    #   serviceconfig.remainafterexit
+    ## This service works be executing before sleeping stays running while
+    ## the sleep target is active, and kills itself when sleep target dies.
+    ## this works with the combination of:
+    ##   before sleep.target
+    ##   unitconfig.stopwhenunneeded
+    ##   serviceconfig.type
+    ##   serviceconfig.remainafterexit
 
-    services.HibernateBluetoothReset = {
-      before = [ "sleep.target" ];
-      wantedBy = [ "sleep.target" ];
-      description = "Start pipewire after hibernation";
-      stopIfChanged = true;
-      unitConfig = {
-        StopWhenUnneeded = "yes";
-      };
-      serviceConfig = {
-        Type = "oneshot";
-        RemainAfterExit = "yes";
-      };
+    #services.HibernateBluetoothReset = {
+    #  before = [ "sleep.target" ];
+    #  wantedBy = [ "sleep.target" ];
+    #  description = "Start pipewire after hibernation";
+    #  stopIfChanged = true;
+    #  unitConfig = {
+    #    StopWhenUnneeded = "yes";
+    #  };
+    #  serviceConfig = {
+    #    Type = "oneshot";
+    #    RemainAfterExit = "yes";
+    #  };
 
-      # ExecStop =
-      preStop = ''
-        echo "Starting bluetooth service"
-        # Start bluetooth service
-        systemctl start bluetooth.service || true
-      '';
+    #  # ExecStop =
+    #  preStop = ''
+    #    echo "Starting bluetooth service"
+    #    # Start bluetooth service
+    #    (sleep 5; systemctl start bluetooth.service || true) &
+    #  '';
 
-      # ExecStart =
-      script = ''
-        echo "Stopping bluetooth service"
-        # Stop bluetooth daemon
-        systemctl stop bluetooth.service || true
-      '';
-    };
+    #  # ExecStart =
+    #  script = ''
+    #    echo "Stopping bluetooth service"
+    #    # Stop bluetooth daemon
+    #    systemctl stop bluetooth.service || true
+    #  '';
+    #};
 
     services.powerTune = {
       enable = true;
@@ -590,19 +592,130 @@ in rec
     };   
 
     sleep.extraConfig = ''
-      SuspendMode=suspend
+      SuspendMode=suspend platform shutdown
       SuspendState=disk
-    #  HibernateDelaySec=1h
-    #  #AllowSuspend=no
-    #  #AllowSuspendThenHibernate=yes
-    #  #AllowHibernate=yes
-    #  #AllowHybridSleep=no
+      #AllowSuspend=yes
+      #HibernateDelaySec=1h
+      #AllowSuspendThenHibernate=yes
+      #AllowHibernate=no
+      #AllowHybridSleep=yes
     '';
   };
 
+  # Monitor laptop with Prometheus
+  services.prometheus = lib.mkIf prometheusEnable {
+    enable = true;
+    globalConfig = {
+      scrape_timeout = "10s";
+      scrape_interval = "1m";
+      evaluation_interval = "1m";
+    };
+    scrapeConfigs = [
+      {
+        job_name = "prometheus";
+        static_configs = [
+          {
+            targets = [ "127.0.0.1:9090" ];
+          }
+        ];
+      }
+      {
+        job_name = "node";
+        static_configs = [
+          {
+            targets = [ "127.0.0.1:9100" ];
+          }
+        ];
+      }
+      {
+        job_name = "process";
+        static_configs = [
+          {
+            targets = [ "127.0.0.1:9256" ];
+          }
+        ];
+      }
+      {
+        job_name = "smartctl";
+        static_configs = [
+          {
+            targets = [ "127.0.0.1:9633" ];
+          }
+        ];
+      }
+      {
+        job_name = "collectd";
+        static_configs = [
+          {
+            targets = [ "127.0.0.1:9103" ];
+          }
+        ];
+      }
+    ];
+    exporters = {
+      node = {
+        enable = true;
+        enabledCollectors = [
+          "systemd"
+          "processes"
+        ];
+      };
+      process = {
+        enable = true;
+      };
+      collectd = {
+        enable = true;
+      };
+      smartctl = {
+        enable = true;
+        devices = [ "/dev/nvme0n1" "/dev/nvme1n1" ];
+      };
+      #script = {
+      #  enable = true;
+      #  settings = {
+      #    scripts = [
+      #      {
+      #        name = "fanspeed";
+      #        script = ''
+      #          
+      #        '';
+      #      }
+      #    ];
+      #  };
+      #};
+    };
+  };
+
+  services.grafana = {
+    enable = true;
+    addr = "127.0.0.1";
+    port = 446;
+    domain = "localhost";
+  };
+
+  security.sudo = {
+    enable = true;
+    # Allow some commands superuser rights without password
+    #extraRules = [
+    #  {
+    #    users = [ "lillecarl" ];
+    #    commands = [
+    #      {
+    #        command = "htop --readonly";
+    #        options = [ "NOPASSWD" ];
+    #      }
+    #    ];
+    #    runAs = "ALL";
+    #  }
+    #];
+  };
+
   # enable tailscale daemon
-  services.tailscale.enable = true;
-  services.tailscale.package = unstable.pkgs.tailscale;
+  #services.tailscale.enable = true;
+  #services.tailscale.package = unstable.pkgs.tailscale;
+
+  # enable emacs, running as a user daemon
+  services.emacs.enable = true;
 
   services.blueman.enable = true;
   # rtkit for pipewire? (Recommended on NixOS wiki)

@@ -105,7 +105,7 @@ rec {
 
     # Plymouth, shows a splash screen rather than systemd boot sequence
     # since our system boots to bloody fast this is barely noticeable
-    plymouth.enable = true;
+    #plymouth.enable = true;
 
     # initrd = initial ramdisk.
     initrd = {
