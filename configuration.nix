@@ -206,8 +206,11 @@ in rec
     zoom # Meetings application
     # Media apps
     vlc # Media Player
+    mpv # Media Player
+    celluloid #  MPV GTK frontend wrapper
     ytmdesktop # YouTube Music Player
     # Commandline tools
+    inotify-tools # CLI tools for inotify in Linux
     sshfs # Mount SFTP as filesystem
     rclone # rsync for clouds (+ loads of other cool things)
     kompose # Kubernetes docker-compose like tool
@@ -230,6 +233,7 @@ in rec
     ripgrep # Rust grep implmenetation, not POSIX compliant
     wget # Fetch things quicly with HTTP
     gnufdisk # CLI partition management
+    efitools # Tools for managing EFI, variables and such
     curl # All things HTTP and other web transfer protocols
     tmux # terminal multiplexer
     htop # NCurses "task manager"
@@ -265,6 +269,7 @@ in rec
     lm_sensors # Read sensors
     file # Show information about files
     jq # CLI JSON utility, piping JSON here will always pretty-print it
+    yq # CLI YAML utility, useful for those that thing YAML is a bit shit
     desktop-file-utils # Required for VS Code live share
     powershell # Microsofts shell implementation
     ncdu # NCurses Disk Utility (TUI way of finding big files and folders)
@@ -335,8 +340,6 @@ in rec
     mailspring # Mail client
     mucommander # file manager, written in Java
     libreoffice # MS office compatible productivity suite
-    vlc # Media Player
-    mpv # Media Player
     unstable.obs-studio # Screen recording/streaming utility
     freerdp # Remote Desktop Protocol client
     kgpg # KDE pgp tool
