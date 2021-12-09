@@ -450,101 +450,11 @@ in rec
       script = "${pkgs.mdadm}/bin/mdadm --monitor -m root /dev/md1337";
     };
 
-    # This breaks the mdmonitor service nixos installs by appending bogus to the end
-    # the effect is that we don't have this unit as failed in systemctl --failed
+    # Disable the default NixOS mdadm monitor as it doesn't work at all
     services.mdmonitor.enable = false;
-    #services.mdmonitor = {
-    #  description = "Monitor RAID disks";
-    #  wantedBy = [ "multi-user.target" ];
-    #  script = "${pkgs.mdadm}/bin/mdadm --monitor -m root /dev/md1337";
-    #};
 
     # upower systemd service
     services.upower.enable = true;
-
-    # This service works be executing before sleeping stays running while
-    # the sleep target is active, and kills itself when sleep target dies.
-    # this works with the combination of:
-    #   before sleep.target
-    #   unitconfig.stopwhenunneeded
-    #   serviceconfig.type
-    #   serviceconfig.remainafterexit
-    # 
-    # It also runs as my user (lillecarl, uid 1000)
-    # XDG_RUNTIME_DIR must be set for systemctl to work, see https://serverfault.com/a/937012
-
-    #services.HibernatePipeWireReset = {
-    #  before = [ "sleep.target" ];
-    #  wantedBy = [ "sleep.target" ];
-    #  description = "Start pipewire after hibernation";
-    #  stopIfChanged = true;
-    #  unitConfig = {
-    #    StopWhenUnneeded = "yes";
-    #  };
-    #  serviceConfig = {
-    #    Type = "oneshot";
-    #    RemainAfterExit = "yes";
-    #    User = "1000";
-    #  };
-
-    #  # ExecStop =
-    #  preStop = ''
-    #    echo "Starting pipewire services"
-    #    # Required to get systemctl --user working
-    #    export XDG_RUNTIME_DIR=/run/user/$(id -u)
-    #    # For some reason this starts pipewire up properly
-    #    #systemctl --user stop pipewire-pulse || true
-    #    #systemctl --user restart pipewire || true
-    #    #systemctl --user restart pipewire-pulse || true
-    #    (sleep 5; (systemctl --user restart pipewire || systemctl --user restart pipewire-pulse) || true) &
-    #  '';
-
-    #  # ExecStart =
-    #  script = ''
-    #    echo "Stopping pipewire services"
-    #    # Required to get systemctl --user working
-    #    export XDG_RUNTIME_DIR=/run/user/$(id -u)
-    #    # Stop pipewire daemon
-    #    systemctl --user stop pipewire.service || true
-    #    #systemctl --user stop pipewire-pulse.service || true
-    #  '';
-    #};
-
-    ## This service works be executing before sleeping stays running while
-    ## the sleep target is active, and kills itself when sleep target dies.
-    ## this works with the combination of:
-    ##   before sleep.target
-    ##   unitconfig.stopwhenunneeded
-    ##   serviceconfig.type
-    ##   serviceconfig.remainafterexit
-
-    #services.HibernateBluetoothReset = {
-    #  before = [ "sleep.target" ];
-    #  wantedBy = [ "sleep.target" ];
-    #  description = "Start pipewire after hibernation";
-    #  stopIfChanged = true;
-    #  unitConfig = {
-    #    StopWhenUnneeded = "yes";
-    #  };
-    #  serviceConfig = {
-    #    Type = "oneshot";
-    #    RemainAfterExit = "yes";
-    #  };
-
-    #  # ExecStop =
-    #  preStop = ''
-    #    echo "Starting bluetooth service"
-    #    # Start bluetooth service
-    #    (sleep 5; systemctl start bluetooth.service || true) &
-    #  '';
-
-    #  # ExecStart =
-    #  script = ''
-    #    echo "Stopping bluetooth service"
-    #    # Stop bluetooth daemon
-    #    systemctl stop bluetooth.service || true
-    #  '';
-    #};
 
     services.powerTune = {
       enable = true;
