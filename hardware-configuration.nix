@@ -23,6 +23,10 @@ rec {
     enable = true;
     powertop.enable = true;
     cpuFreqGovernor = "powersave";
+    powerUpCommands = ''
+    '';
+    powerDownCommands = ''
+    '';
   };
 
   services.thermald.enable = true;
