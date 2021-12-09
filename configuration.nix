@@ -556,14 +556,6 @@ in rec
           }
         ];
       }
-      {
-        job_name = "collectd";
-        static_configs = [
-          {
-            targets = [ "127.0.0.1:9103" ];
-          }
-        ];
-      }
     ];
     exporters = {
       node = {
@@ -574,9 +566,6 @@ in rec
         ];
       };
       process = {
-        enable = true;
-      };
-      collectd = {
         enable = true;
       };
       smartctl = {
