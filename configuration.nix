@@ -627,8 +627,7 @@ rec
   #services.tailscale.package = unstable.pkgs.tailscale;
 
   # enable emacs, running as a user daemon
-  services.emacs.enable = true;
-
+  #services.emacs.enable = true;
   # Enable bluetooth
   services.blueman.enable = true;
   # rtkit for pipewire? (Recommended on NixOS wiki)
