@@ -196,6 +196,7 @@ rec
     celluloid #  MPV GTK frontend wrapper
     ytmdesktop # YouTube Music Player
     # Commandline tools
+    unstable.tldr # Like, TL;DR manpages
     unstable.go # Golang
     unstable.dotnet-sdk_6 # Latest dotnet
     unstable.azure-cli # Azure CLI tooling
