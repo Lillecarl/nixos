@@ -15,7 +15,8 @@ let
   kubeMasterAPIServerPort = 6443;
 
   prometheusEnable = true;
-in rec
+in
+rec
 {
   imports = [
     <nixos-hardware/system76> # Enable S76 unique stuff
@@ -26,28 +27,11 @@ in rec
     ./cachix.nix
   ];
 
-  #disabledModules = [ "hardware/video/displaylink.nix" ];
-
   nix.autoOptimiseStore = true;
 
   nixpkgs = {
     # Allow proprietary software to be installed
     config.allowUnfree = true;
-    #overlays = [
-    #  (
-    #    self: super: {
-    #      virt-manager = super.virt-manager.override {
-    #          buildInputs = with pkgs; [
-    #            wrapGAppsHook
-    #            libvirt-glib vte dconf gtk-vnc gnome.adwaita-icon-theme avahi
-    #            gsettings-desktop-schemas libosinfo gtksourceview4
-    #            gobject-introspection
-    #            swtpm
-    #          ];
-    #      };
-    #    }
-    #  )
-    #];
   };
 
   networking = {
@@ -72,7 +56,7 @@ in rec
     #    ];
     #  };
     #};
- 
+
     # Open ports in the firewall.
     #networking.firewall.allowedTCPPorts = [ ... ];
     #networking.firewall.allowedUDPPorts = [ ... ];
@@ -98,11 +82,11 @@ in rec
   };
 
   console = {
-    font = "Lat2-Terminus16";
+    font = "Hack";
     keyMap = "us";
   };
 
-  # Eanble xwayland, not everything is wayland yet.
+  # Enable xwayland, not everything is wayland yet.
   programs.xwayland.enable = true;
   # Enable the X11 windowing system.
   services.xserver.enable = true;
@@ -114,15 +98,14 @@ in rec
   # Configure keymap in X11
   services.xserver.layout = "us";
   # Available videodrivers
-  services.xserver.videoDrivers = [
-    #"displaylink" # For the DELL docks at work
-    "modesetting" # Standard driver
-    "fbdev" # Enabled by default in NixOS
-  ];
-  #services.xserver.xkbOptions = "eurosign:e";
-  #services.xserver.displayManager.sessionCommands = ''
-  #  xhost +local:
-  #'';
+  #services.xserver.videoDrivers = [
+  #  #"displaylink" # For the DELL docks at work
+  #  "modesetting" # Standard driver
+  #  "fbdev" # Enabled by default in NixOS
+  #];
+  services.xserver.displayManager.setupCommands = ''
+    ${pkgs.xorg.xhost}/bin/xhost +local:
+  '';
 
 
   # Enable CUPS to print documents.
@@ -131,8 +114,10 @@ in rec
 
   programs.adb.enable = true;
 
+  
+  # Fix local Kubernetes
   services.kubernetes = lib.mkIf kubeEnable {
-    roles = ["master" "node"];
+    roles = [ "master" "node" ];
     masterAddress = kubeMasterHostname;
     apiserverAddress = "https://${kubeMasterHostname}:${toString kubeMasterAPIServerPort}";
     easyCerts = true;
@@ -177,6 +162,7 @@ in rec
       "flatpak" # allow managing flatpak
       "adbusers" # allow usage of adb
       "podman" # allow usage of adb
+      "wireshark" # allow wireshark dumpcap
     ];
   };
 
@@ -199,17 +185,31 @@ in rec
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     # Chat apps
-    teams # Microsoft Teams collaboration suite (Electron)
-    slack # Team collaboration chat (Electron)
-    discord # Gaming chat application
+    unstable.teams # Microsoft Teams collaboration suite (Electron)
+    unstable.slack # Team collaboration chat (Electron)
+    unstable.discord # Gaming chat application
     signal-desktop # Secure messenger
-    zoom # Meetings application
+    unstable.zoom # Meetings application
     # Media apps
     vlc # Media Player
     mpv # Media Player
     celluloid #  MPV GTK frontend wrapper
     ytmdesktop # YouTube Music Player
     # Commandline tools
+    unstable.go # Golang
+    unstable.dotnet-sdk_6 # Latest dotnet
+    unstable.azure-cli # Azure CLI tooling
+    unstable.awscli # AWS CLI tooling
+    unstable.aws-nuke # Nuke AWS account completely
+    unstable.terraform # Cloud orchestrator
+    unstable.terragrunt # Terraform Wrapper that does nice things
+    unstable.terraform-lsp # Terraform Language Server
+    unstable.youtube-dl # Download media from a lot of different websites
+    unstable.zellij # discoverable terminal multiplexer written in rust
+    zoxide # Rust implementation of z/autojump
+    age # Modern crypto (kinda like PGP it seems)
+    chezmoi # dotfile manager
+    pmutils # Suspend tools
     inotify-tools # CLI tools for inotify in Linux
     sshfs # Mount SFTP as filesystem
     rclone # rsync for clouds (+ loads of other cool things)
@@ -217,6 +217,9 @@ in rec
     kubectl # Kubernetes management cli
     kubernetes # Kubernetes packages
     bind # brings the dig command
+    xortool # xor key bruteforcing tool
+    wireshark-cli # Wireshark CLI
+    termshark # Wireshark TUI?
     entr # Run commands when files change
     cmatrix # Just scrolling to look really cool
     system76-firmware # System76 firmware tools
@@ -313,7 +316,7 @@ in rec
     pstree # Show process tree as a tree
     gist # Tool to post files to gist.github.com straight away
     # Programming tools
-    vscode # Programming editor, growing into an IDE
+    unstable.vscode # Programming editor, growing into an IDE
     kdiff3 # Well know diffing tool
     ruby # Ruby programming language
     python3 # Language interpreter
@@ -331,10 +334,18 @@ in rec
     wireshark # Defactor network traffic sniffing tool
     ksystemlog # KDE syslog viewer
     etcher # Balena Etcher, GUI for dd (flash SD cards)
-    nix-bash-completions # Nix completions in bash, probably ZSH compatible
+    nix-bash-completions # Nix completions in bash
+    nix-zsh-completions # Nix completions in ZSH
+    bash-completion # Bash cli autocomplete
     hardinfo # Hardware information
     # Productivity tools
+    unstable.dbeaver # SQL database GUI
+    unstable.wezterm # Crossplatform terminal emulator, supports ligatures
+    unstable.bitwarden # Password manger
+    unstable.rofi # Searchable window title window switcher
+    unstable.rofimoji # Emoji/Char picker for rofi
     thunderbird # Mail client
+    unstable.gitkraken # Git GUI
     claws-mail # Mail client
     evolution # Mail client
     mailspring # Mail client
@@ -348,7 +359,9 @@ in rec
     notepadqq # Notepad++ "clone" for Linux
     geany # Supposed to be like Notepad++
     ghostwriter # Markdown editor
-    teamviewer # Remote Desktop Solution
+    unstable.teamviewer # Remote Desktop Solution
+    audacity # Audio software
+    qtractor # Audio software
     #electronim # This isn't yet packaged for NixOS, but put it here as a reminder of the future
     qbittorrent # OpenSource Qt Bittorrent client
     okular # PDF viewer
@@ -356,38 +369,22 @@ in rec
     # Misc
     unstable.scrcpy
     wineWowPackages.full
-    #libsForQt5.kdeconnect-kde # Integrate your DE with things
-    #libsForQt5.plasma-browser-integration # Integrate KDE with 
-    #libsForQt5.kcalc # KDE calculator
     krita # KDE alternative to GIMP
     gimp # Photoshop alternative
     kdenlive # KDE alternative to Windows Movie Maker
     webcamoid # Webcam application
-    # Unstable tools, grouped in case we don't have access to the channels,
-    # (while reinstalling) we can just comment them all out with a visual block.
-    unstable.youtube-dl # Download media from a lot of different websites
-    unstable.zellij # discoverable terminal multiplexer written in rust
-    unstable.wezterm # Crossplatform terminal emulator, supports ligatures
-    unstable.rofi # Searchable window title window switcher
-    unstable.rofimoji # Emoji/Char picker for rofi
-    unstable.ungoogled-chromium # Chromium without Google
-    unstable.bitwarden # Password manger
-    unstable.dotnet-sdk_6 # Latest dotnet
-    unstable.go # Golang
-    unstable.gitkraken # Git GUI
-    unstable.azure-cli # Azure CLI tooling
-    unstable.awscli # AWS CLI tooling
-    unstable.aws-nuke # Nuke AWS account completely
+    # Web browsers
     unstable.brave # Web brower, Chromium based
-    #unstable.tangram # Web-App runner
+    unstable.ungoogled-chromium # Chromium without Google
     unstable.nyxt # Hackable "power-browser"
     unstable.qutebrowser # Keyboard driven browser, Python and PyQt based
-    unstable.terraform # Cloud orchestrator
-    unstable.terragrunt # Terraform Wrapper that does nice things
-    unstable.terraform-lsp # Terraform Language Server
-    unstable.dbeaver # SQL database GUI
-    #unstable.displaylink # Driver for DisplayLink docks, works like shit
-    #unstable.anbox # look into what's blocking anbox from running a late kernel
+    # Fonts
+    corefonts
+    helvetica-neue-lt-std
+    xkcd-font
+    hack-font
+    fira-code
+    jetbrains-mono
     # Kernel modules with userspace commands
     config.boot.kernelPackages.cpupower
     config.boot.kernelPackages.turbostat
@@ -396,18 +393,15 @@ in rec
     config.boot.kernelPackages.system76-acpi
   ];
 
-  environment.variables = 
-  {
-    EDITOR = "nvim";
-    VISUAL = "nvim";
-    ARM_THREEPOINTZERO_BETA_RESOURCES = "true";
-  };
+  environment.variables =
+    {
+      EDITOR = "nvim";
+      VISUAL = "nvim";
+      ARM_THREEPOINTZERO_BETA_RESOURCES = "true";
+    };
 
-  # SDDM setupCommands is used instead, should do the trick.
-  #environment.extraInit = ''
-  #  xhost +local:
-  #'';
-
+  # Enable wireshark
+  programs.wireshark.enable = true;
   # gnupg settings
   programs.gnupg.agent = {
     enable = true;
@@ -502,16 +496,21 @@ in rec
         AccuracySec = "1m";
         Unit = "sysPersist.service";
       };
-    };   
+    };
 
     sleep.extraConfig = ''
-      SuspendMode=suspend platform shutdown
-      SuspendState=disk
-      #AllowSuspend=yes
-      #HibernateDelaySec=1h
-      #AllowSuspendThenHibernate=yes
-      #AllowHibernate=no
-      #AllowHybridSleep=yes
+      AllowSuspend=yes
+      AllowHibernation=yes
+      AllowSuspendThenHibernate=yes
+      AllowHybridSleep=yes
+      SuspendMode=suspend
+      SuspendState=mem standby freeze
+      #HibernateMode=platform shutdown
+      HibernateMode=suspend
+      HibernateState=disk
+      HybridSleepMode=suspend platform shutdown
+      HybridSleepState=disk
+      HibernateDelaySec=180min
     '';
   };
 
@@ -598,18 +597,17 @@ in rec
   security.sudo = {
     enable = true;
     # Allow some commands superuser rights without password
-    #extraRules = [
-    #  {
-    #    users = [ "lillecarl" ];
-    #    commands = [
-    #      {
-    #        command = "htop --readonly";
-    #        options = [ "NOPASSWD" ];
-    #      }
-    #    ];
-    #    runAs = "ALL";
-    #  }
-    #];
+    extraRules = [
+      {
+        users = [ "lillecarl" ];
+        commands = [
+          {
+            command = "${pkgs.htop}/bin/htop --readonly";
+            options = [ "NOPASSWD" ];
+          }
+        ];
+      }
+    ];
   };
 
   # enable tailscale daemon
@@ -640,9 +638,9 @@ in rec
   # replaces all other sound daemons
   services.pipewire = {
     enable = true;
-    #alsa.enable = true;
-    #alsa.support32Bit = true;
-    #jack.enable = true;
+    alsa.enable = true; # Required by: Audacity
+    #alsa.support32Bit = true; # Probably never required on NixOS
+    jack.enable = true; # Required by: Qtractor
     pulse.enable = true;
     socketActivation = true;
   };
