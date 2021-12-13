@@ -24,8 +24,11 @@ rec {
     powertop.enable = true;
     cpuFreqGovernor = "powersave";
     powerUpCommands = ''
+      (sleep 5; systemctl start powerTune.service) &
     '';
     powerDownCommands = ''
+      $(pkgs.coreutils)/bin/sync
+      echo 1 > /proc/sys/vm/drop_caches
     '';
   };
 
