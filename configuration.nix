@@ -597,6 +597,15 @@ rec
     domain = "localhost";
   };
 
+  security.pam.loginLimits = [
+    { # This fixes "ip vrf exec" for reasons still "unknown" (haven't read up on yet)
+      domain = "*"; 
+      item = "memlock"; # Locked memory, required for BPF programs
+      type = "-"; # This is instead of hard/soft?
+      value = 16384; # Value mentioned on RedHat bugzilla
+    }
+  ];
+
   security.sudo = {
     enable = true;
     # Allow some commands superuser rights without password
@@ -662,4 +671,3 @@ rec
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "21.05"; # Did you read the comment?
 }
-
