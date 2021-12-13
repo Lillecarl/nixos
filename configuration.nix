@@ -610,7 +610,7 @@ rec
     enable = true;
     # Allow some commands superuser rights without password
     extraRules = [
-      {
+      { # Allow running htop --readonly as sudoer without password
         users = [ "lillecarl" ];
         commands = [
           {
@@ -629,6 +629,7 @@ rec
   # enable emacs, running as a user daemon
   services.emacs.enable = true;
 
+  # Enable bluetooth
   services.blueman.enable = true;
   # rtkit for pipewire? (Recommended on NixOS wiki)
   security.rtkit.enable = true;
