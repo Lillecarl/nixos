@@ -168,10 +168,10 @@ rec
       package = unstable.lxd;
       recommendedSysctlSettings = true;
     };
-    podman = {
-      enable = true;
-      dockerCompat = true;
-    };
+    #podman = {
+    #  enable = true;
+    #  dockerCompat = true;
+    #};
   };
 
   # List packages installed in system profile. To search, run:
