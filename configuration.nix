@@ -97,12 +97,7 @@ rec
   services.xserver.libinput.enable = true;
   # Configure keymap in X11
   services.xserver.layout = "us";
-  # Available videodrivers
-  #services.xserver.videoDrivers = [
-  #  #"displaylink" # For the DELL docks at work
-  #  "modesetting" # Standard driver
-  #  "fbdev" # Enabled by default in NixOS
-  #];
+  # Allow local clients to connect to my X server
   services.xserver.displayManager.setupCommands = ''
     ${pkgs.xorg.xhost}/bin/xhost +local:
   '';
