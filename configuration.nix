@@ -187,7 +187,6 @@ rec
     vlc # Media Player
     mpv # Media Player
     celluloid #  MPV GTK frontend wrapper
-    ytmdesktop # YouTube Music Player
     # Commandline tools
     unstable.tldr # Like, TL;DR manpages
     unstable.go # Golang
@@ -201,7 +200,8 @@ rec
     unstable.youtube-dl # Download media from a lot of different websites
     unstable.zellij # discoverable terminal multiplexer written in rust
     zoxide # Rust implementation of z/autojump
-    age # Modern crypto (kinda like PGP it seems)
+    age # Modern crypto written in Go
+    rage # Modern crypto written in Rust (Compatible with Age)
     chezmoi # dotfile manager
     pmutils # Suspend tools
     inotify-tools # CLI tools for inotify in Linux
@@ -242,6 +242,7 @@ rec
     nix-tree # visualize the Nix store interactively
     nix-update # Tool to help updating nix packages
     nix-direnv # Nix direnv implementation
+    nix-prefetch # nix prefetcher
     nix-prefetch-github # fetch nix package from github
     niv # Dependency manager for Nix, which is a dependency manager (wat)
     lorri # nix-shell alternative
@@ -294,6 +295,7 @@ rec
     speedtest-cli # Speedtest from the commandline
     poppler_utils # Utilities for PDF rendering
     imagemagick # CLI for doing image stuff
+    waypipe # Wayland forwarding (Like X11 forwarding, but for Wayland)
     xbindkeys # Binding keys for X
     xorg.xev # Monitor Keypresses, useful when troubleshooting keylayouts
     xorg.xhost # Not sure, used for X11 socket forwarding
@@ -356,13 +358,14 @@ rec
     unstable.teamviewer # Remote Desktop Solution
     audacity # Audio software
     qtractor # Audio software
-    #electronim # This isn't yet packaged for NixOS, but put it here as a reminder of the future
     qbittorrent # OpenSource Qt Bittorrent client
     okular # PDF viewer
-    unstable.ytmdesktop # Youtube Music player
+    libsForQt5.kcolorpicker # Color Picker for Qt/KDE
+    colorpicker # Just a color picker
     # Misc
-    unstable.scrcpy
-    wineWowPackages.full
+    unstable.scrcpy # Print-screen tool
+    wineWowPackages.full # Win32 API compability layer for Linux
+    bottles # Wine prefix manager (Tool to make installing Windows apps easier)
     krita # KDE alternative to GIMP
     gimp # Photoshop alternative
     kdenlive # KDE alternative to Windows Movie Maker
