@@ -104,12 +104,10 @@ rec
 
 
   # Enable CUPS to print documents.
-  # services.printing.enable = true;
-
-
+  services.printing.enable = true;
+  # Enable Android debugging tools
   programs.adb.enable = true;
 
-  
   # Fix local Kubernetes
   services.kubernetes = lib.mkIf kubeEnable {
     roles = [ "master" "node" ];
