@@ -629,8 +629,8 @@ rec
   };
 
   # enable tailscale daemon
-  #services.tailscale.enable = true;
-  #services.tailscale.package = unstable.pkgs.tailscale;
+  services.tailscale.enable = true;
+  services.tailscale.package = unstable.pkgs.tailscale;
 
   # enable emacs, running as a user daemon
   #services.emacs.enable = true;
