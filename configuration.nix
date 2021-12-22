@@ -390,6 +390,16 @@ rec
     config.boot.kernelPackages.system76-acpi
   ];
 
+  fonts.fonts = with pkgs; [
+    corefonts
+    helvetica-neue-lt-std
+    xkcd-font
+    hack-font
+    fira-code
+    jetbrains-mono
+    unifont
+  ];
+
   environment.variables =
     {
       EDITOR = "nvim";
