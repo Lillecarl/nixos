@@ -193,11 +193,12 @@ rec
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     # Chat apps
+    unstable.element-desktop # Element Slack app
     unstable.teams # Microsoft Teams collaboration suite (Electron)
     unstable.slack # Team collaboration chat (Electron)
     unstable.discord # Gaming chat application
-    signal-desktop # Secure messenger
     unstable.zoom # Meetings application
+    signal-desktop # Secure messenger
     # Media apps
     vlc # Media Player
     mpv # Media Player
@@ -224,6 +225,7 @@ rec
     rclone # rsync for clouds (+ loads of other cool things)
     kompose # Kubernetes docker-compose like tool
     kubectl # Kubernetes management cli
+    kubectx # Kube switcher
     kubernetes # Kubernetes packages
     bind # brings the dig command
     xortool # xor key bruteforcing tool
@@ -253,6 +255,8 @@ rec
     powertop # See power information
     iotop # See disk IO information
     nixpkgs-fmt # Format Nix like the Nix project wants
+    manix # Nix documentation search tool
+    nix-du # Nix disk usage check
     nix-top # See what nix is doing when it's doing things
     nix-tree # visualize the Nix store interactively
     nix-update # Tool to help updating nix packages
@@ -301,6 +305,7 @@ rec
     killall # Kill processes by name
     swtpm # needed to emulate TPM on QEMU
     gnupg # PGP implementation
+    keychain # Easier key management
     ranger # file manager
     nnn # file manager
     fzf # fuzzy finder, pipe to this for nice search
@@ -336,7 +341,6 @@ rec
     gnumake # GNU make
     clang # Cool modular C/C++ compiler
     gcc # Old but gold C/C++ and others compiler
-    adoptopenjdk-jre-bin # Java runtime
     # System tools
     ark # Archiving tool
     gparted # GUI partition manager
@@ -374,6 +378,7 @@ rec
     audacity # Audio software
     qtractor # Audio software
     qbittorrent # OpenSource Qt Bittorrent client
+    #subdl # Download subtitles
     okular # PDF viewer
     libsForQt5.kcolorpicker # Color Picker for Qt/KDE
     colorpicker # Just a color picker
@@ -385,42 +390,45 @@ rec
     gimp # Photoshop alternative
     kdenlive # KDE alternative to Windows Movie Maker
     webcamoid # Webcam application
+    mkchromecast
+    gnomecast
+    go-chromecast
+    castnow
+    catt
     # Web browsers
     unstable.brave # Web brower, Chromium based
     unstable.ungoogled-chromium # Chromium without Google
     unstable.nyxt # Hackable "power-browser"
     unstable.qutebrowser # Keyboard driven browser, Python and PyQt based
-    # Fonts
-    corefonts
-    helvetica-neue-lt-std
-    xkcd-font
-    hack-font
-    fira-code
-    jetbrains-mono
+    # Games
+    unstable.superTuxKart # Kart game with Tux
     # Kernel modules with userspace commands
     config.boot.kernelPackages.cpupower
     config.boot.kernelPackages.turbostat
     config.boot.kernelPackages.system76
     config.boot.kernelPackages.system76-io
     config.boot.kernelPackages.system76-acpi
+    config.boot.kernelPackages.usbip
   ];
 
-  fonts.fonts = with pkgs; [
-    corefonts
-    helvetica-neue-lt-std
-    xkcd-font
-    hack-font
-    fira-code
-    jetbrains-mono
-    unifont
-  ];
+  fonts = {
+    fontDir.enable = true;
+    enableDefaultFonts = true;
+    enableGhostscriptFonts = true;
 
-  environment.variables =
-    {
-      EDITOR = "nvim";
-      VISUAL = "nvim";
-      ARM_THREEPOINTZERO_BETA_RESOURCES = "true";
-    };
+    fonts = with pkgs; [
+      corefonts
+      nerdfonts
+      powerline-fonts
+      helvetica-neue-lt-std
+      xkcd-font
+      hack-font
+      fira-code
+      fira-code-symbols
+      jetbrains-mono
+      unifont
+    ];
+  };
 
   # Enable noisetorch, noise suppression for microphones using pulse/pipewire
   programs.noisetorch.enable = true;
