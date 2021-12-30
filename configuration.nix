@@ -430,6 +430,11 @@ rec
     ];
   };
 
+  environment.variables = {
+    EDITOR = "nvim";
+    VISUAL = "nvim";
+    ARM_THREEPOINTZERO_BETA_RESOURCES = "true";
+  };
   # Enable noisetorch, noise suppression for microphones using pulse/pipewire
   programs.noisetorch.enable = true;
   # Enable wireshark
