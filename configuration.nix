@@ -555,6 +555,20 @@ rec
     '';
   };
 
+  # Local network autodiscovery services
+  # required for chromecasting to work
+  services.avahi = {
+    nssmdns = true;
+    enable = true;
+    ipv4 = true;
+    ipv6 = true;
+    publish = {
+      enable = true;
+      addresses = true;
+      workstation = true;
+    };
+  };
+
   # Monitor laptop with Prometheus
   services.prometheus = lib.mkIf prometheusEnable {
     enable = true;
