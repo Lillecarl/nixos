@@ -142,6 +142,7 @@ rec {
       system76
       system76-io
       system76-acpi
+      usbip
     ];
     # udl was here, which is the old displaylink driver
     kernelModules = [ "evdi" "kvm-intel" "vfio_virqfd" "vfio_pci" "vfio_iommu_type1" "vfio" ];
