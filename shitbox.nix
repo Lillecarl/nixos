@@ -16,9 +16,6 @@ in
     };
   };
   imports = [
-    <nixos-hardware/common/cpu/intel>
-    <nixos-hardware/common/pc/ssd>
-    <nixos-hardware/common/pc>
     # Import hardware configuration
     ./hardware-configuration.nix
     # Import boot configuration 
@@ -185,6 +182,7 @@ in
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     notepadqq
+    gist
     jq
     entr
     gitui
