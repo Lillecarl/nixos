@@ -4,7 +4,7 @@
   boot = {
     # 2021/07/09 latest kernel doesn't build with Nvidia, nvidia fuck you
     # kernelPackages = pkgs.linuxPackages_latest;
-    kernelPackages = pkgs.linuxPackages_latest;
+    #kernelPackages = pkgs.linuxPackages_latest;
     # required for ZFS to build
     zfs.enableUnstable = true;
     # Enable ZFS boot

@@ -22,9 +22,14 @@
   #boot.initrd.kernelModules = [ "e1000e" "r8169" "bcma" ];
   boot.extraModprobeConfig = "options vfio-pci ids=1002:67b1,1002:aac8";
   boot.blacklistedKernelModules = [ "amdgpu" "radeon" ];
-  boot.kernelModules = [ "kvm-intel" "wl" "vfio_virqfd" "vfio_pci" "vfio_iommu_type1" "vfio" ];
+  boot.kernelPackages = with pkgs.linuxKernel.packages; linux_xanmod;
+  boot.kernelModules = [ "kvm-intel" "wl" "vfio_virqfd" "vfio_pci" "vfio_iommu_type1" "vfio" "i2c-dev" ];
   boot.kernelParams = [ "amd_iommu=on" "intel_iommu=on" "mitigations=off" "kvm.nx_huge_pages=off" ];
-  boot.extraModulePackages = [ ];
+
+  boot.extraModulePackages = with config.boot.kernelPackages; [
+    usbip
+  ];
+
   boot.kernel.sysctl = {
     "vm.swappiness" = 1;
   };
