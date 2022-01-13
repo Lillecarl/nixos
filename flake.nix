@@ -9,7 +9,7 @@
     nixosConfigurations.shitbox = (let nixpkgs = unstable; in nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
-        ./shitbox.nix
+        ./shitbox
         nixos-hardware.nixosModules.common-cpu-intel
         nixos-hardware.nixosModules.common-pc-ssd
         nixos-hardware.nixosModules.common-pc
