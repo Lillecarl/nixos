@@ -18,7 +18,7 @@
     nixosConfigurations.lemur = (let nixpkgs = stable; in nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
-        ./lemur.nix
+        ./lemur
         nixos-hardware.nixosModules.common-cpu-intel
         nixos-hardware.nixosModules.common-pc-laptop
         nixos-hardware.nixosModules.common-pc-ssd
