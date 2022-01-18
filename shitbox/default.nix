@@ -186,7 +186,6 @@ in
     jq
     entr
     gitui
-    #nixops
     element-desktop
     cmatrix sl cowsay fortune toilet oneko
     anydesk nix-index mpv xorg.xhost lm_sensors

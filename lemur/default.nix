@@ -3,12 +3,7 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, lib, ... }:
-
 let
-  unstable = import <unstable> { config = config.nixpkgs.config; };
-  #master = import <master> { config = config.nixpkgs.config; };
-  custom = import /etc/nixos/nixpkgs { config = config.nixpkgs.config; };
-
   kubeEnable = false;
   kubeMasterIP = "192.168.122.1";
   kubeMasterHostname = "api.kube";
@@ -19,12 +14,7 @@ in
 rec
 {
   imports = [
-    <nixos-hardware/system76> # Enable S76 unique stuff
-    <nixos-hardware/common/pc/laptop> # Power stuff
-    <nixos-hardware/common/pc/ssd> # FStrim, paging
-    <nixos-hardware/common/cpu/intel> # Intel/i915 stuff (research more)
     ./hardware-configuration.nix
-    ./cachix.nix
   ];
 
   nix.autoOptimiseStore = true;
@@ -34,11 +24,22 @@ rec
     config.allowUnfree = true;
   };
 
+  nix = {
+    package = pkgs.nixFlakes;
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
+  };
+
   networking = {
     hostName = "lemur"; # System hostname
     networkmanager.enable = true; # Laptops do well with networkmanager
     useDHCP = false; # deprecated, should be false
-    extraHosts = "${kubeMasterIP} ${kubeMasterHostname}";
+    extraHosts = ''
+      ${kubeMasterIP} ${kubeMasterHostname}
+      100.95.25.107 shitbox
+      100.120.205.93 lemur
+    '';
 
     #wireguard = {
     #  enable = true;
@@ -81,10 +82,6 @@ rec
     supportedLocales = [ "all" ];
   };
 
-  console = {
-    font = "Hack";
-    keyMap = "us";
-  };
 
   # Enable xwayland, not everything is wayland yet.
   programs.xwayland.enable = true;
@@ -101,6 +98,14 @@ rec
   services.xserver.displayManager.setupCommands = ''
     ${pkgs.xorg.xhost}/bin/xhost +local:
   '';
+  # Replace caps-lock with caps
+  services.xserver.xkbOptions = "esc:swapcaps";
+
+  # Use hack font in tty, use xserver keymap
+  console = {
+    font = "Hack";
+    useXkbConfig = true;
+  };
 
 
   # Enable CUPS to print documents.
@@ -165,13 +170,13 @@ rec
     };
     lxd = {
       enable = true;
-      package = unstable.lxd;
       recommendedSysctlSettings = true;
     };
-    #podman = {
-    #  enable = true;
-    #  dockerCompat = true;
-    #};
+    podman = {
+      enable = true;
+      dockerCompat = true;
+    };
+    #waydroid.enable = true;
   };
 
   # XDG Base Directory Specification
@@ -193,28 +198,28 @@ rec
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     # Chat apps
-    unstable.element-desktop # Element Slack app
-    unstable.teams # Microsoft Teams collaboration suite (Electron)
-    unstable.slack # Team collaboration chat (Electron)
-    unstable.discord # Gaming chat application
-    unstable.zoom # Meetings application
+    element-desktop # Element Slack app
+    teams # Microsoft Teams collaboration suite (Electron)
+    slack # Team collaboration chat (Electron)
+    discord # Gaming chat application
+    zoom # Meetings application
     signal-desktop # Secure messenger
     # Media apps
     vlc # Media Player
     mpv # Media Player
     celluloid #  MPV GTK frontend wrapper
     # Commandline tools
-    unstable.tldr # Like, TL;DR manpages
-    unstable.go # Golang
-    unstable.dotnet-sdk_6 # Latest dotnet
-    unstable.azure-cli # Azure CLI tooling
-    unstable.awscli # AWS CLI tooling
-    unstable.aws-nuke # Nuke AWS account completely
-    unstable.terraform # Cloud orchestrator
-    unstable.terragrunt # Terraform Wrapper that does nice things
-    unstable.terraform-lsp # Terraform Language Server
-    unstable.youtube-dl # Download media from a lot of different websites
-    unstable.zellij # discoverable terminal multiplexer written in rust
+    tldr # Like, TL;DR manpages
+    go # Golang
+    dotnet-sdk_6 # Latest dotnet
+    azure-cli # Azure CLI tooling
+    awscli # AWS CLI tooling
+    aws-nuke # Nuke AWS account completely
+    terraform # Cloud orchestrator
+    terragrunt # Terraform Wrapper that does nice things
+    terraform-lsp # Terraform Language Server
+    youtube-dl # Download media from a lot of different websites
+    zellij # discoverable terminal multiplexer written in rust
     zoxide # Rust implementation of z/autojump
     age # Modern crypto written in Go
     rage # Modern crypto written in Rust (Compatible with Age)
@@ -224,13 +229,15 @@ rec
     sshfs # Mount SFTP as filesystem
     rclone # rsync for clouds (+ loads of other cool things)
     kompose # Kubernetes docker-compose like tool
-    kubectl # Kubernetes management cli
+    (lowPrio kubectl) # Kubernetes management cli
     kubectx # Kube switcher
     kubernetes # Kubernetes packages
+    buildah
     bind # brings the dig command
+    whois # whois command
     xortool # xor key bruteforcing tool
-    wireshark-cli # Wireshark CLI
-    termshark # Wireshark TUI?
+    (lowPrio wireshark-cli) # Wireshark CLI
+    (lowPrio termshark) # Wireshark TUI?
     entr # Run commands when files change
     cmatrix # Just scrolling to look really cool
     system76-firmware # System76 firmware tools
@@ -251,7 +258,7 @@ rec
     curl # All things HTTP and other web transfer protocols
     tmux # terminal multiplexer
     htop # NCurses "task manager"
-    unstable.bottom # Task Manager written in Rust
+    bottom # Task Manager written in Rust
     powertop # See power information
     iotop # See disk IO information
     nixpkgs-fmt # Format Nix like the Nix project wants
@@ -266,11 +273,10 @@ rec
     niv # Dependency manager for Nix, which is a dependency manager (wat)
     lorri # nix-shell alternative
     direnv # Do environment things based on cd
-    cachix # Nix binary cache
-    vulnix # Nix vulnerability scanner
-    gitFull
-    unstable.lazygit # Git TUI, golang
-    unstable.gitui # Git TUI, rust
+    pijul # Patch based git alternative (Similiar to darcs but written in rust)
+    gitFull # Git and all beloning standard packages
+    lazygit # Git TUI, golang
+    gitui # Git TUI, rust
     overcommit # Git hooks manager
     tig
     git-imerge # interactive and incremental git merging utility
@@ -310,7 +316,7 @@ rec
     nnn # file manager
     fzf # fuzzy finder, pipe to this for nice search
     unipicker # unicode char finder
-    unstable.bitwarden-cli # Password manager CLI
+    bitwarden-cli # Password manager CLI
     thefuck # Command that corrects your previous command
     speedtest-cli # Speedtest from the commandline
     poppler_utils # Utilities for PDF rendering
@@ -332,15 +338,15 @@ rec
     pstree # Show process tree as a tree
     gist # Tool to post files to gist.github.com straight away
     # Programming tools
-    unstable.vscode # Programming editor, growing into an IDE
+    vscode # Programming editor, growing into an IDE
     kdiff3 # Well know diffing tool
     ruby # Ruby programming language
     python3 # Language interpreter
     python39Packages.boto3 # AWS Python library
     nodejs # Javascript with OS access
-    gnumake # GNU make
-    clang # Cool modular C/C++ compiler
-    gcc # Old but gold C/C++ and others compiler
+    #gnumake # GNU make
+    #clang # Cool modular C/C++ compiler
+    #(lowPrio gcc) # Old but gold C/C++ and others compiler
     # System tools
     ark # Archiving tool
     gparted # GUI partition manager
@@ -354,27 +360,29 @@ rec
     bash-completion # Bash cli autocomplete
     hardinfo # Hardware information
     # Productivity tools
-    unstable.dbeaver # SQL database GUI
-    unstable.wezterm # Crossplatform terminal emulator, supports ligatures
-    unstable.bitwarden # Password manger
-    unstable.rofi # Searchable window title window switcher
-    unstable.rofimoji # Emoji/Char picker for rofi
+    opensnitch-ui
+    obsidian # Markdown knowledge base
+    dbeaver # SQL database GUI
+    wezterm # Crossplatform terminal emulator, supports ligatures
+    bitwarden # Password manger
+    rofi # Searchable window title window switcher
+    rofimoji # Emoji/Char picker for rofi
     thunderbird # Mail client
-    unstable.gitkraken # Git GUI
+    gitkraken # Git GUI
     claws-mail # Mail client
     evolution # Mail client
     mailspring # Mail client
-    mucommander # file manager, written in Java
     libreoffice # MS office compatible productivity suite
-    unstable.obs-studio # Screen recording/streaming utility
+    obs-studio # Screen recording/streaming utility
     freerdp # Remote Desktop Protocol client
     kgpg # KDE pgp tool
     copyq # Clipboard manager
+    qview # Image viewer
     kate # KDE text editor
     notepadqq # Notepad++ "clone" for Linux
     geany # Supposed to be like Notepad++
     ghostwriter # Markdown editor
-    unstable.teamviewer # Remote Desktop Solution
+    teamviewer # Remote Desktop Solution
     audacity # Audio software
     qtractor # Audio software
     qbittorrent # OpenSource Qt Bittorrent client
@@ -383,7 +391,7 @@ rec
     libsForQt5.kcolorpicker # Color Picker for Qt/KDE
     colorpicker # Just a color picker
     # Misc
-    unstable.scrcpy # Print-screen tool
+    scrcpy # Print-screen tool
     wineWowPackages.full # Win32 API compability layer for Linux
     bottles # Wine prefix manager (Tool to make installing Windows apps easier)
     krita # KDE alternative to GIMP
@@ -396,12 +404,12 @@ rec
     castnow
     catt
     # Web browsers
-    unstable.brave # Web brower, Chromium based
-    unstable.ungoogled-chromium # Chromium without Google
-    unstable.nyxt # Hackable "power-browser"
-    unstable.qutebrowser # Keyboard driven browser, Python and PyQt based
+    brave # Web brower, Chromium based
+    ungoogled-chromium # Chromium without Google
+    nyxt # Hackable "power-browser"
+    qutebrowser # Keyboard driven browser, Python and PyQt based
     # Games
-    unstable.superTuxKart # Kart game with Tux
+    superTuxKart # Kart game with Tux
     # Kernel modules with userspace commands
     config.boot.kernelPackages.cpupower
     config.boot.kernelPackages.turbostat
@@ -435,6 +443,7 @@ rec
     VISUAL = "nvim";
     ARM_THREEPOINTZERO_BETA_RESOURCES = "true";
   };
+
   # Enable SSH agent
   programs.ssh = {
     startAgent = true;
@@ -540,20 +549,23 @@ rec
     };
 
     sleep.extraConfig = ''
-      AllowSuspend=yes
-      AllowHibernation=yes
-      AllowSuspendThenHibernate=yes
-      AllowHybridSleep=yes
-      SuspendMode=suspend
-      SuspendState=mem standby freeze
+      #AllowSuspend=yes
+      #AllowHibernation=yes
+      #AllowSuspendThenHibernate=yes
+      #AllowHybridSleep=yes
+      #SuspendMode=
+      #SuspendState=mem standby freeze
       #HibernateMode=platform shutdown
-      HibernateMode=suspend
-      HibernateState=disk
-      HybridSleepMode=suspend platform shutdown
-      HybridSleepState=disk
-      HibernateDelaySec=180min
+      #HibernateState=disk
+      #HybridSleepMode=suspend platform shutdown
+      #HybridSleepState=disk
+      HibernateDelaySec=300min
     '';
   };
+
+  #services.syncthing = {
+  #  
+  #};
 
   # Local network autodiscovery services
   # required for chromecasting to work
@@ -568,6 +580,9 @@ rec
       workstation = true;
     };
   };
+
+  # Network Firewall
+  services.opensnitch.enable = true;
 
   # Monitor laptop with Prometheus
   services.prometheus = lib.mkIf prometheusEnable {
@@ -650,8 +665,9 @@ rec
   };
 
   security.pam.loginLimits = [
-    { # This fixes "ip vrf exec" for reasons still "unknown" (haven't read up on yet)
-      domain = "*"; 
+    {
+      # This fixes "ip vrf exec" for reasons still "unknown" (haven't read up on yet)
+      domain = "*";
       item = "memlock"; # Locked memory, required for BPF programs
       type = "-"; # This is instead of hard/soft?
       value = 16384; # Value mentioned on RedHat bugzilla
@@ -662,7 +678,8 @@ rec
     enable = true;
     # Allow some commands superuser rights without password
     extraRules = [
-      { # Allow running htop --readonly as sudoer without password
+      {
+        # Allow running htop --readonly as sudoer without password
         users = [ "lillecarl" ];
         commands = [
           {
@@ -676,7 +693,7 @@ rec
 
   # enable tailscale daemon
   services.tailscale.enable = true;
-  services.tailscale.package = unstable.pkgs.tailscale;
+  services.tailscale.package = pkgs.tailscale;
 
   # enable emacs, running as a user daemon
   #services.emacs.enable = true;
@@ -723,3 +740,4 @@ rec
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "21.05"; # Did you read the comment?
 }
+
