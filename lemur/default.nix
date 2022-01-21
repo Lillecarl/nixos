@@ -35,6 +35,7 @@ rec
     hostName = "lemur"; # System hostname
     networkmanager.enable = true; # Laptops do well with networkmanager
     useDHCP = false; # deprecated, should be false
+    # Extra hostnames, hardcoded IP's are from Tailscale
     extraHosts = ''
       ${kubeMasterIP} ${kubeMasterHostname}
       100.95.25.107 shitbox
@@ -217,7 +218,6 @@ rec
     aws-nuke # Nuke AWS account completely
     terraform # Cloud orchestrator
     terragrunt # Terraform Wrapper that does nice things
-    terraform-lsp # Terraform Language Server
     youtube-dl # Download media from a lot of different websites
     zellij # discoverable terminal multiplexer written in rust
     zoxide # Rust implementation of z/autojump
@@ -228,6 +228,7 @@ rec
     inotify-tools # CLI tools for inotify in Linux
     sshfs # Mount SFTP as filesystem
     rclone # rsync for clouds (+ loads of other cool things)
+    kubernetes-helm # Kubernetes package manager
     kompose # Kubernetes docker-compose like tool
     (lowPrio kubectl) # Kubernetes management cli
     kubectx # Kube switcher
@@ -247,6 +248,8 @@ rec
     neovim # Modal CLI text editor, modern version of Vim
     amp # Modal CLI text editor, modern, rust
     kakoune # Modal editor, faster because of fewer keystrokes
+    helix #  Modern modal editor, written in Rust
+    direnv
     emacs # well, it's emacs...
     fd # not sure, doom-emacs recommends it
     ripgrep # Modern rusty grep
