@@ -17,7 +17,7 @@ rec
     ];
   };
 
-  # Define a user account.
+  users.defaultUserShell = pkgs.zsh;
   users.users.lillecarl = {
     uid = 1000;
     shell = pkgs.zsh;
@@ -103,6 +103,11 @@ rec
     mpv # Media Player
     celluloid #  MPV GTK frontend wrapper
     # Commandline tools
+    sl # Train riding over screen in CLI
+    cowsay # Make a cow say shit
+    fortune # Fortune cookies in CLI
+    toilet # Ascii art text
+    cmatrix # Cool matrix style scrolling, really cpu intense
     tldr # Like, TL;DR manpages
     go # Golang
     dotnet-sdk_6 # Latest dotnet
@@ -142,7 +147,7 @@ rec
     amp # Modal CLI text editor, modern, rust
     kakoune # Modal editor, faster because of fewer keystrokes
     helix #  Modern modal editor, written in Rust
-    direnv
+    direnv # Tool for setting env-vars when entering directories
     emacs # well, it's emacs...
     fd # not sure, doom-emacs recommends it
     ripgrep # Modern rusty grep
@@ -160,6 +165,7 @@ rec
     nixpkgs-fmt # Format Nix like the Nix project wants
     manix # Nix documentation search tool
     nix-du # Nix disk usage check
+    nix-index # Files database for nixpkgs (find uninstalled commands)
     nix-top # See what nix is doing when it's doing things
     nix-tree # visualize the Nix store interactively
     nix-update # Tool to help updating nix packages
@@ -348,6 +354,8 @@ rec
   };
   # Enable zsh
   programs.zsh.enable = true;
+  # Bash autocomplete
+  programs.bash.enableCompletion = true;
 
   # Enable Oh-my-zsh
   programs.zsh.ohMyZsh = {
