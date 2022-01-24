@@ -1,7 +1,7 @@
 {
   inputs = {
     unstable.url = github:NixOS/nixpkgs/nixos-unstable;
-    stable.url = github:NixOS/nixpkgs/21.11;
+    #stable.url = github:NixOS/nixpkgs/21.11;
     nixos-hardware.url = github:NixOS/nixos-hardware/master;
   };
 
