@@ -172,6 +172,7 @@ rec
     nix-direnv # Nix direnv implementation
     nix-prefetch # nix prefetcher
     nix-prefetch-github # fetch nix package from github
+    comma # Run stuff without installing it
     niv # Dependency manager for Nix, which is a dependency manager (wat)
     lorri # nix-shell alternative
     direnv # Do environment things based on cd
