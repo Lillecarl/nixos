@@ -102,7 +102,7 @@ rec
       enable = true;
       dockerCompat = true;
     };
-    #waydroid.enable = true;
+    waydroid.enable = true;
   };
 
   environment.systemPackages = with pkgs; [
