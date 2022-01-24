@@ -383,7 +383,7 @@ rec
   };
 
   # Network Firewall
-  services.opensnitch.enable = true;
+  #services.opensnitch.enable = true;
 
   security.pam.loginLimits = [
     {
