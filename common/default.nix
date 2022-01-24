@@ -174,7 +174,7 @@ rec
     lazygit # Git TUI, golang
     gitui # Git TUI, rust
     overcommit # Git hooks manager
-    tig
+    github-cli # CLI for github interactions
     git-imerge # interactive and incremental git merging utility
     git-trim
     git-cola
