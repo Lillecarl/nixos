@@ -34,7 +34,7 @@
       },
       "original": {
         "owner": "NixOS",
-        "ref": "nixos-21.11",
+        "ref": "21.11",
         "repo": "nixpkgs",
         "type": "github"
       }

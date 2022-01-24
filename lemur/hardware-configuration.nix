@@ -24,10 +24,11 @@ rec {
     powertop.enable = true;
     cpuFreqGovernor = "powersave";
     powerUpCommands = ''
-      (sleep 5; systemctl start powerTune.service) &
+      sleep 5
+      systemctl start powerTune.service
     '';
     powerDownCommands = ''
-      $(pkgs.coreutils)/bin/sync
+      #$(pkgs.coreutils)/bin/sync
       echo 1 > /proc/sys/vm/drop_caches
     '';
   };
@@ -48,7 +49,7 @@ rec {
       enable = true;
       extraPackages = with pkgs; [
         intel-media-driver # LIBVA_DRIVER_NAME=iHD
-        vaapiIntel         # LIBVA_DRIVER_NAME=i965 (older but works better for FF/Chromium)
+        vaapiIntel # LIBVA_DRIVER_NAME=i965 (older but works better for FF/Chromium)
         vaapiVdpau
         libvdpau-va-gl
       ];
@@ -133,7 +134,6 @@ rec {
     #kernelPackages = pkgs.linuxPackages_latest;
     extraModulePackages = with config.boot.kernelPackages; [
       v4l2loopback
-      evdi
       akvcam
       cryptodev
       cpupower
@@ -145,8 +145,10 @@ rec {
       usbip
     ];
     # udl was here, which is the old displaylink driver
-    kernelModules = [ "evdi" "kvm-intel" "vfio_virqfd" "vfio_pci" "vfio_iommu_type1" "vfio" ];
+    kernelModules = [ "kvm-intel" "vfio_virqfd" "vfio_pci" "vfio_iommu_type1" "vfio" ];
     kernelParams = [ "intel_iommu=on" ];
+
+    kernelPackages = with pkgs.linuxKernel.packages; linux_xanmod;
 
     kernelPatches = [
       {
