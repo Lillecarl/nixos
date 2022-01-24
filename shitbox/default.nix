@@ -3,24 +3,30 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
-
-# discord curl -sI "https://discord.com/api/download?platform=linux&format=tar.gz" | grep -oP 'location: \K\S+'
-let
-  unstablegit = import /etc/nixos/unstable { config = config.nixpkgs.config; };
-in
 {
-  nixpkgs.config.packageOverrides = pkgs: {
-    #nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
-    nur = import <nur> {
-      inherit pkgs;
-    };
-  };
   imports = [
     # Import hardware configuration
     ./hardware-configuration.nix
     # Import boot configuration 
     ./boot.nix
+    # Configuration shared between all hosts
+    ../common
   ];
+
+
+  nixpkgs = {
+    # Allow proprietary software to be installed
+    config.allowUnfree = true;
+  };
+
+  nix = {
+    package = pkgs.nixFlakes;
+    autoOptimiseStore = true;
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
+  };
+
 
   # Networking, virbr0 is WAN iface
   networking = {
@@ -36,16 +42,7 @@ in
       enable = true;
       unmanaged = [ "virbr0" "lxdbr0" ];
     };
-  };
-
-  # Set your time zone.
-  time.timeZone = "Europe/Stockholm";
-
-  # Select internationalisation properties.
-  i18n.defaultLocale = "en_US.UTF-8";
-  console = {
-    font = "Lat2-Terminus16";
-    keyMap = "us";
+    firewall.enable = false;
   };
 
   services = {
@@ -58,15 +55,6 @@ in
       layout = "us";
       # Use NVIDIA driver
       videoDrivers = [ "nvidia" ];
-    };
-    tailscale = {
-      enable = true;
-    };
-    cron = {
-      enable = true;
-      #systemCronJobs = [
-      #  "*/5 * * * * root . /etc/profile; cd /etc/nixos/nixpgs; git pull --all --force"
-      #];
     };
     ratbagd = {
       enable = true;
@@ -85,10 +73,6 @@ in
         enable = true;
       };
     };
-    # Disable CUPS printing
-    printing = {
-      enable = false;
-    };
     # Enable SSD trimming
     fstrim = {
       enable = true;
@@ -102,19 +86,6 @@ in
       pulse.enable = true;
       socketActivation = true;
     };
-    #fail2ban = {
-    #  enable = true;
-    #  ignoreIP = [
-    #    "192.168.0.0/16"
-    #    "172.16.0.0/12"
-    #    "10.0.0.0/8"
-    #  ];
-    #};
-    openssh = {
-      enable = true;
-      forwardX11 = true;
-      logLevel = "VERBOSE";
-    };
     ntp = {
       enable = true;
       servers = [
@@ -124,159 +95,51 @@ in
         "3.se.pool.ntp.org"
       ];
     };
-    flatpak = {
-      enable = true;
-    };
   };
-
-  # xdg desktop intergration (required for flatpak)
-  xdg.portal = {
-    enable = true;
-    gtkUsePortal = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-  };
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users = {
-    defaultUserShell = pkgs.zsh;
-    users = {
-      lillecarl = {
-        uid = 1000;
-        isNormalUser = true;
-        extraGroups = [
-          "wheel"
-          "networkmanager"
-          "libvirt"
-          "lxd"
-          "flatpak"
-          "kvm"
-          "nixdev"
-        ];
-        shell = pkgs.zsh;
-        createHome = true;
-      };
-    };
-    groups = {
-      nixdev = { };
-    };
-  };
-
-  nix = {
-    package = pkgs.nixUnstable;
-    extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
-    #gc = {
-    #  automatic = true;
-    #  dates = "03:00";
-    #  options = "--delete-older-than 30d";
-    #};
-    # Automatically optimse store
-    autoOptimiseStore = true;
-  };
-
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true; # Required to load the broadcom drivers
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    notepadqq
-    gist
-    jq
-    entr
-    gitui
-    element-desktop
-    cmatrix sl cowsay fortune toilet oneko
-    anydesk nix-index mpv xorg.xhost lm_sensors
-    weechat curl emacs bind arping nix-prefetch nix-prefetch-github iperf3
-    bash zsh powershell zoxide rustup
-    wget git gitAndTools.git-imerge kdiff3 xclip freerdp alacritty wezterm
-    vim neovim tmux zellij htop iotop iftop pciutils neofetch direnv
-    wineWowPackages.full
-    ncdu qemu_kvm dmidecode ksnip
-    firefox brave tridactyl-native  torbrowser nyxt libsForQt5.kruler libsForQt5.yakuake
-    gparted cmake tldr gitkraken lshw
-    thunderbird evolution-data-server evolution-ews stow
-    openvpn torsocks kgpg
-    libsForQt5.networkmanager-qt bridge-utils
-    vscode qtcreator units heroku
+    pciutils
+    qemu_kvm
+    dmidecode
+    ksnip
+    #tridactyl-native
+    lshw
+    bridge-utils
+    qtcreator
+    units
+    heroku
     libreoffice
     piper
-    rofi
-    rofimoji
-    lazygit
     syncthing
-    keychain
-    thefuck
-    oh-my-zsh
     nmap
-    obs-studio gimp gwenview okular
-    virt-manager OVMFFull numactl looking-glass-client barrier etcher
-    ark archiver libarchive
-    discord teamspeak_client qbittorrent lutris # teams
-    bitwarden pwgen kwin-tiling
-    spectre-meltdown-checker
-    phoronix-test-suite geekbench sysbench stress-ng
-    soldat-unstable unrar
-    quickemu openssl
-
-    nixpkgs-fmt
-
-    pastebinit
-
-    dbeaver dotnet-sdk_5 mono6 nodejs_latest yarn
-    gnumake cmakeWithGui
-
+    obs-studio
+    gwenview
+    okular
+    virt-manager
+    OVMFFull
+    numactl
+    looking-glass-client
+    barrier
+    etcher
+    ark
+    archiver
+    libarchive
+    discord
+    teamspeak_client
+    lutris
     appimage-run # running appimages (shadow)
-    nix-tree
-    chezmoi
-    kleopatra gpg-tui gnupg pinentry pinentry-qt pinentry-gtk2 pinentry-curses
-    # Sound packages for pipewire
-    kmix volctl
-
-    # Infra management
-    terraform ansible azure-cli
 
     # Hardware management
     smartmontools
     ddcutil # Monitor control
-
-    #nur.repos.mweinelt.cmangos_tbc
-    #nur.repos.nur-combined.stremio
   ];
 
   environment.etc = {
     "X11/xorg.conf.d/90-nvidia-i2c.conf" = {
       source = "${pkgs.ddcutil}/share/ddcutil/data/90-nvidia-i2c.conf";
     };
-  };
-
-  # Enable zsh                                                           
-  programs.zsh.enable = true;                                           
-                                                                        
-  # Enable Oh-my-zsh                                                    
-  programs.zsh.ohMyZsh = {                                              
-    enable = true;                                                      
-    plugins = [ "git" "sudo" "docker" "kubectl" ];                      
-  };
-
-  # Enable Microsoft corefonts
-  fonts.fonts = with pkgs; [
-    corefonts
-    nerdfonts
-  ];
-  # Bash autocomplete with tab
-  programs.bash.enableCompletion = true;
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  programs.mtr.enable = true;
-  # Crypto stuff
-  services.pcscd.enable = true;
-  programs.gnupg.agent = {
-     enable = true;
-     pinentryFlavor = "gtk2";
-     enableSSHSupport = true;
   };
 
   virtualisation = {
@@ -308,30 +171,7 @@ in
       zfsSupport = true;
       recommendedSysctlSettings = true;
     };
-    #anbox = {
-    #  enable = true;
-    #};
   };
-  #security.apparmor.enable = true;
-
-  services.avahi = {       
-    nssmdns = true;        
-    enable = true;         
-    ipv4 = true;           
-    ipv6 = true;           
-    publish = {            
-      enable = true;       
-      addresses = true;    
-      workstation = true;  
-    };                     
-  };
-
-  # Open ports in the firewall.
-  #networking.firewall.allowedTCPPorts = [ 22 24800 ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  networking.firewall.enable = false;
-
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
