@@ -82,6 +82,7 @@ rec
     XDG_BIN_HOME    = "\${HOME}/.local/bin";
     XDG_DATA_HOME   = "\${HOME}/.local/share";
     XDG_STATE_HOME  = "\${HOME}/.local/state";
+    NODE_HOME       = "\${HOME}/.local/node";
 
     PATH = [ 
       "\${XDG_BIN_HOME}"
