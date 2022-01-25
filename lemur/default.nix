@@ -69,6 +69,8 @@ rec
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
+  # Enable GlobalProtect VPN
+  services.globalprotect.enable = true;
   # Enable Android debugging tools
   programs.adb.enable = true;
 
@@ -106,6 +108,7 @@ rec
   };
 
   environment.systemPackages = with pkgs; [
+    globalprotect-openconnect
     # Kernel modules with userspace commands
     config.boot.kernelPackages.cpupower
     config.boot.kernelPackages.turbostat
