@@ -1,11 +1,10 @@
 {
   inputs = {
     unstable.url = github:NixOS/nixpkgs/nixos-unstable;
-    #stable.url = github:NixOS/nixpkgs/21.11;
     nixos-hardware.url = github:NixOS/nixos-hardware/master;
   };
 
-  outputs = { self, unstable, stable, nixos-hardware, ... } @inputs:
+  outputs = { self, unstable, nixos-hardware, ... } @inputs:
     let
       nixpkgsConfig = {
         config = { allowUnfree = true; };
