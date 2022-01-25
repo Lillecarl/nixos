@@ -110,6 +110,7 @@ rec
     toilet # Ascii art text
     cmatrix # Cool matrix style scrolling, really cpu intense
     tldr # Like, TL;DR manpages
+    envsubst # Templating with environment variables, commonly used with k8s
     go # Golang
     dotnet-sdk_6 # Latest dotnet
     azure-cli # Azure CLI tooling
