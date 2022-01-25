@@ -116,7 +116,8 @@ rec
     azure-cli # Azure CLI tooling
     awscli # AWS CLI tooling
     aws-nuke # Nuke AWS account completely
-    terraform # Cloud orchestrator
+    #terraform # Cloud orchestrator
+    tfswitch # Terraform version switcher
     terragrunt # Terraform Wrapper that does nice things
     youtube-dl # Download media from a lot of different websites
     zellij # discoverable terminal multiplexer written in rust
