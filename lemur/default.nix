@@ -18,7 +18,7 @@ rec
     ../common
   ];
 
-  nix.autoOptimiseStore = true;
+  nix.settings.auto-optimise-store = true;
 
   nixpkgs = {
     # Allow proprietary software to be installed

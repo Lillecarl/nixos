@@ -21,7 +21,7 @@
 
   nix = {
     package = pkgs.nixFlakes;
-    autoOptimiseStore = true;
+    settings.auto-optimise-store
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
