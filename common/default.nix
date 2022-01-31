@@ -105,6 +105,7 @@ rec
     celluloid #  MPV GTK frontend wrapper
     # Commandline tools
     bat # Cat clone with syntax highlight and git integration
+    proxychains-ng # Proxy things through SOCKS
     sl # Train riding over screen in CLI
     cowsay # Make a cow say shit
     fortune # Fortune cookies in CLI
