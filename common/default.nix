@@ -131,6 +131,7 @@ rec
     inotify-tools # CLI tools for inotify in Linux
     sshfs # Mount SFTP as filesystem
     rclone # rsync for clouds (+ loads of other cool things)
+    k2tf # Kubernetes YAML to Terraform
     kubernetes-helm # Kubernetes package manager
     kompose # Kubernetes docker-compose like tool
     (lowPrio kubectl) # Kubernetes management cli
