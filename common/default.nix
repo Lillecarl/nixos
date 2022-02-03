@@ -104,6 +104,7 @@ rec
     mpv # Media Player
     celluloid #  MPV GTK frontend wrapper
     # Commandline tools
+    starship # Shell prompt
     bat # Cat clone with syntax highlight and git integration
     proxychains-ng # Proxy things through SOCKS
     sl # Train riding over screen in CLI
