@@ -5,7 +5,8 @@
 
 {
   imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
+    [
+      (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
   boot.initrd.availableKernelModules = [
@@ -35,28 +36,31 @@
   };
 
   fileSystems."/" =
-    { device = "zroot/root";
+    {
+      device = "zroot/root";
       fsType = "zfs";
     };
 
   fileSystems."/nix" =
-    { device = "zroot/root/nix";
+    {
+      device = "zroot/root/nix";
       fsType = "zfs";
     };
 
   fileSystems."/home" =
-    { device = "zroot/root/home";
+    {
+      device = "zroot/root/home";
       fsType = "zfs";
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/7774-7A15";
+    {
+      device = "/dev/disk/by-uuid/7774-7A15";
       fsType = "vfat";
     };
 
   swapDevices =
-    [ { device = "/dev/disk/by-uuid/706e9add-3b1c-49b4-94b0-795218b393ac"; }
-    ];
+    [{ device = "/dev/disk/by-uuid/706e9add-3b1c-49b4-94b0-795218b393ac"; }];
 
   hardware.enableAllFirmware = true;
   powerManagement.cpuFreqGovernor = "performance";

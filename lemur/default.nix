@@ -15,7 +15,6 @@ rec
 {
   imports = [
     ./hardware-configuration.nix
-    ../common
   ];
 
   nix.settings.auto-optimise-store = true;

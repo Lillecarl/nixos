@@ -8,6 +8,7 @@
   outputs = { self, nixpkgs-unstable, nixpkgs-master, nixos-hardware, ... } @inputs:
     let
       system = "x86_64-linux"; # I guess this works as long as all my systems are x86_64-linux
+
       overlay-master = final: prev: {
         master = import nixpkgs-master {
           inherit system;
@@ -17,7 +18,9 @@
 
       overlayMagic = (
         { config, pkgs, ... }:
-        { nixpkgs.overlays = [ overlay-master ]; }
+        {
+          nixpkgs.overlays = [ overlay-master ];
+        }
       );
     in
     {
@@ -26,6 +29,7 @@
           system = "x86_64-linux";
           modules = [
             ./shitbox
+            ./common
             overlayMagic
             nixos-hardware.nixosModules.common-cpu-intel
             nixos-hardware.nixosModules.common-pc-ssd
@@ -35,7 +39,8 @@
         lemur = nixpkgs-unstable.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
-            ./lemur 
+            ./lemur
+            ./common
             overlayMagic
             nixos-hardware.nixosModules.common-cpu-intel
             nixos-hardware.nixosModules.common-pc-laptop

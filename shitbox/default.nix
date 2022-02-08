@@ -9,8 +9,6 @@
     ./hardware-configuration.nix
     # Import boot configuration 
     ./boot.nix
-    # Configuration shared between all hosts
-    ../common
   ];
 
 
@@ -22,7 +20,7 @@
   nix = {
     package = pkgs.nixFlakes;
     settings.auto-optimise-store
-    extraOptions = ''
+      extraOptions = ''
       experimental-features = nix-command flakes
     '';
   };
