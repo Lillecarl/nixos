@@ -315,7 +315,8 @@ rec
     catt # Chromecast CLI
     # Web browsers
     brave # Web brower, Chromium based
-    ungoogled-chromium # Chromium without Google
+    #firefox # Web browser that should be great but kinda isn't
+    #ungoogled-chromium # Chromium without Google
     nyxt # Hackable "power-browser"
     qutebrowser # Keyboard driven browser, Python and PyQt based
     # Games
