@@ -104,6 +104,7 @@ rec
     mpv # Media Player
     celluloid #  MPV GTK frontend wrapper
     # Commandline tools
+    mongodb-tools # MongoDB tools like dumping etc.
     starship # Shell prompt
     bat # Cat clone with syntax highlight and git integration
     proxychains-ng # Proxy things through SOCKS
@@ -117,7 +118,7 @@ rec
     go # Golang
     dotnet-sdk_6 # Latest dotnet
     azure-cli # Azure CLI tooling
-    awscli # AWS CLI tooling
+    awscli2 # AWS CLI tooling
     aws-nuke # Nuke AWS account completely
     #terraform # Cloud orchestrator
     tfswitch # Terraform version switcher
@@ -271,13 +272,12 @@ rec
     hardinfo # Hardware information
     # Productivity tools
     opensnitch-ui
-    obsidian # Markdown knowledge base
+    mongodb-compass # MongoDB GUI
     dbeaver # SQL database GUI
     wezterm # Crossplatform terminal emulator, supports ligatures
     bitwarden # Password manger
     rofi # Searchable window title window switcher
     rofimoji # Emoji/Char picker for rofi
-    thunderbird # Mail client
     gitkraken # Git GUI
     claws-mail # Mail client
     evolution # Mail client
@@ -315,8 +315,6 @@ rec
     catt # Chromecast CLI
     # Web browsers
     brave # Web brower, Chromium based
-    #firefox # Web browser that should be great but kinda isn't
-    #ungoogled-chromium # Chromium without Google
     nyxt # Hackable "power-browser"
     qutebrowser # Keyboard driven browser, Python and PyQt based
     # Games
