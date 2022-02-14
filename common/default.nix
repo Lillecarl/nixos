@@ -265,7 +265,7 @@ rec
     virt-manager-qt # Shitty version of virt-manager
     wireshark # Defactor network traffic sniffing tool
     ksystemlog # KDE syslog viewer
-    etcher # Balena Etcher, GUI for dd (flash SD cards)
+    #etcher # Balena Etcher, GUI for dd (flash SD cards)
     nix-bash-completions # Nix completions in bash
     nix-zsh-completions # Nix completions in ZSH
     bash-completion # Bash cli autocomplete
