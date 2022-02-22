@@ -49,6 +49,18 @@
             nixos-hardware.nixosModules.system76
           ];
         };
+        macnix = nixpkgs-unstable.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            ./macnix
+            ./common
+            overlayMagic
+            nixos-hardware.nixosModules.common-cpu-intel
+            nixos-hardware.nixosModules.common-pc-laptop
+            nixos-hardware.nixosModules.common-pc-ssd
+            nixos-hardware.nixosModules.common-pc
+          ];
+        };
       };
     };
 }

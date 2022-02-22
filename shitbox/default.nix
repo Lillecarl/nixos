@@ -98,6 +98,8 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    virt-manager # Virtualisation manager
+    virt-manager-qt # Shitty version of virt-manager
     pciutils
     qemu_kvm
     dmidecode

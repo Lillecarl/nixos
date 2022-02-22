@@ -95,7 +95,7 @@ rec
     # Chat apps
     element-desktop # Element Slack app
     teams # Microsoft Teams collaboration suite (Electron)
-    master.slack # Team collaboration chat (Electron)
+    slack # Team collaboration chat (Electron)
     discord # Gaming chat application
     zoom # Meetings application
     signal-desktop # Secure messenger
@@ -103,7 +103,8 @@ rec
     vlc # Media Player
     mpv # Media Player
     celluloid #  MPV GTK frontend wrapper
-    # Commandline tools
+    # Commandline tools (CLI)
+    xorg.xmodmap # Remapping keys in X
     mongodb-tools # MongoDB tools like dumping etc.
     starship # Shell prompt
     bat # Cat clone with syntax highlight and git integration
@@ -147,7 +148,6 @@ rec
     (lowPrio termshark) # Wireshark TUI?
     entr # Run commands when files change
     cmatrix # Just scrolling to look really cool
-    system76-firmware # System76 firmware tools
     mailutils # Sending mail from commandline 
     libnotify # Cli utils for sending KDE notifications
     vim # Modal CLI text editor
@@ -261,8 +261,6 @@ rec
     # System tools
     ark # Archiving tool
     gparted # GUI partition manager
-    virt-manager # Virtualisation manager
-    virt-manager-qt # Shitty version of virt-manager
     wireshark # Defactor network traffic sniffing tool
     ksystemlog # KDE syslog viewer
     #etcher # Balena Etcher, GUI for dd (flash SD cards)

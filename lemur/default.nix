@@ -107,7 +107,9 @@ rec
   };
 
   environment.systemPackages = with pkgs; [
-    globalprotect-openconnect
+    virt-manager # Virtualisation manager
+    virt-manager-qt # Shitty version of virt-manager
+    globalprotect-openconnect # GlobalProtect VPN for NENT
     # Kernel modules with userspace commands
     config.boot.kernelPackages.cpupower
     config.boot.kernelPackages.turbostat
