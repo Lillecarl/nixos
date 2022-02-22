@@ -15,11 +15,14 @@
   nixpkgs = {
     # Allow proprietary software to be installed
     config.allowUnfree = true;
+    config.permittedInsecurePackages = [
+      "electron-12.2.3"
+    ];
   };
 
   nix = {
     package = pkgs.nixFlakes;
-    settings.auto-optimise-store
+    settings.auto-optimise-store = true;
       extraOptions = ''
       experimental-features = nix-command flakes
     '';
