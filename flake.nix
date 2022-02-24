@@ -73,7 +73,7 @@
         ];
         inputs = {
           inherit darwin;
-          nixpkgs = nixpkgs-darwin;
+          nixpkgs = nixpkgs-unstable;
         };
       };
     };
