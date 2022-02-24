@@ -1,5 +1,26 @@
 {
   "nodes": {
+    "darwin": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs-darwin"
+        ]
+      },
+      "locked": {
+        "lastModified": 1645293039,
+        "narHash": "sha256-PwdDu+SkX8dreeuJ/4av1sEluNZdrpdXv8JsRKKg1Yc=",
+        "owner": "lnl7",
+        "repo": "nix-darwin",
+        "rev": "1df878b6f8351795a3bebfbe4fd2d02e1e8b29d6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "lnl7",
+        "ref": "master",
+        "repo": "nix-darwin",
+        "type": "github"
+      }
+    },
     "nixos-hardware": {
       "locked": {
         "lastModified": 1645346782,
@@ -13,6 +34,22 @@
         "owner": "NixOS",
         "ref": "master",
         "repo": "nixos-hardware",
+        "type": "github"
+      }
+    },
+    "nixpkgs-darwin": {
+      "locked": {
+        "lastModified": 1645635047,
+        "narHash": "sha256-4+hYwKZ9lf48Yb6PKmWERoKjvFcf9KIzWkVPiawcK/8=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "759e24c7d9169ec798107246b5117a997f27e5dc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixpkgs-21.11-darwin",
+        "repo": "nixpkgs",
         "type": "github"
       }
     },
@@ -50,7 +87,9 @@
     },
     "root": {
       "inputs": {
+        "darwin": "darwin",
         "nixos-hardware": "nixos-hardware",
+        "nixpkgs-darwin": "nixpkgs-darwin",
         "nixpkgs-master": "nixpkgs-master",
         "nixpkgs-unstable": "nixpkgs-unstable"
       }
