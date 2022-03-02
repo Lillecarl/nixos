@@ -20,8 +20,14 @@
     zellij
     chezmoi
     gitui
+    direnv
+    kubectl
+    kubectx
+    kubernetes-helm
+    tldr
     ## Packages below are broken in Nix and installed with brew
     #brave
+    #slack
     #wezterm
     #iterm2
   ];
