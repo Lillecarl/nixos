@@ -237,7 +237,7 @@ rec
     xorg.xev # Monitor Keypresses, useful when troubleshooting keylayouts
     xorg.xhost # Not sure, used for X11 socket forwarding
     xorg.xinit # Well starting x?
-    conntrack_tools # Connection tracking userspace tools
+    conntrack-tools # Connection tracking userspace tools
     iptstate # Conntrack "top like" tool
     nixos-generators # Tools for generating nixos images (AWS, Azure, ISO etc..)
     archiver # "Generic" decompression tool
