@@ -282,6 +282,7 @@ rec
     mailspring # Mail client
     libreoffice # MS office compatible productivity suite
     obs-studio # Screen recording/streaming utility
+    filezilla # Free FTP/FTPS/SFTP software
     freerdp # Remote Desktop Protocol client
     kgpg # KDE pgp tool
     copyq # Clipboard manager
@@ -348,6 +349,8 @@ rec
   programs.ssh = {
     startAgent = true;
   };
+  # Enable KDE Connect
+  programs.kdeconnect.enable = true;
   # Enable noisetorch, noise suppression for microphones using pulse/pipewire
   programs.noisetorch.enable = true;
   # Enable wireshark
