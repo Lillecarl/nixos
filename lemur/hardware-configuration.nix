@@ -33,7 +33,7 @@ rec {
     '';
   };
 
-  services.thermald.enable = true;
+  #services.thermald.enable = true;
 
   nixpkgs.config.packageOverrides = pkgs: {
     vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
