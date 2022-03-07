@@ -17,6 +17,11 @@ rec
     ./hardware-configuration.nix
   ];
 
+  services.undervolt = {
+    enable = true;
+    temp = 100;
+  };
+
   nix.settings.auto-optimise-store = true;
 
   nixpkgs = {

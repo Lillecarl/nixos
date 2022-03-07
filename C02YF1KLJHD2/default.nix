@@ -25,6 +25,13 @@
     kubectx
     kubernetes-helm
     tldr
+    ripgrep
+    powershell
+    cli53
+    unixtools.watch
+    git-open
+    git
+    pijul
     ## Packages below are broken in Nix and installed with brew
     #brave
     #slack

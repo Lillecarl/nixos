@@ -58,6 +58,7 @@ rec
   # Enable the Plasma 5 Desktop Environment.
   services.xserver.displayManager.sddm.enable = true;
   services.xserver.desktopManager.plasma5.enable = true;
+  services.xserver.desktopManager.plasma5.runUsingSystemd = true;
   # Enable touchpad support (enabled default in most desktopManager).
   services.xserver.libinput.enable = true;
   # Configure keymap in X11
@@ -89,6 +90,23 @@ rec
     ];
 
     POWERSHELL_TELEMETRY_OPTOUT = "yes";
+  };
+
+  # Firejail is used to isolate processes
+  programs.firejail = {
+    enable = true;
+    wrappedBinaries = {
+      teams_nent = {
+        executable = "${lib.getBin pkgs.teams}/bin/teams";
+        profile = "${pkgs.firejail}/etc/firejail/teams.profile";
+        extraArgs = [ "--private=~/.local/share/teams_nent" ];
+      };
+      teams_sdnit = {
+        executable = "${lib.getBin pkgs.teams}/bin/teams";
+        profile = "${pkgs.firejail}/etc/firejail/teams.profile";
+        extraArgs = [ "--private=~/.local/share/teams_sdnit" ];
+      };
+    };
   };
 
   environment.systemPackages = with pkgs; [
@@ -282,6 +300,7 @@ rec
     mailspring # Mail client
     libreoffice # MS office compatible productivity suite
     obs-studio # Screen recording/streaming utility
+    filezilla # Free FTP/FTPS/SFTP software
     freerdp # Remote Desktop Protocol client
     kgpg # KDE pgp tool
     copyq # Clipboard manager
@@ -345,9 +364,9 @@ rec
   };
 
   # Enable SSH agent
-  programs.ssh = {
-    startAgent = true;
-  };
+  programs.ssh.startAgent = true;
+  # Enable KDE Connect
+  programs.kdeconnect.enable = true;
   # Enable noisetorch, noise suppression for microphones using pulse/pipewire
   programs.noisetorch.enable = true;
   # Enable wireshark
