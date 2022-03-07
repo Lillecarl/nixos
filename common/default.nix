@@ -372,6 +372,9 @@ rec
   # started in user sessions.
   programs.mtr.enable = true;
 
+  # Enable KDE connect on all Linux machines
+  programs.kdeconnect.enable = true;
+
   # Local network autodiscovery services
   # required for chromecasting to work
   services.avahi = {
