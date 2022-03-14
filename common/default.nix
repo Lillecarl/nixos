@@ -122,6 +122,8 @@ rec
     mpv # Media Player
     celluloid #  MPV GTK frontend wrapper
     # Commandline tools (CLI)
+    asciinema # Terminal session recorder
+    asciinema-scenario # Make video from a text file
     xorg.xmodmap # Remapping keys in X
     mongodb-tools # MongoDB tools like dumping etc.
     starship # Shell prompt
@@ -290,6 +292,7 @@ rec
     opensnitch-ui
     mongodb-compass # MongoDB GUI
     dbeaver # SQL database GUI
+    #pgadmin # SQL database GUI
     wezterm # Crossplatform terminal emulator, supports ligatures
     bitwarden # Password manger
     rofi # Searchable window title window switcher
@@ -318,6 +321,8 @@ rec
     libsForQt5.kcolorpicker # Color Picker for Qt/KDE
     colorpicker # Just a color picker
     # Misc
+    xdg-desktop-portal-kde # KDE portal (portals seem to be a Flatpak thing)
+    plasma-browser-integration # KDE browser integration
     scrcpy # Print-screen tool
     wineWowPackages.full # Win32 API compability layer for Linux
     bottles # Wine prefix manager (Tool to make installing Windows apps easier)
