@@ -1,3 +1,5 @@
 nixpkgs
 unstable
 result
+.pijul
+.ignore
