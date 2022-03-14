@@ -210,6 +210,7 @@ rec
     gitui # Git TUI, rust
     overcommit # Git hooks manager
     github-cli # CLI for github interactions
+    git-open # Open repo with browser in $sourcecontrol website
     git-imerge # interactive and incremental git merging utility
     git-trim
     git-cola
