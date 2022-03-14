@@ -34,6 +34,7 @@
           modules = [
             ./shitbox
             ./common
+            ./common/flatpak.nix
             overlayMagic
             nixos-hardware.nixosModules.common-cpu-intel
             nixos-hardware.nixosModules.common-pc-ssd
