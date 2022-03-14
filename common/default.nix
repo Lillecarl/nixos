@@ -313,7 +313,7 @@ rec
     notepadqq # Notepad++ "clone" for Linux
     geany # Supposed to be like Notepad++
     ghostwriter # Markdown editor
-    teamviewer # Remote Desktop Solution
+    #teamviewer # Remote Desktop Solution
     audacity # Audio software
     qtractor # Audio software
     qbittorrent # OpenSource Qt Bittorrent client
