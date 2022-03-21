@@ -118,7 +118,6 @@ rec
     zoom # Meetings application
     signal-desktop # Secure messenger
     # Media apps
-    vlc # Media Player
     mpv # Media Player
     celluloid #  MPV GTK frontend wrapper
     # Commandline tools (CLI)
@@ -127,6 +126,7 @@ rec
     xorg.xmodmap # Remapping keys in X
     mongodb-tools # MongoDB tools like dumping etc.
     starship # Shell prompt
+    mcfly # Improved shell history
     bat # Cat clone with syntax highlight and git integration
     proxychains-ng # Proxy things through SOCKS
     sl # Train riding over screen in CLI
@@ -290,6 +290,7 @@ rec
     bash-completion # Bash cli autocomplete
     hardinfo # Hardware information
     # Productivity tools
+    tigervnc # VNC client
     opensnitch-ui
     mongodb-compass # MongoDB GUI
     dbeaver # SQL database GUI
