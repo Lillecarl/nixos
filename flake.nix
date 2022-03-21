@@ -71,6 +71,7 @@
         system = "x86_64-darwin";
         modules = [
           ./C02YF1KLJHD2
+          ./common/xplatform.nix
         ];
         inputs = {
           inherit darwin;
