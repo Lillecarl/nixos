@@ -35,6 +35,7 @@
             ./shitbox
             ./common
             ./common/flatpak.nix
+            ./common/killservice.nix
             overlayMagic
             nixos-hardware.nixosModules.common-cpu-intel
             nixos-hardware.nixosModules.common-pc-ssd
@@ -46,6 +47,7 @@
           modules = [
             ./lemur
             ./common
+            ./common/killservice.nix
             overlayMagic
             nixos-hardware.nixosModules.common-cpu-intel
             nixos-hardware.nixosModules.common-pc-laptop

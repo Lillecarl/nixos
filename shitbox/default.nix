@@ -11,24 +11,6 @@
     ./boot.nix
   ];
 
-  # Kills KDE if it hangs on shutdown
-  systemd.services.KWinKill = {
-    wantedBy = [ "multi-user.target" ];
-
-    script = "${pkgs.bashInteractive}/bin/sh -c \"true\"";
-    preStop = "${pkgs.procps}/bin/pkill -KILL kwin_x11";
-
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-    };
-
-    stopIfChanged = false;
-    restartIfChanged = false;
-    reloadIfChanged = false;
-  };
-
-
   nixpkgs = {
     # Allow proprietary software to be installed
     config.allowUnfree = true;
