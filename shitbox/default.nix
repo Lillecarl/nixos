@@ -45,6 +45,8 @@
     firewall.enable = false;
   };
 
+  hardware.opengl.enable = true;
+  hardware.opengl.driSupport32Bit = true;
   services = {
     xserver = {
       # Enable the Plasma 5 Desktop Environment.
@@ -100,6 +102,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    gnome3.adwaita-icon-theme # Lutris icons
     virt-manager # Virtualisation manager
     virt-manager-qt # Shitty version of virt-manager
     pciutils
