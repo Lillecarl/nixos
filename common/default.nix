@@ -122,6 +122,8 @@ rec
     mpv # Media Player
     celluloid #  MPV GTK frontend wrapper
     # Commandline tools (CLI)
+    distrobuilder # Build other distros
+    x11docker # Run GUI applications with docker
     asciinema # Terminal session recorder
     asciinema-scenario # Make video from a text file
     xorg.xmodmap # Remapping keys in X
@@ -290,6 +292,7 @@ rec
     bash-completion # Bash cli autocomplete
     hardinfo # Hardware information
     # Productivity tools
+    tigervnc # VNC client
     opensnitch-ui
     mongodb-compass # MongoDB GUI
     dbeaver # SQL database GUI
@@ -468,6 +471,4 @@ rec
     pulse.enable = true;
     socketActivation = true;
   };
-
-
 }
