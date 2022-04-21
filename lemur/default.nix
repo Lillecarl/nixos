@@ -71,8 +71,8 @@ rec
     #networking.firewall.enable = false;
   };
 
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
+  # CUPS for printing documents.
+  services.printing.enable = false;
   # Enable GlobalProtect VPN
   services.globalprotect.enable = true;
   # Enable Android debugging tools
