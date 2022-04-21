@@ -137,6 +137,7 @@ rec
     toilet # Ascii art text
     cmatrix # Cool matrix style scrolling, really cpu intense
     tldr # Like, TL;DR manpages
+    xprintidle-ng # print idle time
     envsubst # Templating with environment variables, commonly used with k8s
     go # Golang
     dotnet-sdk_6 # Latest dotnet
@@ -341,6 +342,7 @@ rec
     catt # Chromecast CLI
     # Web browsers
     brave # Web brower, Chromium based
+    google-chrome # Only use this when websites are stupid
     nyxt # Hackable "power-browser"
     qutebrowser # Keyboard driven browser, Python and PyQt based
     # Games
