@@ -47,6 +47,7 @@
           modules = [
             ./lemur
             ./common
+            ./common/flatpak.nix
             ./common/killservice.nix
             overlayMagic
             nixos-hardware.nixosModules.common-cpu-intel
