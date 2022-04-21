@@ -34,6 +34,11 @@ rec
     ];
   };
 
+  # Give applications 15 seconds to shut down when shutting down the computer
+  systemd.extraConfig = ''
+    DefaultTimeoutStopSec=15s
+  '';
+
   # Set your time zone.
   time.timeZone = "Europe/Stockholm";
 
@@ -439,6 +444,16 @@ rec
         commands = [
           {
             command = "${pkgs.htop}/bin/htop --readonly";
+            options = [ "NOPASSWD" ];
+          }
+        ];
+      }
+      {
+        # Allow running htop --readonly as sudoer without password
+        users = [ "lillecarl" ];
+        commands = [
+          {
+            command = "${pkgs.htop}/bin/ddcutil";
             options = [ "NOPASSWD" ];
           }
         ];
