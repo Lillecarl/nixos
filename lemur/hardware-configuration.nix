@@ -118,7 +118,7 @@ rec {
     # initrd = initial ramdisk.
     initrd = {
       # RAID configuration, can be exported with "sudo mdadm --scan --export" 
-      mdadmConf = ''
+      services.swraid.mdadmConf = ''
         ARRAY /dev/md/1337 level=raid1 num-devices=2 metadata=1.2 name=nixos:1337 UUID=aec75f01:8035340e:0689cd7a:7e344342
            devices=/dev/nvme0n1p2,/dev/nvme1n1p2
       '';
