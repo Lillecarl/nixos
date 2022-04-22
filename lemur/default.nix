@@ -63,12 +63,6 @@ rec
     #    ];
     #  };
     #};
-
-    # Open ports in the firewall.
-    #networking.firewall.allowedTCPPorts = [ ... ];
-    #networking.firewall.allowedUDPPorts = [ ... ];
-    # Or disable the firewall altogether.
-    #networking.firewall.enable = false;
   };
 
   # CUPS for printing documents.
@@ -130,7 +124,7 @@ rec
   # };
   systemd = {
     network = {
-      enable = true;
+      enable = false;
       #networks."vpn" = {
       #  enable = true;
       #  vrf = [ "vpnvrf" ];
