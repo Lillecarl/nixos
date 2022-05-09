@@ -148,8 +148,7 @@ rec {
     kernelModules = [ "kvm-intel" "vfio_virqfd" "vfio_pci" "vfio_iommu_type1" "vfio" ];
     kernelParams = [ "intel_iommu=on" ];
 
-    #kernelPackages = with pkgs.linuxKernel.packages; linux_xanmod;
-    kernelPackages = with pkgs.linuxKernel.packages; linux_5_16;
+    kernelPackages = with pkgs.linuxKernel.packages; linux_xanmod_latest;
   };
 
   # Root BTRFS filesystem, let's hope ZFS implements support for hibernation soon!
