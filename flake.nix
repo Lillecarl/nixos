@@ -49,6 +49,7 @@
             ./common
             ./common/flatpak.nix
             ./common/killservice.nix
+            ./common/xplatform.nix
             overlayMagic
             nixos-hardware.nixosModules.common-cpu-intel
             nixos-hardware.nixosModules.common-pc-laptop
