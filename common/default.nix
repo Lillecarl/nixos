@@ -39,6 +39,9 @@ rec
     DefaultTimeoutStopSec=15s
   '';
 
+  # Tailscale exit-node & subnet routing fix (asym routing)
+  networking.firewall.checkReversePath = "loose";
+
   # Set your time zone.
   time.timeZone = "Europe/Stockholm";
 
