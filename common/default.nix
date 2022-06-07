@@ -305,7 +305,7 @@ rec
     opensnitch-ui
     mongodb-compass # MongoDB GUI
     dbeaver # SQL database GUI
-    #pgadmin # SQL database GUI
+    pgadmin4 # SQL database GUI
     wezterm # Crossplatform terminal emulator, supports ligatures
     bitwarden # Password manger
     rofi # Searchable window title window switcher
