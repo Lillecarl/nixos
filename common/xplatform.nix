@@ -14,6 +14,7 @@
     kubernetes-helm # Kubernetes package manager
     kustomize # Kubernetes YAML configurations
     octant # Kubernetes GUI
+    rancher # Rancher CLI
     tldr # tldr manpages
     ripgrep # Nice grep
     powershell # scripting shell from MS
@@ -30,6 +31,7 @@
     gource # VCS repo history visualizer
     jq # JSON CLI Tool
     yq # YAML CLI Tool
+    jless # JSON TUI browser
     thefuck # Command fixing tool
   ];
    
