@@ -108,7 +108,9 @@ rec
   environment.systemPackages = with pkgs; [
     virt-manager # Virtualisation manager
     virt-manager-qt # Shitty version of virt-manager
+    kde-gtk-config # KDE GTK Stuff (https://nixos.wiki/wiki/KDE)
     globalprotect-openconnect # GlobalProtect VPN for NENT
+    qpaeq # Pulse Equalizer
     # Kernel modules with userspace commands
     config.boot.kernelPackages.cpupower
     config.boot.kernelPackages.turbostat
@@ -117,6 +119,11 @@ rec
     config.boot.kernelPackages.system76-acpi
     config.boot.kernelPackages.usbip
   ];
+
+  environment.shellInit = ''
+    export GTK_PATH=$GTK_PATH:${pkgs.libsForQt5.breeze-gtk}/lib/gtk-2.0
+    export GTK2_RC_FILES=$GTK2_RC_FILES:${pkgs.libsForQt5.breeze-gtk}/share/themes/breeze-gtk/gtk-2.0/gtkrc
+  '';
 
   # programs.gnupg.agent = {
   #   enable = true;
