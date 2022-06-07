@@ -148,6 +148,7 @@ rec
 
     # Disable the default NixOS mdadm monitor as it doesn't work at all
     services.mdmonitor.enable = false;
+    services.NetworkManager-wait-online.enable = false;
 
     # upower systemd service
     services.upower.enable = true;
@@ -316,4 +317,3 @@ rec
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "21.05"; # Did you read the comment?
 }
-
