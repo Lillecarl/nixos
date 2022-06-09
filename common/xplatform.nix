@@ -16,6 +16,7 @@
     octant # Kubernetes GUI
     rancher # Rancher CLI
     tldr # tldr manpages
+    cheat # tldr alternative
     ripgrep # Nice grep
     powershell # scripting shell from MS
     cli53 # Route53 CLI
