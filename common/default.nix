@@ -171,13 +171,18 @@ rec
     (lowPrio kubectl) # Kubernetes management cli
     kubectx # Kube switcher
     kubernetes # Kubernetes packages
+    krew # kubectl plugin manager
+    exa # cat replacement
+    sipcalc # Subnet calculator
     buildah
     bind # brings the dig command
     whois # whois command
     xortool # xor key bruteforcing tool
     (lowPrio wireshark-cli) # Wireshark CLI
     (lowPrio termshark) # Wireshark TUI?
+    libguestfs-with-appliance # Mount qcow2
     entr # Run commands when files change
+    pv # Monitor pipe progress
     cmatrix # Just scrolling to look really cool
     mailutils # Sending mail from commandline 
     libnotify # Cli utils for sending KDE notifications
@@ -226,6 +231,7 @@ rec
     git-trim
     git-cola
     git-fire # Save your code, then your life
+    bfg-repo-cleaner # Clean repos that are huge
     alacritty # Fast crossplatform terminal emulator
     xclip # | "xclip -sel clip" is what you want
     ansible # Server automation tool
