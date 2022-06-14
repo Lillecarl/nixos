@@ -22,6 +22,8 @@ rec
     temp = 100;
   };
 
+  services.gnome.gnome-keyring.enable = true;
+
   nix.settings.auto-optimise-store = true;
 
   nixpkgs = {
@@ -108,6 +110,7 @@ rec
   environment.systemPackages = with pkgs; [
     virt-manager # Virtualisation manager
     virt-manager-qt # Shitty version of virt-manager
+    openstackclient # OpenStack CLI client
     kde-gtk-config # KDE GTK Stuff (https://nixos.wiki/wiki/KDE)
     globalprotect-openconnect # GlobalProtect VPN for NENT
     qpaeq # Pulse Equalizer
