@@ -1,4 +1,30 @@
 { config, pkgs, lib, ... }:
+let
+  mach-nix = import (builtins.fetchGit {
+    url = "https://github.com/DavHau/mach-nix/";
+    rev = "7e14360bde07dcae32e5e24f366c83272f52923f";
+  }) {
+    pkgs = pkgs;
+  };
+
+  pyenv = mach-nix.mkPython {
+    requirements = ''
+      xonsh-direnv
+      xontrib-sh
+      xxh-xxh
+    '';
+  };
+
+  xonshrc = pkgs.writeText "xonshrc" ''
+    $PROMPT = '{BOLD_GREEN}{user}@{hostname}{BOLD_BLUE} {cwd}{NO_COLOR}> '
+    $XONSH_COLOR_STYLE = 'rrt'
+    xontrib load sh
+  '';
+
+  xonsh_with_plugins = pkgs.xonsh.overrideAttrs (old: {
+    propagatedBuildInputs = old.propagatedBuildInputs ++ pyenv.python.pkgs.selectPkgs pyenv.python.pkgs;
+  });
+in
 rec
 {
   # Allow root to map to LilleCarl user in LXD container
@@ -305,6 +331,7 @@ rec
     nix-bash-completions # Nix completions in bash
     nix-zsh-completions # Nix completions in ZSH
     bash-completion # Bash cli autocomplete
+    xonsh_with_plugins # xonsh python+bash shell
     hardinfo # Hardware information
     # Productivity tools
     tigervnc # VNC client
@@ -401,6 +428,8 @@ rec
     enable = true;
     pinentryFlavor = "qt";
   };
+  # Enable xonsh
+  #programs.xonsh.enable = true;
   # Enable zsh
   programs.zsh.enable = true;
   # Bash autocomplete
