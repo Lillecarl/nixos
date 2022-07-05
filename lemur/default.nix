@@ -158,7 +158,6 @@ rec
 
     # Disable the default NixOS mdadm monitor as it doesn't work at all
     services.mdmonitor.enable = false;
-    services.NetworkManager-wait-online.enable = false;
 
     # upower systemd service
     services.upower.enable = true;

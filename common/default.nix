@@ -103,6 +103,9 @@ rec
   '';
   # Replace caps-lock with caps
   services.xserver.xkbOptions = "esc:swapcaps";
+  # Disable network-manager wait-online service that prohibits nixos-rebuild
+  services.NetworkManager-wait-online.enable = false;
+
 
   # Use hack font in tty, use xserver keymap
   console = {
