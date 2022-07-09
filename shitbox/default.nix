@@ -158,7 +158,7 @@
         package = pkgs.qemu_kvm;
         ovmf = {
           enable = true;
-          packages = [ pkgs.OVMFFull ];
+          packages = [ pkgs.OVMFFull.fd pkgs.OVMFFull ];
         };
 
         swtpm = {
