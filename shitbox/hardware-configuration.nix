@@ -10,26 +10,35 @@
     ];
 
   boot.initrd.availableKernelModules = [
-    "ehci_pci"
-    "ahci"
-    "xhci_pci"
-    "usbhid"
-    "usb_storage"
-    "sd_mod"
-    "e1000e"
-    "r8169"
-    "bcma"
+    "vfio-pci"
+    "amdgpu"
   ];
-  #boot.initrd.kernelModules = [ "e1000e" "r8169" "bcma" ];
-  boot.extraModprobeConfig = "options vfio-pci ids=1002:67b1,1002:aac8";
-  boot.blacklistedKernelModules = [ "amdgpu" "radeon" ];
+  boot.initrd.kernelModules = [ "amdgpu" "vfio-pci" ];
+  boot.extraModprobeConfig = "options vfio-pci ids=10de:2487,10de:228b";
+  boot.blacklistedKernelModules = [ "nvidiafb" "nouveau" "nvidia_drm" "nvidia" ];
   boot.kernelPackages = with pkgs.linuxKernel.packages; linux_xanmod;
-  boot.kernelModules = [ "kvm-intel" "wl" "vfio_virqfd" "vfio_pci" "vfio_iommu_type1" "vfio" "i2c-dev" ];
-  boot.kernelParams = [ "amd_iommu=on" "intel_iommu=on" "mitigations=off" "kvm.nx_huge_pages=off" ];
+  boot.kernelModules = [ "amdgpu" "kvm-amd" "wl" "vfio_virqfd" "vfio_pci" "vfio_iommu_type1" "vfio" "i2c-dev" ];
+  boot.kernelParams = [ "amd_iommu=on" "mitigations=off" "iommu=pt" "radeon.cik_support=0" "amdgpu.cik_support=1" ];
 
-  boot.extraModulePackages = with config.boot.kernelPackages; [
-    usbip
-  ];
+  #boot.extraModulePackages = with config.boot.kernelPackages; [
+  #  usbip
+  #];
+
+  boot.postBootCommands = ''
+    modprobe -r nvidiafb
+    modprobe -r nouveau
+
+    echo 0 > /sys/class/vtconsole/vtcon0/bind
+    echo 0 > /sys/class/vtconsole/vtcon1/bind
+    echo efi-framebuffer.0 > /sys/bus/platform/drivers/efi-framebuffer/unbind
+
+    DEVS="0000:08:00.0 0000:08:00.1"
+  
+    for DEV in $DEVS; do
+      echo "vfio-pci" > /sys/bus/pci/devices/$DEV/driver_override
+    done
+    modprobe -i vfio-pci
+  '';
 
   boot.kernel.sysctl = {
     "vm.swappiness" = 1;
@@ -63,5 +72,6 @@
     [{ device = "/dev/disk/by-uuid/706e9add-3b1c-49b4-94b0-795218b393ac"; }];
 
   hardware.enableAllFirmware = true;
+  hardware.cpu.amd.updateMicrocode = true;
   powerManagement.cpuFreqGovernor = "performance";
 }

@@ -47,6 +47,15 @@
 
   hardware.opengl.enable = true;
   hardware.opengl.driSupport32Bit = true;
+  hardware.opengl.extraPackages = with pkgs; [
+   rocm-opencl-icd
+   rocm-opencl-runtime
+   amdvlk
+  ];
+  hardware.opengl.extraPackages32 = with pkgs; [
+    driversi686Linux.amdvlk
+  ];
+
   services = {
     xserver = {
       # Enable the Plasma 5 Desktop Environment.
@@ -55,8 +64,8 @@
       desktopManager.plasma5.enable = true;
       # Keyboard layout
       layout = "us";
-      # Use NVIDIA driver
-      videoDrivers = [ "nvidia" ];
+      # Use AMD driver
+      videoDrivers = [ "amdgpu" ];
     };
     ratbagd = {
       enable = true;
@@ -141,11 +150,11 @@
     ddcutil # Monitor control
   ];
 
-  environment.etc = {
-    "X11/xorg.conf.d/90-nvidia-i2c.conf" = {
-      source = "${pkgs.ddcutil}/share/ddcutil/data/90-nvidia-i2c.conf";
-    };
-  };
+  #environment.etc = {
+  #  "X11/xorg.conf.d/90-nvidia-i2c.conf" = {
+  #    source = "${pkgs.ddcutil}/share/ddcutil/data/90-nvidia-i2c.conf";
+  #  };
+  #};
 
   virtualisation = {
     libvirtd = {

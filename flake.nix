@@ -37,7 +37,7 @@
             ./common/flatpak.nix
             ./common/killservice.nix
             overlayMagic
-            nixos-hardware.nixosModules.common-cpu-intel
+            nixos-hardware.nixosModules.common-cpu-amd
             nixos-hardware.nixosModules.common-pc-ssd
             nixos-hardware.nixosModules.common-pc
           ];
