@@ -379,7 +379,8 @@ rec
     xdg-desktop-portal-kde # KDE portal (portals seem to be a Flatpak thing)
     plasma-browser-integration # KDE browser integration
     scrcpy # Print-screen tool
-    wineWowPackages.full # Win32 API compability layer for Linux
+    winePackages.wayland # Win32 API compability layer for Linux
+    wine64Packages.wayland # Win32 API compability layer for Linux
     bottles # Wine prefix manager (Tool to make installing Windows apps easier)
     krita # KDE alternative to GIMP
     gimp # Photoshop alternative
