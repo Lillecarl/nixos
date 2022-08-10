@@ -2,8 +2,6 @@
 
 {
   boot = {
-    # 2021/07/09 latest kernel doesn't build with Nvidia, nvidia fuck you
-    # kernelPackages = pkgs.linuxPackages_latest;
     #kernelPackages = pkgs.linuxPackages_latest;
     # required for ZFS to build
     zfs.enableUnstable = true;
@@ -12,7 +10,7 @@
     # Use the systemd-boot EFI boot loader.
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
-    initrd.availableKernelModules = [ "e1000e" "bcma" "r8169" ];
+    #initrd.availableKernelModules = [ "e1000e" "bcma" "r8169" ];
     initrd.network = {
       # This will use udhcp to get an ip address.
       # Make sure you have added the kernel module for your network driver to `boot.initrd.availableKernelModules`, 
