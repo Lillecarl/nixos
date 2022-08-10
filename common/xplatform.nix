@@ -9,6 +9,7 @@
     chezmoi # Dotfile manager
     gitui # Git TUI
     direnv # Env vars from directories
+    #vmctl # Cert-manager CLI
     kubectl # Kubernetes admin tool
     kubectx # Kubernetes session helper
     kubernetes-helm # Kubernetes package manager

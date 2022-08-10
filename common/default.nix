@@ -11,6 +11,7 @@ let
     requirements = ''
       xonsh-direnv
       xontrib-sh
+      #xontrib-prompt-starship
       xxh-xxh
     '';
   };
@@ -19,6 +20,7 @@ let
     $PROMPT = '{BOLD_GREEN}{user}@{hostname}{BOLD_BLUE} {cwd}{NO_COLOR}> '
     $XONSH_COLOR_STYLE = 'rrt'
     xontrib load sh
+    $VI_MODE = True
   '';
 
   xonsh_with_plugins = pkgs.xonsh.overrideAttrs (old: {
@@ -154,9 +156,12 @@ rec
     discord # Gaming chat application
     zoom # Meetings application
     signal-desktop # Secure messenger
+
     # Media apps
     mpv # Media Player
     celluloid #  MPV GTK frontend wrapper
+    #vlc # VLC sucks in comparision to MPV
+
     # Commandline tools (CLI)
     distrobuilder # Build other distros
     x11docker # Run GUI applications with docker
@@ -195,12 +200,15 @@ rec
     sshfs # Mount SFTP as filesystem
     rclone # rsync for clouds (+ loads of other cool things)
     k2tf # Kubernetes YAML to Terraform
+    tfk8s # Kubernetes YAML to Terraform
     kubernetes-helm # Kubernetes package manager
     kompose # Kubernetes docker-compose like tool
     (lowPrio kubectl) # Kubernetes management cli
     kubectx # Kube switcher
     kubernetes # Kubernetes packages
+    cmctl # cert-manager CLI
     krew # kubectl plugin manager
+    operator-sdk # Kubernetes Operator Lifecycle Management(OLM) SDK
     exa # cat replacement
     sipcalc # Subnet calculator
     buildah # Build OCI images
@@ -273,6 +281,7 @@ rec
     file # Show information about files
     jq # CLI JSON utility, piping JSON here will always pretty-print it
     yq # CLI YAML utility, useful for those that thing YAML is a bit shit
+    gron # Flatten JSON to make it easy to grep
     desktop-file-utils # Required for VS Code live share
     powershell # Microsofts shell implementation
     ncdu # NCurses Disk Utility (TUI way of finding big files and folders)
@@ -317,16 +326,18 @@ rec
     fsql # Query the filesystem with SQL
     pstree # Show process tree as a tree
     gist # Tool to post files to gist.github.com straight away
+
     # Programming tools
     vscode # Programming editor, growing into an IDE
     kdiff3 # Well know diffing tool
     ruby # Ruby programming language
-    python3 # Language interpreter
-    python39Packages.boto3 # AWS Python library
+    #python3 # Language interpreter
+    #python39Packages.boto3 # AWS Python library
     nodejs # Javascript with OS access
     #gnumake # GNU make
     #clang # Cool modular C/C++ compiler
     #(lowPrio gcc) # Old but gold C/C++ and others compiler
+
     # System tools
     ark # Archiving tool
     gparted # GUI partition manager
@@ -338,12 +349,14 @@ rec
     bash-completion # Bash cli autocomplete
     #xonsh_with_plugins # xonsh python+bash shell
     hardinfo # Hardware information
+    debootstrap # Bootstrap Debian based (deb package manager) Linux distros
+
     # Productivity tools
     tigervnc # VNC client
-    opensnitch-ui
+    #opensnitch-ui
     mongodb-compass # MongoDB GUI
     dbeaver # SQL database GUI
-    pgadmin4 # SQL database GUI
+    #pgadmin4 # SQL database GUI
     wezterm # Crossplatform terminal emulator, supports ligatures
     bitwarden # Password manger
     rofi # Searchable window title window switcher
@@ -371,11 +384,13 @@ rec
     okular # PDF viewer
     libsForQt5.kcolorpicker # Color Picker for Qt/KDE
     colorpicker # Just a color picker
+
     # Misc
     xdg-desktop-portal-kde # KDE portal (portals seem to be a Flatpak thing)
     plasma-browser-integration # KDE browser integration
     scrcpy # Print-screen tool
-    wineWowPackages.full # Win32 API compability layer for Linux
+    winePackages.wayland # Win32 API compability layer for Linux
+    wine64Packages.wayland # Win32 API compability layer for Linux
     bottles # Wine prefix manager (Tool to make installing Windows apps easier)
     krita # KDE alternative to GIMP
     gimp # Photoshop alternative
@@ -386,11 +401,14 @@ rec
     go-chromecast # Chromecast CLI
     castnow # Chromecast CLI
     catt # Chromecast CLI
+
     # Web browsers
     brave # Web brower, Chromium based
+    firefox # The browser I'd love to use
     google-chrome # Only use this when websites are stupid
     nyxt # Hackable "power-browser"
     qutebrowser # Keyboard driven browser, Python and PyQt based
+
     # Games
     superTuxKart # Kart game with Tux
   ];
