@@ -203,7 +203,8 @@ rec
     krew # kubectl plugin manager
     exa # cat replacement
     sipcalc # Subnet calculator
-    buildah
+    buildah # Build OCI images
+    debootstrap # Create Debian system in a chroot/systemd-nspawn
     bind # brings the dig command
     whois # whois command
     xortool # xor key bruteforcing tool
@@ -227,7 +228,8 @@ rec
     lsof # Check who uses file
     ripgrep # Rust grep implmenetation, not POSIX compliant
     wget # Fetch things quicly with HTTP
-    gnufdisk # CLI partition management
+    gnufdisk # CLI partition management (MBR)
+    gptfdisk # CLI partition management (GPT)
     efitools # Tools for managing EFI, variables and such
     curl # All things HTTP and other web transfer protocols
     tmux # terminal multiplexer
@@ -334,7 +336,7 @@ rec
     nix-bash-completions # Nix completions in bash
     nix-zsh-completions # Nix completions in ZSH
     bash-completion # Bash cli autocomplete
-    xonsh_with_plugins # xonsh python+bash shell
+    #xonsh_with_plugins # xonsh python+bash shell
     hardinfo # Hardware information
     # Productivity tools
     tigervnc # VNC client
