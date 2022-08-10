@@ -156,9 +156,12 @@ rec
     discord # Gaming chat application
     zoom # Meetings application
     signal-desktop # Secure messenger
+
     # Media apps
     mpv # Media Player
     celluloid #  MPV GTK frontend wrapper
+    #vlc # VLC sucks in comparision to MPV
+
     # Commandline tools (CLI)
     distrobuilder # Build other distros
     x11docker # Run GUI applications with docker
@@ -321,6 +324,7 @@ rec
     fsql # Query the filesystem with SQL
     pstree # Show process tree as a tree
     gist # Tool to post files to gist.github.com straight away
+
     # Programming tools
     vscode # Programming editor, growing into an IDE
     kdiff3 # Well know diffing tool
@@ -331,6 +335,7 @@ rec
     #gnumake # GNU make
     #clang # Cool modular C/C++ compiler
     #(lowPrio gcc) # Old but gold C/C++ and others compiler
+
     # System tools
     ark # Archiving tool
     gparted # GUI partition manager
@@ -342,6 +347,8 @@ rec
     bash-completion # Bash cli autocomplete
     #xonsh_with_plugins # xonsh python+bash shell
     hardinfo # Hardware information
+    debootstrap # Bootstrap Debian based (deb package manager) Linux distros
+
     # Productivity tools
     tigervnc # VNC client
     #opensnitch-ui
@@ -375,6 +382,7 @@ rec
     okular # PDF viewer
     libsForQt5.kcolorpicker # Color Picker for Qt/KDE
     colorpicker # Just a color picker
+
     # Misc
     xdg-desktop-portal-kde # KDE portal (portals seem to be a Flatpak thing)
     plasma-browser-integration # KDE browser integration
@@ -391,11 +399,14 @@ rec
     go-chromecast # Chromecast CLI
     castnow # Chromecast CLI
     catt # Chromecast CLI
+
     # Web browsers
     brave # Web brower, Chromium based
+    firefox # The browser I'd love to use
     google-chrome # Only use this when websites are stupid
     nyxt # Hackable "power-browser"
     qutebrowser # Keyboard driven browser, Python and PyQt based
+
     # Games
     superTuxKart # Kart game with Tux
   ];
