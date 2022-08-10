@@ -47,6 +47,7 @@ rec
       ${kubeMasterIP} ${kubeMasterHostname}
       100.95.25.107 shitbox
       100.120.205.93 lemur
+      192.168.122.107 rancher.lillecarl.com
     '';
 
     #wireguard = {
@@ -110,10 +111,12 @@ rec
   environment.systemPackages = with pkgs; [
     virt-manager # Virtualisation manager
     virt-manager-qt # Shitty version of virt-manager
+    distrobox # Run different distros on your machine
     openstackclient # OpenStack CLI client
     kde-gtk-config # KDE GTK Stuff (https://nixos.wiki/wiki/KDE)
     globalprotect-openconnect # GlobalProtect VPN for NENT
     qpaeq # Pulse Equalizer
+    gcc11 # GNU Compiler Collection
     # Kernel modules with userspace commands
     config.boot.kernelPackages.cpupower
     config.boot.kernelPackages.turbostat
@@ -327,3 +330,4 @@ rec
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "21.05"; # Did you read the comment?
 }
+

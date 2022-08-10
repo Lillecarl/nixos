@@ -11,6 +11,7 @@ let
     requirements = ''
       xonsh-direnv
       xontrib-sh
+      #xontrib-prompt-starship
       xxh-xxh
     '';
   };
@@ -19,6 +20,7 @@ let
     $PROMPT = '{BOLD_GREEN}{user}@{hostname}{BOLD_BLUE} {cwd}{NO_COLOR}> '
     $XONSH_COLOR_STYLE = 'rrt'
     xontrib load sh
+    $VI_MODE = True
   '';
 
   xonsh_with_plugins = pkgs.xonsh.overrideAttrs (old: {
@@ -192,12 +194,15 @@ rec
     sshfs # Mount SFTP as filesystem
     rclone # rsync for clouds (+ loads of other cool things)
     k2tf # Kubernetes YAML to Terraform
+    tfk8s # Kubernetes YAML to Terraform
     kubernetes-helm # Kubernetes package manager
     kompose # Kubernetes docker-compose like tool
     (lowPrio kubectl) # Kubernetes management cli
     kubectx # Kube switcher
     kubernetes # Kubernetes packages
+    cmctl # cert-manager CLI
     krew # kubectl plugin manager
+    operator-sdk # Kubernetes Operator Lifecycle Management(OLM) SDK
     exa # cat replacement
     sipcalc # Subnet calculator
     buildah
@@ -316,8 +321,8 @@ rec
     vscode # Programming editor, growing into an IDE
     kdiff3 # Well know diffing tool
     ruby # Ruby programming language
-    python3 # Language interpreter
-    python39Packages.boto3 # AWS Python library
+    #python3 # Language interpreter
+    #python39Packages.boto3 # AWS Python library
     nodejs # Javascript with OS access
     #gnumake # GNU make
     #clang # Cool modular C/C++ compiler
@@ -331,14 +336,14 @@ rec
     nix-bash-completions # Nix completions in bash
     nix-zsh-completions # Nix completions in ZSH
     bash-completion # Bash cli autocomplete
-    xonsh_with_plugins # xonsh python+bash shell
+    #xonsh_with_plugins # xonsh python+bash shell
     hardinfo # Hardware information
     # Productivity tools
     tigervnc # VNC client
-    opensnitch-ui
+    #opensnitch-ui
     mongodb-compass # MongoDB GUI
     dbeaver # SQL database GUI
-    pgadmin4 # SQL database GUI
+    #pgadmin4 # SQL database GUI
     wezterm # Crossplatform terminal emulator, supports ligatures
     bitwarden # Password manger
     rofi # Searchable window title window switcher
