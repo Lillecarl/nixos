@@ -276,6 +276,7 @@ rec
     file # Show information about files
     jq # CLI JSON utility, piping JSON here will always pretty-print it
     yq # CLI YAML utility, useful for those that thing YAML is a bit shit
+    gron # Flatten JSON to make it easy to grep
     desktop-file-utils # Required for VS Code live share
     powershell # Microsofts shell implementation
     ncdu # NCurses Disk Utility (TUI way of finding big files and folders)
