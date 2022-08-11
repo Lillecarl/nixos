@@ -26,6 +26,22 @@ let
   xonsh_with_plugins = pkgs.xonsh.overrideAttrs (old: {
     propagatedBuildInputs = old.propagatedBuildInputs ++ pyenv.python.pkgs.selectPkgs pyenv.python.pkgs;
   });
+
+  braveWaylandDesktopItem = pkgs.makeDesktopItem {
+    name = "brave-browser";
+    desktopName = "Brave";
+    icon = "brave-browser";
+    mimeTypes = lib.splitString ";" "application/pdf;application/rdf+xml;application/rss+xml;application/xhtml+xml;application/xhtml_xml;application/xml;image/gif;image/jpeg;image/png;image/webp;text/html;text/xml;x-scheme-handler/http;x-scheme-handler/https;x-scheme-handler/ipfs;x-scheme-handler/ipns";
+    exec = "${pkgs.brave}/bin/brave --enable-features=UseOzonePlatform --ozone-platform=wayland %U";
+  };
+
+  slackWaylandDesktopItem = pkgs.makeDesktopItem {
+    name = "slack";
+    desktopName = "Slack";
+    icon = "${pkgs.slack}/share/pixmaps/slack.png";
+    mimeTypes = lib.splitString ";" "x-scheme-handler/slack";
+    exec = "${pkgs.slack}/bin/slack --enable-features=UseOzonePlatform --ozone-platform=wayland %U";
+  };
 in
 rec
 {
@@ -149,6 +165,10 @@ rec
   };
 
   environment.systemPackages = with pkgs; [
+    # Temporary lab
+    (hiPrio braveWaylandDesktopItem)
+    (hiPrio slackWaylandDesktopItem)
+
     # Chat apps
     element-desktop # Element Slack app
     teams # Microsoft Teams collaboration suite (Electron)
