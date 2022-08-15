@@ -32,7 +32,7 @@ let
     desktopName = "Brave";
     icon = "brave-browser";
     mimeTypes = lib.splitString ";" "application/pdf;application/rdf+xml;application/rss+xml;application/xhtml+xml;application/xhtml_xml;application/xml;image/gif;image/jpeg;image/png;image/webp;text/html;text/xml;x-scheme-handler/http;x-scheme-handler/https;x-scheme-handler/ipfs;x-scheme-handler/ipns";
-    exec = "${pkgs.brave}/bin/brave --enable-features=UseOzonePlatform --ozone-platform=wayland %U";
+    exec = "${pkgs.brave}/bin/brave --ozone-platform=wayland %U";
   };
 
   slackWaylandDesktopItem = pkgs.makeDesktopItem {
@@ -40,7 +40,15 @@ let
     desktopName = "Slack";
     icon = "${pkgs.slack}/share/pixmaps/slack.png";
     mimeTypes = lib.splitString ";" "x-scheme-handler/slack";
-    exec = "${pkgs.slack}/bin/slack --enable-features=UseOzonePlatform --ozone-platform=wayland %U";
+    exec = "${pkgs.slack}/bin/slack --ozone-platform=wayland %U";
+  };
+
+  codeWaylandDesktopItem = pkgs.makeDesktopItem {
+    name = "code";
+    desktopName = "Visual Studio Code";
+    icon = "code";
+    mimeTypes = lib.splitString ";" "text/plain;inode/directory";
+    exec = "${pkgs.vscode}/bin/code --ozone-platform=wayland %U";
   };
 in
 rec
@@ -168,6 +176,7 @@ rec
     # Temporary lab
     (hiPrio braveWaylandDesktopItem) # Dekstop item to force Wayland
     (hiPrio slackWaylandDesktopItem) # Desktop item to force Wayland
+    (hiPrio codeWaylandDesktopItem) # Desktop item to force Wayland
     xorg.xwininfo # Information about X windows (Used to find things using XWayland)
     xonsh
 
