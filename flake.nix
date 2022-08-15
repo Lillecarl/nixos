@@ -3,13 +3,22 @@
     nixpkgs-unstable.url = github:NixOS/nixpkgs/nixos-unstable;
     nixpkgs-master.url = github:NixOS/nixpkgs/master;
     nixos-hardware.url = github:NixOS/nixos-hardware/master;
+    flake-utils.url = "github:numtide/flake-utils";
 
-    nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-21.11-darwin";
-    darwin.url = "github:lnl7/nix-darwin/master";
-    darwin.inputs.nixpkgs.follows = "nixpkgs-darwin";
+    pypi-deps-db = {
+      url = "github:DavHau/pypi-deps-db";
+      inputs.nixpkgs-unstable.follows = "nixpkgs";
+      inputs.mach-nix.follows = "mach-nix";
+    };
+    mach-nix = {
+      url = "github:DavHau/mach-nix/3.3.0";
+      inputs.nixpkgs-unstable.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
+      inputs.pypi-deps-db.follows = "pypi-deps-db";
+    };
   };
 
-  outputs = { self, nixpkgs-unstable, nixpkgs-master, nixos-hardware, nixpkgs-darwin, darwin, ... } @inputs:
+  outputs = { self, nixpkgs-unstable, nixpkgs-master, nixos-hardware, mach-nix, pypi-deps-db, ... } @inputs:
     let
       system = "x86_64-linux"; # I guess this works as long as all my systems are x86_64-linux
 
@@ -57,29 +66,7 @@
             nixos-hardware.nixosModules.common-pc
             nixos-hardware.nixosModules.system76
           ];
-        };
-        macnix = nixpkgs-unstable.lib.nixosSystem {
-          system = "x86_64-linux";
-          modules = [
-            ./macnix
-            ./common
-            overlayMagic
-            nixos-hardware.nixosModules.common-cpu-intel
-            nixos-hardware.nixosModules.common-pc-laptop
-            nixos-hardware.nixosModules.common-pc-ssd
-            nixos-hardware.nixosModules.common-pc
-          ];
-        };
-      };
-      darwinConfigurations."C02YF1KLJHD2" = darwin.lib.darwinSystem {
-        system = "x86_64-darwin";
-        modules = [
-          ./C02YF1KLJHD2
-          ./common/xplatform.nix
-        ];
-        inputs = {
-          inherit darwin;
-          nixpkgs = nixpkgs-unstable;
+	  specialArgs = inputs;
         };
       };
     };
