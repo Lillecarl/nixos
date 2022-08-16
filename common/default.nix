@@ -1,27 +1,12 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, mach-nix, ... }:
 let
-  mach-nix = import (builtins.fetchGit {
-    url = "https://github.com/DavHau/mach-nix/";
-    rev = "7e14360bde07dcae32e5e24f366c83272f52923f";
-  }) {
-    pkgs = pkgs;
-  };
-
-  pyenv = mach-nix.mkPython {
+  pyenv = mach-nix.lib."x86_64-linux".mkPython {
     requirements = ''
       xonsh-direnv
       xontrib-sh
       #xontrib-prompt-starship
-      xxh-xxh
     '';
   };
-
-  xonshrc = pkgs.writeText "xonshrc" ''
-    $PROMPT = '{BOLD_GREEN}{user}@{hostname}{BOLD_BLUE} {cwd}{NO_COLOR}> '
-    $XONSH_COLOR_STYLE = 'rrt'
-    xontrib load sh
-    $VI_MODE = True
-  '';
 
   xonsh_with_plugins = pkgs.xonsh.overrideAttrs (old: {
     propagatedBuildInputs = old.propagatedBuildInputs ++ pyenv.python.pkgs.selectPkgs pyenv.python.pkgs;
@@ -32,7 +17,7 @@ let
     desktopName = "Brave";
     icon = "brave-browser";
     mimeTypes = lib.splitString ";" "application/pdf;application/rdf+xml;application/rss+xml;application/xhtml+xml;application/xhtml_xml;application/xml;image/gif;image/jpeg;image/png;image/webp;text/html;text/xml;x-scheme-handler/http;x-scheme-handler/https;x-scheme-handler/ipfs;x-scheme-handler/ipns";
-    exec = "${pkgs.brave}/bin/brave --enable-features=UseOzonePlatform --ozone-platform=wayland %U";
+    exec = "${pkgs.brave}/bin/brave --ozone-platform=wayland %U";
   };
 
   slackWaylandDesktopItem = pkgs.makeDesktopItem {
@@ -40,7 +25,15 @@ let
     desktopName = "Slack";
     icon = "${pkgs.slack}/share/pixmaps/slack.png";
     mimeTypes = lib.splitString ";" "x-scheme-handler/slack";
-    exec = "${pkgs.slack}/bin/slack --enable-features=UseOzonePlatform --ozone-platform=wayland %U";
+    exec = "${pkgs.slack}/bin/slack --ozone-platform=wayland %U";
+  };
+
+  codeWaylandDesktopItem = pkgs.makeDesktopItem {
+    name = "code";
+    desktopName = "Visual Studio Code";
+    icon = "code";
+    mimeTypes = lib.splitString ";" "text/plain;inode/directory";
+    exec = "${pkgs.vscode}/bin/code --ozone-platform=wayland %U";
   };
 in
 rec
@@ -168,6 +161,7 @@ rec
     # Temporary lab
     (hiPrio braveWaylandDesktopItem) # Dekstop item to force Wayland
     (hiPrio slackWaylandDesktopItem) # Desktop item to force Wayland
+    (hiPrio codeWaylandDesktopItem) # Desktop item to force Wayland
     xorg.xwininfo # Information about X windows (Used to find things using XWayland)
     xonsh
 
@@ -185,6 +179,7 @@ rec
     #vlc # VLC sucks in comparision to MPV
 
     # Commandline tools (CLI)
+    cookiecutter # Simple project template engine
     distrobuilder # Build other distros
     x11docker # Run GUI applications with docker
     asciinema # Terminal session recorder
@@ -295,6 +290,7 @@ rec
     bfg-repo-cleaner # Clean repos that are huge
     alacritty # Fast crossplatform terminal emulator
     xclip # | "xclip -sel clip" is what you want
+    wl-clipboard # Wayland clipboard manipulation
     ansible # Server automation tool
     iftop # Show interface throughput and which IP's
     smartmontools # Read SSD SMART information
