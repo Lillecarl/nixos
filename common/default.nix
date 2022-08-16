@@ -166,8 +166,10 @@ rec
 
   environment.systemPackages = with pkgs; [
     # Temporary lab
-    (hiPrio braveWaylandDesktopItem)
-    (hiPrio slackWaylandDesktopItem)
+    (hiPrio braveWaylandDesktopItem) # Dekstop item to force Wayland
+    (hiPrio slackWaylandDesktopItem) # Desktop item to force Wayland
+    xorg.xwininfo # Information about X windows (Used to find things using XWayland)
+    xonsh
 
     # Chat apps
     element-desktop # Element Slack app
