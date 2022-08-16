@@ -179,6 +179,7 @@ rec
     #vlc # VLC sucks in comparision to MPV
 
     # Commandline tools (CLI)
+    cookiecutter # Simple project template engine
     distrobuilder # Build other distros
     x11docker # Run GUI applications with docker
     asciinema # Terminal session recorder
@@ -287,6 +288,7 @@ rec
     bfg-repo-cleaner # Clean repos that are huge
     alacritty # Fast crossplatform terminal emulator
     xclip # | "xclip -sel clip" is what you want
+    wl-clipboard # Wayland clipboard manipulation
     ansible # Server automation tool
     iftop # Show interface throughput and which IP's
     smartmontools # Read SSD SMART information
