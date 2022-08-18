@@ -68,6 +68,23 @@
           ];
 	  specialArgs = inputs;
         };
+        nub = nixpkgs-unstable.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            ./nub
+            ./common
+            ./common/flatpak.nix
+            ./common/killservice.nix
+            ./common/xplatform.nix
+            overlayMagic
+            nixos-hardware.nixosModules.common-cpu-amd
+            nixos-hardware.nixosModules.common-gpu-amd
+            nixos-hardware.nixosModules.common-pc-laptop
+            nixos-hardware.nixosModules.common-pc-ssd
+            nixos-hardware.nixosModules.common-pc
+          ];
+	  specialArgs = inputs;
+        };
       };
     };
 }
