@@ -14,37 +14,16 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "tmpfs";
-      fsType = "tmpfs";
-    };
-
-  fileSystems."/iso" =
-    { device = "/dev/disk/by-uuid/1980-01-01-00-00-00-00";
-      fsType = "iso9660";
-    };
-
-  fileSystems."/nix/.ro-store" =
-    { device = "/iso/nix-store.squashfs";
-      fsType = "squashfs";
-      options = [ "loop" ];
-    };
-
-  fileSystems."/nix/.rw-store" =
-    { device = "tmpfs";
-      fsType = "tmpfs";
-    };
-
-  fileSystems."/nix/store" =
-    { device = "overlay";
-      fsType = "overlay";
-    };
-
-  fileSystems."/mnt" =
     { device = "/dev/disk/by-uuid/c0e53faf-6834-4a7d-9999-2d571d65e86e";
       fsType = "btrfs";
     };
 
   boot.initrd.luks.devices."1337".device = "/dev/disk/by-uuid/bfdfdfe6-3e7e-4a82-8260-98d27c748d67";
+
+  fileSystems."/boot" =
+    { device = "/dev/disk/by-uuid/6F2C-B215";
+      fsType = "vfat";
+    };
 
   swapDevices = [ ];
 
