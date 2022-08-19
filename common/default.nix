@@ -550,7 +550,7 @@ rec
   # xdg desktop intergration (required for flatpak)
   xdg.portal = {
     enable = true;
-    gtkUsePortal = true;
+    #gtkUsePortal = true;
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   };
   # Enabled fwupd daemon, allows applications to update firmware
