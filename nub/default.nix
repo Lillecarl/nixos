@@ -33,6 +33,12 @@ rec
     };
   };
 
+  powerManagement = {
+    enable = true;
+    powertop.enable = true;
+    cpuFreqGovernor = "powersave";
+  };
+
   services.gnome.gnome-keyring.enable = true;
 
   nix.settings.auto-optimise-store = true;
@@ -339,3 +345,4 @@ rec
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "22.05"; # Did you read the comment?
 }
+
