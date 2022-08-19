@@ -22,6 +22,10 @@ rec
   boot.loader.efi.canTouchEfiVariables = true;
 
 
+  # Enable fingerprint services
+  services.fprintd.enable = true;
+  #security.pam.services.login.fprintAuth = true;
+
   services.gnome.gnome-keyring.enable = true;
 
   nix.settings.auto-optimise-store = true;
@@ -328,3 +332,4 @@ rec
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "22.05"; # Did you read the comment?
 }
+
