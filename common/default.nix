@@ -1,17 +1,5 @@
 { config, pkgs, lib, mach-nix, ... }:
 let
-  pyenv = mach-nix.lib."x86_64-linux".mkPython {
-    requirements = ''
-      xonsh-direnv
-      xontrib-sh
-      #xontrib-prompt-starship
-    '';
-  };
-
-  xonsh_with_plugins = pkgs.xonsh.overrideAttrs (old: {
-    propagatedBuildInputs = old.propagatedBuildInputs ++ pyenv.python.pkgs.selectPkgs pyenv.python.pkgs;
-  });
-
   braveWaylandDesktopItem = pkgs.makeDesktopItem {
     name = "brave-browser";
     desktopName = "Brave";
@@ -235,7 +223,7 @@ rec
     xortool # xor key bruteforcing tool
     (lowPrio wireshark-cli) # Wireshark CLI
     (lowPrio termshark) # Wireshark TUI?
-    libguestfs-with-appliance # Mount qcow2
+    #libguestfs-with-appliance # Mount qcow2
     entr # Run commands when files change
     pv # Monitor pipe progress
     cmatrix # Just scrolling to look really cool
@@ -365,7 +353,6 @@ rec
     nix-bash-completions # Nix completions in bash
     nix-zsh-completions # Nix completions in ZSH
     bash-completion # Bash cli autocomplete
-    #xonsh_with_plugins # xonsh python+bash shell
     hardinfo # Hardware information
     debootstrap # Bootstrap Debian based (deb package manager) Linux distros
 
@@ -380,9 +367,9 @@ rec
     rofi # Searchable window title window switcher
     rofimoji # Emoji/Char picker for rofi
     gitkraken # Git GUI
-    claws-mail # Mail client
-    evolution # Mail client
-    mailspring # Mail client
+    #claws-mail # Mail client
+    #evolution # Mail client
+    #mailspring # Mail client
     libreoffice # MS office compatible productivity suite
     obs-studio # Screen recording/streaming utility
     filezilla # Free FTP/FTPS/SFTP software

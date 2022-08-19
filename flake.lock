@@ -15,31 +15,6 @@
         "type": "github"
       }
     },
-    "mach-nix": {
-      "inputs": {
-        "flake-utils": [
-          "flake-utils"
-        ],
-        "nixpkgs": "nixpkgs",
-        "pypi-deps-db": [
-          "pypi-deps-db"
-        ]
-      },
-      "locked": {
-        "lastModified": 1621754806,
-        "narHash": "sha256-RvbFjxnnY/+/zEkvQpl85MICmyp9p2EoncjuN80yrYA=",
-        "owner": "DavHau",
-        "repo": "mach-nix",
-        "rev": "773580c35bcdb8cbd0820018d304686282f88d16",
-        "type": "github"
-      },
-      "original": {
-        "owner": "DavHau",
-        "ref": "3.3.0",
-        "repo": "mach-nix",
-        "type": "github"
-      }
-    },
     "nixos-hardware": {
       "locked": {
         "lastModified": 1660407119,
@@ -53,22 +28,6 @@
         "owner": "NixOS",
         "ref": "master",
         "repo": "nixos-hardware",
-        "type": "github"
-      }
-    },
-    "nixpkgs": {
-      "locked": {
-        "lastModified": 1621640932,
-        "narHash": "sha256-fXJ+OdiqSzdjFU+wkAciws+m5pEhFjFjjZmCLE6DpO4=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "9971c5d1a40d4e9ff8159ec6595cb9e91da7d438",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixos-unstable",
-        "repo": "nixpkgs",
         "type": "github"
       }
     },
@@ -104,83 +63,12 @@
         "type": "github"
       }
     },
-    "nixpkgsPy36": {
-      "locked": {
-        "lastModified": 1601475821,
-        "narHash": "sha256-7AI8j/xq5slauMGwC3Dp2K9TKDyDtBXBebeyWsE9euE=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "b4db68ff563895eea6aab4ff24fa04ef403dfe14",
-        "type": "github"
-      },
-      "original": {
-        "id": "nixpkgs",
-        "rev": "b4db68ff563895eea6aab4ff24fa04ef403dfe14",
-        "type": "indirect"
-      }
-    },
-    "nixpkgs_2": {
-      "locked": {
-        "lastModified": 1618619705,
-        "narHash": "sha256-+yBGazqJxjT+BR00oCNamOgiEFPHBOPkqak7MUYcpBA=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "e5cc06a1e806070693add4f231060a62b962fc44",
-        "type": "github"
-      },
-      "original": {
-        "id": "nixpkgs",
-        "ref": "nixos-unstable",
-        "type": "indirect"
-      }
-    },
-    "pypi-deps-db": {
-      "inputs": {
-        "mach-nix": [
-          "mach-nix"
-        ],
-        "nixpkgs": "nixpkgs_2",
-        "nixpkgsPy36": "nixpkgsPy36",
-        "pypiIndex": "pypiIndex"
-      },
-      "locked": {
-        "lastModified": 1660508159,
-        "narHash": "sha256-MK65YIH8YfX9eWB5rz6xqBpjYAhLOzA5xKwo2rP+xes=",
-        "owner": "DavHau",
-        "repo": "pypi-deps-db",
-        "rev": "a0972b470d9c325c37fc68f60475dc843616a67e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "DavHau",
-        "repo": "pypi-deps-db",
-        "type": "github"
-      }
-    },
-    "pypiIndex": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1660499299,
-        "narHash": "sha256-CH3bsP5Ij63JP2TiUHvWk0jbScRtIWyluR9OUhdr40k=",
-        "owner": "davhau",
-        "repo": "nix-pypi-fetcher",
-        "rev": "65899a8f0c5a43c3caf070d8f5153e17584f8560",
-        "type": "github"
-      },
-      "original": {
-        "owner": "davhau",
-        "repo": "nix-pypi-fetcher",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "flake-utils": "flake-utils",
-        "mach-nix": "mach-nix",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs-master": "nixpkgs-master",
-        "nixpkgs-unstable": "nixpkgs-unstable",
-        "pypi-deps-db": "pypi-deps-db"
+        "nixpkgs-unstable": "nixpkgs-unstable"
       }
     }
   },

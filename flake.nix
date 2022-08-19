@@ -4,21 +4,9 @@
     nixpkgs-master.url = github:NixOS/nixpkgs/master;
     nixos-hardware.url = github:NixOS/nixos-hardware/master;
     flake-utils.url = "github:numtide/flake-utils";
-
-    pypi-deps-db = {
-      url = "github:DavHau/pypi-deps-db";
-      inputs.nixpkgs-unstable.follows = "nixpkgs";
-      inputs.mach-nix.follows = "mach-nix";
-    };
-    mach-nix = {
-      url = "github:DavHau/mach-nix/3.3.0";
-      inputs.nixpkgs-unstable.follows = "nixpkgs";
-      inputs.flake-utils.follows = "flake-utils";
-      inputs.pypi-deps-db.follows = "pypi-deps-db";
-    };
   };
 
-  outputs = { self, nixpkgs-unstable, nixpkgs-master, nixos-hardware, mach-nix, pypi-deps-db, ... } @inputs:
+  outputs = { self, nixpkgs-unstable, nixpkgs-master, nixos-hardware, ... } @inputs:
     let
       system = "x86_64-linux"; # I guess this works as long as all my systems are x86_64-linux
 
