@@ -9,27 +9,21 @@
     ];
 
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "usb_storage" "sd_mod" ];
-  boot.initrd.kernelModules = [ ];
+  boot.initrd.kernelModules = [ "dm-snapshot" ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
+  # Added manually, nixos-generate-config doesn't recognize this
+  boot.initrd.luks.devices."1337".device = "/dev/disk/by-uuid/2bb21eac-b00e-4a9d-84f0-19d3c3d04dfe";
+
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/c0e53faf-6834-4a7d-9999-2d571d65e86e";
+    { device = "/dev/vg1/root";
       fsType = "btrfs";
     };
 
-  boot.initrd.luks.devices."1337".device = "/dev/disk/by-uuid/bfdfdfe6-3e7e-4a82-8260-98d27c748d67";
-
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/6F2C-B215";
-      fsType = "vfat";
-    };
-
-  swapDevices = [
-    {
-      device = "/swap/swapfile";
-    }
-  ];
+  swapDevices =
+    [ { device = "/dev/vg1/swap"; }
+    ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
