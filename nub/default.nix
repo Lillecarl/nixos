@@ -21,7 +21,17 @@ rec
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  hardware = {
+    bluetooth = {
+      enable = true;
 
+      settings = {
+        General = {
+          Enable = "Source,Sink,Media,Socket";
+        };
+      };
+    };
+  };
 
   services.gnome.gnome-keyring.enable = true;
 
