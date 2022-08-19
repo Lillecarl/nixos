@@ -77,9 +77,11 @@
             ./common/killservice.nix
             ./common/xplatform.nix
             overlayMagic
+            nixos-hardware.nixosModules.lenovo-thinkpad-t14s
             nixos-hardware.nixosModules.common-cpu-amd
             nixos-hardware.nixosModules.common-gpu-amd
             nixos-hardware.nixosModules.common-pc-laptop
+            nixos-hardware.nixosModules.common-pc-laptop-acpi_call
             nixos-hardware.nixosModules.common-pc-ssd
             nixos-hardware.nixosModules.common-pc
           ];
