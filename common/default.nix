@@ -219,6 +219,7 @@ rec
     buildah # Build OCI images
     debootstrap # Create Debian system in a chroot/systemd-nspawn
     bind # brings the dig command
+    dogdns # dig without poop
     whois # whois command
     xortool # xor key bruteforcing tool
     (lowPrio wireshark-cli) # Wireshark CLI
