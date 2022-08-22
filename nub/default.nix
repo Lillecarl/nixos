@@ -20,6 +20,7 @@ rec
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.kernelParams = [ "resume=/dev/vg1/swap" ];
 
   hardware = {
     bluetooth = {
@@ -346,3 +347,4 @@ rec
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "22.05"; # Did you read the comment?
 }
+

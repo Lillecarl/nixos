@@ -13,7 +13,6 @@
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
-  # Added manually, nixos-generate-config doesn't recognize this
   boot.initrd.luks.devices."1337".device = "/dev/disk/by-uuid/2bb21eac-b00e-4a9d-84f0-19d3c3d04dfe";
 
   fileSystems."/" =
@@ -21,17 +20,12 @@
       fsType = "btrfs";
     };
 
-  swapDevices =
-    [ { device = "/dev/vg1/swap"; }
-    ];
+  fileSystems."/boot" =
+    { device = "/dev/disk/by-uuid/6F2C-B215";
+      fsType = "vfat";
+    };
 
-  # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
-  # (the default) this is the recommended approach. When using systemd-networkd it's
-  # still possible to use this option, but it's recommended to use it in conjunction
-  # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
-  networking.useDHCP = lib.mkDefault true;
-  # networking.interfaces.enp2s0f0.useDHCP = lib.mkDefault true;
-  # networking.interfaces.wlp3s0.useDHCP = lib.mkDefault true;
+  swapDevices = [ { device = "/dev/vg1/swap"; } ];
 
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
