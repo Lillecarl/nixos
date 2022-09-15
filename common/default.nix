@@ -30,25 +30,27 @@ let
     pname = "xonsh-direnv";
     version = "1.6.1";
     src = python3Packages.fetchPypi {
-        inherit pname version;
-        sha256 = "sha256-Nt8Da1EtMVWZ9mbBDjys7HDutLYifwoQ1HVmI5CN2Ww=";
+      inherit pname version;
+      sha256 = "sha256-Nt8Da1EtMVWZ9mbBDjys7HDutLYifwoQ1HVmI5CN2Ww=";
     };
     meta = {
-        description = "xonsh extension for using direnv";
-        homepage = "https://github.com/Granitosaurus/${pname}";
-        license = lib.licenses.mit;
+      description = "xonsh extension for using direnv";
+      homepage = "https://github.com/Granitosaurus/${pname}";
+      license = lib.licenses.mit;
     };
   };
 
   xonsh-overlay = final: prev: {
-    xonsh = let
+    xonsh =
+      let
         python3Packages = final.python310.pkgs;
-    in (prev.xonsh.override { inherit python3Packages; }).overrideAttrs (old: {
+      in
+      (prev.xonsh.override { inherit python3Packages; }).overrideAttrs (old: {
         propagatedBuildInputs = lib.flatten [
-            (with python3Packages; [ xonsh-direnv ])
-            (old.propagatedBuildInputs or [])
+          (with python3Packages; [ xonsh-direnv ])
+          (old.propagatedBuildInputs or [ ])
         ];
-    });
+      });
   };
 in
 rec

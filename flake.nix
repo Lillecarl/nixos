@@ -54,7 +54,7 @@
             nixos-hardware.nixosModules.common-pc
             nixos-hardware.nixosModules.system76
           ];
-	  specialArgs = inputs;
+          specialArgs = inputs;
         };
         nub = nixpkgs-unstable.lib.nixosSystem {
           system = "x86_64-linux";
@@ -73,7 +73,7 @@
             nixos-hardware.nixosModules.common-pc-ssd
             nixos-hardware.nixosModules.common-pc
           ];
-	  specialArgs = inputs;
+          specialArgs = inputs;
         };
       };
       hydraJobs."nub"."x86_64-linux" = derivation;
