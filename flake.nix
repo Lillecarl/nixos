@@ -76,5 +76,6 @@
 	  specialArgs = inputs;
         };
       };
+      hydraJobs."nub"."x86_64-linux" = derivation;
     };
 }
