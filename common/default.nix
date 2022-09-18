@@ -40,6 +40,63 @@ let
     };
   };
 
+  xontrib-argcomplete = python3Packages.buildPythonPackage rec {
+    pname = "xontrib-argcomplete";
+    version = "0.3.2";
+    src = python3Packages.fetchPypi {
+      inherit pname version;
+      sha256 = "sha256-jn1NHh/PTTgSX0seOvOZTpRv4PxAQ4PbDiXOSb4/jrU=";
+    };
+
+    propagatedBuildInputs = with pkgs.python3Packages; [
+      argcomplete
+    ];
+
+    meta = {
+      description = "Argcomplete support for python and xonsh scripts in xonsh shell.";
+      homepage = "https://github.com/anki-code/${pname}";
+      license = lib.licenses.mit;
+    };
+  };
+
+  tokenize-output = python3Packages.buildPythonPackage rec {
+    pname = "tokenize-output";
+    version = "0.4.7";
+    src = python3Packages.fetchPypi {
+      inherit pname version;
+      sha256 = "sha256-b/ffh5l6YO9A20vtekBGXLMZdfXfrzU9nzXyxa7xZR0=";
+    };
+
+    propagatedBuildInputs = with pkgs.python3Packages; [
+      demjson3
+    ];
+
+    meta = {
+      description = "Get identifiers, paths, URLs and words from a string.";
+      homepage = "https://github.com/anki-code/${pname}";
+      license = lib.licenses.mit;
+    };
+  };
+  
+  xontrib-output-search = python3Packages.buildPythonPackage rec {
+    pname = "xontrib-output-search";
+    version = "0.6.2";
+    src = python3Packages.fetchPypi {
+      inherit pname version;
+      sha256 = "sha256-Zh4DXs5qajZ3bR2YVJ+uLE2u1TVJcmdzH3x9nX6jJDI=";
+    };
+
+    propagatedBuildInputs = with pkgs.python3Packages; [
+      tokenize-output
+    ];
+
+    meta = {
+      description = "Get identifiers, paths, URLs and words from the previous command output and use them for the next command in xonsh shell.";
+      homepage = "https://github.com/anki-code/${pname}";
+      license = lib.licenses.mit;
+    };
+  };
+
   xonsh-overlay = final: prev: {
     xonsh =
       let
@@ -47,7 +104,7 @@ let
       in
       (prev.xonsh.override { inherit python3Packages; }).overrideAttrs (old: {
         propagatedBuildInputs = lib.flatten [
-          (with python3Packages; [ xonsh-direnv ])
+          (with python3Packages; [ xonsh-direnv xontrib-argcomplete xontrib-output-search ])
           (old.propagatedBuildInputs or [ ])
         ];
       });
