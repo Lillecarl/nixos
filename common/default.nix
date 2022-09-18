@@ -546,14 +546,8 @@ rec
             command = "${pkgs.htop}/bin/htop --readonly";
             options = [ "NOPASSWD" ];
           }
-        ];
-      }
-      {
-        # Allow running htop --readonly as sudoer without password
-        users = [ "lillecarl" ];
-        commands = [
           {
-            command = "${pkgs.htop}/bin/ddcutil";
+            command = "${pkgs.ddcutil}/bin/ddcutil";
             options = [ "NOPASSWD" ];
           }
         ];
