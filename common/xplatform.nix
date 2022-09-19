@@ -36,5 +36,5 @@
     jless # JSON TUI browser
     thefuck # Command fixing tool
   ];
-   
+
 }
