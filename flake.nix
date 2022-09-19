@@ -76,6 +76,6 @@
           specialArgs = inputs;
         };
       };
-      hydraJobs."nub"."x86_64-linux" = nixosConfigurations.shitbox;
+      #hydraJobs."nub"."x86_64-linux" = nixosConfigurations.shitbox;
     };
 }
