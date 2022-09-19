@@ -82,7 +82,10 @@ rec
 
   networking = {
     hostName = "nub"; # System hostname
-    networkmanager.enable = true; # Laptops do well with networkmanager
+    networkmanager = {
+      enable = true; # Laptops do well with networkmanager
+      #unmanaged = [ "virbr0" "lxdbr0" "lxdbr1" ];
+    };
     useDHCP = false; # deprecated, should be false
     # Extra hostnames, hardcoded IP's are from Tailscale
     extraHosts = ''
@@ -142,6 +145,7 @@ rec
       enable = true;
       recommendedSysctlSettings = true;
     };
+    lxc.lxcfs.enable = true;
     podman = {
       enable = true;
       dockerCompat = true;
