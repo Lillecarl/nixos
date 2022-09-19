@@ -77,7 +77,7 @@ let
       license = lib.licenses.mit;
     };
   };
-  
+
   xontrib-output-search = python3Packages.buildPythonPackage rec {
     pname = "xontrib-output-search";
     version = "0.6.2";
@@ -100,33 +100,32 @@ let
   xonsh-overlay = final: prev: {
     xonsh =
       let
-      python3Packages = final.python310.pkgs;
+        python3Packages = final.python310.pkgs;
       in
       (prev.xonsh.override { inherit python3Packages; }).overrideAttrs (old: {
-      propagatedBuildInputs = lib.flatten [
+        propagatedBuildInputs = lib.flatten [
           (with python3Packages; [ xonsh-direnv xontrib-argcomplete xontrib-output-search ])
-        ])
-        (old.propagatedBuildInputs or [])
-      ];
-      });
-  };
-in
-rec
-{
-  # Allow root to map to LilleCarl user in LXD container
-  users.users.root = {
-    subUidRanges = [
+          (old.propagatedBuildInputs or [ ])
+        ];
+        });
+      };
+      in
+      rec
       {
-        count = 1;
-        startUid = users.users.lillecarl.uid;
-      }
-    ];
-    subGidRanges = [
+      # Allow root to map to LilleCarl user in LXD container
+      users.users.root = {
+      subUidRanges = [
       {
-        count = 1;
-        startGid = 1000;
-      }
+      count = 1;
+    startUid = users.users.lillecarl.uid;
+  }
     ];
+  subGidRanges = [
+    {
+      count = 1;
+      startGid = 1000;
+    }
+  ];
   };
 
   nixpkgs.overlays = [
@@ -646,4 +645,4 @@ rec
     pulse.enable = true;
     socketActivation = true;
   };
-}
+  }
