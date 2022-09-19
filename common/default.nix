@@ -42,12 +42,14 @@ let
 
   xonsh-overlay = final: prev: {
     xonsh = let
-        python3Packages = final.python310.pkgs;
+      python3Packages = final.python310.pkgs;
     in (prev.xonsh.override { inherit python3Packages; }).overrideAttrs (old: {
-        propagatedBuildInputs = lib.flatten [
-            (with python3Packages; [ xonsh-direnv ])
-            (old.propagatedBuildInputs or [])
-        ];
+      propagatedBuildInputs = lib.flatten [
+        (with python3Packages; [
+          xonsh-direnv
+        ])
+        (old.propagatedBuildInputs or [])
+      ];
     });
   };
 in
@@ -184,6 +186,8 @@ rec
     xorg.xwininfo # Information about X windows (Used to find things using XWayland)
     xonsh
 
+    tangram # Pinned tabs
+
     # Chat apps
     element-desktop # Element Slack app
     teams # Microsoft Teams collaboration suite (Electron)
@@ -198,6 +202,7 @@ rec
     #vlc # VLC sucks in comparision to MPV
 
     # Commandline tools (CLI)
+    handlr # xdg-open alternative 
     cookiecutter # Simple project template engine
     distrobuilder # Build other distros
     x11docker # Run GUI applications with docker
@@ -245,6 +250,8 @@ rec
     cmctl # cert-manager CLI
     krew # kubectl plugin manager
     operator-sdk # Kubernetes Operator Lifecycle Management(OLM) SDK
+    packer # Tool to create images and stuff from Hashicorp
+    gnumake # Make for packer for rhel template
     exa # cat replacement
     sipcalc # Subnet calculator
     buildah # Build OCI images
@@ -278,6 +285,7 @@ rec
     efitools # Tools for managing EFI, variables and such
     curl # All things HTTP and other web transfer protocols
     tmux # terminal multiplexer
+    tmate # terminal multiplexer with online sharing
     htop # NCurses "task manager"
     bottom # Task Manager written in Rust
     powertop # See power information
