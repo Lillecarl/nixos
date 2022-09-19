@@ -127,25 +127,25 @@ let
           ])
           (old.propagatedBuildInputs or [ ])
         ];
-        });
-      };
-      in
-      rec
+      });
+  };
+in
+rec
+{
+  # Allow root to map to LilleCarl user in LXD container
+  users.users.root = {
+    subUidRanges = [
       {
-      # Allow root to map to LilleCarl user in LXD container
-      users.users.root = {
-      subUidRanges = [
-      {
-      count = 1;
-    startUid = users.users.lillecarl.uid;
-  }
+        count = 1;
+        startUid = users.users.lillecarl.uid;
+      }
     ];
-  subGidRanges = [
-    {
-      count = 1;
-      startGid = 1000;
-    }
-  ];
+    subGidRanges = [
+      {
+        count = 1;
+        startGid = 1000;
+      }
+    ];
   };
 
   nixpkgs.overlays = [
@@ -665,4 +665,4 @@ let
     pulse.enable = true;
     socketActivation = true;
   };
-  }
+}
