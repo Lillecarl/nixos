@@ -97,6 +97,21 @@ let
     };
   };
 
+  xontrib-fzf-widgets = python3Packages.buildPythonPackage rec {
+    pname = "xontrib-fzf-widgets";
+    version = "0.0.4";
+    src = python3Packages.fetchPypi {
+      inherit pname version;
+      sha256 = "sha256-EpeOr9c3HwFdF8tMpUkFNu7crmxqbL1VjUg5wTzNzUk=";
+    };
+
+    meta = {
+      description = "fzf widgets for xonsh.";
+      homepage = "https://github.com/laloch/${pname}";
+      license = lib.licenses.mit;
+    };
+  };
+
   xonsh-overlay = final: prev: {
     xonsh =
       let
@@ -104,7 +119,12 @@ let
       in
       (prev.xonsh.override { inherit python3Packages; }).overrideAttrs (old: {
         propagatedBuildInputs = lib.flatten [
-          (with python3Packages; [ xonsh-direnv xontrib-argcomplete xontrib-output-search ])
+          (with python3Packages; [
+            xonsh-direnv
+            xontrib-argcomplete
+            xontrib-output-search
+            xontrib-fzf-widgets
+          ])
           (old.propagatedBuildInputs or [ ])
         ];
         });
