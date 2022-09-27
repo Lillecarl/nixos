@@ -31,6 +31,17 @@
         "type": "github"
       }
     },
+    "nixos-unstable-channel": {
+      "locked": {
+        "narHash": "sha256-FCloNRPBFo1VLepGRKgNUUAkl0+N+xgOmQOtqkFt4e4=",
+        "type": "tarball",
+        "url": "https://nixos.org/channels/nixos-unstable/nixexprs.tar.xz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://nixos.org/channels/nixos-unstable/nixexprs.tar.xz"
+      }
+    },
     "nixpkgs-master": {
       "locked": {
         "lastModified": 1664200630,
@@ -67,6 +78,7 @@
       "inputs": {
         "flake-utils": "flake-utils",
         "nixos-hardware": "nixos-hardware",
+        "nixos-unstable-channel": "nixos-unstable-channel",
         "nixpkgs-master": "nixpkgs-master",
         "nixpkgs-unstable": "nixpkgs-unstable"
       }
