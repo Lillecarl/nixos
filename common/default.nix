@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, nixos-unstable-channel, ... }:
 let
   braveWaylandDesktopItem = pkgs.makeDesktopItem {
     name = "brave-browser";
@@ -23,6 +23,10 @@ let
     mimeTypes = lib.splitString ";" "text/plain;inode/directory";
     exec = "${pkgs.vscode}/bin/code --ozone-platform=wayland %U";
   };
+
+  programs_sqlite = pkgs.runCommandLocal "programs_sqlite" { } ''
+    cp ${nixos-unstable-channel}/programs.sqlite $out
+  '';
 
   python3Packages = pkgs.python310.pkgs;
 
@@ -127,6 +131,9 @@ let
           ])
           (old.propagatedBuildInputs or [ ])
         ];
+	checkInputs = [];
+	checkPhase = "";
+	pytestcheckPhase = "";
       });
   };
 in
@@ -168,6 +175,8 @@ rec
       "wireshark" # allow wireshark dumpcap
     ];
   };
+
+  programs.command-not-found.dbPath = programs_sqlite;
 
   # Give applications 15 seconds to shut down when shutting down the computer
   systemd.extraConfig = ''
