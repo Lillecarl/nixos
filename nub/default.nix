@@ -21,6 +21,29 @@ rec
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelParams = [ "resume=/dev/vg1/swap" ];
+  #boot.kernelPackages = with pkgs.linuxKernel.packages; linux_xanmod_latest;
+
+  # Make some extra kernel modules available to NixOS
+  boot.extraModulePackages = with config.boot.kernelPackages; [
+    v4l2loopback.out
+    usbip
+  ];
+
+  # Activate kernel modules (choose from built-ins and extra ones)
+  boot.kernelModules = [
+    # Virtual Camera
+    "v4l2loopback"
+    # Virtual Microphone, built-in
+    #"snd-aloop"
+  ];
+
+  # Set initial kernel module settings
+  boot.extraModprobeConfig = ''
+    # exclusive_caps: Skype, Zoom, Teams etc. will only show device when actually streaming
+    # card_label: Name of virtual camera, how it'll show up in Skype, Zoom, Teams
+    # https://github.com/umlaeute/v4l2loopback
+    options v4l2loopback exclusive_caps=1 card_label="Virtual Camera"
+  '';
 
   hardware = {
     bluetooth = {
@@ -51,7 +74,7 @@ rec
   };
 
   nix = {
-    package = pkgs.nixFlakes;
+    package = pkgs.nixVersions.stable;
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
@@ -59,7 +82,10 @@ rec
 
   networking = {
     hostName = "nub"; # System hostname
-    networkmanager.enable = true; # Laptops do well with networkmanager
+    networkmanager = {
+      enable = true; # Laptops do well with networkmanager
+      #unmanaged = [ "virbr0" "lxdbr0" "lxdbr1" ];
+    };
     useDHCP = false; # deprecated, should be false
     # Extra hostnames, hardcoded IP's are from Tailscale
     extraHosts = ''
@@ -119,6 +145,7 @@ rec
       enable = true;
       recommendedSysctlSettings = true;
     };
+    lxc.lxcfs.enable = true;
     podman = {
       enable = true;
       dockerCompat = true;
@@ -205,28 +232,28 @@ rec
     };
 
     # Clone everything from /sys-persist into /sys, no error handling
-    services.sysPersist = {
-      enable = true;
-      stopIfChanged = true;
-      path = with pkgs; [ findutils gnused ];
-      script = ''
-        for file in $(find /sys-persist -type f)
-        do
-          cat $file > $(echo $file | sed "s/sys-persist/sys/")
-        done
-      '';
-    };
+    #services.sysPersist = {
+    #  enable = true;
+    #  stopIfChanged = true;
+    #  path = with pkgs; [ findutils gnused ];
+    #  script = ''
+    #    for file in $(find /sys-persist -type f)
+    #    do
+    #      cat $file > $(echo $file | sed "s/sys-persist/sys/")
+    #    done
+    #  '';
+    #};
 
-    timers.sysPersist = {
-      enable = true;
-      wantedBy = [ "multi-user.target" ];
-      timerConfig = {
-        OnBootSec = "3m";
-        OnUnitActiveSec = "3m";
-        AccuracySec = "1m";
-        Unit = "sysPersist.service";
-      };
-    };
+    #timers.sysPersist = {
+    #  enable = true;
+    #  wantedBy = [ "multi-user.target" ];
+    #  timerConfig = {
+    #    OnBootSec = "3m";
+    #    OnUnitActiveSec = "3m";
+    #    AccuracySec = "1m";
+    #    Unit = "sysPersist.service";
+    #  };
+    #};
 
     sleep.extraConfig = ''
       #AllowSuspend=yes

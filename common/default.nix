@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, nixos-unstable-channel, ... }:
 let
   braveWaylandDesktopItem = pkgs.makeDesktopItem {
     name = "brave-browser";
@@ -23,6 +23,10 @@ let
     mimeTypes = lib.splitString ";" "text/plain;inode/directory";
     exec = "${pkgs.vscode}/bin/code --ozone-platform=wayland %U";
   };
+
+  programs_sqlite = pkgs.runCommandLocal "programs_sqlite" { } ''
+    cp ${nixos-unstable-channel}/programs.sqlite $out
+  '';
 
   python3Packages = pkgs.python310.pkgs;
 
@@ -77,7 +81,7 @@ let
       license = lib.licenses.mit;
     };
   };
-  
+
   xontrib-output-search = python3Packages.buildPythonPackage rec {
     pname = "xontrib-output-search";
     version = "0.6.2";
@@ -97,6 +101,21 @@ let
     };
   };
 
+  xontrib-fzf-widgets = python3Packages.buildPythonPackage rec {
+    pname = "xontrib-fzf-widgets";
+    version = "0.0.4";
+    src = python3Packages.fetchPypi {
+      inherit pname version;
+      sha256 = "sha256-EpeOr9c3HwFdF8tMpUkFNu7crmxqbL1VjUg5wTzNzUk=";
+    };
+
+    meta = {
+      description = "fzf widgets for xonsh.";
+      homepage = "https://github.com/laloch/${pname}";
+      license = lib.licenses.mit;
+    };
+  };
+
   xonsh-overlay = final: prev: {
     xonsh =
       let
@@ -104,9 +123,17 @@ let
       in
       (prev.xonsh.override { inherit python3Packages; }).overrideAttrs (old: {
         propagatedBuildInputs = lib.flatten [
-          (with python3Packages; [ xonsh-direnv xontrib-argcomplete xontrib-output-search ])
+          (with python3Packages; [
+            xonsh-direnv
+            xontrib-argcomplete
+            xontrib-output-search
+            xontrib-fzf-widgets
+          ])
           (old.propagatedBuildInputs or [ ])
         ];
+	checkInputs = [];
+	checkPhase = "";
+	pytestcheckPhase = "";
       });
   };
 in
@@ -148,6 +175,8 @@ rec
       "wireshark" # allow wireshark dumpcap
     ];
   };
+
+  programs.command-not-found.dbPath = programs_sqlite;
 
   # Give applications 15 seconds to shut down when shutting down the computer
   systemd.extraConfig = ''
@@ -243,6 +272,8 @@ rec
     xorg.xwininfo # Information about X windows (Used to find things using XWayland)
     xonsh
 
+    tangram # Pinned tabs
+
     # Chat apps
     element-desktop # Element Slack app
     teams # Microsoft Teams collaboration suite (Electron)
@@ -257,6 +288,7 @@ rec
     #vlc # VLC sucks in comparision to MPV
 
     # Commandline tools (CLI)
+    handlr # xdg-open alternative 
     cookiecutter # Simple project template engine
     distrobuilder # Build other distros
     x11docker # Run GUI applications with docker
@@ -304,6 +336,8 @@ rec
     cmctl # cert-manager CLI
     krew # kubectl plugin manager
     operator-sdk # Kubernetes Operator Lifecycle Management(OLM) SDK
+    packer # Tool to create images and stuff from Hashicorp
+    gnumake # Make for packer for rhel template
     exa # cat replacement
     sipcalc # Subnet calculator
     buildah # Build OCI images
@@ -337,6 +371,7 @@ rec
     efitools # Tools for managing EFI, variables and such
     curl # All things HTTP and other web transfer protocols
     tmux # terminal multiplexer
+    tmate # terminal multiplexer with online sharing
     htop # NCurses "task manager"
     bottom # Task Manager written in Rust
     powertop # See power information

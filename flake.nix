@@ -4,6 +4,7 @@
     nixpkgs-master.url = github:NixOS/nixpkgs/master;
     nixos-hardware.url = github:NixOS/nixos-hardware/master;
     flake-utils.url = "github:numtide/flake-utils";
+    nixos-unstable-channel.url = "https://nixos.org/channels/nixos-unstable/nixexprs.tar.xz";
   };
 
   outputs = { self, nixpkgs-unstable, nixpkgs-master, nixos-hardware, ... } @inputs:
@@ -76,6 +77,6 @@
           specialArgs = inputs;
         };
       };
-      hydraJobs."nub"."x86_64-linux" = nixosConfigurations.shitbox;
+      #hydraJobs."nub"."x86_64-linux" = nixosConfigurations.shitbox;
     };
 }
