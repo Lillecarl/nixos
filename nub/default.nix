@@ -22,6 +22,7 @@ rec
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelParams = [ "resume=/dev/vg1/swap" "mem_sleep_default=deep" ];
   #boot.kernelPackages = with pkgs.linuxKernel.packages; linux_xanmod_latest;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   services.tp-auto-kbbl = {
     enable = true;
