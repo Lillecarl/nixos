@@ -20,7 +20,7 @@ rec
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernelParams = [ "resume=/dev/vg1/swap" ];
+  boot.kernelParams = [ "resume=/dev/vg1/swap" "mem_sleep_default=deep" ];
   #boot.kernelPackages = with pkgs.linuxKernel.packages; linux_xanmod_latest;
 
   services.tp-auto-kbbl = {
