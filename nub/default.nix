@@ -199,9 +199,6 @@ rec
     # Kernel modules with userspace commands
     config.boot.kernelPackages.cpupower
     config.boot.kernelPackages.turbostat
-    config.boot.kernelPackages.system76
-    config.boot.kernelPackages.system76-io
-    config.boot.kernelPackages.system76-acpi
     config.boot.kernelPackages.usbip
   ];
 
