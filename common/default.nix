@@ -116,6 +116,21 @@ let
     };
   };
 
+  pyyaml = python3Packages.buildPythonPackage rec {
+    pname = "PyYAML";
+    version = "6.0";
+    src = python3Packages.fetchPypi {
+      inherit pname version;
+      sha256 = "sha256-aPtRnBQwb+yXIKKltFvJ8MjRuccq30XDe67fzZScNaI=";
+    };
+
+    meta = {
+      description = "fzf widgets for xonsh.";
+      homepage = "https://github.com/laloch/${pname}";
+      license = lib.licenses.mit;
+    };
+  };
+
   xonsh-overlay = final: prev: {
     xonsh =
       let
@@ -128,6 +143,7 @@ let
             xontrib-argcomplete
             xontrib-output-search
             xontrib-fzf-widgets
+            pyyaml
           ])
           (old.propagatedBuildInputs or [ ])
         ];
