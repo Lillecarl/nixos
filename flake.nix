@@ -40,23 +40,6 @@
             nixos-hardware.nixosModules.common-pc
           ];
         };
-        lemur = nixpkgs-unstable.lib.nixosSystem {
-          system = "x86_64-linux";
-          modules = [
-            ./lemur
-            ./common
-            ./common/flatpak.nix
-            ./common/killservice.nix
-            ./common/xplatform.nix
-            overlayMagic
-            nixos-hardware.nixosModules.common-cpu-intel
-            nixos-hardware.nixosModules.common-pc-laptop
-            nixos-hardware.nixosModules.common-pc-ssd
-            nixos-hardware.nixosModules.common-pc
-            nixos-hardware.nixosModules.system76
-          ];
-          specialArgs = inputs;
-        };
         nub = nixpkgs-unstable.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
