@@ -317,6 +317,9 @@ rec
       scrape_interval = "1m";
       evaluation_interval = "1m";
     };
+    pushgateway = {
+      enable = true;
+    };
     scrapeConfigs = [
       {
         job_name = "prometheus";
@@ -409,3 +412,4 @@ rec
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "22.05"; # Did you read the comment?
 }
+
