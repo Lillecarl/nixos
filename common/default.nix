@@ -465,6 +465,7 @@ rec
     dmidecode # system information
     pciutils # PCI(e) utilities (lspci for example)
     usbutils # USB utils
+    bridge-utils # Bridge utils
     xdotool # Tools to automate mouse and keyboard in X
     wtype # Wayland version of xdotools
     libsForQt5.qt5.qttools # qdbus command comes from here
@@ -489,6 +490,8 @@ rec
     xorg.xev # Monitor Keypresses, useful when troubleshooting keylayouts
     xorg.xhost # Not sure, used for X11 socket forwarding
     xorg.xinit # Well starting x?
+    libinput # Libinput CLI tooling
+    brightnessctl # Control brightness of things
     conntrack-tools # Connection tracking userspace tools
     iptstate # Conntrack "top like" tool
     nixos-generators # Tools for generating nixos images (AWS, Azure, ISO etc..)
@@ -708,6 +711,7 @@ rec
   services.openssh.enable = true;
   # Enable PipeWire A/V daemon
   # replaces all other sound daemons
+
   services.pipewire = {
     enable = true;
     alsa.enable = true; # Required by: Audacity
