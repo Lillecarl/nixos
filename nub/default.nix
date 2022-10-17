@@ -189,6 +189,9 @@ rec
   };
 
   environment.systemPackages = with pkgs; [
+    zoom-us # Yet another video conferencing tool
+    jitsi-meet-electron # Video conferencing
+    zenmonitor # AMD CPU monitoring
     virt-manager # Virtualisation manager
     virt-manager-qt # Shitty version of virt-manager
     distrobox # Run different distros on your machine
