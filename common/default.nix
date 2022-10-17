@@ -248,14 +248,11 @@ rec
   services.actkbd = {
     enable = true;
 
-    extraConfig = 
-    
     bindings = [
-      {
-        keys = [ 19 ];
-	events = "key";
-	command = "${pkgs.systemd}/bin/machinectl lillecarl@ ${pkgs.spectactle}/bin/spectacle";
-      }
+      { keys = [ 119 ]; events = [ "key" ];
+	command = "${pkgs.systemd}/bin/machinectl shell --setenv=WAYLAND_DISPLAY=wayland-0 --setenv=XDG_SESSION_TYPE=wayland lillecarl@ ${pkgs.spectacle}/bin/spectacle"; }
+      { keys = [ 105 ]; events = [ "key" ];
+	command = "${pkgs.coreutils-full}/bin/date > /home/lillecarl/actkbd"; }
     ];
   };
 
