@@ -136,6 +136,18 @@ let
 	pytestcheckPhase = "";
       });
   };
+
+  acpid-overlay = final: prev: {
+    acpid = (prev.acpid.override { }).overrideAttrs (old: {
+        propagatedBuildInputs = lib.flatten [
+          (with pkgs; [
+	    pulseaudio
+	    ripgrep
+          ])
+          (old.propagatedBuildInputs or [ ])
+        ];
+      });
+  };
 in
 rec
 {
@@ -157,6 +169,7 @@ rec
 
   nixpkgs.overlays = [
     xonsh-overlay
+    acpid-overlay
   ];
 
   users.defaultUserShell = pkgs.zsh;

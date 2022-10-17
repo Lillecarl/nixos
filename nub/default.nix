@@ -23,6 +23,40 @@ rec
   boot.kernelParams = [ "resume=/dev/vg1/swap" ];
   #boot.kernelPackages = with pkgs.linuxKernel.packages; linux_xanmod_latest;
 
+  services.tp-auto-kbbl = {
+    enable = true;
+    arguments = [
+      "-b 1"
+      "-t 5"
+    ];
+  };
+
+  services.acpid = {
+    enable = true;
+
+    handlers = {
+      mic-led = {
+        action = ''
+          vals=($1)  # space separated string to array of multiple values
+          case ''${vals[1]} in
+              F20)
+	          if ${pkgs.systemd}/bin/machinectl shell lillecarl@ /run/current-system/sw/bin/pactl get-source-mute alsa_input.pci-0000_05_00.6.HiFi__hw_acp__source | ${pkgs.gnugrep}/bin/grep "Mute: yes"
+		  then
+	            echo 1 > /sys/class/leds/platform::micmute/brightness
+		  else
+	            echo 0 > /sys/class/leds/platform::micmute/brightness
+		  fi
+                  ;;
+              *)
+                  echo unknown >> /tmp/acpi.log
+                  ;;
+          esac
+        '';
+        event = "button/*";
+      };
+    };
+  };
+
   # Make some extra kernel modules available to NixOS
   boot.extraModulePackages = with config.boot.kernelPackages; [
     v4l2loopback.out
@@ -374,4 +408,3 @@ rec
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "22.05"; # Did you read the comment?
 }
-
