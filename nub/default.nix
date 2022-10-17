@@ -20,8 +20,43 @@ rec
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernelParams = [ "resume=/dev/vg1/swap" ];
+  boot.kernelParams = [ "resume=/dev/vg1/swap" "mem_sleep_default=deep" ];
   #boot.kernelPackages = with pkgs.linuxKernel.packages; linux_xanmod_latest;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+
+  services.tp-auto-kbbl = {
+    enable = true;
+    arguments = [
+      "-b 1"
+      "-t 5"
+    ];
+  };
+
+  services.acpid = {
+    enable = true;
+
+    handlers = {
+      mic-led = {
+        action = ''
+          vals=($1)  # space separated string to array of multiple values
+          case ''${vals[1]} in
+              F20)
+	          if ${pkgs.systemd}/bin/machinectl shell lillecarl@ /run/current-system/sw/bin/pactl get-source-mute alsa_input.pci-0000_05_00.6.HiFi__hw_acp__source | ${pkgs.gnugrep}/bin/grep "Mute: yes"
+		  then
+	            echo 1 > /sys/class/leds/platform::micmute/brightness
+		  else
+	            echo 0 > /sys/class/leds/platform::micmute/brightness
+		  fi
+                  ;;
+              *)
+                  echo unknown >> /tmp/acpi.log
+                  ;;
+          esac
+        '';
+        event = "button/*";
+      };
+    };
+  };
 
   # Make some extra kernel modules available to NixOS
   boot.extraModulePackages = with config.boot.kernelPackages; [
@@ -154,6 +189,9 @@ rec
   };
 
   environment.systemPackages = with pkgs; [
+    zoom-us # Yet another video conferencing tool
+    jitsi-meet-electron # Video conferencing
+    zenmonitor # AMD CPU monitoring
     virt-manager # Virtualisation manager
     virt-manager-qt # Shitty version of virt-manager
     distrobox # Run different distros on your machine
@@ -165,9 +203,6 @@ rec
     # Kernel modules with userspace commands
     config.boot.kernelPackages.cpupower
     config.boot.kernelPackages.turbostat
-    config.boot.kernelPackages.system76
-    config.boot.kernelPackages.system76-io
-    config.boot.kernelPackages.system76-acpi
     config.boot.kernelPackages.usbip
   ];
 
@@ -281,6 +316,9 @@ rec
       scrape_timeout = "10s";
       scrape_interval = "1m";
       evaluation_interval = "1m";
+    };
+    pushgateway = {
+      enable = true;
     };
     scrapeConfigs = [
       {
