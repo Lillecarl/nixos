@@ -715,5 +715,6 @@ rec
     jack.enable = true; # Required by: Qtractor
     pulse.enable = true;
     socketActivation = true;
+    wireplumber.enable = true;
   };
 }
