@@ -258,6 +258,14 @@ rec
   # Disable network-manager wait-online service that prohibits nixos-rebuild
   systemd.services.NetworkManager-wait-online.enable = false;
 
+  services.actkbd = {
+    enable = true;
+    
+    bindings = [
+      
+    ];
+  };
+
 
   # Use hack font in tty, use xserver keymap
   console = {
