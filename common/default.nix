@@ -241,7 +241,12 @@ rec
   services.xserver.desktopManager.plasma5.enable = true;
   services.xserver.desktopManager.plasma5.runUsingSystemd = true;
   # Enable touchpad support (enabled default in most desktopManager).
-  services.xserver.libinput.enable = true;
+  services.xserver.libinput = {
+    enable = true;
+
+    touchpad.disableWhileTyping = true;
+  };
+
   # Configure keymap in X11
   services.xserver.layout = "us";
   # Allow local clients to connect to my X server
