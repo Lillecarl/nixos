@@ -258,9 +258,8 @@ rec
   };
 
 
-  # Use hack font in tty, use xserver keymap
+  # Use xserver keymap
   console = {
-    font = "Hack";
     useXkbConfig = true;
   };
 
