@@ -28,7 +28,7 @@ rec
     enable = true;
     arguments = [
       "-b 1"
-      "-t 5"
+      "-t 2"
     ];
   };
 
