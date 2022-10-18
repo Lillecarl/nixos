@@ -299,17 +299,21 @@ rec
 	events = [ "key" ];
 	command = "${pkgs.systemd}/bin/machinectl shell lillecarl@ /run/current-system/sw/bin/qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut \"Window Quick Tile Bottom Right\"";
       }
-      {
-        keys = [ 33 125 ];
-	events = [ "key" ];
-	command = "${pkgs.systemd}/bin/machinectl shell lillecarl@ /run/current-system/sw/bin/qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut \"Window Maximize\"";
-      }
+      #{
+      #  keys = [ 33 125 ];
+      #  events = [ "key" ];
+      #  command = "${pkgs.systemd}/bin/machinectl shell lillecarl@ /run/current-system/sw/bin/qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut \"Window Maximize\"";
+      #}
       {
         keys = [ 119 ];
 	events = [ "key" ];
 	command = "${pkgs.systemd}/bin/machinectl shell --setenv=WAYLAND_DISPLAY=wayland-0 --setenv=XDG_SESSION_TYPE=wayland lillecarl@ ${pkgs.spectacle}/bin/spectacle";
       }
     ];
+    extraConfig = ''
+      33+125:key:grab,exec:/nix/store/fcb987c6axvjmn2scd2pr9b2hxf4iang-systemd-251.4/bin/machinectl shell lillecarl@ /run/current-system/sw/bin/qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut "Window Maximize"
+      33+125:rel:grabbed,noexec,ungrab:
+    '';
   };
 
 
