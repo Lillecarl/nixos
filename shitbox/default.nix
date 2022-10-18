@@ -27,6 +27,24 @@
     '';
   };
 
+  services.hydra = {
+    enable = true;
+    hydraURL = "http://localhost:3000"; # externally visible URL
+    notificationSender = "hydra@localhost"; # e-mail of hydra service
+    # a standalone hydra will require you to unset the buildMachinesFiles list to avoid using a nonexistant /etc/nix/machines
+    buildMachinesFiles = [ ];
+    # you will probably also want, otherwise *everything* will be built from scratch
+    useSubstitutes = true;
+  };
+
+  nix.buildMachines = [
+    {
+      hostName = "localhost";
+      system = "x86_64-linux";
+      supportedFeatures = [ "kvm" "nixos-test" "big-parallel" "benchmark" ];
+      maxJobs = 8;
+    }
+  ];
 
   # Networking, virbr0 is WAN iface
   networking = {
@@ -111,7 +129,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    gnome3.adwaita-icon-theme # Lutris icons
+    gnome.adwaita-icon-theme # Lutris icons
     virt-manager # Virtualisation manager
     virt-manager-qt # Shitty version of virt-manager
     pciutils
@@ -142,7 +160,6 @@
     libarchive
     discord
     teamspeak_client
-    lutris
     appimage-run # running appimages (shadow)
 
     # Hardware management

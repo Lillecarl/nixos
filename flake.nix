@@ -39,6 +39,7 @@
             nixos-hardware.nixosModules.common-pc-ssd
             nixos-hardware.nixosModules.common-pc
           ];
+          specialArgs = inputs;
         };
         nub = nixpkgs-unstable.lib.nixosSystem {
           system = "x86_64-linux";
