@@ -58,6 +58,9 @@ rec
     };
   };
 
+  systemd.targets.hibernate.enable = false;
+  systemd.targets.hybrid-sleep.enable = false;
+
   # Make some extra kernel modules available to NixOS
   boot.extraModulePackages = with config.boot.kernelPackages; [
     v4l2loopback.out
