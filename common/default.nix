@@ -148,9 +148,9 @@ let
           ])
           (old.propagatedBuildInputs or [ ])
         ];
-	checkInputs = [];
-	checkPhase = "";
-	pytestcheckPhase = "";
+        checkInputs = [ ];
+        checkPhase = "";
+        pytestcheckPhase = "";
       });
   };
 in
