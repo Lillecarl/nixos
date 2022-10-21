@@ -303,6 +303,7 @@ rec
     #vlc # VLC sucks in comparision to MPV
 
     # Commandline tools (CLI)
+    execline # Tools for dbus n stuff
     actkbd # Keyboard shortcut daemon
     handlr # xdg-open alternative 
     cookiecutter # Simple project template engine
