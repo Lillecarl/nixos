@@ -33,6 +33,7 @@
             ./shitbox
             ./common
             ./common/flatpak.nix
+            ./common/keybindings.nix
             ./common/killservice.nix
             overlayMagic
             nixos-hardware.nixosModules.common-cpu-amd
@@ -47,6 +48,7 @@
             ./nub
             ./common
             ./common/flatpak.nix
+            ./common/keybindings.nix
             ./common/killservice.nix
             ./common/xplatform.nix
             overlayMagic
