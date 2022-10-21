@@ -380,6 +380,7 @@ rec
     #vlc # VLC sucks in comparision to MPV
 
     # Commandline tools (CLI)
+    actkbd # Keyboard shortcut daemon
     handlr # xdg-open alternative 
     cookiecutter # Simple project template engine
     distrobuilder # Build other distros
@@ -400,6 +401,7 @@ rec
     tldr # Like, TL;DR manpages
     xprintidle-ng # print idle time
     envsubst # Templating with environment variables, commonly used with k8s
+    wireguard-tools # Wireguard tools
     go # Golang
     dotnet-sdk_6 # Latest dotnet
     azure-cli # Azure CLI tooling
