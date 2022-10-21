@@ -132,24 +132,7 @@ rec
       192.168.122.107 rancher.lillecarl.com
     '';
 
-    #wireguard = {
-    #  enable = true;
-    #  interfaces."ovpn" = {
-    #    privateKey = "gLwT/gGP+oG1MTGBciRpxVPqceDyXGtXJkOzHAYAFXI=";
-    #    ips = [ "172.25.172.124/32" "fd00:0000:1337:cafe:1111:1111:9562:0542/128" ];
-    #    table = "1337";
-    #    peers = [
-    #      {
-    #        publicKey = "UPKLcNO8+oav7Bsc8afNeN482pnieYLOBAh4vXdWFT0=";
-    #        allowedIPs = [ "0.0.0.0/0" "::/0" ];
-    #        endpoint = "vpn12.prd.kista.ovpn.com:9929";
-    #        persistentKeepalive = 25;
-    #      }
-    #    ];
-    #  };
-    #};
   };
-
   # CUPS for printing documents.
   services.printing.enable = false;
   # Enable GlobalProtect VPN
@@ -415,4 +398,3 @@ rec
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "22.05"; # Did you read the comment?
 }
-
