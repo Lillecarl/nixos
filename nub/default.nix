@@ -41,7 +41,7 @@ rec
           vals=($1)  # space separated string to array of multiple values
           case ''${vals[1]} in
               F20)
-	          if ${pkgs.systemd}/bin/machinectl shell lillecarl@ /run/current-system/sw/bin/pactl get-source-mute alsa_input.pci-0000_05_00.6.HiFi__hw_acp__source | ${pkgs.gnugrep}/bin/grep "Mute: yes"
+	          if ${pkgs.systemd}/bin/machinectl shell lillecarl@ ${pkgs.pulseaudio}/bin/pactl get-source-mute alsa_input.pci-0000_05_00.6.HiFi__hw_acp__source | ${pkgs.gnugrep}/bin/grep "Mute: yes"
 		  then
 	            echo 1 > /sys/class/leds/platform::micmute/brightness
 		  else
