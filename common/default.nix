@@ -348,11 +348,6 @@ rec
         profile = "${pkgs.firejail}/etc/firejail/teams.profile";
         extraArgs = [ "--private=~/.local/share/teams_nent" ];
       };
-      teams_sdnit = {
-        executable = "${lib.getBin pkgs.teams}/bin/teams";
-        profile = "${pkgs.firejail}/etc/firejail/teams.profile";
-        extraArgs = [ "--private=~/.local/share/teams_sdnit" ];
-      };
     };
   };
 
