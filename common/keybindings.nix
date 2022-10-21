@@ -250,7 +250,58 @@ let
   KEY_WIMAX = KEY_WWAN;
   KEY_RFKILL = 247;
   KEY_MICMUTE = 248;
+
+  envstealer = pkgs.writeTextFile {
+    name = "envstealer";
+    text = ''
+      #! /usr/bin/env xonsh
+
+      import sys
+      import os
+      import psutil
+      import subprocess
+
+      print(sys.argv)
+
+      def envsteal(pid: int):
+        envfile = open("/proc/{}/environ".format(pid))
+        envstr = envfile.read()
+        envrows = envstr.split("\x00")
+        for i in envrows:
+          try:
+            env = i.split("=", 1)
+            ''${env[0]} = env[1] if env[1] is not None else ""
+          except:
+            pass
+
+      def findproc(name: str):
+        username = os.getlogin()
+        print(username)
+        pid = 0
+  
+        for proc in psutil.process_iter(['pid', 'name', 'username']):
+          if proc.info['username'] == username and proc.info['name'].find(sys.argv[1]) >= 0 :
+            print(proc.info['name'])
+            pid = proc.info['pid']
+            break
+  
+        return pid
+
+      if __name__ == "__main__":
+        pid = findproc(sys.argv[1])
+
+        print(pid)
+  
+        if pid:
+          envsteal(pid)
+          @(sys.argv[2])
+
+    '';
+    executable = true;
+    destination = "/bin/envstealer";
+  };
 in
+rec
 {
   services.actkbd = {
     enable = true;
@@ -271,7 +322,7 @@ in
       }
       { keys = [ KEY_SPACE KEY_LEFTMETA ]; events = [ "rel" ]; attributes = [ "grabbed" "grab" "ungrab" "noexec" ]; }
       {
-        keys = [ KEY_LEFT KEY_LEFTMETA];
+        keys = [ KEY_LEFT KEY_LEFTMETA ];
         events = [ "key" ];
         attributes = [ "grab" ];
         command = "${pkgs.systemd}/bin/machinectl shell lillecarl@ /run/current-system/sw/bin/qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut \"Window Quick Tile Left\" &";
@@ -340,7 +391,13 @@ in
         command = "${pkgs.systemd}/bin/machinectl shell --setenv=WAYLAND_DISPLAY=wayland-0 --setenv=XDG_SESSION_TYPE=wayland lillecarl@ ${pkgs.spectacle}/bin/spectacle &";
       }
       { keys = [ KEY_PAUSE ]; events = [ "rel" ]; attributes = [ "grabbed" "grab" "ungrab" "noexec" ]; }
+      {
+        keys = [ KEY_SYSRQ ];
+        events = [ "key" ];
+        attributes = [ "grab" ];
+        command = "${pkgs.systemd}/bin/machinectl shell lillecarl@ ${pkgs.systemd}/bin/systemd-run --user ${envstealer}/bin/envstealer plasmashell spectacle &";
+      }
+      { keys = [ KEY_SYSRQ ]; events = [ "rel" ]; attributes = [ "grabbed" "grab" "ungrab" "noexec" ]; }
     ];
   };
-
 }
