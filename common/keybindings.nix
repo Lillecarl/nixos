@@ -1,5 +1,16 @@
 { config, pkgs, ... }:
 let
+  # machinectl gives us a shell to run a command as a user with dbus and everything set up by systemd
+  mctl_shell_qdbus = "${pkgs.systemd}/bin/machinectl shell lillecarl@ /run/current-system/sw/bin/qdbus";
+  # invokeShortcut runs qdbus to invoke a KDE shortcut (see settings page)
+  invokeShortcut =  shortcut: "${mctl_shell_qdbus} org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut \"${shortcut}\" &";
+  # invokeCommand runs machinectl, sets up a temporary systemd unit, steals the environment variables from plasmashell and executes a command
+  invokeCommand = command: "${pkgs.systemd}/bin/machinectl shell lillecarl@ ${pkgs.systemd}/bin/systemd-run --user ${envstealer}/bin/envstealer plasmashell ${command} &";
+  # Attributes used for keydown registration
+  keyAttributes = [ "ungrabbed" "exec" "grab" ];
+  # Attributes used for releasing
+  releaseAttributes = [ "grabbed" "noexec" "ungrab" "rcvrel" "allrel" ];
+
   # https://raw.githubusercontent.com/torvalds/linux/master/include/uapi/linux/input-event-codes.h
   KEY_RESERVED = 0;
   KEY_ESC = 1;
@@ -100,6 +111,7 @@ let
   KEY_RIGHTCTRL = 97;
   KEY_KPSLASH = 98;
   KEY_SYSRQ = 99;
+  KEY_PRINTSCREEN = 99; # Custom
   KEY_RIGHTALT = 100;
   KEY_LINEFEED = 101;
   KEY_HOME = 102;
@@ -308,96 +320,110 @@ rec
 
     bindings = [
       {
-        keys = [ KEY_LEFTALT KEY_CAPSLOCK ];
+        keys = [ KEY_LEFTMETA KEY_TAB];
         events = [ "key" ];
-        attributes = [ "grab" ];
-        command = "${pkgs.systemd}/bin/machinectl shell lillecarl@ /run/current-system/sw/bin/qdbus org.kde.krunner /App org.kde.krunner.App.query \"window: \" &";
+        command = "${mctl_shell_qdbus} org.kde.krunner /App org.kde.krunner.App.query \"window: \" &";
+        attributes = keyAttributes;
       }
-      { keys = [ KEY_LEFTALT KEY_CAPSLOCK ]; events = [ "rel" ]; attributes = [ "grabbed" "grab" "ungrab" "noexec" ]; }
+      { keys = [ KEY_LEFTMETA KEY_TAB ]; events = [ "rel" ]; attributes = releaseAttributes; }
       {
-        keys = [ KEY_SPACE KEY_LEFTMETA ];
+        keys = [ KEY_SPACE KEY_LEFTALT];
         events = [ "key" ];
-        attributes = [ "grab" ];
-        command = "${pkgs.systemd}/bin/machinectl shell lillecarl@ /run/current-system/sw/bin/qdbus org.kde.krunner /App org.kde.krunner.App.query \"\" &";
+        command = "${mctl_shell_qdbus} org.kde.krunner /App org.kde.krunner.App.query \"\" &";
+        attributes = keyAttributes;
       }
-      { keys = [ KEY_SPACE KEY_LEFTMETA ]; events = [ "rel" ]; attributes = [ "grabbed" "grab" "ungrab" "noexec" ]; }
+      { keys = [ KEY_SPACE KEY_LEFTALT]; events = [ "rel" ]; attributes = releaseAttributes; }
       {
         keys = [ KEY_LEFT KEY_LEFTMETA ];
         events = [ "key" ];
-        attributes = [ "grab" ];
-        command = "${pkgs.systemd}/bin/machinectl shell lillecarl@ /run/current-system/sw/bin/qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut \"Window Quick Tile Left\" &";
+        command = invokeShortcut "Window Quick Tile Left";
+        attributes = keyAttributes;
       }
-      { keys = [ KEY_LEFT KEY_LEFTMETA ]; events = [ "rel" ]; attributes = [ "grabbed" "grab" "ungrab" "noexec" ]; }
+      { keys = [ KEY_LEFT KEY_LEFTMETA ]; events = [ "rel" ]; attributes = releaseAttributes; }
       {
         keys = [ KEY_RIGHT KEY_LEFTMETA ];
         events = [ "key" ];
-        attributes = [ "grab" ];
-        command = "${pkgs.systemd}/bin/machinectl shell lillecarl@ /run/current-system/sw/bin/qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut \"Window Quick Tile Right\" &";
+        command = invokeShortcut "Window Quick Tile Right";
+        attributes = keyAttributes;
       }
-      { keys = [ KEY_RIGHT KEY_LEFTMETA ]; events = [ "rel" ]; attributes = [ "grabbed" "grab" "ungrab" "noexec" ]; }
+      { keys = [ KEY_RIGHT KEY_LEFTMETA ]; events = [ "rel" ]; attributes = releaseAttributes; }
       {
         keys = [ KEY_UP KEY_LEFTMETA ];
         events = [ "key" ];
-        attributes = [ "grab" ];
-        command = "${pkgs.systemd}/bin/machinectl shell lillecarl@ /run/current-system/sw/bin/qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut \"Window Quick Tile Top\" &";
+        command = invokeShortcut "Window Quick Tile Top";
+        attributes = keyAttributes;
       }
-      { keys = [ KEY_UP KEY_LEFTMETA ]; events = [ "rel" ]; attributes = [ "grabbed" "grab" "ungrab" "noexec" ]; }
+      { keys = [ KEY_UP KEY_LEFTMETA ]; events = [ "rel" ]; attributes = releaseAttributes; }
       {
         keys = [ KEY_DOWN KEY_LEFTMETA ];
         events = [ "key" ];
-        attributes = [ "grab" ];
-        command = "${pkgs.systemd}/bin/machinectl shell lillecarl@ /run/current-system/sw/bin/qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut \"Window Quick Tile Bottom\" &";
+        command = invokeShortcut "Window Quick Tile Bottom";
+        attributes = keyAttributes;
       }
-      { keys = [ KEY_DOWN KEY_LEFTMETA ]; events = [ "rel" ]; attributes = [ "grabbed" "grab" "ungrab" "noexec" ]; }
+      { keys = [ KEY_DOWN KEY_LEFTMETA ]; events = [ "rel" ]; attributes = releaseAttributes; }
       {
         keys = [ KEY_LEFT KEY_UP KEY_LEFTMETA ];
         events = [ "key" ];
-        attributes = [ "grab" ];
-        command = "${pkgs.systemd}/bin/machinectl shell lillecarl@ /run/current-system/sw/bin/qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut \"Window Quick Tile Top Left\" &";
+        command = invokeShortcut "Window Quick Tile Top Left";
+        attributes = keyAttributes;
       }
-      { keys = [ KEY_LEFT KEY_UP KEY_LEFTMETA ]; events = [ "rel" ]; attributes = [ "grabbed" "grab" "ungrab" "noexec" ]; }
+      { keys = [ KEY_LEFT KEY_UP KEY_LEFTMETA ]; events = [ "rel" ]; attributes = releaseAttributes; }
       {
         keys = [ KEY_RIGHT KEY_UP KEY_LEFTMETA ];
         events = [ "key" ];
-        attributes = [ "grab" ];
-        command = "${pkgs.systemd}/bin/machinectl shell lillecarl@ /run/current-system/sw/bin/qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut \"Window Quick Tile Top Right\" &";
+        command = invokeShortcut "Window Quick Tile Top Right";
+        attributes = keyAttributes;
       }
-      { keys = [ KEY_RIGHT KEY_UP KEY_LEFTMETA ]; events = [ "rel" ]; attributes = [ "grabbed" "grab" "ungrab" "noexec" ]; }
+      { keys = [ KEY_RIGHT KEY_UP KEY_LEFTMETA ]; events = [ "rel" ]; attributes = releaseAttributes; }
       {
         keys = [ KEY_LEFT KEY_DOWN KEY_LEFTMETA ];
         events = [ "key" ];
-        attributes = [ "grab" ];
-        command = "${pkgs.systemd}/bin/machinectl shell lillecarl@ /run/current-system/sw/bin/qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut \"Window Quick Tile Bottom Left\" &";
+        command = invokeShortcut "Window Quick Tile Bottom Left";
+        attributes = keyAttributes;
       }
-      { keys = [ KEY_LEFT KEY_DOWN KEY_LEFTMETA ]; events = [ "rel" ]; attributes = [ "grabbed" "grab" "ungrab" "noexec" ]; }
+      { keys = [ KEY_LEFT KEY_DOWN KEY_LEFTMETA ]; events = [ "rel" ]; attributes = releaseAttributes; }
       {
         keys = [ KEY_RIGHT KEY_DOWN KEY_LEFTMETA ];
         events = [ "key" ];
-        attributes = [ "grab" ];
-        command = "${pkgs.systemd}/bin/machinectl shell lillecarl@ /run/current-system/sw/bin/qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut \"Window Quick Tile Bottom Right\" &";
+        command = invokeShortcut "Window Quick Tile Bottom Right";
+        attributes = keyAttributes;
       }
-      { keys = [ KEY_RIGHT KEY_DOWN KEY_LEFTMETA ]; events = [ "rel" ]; attributes = [ "grabbed" "grab" "ungrab" "noexec" ]; }
+      { keys = [ KEY_RIGHT KEY_DOWN KEY_LEFTMETA ]; events = [ "rel" ]; attributes = releaseAttributes; }
       {
         keys = [ KEY_F KEY_LEFTMETA ];
         events = [ "key" ];
-        attributes = [ "grab" ];
-        command = "${pkgs.systemd}/bin/machinectl shell lillecarl@ /run/current-system/sw/bin/qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut \"Window Maximize\" &";
+        command = invokeShortcut "Window Maximize";
+        attributes = keyAttributes;
       }
-      { keys = [ KEY_F KEY_LEFTMETA ]; events = [ "rel" ]; attributes = [ "grabbed" "grab" "ungrab" "noexec" ]; }
+      { keys = [ KEY_F KEY_LEFTMETA ]; events = [ "rel" ]; attributes = releaseAttributes; }
       {
-        keys = [ KEY_PAUSE ];
+        keys = [ KEY_LEFTCTRL KEY_C ];
         events = [ "key" ];
-        attributes = [ "grab" ];
-        command = "${pkgs.systemd}/bin/machinectl shell --setenv=WAYLAND_DISPLAY=wayland-0 --setenv=XDG_SESSION_TYPE=wayland lillecarl@ ${pkgs.spectacle}/bin/spectacle &";
+        command = invokeShortcut "Copy";
+        attributes = keyAttributes;
       }
-      { keys = [ KEY_PAUSE ]; events = [ "rel" ]; attributes = [ "grabbed" "grab" "ungrab" "noexec" ]; }
+      { keys = [ KEY_LEFTCTRL KEY_C ]; events = [ "rel" ]; attributes = releaseAttributes; }
       {
-        keys = [ KEY_SYSRQ ];
+        keys = [ KEY_LEFTCTRL KEY_X ];
         events = [ "key" ];
-        attributes = [ "grab" ];
-        command = "${pkgs.systemd}/bin/machinectl shell lillecarl@ ${pkgs.systemd}/bin/systemd-run --user ${envstealer}/bin/envstealer plasmashell spectacle &";
+        command = invokeShortcut "Cut";
+        attributes = keyAttributes;
       }
-      { keys = [ KEY_SYSRQ ]; events = [ "rel" ]; attributes = [ "grabbed" "grab" "ungrab" "noexec" ]; }
+      { keys = [ KEY_LEFTCTRL KEY_X ]; events = [ "rel" ]; attributes = releaseAttributes; }
+      {
+        keys = [ KEY_LEFTCTRL KEY_V ];
+        events = [ "key" ];
+        command = invokeShortcut "Cut";
+        attributes = keyAttributes;
+      }
+      { keys = [ KEY_LEFTCTRL KEY_V ]; events = [ "rel" ]; attributes = releaseAttributes; }
+      {
+        keys = [ KEY_PRINTSCREEN ];
+        events = [ "key" ];
+        command = invokeCommand "spectacle";
+        attributes = keyAttributes;
+      }
+      { keys = [ KEY_PRINTSCREEN ]; events = [ "rel" ]; attributes = releaseAttributes; }
     ];
   };
 }
