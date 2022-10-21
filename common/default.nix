@@ -144,6 +144,7 @@ let
             xontrib-output-search
             xontrib-fzf-widgets
             pyyaml
+            psutil
             jinja2
           ])
           (old.propagatedBuildInputs or [ ])
