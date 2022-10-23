@@ -11,4 +11,5 @@ final: prev: {
   tokenize-output         = prev.callPackage ./tokenize-output.nix { };
   xontrib-output-search   = prev.callPackage ./xontrib-output-search.nix { };
   xontrib-fzf-widgets     = prev.callPackage ./xontrib-fzf-widgets.nix { };
+  pyyaml                  = prev.callPackage ./pyyaml.nix { };
 }
