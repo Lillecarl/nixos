@@ -9,4 +9,6 @@ final: prev: {
   xonsh-direnv            = prev.callPackage ./xonsh-direnv.nix { };
   xontrib-argcomplete     = prev.callPackage ./xontrib-argcomplete.nix { };
   tokenize-output         = prev.callPackage ./tokenize-output.nix { };
+  xontrib-output-search   = prev.callPackage ./xontrib-output-search.nix { };
+  xontrib-fzf-widgets     = prev.callPackage ./xontrib-fzf-widgets.nix { };
 }

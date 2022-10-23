@@ -1,14 +1,12 @@
 { lib
-, python
-, buildPythonPackage
-, fetchPypi
+, python3
 }:
 
-buildPythonPackage rec {
+python3.pkgs.buildPythonPackage rec {
   pname = "xonsh-direnv";
   version = "1.6.1";
 
-  src = fetchPypi {
+  src = python3.pkgs.fetchPypi {
     inherit pname version;
     sha256 = "sha256-Nt8Da1EtMVWZ9mbBDjys7HDutLYifwoQ1HVmI5CN2Ww=";
   };

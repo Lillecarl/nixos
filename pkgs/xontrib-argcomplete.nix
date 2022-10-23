@@ -1,20 +1,17 @@
 { lib
-, pkgs
-, python
-, buildPythonPackage
-, fetchPypi
+, python3
 }:
 
-buildPythonPackage rec {
+python3.pkgs.buildPythonPackage rec {
   pname = "xontrib-argcomplete";
   version = "0.3.2";
 
-  src = fetchPypi {
+  src = python3.pkgs.fetchPypi {
     inherit pname version;
     sha256 = "sha256-jn1NHh/PTTgSX0seOvOZTpRv4PxAQ4PbDiXOSb4/jrU=";
   };
 
-  propagatedBuildInputs = with pkgs.python3Packages; [
+  propagatedBuildInputs = with python3.pkgs; [
     argcomplete
   ];
 
