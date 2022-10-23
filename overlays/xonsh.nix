@@ -2,10 +2,7 @@ final: prev: {
   _dontExport = true;
 
   xonsh =
-    let
-      python3Packages = prev.python3.pkgs;
-    in
-    (prev.xonsh.override { inherit python3Packages; }).overrideAttrs (old: {
+    (prev.xonsh.override { inherit (prev.python3.pkgs); }).overrideAttrs (old: {
       propagatedBuildInputs = prev.lib.flatten [
         (with prev.pkgs; with prev.python3.pkgs; [
           xonsh-direnv
@@ -13,7 +10,7 @@ final: prev: {
           xontrib-output-search
           xontrib-fzf-widgets
           pyyaml
-          prev.python3.pkgs.psutil
+          psutil
           jinja2
         ])
         (old.propagatedBuildInputs or [ ])

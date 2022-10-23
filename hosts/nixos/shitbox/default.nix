@@ -4,47 +4,99 @@
 
 { config, pkgs, ... }:
 {
-  imports = [
-    # Import hardware configuration
-    ./hardware-configuration.nix
-    # Import boot configuration 
-    ./boot.nix
+  boot.initrd.availableKernelModules = [
+    "vfio-pci"
+    "amdgpu"
   ];
+  boot.initrd.kernelModules = [ "amdgpu" "vfio-pci" ];
+  boot.extraModprobeConfig = "options vfio-pci ids=10de:2487,10de:228b";
+  boot.blacklistedKernelModules = [ "nvidiafb" "nouveau" "nvidia_drm" "nvidia" ];
+  boot.kernelModules = [ "amdgpu" "kvm-amd" "wl" "vfio_virqfd" "vfio_pci" "vfio_iommu_type1" "vfio" "i2c-dev" ];
+  boot.kernelParams = [ "amd_iommu=on" "mitigations=off" "iommu=pt" "radeon.cik_support=0" "amdgpu.cik_support=1" ];
 
-  nixpkgs = {
-    # Allow proprietary software to be installed
-    config.allowUnfree = true;
-    config.permittedInsecurePackages = [
-      "electron-12.2.3"
-    ];
+  boot.postBootCommands = ''
+    ${pkgs.kmod}/bin/modprobe -r nvidiafb
+    ${pkgs.kmod}/bin/modprobe -r nouveau
+
+    echo 0 > /sys/class/vtconsole/vtcon0/bind
+    echo 0 > /sys/class/vtconsole/vtcon1/bind
+    echo efi-framebuffer.0 > /sys/bus/platform/drivers/efi-framebuffer/unbind
+
+    DEVS="0000:08:00.0 0000:08:00.1"
+  
+    for DEV in $DEVS; do
+      echo "vfio-pci" > /sys/bus/pci/devices/$DEV/driver_override
+    done
+    ${pkgs.kmod}/bin/modprobe -i vfio-pci
+  '';
+
+  boot.kernel.sysctl = {
+    "vm.swappiness" = 1;
   };
 
-  nix = {
-    package = pkgs.nixVersions.stable;
-    settings.auto-optimise-store = true;
-    extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
-  };
-
-  services.hydra = {
-    enable = true;
-    hydraURL = "http://localhost:3000"; # externally visible URL
-    notificationSender = "hydra@localhost"; # e-mail of hydra service
-    # a standalone hydra will require you to unset the buildMachinesFiles list to avoid using a nonexistant /etc/nix/machines
-    buildMachinesFiles = [ ];
-    # you will probably also want, otherwise *everything* will be built from scratch
-    useSubstitutes = true;
-  };
-
-  nix.buildMachines = [
+  fileSystems."/" =
     {
-      hostName = "localhost";
-      system = "x86_64-linux";
-      supportedFeatures = [ "kvm" "nixos-test" "big-parallel" "benchmark" ];
-      maxJobs = 8;
-    }
-  ];
+      device = "zroot/root";
+      fsType = "zfs";
+    };
+
+  fileSystems."/nix" =
+    {
+      device = "zroot/root/nix";
+      fsType = "zfs";
+    };
+
+  fileSystems."/home" =
+    {
+      device = "zroot/root/home";
+      fsType = "zfs";
+    };
+
+  fileSystems."/boot" =
+    {
+      device = "/dev/disk/by-uuid/7774-7A15";
+      fsType = "vfat";
+    };
+
+  swapDevices =
+    [{ device = "/dev/disk/by-uuid/706e9add-3b1c-49b4-94b0-795218b393ac"; }];
+
+  hardware.enableAllFirmware = true;
+  hardware.cpu.amd.updateMicrocode = true;
+  powerManagement.cpuFreqGovernor = "performance";
+
+  boot = {
+    #kernelPackages = pkgs.linuxPackages_latest;
+    # required for ZFS to build
+    zfs.enableUnstable = true;
+    # Enable ZFS boot
+    supportedFilesystems = [ "zfs" ];
+    # Use the systemd-boot EFI boot loader.
+    loader.systemd-boot.enable = true;
+    loader.efi.canTouchEfiVariables = true;
+    #initrd.availableKernelModules = [ "e1000e" "bcma" "r8169" ];
+    initrd.network = {
+      # This will use udhcp to get an ip address.
+      # Make sure you have added the kernel module for your network driver to `boot.initrd.availableKernelModules`, 
+      enable = true;
+      ssh = {
+        enable = true;
+        # To prevent ssh from freaking out because a different host key is used,
+        # use a different port for initrd SSH
+        port = 2222;
+        hostKeys = [ "/etc/secrets/initrd/ssh_host_rsa_key" "/etc/secrets/initrd/ssh_host_ed25519_key" ];
+        # public ssh key used for login
+        authorizedKeys = [
+          "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDJ8ga6UB6EPJAWaarh9vr852SKl5aEfNIoiwEeb7m36yDGLLxA/lw5ZzRH6i+krJYnTnXTUY7GVRxkBtPYsTF9tGN10jb7gvtZ67wuAl5Sxnt5EkXZuDS4M5ygT8zeBw0iM0k5/6ALNEaG+3UOT8gmFSqh5QxCqookA2XTDMPH8iZNFxhI5nhxTwkQu9iC7nOXVwg2VZsZJeh3VC823lrNZysuNYb9dGxE35atyjR8DPp83U7MfBZn2ppWGphoHfbCcH+w/oAHOiSr0iA7Kg8AuyeYh8KlbewNDSH7v/5GNzFsno+y5X2xPTNupP0FaL0gRkz/yvdyJcuWJw2UDujVm6frAxh7CKcWg7Tb6QZN/4dHnwpNu+XcffLTwQjMModM6olEJqdhzHyC7G5+fUQo4ngfN73MflwONYE+/verAgQRFv2d4kGHR3KTjW2duij8j1DScjv2s1VTYFUh9wC241xnH49Q9BHu5Rso/74jBDJ06uMU3bzoQoFZ3EMUJf8= lillecarl@nixos"
+        ];
+      };
+      # this will automatically load the zfs password prompt on login
+      # and kill the other prompt so boot can continue
+      postCommands = ''
+        echo "zfs load-key -a; killall zfs" >> /root/.profile
+      '';
+    };
+  };
 
   # Networking, virbr0 is WAN iface
   networking = {
@@ -106,15 +158,6 @@
     fstrim = {
       enable = true;
     };
-    # Run sound through pipewire
-    pipewire = {
-      enable = true;
-      #alsa.enable = true;
-      #alsa.support32Bit = true;
-      #jack.enable = true;
-      pulse.enable = true;
-      socketActivation = true;
-    };
     ntp = {
       enable = true;
       servers = [
@@ -167,12 +210,6 @@
     ddcutil # Monitor control
   ];
 
-  #environment.etc = {
-  #  "X11/xorg.conf.d/90-nvidia-i2c.conf" = {
-  #    source = "${pkgs.ddcutil}/share/ddcutil/data/90-nvidia-i2c.conf";
-  #  };
-  #};
-
   virtualisation = {
     libvirtd = {
       enable = true;
@@ -204,12 +241,6 @@
     };
   };
 
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "20.09"; # Did you read the comment?
+  system.stateVersion = "20.09";
 }
 

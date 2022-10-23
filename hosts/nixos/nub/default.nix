@@ -1,6 +1,6 @@
 { suites, config, lib, pkgs, modulesPath, ... }:
 {
-  imports = suites.base;
+  imports = suites.nub;
   # Custom
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;

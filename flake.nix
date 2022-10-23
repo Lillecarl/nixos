@@ -106,7 +106,7 @@
         nixos = {
           hostDefaults = {
             system = "x86_64-linux";
-            channelName = "nixos";
+            channelName = "latest";
             imports = [ (digga.lib.importExportableModules ./modules) ];
             modules = [
               { lib.our = self.lib; }
@@ -119,6 +119,13 @@
 
           imports = [ (digga.lib.importHosts ./hosts/nixos) ];
           hosts = {
+            shitbox = {
+              modules = [
+                nixos-hardware.nixosModules.common-cpu-amd
+                nixos-hardware.nixosModules.common-pc-ssd
+                nixos-hardware.nixosModules.common-pc
+              ];
+            };
             nub = {
               modules = [
                 nixos-hardware.nixosModules.lenovo-thinkpad-t14s
@@ -137,10 +144,15 @@
             };
             suites = with profiles; rec {
               base = [
-                core.nixos
-                users.nixos
+                users.lillecarl
                 users.root
                 common.nixos
+              ];
+              nub = [
+                users.lillecarl
+                users.root
+                common.nixos
+                common.nub
               ];
             };
           };
@@ -184,23 +196,7 @@
             };
           };
           users = {
-            # TODO: does this naming convention still make sense with darwin support?
-            #
-            # - it doesn't make sense to make a 'nixos' user available on
-            #   darwin, and vice versa
-            #
-            # - the 'nixos' user might have special significance as the default
-            #   user for fresh systems
-            #
-            # - perhaps a system-agnostic home-manager user is more appropriate?
-            #   something like 'primaryuser'?
-            #
-            # all that said, these only exist within the `hmUsers` attrset, so
-            # it could just be left to the developer to determine what's
-            # appropriate. after all, configuring these hm users is one of the
-            # first steps in customizing the template.
-            nixos = { suites, ... }: { imports = suites.base; };
-            darwin = { suites, ... }: { imports = suites.base; };
+            lillecarl = { suites, ... }: { imports = suites.base; };
           }; # digga.lib.importers.rakeLeaves ./users/hm;
         };
 
