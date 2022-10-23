@@ -45,6 +45,8 @@
       nixos-hardware.url = "github:nixos/nixos-hardware";
 
       nixos-generators.url = "github:nix-community/nixos-generators";
+
+      nixos-unstable-channel.url = "https://nixos.org/channels/nixos-unstable/nixexprs.tar.xz"; # For fixing command not found
     };
 
   outputs =
@@ -117,15 +119,29 @@
 
           imports = [ (digga.lib.importHosts ./hosts/nixos) ];
           hosts = {
-            /* set host-specific properties here */
-            NixOS = { };
+            nub = {
+              modules = [
+                nixos-hardware.nixosModules.lenovo-thinkpad-t14s
+                nixos-hardware.nixosModules.common-cpu-amd
+                nixos-hardware.nixosModules.common-gpu-amd
+                nixos-hardware.nixosModules.common-pc-laptop
+                nixos-hardware.nixosModules.common-pc-laptop-acpi_call
+                nixos-hardware.nixosModules.common-pc-ssd
+                nixos-hardware.nixosModules.common-pc
+              ];
+            };
           };
           importables = rec {
             profiles = digga.lib.rakeLeaves ./profiles // {
               users = digga.lib.rakeLeaves ./users;
             };
             suites = with profiles; rec {
-              base = [ core.nixos users.nixos users.root ];
+              base = [
+                core.nixos
+                users.nixos
+                users.root
+                common.nixos
+              ];
             };
           };
         };

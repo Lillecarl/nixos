@@ -406,6 +406,17 @@
         "type": "github"
       }
     },
+    "nixos-unstable-channel": {
+      "locked": {
+        "narHash": "sha256-jDsZxXKqH/jSCwb2aThDOnZCSBvnFSYu+uDIWgaMx6U=",
+        "type": "tarball",
+        "url": "https://nixos.org/channels/nixos-unstable/nixexprs.tar.xz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://nixos.org/channels/nixos-unstable/nixexprs.tar.xz"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1637186689,
@@ -516,6 +527,7 @@
         "nixos": "nixos",
         "nixos-generators": "nixos-generators",
         "nixos-hardware": "nixos-hardware",
+        "nixos-unstable-channel": "nixos-unstable-channel",
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-darwin-stable": "nixpkgs-darwin-stable",
         "nur": "nur",
