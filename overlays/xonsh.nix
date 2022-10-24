@@ -1,10 +1,11 @@
 final: prev: {
-  _dontExport = true;
-
   xonsh =
-    (prev.xonsh.override { inherit (prev.python3.pkgs); }).overrideAttrs (old: {
+    let
+      python3Packages = prev.python3.pkgs;
+    in
+    (prev.xonsh.override { inherit python3Packages; }).overrideAttrs (old: {
       propagatedBuildInputs = prev.lib.flatten [
-        (with prev.pkgs; with prev.python3.pkgs; [
+        (with python3Packages; [
           xonsh-direnv
           xontrib-argcomplete
           xontrib-output-search
@@ -15,9 +16,6 @@ final: prev: {
         ])
         (old.propagatedBuildInputs or [ ])
       ];
-      checkInputs = [ ];
-      checkPhase = "";
-      pytestcheckPhase = "";
     }
   );
 }
