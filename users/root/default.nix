@@ -3,7 +3,7 @@ rec
 {
   # Allow root to map to LilleCarl user in LXD container
   users.users.root = {
-    initialHashedPassword = "$6$ONUDqt1exFxDBPp.$mmPLQrgtFNJ543sZst.DoEAgVAyi5U8i2AWAXhDpoUGz0KDU.6QbXybsMtyPsMu5Q9nq2YKhfm5ca.oRHTVrm.";
+    initialHashedPassword = "$6$cQj59HFxckoo6edO$K52bjvtmBAFVlUVdCoLCURYbXYW.SM461pR4sq9jK7c/v1qy8caVOCthu4jfHTdhFwXLVKwe6WjV2grmH1l0b/";
     subUidRanges = [
       {
         count = 1;
