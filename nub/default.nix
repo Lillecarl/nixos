@@ -32,6 +32,22 @@ rec
     ];
   };
 
+  services.salt.master = {
+    enable = true;
+
+    configuration = {
+      file_roots = {
+        base = [ "/srv/salt/salt" ];
+      };
+      pillar_roots = {
+        base = [ "/srv/salt/pillar" ];
+      };
+      master_roots = {
+        base = [ "/srv/salt/salt-master" ];
+      };
+    };
+  };
+
   services.acpid = {
     enable = true;
 
