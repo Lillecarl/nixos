@@ -338,8 +338,6 @@ rec
     xorg.xwininfo # Information about X windows (Used to find things using XWayland)
     xonsh
 
-    tangram # Pinned tabs
-
     # Chat apps
     element-desktop # Element Slack app
     teams # Microsoft Teams collaboration suite (Electron)
@@ -354,6 +352,8 @@ rec
     #vlc # VLC sucks in comparision to MPV
 
     # Commandline tools (CLI)
+    nmap # Network scanner
+    vagrant # Create 
     execline # Tools for dbus n stuff
     actkbd # Keyboard shortcut daemon
     handlr # xdg-open alternative 
