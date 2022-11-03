@@ -375,9 +375,13 @@ rec
 
   services.grafana = {
     enable = true;
-    addr = "127.0.0.1";
-    port = 446;
-    domain = "localhost";
+    settings = {
+      server = {
+        http_addr = "127.0.0.1";
+        http_port = 446;
+        domain = "localhost";
+      };
+    };
   };
 
   # enable emacs, running as a user daemon
