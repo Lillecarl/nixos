@@ -207,6 +207,7 @@ let
 in
 rec
 {
+  nix.settings.trusted-users = [ "root" "lillecarl" ];
   # Allow root to map to LilleCarl user in LXD container
   users.users.root = {
     subUidRanges = [
