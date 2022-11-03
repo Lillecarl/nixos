@@ -131,6 +131,54 @@ let
     };
   };
 
+  repassh = python3Packages.buildPythonPackage rec {
+    pname = "repassh";
+    version = "1.2.0";
+    src = python3Packages.fetchPypi {
+      inherit pname version;
+      sha256 = "sha256-uerGQg/c+7LkDyenSeLjPaMMVCNZyMPw1atxhiQrIYI=";
+    };
+
+    meta = {
+      description = "SSH agent integration for xonsh";
+      homepage = "https://github.com/dyuri/${pname}";
+      license = lib.licenses.mit;
+    };
+  };
+
+  xontrib-ssh-agent = python3Packages.buildPythonPackage rec {
+    pname = "xontrib-ssh-agent";
+    version = "1.0.13";
+    src = python3Packages.fetchPypi {
+      inherit pname version;
+      sha256 = "sha256-XfrZ1ALl71anA/WeOAIBlifAE9ruoZPqD/blkJlf5fw=";
+    };
+
+    propagatedBuildInputs = with pkgs.python3Packages; [
+      repassh
+    ];
+    meta = {
+      description = "SSH agent integration for xonsh";
+      homepage = "https://github.com/dyuri/${pname}";
+      license = lib.licenses.mit;
+    };
+  };
+
+  xontrib-sh = python3Packages.buildPythonPackage rec {
+    pname = "xontrib-sh";
+    version = "0.3.0";
+    src = python3Packages.fetchPypi {
+      inherit pname version;
+      sha256 = "sha256-eV++ZuopnAzNXRuafXXZM7tmcay1NLBIB/U+SVrQV+U=";
+    };
+
+    meta = {
+      description = "SSH agent integration for xonsh";
+      homepage = "https://github.com/anki-code/${pname}";
+      license = lib.licenses.mit;
+    };
+  };
+
   xonsh-overlay = final: prev: {
     xonsh =
       let
@@ -143,6 +191,8 @@ let
             xontrib-argcomplete
             xontrib-output-search
             xontrib-fzf-widgets
+            xontrib-ssh-agent
+            xontrib-sh
             pyyaml
             psutil
             jinja2
