@@ -316,7 +316,7 @@ in
 rec
 {
   services.actkbd = {
-    enable = true;
+    enable = false;
 
     bindings = [
       {
@@ -413,7 +413,7 @@ rec
       {
         keys = [ KEY_LEFTCTRL KEY_V ];
         events = [ "key" ];
-        command = invokeShortcut "Cut";
+        command = invokeShortcut "Paste";
         attributes = keyAttributes;
       }
       { keys = [ KEY_LEFTCTRL KEY_V ]; events = [ "rel" ]; attributes = releaseAttributes; }
