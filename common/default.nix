@@ -373,7 +373,7 @@ rec
     fortune # Fortune cookies in CLI
     toilet # Ascii art text
     cmatrix # Cool matrix style scrolling, really cpu intense
-    tldr # Like, TL;DR manpages
+    tealdeer # Like, TL;DR manpages
     xprintidle-ng # print idle time
     envsubst # Templating with environment variables, commonly used with k8s
     wireguard-tools # Wireguard tools
