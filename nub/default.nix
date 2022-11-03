@@ -131,8 +131,10 @@ rec
       100.95.25.107 shitbox
       192.168.122.107 rancher.lillecarl.com
     '';
-
   };
+  # Enable systemd-resolved, takes care of splitting DNS across interfaces n stuff
+  services.resolved.enable = true;
+
   # CUPS for printing documents.
   services.printing.enable = false;
   # Enable GlobalProtect VPN
