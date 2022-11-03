@@ -16,7 +16,7 @@
     kustomize # Kubernetes YAML configurations
     octant # Kubernetes GUI
     rancher # Rancher CLI
-    tldr # tldr manpages
+    tealdeer # tldr manpages
     cheat # tldr alternative
     ripgrep # Nice grep
     powershell # scripting shell from MS
