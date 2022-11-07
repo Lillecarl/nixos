@@ -353,6 +353,7 @@ rec
     #vlc # VLC sucks in comparision to MPV
 
     # Commandline tools (CLI)
+    rmtrash # rm compatible remove tool
     nmap # Network scanner
     vagrant # Create 
     execline # Tools for dbus n stuff
