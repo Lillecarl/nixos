@@ -354,6 +354,7 @@ rec
 
     # Commandline tools (CLI)
     rmtrash # rm compatible remove tool
+    inetutils # Common internet utilities
     nmap # Network scanner
     vagrant # Create 
     execline # Tools for dbus n stuff
