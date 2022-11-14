@@ -546,6 +546,7 @@ rec
     #(lowPrio gcc) # Old but gold C/C++ and others compiler
 
     # System tools
+    putty # TTY tool for uncool people
     ark # Archiving tool
     gparted # GUI partition manager
     wireshark # Defactor network traffic sniffing tool
