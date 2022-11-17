@@ -286,30 +286,6 @@ rec
       };
     };
 
-    # Clone everything from /sys-persist into /sys, no error handling
-    #services.sysPersist = {
-    #  enable = true;
-    #  stopIfChanged = true;
-    #  path = with pkgs; [ findutils gnused ];
-    #  script = ''
-    #    for file in $(find /sys-persist -type f)
-    #    do
-    #      cat $file > $(echo $file | sed "s/sys-persist/sys/")
-    #    done
-    #  '';
-    #};
-
-    #timers.sysPersist = {
-    #  enable = true;
-    #  wantedBy = [ "multi-user.target" ];
-    #  timerConfig = {
-    #    OnBootSec = "3m";
-    #    OnUnitActiveSec = "3m";
-    #    AccuracySec = "1m";
-    #    Unit = "sysPersist.service";
-    #  };
-    #};
-
     sleep.extraConfig = ''
       #AllowSuspend=yes
       #AllowHibernation=yes
