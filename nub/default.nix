@@ -220,15 +220,15 @@ rec
       enable = true;
     };
     lxd = {
-      enable = true;
+      enable = false;
       recommendedSysctlSettings = true;
     };
-    lxc.lxcfs.enable = true;
+    #lxc.lxcfs.enable = true;
     podman = {
       enable = true;
       dockerCompat = true;
     };
-    waydroid.enable = true;
+    #waydroid.enable = true;
   };
 
   environment.systemPackages = with pkgs; [
