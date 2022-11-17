@@ -259,19 +259,11 @@ rec
   #   enableSSHSupport = true;
   # };
   systemd = {
-    services.mdmonitor1 = {
-      description = "Monitor RAID disks";
-      wantedBy = [ "multi-user.target" ];
-      script = "${pkgs.mdadm}/bin/mdadm --monitor -m root /dev/md1337";
-    };
-
-    # Disable the default NixOS mdadm monitor as it doesn't work at all
-    services.mdmonitor.enable = false;
-
     # upower systemd service
     services.upower.enable = true;
 
     services.systemd-networkd-wait-online.enable = false;
+
     services.powerTune = {
       enable = true;
       path = with pkgs; [ powertop ];
