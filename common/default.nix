@@ -353,6 +353,7 @@ rec
     #vlc # VLC sucks in comparision to MPV
 
     # Commandline tools (CLI)
+    ansible-lint # Ansible linting software
     rmtrash # rm compatible remove tool
     inetutils # Common internet utilities
     nmap # Network scanner
@@ -605,7 +606,6 @@ rec
     webcamoid # Webcam application
     mkchromecast # Chromecast CLI
     gnomecast # Chromecast CLI
-    go-chromecast # Chromecast CLI
     castnow # Chromecast CLI
     catt # Chromecast CLI
 
