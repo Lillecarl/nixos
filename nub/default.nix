@@ -89,6 +89,7 @@ rec
     "v4l2loopback"
     # Virtual Microphone, built-in
     #"snd-aloop"
+    "tp_smapi"
   ];
 
   # Set initial kernel module settings
@@ -256,6 +257,7 @@ rec
       script = ''
         powertop --auto-tune || true
         echo "powersave" | tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor || true
+        ${pkgs.tpacpi-bat}/bin/tpacpi-bat -v -s SP 1 85 || true
       '';
     };
 
