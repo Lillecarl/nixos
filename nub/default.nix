@@ -288,10 +288,6 @@ rec
     };
   };
 
-  #services.syncthing = {
-  #  
-  #};
-
   # Monitor laptop with Prometheus
   services.prometheus = lib.mkIf prometheusEnable {
     enable = true;
