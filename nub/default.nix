@@ -232,8 +232,9 @@ rec
   };
 
   environment.systemPackages = with pkgs; [
-    zoom-us # Yet another video conferencing tool
-    jitsi-meet-electron # Video conferencing
+    iptables # Give us the iptables CLI (should map to nftables)
+    #zoom-us # Yet another video conferencing tool
+    #jitsi-meet-electron # Video conferencing
     zenmonitor # AMD CPU monitoring
     virt-manager # Virtualisation manager
     virt-manager-qt # Shitty version of virt-manager
