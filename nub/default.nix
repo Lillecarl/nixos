@@ -286,20 +286,6 @@ rec
         Unit = "powerTune.service";
       };
     };
-
-    sleep.extraConfig = ''
-      #AllowSuspend=yes
-      #AllowHibernation=yes
-      #AllowSuspendThenHibernate=yes
-      #AllowHybridSleep=yes
-      #SuspendMode=
-      #SuspendState=mem standby freeze
-      #HibernateMode=platform shutdown
-      #HibernateState=disk
-      #HybridSleepMode=suspend platform shutdown
-      #HybridSleepState=disk
-      HibernateDelaySec=300min
-    '';
   };
 
   #services.syncthing = {
