@@ -272,7 +272,7 @@ rec
       script = ''
         powertop --auto-tune || true
         echo "powersave" | tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor || true
-        ${pkgs.tpacpi-bat}/bin/tpacpi-bat -v -s SP 1 85 || true
+        ${pkgs.tpacpi-bat}/bin/tpacpi-bat -v -s SP 1 86 || true
       '';
     };
 
