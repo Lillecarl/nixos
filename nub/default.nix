@@ -137,20 +137,58 @@ rec
 
   networking = {
     hostName = "nub"; # System hostname
+    nftables.enable = true; # Enable nftables
+    firewall.enable = false; # Disable iptables
     networkmanager = {
       enable = true; # Laptops do well with networkmanager
-      #unmanaged = [ "virbr0" "lxdbr0" "lxdbr1" ];
+      unmanaged = [ "virbr0" "virbr1" "lilbr" ];
     };
     useDHCP = false; # deprecated, should be false
     # Extra hostnames, hardcoded IP's are from Tailscale
     extraHosts = ''
       ${kubeMasterIP} ${kubeMasterHostname}
-      100.95.25.107 shitbox
-      192.168.122.107 rancher.lillecarl.com
     '';
   };
   # Enable systemd-resolved, takes care of splitting DNS across interfaces n stuff
   services.resolved.enable = true;
+  systemd.network = {
+    enable = true;
+
+    wait-online = {
+      timeout = 5;
+      anyInterface = true;
+    };
+
+    netdevs = {
+      lilbr = {
+        netdevConfig = {
+          Kind = "bridge";
+          Name = "lilbr";
+          MTUBytes = "1500";
+          MACAddress = "44:38:39:36:EA:D5";
+        };
+      };
+    };
+    networks = {
+      lilbr = {
+        address = [ "10.255.255.1/24" ];
+        networkConfig = {
+          LLDP = true;
+          EmitLLDP = true;
+          MulticastDNS = true;
+        };
+        dhcpServerConfig = {
+          ServerAddress = "10.255.255.1/24";
+          PoolOffset = 50;
+          EmitDNS = true;
+          DNS = "10.255.255.1";
+        };
+        linkConfig = {
+          ActivationPolicy = "always-up";
+        };
+      };
+    };
+  };
 
   # CUPS for printing documents.
   services.printing.enable = false;
@@ -221,23 +259,6 @@ rec
   #   enableSSHSupport = true;
   # };
   systemd = {
-    network = {
-      enable = false;
-      #networks."vpn" = {
-      #  enable = true;
-      #  vrf = [ "vpnvrf" ];
-      #};
-      netdevs."vpn" = {
-        enable = true;
-        vrfConfig = {
-          Table = 1337;
-        };
-        netdevConfig = {
-          Kind = "vrf";
-          Name = "vpn";
-        };
-      };
-    };
     services.mdmonitor1 = {
       description = "Monitor RAID disks";
       wantedBy = [ "multi-user.target" ];
@@ -250,6 +271,7 @@ rec
     # upower systemd service
     services.upower.enable = true;
 
+    services.systemd-networkd-wait-online.enable = false;
     services.powerTune = {
       enable = true;
       path = with pkgs; [ powertop ];
