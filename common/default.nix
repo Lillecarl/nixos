@@ -552,7 +552,6 @@ rec
     gparted # GUI partition manager
     wireshark # Defactor network traffic sniffing tool
     ksystemlog # KDE syslog viewer
-    #etcher # Balena Etcher, GUI for dd (flash SD cards)
     nix-bash-completions # Nix completions in bash
     nix-zsh-completions # Nix completions in ZSH
     bash-completion # Bash cli autocomplete
@@ -561,7 +560,6 @@ rec
 
     # Productivity tools
     tigervnc # VNC client
-    #opensnitch-ui
     mongodb-compass # MongoDB GUI
     dbeaver # SQL database GUI
     #pgadmin4 # SQL database GUI
@@ -570,9 +568,6 @@ rec
     rofi # Searchable window title window switcher
     rofimoji # Emoji/Char picker for rofi
     gitkraken # Git GUI
-    #claws-mail # Mail client
-    #evolution # Mail client
-    #mailspring # Mail client
     libreoffice # MS office compatible productivity suite
     obs-studio # Screen recording/streaming utility
     filezilla # Free FTP/FTPS/SFTP software
@@ -581,14 +576,11 @@ rec
     copyq # Clipboard manager
     qview # Image viewer
     kate # KDE text editor
-    notepadqq # Notepad++ "clone" for Linux
     geany # Supposed to be like Notepad++
     ghostwriter # Markdown editor
-    #teamviewer # Remote Desktop Solution
     audacity # Audio software
     qtractor # Audio software
     qbittorrent # OpenSource Qt Bittorrent client
-    #subdl # Download subtitles
     okular # PDF viewer
     libsForQt5.kcolorpicker # Color Picker for Qt/KDE
     colorpicker # Just a color picker
