@@ -14,7 +14,8 @@
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
-    in {
+    in
+    {
       homeConfigurations.root = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
 
@@ -26,15 +27,7 @@
         # to pass through arguments to home.nix
       };
       packages.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux;
+      defaultPackage.x86_64-linux = import ./profile.nix { inherit pkgs; };
     };
 }
 
-#{
-#  inputs = {
-#    nixpkgs.url = "github:nixos/nixpkgs";
-#  };
-#
-#  outputs = { self, nixpkgs }: {
-#    packages.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux;
-#  };
-#}
