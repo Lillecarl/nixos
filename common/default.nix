@@ -139,20 +139,7 @@ let
     };
   };
 
-  xontrib-sh = python3Packages.buildPythonPackage rec {
-    pname = "xontrib-sh";
-    version = "0.3.0";
-    src = python3Packages.fetchPypi {
-      inherit pname version;
-      sha256 = "sha256-eV++ZuopnAzNXRuafXXZM7tmcay1NLBIB/U+SVrQV+U=";
-    };
-
-    meta = {
-      description = "SSH agent integration for xonsh";
-      homepage = "https://github.com/anki-code/${pname}";
-      license = lib.licenses.mit;
-    };
-  };
+  xontrib-sh = pkgs.callPackage ../pkgs/xontrib-sh {};
 
   xonsh-overlay = final: prev: {
     xonsh =
