@@ -3,7 +3,7 @@ let
   # machinectl gives us a shell to run a command as a user with dbus and everything set up by systemd
   mctl_shell_qdbus = "${pkgs.systemd}/bin/machinectl shell lillecarl@ /run/current-system/sw/bin/qdbus";
   # invokeShortcut runs qdbus to invoke a KDE shortcut (see settings page)
-  invokeShortcut =  shortcut: "${mctl_shell_qdbus} org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut \"${shortcut}\" &";
+  invokeShortcut = shortcut: "${mctl_shell_qdbus} org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut \"${shortcut}\" &";
   # invokeCommand runs machinectl, sets up a temporary systemd unit, steals the environment variables from plasmashell and executes a command
   invokeCommand = command: "${pkgs.systemd}/bin/machinectl shell lillecarl@ ${pkgs.systemd}/bin/systemd-run --user ${envstealer}/bin/envstealer plasmashell ${command} &";
   # Attributes used for keydown registration
@@ -320,19 +320,19 @@ rec
 
     bindings = [
       {
-        keys = [ KEY_LEFTMETA KEY_TAB];
+        keys = [ KEY_LEFTMETA KEY_TAB ];
         events = [ "key" ];
         command = "${mctl_shell_qdbus} org.kde.krunner /App org.kde.krunner.App.query \"window: \" &";
         attributes = keyAttributes;
       }
       { keys = [ KEY_LEFTMETA KEY_TAB ]; events = [ "rel" ]; attributes = releaseAttributes; }
       {
-        keys = [ KEY_SPACE KEY_LEFTALT];
+        keys = [ KEY_SPACE KEY_LEFTALT ];
         events = [ "key" ];
         command = "${mctl_shell_qdbus} org.kde.krunner /App org.kde.krunner.App.query \"\" &";
         attributes = keyAttributes;
       }
-      { keys = [ KEY_SPACE KEY_LEFTALT]; events = [ "rel" ]; attributes = releaseAttributes; }
+      { keys = [ KEY_SPACE KEY_LEFTALT ]; events = [ "rel" ]; attributes = releaseAttributes; }
       {
         keys = [ KEY_LEFT KEY_LEFTMETA ];
         events = [ "key" ];
