@@ -91,21 +91,6 @@ let
 
   xontrib-fzf-widgets = pkgs.callPackage ../pkgs/xontrib-fzf-widgets {};
 
-  pyyaml = python3Packages.buildPythonPackage rec {
-    pname = "PyYAML";
-    version = "6.0";
-    src = python3Packages.fetchPypi {
-      inherit pname version;
-      sha256 = "sha256-aPtRnBQwb+yXIKKltFvJ8MjRuccq30XDe67fzZScNaI=";
-    };
-
-    meta = {
-      description = "fzf widgets for xonsh.";
-      homepage = "https://github.com/laloch/${pname}";
-      license = lib.licenses.mit;
-    };
-  };
-
   repassh = python3Packages.buildPythonPackage rec {
     pname = "repassh";
     version = "1.2.0";
