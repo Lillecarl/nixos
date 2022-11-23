@@ -34,27 +34,10 @@ let
   xontrib-fzf-widgets = pkgs.callPackage ../pkgs/xontrib-fzf-widgets { };
   xontrib-sh = pkgs.callPackage ../pkgs/xontrib-sh { };
   xontrib-argcomplete = pkgs.callPackage ../pkgs/xontrib-argcomplete { };
-  tokenize-output = pkgs.callPackage ../pkgs/tokenize-output { };
   xontrib-output-search = pkgs.callPackage ../pkgs/xontrib-output-search { inherit tokenize-output; };
+  xontrib-ssh-agent = pkgs.callPackage ../pkgs/xontrib-ssh-agent { inherit repassh; };
   repassh = pkgs.callPackage ../pkgs/repassh { };
-
-  xontrib-ssh-agent = python3Packages.buildPythonPackage rec {
-    pname = "xontrib-ssh-agent";
-    version = "1.0.13";
-    src = python3Packages.fetchPypi {
-      inherit pname version;
-      sha256 = "sha256-XfrZ1ALl71anA/WeOAIBlifAE9ruoZPqD/blkJlf5fw=";
-    };
-
-    propagatedBuildInputs = with pkgs.python3Packages; [
-      repassh
-    ];
-    meta = {
-      description = "SSH agent integration for xonsh";
-      homepage = "https://github.com/dyuri/${pname}";
-      license = lib.licenses.mit;
-    };
-  };
+  tokenize-output = pkgs.callPackage ../pkgs/tokenize-output { };
 
   xonsh-overlay = final: prev: {
     xonsh =
