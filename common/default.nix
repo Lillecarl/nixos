@@ -28,8 +28,6 @@ let
     cp ${nixos-unstable-channel}/programs.sqlite $out
   '';
 
-  python3Packages = pkgs.python310.pkgs;
-
   xonsh-direnv = pkgs.callPackage ../pkgs/xonsh-direnv { };
   xontrib-fzf-widgets = pkgs.callPackage ../pkgs/xontrib-fzf-widgets { };
   xontrib-sh = pkgs.callPackage ../pkgs/xontrib-sh { };
@@ -44,7 +42,7 @@ let
       let
         python3Packages = final.python310.pkgs;
       in
-      (prev.xonsh.override { inherit python3Packages; }).overrideAttrs (old: {
+      (prev.xonsh.override { python3Packages = pkgs.python310.pkgs; }).overrideAttrs (old: {
         propagatedBuildInputs = lib.flatten [
           (with python3Packages; [
             xonsh-direnv
