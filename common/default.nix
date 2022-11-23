@@ -36,21 +36,7 @@ let
   xontrib-argcomplete = pkgs.callPackage ../pkgs/xontrib-argcomplete { };
   tokenize-output = pkgs.callPackage ../pkgs/tokenize-output { };
   xontrib-output-search = pkgs.callPackage ../pkgs/xontrib-output-search { inherit tokenize-output; };
-
-  repassh = python3Packages.buildPythonPackage rec {
-    pname = "repassh";
-    version = "1.2.0";
-    src = python3Packages.fetchPypi {
-      inherit pname version;
-      sha256 = "sha256-uerGQg/c+7LkDyenSeLjPaMMVCNZyMPw1atxhiQrIYI=";
-    };
-
-    meta = {
-      description = "SSH agent integration for xonsh";
-      homepage = "https://github.com/dyuri/${pname}";
-      license = lib.licenses.mit;
-    };
-  };
+  repassh = pkgs.callPackage ../pkgs/repassh { };
 
   xontrib-ssh-agent = python3Packages.buildPythonPackage rec {
     pname = "xontrib-ssh-agent";
