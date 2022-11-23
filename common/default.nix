@@ -287,6 +287,9 @@ rec
     touchpad.disableWhileTyping = true;
   };
 
+  # Enable qtile
+  services.xserver.windowManager.qtile.enable = true;
+
   # Configure keymap in X11
   services.xserver.layout = "us";
   # Allow local clients to connect to my X server
