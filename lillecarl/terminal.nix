@@ -9,6 +9,7 @@
     ".config/starship.toml".source = ./dotfiles/.config/starship.toml;
     ".config/tealdeer/config.toml".source = ./dotfiles/.config/tealdeer/config.toml;
     ".config/powershell/Microsoft.PowerShell_profile.ps1".source = ./dotfiles/.config/powershell/Microsoft.PowerShell_profile.ps1;
+    ".config/nvim/init.vim".source = ./dotfiles/.config/nvim/init.vim;
   };
 
   programs.git = {
