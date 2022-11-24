@@ -33,6 +33,8 @@ let
 in
 rec
 {
+  security.pam.services.login.enableKwallet = true;
+  security.pam.services.session.enableKwallet = true;
   nix.settings.trusted-users = [ "root" "lillecarl" ];
   # Allow root to map to LilleCarl user in LXD container
   users.users.root = {
@@ -102,21 +104,31 @@ rec
   # Enable xwayland, not everything is wayland yet.
   programs.xwayland.enable = true;
   # Enable the X11 windowing system.
-  services.xserver.enable = true;
+  services.xserver.enable = true; # Not sure why this is required.
   # Enable the Plasma 5 Desktop Environment.
-  services.xserver.displayManager.sddm.enable = true;
-  services.xserver.desktopManager.plasma5.enable = true;
-  services.xserver.desktopManager.plasma5.runUsingSystemd = true;
+  #services.xserver.displayManager.sddm.enable = true;
+  services.xserver.displayManager.lightdm.enable = true;
+  #services.xserver.desktopManager.plasma5.enable = true;
+  #services.xserver.desktopManager.plasma5.runUsingSystemd = true;
   # Enable touchpad support (enabled default in most desktopManager).
   services.xserver.libinput = {
     enable = true;
 
     touchpad.disableWhileTyping = true;
+    touchpad.naturalScrolling = true;
   };
 
   # Enable qtile
-  services.xserver.windowManager.qtile.enable = true;
-
+  #services.xserver.windowManager.qtile.enable = true;
+  services.xserver.windowManager.session = [
+    {
+      name = "qtile";
+      start = ''
+        ${pkgs.qtile}/bin/qtile start -b wayland &
+        waitPID=$!
+      '';
+    }
+  ];
   # Configure keymap in X11
   services.xserver.layout = "us";
   # Allow local clients to connect to my X server
@@ -168,6 +180,7 @@ rec
     (hiPrio codeWaylandDesktopItem) # Desktop item to force Wayland
     xorg.xwininfo # Information about X windows (Used to find things using XWayland)
     xonsh
+    qtile
 
     # Commandline tools (CLI)
     home-manager # Tool to build your home environment in a reproducible fashion, anywhere with Nix!
