@@ -171,13 +171,11 @@ rec
 
     # Commandline tools (CLI)
     home-manager # Tool to build your home environment in a reproducible fashion, anywhere with Nix!
-    ansible-lint # Ansible linting software
     rmtrash # rm compatible remove tool
     inetutils # Common internet utilities
     nmap # Network scanner
     vagrant # Create 
     execline # Tools for dbus n stuff
-    actkbd # Keyboard shortcut daemon
     handlr # xdg-open alternative 
     cookiecutter # Simple project template engine
     distrobuilder # Build other distros
@@ -190,20 +188,12 @@ rec
     bat # Cat clone with syntax highlight and git integration
     proxychains-ng # Proxy things through SOCKS
     sl # Train riding over screen in CLI
-    cowsay # Make a cow say shit
-    fortune # Fortune cookies in CLI
-    toilet # Ascii art text
-    cmatrix # Cool matrix style scrolling, really cpu intense
     tealdeer # Like, TL;DR manpages
     xprintidle-ng # print idle time
-    envsubst # Templating with environment variables, commonly used with k8s
     wireguard-tools # Wireguard tools
     go # Golang
     dotnet-sdk_6 # Latest dotnet
-    azure-cli # Azure CLI tooling
-    awscli2 # AWS CLI tooling
     aws-nuke # Nuke AWS account completely
-    #terraform # Cloud orchestrator
     tfswitch # Terraform version switcher
     terragrunt # Terraform Wrapper that does nice things
     youtube-dl # Download media from a lot of different websites
@@ -216,17 +206,6 @@ rec
     inotify-tools # CLI tools for inotify in Linux
     sshfs # Mount SFTP as filesystem
     rclone # rsync for clouds (+ loads of other cool things)
-    k2tf # Kubernetes YAML to Terraform
-    tfk8s # Kubernetes YAML to Terraform
-    kubernetes-helm # Kubernetes package manager
-    kompose # Kubernetes docker-compose like tool
-    (lowPrio kubectl) # Kubernetes management cli
-    kubectx # Kube switcher
-    kubernetes # Kubernetes packages
-    cmctl # cert-manager CLI
-    krew # kubectl plugin manager
-    operator-sdk # Kubernetes Operator Lifecycle Management(OLM) SDK
-    packer # Tool to create images and stuff from Hashicorp
     gnumake # Make for packer for rhel template
     exa # cat replacement
     sipcalc # Subnet calculator
@@ -235,13 +214,10 @@ rec
     bind # brings the dig command
     dogdns # dig without poop
     whois # whois command
-    xortool # xor key bruteforcing tool
     (lowPrio wireshark-cli) # Wireshark CLI
     (lowPrio termshark) # Wireshark TUI?
-    #libguestfs-with-appliance # Mount qcow2
     entr # Run commands when files change
     pv # Monitor pipe progress
-    cmatrix # Just scrolling to look really cool
     mailutils # Sending mail from commandline 
     libnotify # Cli utils for sending KDE notifications
     vim # Modal CLI text editor
@@ -251,7 +227,6 @@ rec
     helix #  Modern modal editor, written in Rust
     direnv # Tool for setting env-vars when entering directories
     emacs # well, it's emacs...
-    fd # not sure, doom-emacs recommends it
     ripgrep # Modern rusty grep
     lsof # Check who uses file
     ripgrep # Rust grep implmenetation, not POSIX compliant
@@ -261,7 +236,6 @@ rec
     efitools # Tools for managing EFI, variables and such
     curl # All things HTTP and other web transfer protocols
     tmux # terminal multiplexer
-    tmate # terminal multiplexer with online sharing
     htop # NCurses "task manager"
     bottom # Task Manager written in Rust
     powertop # See power information
@@ -277,7 +251,6 @@ rec
     nix-prefetch # nix prefetcher
     nix-prefetch-github # fetch nix package from github
     comma # Run stuff without installing it
-    niv # Dependency manager for Nix, which is a dependency manager (wat)
     lorri # nix-shell alternative
     direnv # Do environment things based on cd
     pijul # Patch based git alternative (Similiar to darcs but written in rust)
