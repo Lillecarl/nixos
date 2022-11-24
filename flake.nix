@@ -11,10 +11,16 @@
     };
   };
 
-  outputs = { self, nixos-unstable, nixos-hardware, home-manager, ... } @inputs: {
+  outputs = { self, nixos-unstable, nixos-hardware, home-manager, ... } @inputs:
+  let
+    system = "x86_64-linux";
+    pkgs = import nixos-unstable { system = "x86_64-linux"; config = { allowUnfree = true; }; };
+  in
+  {
+
     nixosConfigurations = rec {
       shitbox = nixos-unstable.lib.nixosSystem {
-        system = "x86_64-linux";
+        inherit system;
         modules = [
           ./shitbox
           ./common
@@ -28,7 +34,7 @@
         specialArgs = inputs;
       };
       nub = nixos-unstable.lib.nixosSystem {
-        system = "x86_64-linux";
+        inherit system;
         modules = [
           ./nub
           ./common
@@ -60,8 +66,7 @@
     };
     homeConfigurations = {
       lillecarl = home-manager.lib.homeManagerConfiguration {
-        #inherit pkgs;
-
+        inherit pkgs;
         modules = [
           ./lillecarl
         ];
