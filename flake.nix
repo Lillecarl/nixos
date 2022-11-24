@@ -48,6 +48,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
+            home-manager.backupFileExtension = "old"; # Move non-hm files if they're in the way
             home-manager.users.lillecarl = import ./lillecarl;
 
             # Optionally, use home-manager.extraSpecialArgs to pass
