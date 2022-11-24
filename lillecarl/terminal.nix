@@ -7,7 +7,8 @@
     ".config/xonsh/rc.d/keybindings.xsh".source = ./dotfiles/.config/xonsh/rc.d/keybindings.xsh;
     ".config/xonsh/rc.d/prompt.xsh".source = ./dotfiles/.config/xonsh/rc.d/prompt.xsh;
     ".config/starship.toml".source = ./dotfiles/.config/starship.toml;
-    ".config/tealdeer/config.toml".source = ./dotfiles/.config/tealdeer/tealdeer.toml;
+    ".config/tealdeer/config.toml".source = ./dotfiles/.config/tealdeer/config.toml;
+    ".config/powershell/Microsoft.PowerShell_profile.ps1".source = ./dotfiles/.config/powershell/Microsoft.PowerShell_profile.ps1;
   };
 
   programs.git = {
