@@ -28,26 +28,8 @@ let
     cp ${nixos-unstable-channel}/programs.sqlite $out
   '';
 
-  xonsh-direnv = pkgs.callPackage ../pkgs/xonsh-direnv { };
-  xontrib-fzf-widgets = pkgs.callPackage ../pkgs/xontrib-fzf-widgets { };
-  xontrib-sh = pkgs.callPackage ../pkgs/xontrib-sh { };
-  xontrib-argcomplete = pkgs.callPackage ../pkgs/xontrib-argcomplete { };
-  xontrib-output-search = pkgs.callPackage ../pkgs/xontrib-output-search { inherit tokenize-output; };
-  xontrib-ssh-agent = pkgs.callPackage ../pkgs/xontrib-ssh-agent { inherit repassh; };
-  repassh = pkgs.callPackage ../pkgs/repassh { };
-  tokenize-output = pkgs.callPackage ../pkgs/tokenize-output { };
-
-  xonsh-overlay = import ../overlays/xonsh-overlay {
-    inherit
-      xonsh-direnv
-      xontrib-argcomplete
-      xontrib-output-search
-      xontrib-fzf-widgets
-      xontrib-ssh-agent
-      xontrib-sh
-      lib
-      pkgs;
-  };
+  pkgs-overlay = import ../overlays/pkgs;
+  xonsh-overlay = import ../overlays/xonsh-overlay;
 in
 rec
 {
@@ -70,6 +52,7 @@ rec
 
   nixpkgs.overlays = [
     xonsh-overlay
+    pkgs-overlay
   ];
 
   users.defaultUserShell = pkgs.zsh;
