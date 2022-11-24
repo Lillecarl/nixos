@@ -1,14 +1,22 @@
 { config, pkgs, ... }:
+let
+  pkgs-overlay = import ../pkgs;
+  xonsh-overlay = import ../overlays/xonsh-overlay;
+in
 {
-  # Home Manager needs a bit of information about you and the
-  # paths it should manage.
+  # HM paths
   home.username = "lillecarl";
   home.homeDirectory = "/home/lillecarl";
+
+  nixpkgs.overlays = [
+    pkgs-overlay
+    xonsh-overlay
+  ];
 
   home.stateVersion = "22.05";
 
   home.packages = with pkgs; [
-
+    xonsh
   ];
 
   # Let Home Manager install and manage itself.
