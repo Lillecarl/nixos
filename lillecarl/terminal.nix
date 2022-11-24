@@ -11,6 +11,8 @@
     ".config/powershell/Microsoft.PowerShell_profile.ps1".source = ./dotfiles/.config/powershell/Microsoft.PowerShell_profile.ps1;
     ".config/nvim/init.vim".source = ./dotfiles/.config/nvim/init.vim;
     ".config/wezterm/wezterm.lua".source = ./dotfiles/.config/wezterm/wezterm.lua;
+    ".config/qtile/autostart.sh".source = ./dotfiles/.config/qtile/autostart.sh;
+    ".config/qtile/config.py".source = ./dotfiles/.config/qtile/config.py;
   };
 
   programs.git = {
