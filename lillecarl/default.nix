@@ -15,6 +15,9 @@ in
 
   home.file = {
     ".config/xonsh/rc.xsh".source = ./dotfiles/.config/xonsh/rc.xsh;
+    ".config/xonsh/rc.d/aliases.xsh".source = ./dotfiles/.config/xonsh/rc.d/aliases.xsh;
+    ".config/xonsh/rc.d/keybindings.xsh".source = ./dotfiles/.config/xonsh/rc.d/keybindings.xsh;
+    ".config/xonsh/rc.d/prompt.xsh".source = ./dotfiles/.config/xonsh/rc.d/prompt.xsh;
   };
 
 
