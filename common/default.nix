@@ -169,19 +169,6 @@ rec
     xorg.xwininfo # Information about X windows (Used to find things using XWayland)
     xonsh
 
-    # Chat apps
-    element-desktop # Element Slack app
-    teams # Microsoft Teams collaboration suite (Electron)
-    slack # Team collaboration chat (Electron)
-    discord # Gaming chat application
-    zoom # Meetings application
-    signal-desktop # Secure messenger
-
-    # Media apps
-    mpv # Media Player
-    celluloid #  MPV GTK frontend wrapper
-    #vlc # VLC sucks in comparision to MPV
-
     # Commandline tools (CLI)
     home-manager # Tool to build your home environment in a reproducible fashion, anywhere with Nix!
     ansible-lint # Ansible linting software
@@ -197,7 +184,6 @@ rec
     x11docker # Run GUI applications with docker
     asciinema # Terminal session recorder
     asciinema-scenario # Make video from a text file
-    xorg.xmodmap # Remapping keys in X
     mongodb-tools # MongoDB tools like dumping etc.
     starship # Shell prompt
     mcfly # Improved shell history
