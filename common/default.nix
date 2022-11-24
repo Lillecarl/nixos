@@ -28,7 +28,7 @@ let
     cp ${nixos-unstable-channel}/programs.sqlite $out
   '';
 
-  pkgs-overlay = import ../overlays/pkgs;
+  pkgs-overlay = import ../pkgs;
   xonsh-overlay = import ../overlays/xonsh-overlay;
 in
 rec
