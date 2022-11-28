@@ -15,20 +15,33 @@
   boot.extraModulePackages = [ ];
 
   boot.initrd.luks.devices."1337".device = "/dev/disk/by-uuid/2bb21eac-b00e-4a9d-84f0-19d3c3d04dfe";
+  boot.initrd.luks.devices."1337".allowDiscards = true;
 
   fileSystems."/" =
     {
       device = "/dev/vg1/root";
       fsType = "btrfs";
+      options = [
+        "defaults"
+        "discard"
+      ];
     };
 
   fileSystems."/boot" =
     {
       device = "/dev/disk/by-uuid/6F2C-B215";
       fsType = "vfat";
+      options = [
+        "flush"
+      ];
     };
 
-  swapDevices = [{ device = "/dev/vg1/swap"; }];
+  swapDevices = [
+    {
+      device = "/dev/vg1/swap";
+      discardPolicy = "both";
+    }
+  ];
 
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
