@@ -1,6 +1,13 @@
 { config, pkgs, ... }:
 {
+  programs.rofi = {
+    enable = true;
+    package = pkgs.rofi-wayland;
+    plugins = with pkgs; [ rofimoji rofi-rbw ];
+  };
+
   home.packages = with pkgs; [
+    wofi # Wayland rofi?
     # Chat apps
     element-desktop # Element Slack app
     teams # Microsoft Teams collaboration suite (Electron)
