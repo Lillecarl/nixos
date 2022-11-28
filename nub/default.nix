@@ -43,6 +43,17 @@ rec
     };
   };
 
+  services.btrbk.instances."btrbk" = {
+    onCalendar = "*:0/15";
+    settings = {
+      snapshot_preserve_min = "2d";
+      volume."/" = {
+        #subvolume = "/home";
+        snapshot_dir = ".snapshots";
+      };
+    };
+  };
+
   services.acpid = {
     enable = true;
 
