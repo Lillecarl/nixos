@@ -8,6 +8,7 @@ import time
 import json
 import platform
 import os
+
 from prompt_toolkit.keys import Keys
 from shutil import which
 
@@ -105,3 +106,11 @@ if which("keychain"):
   if $HOSTNAME == "nub":
     keychain -q ed_viaplay
     keychain -q rsa_viaplay
+
+if os.path.exists(f"{$HOME}/.nix-profile") and not __xonsh__.env.get("NIX_PATH"):
+    $NIX_REMOTE="daemon"
+    $NIX_USER_PROFILE_DIR="/nix/var/nix/profiles/per-user/" + $USER
+    $NIX_PROFILES="/nix/var/nix/profiles/default " + $HOME + "/.nix-profile"
+    $NIX_SSL_CERT_FILE="/etc/ssl/certs/ca-certificates.crt"
+    $NIX_PATH="nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixpkgs:/nix/var/nix/profiles/per-user/root/channels"
+    $PATH += [f"{$HOME}/.nix-profile/bin", "/nix/var/nix/profiles/default/bin"]
