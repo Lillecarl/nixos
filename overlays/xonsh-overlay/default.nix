@@ -1,11 +1,8 @@
 final: prev: {
   xonsh =
-    let
-      python3Packages = final.python310.pkgs;
-    in
     (prev.xonsh.override { python3Packages = prev.python310.pkgs; }).overrideAttrs (old: {
       propagatedBuildInputs = prev.lib.flatten [
-        (with python3Packages; with prev.pkgs; [
+        (with final.python310.pkgs; with final.pkgs; [
           xonsh-direnv
           xontrib-argcomplete
           xontrib-output-search
