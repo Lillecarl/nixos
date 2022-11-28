@@ -22,8 +22,17 @@
     lfs.enable = true;
   };
 
+  programs.rbw = {
+    enable = true;
+    settings = {
+      email = "bitwarden@lillecarl.com";
+      pinentry = "qt";
+    };
+  };
+
   home.packages = with pkgs; [
     xonsh # xonsh shell
+    rbw # Unofficial Bitwarden CLI client
 
     ansible-lint # Ansible linting software
     # Commandline tools (CLI)
