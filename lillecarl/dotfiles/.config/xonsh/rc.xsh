@@ -42,6 +42,8 @@ $fzf_history_binding = Keys.ControlR
 xontrib load fzf-widgets
 # Jump words with control + arrows
 xontrib load whole_word_jumping
+# vox, pyenv for xonsh
+xontrib load vox
 
 # Because modal text editing makes sense
 $VI_MODE = True
