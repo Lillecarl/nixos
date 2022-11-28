@@ -106,10 +106,18 @@ rec
   # Enable the X11 windowing system.
   services.xserver.enable = true; # Not sure why this is required.
   # Enable the Plasma 5 Desktop Environment.
-  #services.xserver.displayManager.sddm.enable = true;
-  services.xserver.displayManager.lightdm.enable = true;
-  #services.xserver.desktopManager.plasma5.enable = true;
-  #services.xserver.desktopManager.plasma5.runUsingSystemd = true;
+  services.xserver.displayManager.sddm = {
+    enable = true;
+    settings = {
+      General = {
+        DisplayServer = "wayland";
+      };
+    };
+  };
+  #services.xserver.displayManager.defaultSession = "none+qtile";
+  #services.xserver.displayManager.lightdm.enable = true;
+  services.xserver.desktopManager.plasma5.enable = true;
+  services.xserver.desktopManager.plasma5.runUsingSystemd = true;
   # Enable touchpad support (enabled default in most desktopManager).
   services.xserver.libinput = {
     enable = true;
@@ -119,16 +127,8 @@ rec
   };
 
   # Enable qtile
-  #services.xserver.windowManager.qtile.enable = true;
-  services.xserver.windowManager.session = [
-    {
-      name = "qtile";
-      start = ''
-        ${pkgs.qtile}/bin/qtile start -b wayland &
-        waitPID=$!
-      '';
-    }
-  ];
+  services.xserver.windowManager.qtile.enable = true;
+  #services.xserver.windowManager.qtile.extraOptions = "-b wayland";
   # Configure keymap in X11
   services.xserver.layout = "us";
   # Allow local clients to connect to my X server
@@ -139,6 +139,8 @@ rec
   services.xserver.xkbOptions = "esc:swapcaps";
   # Disable network-manager wait-online service that prohibits nixos-rebuild
   systemd.services.NetworkManager-wait-online.enable = false;
+
+  services.fstrim.enable = true;
 
   # Use xserver keymap
   console = {
@@ -181,6 +183,7 @@ rec
     xorg.xwininfo # Information about X windows (Used to find things using XWayland)
     xonsh
     qtile
+    wdisplays
 
     # Commandline tools (CLI)
     home-manager # Tool to build your home environment in a reproducible fashion, anywhere with Nix!
@@ -368,7 +371,6 @@ rec
     #pgadmin4 # SQL database GUI
     wezterm # Crossplatform terminal emulator, supports ligatures
     bitwarden # Password manger
-    rofi # Searchable window title window switcher
     rofimoji # Emoji/Char picker for rofi
     gitkraken # Git GUI
     libreoffice # MS office compatible productivity suite
