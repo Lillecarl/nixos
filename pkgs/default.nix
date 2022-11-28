@@ -7,4 +7,5 @@ final: prev: {
   xontrib-ssh-agent = prev.callPackage ../pkgs/xontrib-ssh-agent { };
   repassh = prev.callPackage ../pkgs/repassh { };
   tokenize-output = prev.callPackage ../pkgs/tokenize-output { };
+  lazyasd = prev.callPackage ../pkgs/lazyasd { };
 }
