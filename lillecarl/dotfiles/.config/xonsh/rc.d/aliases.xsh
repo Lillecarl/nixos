@@ -33,6 +33,8 @@ def _blueprofile(args, stdin=None):
 # ALIASES
 # ---------------------------
 
+# Semi-common cd typo
+aliases['cd..'] = 'cd ..'
 # systemctl shortcut
 aliases["sc"] = "systemctl"
 # systemctl --user shortcut
