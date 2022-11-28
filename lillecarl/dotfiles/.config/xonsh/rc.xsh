@@ -95,11 +95,11 @@ $NODE_PATH=$NODE_HOME+"/lib/node_modules"
 
 # Load keychain bash environment stuff
 source-bash $(keychain --eval -q) --suppress-skip-message
+
 # If keychain binary exists, load ed25519 key
 if which("keychain"):
   keychain -q id_ed25519
   # Add work keys to work machine
-  if os.uname()[1] == "nub":
+  if $HOSTNAME == "nub":
     keychain -q ed_viaplay
     keychain -q rsa_viaplay
-
