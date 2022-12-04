@@ -18,6 +18,9 @@ rec
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelParams = [ "resume=/dev/vg1/swap" "mem_sleep_default=deep" ];
   boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernel.sysctl = {
+    "vm.swappiness" = 1;
+  };
 
   services.tp-auto-kbbl = {
     enable = true;
