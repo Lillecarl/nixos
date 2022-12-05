@@ -90,6 +90,9 @@ rec
   boot.extraModulePackages = with config.boot.kernelPackages; [
     v4l2loopback.out
     usbip
+    zenpower
+    turbostat
+    cpupower
   ];
 
   # Activate kernel modules (choose from built-ins and extra ones)
@@ -125,7 +128,7 @@ rec
   powerManagement = {
     enable = true;
     powertop.enable = true;
-    cpuFreqGovernor = "powersave";
+    cpuFreqGovernor = "schedutil";
   };
 
   services.gnome.gnome-keyring.enable = true;
@@ -280,7 +283,7 @@ rec
       stopIfChanged = true;
       script = ''
         powertop --auto-tune || true
-        echo "powersave" | tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor || true
+        echo "schedutil" | tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor || true
         ${pkgs.tpacpi-bat}/bin/tpacpi-bat -v -s SP 1 86 || true
       '';
     };
