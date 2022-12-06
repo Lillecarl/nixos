@@ -17,7 +17,7 @@ rec
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelParams = [ "resume=/dev/vg1/swap" "mem_sleep_default=deep" ];
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
   boot.kernel.sysctl = {
     "vm.swappiness" = 1;
   };
