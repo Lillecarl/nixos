@@ -94,6 +94,7 @@ rec
     turbostat
     cpupower
   ];
+  boot.blacklistedKernelModules = [ "k10temp" ];
 
   # Activate kernel modules (choose from built-ins and extra ones)
   boot.kernelModules = [
