@@ -127,7 +127,14 @@ rec
   };
 
   # Enable qtile
-  services.xserver.windowManager.qtile.enable = true;
+  #services.xserver.windowManager.qtile.enable = true;
+  services.xserver.windowManager.session = [{
+    name = "wqtile";
+    start = ''
+      ${pkgs.qtile}/bin/qtile start -b wayland &
+      waitPID=$!
+    '';
+  }];
   #services.xserver.windowManager.qtile.extraOptions = "-b wayland";
   # Configure keymap in X11
   services.xserver.layout = "us";
@@ -184,6 +191,7 @@ rec
     xonsh
     qtile
     wdisplays
+    kanshi
 
     # Commandline tools (CLI)
     home-manager # Tool to build your home environment in a reproducible fashion, anywhere with Nix!
