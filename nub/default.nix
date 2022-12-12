@@ -168,7 +168,6 @@ rec
     enable = true;
 
     wait-online = {
-      enable = false;
       timeout = 5;
       anyInterface = true;
     };
