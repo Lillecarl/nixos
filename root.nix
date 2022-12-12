@@ -12,6 +12,9 @@
     salt
     xonsh
     gitui
+    ripgrep
+    bat
+    exa
   ];
 
   home.stateVersion = "22.05";
