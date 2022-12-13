@@ -15,6 +15,7 @@
     ripgrep
     bat
     exa
+    zabbix.agent2
   ];
 
   home.stateVersion = "22.05";
