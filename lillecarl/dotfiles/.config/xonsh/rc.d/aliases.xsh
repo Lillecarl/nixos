@@ -1,6 +1,14 @@
 #! /usr/bin/env xonsh
 
 # ---------------------------
+# ALIAS MIDDLE STORAGE
+# This is used for aliases "aliasup" and "aliasdown" to enable and
+# disable all custom aliases at one
+# ---------------------------
+
+carliases = dict()
+
+# ---------------------------
 # ALIAS FUNCTIONS
 # ---------------------------
 
@@ -29,30 +37,49 @@ def _blueprofile(args, stdin=None):
     if profile == "headset-head-unit":
       pactl set-default-source $(pactl list sources short | rg bluez_input | awk '{ print $1 }') # Switch this when switching from bluetooth too
 
+def _aliasupdown(data, up):
+  for k,v in data.items():
+    try:
+      if up:
+        aliases[k] = v
+      else:
+        aliases.pop(k)
+    except KeyError:
+      pass
+    except Exception as e:
+      print("Couldn't remove {0}".format(k))
+      print(e)
+
 # ---------------------------
 # ALIASES
 # ---------------------------
 
 # Semi-common cd typo
-aliases['cd..'] = 'cd ..'
+carliases['cd..'] = 'cd ..'
 # systemctl shortcut
-aliases["sc"] = "systemctl"
+carliases["sc"] = "systemctl"
 # systemctl --user shortcut
-aliases["scu"] = "systemctl --user"
+carliases["scu"] = "systemctl --user"
 # Better ls
-aliases['ls'] = 'exa -lah'
+carliases['ls'] = 'exa -lah'
 # Better cat
-aliases['cat'] = 'bat'
+carliases['cat'] = 'bat'
 # Go to git root folder
-aliases['grt'] = lambda: os.chdir($(git rev-parse --show-toplevel).strip())
+carliases['grt'] = lambda: os.chdir($(git rev-parse --show-toplevel).strip())
 # NeoVIM > VIM
-aliases['vim'] = 'nvim'
+carliases['vim'] = 'nvim'
 # tfswitch with preconfigured root
-aliases["tfswitch"] = _tfswitch
+carliases["tfswitch"] = _tfswitch
 # Set bluetooth mode (choose)
-aliases["blueprofile"] = _blueprofile
+carliases["blueprofile"] = _blueprofile
 # Set bluetooth mode to enable mic
-aliases["bluemic"] = lambda x: _blueprofile(args=["mic"])
+carliases["bluemic"] = lambda x: _blueprofile(args=["mic"])
 # Set bluetooth mode to enable high quality sound
-aliases["bluesound"] = lambda x: _blueprofile(args=["music"])
+carliases["bluesound"] = lambda x: _blueprofile(args=["music"])
+# Add all carliases to aliases
+aliases["aliasup"] = lambda x: _aliasupdown(carliases, True)
+# Remove all carliases to aliases
+aliases["aliasdown"] = lambda x: _aliasupdown(carliases, False)
 
+# Add all aliases
+_aliasupdown(carliases, True)
