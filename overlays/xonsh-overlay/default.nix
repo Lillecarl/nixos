@@ -7,7 +7,6 @@ final: prev: {
           xontrib-argcomplete
           xontrib-output-search
           xontrib-fzf-widgets
-          xontrib-ssh-agent
           xontrib-sh
           lazyasd
           pyyaml
