@@ -33,9 +33,16 @@
   home.packages = with pkgs; [
     xonsh # xonsh shell
     rbw # Unofficial Bitwarden CLI client
-
+    delta # Diffing software
+    du-dust # A more intuitive version of du written in rust.
+    duf # A better df alternative
+    broot # A new way to see and navigate directory trees
+    fd # A simple, fast and user-friendly alternative to find
+    choose # A human-friendly and fast alternative to cut and (sometimes) awk
+    gping # ping, but with a graph.
+    procs # A modern replacement for ps written in Rust.
+    httpie # A modern, user-friendly command-line HTTP client for the API era.
     ansible-lint # Ansible linting software
-    # Commandline tools (CLI)
     cowsay # Make a cow say shit
     fortune # Fortune cookies in CLI
     toilet # Ascii art text

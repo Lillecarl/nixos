@@ -6,6 +6,15 @@
     plugins = with pkgs; [ rofimoji rofi-rbw ];
   };
 
+  #programs.vscode = {
+  #  enable = true;
+
+  #  enableExtensionUpdateCheck = false;
+  #  enableUpdateCheck = false;
+  #  package = pkgs.vscode;
+  #  extensions = [ ];
+  #};
+
   home.packages = with pkgs; [
     wofi # Wayland rofi?
     # Chat apps
