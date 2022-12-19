@@ -15,6 +15,7 @@
     ripgrep # Alternative to grep
     bat # Alternative to cat
     exa # Alternative to ls
+    ncdu # ncurses version of "du" 
     zabbix.agent2 # Zabbix agent
   ];
 
