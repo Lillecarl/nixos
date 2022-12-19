@@ -9,13 +9,13 @@
   home.homeDirectory = "/root/";
 
   home.packages = with pkgs; [
-    salt
-    xonsh
-    gitui
-    ripgrep
-    bat
-    exa
-    zabbix.agent2
+    salt # Salt client and server
+    xonsh # Python shell
+    gitui # git TUI, useful for staging and commiting mostly
+    ripgrep # Alternative to grep
+    bat # Alternative to cat
+    exa # Alternative to ls
+    zabbix.agent2 # Zabbix agent
   ];
 
   home.stateVersion = "22.05";
