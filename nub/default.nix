@@ -301,10 +301,10 @@ rec
 import glob
 # Disable all physical_node wakeups (one of them bugs my machine out)
 for file in glob.glob("/sys/class/wakeup/*/device/physical_node/power/wakeup"):
-  echo @("disabled > {0}".format(file))
+  echo "disabled" > @(file)
 
 # Tune CPU stuff
-powertop --auto-tune || true
+#powertop --auto-tune || true
 # Set CPU scheduler
 echo "schedutil" | tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor || true
 # Lock charging to 86% (85% in practice)
