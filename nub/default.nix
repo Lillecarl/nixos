@@ -22,6 +22,13 @@ rec
     "vm.swappiness" = 1;
   };
 
+  boot.binfmt.emulatedSystems = [
+    #"wasm32-wasi"
+    "x86_64-windows"
+    "i686-windows"
+    #"aarch64-linux"
+  ];
+
   services.tp-auto-kbbl = {
     enable = true;
     device = "/dev/input/by-path/platform-i8042-serio-0-event-kbd";
