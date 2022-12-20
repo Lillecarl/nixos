@@ -298,44 +298,6 @@ rec
     services.upower.enable = true;
 
     services.systemd-networkd-wait-online.enable = false;
-
-    services.systemConfig = {
-      enable = true;
-      path = with pkgs; [ powertop ];
-      stopIfChanged = true;
-      serviceConfig = {
-        ExecStart = pkgs.writeTextFile {
-          name = "systemConfigScript.xsh";
-          executable = true;
-          text = ''
-#! ${pkgs.xonsh}/bin/xonsh
-
-import glob
-# Disable all physical_node wakeups (one of them bugs my machine out)
-for file in glob.glob("/sys/class/wakeup/*/device/physical_node/power/wakeup"):
-  echo "disabled" > @(file)
-
-# Tune CPU stuff
-#powertop --auto-tune || true
-# Set CPU scheduler
-echo "schedutil" | tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor || true
-# Lock charging to 86% (85% in practice)
-${pkgs.tpacpi-bat}/bin/tpacpi-bat -v -s SP 1 86 || true
-          '';
-        };
-      };
-    };
-
-    timers.systemConfig = {
-      enable = true;
-      wantedBy = [ "multi-user.target" ];
-      timerConfig = {
-        OnBootSec = "10s";
-        OnUnitActiveSec = "3m";
-        AccuracySec = "1m";
-        Unit = "systemConfig.service";
-      };
-    };
   };
 
   # Monitor laptop with Prometheus
