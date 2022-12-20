@@ -38,6 +38,18 @@ rec
     ];
   };
 
+  services.udev = {
+    enable = true; #default
+    extraRules = ''
+      # Disable power/wakeup for ELAN touchpad that prevents suspending.
+      SUBSYSTEM=="i2c", DRIVER=="i2c_hid_acpi", ATTR{name}=="ELAN*", ATTR{power/wakeup}="disabled"
+      # Enable waking up by the keyboard, this doesn't work but if some FW changes some day it might.
+      SUBSYSTEM=="serio", DRIVERS=="atkbd", ATTR{power/wakeup}="enabled"
+      # Limit battery max charge to 86% (85 in reality)
+      ACTION=="add|change", SUBSYSTEM=="acpi", DRIVER=="battery", ATTR{power_supply/BAT0/charge_control_end_threshold}="86"
+    '';
+  };
+
   services.salt.master = {
     enable = true;
 
