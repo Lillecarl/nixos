@@ -22,12 +22,32 @@ rec
     "vm.swappiness" = 1;
   };
 
+  boot.binfmt.emulatedSystems = [
+    #"wasm32-wasi"
+    "x86_64-windows"
+    "i686-windows"
+    #"aarch64-linux"
+  ];
+
   services.tp-auto-kbbl = {
     enable = true;
+    device = "/dev/input/by-path/platform-i8042-serio-0-event-kbd";
     arguments = [
       "-b 1"
       "-t 2"
     ];
+  };
+
+  services.udev = {
+    enable = true; #default
+    extraRules = ''
+      # Disable power/wakeup for ELAN touchpad that prevents suspending.
+      SUBSYSTEM=="i2c", DRIVER=="i2c_hid_acpi", ATTR{name}=="ELAN*", ATTR{power/wakeup}="disabled"
+      # Enable waking up by the keyboard, this doesn't work but if some FW changes some day it might.
+      SUBSYSTEM=="serio", DRIVERS=="atkbd", ATTR{power/wakeup}="enabled"
+      # Limit battery max charge to 86% (85 in reality)
+      ACTION=="add|change", SUBSYSTEM=="acpi", DRIVER=="battery", ATTR{power_supply/BAT0/charge_control_end_threshold}="86"
+    '';
   };
 
   services.salt.master = {
@@ -242,7 +262,7 @@ rec
       enable = true;
       dockerCompat = true;
     };
-    #waydroid.enable = true;
+    waydroid.enable = true;
   };
 
   environment.systemPackages = with pkgs; [
@@ -278,28 +298,6 @@ rec
     services.upower.enable = true;
 
     services.systemd-networkd-wait-online.enable = false;
-
-    services.powerTune = {
-      enable = true;
-      path = with pkgs; [ powertop ];
-      stopIfChanged = true;
-      script = ''
-        powertop --auto-tune || true
-        echo "schedutil" | tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor || true
-        ${pkgs.tpacpi-bat}/bin/tpacpi-bat -v -s SP 1 86 || true
-      '';
-    };
-
-    timers.powerTune = {
-      enable = true;
-      wantedBy = [ "multi-user.target" ];
-      timerConfig = {
-        OnBootSec = "3m";
-        OnUnitActiveSec = "3m";
-        AccuracySec = "1m";
-        Unit = "powerTune.service";
-      };
-    };
   };
 
   # Monitor laptop with Prometheus

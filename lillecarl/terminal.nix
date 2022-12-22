@@ -41,7 +41,7 @@
     choose # A human-friendly and fast alternative to cut and (sometimes) awk
     gping # ping, but with a graph.
     procs # A modern replacement for ps written in Rust.
-    httpie # A modern, user-friendly command-line HTTP client for the API era.
+    #httpie # A modern, user-friendly command-line HTTP client for the API era.
     ansible-lint # Ansible linting software
     cowsay # Make a cow say shit
     fortune # Fortune cookies in CLI

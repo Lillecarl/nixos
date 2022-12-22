@@ -91,5 +91,6 @@
           ];
         };
       };
+      formatter.x86_64-linux = nixos-unstable.legacyPackages.x86_64-linux.nixpkgs-fmt;
     };
 }

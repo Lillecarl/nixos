@@ -25,8 +25,8 @@
   #];
 
   boot.postBootCommands = ''
-    modprobe -r nvidiafb
-    modprobe -r nouveau
+    ${pkgs.kmod}/bin/modprobe -r nvidiafb
+    ${pkgs.kmod}/bin/modprobe -r nouveau
 
     echo 0 > /sys/class/vtconsole/vtcon0/bind
     echo 0 > /sys/class/vtconsole/vtcon1/bind
@@ -37,7 +37,7 @@
     for DEV in $DEVS; do
       echo "vfio-pci" > /sys/bus/pci/devices/$DEV/driver_override
     done
-    modprobe -i vfio-pci
+    ${pkgs.kmod}/bin/modprobe -i vfio-pci
   '';
 
   boot.kernel.sysctl = {
