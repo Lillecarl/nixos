@@ -373,6 +373,7 @@ rec
     debootstrap # Bootstrap Debian based (deb package manager) Linux distros
 
     # Productivity tools
+    libsForQt5.krohnkite # Tiling plugin for KDE
     tigervnc # VNC client
     mongodb-compass # MongoDB GUI
     dbeaver # SQL database GUI
