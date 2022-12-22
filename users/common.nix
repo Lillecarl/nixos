@@ -12,6 +12,12 @@ in
     pkgs-overlay
   ];
 
+
+  home.packages = with pkgs; [
+    nix # Nix package manager
+    home-manager # Home-manager
+  ];
+
   # Make sure all users have home-manager in their profile
   programs.home-manager.enable = true;
   # This should not be changed without reading docs
