@@ -14,6 +14,7 @@ in
 
   # Add packages all users should have in their $PATH here
   home.packages = with pkgs; [
+    ncdu # ncurses version of "du" 
   ];
 
   # Make sure all users have home-manager in their profile
