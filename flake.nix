@@ -16,15 +16,23 @@
       pkgs = nixpkgs.legacyPackages.${system};
     in
     {
-      homeConfigurations.root = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
+      homeConfigurations = {
+        root = home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
 
-        # Specify your home configuration modules here, for example,
-        # the path to your home.nix.
-        modules = [ ./root.nix ];
+          modules = [
+            ./users/common.nix
+            ./users/root.nix
+          ];
+        };
+        "carl.hjerpe" = home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
 
-        # Optionally use extraSpecialArgs
-        # to pass through arguments to home.nix
+          modules = [
+            ./users/common.nix
+            ./users/carl.hjerpe.nix
+          ];
+        };
       };
       packages.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux;
       defaultPackage.x86_64-linux = import ./profile.nix { inherit pkgs; };
