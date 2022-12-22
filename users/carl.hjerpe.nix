@@ -12,6 +12,7 @@
     ripgrep # Alternative to grep
     bat # Alternative to cat
     exa # Alternative to ls
-    ncdu # ncurses version of "du" 
+    ncdu # ncurses version of "du"
+    hello # Hello world command
   ];
 }
