@@ -54,7 +54,7 @@ $CASE_SENSITIVE_COMPLETIONS = False
 # Add bash completions to xonsh, not sure how this works but it's heaps cool.
 $BASH_COMPLETIONS= ["/run/current-system/sw/share/bash-completion/bash_completion"]
 # Helm completion
-source-bash $(helm completion bash) --suppress-skip-message
+#source-bash $(helm completion bash) --suppress-skip-message
 
 
 # Use SQLite history backend
