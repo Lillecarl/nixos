@@ -47,7 +47,7 @@
               # arguments to home.nix
             }
           ];
-          specialArgs = inputs;
+          specialArgs = { inherit inputs; };
         };
         nub = nixos-unstable.lib.nixosSystem
           {
@@ -79,7 +79,7 @@
                 # arguments to home.nix
               }
             ];
-            specialArgs = inputs;
+            specialArgs = { inherit inputs; };
           };
       };
       homeConfigurations = {

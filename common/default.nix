@@ -1,4 +1,4 @@
-{ config, pkgs, lib, nixos-unstable-channel, ... }:
+{ inputs, config, pkgs, lib, ... }:
 let
   braveWaylandDesktopItem = pkgs.makeDesktopItem {
     name = "brave-browser";
@@ -25,7 +25,7 @@ let
   };
 
   programs_sqlite = pkgs.runCommandLocal "programs_sqlite" { } ''
-    cp ${nixos-unstable-channel}/programs.sqlite $out
+    cp ${inputs.nixos-unstable-channel}/programs.sqlite $out
   '';
 
   pkgs-overlay = import ../pkgs;
