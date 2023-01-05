@@ -76,12 +76,13 @@ carliases["blueprofile"] = _blueprofile
 carliases["bluemic"] = lambda x: _blueprofile(args=["mic"])
 # Set bluetooth mode to enable high quality sound
 carliases["bluesound"] = lambda x: _blueprofile(args=["music"])
+# nixshell alias just bonks out a nixshell using an auto updated registry entry
+carliases["nixshell"] = lambda x: ![nix shell @("nixos-unstable#{0}".format(x[0] if type(x) is list and len(x) > 0 else ""))]
+
 # Add all carliases to aliases
 aliases["aliasup"] = lambda x: _aliasupdown(carliases, True)
 # Remove all carliases to aliases
 aliases["aliasdown"] = lambda x: _aliasupdown(carliases, False)
-# nixshell alias just bonks out a nixshell using an auto updated registry entry
-aliases["nixshell"] = lambda x: ![nix shell @("nixos-unstable#{0}".format(x[0] if type(x) is list and len(x) > 0 else ""))]
 
 # Add all aliases
 _aliasupdown(carliases, True)
