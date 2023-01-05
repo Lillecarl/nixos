@@ -35,7 +35,11 @@ rec
 {
   security.pam.services.login.enableKwallet = true;
   security.pam.services.session.enableKwallet = true;
-  nix.settings.trusted-users = [ "root" "lillecarl" ];
+  nix = {
+    settings.trusted-users = [ "root" "lillecarl" ];
+    registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
+    nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
+  };
   # Allow root to map to LilleCarl user in LXD container
   users.users.root = {
     subUidRanges = [
