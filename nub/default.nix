@@ -50,6 +50,12 @@ rec
     '';
   };
 
+  services.usbguard = {
+    enable = true;
+
+    IPCAllowedUsers = [ "root" "lillecarl" ];
+  };
+
   services.salt.master = {
     enable = true;
 
