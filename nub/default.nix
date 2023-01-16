@@ -252,6 +252,8 @@ rec
   };
 
   environment.systemPackages = with pkgs; [
+    usbguard # USB blocking solution
+    k3s # Kubernetes K3s
     iptables # Give us the iptables CLI (should map to nftables)
     #zoom-us # Yet another video conferencing tool
     #jitsi-meet-electron # Video conferencing
@@ -284,6 +286,15 @@ rec
     services.upower.enable = true;
 
     services.systemd-networkd-wait-online.enable = false;
+
+    services.before-sleep = {
+      enable = true;
+      wantedBy = [ "sleep.target" ];
+      before = [ "sleep.target" ];
+      script = ''
+        ${pkgs.procps}/bin/pgrep gpclient | xargs kill
+      '';
+    };
   };
 
   # Monitor laptop with Prometheus
