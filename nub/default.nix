@@ -9,6 +9,23 @@ rec
     ./hardware-configuration.nix
   ];
 
+  #services.greetd = {
+  #  enable = true;
+
+  #  #package = pkgs.greetd.wlgreet;
+
+  #  settings = {
+  #    default_session = {
+  #      command = "${pkgs.greetd.greetd}/bin/agreety --cmd \"${pkgs.qtile}/bin/qtile start -b wayland\"";
+  #    };
+  #  };
+  #};
+
+  security.pam.services.swaylock = {};
+
+  # This is implicit when using KDE and such. Be explicit!
+  hardware.opengl.enable = true;
+
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -50,11 +67,7 @@ rec
     enable = true;
 
     IPCAllowedUsers = [ "root" "lillecarl" ];
-  };
-
-  services.salt.master = {
-    enable = true;
-
+  }; services.salt.master = { enable = true;
     configuration = {
       file_roots = {
         base = [ "/srv/salt/salt" ];
@@ -254,6 +267,7 @@ rec
 
   environment.systemPackages = with pkgs; [
     splunk-otel-collector # Temp testing
+    qt5.qtwayland # Required by sway, maybe Qtile too
     usbguard # USB blocking solution
     k3s # Kubernetes K3s
     iptables # Give us the iptables CLI (should map to nftables)

@@ -30,7 +30,6 @@
             ./shitbox
             ./common
             ./common/flatpak.nix
-            ./common/keybindings.nix
             ./common/killservice.nix
             nixos-hardware.nixosModules.common-cpu-amd
             nixos-hardware.nixosModules.common-pc-ssd
@@ -54,9 +53,9 @@
             inherit system;
             modules = [
               ./nub
+              ./nub/keybindings.nix
               ./common
               ./common/flatpak.nix
-              ./common/keybindings.nix
               ./common/killservice.nix
               ./common/xplatform.nix
               nixos-hardware.nixosModules.lenovo-thinkpad-t14s

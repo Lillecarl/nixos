@@ -1,5 +1,16 @@
 { config, pkgs, ... }:
 {
+  wayland.windowManager.sway = {
+    enable = true;
+    config = rec {
+      modifier = "Mod4";
+      # Use kitty as default terminal
+      terminal = "wezterm-gui"; 
+      startup = [
+        {command = "wezterm-gui";}
+      ];
+    };
+  };
   programs.rofi = {
     enable = true;
     package = pkgs.rofi-wayland;

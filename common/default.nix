@@ -33,6 +33,7 @@ let
 in
 rec
 {
+  security.polkit.enable = true;
   security.pam.services.login.enableKwallet = true;
   security.pam.services.session.enableKwallet = true;
   nix = {
@@ -108,44 +109,44 @@ rec
   # Enable xwayland, not everything is wayland yet.
   programs.xwayland.enable = true;
   # Enable the X11 windowing system.
-  services.xserver.enable = true; # Not sure why this is required.
+  #services.xserver.enable = true; # Not sure why this is required.
   # Enable the Plasma 5 Desktop Environment.
-  services.xserver.displayManager.sddm = {
-    enable = true;
-    settings = {
-      General = {
-        DisplayServer = "wayland";
-      };
-    };
-  };
-  services.xserver.displayManager.defaultSession = "plasmawayland";
+  #services.xserver.displayManager.sddm = {
+  #  enable = true;
+  #  settings = {
+  #    General = {
+  #      DisplayServer = "wayland";
+  #    };
+  #  };
+  #};
+  #services.xserver.displayManager.defaultSession = "plasmawayland";
   #services.xserver.displayManager.lightdm.enable = true;
-  services.xserver.desktopManager.plasma5.enable = true;
-  services.xserver.desktopManager.plasma5.runUsingSystemd = true;
+  #services.xserver.desktopManager.plasma5.enable = true;
+  #services.xserver.desktopManager.plasma5.runUsingSystemd = true;
   # Enable touchpad support (enabled default in most desktopManager).
-  services.xserver.libinput = {
-    enable = true;
+  #services.xserver.libinput = {
+  #  enable = true;
 
-    touchpad.disableWhileTyping = true;
-    touchpad.naturalScrolling = true;
-  };
+  #  touchpad.disableWhileTyping = true;
+  #  touchpad.naturalScrolling = true;
+  #};
 
   # Enable qtile
   #services.xserver.windowManager.qtile.enable = true;
-  services.xserver.windowManager.session = [{
-    name = "wqtile";
-    start = ''
-      ${pkgs.qtile}/bin/qtile start -b wayland &
-      waitPID=$!
-    '';
-  }];
+  #services.xserver.windowManager.session = [{
+  #  name = "wqtile";
+  #  start = ''
+  #    ${pkgs.qtile}/bin/qtile start -b wayland &
+  #    waitPID=$!
+  #  '';
+  #}];
   #services.xserver.windowManager.qtile.extraOptions = "-b wayland";
   # Configure keymap in X11
-  services.xserver.layout = "us";
+  #services.xserver.layout = "us";
   # Allow local clients to connect to my X server
-  services.xserver.displayManager.setupCommands = ''
-    ${pkgs.xorg.xhost}/bin/xhost +local:
-  '';
+  #services.xserver.displayManager.setupCommands = ''
+  #  ${pkgs.xorg.xhost}/bin/xhost +local:
+  #'';
   # Replace caps-lock with caps
   services.xserver.xkbOptions = "esc:swapcaps";
   # Disable network-manager wait-online service that prohibits nixos-rebuild
