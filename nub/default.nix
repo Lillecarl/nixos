@@ -105,6 +105,7 @@ rec
     };
   };
 
+
   systemd.targets.hibernate.enable = false;
   systemd.targets.hybrid-sleep.enable = false;
 
@@ -252,6 +253,7 @@ rec
   };
 
   environment.systemPackages = with pkgs; [
+    splunk-otel-collector # Temp testing
     usbguard # USB blocking solution
     k3s # Kubernetes K3s
     iptables # Give us the iptables CLI (should map to nftables)
