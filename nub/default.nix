@@ -1,10 +1,6 @@
 { config, pkgs, lib, ... }:
 let
   kubeEnable = false;
-  kubeMasterIP = "192.168.122.1";
-  kubeMasterHostname = "api.kube";
-  kubeMasterAPIServerPort = 6443;
-
   prometheusEnable = true;
 in
 rec
@@ -22,12 +18,12 @@ rec
     "vm.swappiness" = 1;
   };
 
-  boot.binfmt.emulatedSystems = [
-    #"wasm32-wasi"
-    "x86_64-windows"
-    "i686-windows"
-    #"aarch64-linux"
-  ];
+  boot.binfmt = {
+    emulatedSystems = [
+      "x86_64-windows"
+      "i686-windows"
+    ];
+  };
 
   services.tp-auto-kbbl = {
     enable = true;
@@ -180,13 +176,9 @@ rec
     firewall.enable = false; # Disable iptables
     networkmanager = {
       enable = true; # Laptops do well with networkmanager
-      unmanaged = [ "virbr0" "virbr1" "lilbr" ];
+      unmanaged = [ "virbr0" "lilbr" ];
     };
     useDHCP = false; # deprecated, should be false
-    # Extra hostnames, hardcoded IP's are from Tailscale
-    extraHosts = ''
-      ${kubeMasterIP} ${kubeMasterHostname}
-    '';
   };
   # Enable systemd-resolved, takes care of splitting DNS across interfaces n stuff
   services.resolved.enable = true;
@@ -238,21 +230,9 @@ rec
   programs.adb.enable = true;
 
   # Fix local Kubernetes
-  services.kubernetes = lib.mkIf kubeEnable {
-    roles = [ "master" "node" ];
-    masterAddress = kubeMasterHostname;
-    apiserverAddress = "https://${kubeMasterHostname}:${toString kubeMasterAPIServerPort}";
-    easyCerts = true;
-    apiserver = {
-      securePort = kubeMasterAPIServerPort;
-      advertiseAddress = kubeMasterIP;
-    };
-
-    # use coredns
-    addons.dns.enable = true;
-
-    # needed if you use swap
-    kubelet.extraOpts = "--fail-swap-on=false";
+  services.k3s = lib.mkIf kubeEnable {
+    enable = true;
+    role = "server";
   };
 
   virtualisation = {
