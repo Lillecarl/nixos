@@ -6,4 +6,5 @@ final: prev: {
   xontrib-output-search = prev.callPackage ../pkgs/xontrib-output-search { };
   tokenize-output = prev.callPackage ../pkgs/tokenize-output { };
   lazyasd = prev.callPackage ../pkgs/lazyasd { };
+  splunk-otel-collector = prev.callPackage ../pkgs/splunk-otel-collector { };
 }
