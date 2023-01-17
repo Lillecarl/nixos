@@ -21,6 +21,12 @@ rec
   #  };
   #};
 
+  services.xserver.displayManager.gdm.enable = true;
+  services.xserver.displayManager.gdm.wayland = true;
+  security.pam.services.gdm.enableGnomeKeyring = true;
+  security.pam.services.login.enableGnomeKeyring = true;
+  security.pam.services.auth.enableGnomeKeyring = true;
+  security.pam.services.session.enableGnomeKeyring = true;
   security.pam.services.swaylock = {};
 
   # This is implicit when using KDE and such. Be explicit!
@@ -266,6 +272,10 @@ rec
   };
 
   environment.systemPackages = with pkgs; [
+    libsForQt5.kwallet
+    libsForQt5.kwallet-pam
+    libsForQt5.kwalletmanager
+    kwalletcli
     splunk-otel-collector # Temp testing
     qt5.qtwayland # Required by sway, maybe Qtile too
     usbguard # USB blocking solution
