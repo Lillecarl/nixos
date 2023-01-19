@@ -371,7 +371,6 @@ rec
     wireshark # Defactor network traffic sniffing tool
     ksystemlog # KDE syslog viewer
     nix-bash-completions # Nix completions in bash
-    nix-zsh-completions # Nix completions in ZSH
     bash-completion # Bash cli autocomplete
     hardinfo # Hardware information
     debootstrap # Bootstrap Debian based (deb package manager) Linux distros
@@ -470,16 +469,9 @@ rec
   };
   # Enable xonsh
   programs.xonsh.enable = true;
-  # Enable zsh
-  programs.zsh.enable = true;
+  #programs.xonsh.package = pkgs.xonsh-wrapped;
   # Bash autocomplete
   programs.bash.enableCompletion = true;
-
-  # Enable Oh-my-zsh
-  programs.zsh.ohMyZsh = {
-    enable = true;
-    plugins = [ "git" "sudo" "docker" "kubectl" ];
-  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
