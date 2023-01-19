@@ -5,6 +5,7 @@ let
     name = "xonsh-joined";
     # recurse all listed dependencies
     paths = (prev.python3.pkgs.requiredPythonModules [
+      final.xonsh-direnv
       final.xontrib-argcomplete
       final.xontrib-output-search
       final.xontrib-fzf-widgets
