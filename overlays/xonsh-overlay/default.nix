@@ -1,7 +1,7 @@
 final: prev:
 let
   # Join all xonsh dependencies into one derivation
-  xonsh-joined = prev.symlinkJoin {
+  xonsh-joined-deps = prev.symlinkJoin {
     name = "xonsh-joined";
     # recurse all listed dependencies
     paths = (prev.python3.pkgs.requiredPythonModules [
@@ -21,8 +21,14 @@ in
 {
   # write xonsh wrapper script
   xonsh = prev.writeShellScriptBin "xonsh" ''
-    export PYTHONPATH=${xonsh-joined}/lib/python3.10/site-packages:$PYTHONPATH
+    export PYTHONPATH=${xonsh-joined-deps}/lib/python3.10/site-packages:$PYTHONPATH
 
-    ${prev.xonsh}/bin/xonsh $@
+    export XDG_CACHE_HOME=$HOME/.cache
+    export XDG_BIN_HOME=$HOME/.local/bin
+    export XDG_CONFIG_HOME=$HOME/.config
+    export XDG_DATA_HOME=$HOME/.local/share
+    export XDG_STATE_HOME=$HOME/.local/state
+    
+    exec ${prev.xonsh}/bin/xonsh $@
   '';
 }

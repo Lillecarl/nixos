@@ -64,7 +64,7 @@ rec
   users.defaultUserShell = pkgs.zsh;
   users.users.lillecarl = {
     uid = 1000;
-    shell = pkgs.zsh;
+    #shell = "${pkgs.xonsh}/bin/xonsh";
     isNormalUser = true;
     extraGroups = [
       "wheel" # enables sudo
@@ -469,7 +469,19 @@ rec
   };
   # Enable xonsh
   programs.xonsh.enable = true;
-  #programs.xonsh.package = pkgs.xonsh-wrapped;
+  programs.xonsh.config = ''
+    # https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html#variables
+    if "XDG_CACHE_HOME" not in ''${...}:
+      $XDG_CACHE_HOME = $HOME/.cache
+    if "XDG_CONFIG_HOME" not in ''${...}:
+      $XDG_CONFIG_HOME = $HOME/.config
+    if "XDG_DATA_HOME" not in ''${...}:
+      $XDG_DATA_HOME = $HOME/.local/share
+    if "XDG_STATE_HOME" not in ''${...}:
+      $XDG_STATE_HOME = $HOME/.local/state
+
+    source-bash /etc/bashrc --suppress-skip-message
+  '';
   # Bash autocomplete
   programs.bash.enableCompletion = true;
 
