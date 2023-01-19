@@ -15,20 +15,6 @@ from shutil import which
 # Set shell to xonsh (We're going to spawn a new shell)
 $SHELL = "xonsh"
 
-# Ask if we wanna launch Zellij if we're not inside of it
-# If ZELLIJ env var exists we don't wanna spawn it again
-if "ZELLIJ" in ${...}:
-  pass
-# If zellij exists, ask if we wanna launch it
-elif which("zellij") is not None:
-  if input("Wanna launch Zellij? Y/n: ") != "n":
-    # Attach to default session if it exists
-    if $(zellij list-sessions 2> /dev/null | grep default):
-      exec zellij attach default
-    else:
-      # Spawn new default session
-      exec zellij -s default
-
 # xontribs
 
 # Execute direnv in Xonsh
