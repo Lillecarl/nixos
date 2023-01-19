@@ -57,8 +57,8 @@ rec
   };
 
   nixpkgs.overlays = [
-    xonsh-overlay
     pkgs-overlay
+    xonsh-overlay
   ];
 
   users.defaultUserShell = pkgs.zsh;

@@ -1,22 +1,19 @@
 final: prev: {
-  xonsh =
-    (prev.xonsh.override { python3Packages = prev.python310.pkgs; }).overrideAttrs (old: {
-      propagatedBuildInputs = prev.lib.flatten [
-        (with final.python310.pkgs; with final.pkgs; [
-          xonsh-direnv
-          xontrib-argcomplete
-          xontrib-output-search
-          xontrib-fzf-widgets
-          xontrib-sh
-          lazyasd
-          pyyaml
-          psutil
-          jinja2
-        ])
-        (old.propagatedBuildInputs or [ ])
-      ];
-      checkInputs = [ ];
-      checkPhase = "";
-      pytestcheckPhase = "";
-    });
+  xonsh = prev.writeShellScriptBin "xonsh" ''
+    export PYTHONPATH=${prev.python3.pkgs.makePythonPath [
+      final.xonsh-direnv
+      final.xontrib-argcomplete
+      final.xontrib-output-search
+      final.xontrib-fzf-widgets
+      final.xontrib-sh
+      final.xontrib-jump-to-dir
+      final.lazyasd
+      prev.xonsh
+      prev.python3.pkgs.pyyaml
+      prev.python3.pkgs.psutil
+      prev.python3.pkgs.jinja2
+    ]};
+
+    ${prev.xonsh}/bin/xonsh $@
+  '';
 }
