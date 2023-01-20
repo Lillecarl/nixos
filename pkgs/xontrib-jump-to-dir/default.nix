@@ -1,6 +1,5 @@
 { lib
 , python3Packages
-, final
 , prev
 }:
 
