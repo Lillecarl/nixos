@@ -15,20 +15,6 @@ from shutil import which
 # Set shell to xonsh (We're going to spawn a new shell)
 $SHELL = "xonsh"
 
-# Ask if we wanna launch Zellij if we're not inside of it
-# If ZELLIJ env var exists we don't wanna spawn it again
-if "ZELLIJ" in ${...}:
-  pass
-# If zellij exists, ask if we wanna launch it
-elif which("zellij") is not None:
-  if input("Wanna launch Zellij? Y/n: ") != "n":
-    # Attach to default session if it exists
-    if $(zellij list-sessions 2> /dev/null | grep default):
-      exec zellij attach default
-    else:
-      # Spawn new default session
-      exec zellij -s default
-
 # xontribs
 
 # Execute direnv in Xonsh
@@ -74,6 +60,8 @@ execx($(starship init xonsh))
 $EDITOR = "nvim"
 $VISUAL = "nvim"
 
+if "HOME" not in ${...}:
+  $HOME = "/home/{0}".format($USER)
 # https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html#variables
 if "XDG_CACHE_HOME" not in ${...}:
   $XDG_CACHE_HOME = $HOME/.cache
@@ -95,22 +83,14 @@ $PATH.add($XDG_BIN_HOME)
 $PATH.add($NODE_HOME)
 $NODE_PATH=$NODE_HOME+"/lib/node_modules"
 
-
-# Load keychain bash environment stuff
-source-bash $(keychain --eval -q) --suppress-skip-message
-
-# If keychain binary exists, load ed25519 key
+# If keychain binary exists, load ssh keys
 if which("keychain"):
+  # Load keychain bash environment stuff
+  source-bash $(keychain --eval -q) --suppress-skip-message
+  # Load personal key
   keychain -q id_ed25519
-  # Add work keys to work machine
+  # Load work keys
   if $HOSTNAME == "nub":
     keychain -q ed_viaplay
     keychain -q rsa_viaplay
 
-if os.path.exists(f"{$HOME}/.nix-profile") and not __xonsh__.env.get("NIX_PATH"):
-    $NIX_REMOTE="daemon"
-    $NIX_USER_PROFILE_DIR="/nix/var/nix/profiles/per-user/" + $USER
-    $NIX_PROFILES="/nix/var/nix/profiles/default " + $HOME + "/.nix-profile"
-    $NIX_SSL_CERT_FILE="/etc/ssl/certs/ca-certificates.crt"
-    $NIX_PATH="nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixpkgs:/nix/var/nix/profiles/per-user/root/channels"
-    $PATH += [f"{$HOME}/.nix-profile/bin", "/nix/var/nix/profiles/default/bin"]

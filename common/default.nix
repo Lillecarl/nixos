@@ -58,14 +58,14 @@ rec
   };
 
   nixpkgs.overlays = [
-    xonsh-overlay
     pkgs-overlay
+    xonsh-overlay
   ];
 
   users.defaultUserShell = pkgs.zsh;
   users.users.lillecarl = {
     uid = 1000;
-    shell = pkgs.zsh;
+    #shell = "${pkgs.xonsh}/bin/xonsh";
     isNormalUser = true;
     extraGroups = [
       "wheel" # enables sudo
@@ -372,7 +372,6 @@ rec
     wireshark # Defactor network traffic sniffing tool
     ksystemlog # KDE syslog viewer
     nix-bash-completions # Nix completions in bash
-    nix-zsh-completions # Nix completions in ZSH
     bash-completion # Bash cli autocomplete
     hardinfo # Hardware information
     debootstrap # Bootstrap Debian based (deb package manager) Linux distros
@@ -471,16 +470,21 @@ rec
   };
   # Enable xonsh
   programs.xonsh.enable = true;
-  # Enable zsh
-  programs.zsh.enable = true;
+  programs.xonsh.config = ''
+    # https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html#variables
+    if "XDG_CACHE_HOME" not in ''${...}:
+      $XDG_CACHE_HOME = $HOME/.cache
+    if "XDG_CONFIG_HOME" not in ''${...}:
+      $XDG_CONFIG_HOME = $HOME/.config
+    if "XDG_DATA_HOME" not in ''${...}:
+      $XDG_DATA_HOME = $HOME/.local/share
+    if "XDG_STATE_HOME" not in ''${...}:
+      $XDG_STATE_HOME = $HOME/.local/state
+
+    source-bash /etc/bashrc --suppress-skip-message
+  '';
   # Bash autocomplete
   programs.bash.enableCompletion = true;
-
-  # Enable Oh-my-zsh
-  programs.zsh.ohMyZsh = {
-    enable = true;
-    plugins = [ "git" "sudo" "docker" "kubectl" ];
-  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

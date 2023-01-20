@@ -4,6 +4,8 @@ final: prev: {
   xontrib-sh = prev.callPackage ../pkgs/xontrib-sh { };
   xontrib-argcomplete = prev.callPackage ../pkgs/xontrib-argcomplete { };
   xontrib-output-search = prev.callPackage ../pkgs/xontrib-output-search { };
+  xontrib-jump-to-dir = prev.callPackage ../pkgs/xontrib-jump-to-dir { inherit prev; };
+  xonsh-joined-deps = prev.callPackage ../pkgs/xonsh-joined-deps { };
   tokenize-output = prev.callPackage ../pkgs/tokenize-output { };
   lazyasd = prev.callPackage ../pkgs/lazyasd { };
   splunk-otel-collector = prev.callPackage ../pkgs/splunk-otel-collector { };
