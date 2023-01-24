@@ -180,6 +180,10 @@ rec
       unmanaged = [ "virbr0" "lilbr" ];
     };
     useDHCP = false; # deprecated, should be false
+
+    hosts = {
+      "10.253.187.22" = [ "captiveportal-login.viaplaygroup.com" ];
+    };
   };
   # Enable systemd-resolved, takes care of splitting DNS across interfaces n stuff
   services.resolved.enable = true;
