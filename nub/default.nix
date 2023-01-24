@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
 let
   kubeEnable = false;
-  prometheusEnable = true;
+  prometheusEnable = false;
 in
 rec
 {
