@@ -78,7 +78,9 @@ rec
     ];
   };
 
+  # Make command not found suggest nix derivations
   programs.command-not-found.dbPath = programs_sqlite;
+  programs.iotop.enable = true;
 
   # Give applications 15 seconds to shut down when shutting down the computer
   systemd.extraConfig = ''
