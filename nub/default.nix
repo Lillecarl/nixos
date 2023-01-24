@@ -257,7 +257,7 @@ rec
   };
 
   environment.systemPackages = with pkgs; [
-    splunk-otel-collector # Temp testing
+    #splunk-otel-collector # Temp testing
     usbguard # USB blocking solution
     k3s # Kubernetes K3s
     iptables # Give us the iptables CLI (should map to nftables)
