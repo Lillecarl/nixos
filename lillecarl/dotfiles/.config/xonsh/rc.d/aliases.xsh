@@ -50,6 +50,13 @@ def _aliasupdown(data, up):
       print("Couldn't remove {0}".format(k))
       print(e)
 
+# Allow all plugged in USB devices
+def _usballow():
+  for i in $(usbguard list-devices --blocked).splitlines():
+    id = i.split(':')[0]
+    print("Allowing device {0}".format(i))
+    usbguard allow-device @(id)
+
 # ---------------------------
 # ALIASES
 # ---------------------------
@@ -78,6 +85,8 @@ carliases["bluemic"] = lambda x: _blueprofile(args=["mic"])
 carliases["bluesound"] = lambda x: _blueprofile(args=["music"])
 # nixshell alias just bonks out a nixshell using an auto updated registry entry
 carliases["nixshell"] = lambda x: ![nix shell @("nixos-unstable#{0}".format(x[0] if type(x) is list and len(x) > 0 else ""))]
+# Allow all connected USB devices
+aliases["usballow"] = lambda x: _usballow()
 
 # Add all carliases to aliases
 aliases["aliasup"] = lambda x: _aliasupdown(carliases, True)
