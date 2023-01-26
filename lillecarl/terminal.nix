@@ -13,6 +13,7 @@
     ".config/wezterm/wezterm.lua".source = ./dotfiles/.config/wezterm/wezterm.lua;
     ".config/qtile/autostart.sh".source = ./dotfiles/.config/qtile/autostart.sh;
     ".config/qtile/config.py".source = ./dotfiles/.config/qtile/config.py;
+    ".config/qtile/battery.py".source = ./dotfiles/.config/qtile/battery.py;
   };
 
   programs.git = {

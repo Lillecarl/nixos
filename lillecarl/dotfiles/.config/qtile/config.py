@@ -29,12 +29,15 @@ from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 from libqtile import hook
+from libqtile.backend.wayland import InputConfig
+
+import battery
 
 import os
 import subprocess
 
-mod = "mod4"
-terminal = "wezterm-gui"
+mod = "mod4" # Meta key
+terminal = "wezterm-gui" # Great terminal
 
 keys = [
     # A list of available commands that can be bound to keys can be found
@@ -128,25 +131,40 @@ extension_defaults = widget_defaults.copy()
 
 screens = [
     Screen(
+        top=bar.Bar(
+            [
+                widget.WindowName(),
+                widget.Clipboard(),
+                widget.TextBox("IO:"),
+                widget.HDDBusyGraph(),
+                widget.Memory(fmt="RAM: {0}", format="{MemUsed: .0f}MB"),
+                widget.MemoryGraph(),
+                widget.CPU(fmt="CPU: {0}", format="{load_percent}%"),
+                widget.CPUGraph(),
+                widget.TextBox("Juice:"),
+                battery.Battery(),
+            ],
+            24,
+            # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
+            # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
+        ),
         bottom=bar.Bar(
             [
                 widget.CurrentLayout(),
                 widget.GroupBox(),
                 widget.Prompt(),
-                widget.WindowName(),
+                widget.Clipboard(),
                 widget.Chord(
                     chords_colors={
                         "launch": ("#ff0000", "#ffffff"),
                     },
                     name_transform=lambda name: name.upper(),
                 ),
-                widget.TextBox("default config", name="default"),
-                widget.TextBox("Press &lt;M-r&gt; to spawn", foreground="#d75f5f"),
+                #widget.TextBox("default config", name="default"),
                 # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
-                # widget.StatusNotifier(),
-                widget.Systray(),
-                widget.Clock(format="%Y-%m-%d %a %I:%M %p"),
-                widget.QuickExit(),
+                widget.Spacer(),
+                widget.StatusNotifier(),
+                widget.Clock(format="%y/%m/%d %a %I:%M %p"),
             ],
             24,
             # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
@@ -188,7 +206,16 @@ reconfigure_screens = True
 auto_minimize = True
 
 # When using the Wayland backend, this can be used to configure input devices.
-wl_input_rules = None
+wl_input_rules = {
+    "0:0-wayland-keyboard": InputConfig(
+        accel_profile = 'adaptive',
+        click_method = 'clickfinger',
+        scroll_method = 'twofinger',
+        natural_scroll = True,
+        tap = True,
+        tap_button_map = 'lmr',
+    ),
+};
 
 @hook.subscribe.startup_once
 def autostart():
