@@ -42,7 +42,8 @@ $BASH_COMPLETIONS= ["/run/current-system/sw/share/bash-completion/bash_completio
 # Helm completion
 #source-bash $(helm completion bash) --suppress-skip-message
 
-
+# Store command output in history database
+$XONSH_STORE_STDOUT = True
 # Use SQLite history backend
 $XONSH_HISTORY_BACKEND = 'sqlite'
 # Don't save commands prefixed with a space
