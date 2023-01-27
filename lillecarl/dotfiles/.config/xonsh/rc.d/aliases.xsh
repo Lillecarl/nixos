@@ -86,7 +86,7 @@ carliases["bluesound"] = lambda x: _blueprofile(args=["music"])
 # nixshell alias just bonks out a nixshell using an auto updated registry entry
 carliases["nixshell"] = lambda x: ![nix shell @("nixos-unstable#{0}".format(x[0] if type(x) is list and len(x) > 0 else ""))]
 # Allow all connected USB devices
-aliases["usballow"] = lambda x: _usballow()
+carliases["usballow"] = lambda x: _usballow()
 
 # Add all carliases to aliases
 aliases["aliasup"] = lambda x: _aliasupdown(carliases, True)
