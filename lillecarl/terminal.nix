@@ -33,6 +33,7 @@
 
   home.packages = with pkgs; [
     xonsh # xonsh shell
+    moar # Better pager
     rbw # Unofficial Bitwarden CLI client
     delta # Diffing software
     du-dust # A more intuitive version of du written in rust.

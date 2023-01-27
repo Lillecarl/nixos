@@ -60,6 +60,7 @@ execx($(starship init xonsh))
 
 $EDITOR = "nvim"
 $VISUAL = "nvim"
+$PAGER = "moar"
 
 if "HOME" not in ${...}:
   $HOME = "/home/{0}".format($USER)
