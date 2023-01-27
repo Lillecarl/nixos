@@ -387,7 +387,6 @@ rec
     bitwarden # Password manger
     rofimoji # Emoji/Char picker for rofi
     gitkraken # Git GUI
-    libreoffice # MS office compatible productivity suite
     obs-studio # Screen recording/streaming utility
     filezilla # Free FTP/FTPS/SFTP software
     freerdp # Remote Desktop Protocol client
