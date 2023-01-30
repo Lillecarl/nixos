@@ -94,5 +94,8 @@
         };
       };
       formatter.x86_64-linux = nixos-unstable.legacyPackages.x86_64-linux.nixpkgs-fmt;
+      packages.x86_64-linux = {
+        acme-dns = pkgs.callPackage ./pkgs/acme-dns { };
+      };
     };
 }
