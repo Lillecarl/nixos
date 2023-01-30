@@ -267,6 +267,7 @@ rec
 
   environment.systemPackages = with pkgs; [
     #splunk-otel-collector # Temp testing
+    screen # Just for TTY
     acme-dns # ACME-DNS server. For certifying things that are behind corp firewall.
     usbguard # USB blocking solution
     k3s # Kubernetes K3s
