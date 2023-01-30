@@ -1,35 +1,35 @@
 {
   inputs = {
-    nixos-unstable.url = github:NixOS/nixpkgs/nixos-unstable;
+    nixpkgs.url = github:NixOS/nixpkgs/nixos-unstable;
     nixos-hardware.url = github:NixOS/nixos-hardware/master;
     flake-utils.url = "github:numtide/flake-utils";
-    nixos-unstable-channel.url = "https://nixos.org/channels/nixos-unstable/nixexprs.tar.xz";
+    nixpkgs-channel.url = "https://nixos.org/channels/nixos-unstable/nixexprs.tar.xz";
     dwarffs = {
       url = "github:edolstra/dwarffs";
-      inputs.nixpkgs.follows = "nixos-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     home-manager = {
       url = github:nix-community/home-manager;
-      inputs.nixpkgs.follows = "nixos-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     plasma-manager = {
       url = github:pjones/plasma-manager;
-      inputs.nixpkgs.follows = "nixos-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
   };
 
-  outputs = { self, nixos-unstable, nixos-hardware, home-manager, dwarffs, ... } @inputs:
+  outputs = { self, nixpkgs, nixos-hardware, home-manager, dwarffs, ... } @inputs:
     let
       system = "x86_64-linux";
-      #pkgs = import nixos-unstable { system = "x86_64-linux"; config = { allowUnfree = true; }; };
-      pkgs = import nixos-unstable { system = system; config = { allowUnfree = true; }; };
+      #pkgs = import nixpkgs { system = "x86_64-linux"; config = { allowUnfree = true; }; };
+      pkgs = import nixpkgs { system = system; config = { allowUnfree = true; }; };
     in
     {
       nixosConfigurations = rec {
-        shitbox = nixos-unstable.lib.nixosSystem {
+        shitbox = nixpkgs.lib.nixosSystem {
           inherit system;
           modules = [
             ./shitbox
@@ -54,7 +54,7 @@
           ];
           specialArgs = { inherit inputs; };
         };
-        nub = nixos-unstable.lib.nixosSystem
+        nub = nixpkgs.lib.nixosSystem
           {
             inherit system;
             modules = [
@@ -99,7 +99,7 @@
           ];
         };
       };
-      formatter.x86_64-linux = nixos-unstable.legacyPackages.x86_64-linux.nixpkgs-fmt;
+      formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixpkgs-fmt;
       packages.x86_64-linux = {
         acme-dns = pkgs.callPackage ./pkgs/acme-dns { };
       };

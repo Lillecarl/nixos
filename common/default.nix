@@ -25,7 +25,7 @@ let
   };
 
   programs_sqlite = pkgs.runCommandLocal "programs_sqlite" { } ''
-    cp ${inputs.nixos-unstable-channel}/programs.sqlite $out
+    cp ${inputs.nixpkgs-channel}/programs.sqlite $out
   '';
 
   pkgs-overlay = import ../pkgs;
