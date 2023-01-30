@@ -10,4 +10,5 @@ final: prev: {
   tokenize-output = prev.callPackage ../pkgs/tokenize-output { };
   lazyasd = prev.callPackage ../pkgs/lazyasd { };
   splunk-otel-collector = prev.callPackage ../pkgs/splunk-otel-collector { };
+  acme-dns = prev.callPackage ../pkgs/acme-dns { };
 }
