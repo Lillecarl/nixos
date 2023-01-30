@@ -140,6 +140,8 @@ rec
     bluetooth = {
       enable = true;
 
+      powerOnBoot = true;
+
       settings = {
         General = {
           Enable = "Source,Sink,Media,Socket";
@@ -231,8 +233,6 @@ rec
   services.printing.enable = false;
   # Enable GlobalProtect VPN
   services.globalprotect.enable = true;
-  # Enable Android debugging tools
-  programs.adb.enable = true;
 
   # Fix local Kubernetes
   services.k3s = lib.mkIf kubeEnable {
@@ -283,10 +283,6 @@ rec
     export GTK2_RC_FILES=$GTK2_RC_FILES:${pkgs.libsForQt5.breeze-gtk}/share/themes/breeze-gtk/gtk-2.0/gtkrc
   '';
 
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
   systemd = {
     # upower systemd service
     services.upower.enable = true;
@@ -303,97 +299,6 @@ rec
     };
   };
 
-  # Monitor laptop with Prometheus
-  services.prometheus = lib.mkIf prometheusEnable {
-    enable = true;
-    globalConfig = {
-      scrape_timeout = "10s";
-      scrape_interval = "1m";
-      evaluation_interval = "1m";
-    };
-    pushgateway = {
-      enable = true;
-    };
-    scrapeConfigs = [
-      {
-        job_name = "prometheus";
-        static_configs = [
-          {
-            targets = [ "127.0.0.1:9090" ];
-          }
-        ];
-      }
-      {
-        job_name = "node";
-        static_configs = [
-          {
-            targets = [ "127.0.0.1:9100" ];
-          }
-        ];
-      }
-      {
-        job_name = "process";
-        static_configs = [
-          {
-            targets = [ "127.0.0.1:9256" ];
-          }
-        ];
-      }
-      {
-        job_name = "smartctl";
-        static_configs = [
-          {
-            targets = [ "127.0.0.1:9633" ];
-          }
-        ];
-      }
-    ];
-    exporters = {
-      node = {
-        enable = true;
-        enabledCollectors = [
-          "systemd"
-          "processes"
-        ];
-      };
-      process = {
-        enable = true;
-      };
-      smartctl = {
-        enable = true;
-        devices = [ "/dev/nvme0n1" "/dev/nvme1n1" ];
-      };
-      #script = {
-      #  enable = true;
-      #  settings = {
-      #    scripts = [
-      #      {
-      #        name = "fanspeed";
-      #        script = ''
-      #          
-      #        '';
-      #      }
-      #    ];
-      #  };
-      #};
-    };
-  };
-
-  services.grafana = {
-    enable = true;
-    settings = {
-      server = {
-        http_addr = "127.0.0.1";
-        http_port = 446;
-        domain = "localhost";
-      };
-    };
-  };
-
-  # enable emacs, running as a user daemon
-  #services.emacs.enable = true;
-  # Enable bluetooth
-  services.blueman.enable = true;
   # Enables upower daemon
   services.upower.enable = true;
   # TODO configure this to relay messages out on the internet too
@@ -402,11 +307,5 @@ rec
     setSendmail = true;
   };
 
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "22.05"; # Did you read the comment?
+  system.stateVersion = "22.05";
 }
