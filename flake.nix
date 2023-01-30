@@ -4,6 +4,10 @@
     nixos-hardware.url = github:NixOS/nixos-hardware/master;
     flake-utils.url = "github:numtide/flake-utils";
     nixos-unstable-channel.url = "https://nixos.org/channels/nixos-unstable/nixexprs.tar.xz";
+    dwarffs = {
+      url = "github:edolstra/dwarffs";
+      inputs.nixpkgs.follows = "nixos-unstable";
+    };
 
     home-manager = {
       url = github:nix-community/home-manager;
@@ -17,10 +21,11 @@
     };
   };
 
-  outputs = { self, nixos-unstable, nixos-hardware, home-manager, ... } @inputs:
+  outputs = { self, nixos-unstable, nixos-hardware, home-manager, dwarffs, ... } @inputs:
     let
       system = "x86_64-linux";
-      pkgs = import nixos-unstable { system = "x86_64-linux"; config = { allowUnfree = true; }; };
+      #pkgs = import nixos-unstable { system = "x86_64-linux"; config = { allowUnfree = true; }; };
+      pkgs = import nixos-unstable { system = system; config = { allowUnfree = true; }; };
     in
     {
       nixosConfigurations = rec {
@@ -67,6 +72,7 @@
               nixos-hardware.nixosModules.common-pc-laptop-acpi_call
               nixos-hardware.nixosModules.common-pc-ssd
               nixos-hardware.nixosModules.common-pc
+              dwarffs.nixosModules.dwarffs
 
               home-manager.nixosModules.home-manager
               {

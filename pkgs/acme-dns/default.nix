@@ -1,7 +1,6 @@
-{
-  lib,
-  buildGoModule,
-  fetchFromGitHub
+{ lib
+, buildGoModule
+, fetchFromGitHub
 }:
 
 # If you don't know how to get the sha256's ahead of time, just build and check CLI output.
