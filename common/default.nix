@@ -504,12 +504,20 @@ rec
     };
   };
 
-  # Network Firewall
-  #services.opensnitch.enable = true;
+  # Configure timeservers
+  services.ntp = {
+    enable = true;
+    servers = [
+      "0.se.pool.ntp.org"
+      "1.se.pool.ntp.org"
+      "2.se.pool.ntp.org"
+      "3.se.pool.ntp.org"
+    ];
+  };
 
   security.pam.loginLimits = [
     {
-      # This fixes "ip vrf exec" for reasons still "unknown" (haven't read up on yet)
+      # This fixes "ip vrf exec"
       domain = "*";
       item = "memlock"; # Locked memory, required for BPF programs
       type = "-"; # This is instead of hard/soft?
