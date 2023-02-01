@@ -47,7 +47,7 @@ rec
   };
 
   services.usbguard = {
-    enable = true;
+    enable = false;
 
     IPCAllowedUsers = [ "root" "lillecarl" ];
   };
