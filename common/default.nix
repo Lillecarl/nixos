@@ -176,18 +176,6 @@ rec
     POWERSHELL_TELEMETRY_OPTOUT = "yes";
   };
 
-  # Firejail is used to isolate processes
-  programs.firejail = {
-    enable = true;
-    wrappedBinaries = {
-      teams_nent = {
-        executable = "${lib.getBin pkgs.teams}/bin/teams";
-        profile = "${pkgs.firejail}/etc/firejail/teams.profile";
-        extraArgs = [ "--private=~/.local/share/teams_nent" ];
-      };
-    };
-  };
-
   environment.systemPackages = with pkgs; [
     # Temporary lab
     (hiPrio braveWaylandDesktopItem) # Dekstop item to force Wayland
