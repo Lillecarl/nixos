@@ -305,7 +305,8 @@ rec
       wantedBy = [ "sleep.target" ];
       before = [ "sleep.target" ];
       script = ''
-        ${pkgs.procps}/bin/pgrep gpclient | xargs kill
+                ${pkgs.procps}/bin/pgrep gpclient | xargs kill
+        	${pkgs.iproute2}/bin/ip link del tun0
       '';
     };
   };
