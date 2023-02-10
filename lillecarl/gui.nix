@@ -6,14 +6,18 @@
     plugins = with pkgs; [ rofimoji rofi-rbw ];
   };
 
-  #programs.vscode = {
-  #  enable = true;
+  programs.vscode = {
+    enable = true;
 
-  #  enableExtensionUpdateCheck = false;
-  #  enableUpdateCheck = false;
-  #  package = pkgs.vscode;
-  #  extensions = [ ];
-  #};
+    enableExtensionUpdateCheck = false;
+    enableUpdateCheck = false;
+    package = pkgs.vscode;
+    extensions = with pkgs.vscode-extensions; [
+      jnoortheen.xonsh
+      vscodevim.vim
+      EditorConfig.EditorConfig
+    ];
+  };
 
   home.packages = with pkgs; [
     wofi # Wayland rofi?

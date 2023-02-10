@@ -16,14 +16,6 @@ let
     exec = "${pkgs.slack}/bin/slack --ozone-platform=wayland %U";
   };
 
-  codeWaylandDesktopItem = pkgs.makeDesktopItem {
-    name = "code";
-    desktopName = "Visual Studio Code";
-    icon = "code";
-    mimeTypes = lib.splitString ";" "text/plain;inode/directory";
-    exec = "${pkgs.vscode}/bin/code --ozone-platform=wayland %U";
-  };
-
   programs_sqlite = pkgs.runCommandLocal "programs_sqlite" { } ''
     cp ${inputs.nixpkgs-channel}/programs.sqlite $out
   '';
@@ -180,7 +172,6 @@ rec
     # Temporary lab
     (hiPrio braveWaylandDesktopItem) # Dekstop item to force Wayland
     (hiPrio slackWaylandDesktopItem) # Desktop item to force Wayland
-    (hiPrio codeWaylandDesktopItem) # Desktop item to force Wayland
     xorg.xwininfo # Information about X windows (Used to find things using XWayland)
     xonsh
     qtile
@@ -344,7 +335,6 @@ rec
     gist # Tool to post files to gist.github.com straight away
 
     # Programming tools
-    vscode # Programming editor, growing into an IDE
     kdiff3 # Well know diffing tool
     ruby # Ruby programming language
     #python3 # Language interpreter

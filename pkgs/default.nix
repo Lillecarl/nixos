@@ -11,4 +11,8 @@ final: prev: {
   lazyasd = prev.callPackage ../pkgs/lazyasd { };
   splunk-otel-collector = prev.callPackage ../pkgs/splunk-otel-collector { };
   acme-dns = prev.callPackage ../pkgs/acme-dns { };
+  vscode-extensions = prev.vscode-extensions // {
+    jnoortheen.xonsh = prev.callPackage ../pkgs/vscode-extensions/jnoortheen.xonsh { };
+    EditorConfig.EditorConfig = prev.callPackage ../pkgs/vscode-extensions/EditorConfig.EditorConfig { };
+  };
 }
