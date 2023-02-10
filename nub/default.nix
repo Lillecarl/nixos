@@ -266,6 +266,7 @@ rec
   };
 
   environment.systemPackages = with pkgs; [
+    winbox # MikroTik winbox, until we're rid of this crap at work.
     #splunk-otel-collector # Temp testing
     screen # Just for TTY
     acme-dns # ACME-DNS server. For certifying things that are behind corp firewall.

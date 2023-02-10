@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 let
   pkgs-overlay = import ../pkgs;
   xonsh-overlay = import ../overlays/xonsh-overlay;
