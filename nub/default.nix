@@ -14,9 +14,9 @@ rec
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelParams = [ "resume=/dev/vg1/swap" "mem_sleep_default=deep" ];
   boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
-  boot.kernel.sysctl = {
-    "vm.swappiness" = 1;
-  };
+  #boot.kernel.sysctl = {
+  #  "vm.swappiness" = 1;
+  #};
 
   boot.binfmt = {
     emulatedSystems = [
