@@ -32,7 +32,7 @@
   };
 
   home.packages = with pkgs; [
-    xonsh # xonsh shell
+    xonsh-wrapped # xonsh shell
     moar # Better pager
     rbw # Unofficial Bitwarden CLI client
     delta # Diffing software
