@@ -16,6 +16,9 @@ in{
   splunk-otel-collector = prev.callPackage ../pkgs/splunk-otel-collector { };
   acme-dns = prev.callPackage ../pkgs/acme-dns { };
   python3Packages = prev.python3Packages // myPythonPackages;
+  python3 = prev.python3.override {
+    packageOverrides = final: prev: { } // myPythonPackages;
+  };
   vscode-extensions = prev.vscode-extensions // {
     jnoortheen.xonsh = prev.callPackage ../pkgs/vscode-extensions/jnoortheen.xonsh { };
     EditorConfig.EditorConfig = prev.callPackage ../pkgs/vscode-extensions/EditorConfig.EditorConfig { };
