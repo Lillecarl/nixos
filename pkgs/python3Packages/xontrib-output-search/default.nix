@@ -1,6 +1,5 @@
 { lib
 , python3Packages
-, tokenize-output
 }:
 
 python3Packages.buildPythonPackage rec {
