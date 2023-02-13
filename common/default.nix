@@ -173,7 +173,6 @@ rec
     (hiPrio braveWaylandDesktopItem) # Dekstop item to force Wayland
     (hiPrio slackWaylandDesktopItem) # Desktop item to force Wayland
     xorg.xwininfo # Information about X windows (Used to find things using XWayland)
-    xonsh
     qtile
     wdisplays
     kanshi
@@ -447,6 +446,7 @@ rec
     pinentryFlavor = "qt";
   };
   # Enable xonsh
+  programs.xonsh.package = pkgs.xonsh-wrapped;
   programs.xonsh.enable = true;
   programs.xonsh.config = ''
     # https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html#variables

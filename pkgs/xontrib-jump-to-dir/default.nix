@@ -1,6 +1,6 @@
 { lib
+, xonsh
 , python3Packages
-, prev
 }:
 
 python3Packages.buildPythonPackage rec {
@@ -11,7 +11,7 @@ python3Packages.buildPythonPackage rec {
     sha256 = "sha256-affmEnOeQWrbB2hYpkFxR6QSrdAU8Cty2ZwFJD22Y6I=";
   };
 
-  propagatedBuildInputs = [ prev.xonsh ];
+  propagatedBuildInputs = [ xonsh ];
 
   meta = {
     description = "Jump to used before directory by part of the path. Lightweight zero-dependency implementation of autojump or zoxide projects functionality.";

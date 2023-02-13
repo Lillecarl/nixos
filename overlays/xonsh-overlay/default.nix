@@ -1,27 +1,6 @@
-final: prev:
-let
-in
-rec {
-  # Join all xonsh dependencies into one derivation
-  #  xonsh-joined-deps = prev.symlinkJoin {
-  #    name = "xonsh-joined";
-  #    # recurse all listed dependencies
-  #    paths = (prev.python3.pkgs.requiredPythonModules [
-  #      final.xonsh-direnv
-  #      final.xontrib-argcomplete
-  #      final.xontrib-output-search
-  #      final.xontrib-fzf-widgets
-  #      final.xontrib-sh
-  #      final.xontrib-jump-to-dir
-  #      final.lazyasd
-  #      prev.python3.pkgs.pyyaml
-  #      prev.python3.pkgs.psutil
-  #      prev.python3.pkgs.jinja2
-  #    ]);
-  #  };
-
+final: prev: {
   # write xonsh wrapper script
-  xonsh = prev.writeShellScriptBin "xonsh" ''
+  xonsh-wrapped = prev.writeShellScriptBin "xonsh" ''
     export PYTHONPATH=${final.xonsh-joined-deps}/lib/python3.10/site-packages:$PYTHONPATH
 
     export XDG_CACHE_HOME=$HOME/.cache

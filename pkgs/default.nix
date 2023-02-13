@@ -4,8 +4,8 @@ final: prev: {
   xontrib-sh = prev.callPackage ../pkgs/xontrib-sh { };
   xontrib-argcomplete = prev.callPackage ../pkgs/xontrib-argcomplete { };
   xontrib-output-search = prev.callPackage ../pkgs/xontrib-output-search { };
-  xontrib-jump-to-dir = prev.callPackage ../pkgs/xontrib-jump-to-dir { inherit prev; };
-  xonsh-joined-deps = prev.callPackage ../pkgs/xonsh-joined-deps { inherit prev; };
+  xontrib-jump-to-dir = prev.callPackage ../pkgs/xontrib-jump-to-dir { };
+  xonsh-joined-deps = prev.callPackage ../pkgs/xonsh-joined-deps { };
   xonsh-autoxsh = prev.callPackage ../pkgs/xonsh-autoxsh { };
   tokenize-output = prev.callPackage ../pkgs/tokenize-output { };
   lazyasd = prev.callPackage ../pkgs/lazyasd { };

@@ -8,14 +8,12 @@
 , xontrib-jump-to-dir
 , lazyasd
 , symlinkJoin
-, prev
 }:
 
 symlinkJoin {
   name = "xonsh-joined";
   # recurse all listed dependencies
   paths = (python3.pkgs.requiredPythonModules [
-    prev.xonsh
     xonsh-direnv
     xonsh-autoxsh
     xontrib-argcomplete
