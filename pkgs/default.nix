@@ -15,4 +15,5 @@ final: prev: {
     jnoortheen.xonsh = prev.callPackage ../pkgs/vscode-extensions/jnoortheen.xonsh { };
     EditorConfig.EditorConfig = prev.callPackage ../pkgs/vscode-extensions/EditorConfig.EditorConfig { };
   };
+  nodePackages = prev.nodePackages // (prev.callPackages ./node-packages {});
 }

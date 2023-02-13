@@ -73,5 +73,7 @@
     jq # CLI JSON utility, piping JSON here will always pretty-print it
     yq # CLI YAML utility, useful for those that thing YAML is a bit shit
     gron # Flatten JSON to make it easy to grep
+    node2nix # Generate nix packages from NPM packages
+    nodePackages.pajv # JSON Schema Validator for multiple formats
   ];
 }
