@@ -23,7 +23,9 @@
       fsType = "btrfs";
       options = [
         "defaults"
-        "discard"
+        "discard=async"
+        "ssd"
+        "space_cache=v2"
       ];
     };
 
