@@ -14,6 +14,7 @@ let
   };
 in{
   splunk-otel-collector = prev.callPackage ../pkgs/splunk-otel-collector { };
+  salt-pepper = prev.callPackage ../pkgs/salt-pepper { };
   acme-dns = prev.callPackage ../pkgs/acme-dns { };
   python3Packages = prev.python3Packages // myPythonPackages;
   python3 = prev.python3.override {

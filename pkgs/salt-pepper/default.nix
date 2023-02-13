@@ -8,12 +8,18 @@ python3Packages.buildPythonPackage rec {
 
   src = python3Packages.fetchPypi {
     inherit pname version;
-    sha256 = "sha256-qwXbNbQ5mAwkZ4N+htv0Juw2a3NF6pv0XpolLIQfIe4=";
+    sha256 = "sha256-t1pkHU/ZZmOuRPx85KrbfkyHuP8w96w1R5ooK5mJR0k=";
   };
+
+  propagatedBuildInputs = with python3Packages; [
+    setuptools-scm
+  ];
+
+  doCheck = false;
 
   meta = {
     description = "A CLI front-end to a running salt-api system";
     homepage = "https://github.com/saltstack/pepper";
-    license = lib.licenses.apache2;
+    license = lib.licenses.asl20;
   };
 }

@@ -32,6 +32,7 @@
   };
 
   home.packages = with pkgs; [
+    salt-pepper # salt-api CLI tool
     xonsh-wrapped # xonsh shell
     moar # Better pager
     rbw # Unofficial Bitwarden CLI client
