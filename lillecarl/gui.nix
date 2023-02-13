@@ -16,6 +16,7 @@
       jnoortheen.xonsh
       vscodevim.vim
       EditorConfig.EditorConfig
+      bbenoist.nix
     ];
   };
 
