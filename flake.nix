@@ -90,6 +90,7 @@
         formatter = pkgs.nixpkgs-fmt;
         packages = {
           acme-dns = pkgs.callPackage ./pkgs/acme-dns { };
+          pajv = (pkgs.callPackage ./pkgs/node-packages { }).pajv;
         };
       };
     };
