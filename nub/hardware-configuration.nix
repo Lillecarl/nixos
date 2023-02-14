@@ -19,6 +19,7 @@
 
   zramSwap = {
     enable = true;
+    priority = 15;
   };
 
   fileSystems."/" =
