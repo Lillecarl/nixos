@@ -46,6 +46,7 @@
     {
       device = "/dev/vg1/swap";
       discardPolicy = "both";
+      priority = 10;
     }
   ];
 
