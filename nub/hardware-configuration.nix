@@ -2,7 +2,15 @@
 # and may be overwritten by future invocations.  Please make changes
 # to /etc/nixos/configuration.nix instead.
 { config, lib, pkgs, modulesPath, ... }:
-
+let
+  defFsOpts = [
+    "defaults"
+    "discard=async"
+    "ssd"
+    "space_cache=v2"
+    "lazytime"
+  ];
+in
 {
   imports =
     [
@@ -26,21 +34,14 @@
     {
       device = "/dev/vg1/root";
       fsType = "btrfs";
-      options = [
-        "defaults"
-        "discard=async"
-        "ssd"
-        "space_cache=v2"
-      ];
+      options = defFsOpts;
     };
 
   fileSystems."/boot" =
     {
       device = "/dev/disk/by-uuid/6F2C-B215";
       fsType = "vfat";
-      options = [
-        "flush"
-      ];
+      options = defFsOpts;
     };
 
   swapDevices = [
