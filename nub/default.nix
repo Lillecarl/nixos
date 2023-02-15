@@ -47,9 +47,10 @@ rec
   };
 
   services.usbguard = {
-    enable = false;
+    enable = true;
 
     IPCAllowedUsers = [ "root" "lillecarl" ];
+    implictPolicyTarget = "allow"; # Allow everything
   };
 
   services.salt.master = {
