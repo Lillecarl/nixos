@@ -18,6 +18,29 @@
       EditorConfig.EditorConfig
       bbenoist.nix
     ];
+
+    userSettings = {
+      "files.insertFinalNewline" = true;
+      "telemetry.telemetryLevel" = "off";
+      "keyboard.dispatch" = "keyCode";
+      "redhat.telemetry.enabled" = false;
+      "workbench.startupEditor" = "none";
+      "editor.inlineSuggest.enabled" = true;
+      "update.mode" = "none";
+      "files.autoSave" = "onFocusChange";
+      "files.autoSaveDelay" = 500;
+      "editor.insertSpaces" = true;
+      "[tf]" = {
+          "editor.insertSpaces" = true;
+          "editor.tabSize" = 2;
+      };
+      "shebang.associations" = [
+        {
+          "pattern" = "^#!py$";
+          "language" = "python";
+        }
+      ];
+    };
   };
 
   home.packages = with pkgs; [
