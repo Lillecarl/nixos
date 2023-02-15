@@ -298,7 +298,6 @@ rec
     powershell # Microsofts shell implementation
     ncdu # NCurses Disk Utility (TUI way of finding big files and folders)
     scrot # Commandline print-screen tool, use with GnuPG for automatic screenshotting
-    maim # Commandline print-screen tool, use with GnuPG for automatic screenshotting
     pulseaudio # For pactl
     dmidecode # system information
     pciutils # PCI(e) utilities (lspci for example)
@@ -395,7 +394,6 @@ rec
     scrcpy # Print-screen tool
     winePackages.wayland # Win32 API compability layer for Linux
     wine64Packages.wayland # Win32 API compability layer for Linux
-    bottles # Wine prefix manager (Tool to make installing Windows apps easier)
     krita # KDE alternative to GIMP
     gimp # Photoshop alternative
     kdenlive # KDE alternative to Windows Movie Maker
