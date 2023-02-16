@@ -1,6 +1,5 @@
 { vscode
 , symlinkJoin
-, python3
 }:
 
 symlinkJoin {
@@ -10,6 +9,5 @@ symlinkJoin {
   # recurse all listed dependencies
   paths = [
     vscode
-    python3.pkgs.python-lsp-server
   ];
 }
