@@ -1,29 +1,5 @@
 { inputs, config, pkgs, lib, ... }:
 let
-  braveWaylandDesktopItem = pkgs.makeDesktopItem {
-    name = "brave-browser";
-    desktopName = "Brave";
-    icon = "brave-browser";
-    mimeTypes = lib.splitString ";" "application/pdf;application/rdf+xml;application/rss+xml;application/xhtml+xml;application/xhtml_xml;application/xml;image/gif;image/jpeg;image/png;image/webp;text/html;text/xml;x-scheme-handler/http;x-scheme-handler/https;x-scheme-handler/ipfs;x-scheme-handler/ipns";
-    exec = "${pkgs.brave}/bin/brave --ozone-platform=wayland %U";
-  };
-
-  slackWaylandDesktopItem = pkgs.makeDesktopItem {
-    name = "slack";
-    desktopName = "Slack";
-    icon = "${pkgs.slack}/share/pixmaps/slack.png";
-    mimeTypes = lib.splitString ";" "x-scheme-handler/slack";
-    exec = "${pkgs.slack}/bin/slack --ozone-platform=wayland %U";
-  };
-
-  codeWaylandDesktopItem = pkgs.makeDesktopItem {
-    name = "code";
-    desktopName = "Visual Studio Code";
-    icon = "code";
-    mimeTypes = lib.splitString ";" "text/plain;inode/directory";
-    exec = "${pkgs.vscode}/bin/code --ozone-platform=wayland %U";
-  };
-
   programs_sqlite = pkgs.runCommandLocal "programs_sqlite" { } ''
     cp ${inputs.nixpkgs-channel}/programs.sqlite $out
   '';
@@ -178,9 +154,6 @@ rec
 
   environment.systemPackages = with pkgs; [
     # Temporary lab
-    (hiPrio braveWaylandDesktopItem) # Dekstop item to force Wayland
-    (hiPrio slackWaylandDesktopItem) # Desktop item to force Wayland
-    (hiPrio codeWaylandDesktopItem) # Desktop item to force Wayland
     xorg.xwininfo # Information about X windows (Used to find things using XWayland)
     qtile
     wdisplays
@@ -404,7 +377,6 @@ rec
     #catt # Chromecast CLI
 
     # Web browsers
-    brave # Web brower, Chromium based
     firefox # The browser I'd love to use
     google-chrome # Only use this when websites are stupid
     nyxt # Hackable "power-browser"

@@ -44,11 +44,17 @@
   };
 
   home.packages = with pkgs; [
+    # Temporary
     wofi # Wayland rofi?
+
+    # Desktop item overrides
+    (hiPrio vscode-wayland)
+    (hiPrio slack-wayland)
+    (hiPrio brave-wayland)
+
     # Chat apps
     element-desktop # Element Slack app
     teams # Microsoft Teams collaboration suite (Electron)
-    slack # Team collaboration chat (Electron)
     discord # Gaming chat application
     zoom # Meetings application
     signal-desktop # Secure messenger
@@ -57,6 +63,5 @@
     mpv # Media Player
     celluloid #  MPV GTK frontend wrapper
     #vlc # VLC sucks in comparision to MPV
-
   ];
 }
