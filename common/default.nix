@@ -149,7 +149,8 @@ rec
       "\${XDG_BIN_HOME}"
     ];
 
-    POWERSHELL_TELEMETRY_OPTOUT = "yes";
+    POWERSHELL_TELEMETRY_OPTOUT = "yes"; # No powershell telemetry
+    NIXOS_OZONE_WL = "1"; # Use Wayland whenever we can
   };
 
   environment.systemPackages = with pkgs; [
