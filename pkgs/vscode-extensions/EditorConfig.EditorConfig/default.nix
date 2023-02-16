@@ -10,7 +10,7 @@ in
       name = "EditorConfig";
       publisher = "EditorConfig";
       version = "0.16.4";
-      sha256 = "sha256-j+P2oprpH0rzqI0VKt0JbZG19EDE7e7+kAb3MGGCRDk=";
+      sha256 = "8fe3f6a29ae91f4af3a88d152add096d91b5f440c4edeefe9006f73061824439";
     };
 
     meta = with lib; {

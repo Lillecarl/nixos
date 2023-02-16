@@ -9,7 +9,7 @@ in
       name = "remote-explorer";
       publisher = "ms-vscode";
       version = "0.3.2023021509";
-      sha256 = "sha256-7bxIw9rYJXd7z3GMnyp8Kk5kOT/nJHDi6/NbX/PJmmc=";
+      sha256 = "edbc48c3dad825777bcf718c9f2a7c2a4e64393fe72470e2ebf35b5ff3c99a67";
     };
 
     meta = with lib; {

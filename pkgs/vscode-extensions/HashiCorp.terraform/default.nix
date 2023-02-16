@@ -9,7 +9,7 @@ in
       name = "terraform";
       publisher = "HashiCorp";
       version = "2.25.2";
-      sha256 = "sha256-fbhm+oiIQQZoEZeOeMcjaQX30OuwM1x+2f1VNwSvkI0=";
+      sha256 = "7db866fa888841066811978e78c7236905f7d0ebb0335c7ed9fd553704af908d";
     };
 
     meta = with lib; {

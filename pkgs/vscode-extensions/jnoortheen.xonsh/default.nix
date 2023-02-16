@@ -11,7 +11,7 @@ in
       name = "xonsh";
       publisher = "jnoortheen";
       version = "0.2.6";
-      sha256 = "sha256-EhpIzYLn5XdvR5gAd129+KuyTcKFswXtO6WgVT8b+xA=";
+      sha256 = "121a48cd82e7e5776f479800775dbdf8abb24dc285b305ed3ba5a0553f1bfb10";
     };
 
     propagatedBuildInputs = with python3.pkgs; [

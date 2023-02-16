@@ -9,7 +9,7 @@ in
       name = "isort";
       publisher = "ms-python";
       version = "2023.9.10461023";
-      sha256 = "sha256-6RlR2rKRQ41gou/ltBGPQzoWUY3LbN23zCKfZt+Qdhs=";
+      sha256 = "e91951dab291438d60a2efe5b4118f433a16518dcb6cddb7cc229f66df90761b";
     };
 
     meta = with lib; {

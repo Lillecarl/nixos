@@ -9,7 +9,7 @@ in
       name = "vscode-yaml";
       publisher = "redhat";
       version = "1.11.10112022";
-      sha256 = "sha256-/ZD3LOf6d5dJJW7eGZgkrf4hj1CXZJNI0u06Bnmyo0Q=";
+      sha256 = "fd90f72ce7fa779749256ede199824adfe218f5097649348d2ed3a0679b2a344";
     };
 
     meta = with lib; {

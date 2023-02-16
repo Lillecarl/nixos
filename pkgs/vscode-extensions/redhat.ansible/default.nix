@@ -8,8 +8,8 @@ in
     mktplcRef = {
       name = "ansible";
       publisher = "redhat";
-      version = "1.1.34";
-      sha256 = "sha256-UyAbQpe2KpoBZVk1AwfEr3BoLPwHxps284l0ZzjMQDE=";
+      version = "1.2.44";
+      sha256 = "31f73fb13eea908ffa0040d915dd03900ba2e496b2ceb2b7cffc73705e610929";
     };
 
     meta = with lib; {
