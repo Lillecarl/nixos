@@ -41,15 +41,6 @@
               inputs.nixos-hardware.nixosModules.common-cpu-amd
               inputs.nixos-hardware.nixosModules.common-pc-ssd
               inputs.nixos-hardware.nixosModules.common-pc
-
-              inputs.home-manager.nixosModules.home-manager
-              {
-                home-manager.useGlobalPkgs = true;
-                home-manager.useUserPackages = true;
-                home-manager.backupFileExtension = "old"; # Move non-hm files if they're in the way
-                home-manager.users.lillecarl = import ./lillecarl;
-                home-manager.sharedModules = [ inputs.plasma-manager.homeManagerModules.plasma-manager ];
-              }
             ];
             specialArgs = { inherit inputs; };
           };
@@ -71,16 +62,6 @@
               inputs.nixos-hardware.nixosModules.common-pc-ssd
               inputs.nixos-hardware.nixosModules.common-pc
               inputs.dwarffs.nixosModules.dwarffs
-
-              inputs.home-manager.nixosModules.home-manager
-              {
-                home-manager.useGlobalPkgs = true;
-                home-manager.useUserPackages = true;
-                home-manager.backupFileExtension = "old"; # Move non-hm files if they're in the way
-                home-manager.users.lillecarl = import ./lillecarl;
-
-                home-manager.sharedModules = [ inputs.plasma-manager.homeManagerModules.plasma-manager ];
-              }
             ];
             specialArgs = { inherit inputs; };
           };

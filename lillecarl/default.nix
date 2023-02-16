@@ -16,6 +16,10 @@ in
     ./kde.nix # KDE configuration
   ];
 
+  nixpkgs = {
+    config.allowUnfree = true;
+  };
+
   # HM stuff
   home.username = "lillecarl";
   home.homeDirectory = "/home/lillecarl";

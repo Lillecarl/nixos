@@ -8,7 +8,7 @@ let
   mkHome = system: customArgs:
     withSystem system ({ pkgs, ... }:
       inputs.home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
+        pkgs = (pkgs // { config.allowUnfree = true; });
         extraSpecialArgs = {
           inherit self;
           inherit inputs;
