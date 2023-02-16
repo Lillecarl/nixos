@@ -6,6 +6,10 @@ from pathlib import Path
 
 gitroot = $(git rev-parse --show-toplevel).strip()
 
+def updatenix():
+  print("Updating nix")
+  nix flake lock --recreate-lock-file @(gitroot)
+
 def updatenode():
   print("Updating node packages")
   os.chdir(os.path.join(gitroot, "pkgs/node-packages"))
@@ -49,5 +53,6 @@ def updatevscodeext(path):
 
   rm -rf $OUTNAME
 
+updatenix()
 updatenode()
 updatevscode()
