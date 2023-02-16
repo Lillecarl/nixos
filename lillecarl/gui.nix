@@ -17,6 +17,13 @@
       vscodevim.vim
       EditorConfig.EditorConfig
       bbenoist.nix
+      redhat.vscode-yaml
+      ms-vscode.remote-explorer
+      ms-vscode-remote.remote-ssh-edit
+      ms-vscode-remote.remote-ssh
+      ms-python.python        
+      ms-python.vscode-pylance
+      ms-python.isort         
     ];
 
     userSettings = {
