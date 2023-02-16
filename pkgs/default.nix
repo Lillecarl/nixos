@@ -22,6 +22,7 @@ in{
   slack-wayland   = prev.callPackage ../pkgs/desktopItemOverrides/slack.nix { };
   vscode-wayland  = prev.callPackage ../pkgs/desktopItemOverrides/vscode.nix { };
   brave-wayland   = prev.callPackage ../pkgs/desktopItemOverrides/brave.nix { };
+  vscode-joined   = prev.callPackage ../pkgs/vscode-joined { };
   # Inject python3 packages
   python3Packages = prev.python3Packages // myPythonPackages;
   python3 = prev.python3.override {

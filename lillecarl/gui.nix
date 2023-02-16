@@ -13,7 +13,7 @@
     enableUpdateCheck = false;
     mutableExtensionsDir = false;
 
-    package = pkgs.vscode;
+    package = pkgs.vscode-joined;
 
     extensions = with pkgs.vscode-extensions; [
       # Upstream packaged
