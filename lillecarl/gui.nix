@@ -1,11 +1,5 @@
 { config, pkgs, ... }:
 {
-  programs.rofi = {
-    enable = true;
-    package = pkgs.rofi-wayland;
-    plugins = with pkgs; [ rofimoji rofi-rbw ];
-  };
-
   programs.vscode = {
     enable = true;
 
@@ -62,9 +56,6 @@
   };
 
   home.packages = with pkgs; [
-    # Temporary
-    wofi # Wayland rofi?
-
     # Desktop item overrides
     (hiPrio vscode-wayland)
     (hiPrio slack-wayland)
