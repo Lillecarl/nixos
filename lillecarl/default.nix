@@ -4,7 +4,6 @@ let
   xonsh-overlay = import ../overlays/xonsh-overlay;
 in
 {
-
   nixpkgs.overlays = [
     pkgs-overlay
     xonsh-overlay
