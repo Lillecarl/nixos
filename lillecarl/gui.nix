@@ -50,8 +50,14 @@
           "language" = "python";
         }
       ];
-      "terraform.languageServer.path" = "${pkgs.terraform-ls}/bin/terraform-ls";
-      "pylsp.executable" = "${pkgs.python3.pkgs.python-lsp-server}/bin/pylsp";
+      "vim.enableNeovim" = true;
+      # Executable path configurations
+      "terraform.languageServer.path"   = "${pkgs.terraform-ls}/bin/terraform-ls";
+      "pylsp.executable"                = "${pkgs.python3.pkgs.python-lsp-server}/bin/pylsp";
+      "vscode-kubernetes.kubectl-path"  = "${pkgs.kubectl}/bin/kubectl";
+      "vscode-kubernetes.helm-path"     = "${pkgs.kubernetes-helm}/bin/helm";
+      "ansible.ansible.path"            = "${pkgs.ansible}/bin/ansible";
+      "vim.neovimPath"                  = "${pkgs.neovim}/bin/nvim";
     };
   };
 
