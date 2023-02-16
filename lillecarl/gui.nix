@@ -56,6 +56,8 @@
           "language" = "python";
         }
       ];
+      "terraform.languageServer.path" = "${pkgs.terraform-ls}/bin/terraform-ls";
+      "pylsp.executable" = "${pkgs.python3.pkgs.python-lsp-server}/bin/pylsp";
     };
   };
 
