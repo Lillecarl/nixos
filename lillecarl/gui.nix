@@ -14,17 +14,21 @@
       vscodevim.vim
       bbenoist.nix
       # Own packaging
+      eamodio.gitlens
       EditorConfig.EditorConfig
       HashiCorp.terraform
       jnoortheen.xonsh
       joaompinto.vscode-graphviz
+      llvm-vs-code-extensions.vscode-clangd
       ms-kubernetes-tools.vscode-kubernetes-tools
       ms-python.isort
       ms-python.python        
       ms-python.vscode-pylance
       ms-vscode-remote.remote-ssh
       ms-vscode-remote.remote-ssh-edit
+      ms-vscode.cpptools
       ms-vscode.remote-explorer
+      MS-vsliveshare.vsliveshare
       redhat.ansible
       redhat.vscode-yaml
     ];
@@ -58,6 +62,7 @@
       "vscode-kubernetes.helm-path"     = "${pkgs.kubernetes-helm}/bin/helm";
       "ansible.ansible.path"            = "${pkgs.ansible}/bin/ansible";
       "vim.neovimPath"                  = "${pkgs.neovim}/bin/nvim";
+      "clangd.path"                     = "${pkgs.clang-tools}/bin/clangd";
     };
   };
 
