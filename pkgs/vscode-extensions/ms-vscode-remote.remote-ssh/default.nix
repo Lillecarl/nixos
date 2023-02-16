@@ -8,8 +8,8 @@ in
     mktplcRef = {
       name = "remote-ssh";
       publisher = "ms-vscode-remote";
-      version = "0.97.2023020215";
-      sha256 = "9ca8402184b67a429456b8c45b5756c9f91cce8477805e542a39850a39d1c047";
+      version = "0.97.2023021615";
+      sha256 = "9baa6b2a5dde7233e8757b1af747ff2e514f0767136ab350c865d3fe1c7ab2de";
     };
 
     meta = with lib; {
