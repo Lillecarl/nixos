@@ -71,6 +71,8 @@ carliases["scu"] = "systemctl --user"
 carliases['ls'] = 'exa -lah'
 # Better cat
 carliases['cat'] = 'bat'
+# Better grep
+carliases['grep'] = 'rg'
 # Go to git root folder
 carliases['grt'] = lambda: os.chdir($(git rev-parse --show-toplevel).strip())
 # NeoVIM > VIM
