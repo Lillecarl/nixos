@@ -3,8 +3,9 @@
 from pathlib import Path
 
 flakepath = Path("/home/lillecarl/Code/nixos")
+commonargs = ["--flake", flakepath, "--keep-failed", "-v", "--impure"]
 
-nixos-rebuild build --use-remote-sudo --flake @(flakepath) --keep-failed -v --impure && unlink result
-home-manager build --flake @(flakepath) --keep-failed -v --impure && unlink result
-nixos-rebuild switch --use-remote-sudo --flake @(flakepath) --keep-failed -v --impure
-home-manager switch --flake @(flakepath) --keep-failed -v --impure
+sudo echo "Building nixos"
+nixos-rebuild switch --use-remote-sudo @(commonargs)
+echo "Building home"
+home-manager switch @(commonargs)
