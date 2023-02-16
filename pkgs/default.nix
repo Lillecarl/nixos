@@ -1,5 +1,6 @@
 final: prev:
 let
+  # python3 packages
   myPythonPackages = {
     xonsh-direnv = prev.callPackage ../pkgs/python3Packages/xonsh-direnv { };
     xontrib-fzf-widgets = prev.callPackage ../pkgs/python3Packages/xontrib-fzf-widgets { };
@@ -13,19 +14,24 @@ let
     lazyasd = prev.callPackage ../pkgs/python3Packages/lazyasd { };
   };
 in{
+  # Stand-alone packages
   splunk-otel-collector = prev.callPackage ../pkgs/splunk-otel-collector { };
   salt-pepper = prev.callPackage ../pkgs/salt-pepper { };
   acme-dns = prev.callPackage ../pkgs/acme-dns { };
+  # Desktop items to enable Wayland for packages that prefer X
   slack-wayland = prev.callPackage ../pkgs/desktopItemOverrides/slack.nix { };
   vscode-wayland = prev.callPackage ../pkgs/desktopItemOverrides/vscode.nix { };
   brave-wayland = prev.callPackage ../pkgs/desktopItemOverrides/brave.nix { };
+  # Inject python3 packages
   python3Packages = prev.python3Packages // myPythonPackages;
   python3 = prev.python3.override {
     packageOverrides = final: prev: { } // myPythonPackages;
   };
+  # Inject vscode extensions
   vscode-extensions = prev.vscode-extensions // {
     jnoortheen.xonsh = prev.callPackage ../pkgs/vscode-extensions/jnoortheen.xonsh { };
     EditorConfig.EditorConfig = prev.callPackage ../pkgs/vscode-extensions/EditorConfig.EditorConfig { };
   };
+  # Inject node packages
   nodePackages = prev.nodePackages // (prev.callPackages ./node-packages {});
 }
