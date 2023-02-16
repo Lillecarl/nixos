@@ -11,19 +11,28 @@
 
     enableExtensionUpdateCheck = false;
     enableUpdateCheck = false;
+    mutableExtensionsDir = false;
+
     package = pkgs.vscode;
+
     extensions = with pkgs.vscode-extensions; [
-      jnoortheen.xonsh
+      # Upstream packaged
       vscodevim.vim
-      EditorConfig.EditorConfig
       bbenoist.nix
-      redhat.vscode-yaml
-      ms-vscode.remote-explorer
-      ms-vscode-remote.remote-ssh-edit
-      ms-vscode-remote.remote-ssh
+      # Own packaging
+      EditorConfig.EditorConfig
+      HashiCorp.terraform
+      jnoortheen.xonsh
+      joaompinto.vscode-graphviz
+      ms-kubernetes-tools.vscode-kubernetes-tools
+      ms-python.isort
       ms-python.python        
       ms-python.vscode-pylance
-      ms-python.isort         
+      ms-vscode-remote.remote-ssh
+      ms-vscode-remote.remote-ssh-edit
+      ms-vscode.remote-explorer
+      redhat.ansible
+      redhat.vscode-yaml
     ];
 
     userSettings = {
