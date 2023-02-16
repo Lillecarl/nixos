@@ -61,7 +61,11 @@
     (hiPrio slack-wayland)
     (hiPrio brave-wayland)
 
+    # Web browsers
+    brave
+
     # Chat apps
+    slack # Slack chat app
     element-desktop # Element Slack app
     teams # Microsoft Teams collaboration suite (Electron)
     discord # Gaming chat application
