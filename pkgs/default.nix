@@ -19,6 +19,7 @@ in{
   splunk-otel-collector   = prev.callPackage ../pkgs/splunk-otel-collector { };
   salt-pepper             = prev.callPackage ../pkgs/salt-pepper { };
   acme-dns                = prev.callPackage ../pkgs/acme-dns { };
+  xonsh                   = prev.callPackage ../pkgs/xonsh { };
   # Desktop items to enable Wayland for packages that prefer X
   slack-wayland   = prev.callPackage ../pkgs/desktopItemOverrides/slack.nix { };
   vscode-wayland  = prev.callPackage ../pkgs/desktopItemOverrides/vscode.nix { };

@@ -9,6 +9,6 @@ final: prev: {
     export XDG_DATA_HOME=$HOME/.local/share
     export XDG_STATE_HOME=$HOME/.local/state
     
-    exec ${prev.xonsh}/bin/xonsh $@
+    exec ${prev.xonsh}/bin/.xonsh-wrapped $@
   '';
 }

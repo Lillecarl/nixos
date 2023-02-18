@@ -1,5 +1,6 @@
 { python3
 , python3Packages
+, xonsh
 , symlinkJoin
 }:
 
@@ -7,6 +8,7 @@ symlinkJoin {
   name = "xonsh-joined";
   # recurse all listed dependencies
   paths = with python3Packages; (python3.pkgs.requiredPythonModules [
+    xonsh
     xonsh-direnv
     xonsh-autoxsh
     xontrib-argcomplete
