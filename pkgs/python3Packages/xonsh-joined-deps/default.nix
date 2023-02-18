@@ -14,6 +14,7 @@ symlinkJoin {
     xontrib-fzf-widgets
     xontrib-sh
     xontrib-jump-to-dir
+    xontrib-onepath
     lazyasd
     pyyaml
     psutil

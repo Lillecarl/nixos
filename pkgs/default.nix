@@ -8,6 +8,7 @@ let
     xontrib-argcomplete   = prev.callPackage ../pkgs/python3Packages/xontrib-argcomplete { };
     xontrib-output-search = prev.callPackage ../pkgs/python3Packages/xontrib-output-search { };
     xontrib-jump-to-dir   = prev.callPackage ../pkgs/python3Packages/xontrib-jump-to-dir { };
+    xontrib-onepath       = prev.callPackage ../pkgs/python3Packages/xontrib-onepath { };
     xonsh-joined-deps     = prev.callPackage ../pkgs/python3Packages/xonsh-joined-deps { };
     xonsh-autoxsh         = prev.callPackage ../pkgs/python3Packages/xonsh-autoxsh { };
     tokenize-output       = prev.callPackage ../pkgs/python3Packages/tokenize-output { };
