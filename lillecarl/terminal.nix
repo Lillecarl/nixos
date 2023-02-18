@@ -6,7 +6,6 @@
     ".config/xonsh/rc.d/aliases.xsh".source = ./dotfiles/.config/xonsh/rc.d/aliases.xsh;
     ".config/xonsh/rc.d/keybindings.xsh".source = ./dotfiles/.config/xonsh/rc.d/keybindings.xsh;
     ".config/xonsh/rc.d/prompt.xsh".source = ./dotfiles/.config/xonsh/rc.d/prompt.xsh;
-    ".config/starship.toml".source = ./dotfiles/.config/starship.toml;
     ".config/tealdeer/config.toml".source = ./dotfiles/.config/tealdeer/config.toml;
     ".config/powershell/Microsoft.PowerShell_profile.ps1".source = ./dotfiles/.config/powershell/Microsoft.PowerShell_profile.ps1;
     ".config/qtile/autostart.sh".source = ./dotfiles/.config/qtile/autostart.sh;
@@ -29,6 +28,40 @@
       set number
       set encoding=utf-8
     '';
+  };
+
+  programs.starship = {
+    enable = true;
+
+    settings = {
+      # We don't use terraform workspaces so don't consume the space
+      terraform = {
+        disabled = true;
+      };
+
+      # Directory config, truncation_length is subpath count not char count
+      # don't truncate to git repo (not sure how i feel about this one yet)
+      directory = {
+        truncate_to_repo = false;
+        truncation_length = 10;
+      };
+
+      # Show exit codes
+      status = {
+        disabled = false;
+      };
+
+      username = {
+        format = "[$user]($style) on";
+      };
+
+      # Display which shell we're in
+      # Do we actually need this? We use xonsh all the time.
+      env_var.STARSHIP_SHELL = {
+        format = "🐚 [$env_value]($style)";
+        style = "fg:green";
+      };
+    };
   };
 
   programs.wezterm = {
