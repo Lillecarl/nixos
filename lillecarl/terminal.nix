@@ -57,7 +57,7 @@
       # Display which shell we're in
       # Do we actually need this? We use xonsh all the time.
       env_var.STARSHIP_SHELL = {
-        format = "🐚 [$env_value]($style)";
+        format = "🐚 [$env_value]($style) ";
         style = "fg:green";
       };
     };
