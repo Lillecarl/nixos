@@ -9,7 +9,6 @@
     ".config/starship.toml".source = ./dotfiles/.config/starship.toml;
     ".config/tealdeer/config.toml".source = ./dotfiles/.config/tealdeer/config.toml;
     ".config/powershell/Microsoft.PowerShell_profile.ps1".source = ./dotfiles/.config/powershell/Microsoft.PowerShell_profile.ps1;
-    ".config/wezterm/wezterm.lua".source = ./dotfiles/.config/wezterm/wezterm.lua;
     ".config/qtile/autostart.sh".source = ./dotfiles/.config/qtile/autostart.sh;
     ".config/qtile/config.py".source = ./dotfiles/.config/qtile/config.py;
     ".config/qtile/battery.py".source = ./dotfiles/.config/qtile/battery.py;
@@ -29,6 +28,33 @@
       set mouse=
       set number
       set encoding=utf-8
+    '';
+  };
+
+  programs.wezterm = {
+    enable = true;
+
+    extraConfig = ''
+      return {
+        check_for_updates = false,
+        hide_tab_bar_if_only_one_tab = true,
+        font = wezterm.font_with_fallback({
+          'Hack Nerd Font',
+          'Hack',
+          'Unifont',
+        }),
+        font_size = 10,
+        enable_wayland = true,
+        skip_close_confirmation_for_processes_named = {
+          'bash',
+          'sh',
+          'zsh',
+          'fish',
+          'xonsh',
+          'tmux',
+          'zellij',
+        },
+      }
     '';
   };
 
