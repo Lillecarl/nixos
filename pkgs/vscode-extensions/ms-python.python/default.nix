@@ -8,8 +8,8 @@ in
     mktplcRef = {
       name = "python";
       publisher = "ms-python";
-      version = "2023.3.10461028";
-      sha256 = "94dfa17f79a8bb522ebcfdf6da493ccb347c7935c3d34e070a560953c338b33a";
+      version = "2023.3.10481011";
+      sha256 = "cb7c0f12ac3dbc3c5b3b9be675ae5dd8e69a440059e52c368fea50e6e52ebc7c";
     };
 
     meta = with lib; {
