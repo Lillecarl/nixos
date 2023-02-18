@@ -9,11 +9,26 @@
     ".config/starship.toml".source = ./dotfiles/.config/starship.toml;
     ".config/tealdeer/config.toml".source = ./dotfiles/.config/tealdeer/config.toml;
     ".config/powershell/Microsoft.PowerShell_profile.ps1".source = ./dotfiles/.config/powershell/Microsoft.PowerShell_profile.ps1;
-    ".config/nvim/init.vim".source = ./dotfiles/.config/nvim/init.vim;
+    #".config/nvim/init.vim".source = ./dotfiles/.config/nvim/init.vim;
     ".config/wezterm/wezterm.lua".source = ./dotfiles/.config/wezterm/wezterm.lua;
     ".config/qtile/autostart.sh".source = ./dotfiles/.config/qtile/autostart.sh;
     ".config/qtile/config.py".source = ./dotfiles/.config/qtile/config.py;
     ".config/qtile/battery.py".source = ./dotfiles/.config/qtile/battery.py;
+  };
+
+  programs.neovim = {
+    enable = true;
+
+    plugins = with pkgs.vimPlugins; [
+    ];
+
+    coc = {
+      enable = true;
+    };
+
+    extraConfig = ''
+      set mouse=
+    '';
   };
 
   programs.git = {
