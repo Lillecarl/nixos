@@ -6,7 +6,6 @@
     ".config/xonsh/rc.d/aliases.xsh".source = ./dotfiles/.config/xonsh/rc.d/aliases.xsh;
     ".config/xonsh/rc.d/keybindings.xsh".source = ./dotfiles/.config/xonsh/rc.d/keybindings.xsh;
     ".config/xonsh/rc.d/prompt.xsh".source = ./dotfiles/.config/xonsh/rc.d/prompt.xsh;
-    ".config/tealdeer/config.toml".source = ./dotfiles/.config/tealdeer/config.toml;
     ".config/powershell/Microsoft.PowerShell_profile.ps1".source = ./dotfiles/.config/powershell/Microsoft.PowerShell_profile.ps1;
     ".config/qtile/autostart.sh".source = ./dotfiles/.config/qtile/autostart.sh;
     ".config/qtile/config.py".source = ./dotfiles/.config/qtile/config.py;
@@ -60,6 +59,22 @@
       env_var.STARSHIP_SHELL = {
         format = "🐚 [$env_value]($style)";
         style = "fg:green";
+      };
+    };
+  };
+
+  programs.tealdeer = {
+    enable = true;
+
+    settings = {
+      display = {
+        compact = false;
+	use_pager = false;
+      };
+
+      updates = {
+        auto_update = true;
+	auto_update_interval_hours = 168;
       };
     };
   };
