@@ -12,6 +12,14 @@
     ".config/qtile/battery.py".source = ./dotfiles/.config/qtile/battery.py;
   };
 
+  programs.zellij = {
+    enable = true;
+
+    settings = {
+      
+    };
+  };
+
   programs.neovim = {
     enable = true;
 
