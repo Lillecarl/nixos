@@ -7,6 +7,10 @@
       # Launch WezTerm
       "org.wezfurlong.wezterm.desktop"."_launch" = "Meta+Return";
 
+      # KB Layout Switching
+      "KDE Keyboard Layout Switcher"."Switch keyboard layout to English (US)" = "Alt+Shift+U";
+      "KDE Keyboard Layout Switcher"."Switch keyboard layout to Swedish" = "Alt+Shift+S";
+
       "bismuth"."decrease_master_size" = [ ];
       "bismuth"."decrease_master_win_count" = "Meta+[";
       "bismuth"."decrease_window_height" = "Meta+Ctrl+K";
