@@ -8,8 +8,8 @@ in
     mktplcRef = {
       name = "gitlens";
       publisher = "eamodio";
-      version = "2023.2.1804";
-      sha256 = "16b081657d51fe0808cbfc2e321925250408ad1e0bf11344b848440cabbbacc5";
+      version = "2023.2.1904";
+      sha256 = "0a68f099cc1cfc84ea91976357b6eb9b41e4237425a6bf5e32e7d93c363e964d";
     };
 
     meta = with lib; {
