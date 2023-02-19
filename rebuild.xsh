@@ -8,4 +8,4 @@ commonargs = ["--flake", flakepath, "--keep-failed", "-v", "--impure"]
 sudo echo "Building nixos"
 nixos-rebuild switch --use-remote-sudo @(commonargs)
 echo "Building home"
-home-manager switch @(commonargs)
+home-manager switch -b old @(commonargs)
