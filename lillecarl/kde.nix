@@ -1,23 +1,62 @@
 {
   programs.plasma = {
     enable = true;
+    workspace.clickItemTo = "select";
+
     shortcuts = {
-      "ActivityManager"."switch-to-activity-0b9e1801-fe47-4dec-be93-0ffdf9e9130c" = [ ];
-      "ActivityManager"."switch-to-activity-76d5cdb1-c66a-4bbe-8ef8-539d98661b5b" = [ ];
-      "ActivityManager"."switch-to-activity-d81fa9f6-d109-4186-ab31-01a968c17cdf" = [ ];
-      "KDE Keyboard Layout Switcher"."Switch keyboard layout to English (US)" = [ ];
-      "KDE Keyboard Layout Switcher"."Switch keyboard layout to English (US, intl., AltGr Unicode combining)" = [ ];
-      "KDE Keyboard Layout Switcher"."Switch keyboard layout to Swedish" = [ ];
-      "KDE Keyboard Layout Switcher"."Switch to Next Keyboard Layout" = [ ];
+      # Launch WezTerm
+      "org.wezfurlong.wezterm.desktop"."_launch" = "Meta+Return";
+
+      "bismuth"."decrease_master_size" = [ ];
+      "bismuth"."decrease_master_win_count" = "Meta+[";
+      "bismuth"."decrease_window_height" = "Meta+Ctrl+K";
+      "bismuth"."decrease_window_width" = "Meta+Ctrl+H";
+
+      "bismuth"."focus_bottom_window" = "Meta+J";
+      "bismuth"."focus_left_window" = "Meta+H";
+      "bismuth"."focus_right_window" = "Meta+L";
+      "bismuth"."focus_upper_window" = "Meta+K";
+
+      "bismuth"."focus_next_window" = [ ];
+      "bismuth"."focus_prev_window" = [ ];
+
+      "bismuth"."increase_master_size" = [ ];
+      "bismuth"."increase_master_win_count" = "Meta+]";
+      "bismuth"."increase_window_height" = "Meta+Ctrl+J";
+      "bismuth"."increase_window_width" = "Meta+Ctrl+L";
+
+      "bismuth"."move_window_to_bottom_pos" = "Meta+Shift+J";
+      "bismuth"."move_window_to_left_pos" = "Meta+Shift+H";
+      "bismuth"."move_window_to_right_pos" = "Meta+Shift+L";
+      "bismuth"."move_window_to_upper_pos" = "Meta+Shift+K";
+
+      "bismuth"."move_window_to_next_pos" = [ ];
+      "bismuth"."move_window_to_prev_pos" = [ ];
+      "bismuth"."next_layout" = "Meta+\\,Meta+\\,Switch to the Next Layout";
+      "bismuth"."prev_layout" = "Meta+|";
+
+      "bismuth"."push_window_to_master" = "Meta+Return";
+
+      "bismuth"."rotate" = "Meta+R";
+      "bismuth"."rotate_part" = "Meta+Shift+R";
+      "bismuth"."rotate_reverse" = [ ];
+
+      "bismuth"."toggle_float_layout" = "Meta+Shift+F";
+      "bismuth"."toggle_monocle_layout" = "Meta+M";
+      "bismuth"."toggle_quarter_layout" = [ ];
+      "bismuth"."toggle_spiral_layout" = [ ];
+      "bismuth"."toggle_spread_layout" = [ ];
+      "bismuth"."toggle_stair_layout" = [ ];
+      "bismuth"."toggle_three_column_layout" = [ ];
+      "bismuth"."toggle_tile_layout" = [ ];
+      "bismuth"."toggle_window_floating" = [ "Meta+F" ];
+
       "kaccess"."Toggle Screen Reader On and Off" = [ ];
       "kcm_touchpad"."Disable Touchpad" = "Touchpad Off";
       "kcm_touchpad"."Enable Touchpad" = "Touchpad On";
       "kcm_touchpad"."Toggle Touchpad" = [ "Touchpad Toggle" "Meta+Ctrl+Zenkaku Hankaku" ];
       "kded5"."Show System Activity" = "Ctrl+Esc";
       "kded5"."display" = [ "Meta+P" "Display" ];
-      "khotkeys"."{3022ab02-0ffe-4956-9c85-3f1af4d94a14}" = "Alt+Esc";
-      "khotkeys"."{d03619b6-9b3c-48cc-9d9c-a2aadb485550}" = [ ];
-      "khotkeys"."{d8fd0519-67ab-4242-bfc8-e42f38e633ae}" = [ ];
       "kmix"."decrease_microphone_volume" = "Microphone Volume Down";
       "kmix"."decrease_volume" = "Volume Down";
       "kmix"."increase_microphone_volume" = "Microphone Volume Up";
@@ -38,33 +77,6 @@
       "kwin"."Increase Opacity" = [ ];
       "kwin"."Invert Screen Colors" = [ ];
       "kwin"."Kill Window" = "Meta+Ctrl+Esc";
-      "kwin"."Krohnkite: Cycle Layout" = [ ];
-      "kwin"."Krohnkite: Decrease" = [ ];
-      "kwin"."Krohnkite: Down/Next" = [ ];
-      "kwin"."Krohnkite: Float" = [ ];
-      "kwin"."Krohnkite: Float All" = [ ];
-      "kwin"."Krohnkite: Floating Layout" = [ ];
-      "kwin"."Krohnkite: Grow Height" = [ ];
-      "kwin"."Krohnkite: Grow Width" = [ ];
-      "kwin"."Krohnkite: Increase" = [ ];
-      "kwin"."Krohnkite: Left" = [ ];
-      "kwin"."Krohnkite: Monocle Layout" = [ ];
-      "kwin"."Krohnkite: Move Down/Next" = [ ];
-      "kwin"."Krohnkite: Move Left" = [ ];
-      "kwin"."Krohnkite: Move Right" = [ ];
-      "kwin"."Krohnkite: Move Up/Prev" = [ ];
-      "kwin"."Krohnkite: Next Layout" = [ ];
-      "kwin"."Krohnkite: Previous Layout" = [ ];
-      "kwin"."Krohnkite: Quarter Layout" = [ ];
-      "kwin"."Krohnkite: Right" = [ ];
-      "kwin"."Krohnkite: Set master" = [ ];
-      "kwin"."Krohnkite: Shrink Height" = [ ];
-      "kwin"."Krohnkite: Shrink Width" = [ ];
-      "kwin"."Krohnkite: Spread Layout" = [ ];
-      "kwin"."Krohnkite: Stair Layout" = [ ];
-      "kwin"."Krohnkite: Three Column Layout" = [ ];
-      "kwin"."Krohnkite: Tile Layout" = [ ];
-      "kwin"."Krohnkite: Up/Prev" = [ ];
       "kwin"."MoveMouseToCenter" = "Meta+F6";
       "kwin"."MoveMouseToFocus" = "Meta+F5";
       "kwin"."MoveZoomDown" = [ ];
@@ -84,7 +96,15 @@
       "kwin"."Switch Window Left" = "Meta+Alt+Left";
       "kwin"."Switch Window Right" = "Meta+Alt+Right";
       "kwin"."Switch Window Up" = "Meta+Alt+Up";
-      "kwin"."Switch to Desktop 1" = "Ctrl+F1";
+      "kwin"."Switch to Desktop 1" = [ ];
+      "kwin"."Switch to Desktop 2" = [ ];
+      "kwin"."Switch to Desktop 3" = [ ];
+      "kwin"."Switch to Desktop 4" = [ ];
+      "kwin"."Switch to Desktop 5" = [ ];
+      "kwin"."Switch to Desktop 6" = [ ];
+      "kwin"."Switch to Desktop 7" = [ ];
+      "kwin"."Switch to Desktop 8" = [ ];
+      "kwin"."Switch to Desktop 9" = [ ];
       "kwin"."Switch to Desktop 10" = [ ];
       "kwin"."Switch to Desktop 11" = [ ];
       "kwin"."Switch to Desktop 12" = [ ];
@@ -95,15 +115,7 @@
       "kwin"."Switch to Desktop 17" = [ ];
       "kwin"."Switch to Desktop 18" = [ ];
       "kwin"."Switch to Desktop 19" = [ ];
-      "kwin"."Switch to Desktop 2" = "Ctrl+F2";
       "kwin"."Switch to Desktop 20" = [ ];
-      "kwin"."Switch to Desktop 3" = "Ctrl+F3";
-      "kwin"."Switch to Desktop 4" = "Ctrl+F4";
-      "kwin"."Switch to Desktop 5" = [ ];
-      "kwin"."Switch to Desktop 6" = [ ];
-      "kwin"."Switch to Desktop 7" = [ ];
-      "kwin"."Switch to Desktop 8" = [ ];
-      "kwin"."Switch to Desktop 9" = [ ];
       "kwin"."Switch to Next Desktop" = [ ];
       "kwin"."Switch to Next Screen" = [ ];
       "kwin"."Switch to Previous Desktop" = [ ];
@@ -116,33 +128,6 @@
       "kwin"."Switch to Screen 5" = [ ];
       "kwin"."Switch to Screen 6" = [ ];
       "kwin"."Switch to Screen 7" = [ ];
-      "kwin"."TILING-I3: Set Normal Mode" = [ ];
-      "kwin"."TILING-I3: Set Wrap Horizontal Mode" = [ ];
-      "kwin"."TILING-I3: Set Wrap Vertical Mode" = [ ];
-      "kwin"."TILING: Cycle Rotations" = [ ];
-      "kwin"."TILING: Decrease Number Of Masters" = [ ];
-      "kwin"."TILING: Dump Clients" = [ ];
-      "kwin"."TILING: Focus next tile" = [ ];
-      "kwin"."TILING: Focus previous tile" = [ ];
-      "kwin"."TILING: Increase Number Of Masters" = [ ];
-      "kwin"."TILING: Move Window Down" = [ ];
-      "kwin"."TILING: Move Window Left" = [ ];
-      "kwin"."TILING: Move Window Right" = [ ];
-      "kwin"."TILING: Move Window To New Desktop" = [ ];
-      "kwin"."TILING: Move Window Up" = [ ];
-      "kwin"."TILING: Next Tiling Layout" = [ ];
-      "kwin"."TILING: Previous Tiling Layout" = [ ];
-      "kwin"."TILING: Resize Active Window To The Bottom" = [ ];
-      "kwin"."TILING: Resize Active Window To The Left" = [ ];
-      "kwin"."TILING: Resize Active Window To The Right" = [ ];
-      "kwin"."TILING: Resize Active Window To The Top" = [ ];
-      "kwin"."TILING: Swap Window With Master" = [ ];
-      "kwin"."TILING: Swap with next tile" = [ ];
-      "kwin"."TILING: Swap with previous tile" = [ ];
-      "kwin"."TILING: Tile now" = [ ];
-      "kwin"."TILING: Toggle Border for all" = [ ];
-      "kwin"."TILING: Toggle Floating" = [ ];
-      "kwin"."TILING: Toggle Tiling" = [ ];
       "kwin"."Toggle" = [ ];
       "kwin"."Toggle Night Color" = [ ];
       "kwin"."Toggle Window Raise/Lower" = [ ];
@@ -165,10 +150,10 @@
       "kwin"."Window Grow Horizontal" = [ ];
       "kwin"."Window Grow Vertical" = [ ];
       "kwin"."Window Lower" = [ ];
-      "kwin"."Window Maximize" = [ "Meta+F" "Meta+PgUp" ];
+      "kwin"."Window Maximize" = [ "Meta+M" "Meta+PgUp" ];
       "kwin"."Window Maximize Horizontal" = [ ];
       "kwin"."Window Maximize Vertical" = [ ];
-      "kwin"."Window Minimize" = "Meta+PgDown";
+      "kwin"."Window Minimize" = [ ];
       "kwin"."Window Move" = [ ];
       "kwin"."Window Move Center" = [ ];
       "kwin"."Window No Border" = [ ];
@@ -196,6 +181,14 @@
       "kwin"."Window Shrink Horizontal" = [ ];
       "kwin"."Window Shrink Vertical" = [ ];
       "kwin"."Window to Desktop 1" = [ ];
+      "kwin"."Window to Desktop 2" = [ ];
+      "kwin"."Window to Desktop 3" = [ ];
+      "kwin"."Window to Desktop 4" = [ ];
+      "kwin"."Window to Desktop 5" = [ ];
+      "kwin"."Window to Desktop 6" = [ ];
+      "kwin"."Window to Desktop 7" = [ ];
+      "kwin"."Window to Desktop 8" = [ ];
+      "kwin"."Window to Desktop 9" = [ ];
       "kwin"."Window to Desktop 10" = [ ];
       "kwin"."Window to Desktop 11" = [ ];
       "kwin"."Window to Desktop 12" = [ ];
@@ -206,15 +199,7 @@
       "kwin"."Window to Desktop 17" = [ ];
       "kwin"."Window to Desktop 18" = [ ];
       "kwin"."Window to Desktop 19" = [ ];
-      "kwin"."Window to Desktop 2" = [ ];
       "kwin"."Window to Desktop 20" = [ ];
-      "kwin"."Window to Desktop 3" = [ ];
-      "kwin"."Window to Desktop 4" = [ ];
-      "kwin"."Window to Desktop 5" = [ ];
-      "kwin"."Window to Desktop 6" = [ ];
-      "kwin"."Window to Desktop 7" = [ ];
-      "kwin"."Window to Desktop 8" = [ ];
-      "kwin"."Window to Desktop 9" = [ ];
       "kwin"."Window to Next Desktop" = [ ];
       "kwin"."Window to Next Screen" = [ "Meta+PgDown" "Meta+PgUp" ];
       "kwin"."Window to Previous Desktop" = [ ];
@@ -261,16 +246,16 @@
       "org_kde_powerdevil"."Sleep" = "Sleep";
       "org_kde_powerdevil"."Toggle Keyboard Backlight" = "Keyboard Light On/Off";
       "org_kde_powerdevil"."Turn Off Screen" = [ ];
-      "plasmashell"."activate task manager entry 1" = "Meta+1";
-      "plasmashell"."activate task manager entry 2" = "Meta+2";
-      "plasmashell"."activate task manager entry 3" = "Meta+3";
-      "plasmashell"."activate task manager entry 4" = "Meta+4";
-      "plasmashell"."activate task manager entry 5" = "Meta+5";
-      "plasmashell"."activate task manager entry 6" = "Meta+6";
-      "plasmashell"."activate task manager entry 7" = "Meta+7";
-      "plasmashell"."activate task manager entry 8" = "Meta+8";
-      "plasmashell"."activate task manager entry 9" = "Meta+9";
-      "plasmashell"."activate task manager entry 10" = "Meta+0";
+      "plasmashell"."activate task manager entry 1" = [ ];
+      "plasmashell"."activate task manager entry 2" = [ ];
+      "plasmashell"."activate task manager entry 3" = [ ];
+      "plasmashell"."activate task manager entry 4" = [ ];
+      "plasmashell"."activate task manager entry 5" = [ ];
+      "plasmashell"."activate task manager entry 6" = [ ];
+      "plasmashell"."activate task manager entry 7" = [ ];
+      "plasmashell"."activate task manager entry 8" = [ ];
+      "plasmashell"."activate task manager entry 9" = [ ];
+      "plasmashell"."activate task manager entry 10" = [ ];
       "plasmashell"."clear-history" = [ ];
       "plasmashell"."clipboard_action" = [ ];
       "plasmashell"."cycle-panels" = [ ];
@@ -296,6 +281,13 @@
       "systemsettings.desktop"."screenlocker" = [ ];
     };
     files = {
+      #Bismuth
+      "kglobalshortcutsrc"."bismuth"."_k_friendly_name" = "Window Tiling";
+      "kwinrc"."Plugins"."bismuthEnabled" = true;
+      "kwinrc"."Script-bismuth"."noTileBorder" = true;
+      # WezTerm
+      kglobalshortcutsrc"."org.wezfurlong.wezterm.desktop"."_k_friendly_name" = "WezTerm";
+
       "dolphinrc"."KFileDialog Settings"."Places Icons Auto-resize" = false;
       "dolphinrc"."KFileDialog Settings"."Places Icons Static Size" = 22;
       "dolphinrc"."Open-with settings"."CompletionMode" = 1;
@@ -351,8 +343,11 @@
       "kwinrc"."Desktops"."Rows" = 1;
       "kwinrc"."Effect-windowview"."BorderActivateAll" = 9;
       "kwinrc"."NightColor"."Active" = true;
-      "kwinrc"."NightColor"."LatitudeAuto" = 59.3274;
-      "kwinrc"."NightColor"."LongitudeAuto" = 18.0653;
+      "kwinrc"."NightColor"."LatitudeAuto" = 59.327400;
+      "kwinrc"."NightColor"."LatitudeFixed" = 59.11;
+      "kwinrc"."NightColor"."LongitudeAuto" = 18.065300;
+      "kwinrc"."NightColor"."LongitudeFixed" = 18.16;
+      "kwinrc"."NightColor"."Mode" = "Location";
       "kwinrc"."NightColor"."NightTemperature" = 2500;
       "kwinrc"."Plugins"."kwin4_effect_maximizeEnabled" = false;
       "kwinrc"."TabBoxAlternative"."ActivitiesMode" = 0;
