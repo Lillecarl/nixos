@@ -274,8 +274,6 @@ rec
     usbguard # USB blocking solution
     k3s # Kubernetes K3s
     iptables # Give us the iptables CLI (should map to nftables)
-    #zoom-us # Yet another video conferencing tool
-    #jitsi-meet-electron # Video conferencing
     zenmonitor # AMD CPU monitoring
     virt-manager # Virtualisation manager
     virt-manager-qt # Shitty version of virt-manager

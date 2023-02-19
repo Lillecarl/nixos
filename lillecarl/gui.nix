@@ -121,7 +121,6 @@
     element-desktop # Element Slack app
     teams # Microsoft Teams collaboration suite (Electron)
     discord # Gaming chat application
-    zoom # Meetings application
     signal-desktop # Secure messenger
 
     # Media apps
