@@ -20,6 +20,12 @@ in{
   salt-pepper             = prev.callPackage ../pkgs/salt-pepper { };
   acme-dns                = prev.callPackage ../pkgs/acme-dns { };
   xonsh                   = prev.callPackage ../pkgs/xonsh { };
+  wezterm                 = prev.darwin.apple_sdk_11_0.callPackage (prev.fetchurl {
+    url = "https://raw.githubusercontent.com/NixOS/nixpkgs/d1f88d51e5c21a105edb026229ff42319216514c/pkgs/applications/terminal-emulators/wezterm/default.nix";
+    sha256 = "sha256-5INJIBjrOkUW/3mcqx6VwhR1bLaW+1ubZnUSKFkBtFI=";
+  }) {
+    inherit (prev.darwin.apple_sdk_11_0.frameworks) Cocoa CoreGraphics Foundation UserNotifications;
+  };
   # Desktop items to enable Wayland for packages that prefer X
   slack-wayland   = prev.callPackage ../pkgs/desktopItemOverrides/slack.nix { };
   vscode-wayland  = prev.callPackage ../pkgs/desktopItemOverrides/vscode.nix { };
