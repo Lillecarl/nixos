@@ -109,16 +109,6 @@ rec
     touchpad.naturalScrolling = true;
   };
 
-  # Enable qtile
-  #services.xserver.windowManager.qtile.enable = true;
-  services.xserver.windowManager.session = [{
-    name = "wqtile";
-    start = ''
-      ${pkgs.qtile}/bin/qtile start -b wayland &
-      waitPID=$!
-    '';
-  }];
-  #services.xserver.windowManager.qtile.extraOptions = "-b wayland";
   # Configure keymap in X11
   services.xserver.layout = "us";
   # Allow local clients to connect to my X server
@@ -157,7 +147,7 @@ rec
   environment.systemPackages = with pkgs; [
     # Temporary lab
     xorg.xwininfo # Information about X windows (Used to find things using XWayland)
-    qtile
+    #qtile
     wdisplays
     kanshi
 
