@@ -78,3 +78,4 @@ def updatevscodeext(path):
 updatenix()
 updatenode()
 updatevscode()
+nix fmt
