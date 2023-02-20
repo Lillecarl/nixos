@@ -35,6 +35,7 @@ rec
   nixpkgs.overlays = [
     pkgs-overlay
     xonsh-overlay
+    inputs.nixpkgs-wayland.overlay
   ];
 
   users.defaultUserShell = pkgs.zsh;
