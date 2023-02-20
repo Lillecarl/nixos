@@ -42,6 +42,7 @@ in{
     HashiCorp.terraform                         = prev.callPackage ../pkgs/vscode-extensions/HashiCorp.terraform { };
     jnoortheen.xonsh                            = prev.callPackage ../pkgs/vscode-extensions/jnoortheen.xonsh { };
     joaompinto.vscode-graphviz                  = prev.callPackage ../pkgs/vscode-extensions/joaompinto.vscode-graphviz { };
+    korekontrol.saltstack                       = prev.callPackage ../pkgs/vscode-extensions/korekontrol.saltstack { };
     llvm-vs-code-extensions.vscode-clangd       = prev.callPackage ../pkgs/vscode-extensions/llvm-vs-code-extensions.vscode-clangd { };
     ms-python.isort                             = prev.callPackage ../pkgs/vscode-extensions/ms-python.isort { };
     ms-python.python                            = prev.callPackage ../pkgs/vscode-extensions/ms-python.python { };

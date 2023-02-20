@@ -60,6 +60,7 @@
       HashiCorp.terraform
       jnoortheen.xonsh
       joaompinto.vscode-graphviz
+      korekontrol.saltstack
       llvm-vs-code-extensions.vscode-clangd
       ms-kubernetes-tools.vscode-kubernetes-tools
       ms-python.isort
