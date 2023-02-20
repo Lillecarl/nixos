@@ -290,7 +290,7 @@
       "kwinrc"."Plugins"."bismuthEnabled" = true;
       "kwinrc"."Script-bismuth"."noTileBorder" = true;
       # WezTerm
-      kglobalshortcutsrc"."org.wezfurlong.wezterm.desktop"."_k_friendly_name" = "WezTerm";
+      "kglobalshortcutsrc"."org.wezfurlong.wezterm.desktop"."_k_friendly_name" = "WezTerm";
 
       "dolphinrc"."KFileDialog Settings"."Places Icons Auto-resize" = false;
       "dolphinrc"."KFileDialog Settings"."Places Icons Static Size" = 22;
