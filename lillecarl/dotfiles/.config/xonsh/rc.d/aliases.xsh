@@ -67,6 +67,10 @@ carliases['cd..'] = 'cd ..'
 carliases["sc"] = "systemctl"
 # systemctl --user shortcut
 carliases["scu"] = "systemctl --user"
+# journalctl --unit shortcut
+carliases["jc"] = "journalctl --unit"
+# journalctl --user-unit shortcut
+carliases["jcu"] = "journalctl --user-unit"
 # Better ls
 carliases['ls'] = 'exa -lah'
 # Better cat
