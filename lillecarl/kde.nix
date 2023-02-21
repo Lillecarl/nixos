@@ -68,7 +68,7 @@
       "kmix"."mic_mute" = [ "Microphone Mute" "Meta+Volume Mute" ];
       "kmix"."mute" = "Volume Mute";
       "ksmserver"."Halt Without Confirmation" = [ ];
-      "ksmserver"."Lock Session" = [ "Screensaver" "Meta+L" ];
+      "ksmserver"."Lock Session" = ["Screensaver" "Ctrl+Alt+Del"];
       "ksmserver"."Log Out" = [ ];
       "ksmserver"."Log Out Without Confirmation" = [ ];
       "ksmserver"."Reboot Without Confirmation" = [ ];
@@ -108,7 +108,7 @@
       "kwin"."Switch to Desktop 6" = "Meta+6";
       "kwin"."Switch to Desktop 7" = "Meta+7";
       "kwin"."Switch to Desktop 8" = "Meta+8";
-      "kwin"."Switch to Desktop 9" = "Meta+9";
+      "kwin"."Switch to Desktop 9" = [ ];
       "kwin"."Switch to Desktop 10" = [ ];
       "kwin"."Switch to Desktop 11" = [ ];
       "kwin"."Switch to Desktop 12" = [ ];
@@ -184,15 +184,15 @@
       "kwin"."Window Shade" = [ ];
       "kwin"."Window Shrink Horizontal" = [ ];
       "kwin"."Window Shrink Vertical" = [ ];
-      "kwin"."Window to Desktop 1" = "Ctrl+1";
-      "kwin"."Window to Desktop 2" = "Ctrl+2";
-      "kwin"."Window to Desktop 3" = "Ctrl+3";
-      "kwin"."Window to Desktop 4" = "Ctrl+4";
-      "kwin"."Window to Desktop 5" = "Ctrl+5";
-      "kwin"."Window to Desktop 6" = "Ctrl+6";
-      "kwin"."Window to Desktop 7" = "Ctrl+7";
-      "kwin"."Window to Desktop 8" = "Ctrl+8";
-      "kwin"."Window to Desktop 9" = "Ctrl+9";
+      "kwin"."Window to Desktop 1" = "Alt+1";
+      "kwin"."Window to Desktop 2" = "Alt+2";
+      "kwin"."Window to Desktop 3" = "Alt+3";
+      "kwin"."Window to Desktop 4" = "Alt+4";
+      "kwin"."Window to Desktop 5" = "Alt+5";
+      "kwin"."Window to Desktop 6" = "Alt+6";
+      "kwin"."Window to Desktop 7" = "Alt+7";
+      "kwin"."Window to Desktop 8" = "Alt+8";
+      "kwin"."Window to Desktop 9" = [ ];
       "kwin"."Window to Desktop 10" = [ ];
       "kwin"."Window to Desktop 11" = [ ];
       "kwin"."Window to Desktop 12" = [ ];
@@ -289,6 +289,38 @@
       "kglobalshortcutsrc"."bismuth"."_k_friendly_name" = "Window Tiling";
       "kwinrc"."Plugins"."bismuthEnabled" = true;
       "kwinrc"."Script-bismuth"."noTileBorder" = true;
+
+      # KDE Virtual Desktops
+      "kwinrc"."Desktops"."Id_1" = "0f94886f-7893-4742-ace2-4de80d493919";
+      "kwinrc"."Desktops"."Id_2" = "6d034b2d-396c-4a15-8ed2-d5cf13d14ba8";
+      "kwinrc"."Desktops"."Id_3" = "5c5bba19-6ab3-46a1-952a-67963c19c206";
+      "kwinrc"."Desktops"."Id_4" = "6c59ec8c-5afe-433e-a9b4-ebc1d652756e";
+      "kwinrc"."Desktops"."Id_5" = "360df79a-e996-42a5-89c8-4c08e79ceee8";
+      "kwinrc"."Desktops"."Id_6" = "9bd92a79-d6c9-491e-8e74-435dd9863fd1";
+      "kwinrc"."Desktops"."Id_7" = "35792953-07cc-4acf-9f03-256e6062a421";
+      "kwinrc"."Desktops"."Id_8" = "a064cb33-0300-4fb2-8f1f-0c6b0e94ea36";
+      "kwinrc"."Desktops"."Number" = 8;
+      "kwinrc"."Desktops"."Rows" = 2;
+      "kwinrc"."Plugins"."desktopchangeosdEnabled" = true;
+      "kwinrc"."Script-desktopchangeosd"."PopupHideDelay" = 250;
+
+      # Frame color for active and inactive windows
+      "kdeglobals"."WM"."frame" = "255,17,0";
+      "kdeglobals"."WM"."inactiveFrame" = "153,153,153";
+      "khotkeysrc"."WM"."frame[$d]" = "";
+      "khotkeysrc"."WM"."inactiveFrame[$d]" = "";
+
+      # Tiling gaps, 5px everywhere
+      "kwinrc"."Script-bismuth"."screenGapBottom" = 5;
+      "kwinrc"."Script-bismuth"."screenGapLeft" = 5;
+      "kwinrc"."Script-bismuth"."screenGapRight" = 5;
+      "kwinrc"."Script-bismuth"."screenGapTop" = 5;
+      "kwinrc"."Script-bismuth"."tileLayoutGap" = 5;
+
+      # Focus follows mouse
+      "kwinrc"."Windows"."FocusPolicy" = "FocusFollowsMouse";
+      "kwinrc"."Windows"."FocusStealingPreventionLevel" = 0;
+
       # WezTerm
       "kglobalshortcutsrc"."org.wezfurlong.wezterm.desktop"."_k_friendly_name" = "WezTerm";
 
@@ -343,9 +375,6 @@
       "ksmserverrc"."General"."loginMode" = "emptySession";
       "kwalletrc"."Wallet"."First Use" = false;
       "kwinrc"."Compositing"."OpenGLIsUnsafe" = false;
-      "kwinrc"."Desktops"."Id_1" = "0f94886f-7893-4742-ace2-4de80d493919";
-      "kwinrc"."Desktops"."Number" = 1;
-      "kwinrc"."Desktops"."Rows" = 1;
       "kwinrc"."Effect-windowview"."BorderActivateAll" = 9;
       "kwinrc"."NightColor"."Active" = true;
       "kwinrc"."NightColor"."LatitudeAuto" = 59.327400;
