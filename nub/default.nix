@@ -53,18 +53,27 @@ rec
     implictPolicyTarget = "allow"; # Allow everything
   };
 
-  services.salt.master = {
-    enable = true;
+  services.salt = {
+    master = {
+      enable = true;
 
-    configuration = {
-      file_roots = {
-        base = [ "/srv/salt/salt" ];
+      configuration = {
+        file_roots = {
+          base = [ "/srv/salt/salt" ];
+        };
+        pillar_roots = {
+          base = [ "/srv/salt/pillar" ];
+        };
+        master_roots = {
+          base = [ "/srv/salt/salt-master" ];
+        };
       };
-      pillar_roots = {
-        base = [ "/srv/salt/pillar" ];
-      };
-      master_roots = {
-        base = [ "/srv/salt/salt-master" ];
+    };
+    minion = {
+      enable = true;
+
+      configuration = {
+        master = "localhost";
       };
     };
   };
