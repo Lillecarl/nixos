@@ -328,7 +328,7 @@ rec
     debootstrap # Bootstrap Debian based (deb package manager) Linux distros
 
     # Productivity tools
-    libsForQt5.bismuth # Tiling plugin for KDE that works with Wayland
+    #libsForQt5.bismuth # Tiling plugin for KDE that works with Wayland
     tigervnc # VNC client
     mongodb-compass # MongoDB GUI
     dbeaver # SQL database GUI
