@@ -29,6 +29,10 @@ in
     {
       inherit (prev.darwin.apple_sdk_11_0.frameworks) Cocoa CoreGraphics Foundation UserNotifications;
     };
+
+  #salt = prev.salt.overrideAttrs (final: prev: {
+  #  src = fetchGit "/home/lillecarl/Code/nent/saltstack/";
+  #});
   # Desktop items to enable Wayland for packages that prefer X
   slack-wayland = prev.callPackage ../pkgs/desktopItemOverrides/slack.nix { };
   vscode-wayland = prev.callPackage ../pkgs/desktopItemOverrides/vscode.nix { };
