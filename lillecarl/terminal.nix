@@ -16,6 +16,19 @@
     enable = true;
   };
 
+  services.gpg-agent = {
+    enable = true;
+    enableSshSupport = true;
+    enableExtraSocket = true;
+  };
+
+  programs.gpg = {
+    enable = true;
+
+    mutableKeys = true;
+    mutableTrust = true;
+  };
+
   programs.zellij = {
     enable = true;
 
@@ -121,6 +134,11 @@
     userName = "Carl Hjerpe";
     userEmail = "git@hjerpe.xyz";
     lfs.enable = true;
+
+    signing = {
+      key = "3916387439FCDA33";
+      signByDefault = true;
+    };
   };
 
   programs.rbw = {

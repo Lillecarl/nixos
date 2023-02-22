@@ -87,6 +87,8 @@ $PATH.add($XDG_BIN_HOME)
 $PATH.add($NODE_HOME)
 $NODE_PATH=$NODE_HOME+"/lib/node_modules"
 
+$GPG_TTY=$(tty)
+
 # If keychain binary exists, load ssh keys
 if which("keychain"):
   # Load keychain bash environment stuff
