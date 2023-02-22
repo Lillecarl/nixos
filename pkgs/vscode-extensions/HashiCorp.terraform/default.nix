@@ -8,8 +8,8 @@ buildVscodeMarketplaceExtension {
   mktplcRef = {
     name = "terraform";
     publisher = "HashiCorp";
-    version = "2.25.2";
-    sha256 = "7db866fa888841066811978e78c7236905f7d0ebb0335c7ed9fd553704af908d";
+    version = "2.25.3";
+    sha256 = "4b0dbd8bfe145ca977df1de682ed9ce00dd26e2b6f3921fc75c2cf8f25e7dad0";
   };
 
   meta = with lib; {
