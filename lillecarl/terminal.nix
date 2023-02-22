@@ -12,6 +12,10 @@
     ".config/qtile/battery.py".source = ./dotfiles/.config/qtile/battery.py;
   };
 
+  xdg = {
+    enable = true;
+  };
+
   programs.zellij = {
     enable = true;
 
