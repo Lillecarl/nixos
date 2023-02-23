@@ -8,8 +8,8 @@ buildVscodeMarketplaceExtension {
   mktplcRef = {
     name = "vsliveshare";
     publisher = "MS-vsliveshare";
-    version = "1.0.5831";
-    sha256 = "4158b0641c5e9b4cfad812e1034cdb15d40bdd27e850a650c7a5fe026d65913d";
+    version = "1.0.5832";
+    sha256 = "bc6bab0bef5deb73c68325c456d56aaee483b0e6c38d2869a311c3ec4b304ae9";
   };
 
   meta = with lib; {

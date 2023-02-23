@@ -8,8 +8,8 @@ buildVscodeMarketplaceExtension {
   mktplcRef = {
     name = "vscode-pylance";
     publisher = "ms-python";
-    version = "2023.2.31";
-    sha256 = "1cd881ad786319c76173bebb570325c1e57be3fd49cf8712f4fe9c144a08f6be";
+    version = "2023.2.41";
+    sha256 = "caefcbc65fdd4338236723cf34a71a44d9dc8c0ddde969bf1e1ae0fdefa65ab1";
   };
 
   meta = with lib; {
