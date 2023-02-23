@@ -24,7 +24,7 @@
       "kmix"."mic_mute" = [ "Microphone Mute" "Meta+Volume Mute" ];
       "kmix"."mute" = "Volume Mute";
       "ksmserver"."Halt Without Confirmation" = [ ];
-      "ksmserver"."Lock Session" = ["Screensaver" "Ctrl+Alt+Del"];
+      "ksmserver"."Lock Session" = [ "Screensaver" "Ctrl+Alt+Del" ];
       "ksmserver"."Log Out" = [ ];
       "ksmserver"."Log Out Without Confirmation" = [ ];
       "ksmserver"."Reboot Without Confirmation" = [ ];
@@ -127,12 +127,12 @@
       "kwin"."Window Pack Left" = [ ];
       "kwin"."Window Pack Right" = [ ];
       "kwin"."Window Pack Up" = [ ];
-      "kwin"."Window Quick Tile Bottom" = "Meta+Down";
+      "kwin"."Window Quick Tile Top" = [ "Meta+K" "Meta+Up" ];
+      "kwin"."Window Quick Tile Bottom" = [ "Meta+J" "Meta+Down" ];
+      "kwin"."Window Quick Tile Left" = [ "Meta+H" "Meta+Left" ];
+      "kwin"."Window Quick Tile Right" = [ "Meta+L" "Meta+Right" ];
       "kwin"."Window Quick Tile Bottom Left" = [ ];
       "kwin"."Window Quick Tile Bottom Right" = [ ];
-      "kwin"."Window Quick Tile Left" = "Meta+Left";
-      "kwin"."Window Quick Tile Right" = "Meta+Right";
-      "kwin"."Window Quick Tile Top" = "Meta+Up";
       "kwin"."Window Quick Tile Top Left" = [ ];
       "kwin"."Window Quick Tile Top Right" = [ ];
       "kwin"."Window Raise" = [ ];
