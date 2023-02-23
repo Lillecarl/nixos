@@ -61,7 +61,7 @@
           terraform = {
             command = "${pkgs.terraform-lsp}/bin/terraform-lsp";
             filetypes = [ "terraform" ];
-            initializationOptions = {};
+            initializationOptions = { };
           };
           clangd = {
             command = "${pkgs.clang-tools}/bin/clangd";
