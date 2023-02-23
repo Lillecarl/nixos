@@ -11,50 +11,6 @@
       "KDE Keyboard Layout Switcher"."Switch keyboard layout to English (US)" = "Alt+Shift+U";
       "KDE Keyboard Layout Switcher"."Switch keyboard layout to Swedish" = "Alt+Shift+S";
 
-      "bismuth"."decrease_master_size" = [ ];
-      "bismuth"."decrease_master_win_count" = "Meta+[";
-      "bismuth"."decrease_window_height" = "Meta+Ctrl+K";
-      "bismuth"."decrease_window_width" = "Meta+Ctrl+H";
-
-      "bismuth"."focus_bottom_window" = "Meta+J";
-      "bismuth"."focus_left_window" = "Meta+H";
-      "bismuth"."focus_right_window" = "Meta+L";
-      "bismuth"."focus_upper_window" = "Meta+K";
-
-      "bismuth"."focus_next_window" = [ ];
-      "bismuth"."focus_prev_window" = [ ];
-
-      "bismuth"."increase_master_size" = [ ];
-      "bismuth"."increase_master_win_count" = "Meta+]";
-      "bismuth"."increase_window_height" = "Meta+Ctrl+J";
-      "bismuth"."increase_window_width" = "Meta+Ctrl+L";
-
-      "bismuth"."move_window_to_bottom_pos" = "Meta+Shift+J";
-      "bismuth"."move_window_to_left_pos" = "Meta+Shift+H";
-      "bismuth"."move_window_to_right_pos" = "Meta+Shift+L";
-      "bismuth"."move_window_to_upper_pos" = "Meta+Shift+K";
-
-      "bismuth"."move_window_to_next_pos" = [ ];
-      "bismuth"."move_window_to_prev_pos" = [ ];
-      "bismuth"."next_layout" = "Meta+\\,Meta+\\,Switch to the Next Layout";
-      "bismuth"."prev_layout" = "Meta+|";
-
-      "bismuth"."push_window_to_master" = "Meta+Return";
-
-      "bismuth"."rotate" = "Meta+R";
-      "bismuth"."rotate_part" = "Meta+Shift+R";
-      "bismuth"."rotate_reverse" = [ ];
-
-      "bismuth"."toggle_float_layout" = "Meta+Shift+F";
-      "bismuth"."toggle_monocle_layout" = [ ];
-      "bismuth"."toggle_quarter_layout" = [ ];
-      "bismuth"."toggle_spiral_layout" = [ ];
-      "bismuth"."toggle_spread_layout" = [ ];
-      "bismuth"."toggle_stair_layout" = [ ];
-      "bismuth"."toggle_three_column_layout" = [ ];
-      "bismuth"."toggle_tile_layout" = [ ];
-      "bismuth"."toggle_window_floating" = [ "Meta+F" ];
-
       "kaccess"."Toggle Screen Reader On and Off" = [ ];
       "kcm_touchpad"."Disable Touchpad" = "Touchpad Off";
       "kcm_touchpad"."Enable Touchpad" = "Touchpad On";
