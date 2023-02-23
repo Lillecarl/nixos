@@ -405,10 +405,6 @@ rec
 
   # Enable SSH agent
   programs.ssh.startAgent = true;
-  # Enable KDE Connect
-  programs.kdeconnect.enable = true;
-  # Enable noisetorch, noise suppression for microphones using pulse/pipewire
-  #programs.noisetorch.enable = true;
   # Enable wireshark
   programs.wireshark.enable = true;
   # gnupg settings
