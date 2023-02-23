@@ -164,7 +164,7 @@
 
     signing = {
       key = "3916387439FCDA33";
-      signByDefault = true;
+      signByDefault = false;
     };
   };
 
