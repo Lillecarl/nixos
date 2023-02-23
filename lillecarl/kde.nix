@@ -127,10 +127,10 @@
       "kwin"."Window Pack Left" = [ ];
       "kwin"."Window Pack Right" = [ ];
       "kwin"."Window Pack Up" = [ ];
-      "kwin"."Window Quick Tile Top" = [ "Meta+K" "Meta+Up" ];
-      "kwin"."Window Quick Tile Bottom" = [ "Meta+J" "Meta+Down" ];
-      "kwin"."Window Quick Tile Left" = [ "Meta+H" "Meta+Left" ];
-      "kwin"."Window Quick Tile Right" = [ "Meta+L" "Meta+Right" ];
+      "kwin"."Window Quick Tile Top" = [ "Meta+Up" "Meta+K" ];
+      "kwin"."Window Quick Tile Bottom" = [ "Meta+Down" "Meta+J" ];
+      "kwin"."Window Quick Tile Left" = [ "Meta+Left" "Meta+H" ];
+      "kwin"."Window Quick Tile Right" = [ "Meta+Right" "Meta+L" ];
       "kwin"."Window Quick Tile Bottom Left" = [ ];
       "kwin"."Window Quick Tile Bottom Right" = [ ];
       "kwin"."Window Quick Tile Top Left" = [ ];
