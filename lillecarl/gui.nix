@@ -55,6 +55,7 @@
       vscodevim.vim
       bbenoist.nix
       # Own packaging
+      a5huynh.vscode-ron
       eamodio.gitlens
       EditorConfig.EditorConfig
       HashiCorp.terraform

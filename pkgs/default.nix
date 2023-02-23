@@ -37,6 +37,7 @@ in
   };
   # Inject vscode extensions
   vscode-extensions = prev.vscode-extensions // {
+    a5huynh.vscode-ron = prev.callPackage ../pkgs/vscode-extensions/a5huynh.vscode-ron { };
     EditorConfig.EditorConfig = prev.callPackage ../pkgs/vscode-extensions/EditorConfig.EditorConfig { };
     HashiCorp.terraform = prev.callPackage ../pkgs/vscode-extensions/HashiCorp.terraform { };
     jnoortheen.xonsh = prev.callPackage ../pkgs/vscode-extensions/jnoortheen.xonsh { };
