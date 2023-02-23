@@ -44,10 +44,32 @@
     defaultEditor = true;
 
     plugins = with pkgs.vimPlugins; [
+      nvim-treesitter
+      coc-pyright
+      coc-clangd
     ];
 
     coc = {
       enable = true;
+
+      settings = {
+        languageserver = {
+          nix = {
+            command = "${pkgs.rnix-lsp}/bin/rnix-lsp";
+            filetypes = [ "nix" ];
+          };
+          terraform = {
+            command = "${pkgs.terraform-lsp}/bin/terraform-lsp";
+            filetypes = [ "terraform" ];
+            initializationOptions = {};
+          };
+          clangd = {
+            command = "${pkgs.clang-tools}/bin/clangd";
+            rootPatterns = [ "compile_flags.txt" "compile_commands.json" ];
+            filetypes = [ "c" "cc" "cpp" "c++" "objc" "objcpp" ];
+          };
+        };
+      };
     };
 
     extraConfig = ''
