@@ -78,4 +78,5 @@ def updatevscodeext(path):
 updatenix()
 updatenode()
 updatevscode()
+os.chdir(gitroot)
 nix fmt
