@@ -8,8 +8,8 @@ buildVscodeMarketplaceExtension {
   mktplcRef = {
     name = "python";
     publisher = "ms-python";
-    version = "2023.3.10542301";
-    sha256 = "4da5b207011a76a0a41e9d67da89054b7fe995c39252131fc1943844ee06fe4c";
+    version = "2023.3.10551009";
+    sha256 = "9cf46e08b936f47a57c7e8ee8ac4cffddb7b4f019453d15a8bbde914aa7e4450";
   };
 
   meta = with lib; {
