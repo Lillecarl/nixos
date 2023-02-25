@@ -1,0 +1,128 @@
+[
+  {
+    "name": "EditorConfig",
+    "publisher": "EditorConfig",
+    "version": "0.16.4",
+    "sha256": "0fa4h9hk1xq6j3zfxvf483sbb4bd17fjl5cdm3rll7z9kaigdqwg"
+  },
+  {
+    "name": "terraform",
+    "publisher": "HashiCorp",
+    "version": "2.25.4",
+    "sha256": "0998jd4bl0c47kgchrhqfp6h817gr0kr8lj6dgrsgvf2g03bhzx3"
+  },
+  {
+    "name": "vsliveshare",
+    "publisher": "MS-vsliveshare",
+    "version": "1.0.5832",
+    "sha256": "1saa615yrhqildlji3f3wsq87r5fdbamdi15hg377ssxxw5snsxw"
+  },
+  {
+    "name": "vscode-ron",
+    "publisher": "a5huynh",
+    "version": "0.10.0",
+    "sha256": "1q4hix1lk1xwfx0216xkakrp8jf7pwm603xjmp8pyfa7nh9rhv0f"
+  },
+  {
+    "name": "gitlens",
+    "publisher": "eamodio",
+    "version": "2023.2.2411",
+    "sha256": "1sb2gcv5simc4rm8fx0zyryz7nsbmm9jbxzrh2n4x8852db1cjvf"
+  },
+  {
+    "name": "xonsh",
+    "publisher": "jnoortheen",
+    "version": "0.2.6",
+    "sha256": "047v3czmb8557gnhbcw5q96v5azqpmfpf04q8xppgrg7hb6lh6hj"
+  },
+  {
+    "name": "vscode-graphviz",
+    "publisher": "joaompinto",
+    "version": "0.0.6",
+    "sha256": "17z5zgr8l94mj8dgqxwsrpixnkz0778fp1g4rxc7i56wb1zbik3w"
+  },
+  {
+    "name": "saltstack",
+    "publisher": "korekontrol",
+    "version": "0.0.9",
+    "sha256": "19xrai35rf4mx9n5q8q34q6rbqlwgpw04iz3d5gc04yyj45cky4a"
+  },
+  {
+    "name": "vscode-clangd",
+    "publisher": "llvm-vs-code-extensions",
+    "version": "0.1.23",
+    "sha256": "125incws4n688irqii3s2a1cznj0kvkbhv3sa8585chj5g4zvmfy"
+  },
+  {
+    "name": "vscode-kubernetes-tools",
+    "publisher": "ms-kubernetes-tools",
+    "version": "1.3.11",
+    "sha256": "1jr74lrjbmciam2zpfajicnj662fij37l31x46i0idhmvvsrssr3"
+  },
+  {
+    "name": "isort",
+    "publisher": "ms-python",
+    "version": "2023.9.10461023",
+    "sha256": "06vnj3gnd7r2rjvxsv6bim8icfj3iw8v9rggl9h8shwinbd526g9"
+  },
+  {
+    "name": "python",
+    "publisher": "ms-python",
+    "version": "2023.3.10551009",
+    "sha256": "0l24gsm19sdxiddd2lwl057ppnzxrz28mvp8qxbpmx1np446xx4w"
+  },
+  {
+    "name": "vscode-pylance",
+    "publisher": "ms-python",
+    "version": "2023.2.43",
+    "sha256": "033lg3rzwpjpq8q131x464vnk8jps5w6hwr1z3lgdkc3ljz755kq"
+  },
+  {
+    "name": "remote-ssh",
+    "publisher": "ms-vscode-remote",
+    "version": "0.97.2023022415",
+    "sha256": "0vrf83vj83wra4zaznx34icgni33bs083cqfr8kq6pw5snrz72sy"
+  },
+  {
+    "name": "remote-ssh-edit",
+    "publisher": "ms-vscode-remote",
+    "version": "0.84.0",
+    "sha256": "0rw2klz1f4sy1xzwg4bilcm2sjk0lxdfh9ly3f4kbl8a5xccfy6z"
+  },
+  {
+    "name": "cpptools",
+    "publisher": "ms-vscode",
+    "version": "1.14.3",
+    "sha256": "16mc63k0a0fr6f6nm3cz87c3s8p3hpa02bp9915zf1crwfx874z4"
+  },
+  {
+    "name": "remote-explorer",
+    "publisher": "ms-vscode",
+    "version": "0.3.2023021509",
+    "sha256": "0rwsr7rmynzkxgi709777wwn8kiaghm9z33irxxpf9fqvb1lig7d"
+  },
+  {
+    "name": "ansible",
+    "publisher": "redhat",
+    "version": "1.2.44",
+    "sha256": "0a89c5g70wzwryvv5kmjjvja42wh0gfibna003x8z47a7sqkzxri"
+  },
+  {
+    "name": "vscode-yaml",
+    "publisher": "redhat",
+    "version": "1.11.10112022",
+    "sha256": "0i53n9whcfpds9496r4pa27j3zmd4jc1kpkf4m4rfxzswwngg47x"
+  },
+  {
+    "name": "nix",
+    "publisher": "bbenoist",
+    "version": "1.0.1",
+    "sha256": "0zd0n9f5z1f0ckzfjr38xw2zzmcxg1gjrava7yahg5cvdcw6l35b"
+  },
+  {
+    "name": "vim",
+    "publisher": "vscodevim",
+    "version": "1.24.3",
+    "sha256": "02alixryryak80lmn4mxxf43izci5fk3pf3pcwy52nbd3d2fiwz1"
+  }
+]

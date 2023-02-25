@@ -48,33 +48,11 @@
     enableUpdateCheck = false;
     mutableExtensionsDir = false;
 
-    package = pkgs.vscode-joined;
+    package = pkgs.vscode;
 
-    extensions = with pkgs.vscode-extensions; [
-      # Upstream packaged
-      vscodevim.vim
-      bbenoist.nix
-      # Own packaging
-      a5huynh.vscode-ron
-      eamodio.gitlens
-      EditorConfig.EditorConfig
-      HashiCorp.terraform
-      jnoortheen.xonsh
-      joaompinto.vscode-graphviz
-      korekontrol.saltstack
-      llvm-vs-code-extensions.vscode-clangd
-      ms-kubernetes-tools.vscode-kubernetes-tools
-      ms-python.isort
-      ms-python.python
-      ms-python.vscode-pylance
-      ms-vscode-remote.remote-ssh
-      ms-vscode-remote.remote-ssh-edit
-      ms-vscode.cpptools
-      ms-vscode.remote-explorer
-      MS-vsliveshare.vsliveshare
-      redhat.ansible
-      redhat.vscode-yaml
-    ];
+    extensions = pkgs.vscode-utils.extensionsFromVscodeMarketplace (
+      builtins.fromJSON (
+        builtins.readFile ../pkgs/vscodeExtensions.json));
 
     userSettings = {
       "files.insertFinalNewline" = true;
