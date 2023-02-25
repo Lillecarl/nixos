@@ -8,8 +8,8 @@ buildVscodeMarketplaceExtension {
   mktplcRef = {
     name = "gitlens";
     publisher = "eamodio";
-    version = "2023.2.2404";
-    sha256 = "73ed95e57ca01773f8dccf538af7c12a380d93acad89438c0c2b039cc8a1c828";
+    version = "2023.2.2411";
+    sha256 = "6e4b16561305a14eac80f9f72553ad4bdbf37df61f74876a26ac465d367b62e9";
   };
 
   meta = with lib; {

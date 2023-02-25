@@ -8,8 +8,8 @@ buildVscodeMarketplaceExtension {
   mktplcRef = {
     name = "remote-ssh";
     publisher = "ms-vscode-remote";
-    version = "0.97.2023022015";
-    sha256 = "1231f25afc064e8eace0c78be28380a621deff221d973c3323634c332ef1d8b9";
+    version = "0.97.2023022415";
+    sha256 = "5e8bf3b3d5855f8327ca0eb381805e6344fb5824a3dbaf3e51990f24f7402e6f";
   };
 
   meta = with lib; {
