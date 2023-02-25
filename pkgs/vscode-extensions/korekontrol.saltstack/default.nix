@@ -3,13 +3,14 @@
 }:
 let
   inherit (vscode-utils) buildVscodeMarketplaceExtension;
+  versioninfo = (builtins.fromJSON (builtins.readFile ./version.json));
 in
 buildVscodeMarketplaceExtension {
   mktplcRef = {
     name = "saltstack";
     publisher = "korekontrol";
-    version = "0.0.9";
-    sha256 = "8af8c90a91de13c05e69e34702f87d9ce2950d2603235c6cea95b85c4654b9a7";
+    version = versioninfo.version;
+    sha256 = versioninfo.sha256;
   };
 
   meta = with lib; {

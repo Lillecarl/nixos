@@ -3,13 +3,14 @@
 }:
 let
   inherit (vscode-utils) buildVscodeMarketplaceExtension;
+  versioninfo = (builtins.fromJSON (builtins.readFile ./version.json));
 in
 buildVscodeMarketplaceExtension {
   mktplcRef = {
     name = "vsliveshare";
     publisher = "MS-vsliveshare";
-    version = "1.0.5832";
-    sha256 = "bc6bab0bef5deb73c68325c456d56aaee483b0e6c38d2869a311c3ec4b304ae9";
+    version = versioninfo.version;
+    sha256 = versioninfo.sha256;
   };
 
   meta = with lib; {

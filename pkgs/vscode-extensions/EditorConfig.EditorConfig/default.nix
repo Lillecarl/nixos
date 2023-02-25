@@ -4,13 +4,14 @@
 
 let
   inherit (vscode-utils) buildVscodeMarketplaceExtension;
+  versioninfo = (builtins.fromJSON (builtins.readFile ./version.json));
 in
 buildVscodeMarketplaceExtension {
   mktplcRef = {
     name = "EditorConfig";
     publisher = "EditorConfig";
-    version = "0.16.4";
-    sha256 = "8fe3f6a29ae91f4af3a88d152add096d91b5f440c4edeefe9006f73061824439";
+    version = versioninfo.version;
+    sha256 = versioninfo.sha256;
   };
 
   meta = with lib; {

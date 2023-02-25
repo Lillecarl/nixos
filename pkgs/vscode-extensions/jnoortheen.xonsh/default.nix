@@ -5,13 +5,14 @@
 
 let
   inherit (vscode-utils) buildVscodeMarketplaceExtension;
+  versioninfo = (builtins.fromJSON (builtins.readFile ./version.json));
 in
 buildVscodeMarketplaceExtension {
   mktplcRef = {
     name = "xonsh";
     publisher = "jnoortheen";
-    version = "0.2.6";
-    sha256 = "121a48cd82e7e5776f479800775dbdf8abb24dc285b305ed3ba5a0553f1bfb10";
+    version = versioninfo.version;
+    sha256 = versioninfo.sha256;
   };
 
   propagatedBuildInputs = with python3.pkgs; [

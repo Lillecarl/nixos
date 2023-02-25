@@ -3,13 +3,14 @@
 }:
 let
   inherit (vscode-utils) buildVscodeMarketplaceExtension;
+  versioninfo = (builtins.fromJSON (builtins.readFile ./version.json));
 in
 buildVscodeMarketplaceExtension {
   mktplcRef = {
     name = "vscode-graphviz";
     publisher = "joaompinto";
-    version = "0.0.6";
-    sha256 = "7cccb87e58dc947858cfe485ebd039e04fdbe3cd9a77fc1a9295248af2fbe59f";
+    version = versioninfo.version;
+    sha256 = versioninfo.sha256;
   };
 
   meta = with lib; {

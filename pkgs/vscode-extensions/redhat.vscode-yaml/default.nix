@@ -3,13 +3,14 @@
 }:
 let
   inherit (vscode-utils) buildVscodeMarketplaceExtension;
+  versioninfo = (builtins.fromJSON (builtins.readFile ./version.json));
 in
 buildVscodeMarketplaceExtension {
   mktplcRef = {
     name = "vscode-yaml";
     publisher = "redhat";
-    version = "1.11.10112022";
-    sha256 = "fd90f72ce7fa779749256ede199824adfe218f5097649348d2ed3a0679b2a344";
+    version = versioninfo.version;
+    sha256 = versioninfo.sha256;
   };
 
   meta = with lib; {

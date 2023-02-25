@@ -21,5 +21,6 @@ symlinkJoin {
     pyyaml
     psutil
     jinja2
+    plumbum
   ]);
 }

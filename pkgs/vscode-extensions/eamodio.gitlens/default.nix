@@ -3,13 +3,14 @@
 }:
 let
   inherit (vscode-utils) buildVscodeMarketplaceExtension;
+  versioninfo = (builtins.fromJSON (builtins.readFile ./version.json));
 in
 buildVscodeMarketplaceExtension {
   mktplcRef = {
     name = "gitlens";
     publisher = "eamodio";
-    version = "2023.2.2411";
-    sha256 = "6e4b16561305a14eac80f9f72553ad4bdbf37df61f74876a26ac465d367b62e9";
+    version = versioninfo.version;
+    sha256 = versioninfo.sha256;
   };
 
   meta = with lib; {
