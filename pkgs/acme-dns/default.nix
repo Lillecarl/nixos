@@ -2,19 +2,15 @@
 , buildGoModule
 , fetchFromGitHub
 }:
-
+let
+  versiondata = (builtins.fromJSON (builtins.readFile ./version.json));
+in
 # If you don't know how to get the sha256's ahead of time, just build and check CLI output.
 buildGoModule rec {
   pname = "acme-dns";
-  version = "1.0";
+  version = versiondata.version;
 
-  src = fetchFromGitHub {
-    owner = "joohoi";
-    repo = pname;
-    rev = "v${version}";
-    sha256 = "sha256-qQwvhouqzkChWeu65epgoeMNqZyAD18T+xqEMgdMbhA=";
-  };
-
+  src = fetchFromGitHub versiondata;
   vendorSha256 = "sha256-q/P+cH2OihvPxPj2XWeLsTBHzQQABp0zjnof+Ys/qKo=";
 
   meta = {
