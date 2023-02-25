@@ -1,22 +1,23 @@
 { lib
 , python3Packages
+, xonsh
+, fetchFromGitHub
 }:
-
+let
+  versiondata = (builtins.fromJSON (builtins.readFile ./version.json));
+in
 python3Packages.buildPythonPackage rec {
   pname = "xontrib-argcomplete";
-  version = "0.3.2";
-  src = python3Packages.fetchPypi {
-    inherit pname version;
-    sha256 = "sha256-jn1NHh/PTTgSX0seOvOZTpRv4PxAQ4PbDiXOSb4/jrU=";
-  };
-
+  version = versiondata.version;
+  src = fetchFromGitHub versiondata;
   propagatedBuildInputs = with python3Packages; [
     argcomplete
+    xonsh
   ];
 
   meta = {
     description = "Argcomplete support for python and xonsh scripts in xonsh shell.";
-    homepage = "https://github.com/anki-code/${pname}";
+    homepage = "https://github.com/${versiondata.owner}/${versiondata.repo}";
     license = lib.licenses.mit;
   };
 }

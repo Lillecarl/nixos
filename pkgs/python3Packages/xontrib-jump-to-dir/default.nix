@@ -1,21 +1,21 @@
 { lib
 , xonsh
 , python3Packages
+, fetchFromGitHub
 }:
-
+let
+  versiondata = (builtins.fromJSON (builtins.readFile ./version.json));
+in
 python3Packages.buildPythonPackage rec {
   pname = "xontrib-jump-to-dir";
-  version = "0.0.3";
-  src = python3Packages.fetchPypi {
-    inherit pname version;
-    sha256 = "sha256-affmEnOeQWrbB2hYpkFxR6QSrdAU8Cty2ZwFJD22Y6I=";
-  };
+  version = versiondata.version;
+  src = fetchFromGitHub versiondata;
 
   propagatedBuildInputs = [ xonsh ];
 
   meta = {
     description = "Jump to used before directory by part of the path. Lightweight zero-dependency implementation of autojump or zoxide projects functionality.";
-    homepage = "https://github.com/anki-code/${pname}";
+    homepage = "https://github.com/${versiondata.owner}/${versiondata.repo}";
     license = lib.licenses.mit;
   };
 }

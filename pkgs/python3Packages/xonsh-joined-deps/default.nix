@@ -22,5 +22,6 @@ symlinkJoin {
     psutil
     jinja2
     plumbum
+    PyGithub
   ]);
 }

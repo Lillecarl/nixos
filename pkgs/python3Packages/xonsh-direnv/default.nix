@@ -1,17 +1,18 @@
 { lib
 , python3Packages
+, fetchFromGitHub
 }:
-
+let
+  versiondata = (builtins.fromJSON (builtins.readFile ./version.json));
+in
 python3Packages.buildPythonPackage rec {
   pname = "xonsh-direnv";
-  version = "1.6.1";
-  src = python3Packages.fetchPypi {
-    inherit pname version;
-    sha256 = "sha256-Nt8Da1EtMVWZ9mbBDjys7HDutLYifwoQ1HVmI5CN2Ww=";
-  };
+  version = "0.3.0";
+  src = fetchFromGitHub versiondata;
+
   meta = {
     description = "xonsh extension for using direnv";
-    homepage = "https://github.com/Granitosaurus/${pname}";
+    homepage = "https://github.com/${versiondata.owner}/${versiondata.repo}";
     license = lib.licenses.mit;
   };
 }

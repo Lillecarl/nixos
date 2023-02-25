@@ -6,10 +6,13 @@
 import os
 import re
 import json
+import requests
+from github import Github
 from pathlib import Path
 from plumbum import local
 
 npu = local["nix-prefetch-url"]
+npglr = local["nix-prefetch-github-latest-release"]
 gdata = list()
 
 # This is expected to run from within my nixos repo
@@ -39,13 +42,43 @@ def updatevscode():
     prefetch = npu("--print-path", URL).splitlines()
     $PKGHASH = prefetch[0]
     $PKGPATH = prefetch[1]
+    oldver = ext["version"]
     ext["version"] = json.loads($(unzip -qc "$PKGPATH" "extension/package.json"))['version']
+    if oldver != ext["version"]:
+      print("Updating from {0} to {1}".format(oldver, ext["version"]))
     ext["sha256"] = $PKGHASH
-    Path(os.path.join(gitroot, "pkgs", "vscodeExtensions.json")).write_text(json.dumps(data, indent=2))
+    extpath.write_text(json.dumps(data, indent=2) + os.linesep)
+
+def updategit():
+  os.chdir(os.path.join(gitroot, "pkgs"))
+
+  gh = Github($(gh auth token).rstrip())
+
+  for versionfile in g`**/version.json`:
+    versionfile = Path(versionfile)
+    versiondata = json.loads(versionfile.read_text())
+    print("Fetching updates for {0}/{1}".format(versiondata["owner"], versiondata["repo"]))
+    newdata = json.loads(npglr("--json", versiondata["owner"], versiondata["repo"]))
+    if versiondata["rev"] != newdata["rev"]:
+      print("Updating {0}/{1} to latest github release".format(newdata["owner"], newdata["repo"]))
+
+    try:
+      print("Fetching version info from GitHub")
+      repo = gh.get_repo("{0}/{1}".format(versiondata["owner"], versiondata["repo"]))
+      newdata["version"] = repo.get_latest_release().tag_name
+
+    except Exception as e:
+      print("Couldn't get latest release")
+      print(e)
+
+    versionfile.write_text(json.dumps(newdata, indent=2) + os.linesep)
+
 
 #Call update functions
 #updatenix()
 #updatenode()
-updatevscode()
+#updatevscode()
+updategit()
+os.chdir(gitroot)
 nix fmt
 

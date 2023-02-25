@@ -1,15 +1,14 @@
 { lib
 , python3Packages
+, fetchFromGitHub
 }:
-
+let
+  versiondata = (builtins.fromJSON (builtins.readFile ./version.json));
+in
 python3Packages.buildPythonPackage rec {
   pname = "xontrib-output-search";
-  version = "0.6.2";
-  src = python3Packages.fetchPypi {
-    inherit pname version;
-    sha256 = "sha256-Zh4DXs5qajZ3bR2YVJ+uLE2u1TVJcmdzH3x9nX6jJDI=";
-  };
-
+  version = versiondata.version;
+  src = fetchFromGitHub versiondata;
   propagatedBuildInputs = with python3Packages; [
     tokenize-output
   ];

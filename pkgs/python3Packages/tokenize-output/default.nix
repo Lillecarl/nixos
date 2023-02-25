@@ -1,14 +1,14 @@
 { lib
 , python3Packages
+, fetchFromGitHub
 }:
-
+let
+  versiondata = (builtins.fromJSON (builtins.readFile ./version.json));
+in
 python3Packages.buildPythonPackage rec {
   pname = "tokenize-output";
-  version = "0.4.7";
-  src = python3Packages.fetchPypi {
-    inherit pname version;
-    sha256 = "sha256-b/ffh5l6YO9A20vtekBGXLMZdfXfrzU9nzXyxa7xZR0=";
-  };
+  version = versiondata.version;
+  src = fetchFromGitHub versiondata;
 
   propagatedBuildInputs = with python3Packages; [
     demjson3

@@ -1,14 +1,14 @@
 { lib
 , python3Packages
+, fetchFromGitHub
 }:
-
+let
+  versiondata = (builtins.fromJSON (builtins.readFile ./version.json));
+in
 python3Packages.buildPythonPackage rec {
   pname = "xontrib-sh";
-  version = "0.3.0";
-  src = python3Packages.fetchPypi {
-    inherit pname version;
-    sha256 = "sha256-eV++ZuopnAzNXRuafXXZM7tmcay1NLBIB/U+SVrQV+U=";
-  };
+  version = versiondata.version;
+  src = fetchFromGitHub versiondata;
 
   meta = {
     description = "Bang bash oneliners within xonsh";
