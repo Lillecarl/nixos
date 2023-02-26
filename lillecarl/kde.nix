@@ -8,7 +8,7 @@
       "org.wezfurlong.wezterm.desktop"."_launch" = "Meta+Return";
 
       # KB Layout Switching
-      "KDE Keyboard Layout Switcher"."Switch keyboard layout to English (US)" = "Alt+Shift+U";
+      "KDE Keyboard Layout Switcher"."Switch keyboard layout to English (US)" = "Alt+Shift+E";
       "KDE Keyboard Layout Switcher"."Switch keyboard layout to Swedish" = "Alt+Shift+S";
 
       "kaccess"."Toggle Screen Reader On and Off" = [ ];
