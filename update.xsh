@@ -75,9 +75,9 @@ def updategit():
 
 
 #Call update functions
-#updatenix()
-#updatenode()
-#updatevscode()
+updatenix()
+updatenode()
+updatevscode()
 updategit()
 os.chdir(gitroot)
 nix fmt
