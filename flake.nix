@@ -40,6 +40,7 @@
               ./shitbox
               ./common
               ./common/flatpak.nix
+              ./common/verycommon.nix
               ./common/keybindings.nix
               ./common/killservice.nix
               inputs.nixos-hardware.nixosModules.common-cpu-amd
@@ -54,6 +55,7 @@
               ./nub
               ./common
               ./common/flatpak.nix
+              ./common/verycommon.nix
               ./common/keybindings.nix
               ./common/killservice.nix
               ./common/xplatform.nix
@@ -66,6 +68,16 @@
               inputs.nixos-hardware.nixosModules.common-pc-ssd
               inputs.nixos-hardware.nixosModules.common-pc
               inputs.dwarffs.nixosModules.dwarffs
+            ];
+            specialArgs = { inherit inputs; };
+          };
+          nubvm = inputs.nixpkgs.lib.nixosSystem {
+            system = "x86_64-linux";
+            modules = [
+              ./nubvm
+              ./common/verycommon.nix
+              inputs.nixos-hardware.nixosModules.common-pc-ssd
+              inputs.nixos-hardware.nixosModules.common-pc
             ];
             specialArgs = { inherit inputs; };
           };

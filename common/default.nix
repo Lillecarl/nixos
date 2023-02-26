@@ -1,74 +1,7 @@
 { inputs, config, pkgs, lib, ... }:
-let
-  programs_sqlite = pkgs.runCommandLocal "programs_sqlite" { } ''
-    cp ${inputs.nixpkgs-channel}/programs.sqlite $out
-  '';
-
-  pkgs-overlay = import ../pkgs;
-  xonsh-overlay = import ../overlays/xonsh-overlay;
-in
-rec
 {
   security.pam.services.login.enableKwallet = true;
   security.pam.services.session.enableKwallet = true;
-  nix = {
-    settings.trusted-users = [ "root" "lillecarl" ];
-    registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
-    nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
-  };
-  # Allow root to map to LilleCarl user in LXD container
-  users.users.root = {
-    subUidRanges = [
-      {
-        count = 1;
-        startUid = users.users.lillecarl.uid;
-      }
-    ];
-    subGidRanges = [
-      {
-        count = 1;
-        startGid = 1000;
-      }
-    ];
-  };
-
-  nixpkgs.overlays = [
-    pkgs-overlay
-    xonsh-overlay
-    inputs.nixpkgs-wayland.overlay
-  ];
-
-  users.defaultUserShell = pkgs.zsh;
-  users.users.lillecarl = {
-    uid = 1000;
-    #shell = "${pkgs.xonsh}/bin/xonsh";
-    isNormalUser = true;
-    extraGroups = [
-      "wheel" # enables sudo
-      "libvirtd" # allow use of libvirt without sudo
-      "networkmanager" # allow editing network connections without sudo
-      "lxd" # allow userspace container management without sudo
-      "flatpak" # allow managing flatpak
-      "adbusers" # allow usage of adb
-      "podman" # allow usage of adb
-      "wireshark" # allow wireshark dumpcap
-    ];
-  };
-
-  # Make command not found suggest nix derivations
-  programs.command-not-found.dbPath = programs_sqlite;
-  programs.iotop.enable = true;
-
-  # Give applications 15 seconds to shut down when shutting down the computer
-  systemd.extraConfig = ''
-    DefaultTimeoutStopSec=15s
-  '';
-
-  # Tailscale exit-node & subnet routing fix (asym routing)
-  networking.firewall.checkReversePath = "loose";
-
-  # Set your time zone.
-  time.timeZone = "Europe/Stockholm";
 
   # Select internationalisation properties.
   i18n = {
@@ -77,9 +10,9 @@ rec
     extraLocaleSettings = {
       LANGUAGE = "en_US.UTF-8";
       LC_ALL = "en_US.UTF-8";
-      LC_MEASUREMENT = "en_US.UTF-8";
+      LC_MEASUREMENT = "en_SV.UTF-8";
       LC_NUMERIC = "en_US.UTF-8";
-      LC_TIME = "en_US.UTF-8";
+      LC_TIME = "en_SE.UTF-8";
     };
     supportedLocales = [ "all" ];
   };
@@ -120,28 +53,9 @@ rec
   # Disable network-manager wait-online service that prohibits nixos-rebuild
   systemd.services.NetworkManager-wait-online.enable = false;
 
-  services.fstrim.enable = true;
-
   # Use xserver keymap
   console = {
     useXkbConfig = true;
-  };
-
-  # XDG Base Directory Specification
-  environment.sessionVariables = rec {
-    XDG_CACHE_HOME = "\${HOME}/.cache";
-    XDG_CONFIG_HOME = "\${HOME}/.config";
-    XDG_BIN_HOME = "\${HOME}/.local/bin";
-    XDG_DATA_HOME = "\${HOME}/.local/share";
-    XDG_STATE_HOME = "\${HOME}/.local/state";
-    NODE_HOME = "\${HOME}/.local/node";
-
-    PATH = [
-      "\${XDG_BIN_HOME}"
-    ];
-
-    POWERSHELL_TELEMETRY_OPTOUT = "yes"; # No powershell telemetry
-    NIXOS_OZONE_WL = "1"; # Use Wayland whenever we can
   };
 
   environment.systemPackages = with pkgs; [

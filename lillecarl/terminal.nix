@@ -201,6 +201,7 @@
     cmatrix # Cool matrix style scrolling, really cpu intense
     envsubst # Templating with environment variables, commonly used with k8s
     fzf # fzf cli fuzzy search tool
+    gh # Github CLI
     awscli2 # AWS CLI tooling
     zellij # discoverable terminal multiplexer written in rust
     zoxide # Rust implementation of z/autojump
