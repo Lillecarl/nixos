@@ -23,5 +23,6 @@ symlinkJoin {
     jinja2
     plumbum
     PyGithub
+    sh
   ]);
 }
