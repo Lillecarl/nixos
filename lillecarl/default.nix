@@ -9,12 +9,6 @@ in
     xonsh-overlay
   ];
 
-  imports = [
-    ./terminal.nix # Things that run without a GUI
-    ./gui.nix # Things that run with a GUI
-    ./kde.nix # KDE configuration
-  ];
-
   nixpkgs = {
     config.allowUnfree = true;
   };

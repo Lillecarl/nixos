@@ -186,6 +186,10 @@
     duf # A better df alternative
     broot # A new way to see and navigate directory trees
     fd # A simple, fast and user-friendly alternative to find
+    bat # Better cat
+    exa # Better ls
+    direnv # Do stuff on cd.
+    gitui # Fast Git TUI.
     choose # A human-friendly and fast alternative to cut and (sometimes) awk
     gping # ping, but with a graph.
     procs # A modern replacement for ps written in Rust.
@@ -196,6 +200,7 @@
     toilet # Ascii art text
     cmatrix # Cool matrix style scrolling, really cpu intense
     envsubst # Templating with environment variables, commonly used with k8s
+    fzf # fzf cli fuzzy search tool
     awscli2 # AWS CLI tooling
     zellij # discoverable terminal multiplexer written in rust
     zoxide # Rust implementation of z/autojump
