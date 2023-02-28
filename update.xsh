@@ -36,17 +36,20 @@ def updatevscode():
 
   for ext in data:
     URL="https://{0}.gallery.vsassets.io/_apis/public/gallery/publisher/{0}/extension/{1}/latest/assetbyname/Microsoft.VisualStudio.Services.VSIXPackage".format(ext["publisher"], ext["name"])
+    NAME="{0}-{1}.zip".format(ext["publisher"], ext["name"])
 
     # Download package to nix store
     print("Downloading {0}.{1} to nix store".format(ext["publisher"], ext["name"]))
-    prefetch = npu("--print-path", URL).splitlines()
-    $PKGHASH = prefetch[0]
+    prefetch = npu("--name", NAME, "--print-path", URL).splitlines()
+    PKGHASH = prefetch[0]
+    PKGPATH = prefetch[1]
     $PKGPATH = prefetch[1]
+    print(PKGPATH)
     oldver = ext["version"]
     ext["version"] = json.loads($(unzip -qc "$PKGPATH" "extension/package.json"))['version']
     if oldver != ext["version"]:
       print("Updating from {0} to {1}".format(oldver, ext["version"]))
-    ext["sha256"] = $PKGHASH
+    ext["sha256"] = PKGHASH
     extpath.write_text(json.dumps(data, indent=2) + os.linesep)
 
 def updategit():
