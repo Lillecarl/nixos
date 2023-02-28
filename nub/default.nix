@@ -174,25 +174,6 @@ rec
     config.allowUnfree = true;
   };
 
-  nix = {
-    package = pkgs.nixVersions.stable;
-    extraOptions = ''
-      experimental-features = nix-command flakes repl-flake
-    '';
-    settings = {
-      auto-optimise-store = true;
-
-      trusted-public-keys = [
-        "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-        "nixpkgs-wayland.cachix.org-1:3lwxaILxMRkVhehr5StQprHdEo4IrE8sRho9R9HOLYA="
-      ];
-      substituters = [
-        "https://cache.nixos.org"
-        "https://nixpkgs-wayland.cachix.org"
-      ];
-    };
-  };
-
   networking = {
     hostName = "nub"; # System hostname
     nftables.enable = true; # Enable nftables
@@ -203,8 +184,7 @@ rec
     };
     useDHCP = false; # deprecated, should be false
 
-    hosts = {
-    };
+    hosts = { };
   };
   # Enable systemd-resolved, takes care of splitting DNS across interfaces n stuff
   services.resolved = {
