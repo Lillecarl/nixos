@@ -24,6 +24,7 @@ in
         extraSpecialArgs = { };
         modules = [
           ./gui.nix
+          ./terminal.nix
           ./default.nix
           inputs.plasma-manager.homeManagerModules.plasma-manager
         ];
