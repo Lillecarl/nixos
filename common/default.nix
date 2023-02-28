@@ -285,8 +285,6 @@
     # Web browsers
     firefox # The browser I'd love to use
     google-chrome # Only use this when websites are stupid
-    nyxt # Hackable "power-browser"
-    qutebrowser # Keyboard driven browser, Python and PyQt based
 
     # Games
     superTuxKart # Kart game with Tux
