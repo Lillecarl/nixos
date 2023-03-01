@@ -13,6 +13,13 @@ let
     xonsh-autoxsh = prev.callPackage ../pkgs/python3Packages/xonsh-autoxsh { };
     tokenize-output = prev.callPackage ../pkgs/python3Packages/tokenize-output { };
     lazyasd = prev.callPackage ../pkgs/python3Packages/lazyasd { };
+
+    pyzmq25 = prev.python3Packages.callPackage ../pkgs/python3Packages/pyzmq { };
+    looseversion = prev.python3Packages.callPackage ../pkgs/python3Packages/looseversion { };
+
+    pytest-shell-utilities = prev.python3Packages.callPackage ../pkgs/python3Packages/pytest-shell-utilities { };
+    pytest-skip-markers = prev.python3Packages.callPackage ../pkgs/python3Packages/pytest-skip-markers { };
+    pytest-salt-factories = prev.python3Packages.callPackage ../pkgs/python3Packages/pytest-salt-factories { };
   };
 in
 {

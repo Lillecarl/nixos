@@ -84,10 +84,15 @@
           };
         };
       };
-      perSystem = { config, system, pkgs, ... }: {
+      perSystem = { config, system, pkgs, inputs', ...}: 
+      let
+        pkgs2 = import inputs.nixpkgs { overlays = [ (import ./pkgs) ]; };
+      in
+      {
         formatter = pkgs.nixpkgs-fmt;
         packages = {
           acme-dns = pkgs.callPackage ./pkgs/acme-dns { };
+          salt = pkgs2.callPackage ./pkgs/salt { };
           pajv = (pkgs.callPackage ./pkgs/node-packages { }).pajv;
         };
       };
