@@ -1,6 +1,7 @@
 {
   inputs = {
     nixpkgs.url = github:NixOS/nixpkgs/nixos-unstable;
+    nixpkgs-stable.url = github:NixOS/nixpkgs/nixos-22.11;
     nixos-hardware.url = github:NixOS/nixos-hardware/master;
     nixpkgs-wayland = {
       url = "github:nix-community/nixpkgs-wayland";
