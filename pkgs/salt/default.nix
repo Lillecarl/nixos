@@ -17,6 +17,7 @@ python3.pkgs.buildPythonApplication rec {
     pytest-shell-utilities
     pytest-skip-markers
     pytest-salt-factories
+    pytest-helpers-namespace
     typing-extensions
     mock
   ];
