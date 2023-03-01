@@ -85,14 +85,26 @@
           };
         };
       };
-      perSystem = { config, system, pkgs, inputs', ...}: 
-      let
-	pkgs_overlaid = (pkgs.extend (import ./pkgs));
-      in
-      {
-        formatter = pkgs.nixpkgs-fmt;
-        packages = (import ./pkgs pkgs pkgs_overlaid);
-        legacyPackages = (import ./pkgs pkgs pkgs_overlaid);
-      };
+      perSystem = { config, system, pkgs, inputs', ... }:
+        let
+          pkgs_overlaid = (pkgs.extend (import ./pkgs));
+        in
+        {
+          formatter = pkgs.nixpkgs-fmt;
+          packages = (import ./pkgs pkgs pkgs_overlaid);
+          legacyPackages = (import ./pkgs pkgs pkgs_overlaid);
+          devShells.default = (pkgs_overlaid.buildFHSUserEnv rec {
+            name = "testuserenv";
+
+            targetPkgs = pkgs: (with pkgs_overlaid; [
+              xonsh
+              apt
+            ]);
+
+            multiPkgs = targetPkgs;
+
+            runScript = "bash";
+          }).env;
+        };
     };
 }
