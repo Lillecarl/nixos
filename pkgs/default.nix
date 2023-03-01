@@ -28,7 +28,6 @@ in
   splunk-otel-collector = prev.callPackage ../pkgs/splunk-otel-collector { };
   salt-pepper = prev.callPackage ../pkgs/salt-pepper { };
   acme-dns = prev.callPackage ../pkgs/acme-dns { };
-  xonsh = prev.callPackage ../pkgs/xonsh { };
 
   #salt = prev.salt.overrideAttrs (final: prev: {
   #  src = /home/lillecarl/Code/nent/saltstack;
