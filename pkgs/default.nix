@@ -30,8 +30,11 @@ in
   xonsh = prev.callPackage ../pkgs/xonsh { };
 
   #salt = prev.salt.overrideAttrs (final: prev: {
-  #  src = fetchGit "/home/lillecarl/Code/nent/saltstack/";
+  #  src = /home/lillecarl/Code/nent/saltstack;
   #});
+
+  # Newer salt version, currently in development
+  salt3006 = prev.callPackage ./salt { };
   # Desktop items to enable Wayland for packages that prefer X
   slack-wayland = prev.callPackage ../pkgs/desktopItemOverrides/slack.nix { };
   vscode-wayland = prev.callPackage ../pkgs/desktopItemOverrides/vscode.nix { };

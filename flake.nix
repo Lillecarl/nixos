@@ -30,10 +30,11 @@
   outputs = { self, flake-parts, ... } @inputs:
     flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
+        inputs.flake-parts.flakeModules.easyOverlay
         ./lillecarl/flake-module.nix
       ];
       systems = [ "x86_64-linux" "x86_64-darwin" ];
-      flake = {
+      flake = rec {
         nixosConfigurations = rec {
           shitbox = inputs.nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";
@@ -86,15 +87,12 @@
       };
       perSystem = { config, system, pkgs, inputs', ...}: 
       let
-        pkgs2 = import inputs.nixpkgs { overlays = [ (import ./pkgs) ]; };
+	pkgs_overlaid = (pkgs.extend (import ./pkgs));
       in
       {
         formatter = pkgs.nixpkgs-fmt;
-        packages = {
-          acme-dns = pkgs.callPackage ./pkgs/acme-dns { };
-          salt = pkgs2.callPackage ./pkgs/salt { };
-          pajv = (pkgs.callPackage ./pkgs/node-packages { }).pajv;
-        };
+        packages = (import ./pkgs pkgs pkgs_overlaid);
+        legacyPackages = (import ./pkgs pkgs pkgs_overlaid);
       };
     };
 }
