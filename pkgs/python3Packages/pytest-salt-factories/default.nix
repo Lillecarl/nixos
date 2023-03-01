@@ -13,8 +13,8 @@ buildPythonPackage rec {
   src = fetchFromGitHub {
     owner = "saltstack";
     repo = "pytest-salt-factories";
-    rev = "v${version}";
-    sha256 = "h56Gx/MMCW4L6nGwLAhBkiR7bX+qfFk80LEsJMiDtjQ=";
+    rev = version;
+    sha256 = "sha256-mk/g83hF+2xwyU+AfTlwAkHHuKu3d9xlS5DhDYJuZqg=";
   };
 
   propagatedBuildInputs = [
