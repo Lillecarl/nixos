@@ -3,7 +3,7 @@
 , python3
 , openssl
 , fetchpatch
-, extraInputs ? []
+, extraInputs ? [ ]
 }:
 
 python3.pkgs.buildPythonApplication rec {
@@ -17,9 +17,12 @@ python3.pkgs.buildPythonApplication rec {
     pytest-shell-utilities
     pytest-skip-markers
     pytest-salt-factories
+    pytest-tempdir
     pytest-helpers-namespace
+    pytest-tornado
     typing-extensions
     mock
+    cherrypy
   ];
 
   propagatedBuildInputs = with python3.pkgs; [

@@ -2,7 +2,6 @@
 , fetchPypi
 , buildPythonPackage
 , setuptools
-#, hatchling
 }:
 buildPythonPackage rec {
   pname = "pytest-shell-utilities";
@@ -18,10 +17,6 @@ buildPythonPackage rec {
   propagatedBuildInputs = [
     setuptools
   ];
-
-#  nativeBuildInputs = [
-#    hatchling
-#  ];
 
   meta = {
     description = "Pytest plugin to simplify running shell commands against the system";
