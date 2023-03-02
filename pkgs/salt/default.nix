@@ -55,6 +55,10 @@ python3.pkgs.buildPythonApplication rec {
     echo -n > "requirements/darwin.txt"
   '';
 
+  pytestCheckPhase = ''
+    python -m pytest ./tests/pytests/unit/utils/jinja/test_jinja_file_options.py -vv
+  '';
+
   # Don't use fixed dependencies on Darwin
   USE_STATIC_REQUIREMENTS = "0";
 
