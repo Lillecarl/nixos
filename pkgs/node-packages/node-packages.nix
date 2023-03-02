@@ -688,13 +688,13 @@ let
         sha512 = "Y+R5hJrzs52QCG2laLn4udYVnxsfny9CpOhNhUvk/SSSVyF6T27FzRbF0sroPidSu3X8oEAkOn2K804mjpt6UQ==";
       };
     };
-    "is-array-buffer-3.0.1" = {
+    "is-array-buffer-3.0.2" = {
       name = "is-array-buffer";
       packageName = "is-array-buffer";
-      version = "3.0.1";
+      version = "3.0.2";
       src = fetchurl {
-        url = "https://registry.npmjs.org/is-array-buffer/-/is-array-buffer-3.0.1.tgz";
-        sha512 = "ASfLknmY8Xa2XtB4wmbz13Wu202baeA18cJBCeCy0wXUHZF0IPyVEXqKEcd+t2fNSLLL1vC6k7lxZEojNbISXQ==";
+        url = "https://registry.npmjs.org/is-array-buffer/-/is-array-buffer-3.0.2.tgz";
+        sha512 = "y+FyyR/w8vfIRq4eQcM1EYgSTnmHXPqaF+IgzgraytCFq5Xh8lllDVmAZolPJiZttZLeFSINPYMaEJ7/vWUa1w==";
       };
     };
     "is-bigint-1.0.4" = {
@@ -1301,7 +1301,7 @@ in
       sources."inherits-2.0.4"
       sources."ini-1.3.8"
       sources."internal-slot-1.0.5"
-      sources."is-array-buffer-3.0.1"
+      sources."is-array-buffer-3.0.2"
       sources."is-bigint-1.0.4"
       sources."is-boolean-object-1.1.2"
       sources."is-callable-1.2.7"
