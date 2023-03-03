@@ -9,6 +9,7 @@ python3Packages.buildPythonPackage rec {
   pname = "xontrib-autoxsh";
   version = versiondata.version;
   src = fetchFromGitHub versiondata;
+
   meta = {
     description = "Auto launcher of `.autoxsh` scripts for Xonsh shell's `cd` function";
     homepage = "https://github.com/Lillecarl/xontrib-autoxsh";
