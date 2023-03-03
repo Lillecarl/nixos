@@ -10,12 +10,23 @@ def _pred_systemctl(*args, **kw):
       return True
 
   return False
-_
+
+def _pred_kubectl(*args, **kw):
+  for i in ["logs", "edit"]:
+    if i in args:
+      return True
+
+  return False
+
+# Things that can just never thread, for reasons
 _predictors['less'] = _pred_false
 _predictors['more'] = _pred_false
 _predictors['moar'] = _pred_false
-_predictors['journalctl'] = _pred_false
 _predictors['vim'] = _pred_false
-#_predictors['systemctl'] = lambda *a, **kw: "status" in a
+_predictors['journalctl'] = _pred_false
+
+# Things where some commands spawn a pager, pagers are incompatible
+# with xonsh threading stuff
 _predictors['systemctl'] = _pred_systemctl
+_predictors['kubectl'] = _pred_kubectl
 

@@ -38,13 +38,11 @@ xontrib load autoxsh
 $VI_MODE = True
 # Makes "cd" bareable with beautiful paths
 $CASE_SENSITIVE_COMPLETIONS = False
-# Somehow this fixes pagers
-$THREAD_SUBPROCS = False
+# This breaks interactive commands, check out predictors.xsh
+$THREAD_SUBPROCS = True
 
 # Add bash completions to xonsh, not sure how this works but it's heaps cool.
 $BASH_COMPLETIONS= ["/run/current-system/sw/share/bash-completion/bash_completion"]
-# Helm completion
-#source-bash $(helm completion bash) --suppress-skip-message
 
 # Store command output in history database
 $XONSH_STORE_STDOUT = True
