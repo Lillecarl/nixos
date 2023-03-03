@@ -31,6 +31,8 @@ xontrib load fzf-widgets
 xontrib load whole_word_jumping
 # vox, pyenv for xonsh
 xontrib load vox
+# Load autoxsh (Think shitty direnv)
+xontrib load autoxsh
 
 # Because modal text editing makes sense
 $VI_MODE = True
