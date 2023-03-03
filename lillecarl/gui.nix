@@ -104,7 +104,7 @@
     # Chat apps
     slack # Slack chat app
     element-desktop # Element Slack app
-    teams # Microsoft Teams collaboration suite (Electron)
+    teams-for-linux # Open-Source Teams Electron App
     discord # Gaming chat application
     signal-desktop # Secure messenger
 
