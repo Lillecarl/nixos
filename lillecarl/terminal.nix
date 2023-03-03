@@ -6,6 +6,7 @@
     ".config/xonsh/rc.d/aliases.xsh".source = ./dotfiles/.config/xonsh/rc.d/aliases.xsh;
     ".config/xonsh/rc.d/keybindings.xsh".source = ./dotfiles/.config/xonsh/rc.d/keybindings.xsh;
     ".config/xonsh/rc.d/prompt.xsh".source = ./dotfiles/.config/xonsh/rc.d/prompt.xsh;
+    ".config/xonsh/rc.d/predictors.xsh".source = ./dotfiles/.config/xonsh/rc.d/predictors.xsh;
     ".config/powershell/Microsoft.PowerShell_profile.ps1".source = ./dotfiles/.config/powershell/Microsoft.PowerShell_profile.ps1;
     ".config/qtile/autostart.sh".source = ./dotfiles/.config/qtile/autostart.sh;
     ".config/qtile/config.py".source = ./dotfiles/.config/qtile/config.py;
