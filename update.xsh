@@ -76,12 +76,14 @@ def updategit():
 
     versionfile.write_text(json.dumps(newdata, indent=2) + os.linesep)
 
+def updateall():
+  #Call update functions
+  updatenix()
+  updatenode()
+  updatevscode()
+  updategit()
+  os.chdir(gitroot)
+  nix fmt
 
-#Call update functions
-updatenix()
-updatenode()
-updatevscode()
-updategit()
-os.chdir(gitroot)
-nix fmt
-
+if __name__ == '__main__':
+  updateall()
