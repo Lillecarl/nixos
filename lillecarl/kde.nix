@@ -280,6 +280,18 @@
       # WezTerm
       "kglobalshortcutsrc"."org.wezfurlong.wezterm.desktop"."_k_friendly_name" = "WezTerm";
 
+      # Subpixel rendering
+      "kdeglobals"."General"."XftSubPixel" = "rgb";
+
+      # Locales, ugh Denmark...
+      "plasma-localerc"."Formats"."LC_ADDRESS" = "en_DK.UTF-8";
+      "plasma-localerc"."Formats"."LC_MEASUREMENT" = "en_DK.UTF-8";
+      "plasma-localerc"."Formats"."LC_MONETARY" = "en_DK.UTF-8";
+      "plasma-localerc"."Formats"."LC_NAME" = "en_DK.UTF-8";
+      "plasma-localerc"."Formats"."LC_NUMERIC" = "en_DK.UTF-8";
+      "plasma-localerc"."Formats"."LC_PAGE" = "en_DK.UTF-8";
+      "plasma-localerc"."Formats"."LC_TIME" = "sv_SE.UTF-8";
+
       "dolphinrc"."KFileDialog Settings"."Places Icons Auto-resize" = false;
       "dolphinrc"."KFileDialog Settings"."Places Icons Static Size" = 22;
       "dolphinrc"."Open-with settings"."CompletionMode" = 1;
@@ -297,7 +309,6 @@
       "kdeglobals"."KDE"."AnimationDurationFactor" = 0;
       "kdeglobals"."General"."BrowserApplication" = "brave-browser.desktop";
       "kdeglobals"."General"."XftHintStyle" = "hintslight";
-      "kdeglobals"."General"."XftSubPixel" = "none";
       "kdeglobals"."General"."fixed" = "Hack Nerd Font Mono,10,-1,5,50,0,0,0,0,0";
       "kdeglobals"."KDE"."SingleClick" = false;
       "kdeglobals"."KFileDialog Settings"."Allow Expansion" = false;

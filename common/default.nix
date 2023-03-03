@@ -4,15 +4,11 @@
   security.pam.services.session.enableKwallet = true;
 
   # Select internationalisation properties.
-  i18n = {
-    defaultLocale = "en_US.UTF-8";
-    # These settings makes Perl happy
+  i18n = rec {
+    defaultLocale = "en_DK.UTF-8";
     extraLocaleSettings = {
-      LANGUAGE = "en_US.UTF-8";
-      LC_ALL = "en_US.UTF-8";
-      LC_MEASUREMENT = "en_SV.UTF-8";
-      LC_NUMERIC = "en_US.UTF-8";
-      LC_TIME = "en_SE.UTF-8";
+      LANG = defaultLocale;
+      LC_TELEPHONE = "sv_SE.UTF-8";
     };
     supportedLocales = [ "all" ];
   };
