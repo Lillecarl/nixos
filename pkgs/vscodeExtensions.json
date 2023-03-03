@@ -26,8 +26,8 @@
   {
     "name": "gitlens",
     "publisher": "eamodio",
-    "version": "2023.3.204",
-    "sha256": "0nnmp0igdvx28rsm7ivcnpa0nf95ngfijnl2j98kq7rm1xfspqy6"
+    "version": "2023.3.304",
+    "sha256": "0vmsdy845mj2gh3x5dg8lplkr41nxsdv40f8cxbn9psscdbrjbpc"
   },
   {
     "name": "xonsh",
@@ -68,8 +68,8 @@
   {
     "name": "python",
     "publisher": "ms-python",
-    "version": "2023.5.10611012",
-    "sha256": "15p1n21271r7q0aimlgwd8kkvbrc8xb4ciqrmhc5na2axz4x9z2p"
+    "version": "2023.5.10621009",
+    "sha256": "1iglj0vh5nga86sj508l85pl687i8p2q99vrsp98hxqd96z20c5i"
   },
   {
     "name": "vscode-pylance",
@@ -80,8 +80,8 @@
   {
     "name": "remote-ssh",
     "publisher": "ms-vscode-remote",
-    "version": "0.98.0",
-    "sha256": "0xjlkbrhnwvmvhxzsb34wywcpcrlcdmlqpb7paw3i2kp00hsi69q"
+    "version": "0.99.2023030315",
+    "sha256": "08i9zymgxl1ddqkq4gbz7qvbmnaaqf367n8qzc7srix512py669r"
   },
   {
     "name": "remote-ssh-edit",
