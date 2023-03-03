@@ -88,11 +88,12 @@
       perSystem = { config, system, pkgs, inputs', ... }:
         let
           pkgs_overlaid = (pkgs.extend (import ./pkgs));
+          own_pkgs = (import ./pkgs/pkgs.nix pkgs_overlaid pkgs_overlaid true);
         in
         {
           formatter = pkgs.nixpkgs-fmt;
-          packages = (import ./pkgs pkgs pkgs_overlaid);
-          legacyPackages = (import ./pkgs pkgs pkgs_overlaid);
+          packages = own_pkgs;
+          legacyPackages = pkgs_overlaid;
           devShells.default = (pkgs_overlaid.buildFHSUserEnv rec {
             name = "testuserenv";
 
