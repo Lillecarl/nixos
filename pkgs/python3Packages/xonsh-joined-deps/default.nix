@@ -10,7 +10,7 @@ symlinkJoin {
   paths = with python3Packages; (python3.pkgs.requiredPythonModules [
     xonsh
     xonsh-direnv
-    xonsh-autoxsh
+    xontrib-autoxsh
     xontrib-argcomplete
     xontrib-output-search
     xontrib-fzf-widgets

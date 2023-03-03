@@ -10,7 +10,7 @@ let
     xontrib-jump-to-dir = prev.callPackage ../pkgs/python3Packages/xontrib-jump-to-dir { };
     xontrib-onepath = prev.callPackage ../pkgs/python3Packages/xontrib-onepath { };
     xonsh-joined-deps = prev.callPackage ../pkgs/python3Packages/xonsh-joined-deps { };
-    xonsh-autoxsh = prev.callPackage ../pkgs/python3Packages/xonsh-autoxsh { };
+    xontrib-autoxsh = prev.callPackage ../pkgs/python3Packages/xontrib-autoxsh { };
     tokenize-output = prev.callPackage ../pkgs/python3Packages/tokenize-output { };
     lazyasd = prev.callPackage ../pkgs/python3Packages/lazyasd { };
 
@@ -28,7 +28,9 @@ let
 in
 prev.lib.filterAttrs
   (n: v: flake == false ||
-  (n != "python3Packages" && n != "nodePackages")) # Flake is implicitly true here
+  # Flake is implicitly true here
+  # Filter out package sets if we're called from a flake.
+  (n != "python3Packages" && n != "nodePackages"))
   {
     # Stand-alone packages
     splunk-otel-collector = prev.callPackage ../pkgs/splunk-otel-collector { };
