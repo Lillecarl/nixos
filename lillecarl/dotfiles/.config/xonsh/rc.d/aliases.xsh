@@ -81,6 +81,8 @@ carliases['grep'] = 'rg'
 carliases['grt'] = lambda: os.chdir($(git rev-parse --show-toplevel).strip())
 # NeoVIM > VIM
 carliases['vim'] = 'nvim'
+# rm to rmtrash
+carliases['rm'] = "rmtrash"
 # tfswitch with preconfigured root
 carliases["tfswitch"] = _tfswitch
 # Set bluetooth mode (choose)
