@@ -179,6 +179,7 @@
 
   home.packages = with pkgs; [
     inputs.devenv.defaultPackage.x86_64-linux # devenv package
+    carapace # completion engine
     salt-pepper # salt-api CLI tool
     xonsh-wrapped # xonsh shell
     moar # Better pager
