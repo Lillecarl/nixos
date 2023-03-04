@@ -102,6 +102,7 @@ carliases['hmedit'] = lambda x: ![$EDITOR @(str(x[0]).replace('.config', 'Code/n
 aliases["aliasup"] = lambda x: _aliasupdown(carliases, True)
 # Remove all carliases to aliases
 aliases["aliasdown"] = lambda x: _aliasupdown(carliases, False)
+aliases["unalias"] = lambda x: _aliasupdown(carliases, False)
 
 # Add all aliases
 _aliasupdown(carliases, True)
