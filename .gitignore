@@ -3,3 +3,8 @@ unstable
 result
 .pijul
 .ignore
+
+# Devenv
+.devenv*
+devenv.local.nix
+
