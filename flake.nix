@@ -25,6 +25,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
+
+    devenv.url = "github:cachix/devenv/latest";
   };
 
   outputs = { self, flake-parts, ... } @inputs:

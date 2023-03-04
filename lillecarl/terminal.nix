@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 {
   home.file = {
     # Replace this list once https://github.com/nix-community/home-manager/pull/3235 is ready and merged
@@ -178,6 +178,7 @@
   };
 
   home.packages = with pkgs; [
+    inputs.devenv.defaultPackage.x86_64-linux # devenv package
     salt-pepper # salt-api CLI tool
     xonsh-wrapped # xonsh shell
     moar # Better pager
