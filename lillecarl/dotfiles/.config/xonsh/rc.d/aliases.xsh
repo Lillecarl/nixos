@@ -62,6 +62,10 @@ def _usballow():
 # ---------------------------
 
 # Semi-common cd typo
+# cd-ing shortcuts.
+carliases['-'] = 'cd -'
+carliases['..'] = 'cd ..'
+carliases['....'] = 'cd ../..'
 carliases['cd..'] = 'cd ..'
 # systemctl shortcut
 carliases["sc"] = "systemctl"
@@ -75,8 +79,12 @@ carliases["jcu"] = "journalctl --user-unit"
 carliases['ls'] = 'exa -lah'
 # Better cat
 carliases['cat'] = 'bat'
+# Better cp (rsync)
+carliases['cp'] = 'rsync --progress --recursive --archive'
 # Better grep
 carliases['grep'] = 'rg'
+# history-search alias
+carliases['history-search'] = """sqlite3 $XONSH_HISTORY_FILE @("SELECT inp FROM xonsh_history WHERE inp LIKE '%" + $arg0 + "%' AND inp NOT LIKE 'history-%' ORDER BY tsb DESC LIMIT 10");"""
 # Go to git root folder
 carliases['grt'] = lambda: os.chdir($(git rev-parse --show-toplevel).strip())
 # NeoVIM > VIM
