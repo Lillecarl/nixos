@@ -17,22 +17,29 @@ $SHELL = "xonsh"
 
 # xontribs
 
-# Execute direnv in Xonsh
-xontrib load direnv
-# Allow banging shell scripts from xonsh
-xontrib load sh
-# Search previous commands output with Alt+f
-$XONSH_CAPTURE_ALWAYS=True # Required for output_search
-xontrib load output_search
-# Replaces McFly, loads history into a fuzzy searcher TUI
+$XONSH_CAPTURE_ALWAYS=True # Required for output_search, breaks TUI's
 $fzf_history_binding = Keys.ControlR
-xontrib load fzf-widgets
-# Jump words with control + arrows
-xontrib load whole_word_jumping
-# vox, pyenv for xonsh
-xontrib load vox
-# Load autoxsh (Think shitty direnv)
-xontrib load autoxsh
+
+from xonsh.xontribs import get_xontribs
+_xontribs_installed = set(get_xontribs().keys())
+
+_xontribs_to_load = (
+  "autoxsh",
+  "direnv",
+  "fzf-widgets",
+  "output_search",
+  "sh",
+  "vox",
+  "whole_word_jumping",
+)
+xontrib load @(_xontribs_installed.intersection(_xontribs_to_load))
+
+# Globbing files with “*” or “**” will also match dotfiles, or those ‘hidden’ files whose names begin with a literal ‘.’. 
+# Note! This affects also on rsync and other tools.
+$DOTGLOB = True
+
+# Flag for automatically pushing directories onto the directory stack i.e. `dirs -p` (https://xon.sh/aliases.html#dirs).
+$AUTO_PUSHD = True
 
 # Because modal text editing makes sense
 $VI_MODE = True
@@ -52,6 +59,9 @@ $XONSH_HISTORY_BACKEND = 'sqlite'
 $HISTCONTROL.add('ignorespace')
 # Don't add the command twice to history if ran consecutively
 $HISTCONTROL.add('ignoredups')
+# Set regex to avoid saving unwanted commands
+# Do not write the command to the history if it was ended by `###`
+$XONSH_HISTORY_IGNORE_REGEX = '.*(\\#\\#\\#\\s*)$'
 # Indent with two spaces, not four in CLI
 $INDENT = '  '
 # Auto cd (Change dir without typing cd)
