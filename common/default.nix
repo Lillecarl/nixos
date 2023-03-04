@@ -8,6 +8,7 @@
     defaultLocale = "en_DK.UTF-8";
     extraLocaleSettings = {
       LANG = defaultLocale;
+      LC_ALL = defaultLocale;
       LC_TELEPHONE = "sv_SE.UTF-8";
     };
     supportedLocales = [ "all" ];
