@@ -17,7 +17,7 @@ $SHELL = "xonsh"
 
 # Monitor how many shells deep we are
 if "DEPTH" in ${...}:
-  $DEPTH += 1
+  $DEPTH = int($DEPTH) + 1
 else:
   $DEPTH=0
 
