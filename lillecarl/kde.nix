@@ -12,7 +12,7 @@
       "KDE Keyboard Layout Switcher"."Switch keyboard layout to Swedish" = "Alt+Shift+S";
 
       # Best window switching feature in KDE
-      "kwin"."ExposeAll" = ["Ctrl+F10" "Meta+Tab" "Launch (C)"];
+      "kwin"."ExposeAll" = [ "Ctrl+F10" "Meta+Tab" "Launch (C)" ];
 
       "kaccess"."Toggle Screen Reader On and Off" = [ ];
       "kcm_touchpad"."Disable Touchpad" = "Touchpad Off";
