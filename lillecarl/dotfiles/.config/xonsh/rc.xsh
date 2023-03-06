@@ -57,6 +57,8 @@ $THREAD_SUBPROCS = True
 
 # Add bash completions to xonsh, not sure how this works but it's heaps cool.
 $BASH_COMPLETIONS= ["/run/current-system/sw/share/bash-completion/bash_completion"]
+# Add carapace completions
+# exec($(carapace _carapace xonsh))
 
 # Store command output in history database
 $XONSH_STORE_STDOUT = True
@@ -116,3 +118,4 @@ if which("keychain"):
   if $HOSTNAME == "nub":
     keychain -q ed_viaplay
     keychain -q rsa_viaplay
+
