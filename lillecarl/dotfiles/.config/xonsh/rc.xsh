@@ -24,6 +24,7 @@ from xonsh.xontribs import get_xontribs
 _xontribs_installed = set(get_xontribs().keys())
 
 _xontribs_to_load = (
+  "abbrevs",
   "autoxsh",
   "direnv",
   "fzf-widgets",
@@ -109,4 +110,3 @@ if which("keychain"):
   if $HOSTNAME == "nub":
     keychain -q ed_viaplay
     keychain -q rsa_viaplay
-
