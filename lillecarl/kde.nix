@@ -11,6 +11,9 @@
       "KDE Keyboard Layout Switcher"."Switch keyboard layout to English (US)" = "Alt+Shift+E";
       "KDE Keyboard Layout Switcher"."Switch keyboard layout to Swedish" = "Alt+Shift+S";
 
+      # Best window switching feature in KDE
+      "kwin"."ExposeAll" = ["Ctrl+F10" "Meta+Tab" "Launch (C)"];
+
       "kaccess"."Toggle Screen Reader On and Off" = [ ];
       "kcm_touchpad"."Disable Touchpad" = "Touchpad Off";
       "kcm_touchpad"."Enable Touchpad" = "Touchpad On";
@@ -31,7 +34,6 @@
       "kwin"."Activate Window Demanding Attention" = "Meta+Ctrl+A";
       "kwin"."Decrease Opacity" = [ ];
       "kwin"."Expose" = "Ctrl+F9";
-      "kwin"."ExposeAll" = [ "Ctrl+F10" "Launch (C)" ];
       "kwin"."ExposeClass" = "Ctrl+F7";
       "kwin"."ExposeClassCurrentDesktop" = [ ];
       "kwin"."Increase Opacity" = [ ];
