@@ -15,6 +15,12 @@ from shutil import which
 # Set shell to xonsh (We're going to spawn a new shell)
 $SHELL = "xonsh"
 
+# Monitor how many shells deep we are
+if "DEPTH" in ${...}:
+  $DEPTH += 1
+else:
+  $DEPTH=0
+
 # xontribs
 
 $XONSH_CAPTURE_ALWAYS=True # Required for output_search, breaks TUI's
