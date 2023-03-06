@@ -10,7 +10,7 @@ python3Packages.buildPythonPackage rec {
   version = "3.0.0-1";
   src = fetchFromGitHub versiondata;
 
-  nativeBuildInputs = with python3Packages; [
+  propagatedBuildInputs = with python3Packages; [
     six
   ];
 
