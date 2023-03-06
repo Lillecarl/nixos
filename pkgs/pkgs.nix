@@ -36,6 +36,7 @@ prev.lib.filterAttrs
     splunk-otel-collector = prev.callPackage ../pkgs/splunk-otel-collector { };
     salt-pepper = prev.callPackage ../pkgs/salt-pepper { };
     acme-dns = prev.callPackage ../pkgs/acme-dns { };
+    ifupdown2 = prev.callPackage ../pkgs/python3Packages/ifupdown2 { };
 
     #salt = prev.salt.overrideAttrs (final: prev: {
     #  src = /home/lillecarl/Code/nent/saltstack;
