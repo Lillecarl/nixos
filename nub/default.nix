@@ -264,7 +264,10 @@ rec
     waydroid.enable = true;
   };
 
+  programs.kdeconnect.enable = true;
+
   environment.systemPackages = with pkgs; [
+    kdeconnect # Utility for connecting smartphone with KDE.
     winbox # MikroTik winbox, until we're rid of this crap at work.
     #splunk-otel-collector # Temp testing
     screen # Just for TTY
