@@ -23,6 +23,8 @@ let
     pytest-skip-markers = prev.python3Packages.callPackage ../pkgs/python3Packages/pytest-skip-markers { };
     pytest-salt-factories = prev.python3Packages.callPackage ../pkgs/python3Packages/pytest-salt-factories { };
     pytest-tempdir = prev.python3Packages.callPackage ../pkgs/python3Packages/pytest-tempdir { };
+
+    ifupdown2 = prev.python3Packages.callPackage ../pkgs/python3Packages/ifupdown2 { };
   };
   nodePackages = (prev.callPackages ./node-packages { });
 in
@@ -36,7 +38,6 @@ prev.lib.filterAttrs
     splunk-otel-collector = prev.callPackage ../pkgs/splunk-otel-collector { };
     salt-pepper = prev.callPackage ../pkgs/salt-pepper { };
     acme-dns = prev.callPackage ../pkgs/acme-dns { };
-    ifupdown2 = prev.callPackage ../pkgs/python3Packages/ifupdown2 { };
 
     #salt = prev.salt.overrideAttrs (final: prev: {
     #  src = /home/lillecarl/Code/nent/saltstack;

@@ -1,16 +1,17 @@
 { lib
-, python3Packages
 , fetchFromGitHub
+, buildPythonPackage
+, six
 }:
 let
   versiondata = (builtins.fromJSON (builtins.readFile ./version.json));
 in
-python3Packages.buildPythonPackage rec {
+buildPythonPackage rec {
   pname = "ifupdown2";
   version = "3.0.0-1";
   src = fetchFromGitHub versiondata;
 
-  propagatedBuildInputs = with python3Packages; [
+  propagatedBuildInputs = [
     six
   ];
 
