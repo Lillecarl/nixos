@@ -49,6 +49,7 @@
       nvim-treesitter
       coc-pyright
       coc-clangd
+      vim-nix
     ];
 
     coc = {
