@@ -13,6 +13,10 @@ in
     config.allowUnfree = true;
   };
 
+  xdg = {
+    enable = true;
+  };
+
   # HM stuff
   home.username = "lillecarl";
   home.homeDirectory = "/home/lillecarl";

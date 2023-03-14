@@ -23,8 +23,8 @@ in
       lillecarl-gui = mkHome "x86_64-linux" {
         extraSpecialArgs = { };
         modules = [
-          ./gui.nix
-          ./terminal.nix
+          ./gui
+          ./terminal
           ./default.nix
           inputs.plasma-manager.homeManagerModules.plasma-manager
         ];
@@ -32,9 +32,8 @@ in
       lillecarl-term = mkHome "x86_64-linux" {
         extraSpecialArgs = { };
         modules = [
-          ./terminal.nix
-          ./default.nix
-          inputs.plasma-manager.homeManagerModules.plasma-manager
+          ./terminal
+          ./default
         ];
       };
     };
