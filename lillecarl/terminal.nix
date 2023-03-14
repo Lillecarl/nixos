@@ -50,6 +50,11 @@
       coc-pyright
       coc-clangd
       vim-nix
+      nerdtree
+      fugitive
+      surround
+      ctrlp
+      vim-airline
     ];
 
     coc = {
