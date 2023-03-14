@@ -34,6 +34,7 @@ _predictors['journalctl'] = _pred_false
 _predictors['less'] = _pred_false
 _predictors['moar'] = _pred_false
 _predictors['more'] = _pred_false
+_predictors['nix'] = _pred_false
 _predictors['nvim'] = _pred_false
 _predictors['vim'] = _pred_false
 _predictors['vimdiff'] = _pred_false

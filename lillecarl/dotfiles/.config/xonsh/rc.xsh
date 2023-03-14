@@ -12,6 +12,9 @@ import os
 from prompt_toolkit.keys import Keys
 from shutil import which
 
+old_subprocs = $THREAD_SUBPROCS
+$THREAD_SUBPROCS = None
+
 # Set shell to xonsh (We're going to spawn a new shell)
 $SHELL = "xonsh"
 
@@ -23,7 +26,6 @@ else:
 
 # xontribs
 
-$XONSH_CAPTURE_ALWAYS=True # Required for output_search, breaks TUI's
 $fzf_history_binding = Keys.ControlR
 
 from xonsh.xontribs import get_xontribs
@@ -52,8 +54,6 @@ $AUTO_PUSHD = True
 $VI_MODE = True
 # Makes "cd" bareable with beautiful paths
 $CASE_SENSITIVE_COMPLETIONS = False
-# This breaks interactive commands, check out predictors.xsh
-$THREAD_SUBPROCS = True
 
 # Add bash completions to xonsh, not sure how this works but it's heaps cool.
 $BASH_COMPLETIONS= ["/run/current-system/sw/share/bash-completion/bash_completion"]
@@ -119,3 +119,4 @@ if which("keychain"):
     keychain -q ed_viaplay
     keychain -q rsa_viaplay
 
+$THREAD_SUBPROCS = old_subprocs
