@@ -1,8 +1,8 @@
 { python3
-, lib
 , symlinkJoin
 , xonsh
 , xonsh-wrapper
+, lib
 }:
 symlinkJoin {
   name = "xonsh-joined";
