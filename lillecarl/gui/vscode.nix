@@ -14,16 +14,29 @@
         builtins.readFile ../../pkgs/vscodeExtensions.json));
 
     userSettings = {
-      "files.insertFinalNewline" = true;
-      "telemetry.telemetryLevel" = "off";
-      "keyboard.dispatch" = "keyCode";
-      "redhat.telemetry.enabled" = false;
-      "workbench.startupEditor" = "none";
+      "editor.fontFamily" = "'Hack Nerd Font', 'monospace', monospace";
       "editor.inlineSuggest.enabled" = true;
-      "update.mode" = "none";
+      "editor.insertSpaces" = true;
       "files.autoSave" = "onFocusChange";
       "files.autoSaveDelay" = 500;
-      "editor.insertSpaces" = true;
+      "files.insertFinalNewline" = true;
+      "keyboard.dispatch" = "keyCode";
+      "redhat.telemetry.enabled" = false;
+      "telemetry.telemetryLevel" = "off";
+      "terminal.integrated.fontFamily" = "'Hack Nerd Font', 'monospace', monospace";
+      "update.mode" = "none";
+      "workbench.startupEditor" = "none";
+      "vim.enableNeovim" = true;
+
+      # Executable path configurations
+      "ansible.ansible.path" = "${pkgs.ansible}/bin/ansible";
+      "clangd.path" = "${pkgs.clang-tools}/bin/clangd";
+      "pylsp.executable" = "${pkgs.python3.pkgs.python-lsp-server}/bin/pylsp";
+      "terraform.languageServer.path" = "${pkgs.terraform-ls}/bin/terraform-ls";
+      "vim.neovimPath" = "${pkgs.neovim}/bin/nvim";
+      "vscode-kubernetes.helm-path" = "${pkgs.kubernetes-helm}/bin/helm";
+      "vscode-kubernetes.kubectl-path" = "${pkgs.kubectl}/bin/kubectl";
+
       "[tf]" = {
         "editor.insertSpaces" = true;
         "editor.tabSize" = 2;
@@ -34,15 +47,6 @@
           "language" = "python";
         }
       ];
-      "vim.enableNeovim" = true;
-      # Executable path configurations
-      "terraform.languageServer.path" = "${pkgs.terraform-ls}/bin/terraform-ls";
-      "pylsp.executable" = "${pkgs.python3.pkgs.python-lsp-server}/bin/pylsp";
-      "vscode-kubernetes.kubectl-path" = "${pkgs.kubectl}/bin/kubectl";
-      "vscode-kubernetes.helm-path" = "${pkgs.kubernetes-helm}/bin/helm";
-      "ansible.ansible.path" = "${pkgs.ansible}/bin/ansible";
-      "vim.neovimPath" = "${pkgs.neovim}/bin/nvim";
-      "clangd.path" = "${pkgs.clang-tools}/bin/clangd";
     };
   };
 }
