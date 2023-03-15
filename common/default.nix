@@ -322,7 +322,7 @@
     pinentryFlavor = "qt";
   };
   # Enable xonsh
-  programs.xonsh.package = pkgs.xonsh-wrapped;
+  programs.xonsh.package = pkgs.xonsh-wrapper;
   programs.xonsh.enable = true;
   programs.xonsh.config = ''
     # https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html#variables
