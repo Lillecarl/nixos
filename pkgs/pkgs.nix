@@ -38,7 +38,7 @@ prev.lib.filterAttrs
     salt-pepper = prev.callPackage ../pkgs/salt-pepper { };
     acme-dns = prev.callPackage ../pkgs/acme-dns { };
 
-    xonsh-wrapper = final.callPackage ../pkgs/xonsh-wrapper{ };
+    xonsh-wrapper = final.callPackage ../pkgs/xonsh-wrapper { };
     xonsh-joined = prev.callPackage ../pkgs/xonsh-joined { };
 
     #salt = prev.salt.overrideAttrs (final: prev: {
