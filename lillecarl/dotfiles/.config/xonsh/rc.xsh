@@ -41,7 +41,7 @@ _xontribs_to_load = (
   "autoxsh",
   "direnv",
   "fzf-widgets",
-  "output_search",
+  #"output_search", # This is very broken sadly
   "sh",
   "vox",
   "whole_word_jumping",
