@@ -14,6 +14,24 @@
       # Best window switching feature in KDE
       "kwin"."ExposeAll" = [ "Ctrl+F10" "Meta+Tab" "Launch (C)" ];
 
+      # Window management
+      "kwin"."Window to Desktop 1" = "Meta+1";
+      "kwin"."Window to Desktop 2" = "Meta+2";
+      "kwin"."Window to Desktop 3" = "Meta+3";
+      "kwin"."Window to Desktop 4" = "Meta+4";
+      "kwin"."Window to Desktop 5" = "Meta+5";
+      "kwin"."Window to Desktop 6" = "Meta+6";
+      "kwin"."Window to Desktop 7" = "Meta+7";
+      "kwin"."Window to Desktop 8" = "Meta+8";
+      "kwin"."Switch to Desktop 1" = "Alt+1";
+      "kwin"."Switch to Desktop 2" = "Alt+2";
+      "kwin"."Switch to Desktop 3" = "Alt+3";
+      "kwin"."Switch to Desktop 4" = "Alt+4";
+      "kwin"."Switch to Desktop 5" = "Alt+5";
+      "kwin"."Switch to Desktop 6" = "Alt+6";
+      "kwin"."Switch to Desktop 7" = "Alt+7";
+      "kwin"."Switch to Desktop 8" = "Alt+8";
+
       "kaccess"."Toggle Screen Reader On and Off" = [ ];
       "kcm_touchpad"."Disable Touchpad" = "Touchpad Off";
       "kcm_touchpad"."Enable Touchpad" = "Touchpad On";
@@ -58,14 +76,6 @@
       "kwin"."Switch Window Left" = "Meta+Alt+Left";
       "kwin"."Switch Window Right" = "Meta+Alt+Right";
       "kwin"."Switch Window Up" = "Meta+Alt+Up";
-      "kwin"."Switch to Desktop 1" = "Meta+1";
-      "kwin"."Switch to Desktop 2" = "Meta+2";
-      "kwin"."Switch to Desktop 3" = "Meta+3";
-      "kwin"."Switch to Desktop 4" = "Meta+4";
-      "kwin"."Switch to Desktop 5" = "Meta+5";
-      "kwin"."Switch to Desktop 6" = "Meta+6";
-      "kwin"."Switch to Desktop 7" = "Meta+7";
-      "kwin"."Switch to Desktop 8" = "Meta+8";
       "kwin"."Switch to Desktop 9" = [ ];
       "kwin"."Switch to Desktop 10" = [ ];
       "kwin"."Switch to Desktop 11" = [ ];
@@ -142,14 +152,6 @@
       "kwin"."Window Shade" = [ ];
       "kwin"."Window Shrink Horizontal" = [ ];
       "kwin"."Window Shrink Vertical" = [ ];
-      "kwin"."Window to Desktop 1" = "Alt+1";
-      "kwin"."Window to Desktop 2" = "Alt+2";
-      "kwin"."Window to Desktop 3" = "Alt+3";
-      "kwin"."Window to Desktop 4" = "Alt+4";
-      "kwin"."Window to Desktop 5" = "Alt+5";
-      "kwin"."Window to Desktop 6" = "Alt+6";
-      "kwin"."Window to Desktop 7" = "Alt+7";
-      "kwin"."Window to Desktop 8" = "Alt+8";
       "kwin"."Window to Desktop 9" = [ ];
       "kwin"."Window to Desktop 10" = [ ];
       "kwin"."Window to Desktop 11" = [ ];
