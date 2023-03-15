@@ -3,7 +3,12 @@
 # XONSH WEBCONFIG START
 # XONSH WEBCONFIG END
 
-# Standard imports
+import os
+
+if "ASCIINEMA_REC" not in ${...}:
+   from datetime import datetime as _datetime
+   exec asciinema rec -q -c xonsh @("{0}.rec".format(os.path.join("/home/lillecarl/recordings", _datetime.now().isoformat())))
+
 import time
 import json
 import platform
