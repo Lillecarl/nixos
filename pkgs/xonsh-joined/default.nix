@@ -1,13 +1,14 @@
 { python3
-, python3Packages
-, xonsh
+, lib
 , symlinkJoin
+, xonsh
+, xonsh-wrapper
 }:
-
 symlinkJoin {
   name = "xonsh-joined";
   # recurse all listed dependencies
-  paths = with python3Packages; (python3.pkgs.requiredPythonModules [
+  paths = with python3.pkgs; (python3.pkgs.requiredPythonModules [
+    (lib.hiPrio xonsh-wrapper)
     xonsh
     xonsh-direnv
     xontrib-autoxsh
@@ -24,5 +25,6 @@ symlinkJoin {
     plumbum
     PyGithub
     sh
+    kubernetes
   ]);
 }

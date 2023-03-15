@@ -1,12 +1,10 @@
 { config, pkgs, lib, inputs, ... }:
 let
   pkgs-overlay = import ../pkgs;
-  xonsh-overlay = import ../overlays/xonsh-overlay;
 in
 {
   nixpkgs.overlays = [
     pkgs-overlay
-    xonsh-overlay
   ];
 
   nixpkgs = {

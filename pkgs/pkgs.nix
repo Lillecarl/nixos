@@ -9,7 +9,6 @@ let
     xontrib-output-search = prev.callPackage ../pkgs/python3Packages/xontrib-output-search { };
     xontrib-jump-to-dir = prev.callPackage ../pkgs/python3Packages/xontrib-jump-to-dir { };
     xontrib-onepath = prev.callPackage ../pkgs/python3Packages/xontrib-onepath { };
-    xonsh-joined-deps = prev.callPackage ../pkgs/python3Packages/xonsh-joined-deps { };
     xontrib-autoxsh = prev.callPackage ../pkgs/python3Packages/xontrib-autoxsh { };
     tokenize-output = prev.callPackage ../pkgs/python3Packages/tokenize-output { };
     lazyasd = prev.callPackage ../pkgs/python3Packages/lazyasd { };
@@ -38,6 +37,9 @@ prev.lib.filterAttrs
     splunk-otel-collector = prev.callPackage ../pkgs/splunk-otel-collector { };
     salt-pepper = prev.callPackage ../pkgs/salt-pepper { };
     acme-dns = prev.callPackage ../pkgs/acme-dns { };
+
+    xonsh-wrapper = final.callPackage ../pkgs/xonsh-wrapper{ };
+    xonsh-joined = prev.callPackage ../pkgs/xonsh-joined { };
 
     #salt = prev.salt.overrideAttrs (final: prev: {
     #  src = /home/lillecarl/Code/nent/saltstack;

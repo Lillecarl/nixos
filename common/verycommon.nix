@@ -5,15 +5,20 @@ let
   '';
 
   pkgs-overlay = import ../pkgs;
-  xonsh-overlay = import ../overlays/xonsh-overlay;
 in
 rec
 {
+  nixpkgs.overlays = [
+    pkgs-overlay
+    inputs.nixpkgs-wayland.overlay
+  ];
+
   environment.systemPackages = with pkgs; [
     home-manager
     vim
     git
   ];
+
   # XDG Base Directory Specification
   environment.sessionVariables = rec {
     XDG_CACHE_HOME = "\${HOME}/.cache";
@@ -80,12 +85,6 @@ rec
       }
     ];
   };
-
-  nixpkgs.overlays = [
-    pkgs-overlay
-    xonsh-overlay
-    inputs.nixpkgs-wayland.overlay
-  ];
 
   users.defaultUserShell = pkgs.zsh;
   users.users.lillecarl = {

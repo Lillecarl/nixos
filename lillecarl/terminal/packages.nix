@@ -4,7 +4,7 @@
     inputs.devenv.defaultPackage.x86_64-linux # devenv package
     carapace # completion engine
     salt-pepper # salt-api CLI tool
-    xonsh-wrapped # xonsh shell
+    xonsh-wrapper # xonsh shell
     moar # Better pager
     rbw # Unofficial Bitwarden CLI client
     delta # Diffing software
