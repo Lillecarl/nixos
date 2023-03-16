@@ -26,8 +26,8 @@
   {
     "name": "gitlens",
     "publisher": "eamodio",
-    "version": "2023.3.1505",
-    "sha256": "0jngxgvx0rn7is6i0l37h96w3bx9vdiwn2c1gi6znlbsdhiin82i"
+    "version": "2023.3.1605",
+    "sha256": "0n0j97cqy8cfny2vqiq1qbpl71z8x1vph9f5r4asg2gkgla58pj8"
   },
   {
     "name": "xonsh",
@@ -80,8 +80,8 @@
   {
     "name": "remote-ssh",
     "publisher": "ms-vscode-remote",
-    "version": "0.99.2023030315",
-    "sha256": "08i9zymgxl1ddqkq4gbz7qvbmnaaqf367n8qzc7srix512py669r"
+    "version": "0.99.2023031515",
+    "sha256": "1pm1a4m1x9x6s4669jhl756acbzi608lqfzzhhhy7fvp8hjd1gjz"
   },
   {
     "name": "remote-ssh-edit",
@@ -92,8 +92,8 @@
   {
     "name": "cpptools",
     "publisher": "ms-vscode",
-    "version": "1.14.4",
-    "sha256": "0wy29vpyxplxfqmaadxd2pcl6mciiaghrxvjp7n7irbbqnp8q1fy"
+    "version": "1.15.0",
+    "sha256": "1skg7qy6phgkf9jdr8d9asfsg87nfpnrlnzhfwbaj5vr3q2r5ygx"
   },
   {
     "name": "remote-explorer",

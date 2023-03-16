@@ -59,5 +59,5 @@ prev.lib.filterAttrs
     # Inject node packages
     nodePackages = nodePackages // prev.nodePackages;
   }
-  // (if flake == true then python3Packages else { })
+// (if flake == true then python3Packages else { })
   // (if flake == true then nodePackages else { })
