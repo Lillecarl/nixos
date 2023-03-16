@@ -5,6 +5,7 @@
     ./firefox.nix
     ./vscode.nix
     ./wezterm.nix
+    ./kde.nix
   ];
   home.file = {
     ".config/qtile/autostart.sh".source = ../dotfiles/.config/qtile/autostart.sh;
