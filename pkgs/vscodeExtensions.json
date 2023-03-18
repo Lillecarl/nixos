@@ -26,8 +26,8 @@
   {
     "name": "gitlens",
     "publisher": "eamodio",
-    "version": "2023.3.1605",
-    "sha256": "0n0j97cqy8cfny2vqiq1qbpl71z8x1vph9f5r4asg2gkgla58pj8"
+    "version": "2023.3.1805",
+    "sha256": "14dv5dg1abn9gm597xyzj97dyis30b18p1ycwwqa0v7abxxwvjdm"
   },
   {
     "name": "xonsh",
@@ -68,14 +68,14 @@
   {
     "name": "python",
     "publisher": "ms-python",
-    "version": "2023.5.10741016",
-    "sha256": "1cayhz5r187x8d93vvgl82s8dhfswhl9p5nq9qp23jval0s6k2xm"
+    "version": "2023.5.10752340",
+    "sha256": "04zhh6p5h3cgp2q6dq5rjrishmzj1ah0xf7f37fydrs0xgara183"
   },
   {
     "name": "vscode-pylance",
     "publisher": "ms-python",
-    "version": "2023.3.21",
-    "sha256": "0ih9ccmi61dv32w4caian9aghr7cv4lsrn3b02xprx0bfsdpz3q3"
+    "version": "2023.3.25",
+    "sha256": "1x2n2h6x345hk04bw95q235kly46xy3xv3z7xrda8qjavcj8831f"
   },
   {
     "name": "remote-ssh",
@@ -104,8 +104,8 @@
   {
     "name": "ansible",
     "publisher": "redhat",
-    "version": "1.2.44",
-    "sha256": "0a89c5g70wzwryvv5kmjjvja42wh0gfibna003x8z47a7sqkzxri"
+    "version": "1.3.50",
+    "sha256": "1nrbwbhq6g3nk77666vm1pqj0fkfidynckc24s6jjzk8a03q1civ"
   },
   {
     "name": "vscode-yaml",
