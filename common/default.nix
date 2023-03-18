@@ -14,6 +14,7 @@
     supportedLocales = [ "all" ];
   };
 
+  programs.dconf.enable = true;
   # Enable xwayland, not everything is wayland yet.
   programs.xwayland.enable = true;
   # Enable the X11 windowing system.
