@@ -94,6 +94,10 @@ in
             mountpoint = "/";
             mountOptions = [
               "defaults"
+              "discard=async"
+              "ssd"
+              "space_cache=v2"
+              "lazytime"
             ];
           };
         };
