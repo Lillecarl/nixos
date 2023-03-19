@@ -99,6 +99,20 @@ in
               "space_cache=v2"
               "lazytime"
             ];
+            subvolumes = {
+                # Subvolume name is different from mountpoint
+                "/rootfs" = {
+                  mountpoint = "/";
+                };
+                # Mountpoints inferred from subvolume name
+                "/home" = {
+                  mountOptions = [ "compress=zstd" ];
+                };
+                "/nix" = {
+                  mountOptions = [ "compress=zstd" "noatime" ];
+                };
+                "/var" = { };
+              };
           };
         };
         windows = {
