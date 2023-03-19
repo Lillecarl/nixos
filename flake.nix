@@ -53,6 +53,7 @@
               ./common/keybindings.nix
               ./common/killservice.nix
               inputs.disko.nixosModules.disko
+              inputs.nixos-hardware.nixosModules.common-gpu-nvidia-disable
               inputs.nixos-hardware.nixosModules.common-cpu-amd
               inputs.nixos-hardware.nixosModules.common-pc-ssd
               inputs.nixos-hardware.nixosModules.common-pc
