@@ -21,14 +21,6 @@
     ];
   };
 
-  nix = {
-    package = pkgs.nixVersions.stable;
-    settings.auto-optimise-store = true;
-    extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
-  };
-
   services.hydra = {
     enable = true;
     hydraURL = "http://localhost:3000"; # externally visible URL
@@ -67,14 +59,14 @@
 
   hardware.opengl.enable = true;
   hardware.opengl.driSupport32Bit = true;
-  hardware.opengl.extraPackages = with pkgs; [
-    rocm-opencl-icd
-    rocm-opencl-runtime
-    amdvlk
-  ];
-  hardware.opengl.extraPackages32 = with pkgs; [
-    driversi686Linux.amdvlk
-  ];
+  #hardware.opengl.extraPackages = with pkgs; [
+  #  rocm-opencl-icd
+  #  rocm-opencl-runtime
+  #  amdvlk
+  #];
+  #hardware.opengl.extraPackages32 = with pkgs; [
+  #  driversi686Linux.amdvlk
+  #];
 
   services = {
     xserver = {

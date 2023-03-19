@@ -1,7 +1,7 @@
 { ... }:
 let 
-  disk1 = "vdb";
-  disk2 = "vdc";
+  disk1 = "sda";
+  disk2 = "sdb";
 
   samedisk = { disk, bootloc }  : {
       device = "/dev/${disk}";
@@ -51,8 +51,8 @@ in
 {
   disk = {
     # 1GiB boot, rest mdraid
-    "${disk1}" = samedisk { disk = "vdb"; bootloc = "boot"; };
-    "${disk2}" = samedisk { disk = "vdc"; bootloc = "boot-fallback"; };
+    "${disk1}" = samedisk { disk = disk1; bootloc = "boot"; };
+    "${disk2}" = samedisk { disk = disk2; bootloc = "boot-fallback"; };
   };
   mdadm = {
     root = {
@@ -70,7 +70,6 @@ in
             content = {
               type = "luks";
               name = "crypted";
-              #keyFile = "/tmp/secret.key";
               content = {
                 type = "lvm_pv";
                 vg = "pool";
@@ -89,8 +88,8 @@ in
           type = "lvm_lv";
           size = "250G";
           content = {
-            type = "filesystem";
-            format = "btrfs";
+            type = "btrfs";
+            #format = "btrfs";
             mountpoint = "/";
             mountOptions = [
               "defaults"
