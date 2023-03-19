@@ -44,33 +44,6 @@
     "vm.swappiness" = 1;
   };
 
-#  fileSystems."/" =
-#    {
-#      device = "zroot/root";
-#      fsType = "zfs";
-#    };
-#
-#  fileSystems."/nix" =
-#    {
-#      device = "zroot/root/nix";
-#      fsType = "zfs";
-#    };
-#
-#  fileSystems."/home" =
-#    {
-#      device = "zroot/root/home";
-#      fsType = "zfs";
-#    };
-#
-#  fileSystems."/boot" =
-#    {
-#      device = "/dev/disk/by-uuid/7774-7A15";
-#      fsType = "vfat";
-#    };
-#
-#  swapDevices =
-#    [{ device = "/dev/disk/by-uuid/706e9add-3b1c-49b4-94b0-795218b393ac"; }];
-
   hardware.enableAllFirmware = true;
   hardware.cpu.amd.updateMicrocode = true;
   powerManagement.cpuFreqGovernor = "performance";
