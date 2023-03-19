@@ -27,7 +27,7 @@ let
             content = {
               type = "filesystem";
               format = "vfat";
-              mountpoint = "/${bootloc}/EFI";
+              mountpoint = "/${bootloc}";
               mountOptions = [
                 "sync"
               ];

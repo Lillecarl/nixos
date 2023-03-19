@@ -37,17 +37,16 @@
     };
     grub = {
       enable = true;
-      device = "nodev";
+      device = "/dev/sda";
       efiSupport = true;
       copyKernels = true;
-      enableCryptodisk = true;
-      #mirroredBoots = [
-      #  {
-      #    devices = [ "nodev" ];
-      #    path = "/mnt/boot-fallback";
-      #    efiSysMountPoint = "/mnt/boot-fallback/EFI";
-      #  }
-      #];
+      mirroredBoots = [
+        {
+          devices = [ "/dev/sdb" ];
+          path = "/boot-fallback";
+          efiSysMountPoint = "/boot-fallback/EFI";
+        }
+      ];
     };
   };
 
