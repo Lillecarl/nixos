@@ -11,6 +11,8 @@
     ./boot.nix
   ];
 
+  disko.devices = import ./disko.nix { };
+
   nixpkgs = {
     # Allow proprietary software to be installed
     config.allowUnfree = true;
