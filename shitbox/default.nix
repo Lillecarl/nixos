@@ -7,8 +7,6 @@
   imports = [
     # Import hardware configuration
     ./hardware-configuration.nix
-    # Import boot configuration 
-    ./boot.nix
   ];
 
   disko.devices = import ./disko.nix { };
