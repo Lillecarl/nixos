@@ -13,10 +13,11 @@
     "vfio-pci"
     "amdgpu"
   ];
+  boot.kernelPackages = with pkgs.linuxKernel.packages; linux_5_15;
+  #boot.kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_latest;
   boot.initrd.kernelModules = [ "amdgpu" "vfio-pci" ];
   boot.extraModprobeConfig = "options vfio-pci ids=10de:2487,10de:228b";
   boot.blacklistedKernelModules = [ "nvidiafb" "nouveau" "nvidia_drm" "nvidia" ];
-  boot.kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_latest;
   boot.kernelModules = [ "amdgpu" "kvm-amd" "wl" "vfio_virqfd" "vfio_pci" "vfio_iommu_type1" "vfio" "i2c-dev" ];
   boot.kernelParams = [
     "amd_iommu=on"
@@ -30,19 +31,23 @@
   ];
 
   boot.loader = {
-    efi.canTouchEfiVariables = true;
+    efi = {
+      canTouchEfiVariables = true;
+      efiSysMountPoint = "/boot/EFI"; # ← use the same mount point here.
+    };
     grub = {
       enable = true;
-      device = "/dev/sda";
+      device = "nodev";
       efiSupport = true;
       copyKernels = true;
-      mirroredBoots = [
-        {
-          "devices" = [ "/dev/sdb" ];
-          "path" = "/boot-fallback";
-          "efiSysMountPoint" = "/boot-fallback";
-        }
-      ];
+      enableCryptodisk = true;
+      #mirroredBoots = [
+      #  {
+      #    devices = [ "nodev" ];
+      #    path = "/mnt/boot-fallback";
+      #    efiSysMountPoint = "/mnt/boot-fallback/EFI";
+      #  }
+      #];
     };
   };
 
