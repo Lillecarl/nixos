@@ -22,6 +22,26 @@
         "type": "github"
       }
     },
+    "disko": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1679102303,
+        "narHash": "sha256-XeBi6u3sWN5lZ8qMsoML+az6yW1MXweafPdAy2QfXnE=",
+        "owner": "nix-community",
+        "repo": "disko",
+        "rev": "93672b9b1ef2b262e2bc49be0fc190ac31ea9c59",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "disko",
+        "type": "github"
+      }
+    },
     "dwarffs": {
       "inputs": {
         "nix": "nix_2",
@@ -581,6 +601,7 @@
     "root": {
       "inputs": {
         "devenv": "devenv",
+        "disko": "disko",
         "dwarffs": "dwarffs",
         "flake-parts": "flake-parts",
         "flake-utils": "flake-utils_2",

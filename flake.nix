@@ -27,6 +27,11 @@
     };
 
     devenv.url = "github:cachix/devenv/latest";
+
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, flake-parts, ... } @inputs:
@@ -80,6 +85,7 @@
             modules = [
               ./nubvm
               ./common/verycommon.nix
+              inputs.disko.nixosModules.disko
               inputs.nixos-hardware.nixosModules.common-pc-ssd
               inputs.nixos-hardware.nixosModules.common-pc
             ];
