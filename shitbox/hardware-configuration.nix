@@ -20,6 +20,25 @@
   boot.kernelModules = [ "amdgpu" "kvm-amd" "wl" "vfio_virqfd" "vfio_pci" "vfio_iommu_type1" "vfio" "i2c-dev" ];
   boot.kernelParams = [ "amd_iommu=on" "mitigations=off" "iommu=pt" "radeon.cik_support=0" "amdgpu.cik_support=1" ];
 
+  boot.loader = {
+  # boot with grub rather than systemd-boot because we want mirrored bootloaders
+  efi.canTouchEfiVariables = true;
+  grub = {
+    enable = true;
+    # We use GPT and our boot partitions are FAT32
+    # nodev means don't install MBR bogus on early blocks
+    device = "/dev/sda";
+    efiSupport = true;
+    copyKernels = true;
+    mirroredBoots = [
+      {
+        "devices" = [ "/dev/sdb" ];
+        "path" = "/boot-fallback";
+        "efiSysMountPoint" = "/boot-fallback";
+      }
+    ];
+  };
+
   #boot.extraModulePackages = with config.boot.kernelPackages; [
   #  usbip
   #];
