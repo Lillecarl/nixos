@@ -98,6 +98,13 @@ in
           type = "lvm_lv";
           size = "2G";
         };
+        swap = {
+          type = "lvm_lv";
+          size = "2G";
+          content = {
+            type = "swap";
+          };
+        };
       };
     };
   };
