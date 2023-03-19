@@ -28,6 +28,9 @@ let
               type = "filesystem";
               format = "vfat";
               mountpoint = "/${bootloc}";
+              mountOptions = [
+                "sync"
+              ];
             };
           }
           {
