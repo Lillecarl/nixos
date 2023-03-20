@@ -12,7 +12,7 @@ def block_until_internet():
 
 def commonargs(buildtype):
   flakepath = "/home/lillecarl/Code/nixos"
-  if buildtype == "home-manager" and socket.gethostname() == "nub":
+  if buildtype == "home-manager" and (socket.gethostname() == "nub" or socket.gethostname() == "shitbox"):
     flakepath += "#lillecarl-gui"
   elif buildtype == "home-manager":
     flakepath += "#lillecarl-term"
