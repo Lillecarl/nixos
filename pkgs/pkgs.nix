@@ -24,6 +24,8 @@ let
     pytest-tempdir = prev.python3Packages.callPackage ../pkgs/python3Packages/pytest-tempdir { };
 
     ifupdown2 = prev.python3Packages.callPackage ../pkgs/python3Packages/ifupdown2 { };
+
+    from_ssv = prev.python3Packages.callPackage ../pkgs/python3Packages/from_ssv { };
   };
   nodePackages = (prev.callPackages ./node-packages { });
 in

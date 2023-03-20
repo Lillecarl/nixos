@@ -26,5 +26,7 @@ symlinkJoin {
     PyGithub
     sh
     kubernetes
+    munch
+    from_ssv
   ]);
 }
