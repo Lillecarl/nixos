@@ -68,8 +68,8 @@
   {
     "name": "python",
     "publisher": "ms-python",
-    "version": "2023.5.10752340",
-    "sha256": "04zhh6p5h3cgp2q6dq5rjrishmzj1ah0xf7f37fydrs0xgara183"
+    "version": "2023.5.10791008",
+    "sha256": "1cla45yxc5pgzzdqbpyjc7a0mvy9cc66yr81fyq9m1hjwqr9ixa1"
   },
   {
     "name": "vscode-pylance",
@@ -110,8 +110,8 @@
   {
     "name": "vscode-yaml",
     "publisher": "redhat",
-    "version": "1.12.1",
-    "sha256": "1dsbfc167r3069a8x3skdj1pcmr1gqqliy8f66zv2dcr1gapciy1"
+    "version": "1.12.2",
+    "sha256": "193spsdrfwl6yf1c9k10c6s6azyq15h4jgz76gqz44c4d2yx0c8j"
   },
   {
     "name": "nix",
