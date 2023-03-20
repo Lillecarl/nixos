@@ -1,49 +1,49 @@
 { ... }:
-let 
+let
   disk1 = "vdb";
   disk2 = "vdc";
 
-  samedisk = { disk, bootloc }  : {
-      device = "/dev/${disk}";
-      type = "disk";
-      content = {
-        type = "table";
-        format = "gpt";
-        partitions = [
-          {
-            name = "boot";
-            type = "partition";
-            start = "0";
-            end = "1MiB";
-            bootable = true;
-            flags = [ "bios_grub" ];
-          }
-          {
-            type = "partition";
-            name = "ESP";
-            start = "1MiB";
-            end = "1GiB";
-            bootable = true;
-            content = {
-              type = "filesystem";
-              format = "vfat";
-              mountpoint = "/test/${bootloc}";
-            };
-          }
-          {
+  samedisk = { disk, bootloc }: {
+    device = "/dev/${disk}";
+    type = "disk";
+    content = {
+      type = "table";
+      format = "gpt";
+      partitions = [
+        {
+          name = "boot";
+          type = "partition";
+          start = "0";
+          end = "1MiB";
+          bootable = true;
+          flags = [ "bios_grub" ];
+        }
+        {
+          type = "partition";
+          name = "ESP";
+          start = "1MiB";
+          end = "1GiB";
+          bootable = true;
+          content = {
+            type = "filesystem";
+            format = "vfat";
+            mountpoint = "/test/${bootloc}";
+          };
+        }
+        {
+          name = "root";
+          type = "partition";
+          start = "1GiB";
+          end = "100%";
+          part-type = "primary";
+          content = {
+            type = "mdraid";
             name = "root";
-            type = "partition";
-            start = "1GiB";
-            end = "100%";
-            part-type = "primary";
-            content = {
-              type = "mdraid";
-              name = "root";
-            };
-          }
-        ];
-      };
+          };
+        }
+      ];
     };
+  };
 in
 {
   disk = {

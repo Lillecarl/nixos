@@ -1,52 +1,52 @@
 { ... }:
-let 
+let
   disk1 = "sda";
   disk2 = "sdb";
 
-  samedisk = { disk, bootloc }  : {
-      device = "/dev/${disk}";
-      type = "disk";
-      content = {
-        type = "table";
-        format = "gpt";
-        partitions = [
-          {
-            name = "boot";
-            type = "partition";
-            start = "0";
-            end = "1MiB";
-            bootable = true;
-            flags = [ "bios_grub" ];
-          }
-          {
-            type = "partition";
-            name = "ESP";
-            start = "1MiB";
-            end = "1GiB";
-            bootable = true;
-            content = {
-              type = "filesystem";
-              format = "vfat";
-              mountpoint = "/${bootloc}";
-              mountOptions = [
-                "sync"
-              ];
-            };
-          }
-          {
+  samedisk = { disk, bootloc }: {
+    device = "/dev/${disk}";
+    type = "disk";
+    content = {
+      type = "table";
+      format = "gpt";
+      partitions = [
+        {
+          name = "boot";
+          type = "partition";
+          start = "0";
+          end = "1MiB";
+          bootable = true;
+          flags = [ "bios_grub" ];
+        }
+        {
+          type = "partition";
+          name = "ESP";
+          start = "1MiB";
+          end = "1GiB";
+          bootable = true;
+          content = {
+            type = "filesystem";
+            format = "vfat";
+            mountpoint = "/${bootloc}";
+            mountOptions = [
+              "sync"
+            ];
+          };
+        }
+        {
+          name = "root";
+          type = "partition";
+          start = "1GiB";
+          end = "100%";
+          part-type = "primary";
+          content = {
+            type = "mdraid";
             name = "root";
-            type = "partition";
-            start = "1GiB";
-            end = "100%";
-            part-type = "primary";
-            content = {
-              type = "mdraid";
-              name = "root";
-            };
-          }
-        ];
-      };
+          };
+        }
+      ];
     };
+  };
 in
 {
   disk = {
@@ -99,19 +99,19 @@ in
               "lazytime"
             ];
             subvolumes = {
-                # Subvolume name is different from mountpoint
-                "/rootfs" = {
-                  mountpoint = "/";
-                };
-                # Mountpoints inferred from subvolume name
-                "/home" = {
-                  mountOptions = [ "compress=zstd" ];
-                };
-                "/nix" = {
-                  mountOptions = [ "compress=zstd" "noatime" ];
-                };
-                "/var" = { };
+              # Subvolume name is different from mountpoint
+              "/rootfs" = {
+                mountpoint = "/";
               };
+              # Mountpoints inferred from subvolume name
+              "/home" = {
+                mountOptions = [ "compress=zstd" ];
+              };
+              "/nix" = {
+                mountOptions = [ "compress=zstd" "noatime" ];
+              };
+              "/var" = { };
+            };
           };
         };
         windows = {
