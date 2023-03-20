@@ -24,10 +24,11 @@ let
             start = "1MiB";
             end = "1GiB";
             bootable = true;
+            fs-type = "fat32";
             content = {
               type = "filesystem";
               format = "vfat";
-              mountpoint = "/${bootloc}";
+              mountpoint = "/${bootloc}/efi";
               mountOptions = [
                 "sync"
               ];
@@ -89,8 +90,8 @@ in
           size = "250G";
           content = {
             type = "btrfs";
-            #format = "btrfs";
-            mountpoint = "/";
+            extraArgs = [ "-f" ];
+            #mountpoint = "/";
             mountOptions = [
               "defaults"
               "discard=async"
@@ -100,7 +101,7 @@ in
             ];
             subvolumes = {
                 # Subvolume name is different from mountpoint
-                "/rootfs" = {
+                "rootfs" = {
                   mountpoint = "/";
                 };
                 # Mountpoints inferred from subvolume name
@@ -111,6 +112,8 @@ in
                   mountOptions = [ "compress=zstd" "noatime" ];
                 };
                 "/var" = { };
+                "/srv" = { };
+                "/tmp" = { };
               };
           };
         };
