@@ -18,6 +18,15 @@ rec
   #  "vm.swappiness" = 1;
   #};
 
+  networking.ifupdown2 = {
+    enable = true;
+
+    extraConfig = ''
+      auto ifbr0
+      iface ifbr0 inet manual
+    '';
+  };
+
   boot.binfmt = {
     emulatedSystems = [
       "x86_64-windows"

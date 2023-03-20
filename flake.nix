@@ -70,6 +70,7 @@
               ./common/keybindings.nix
               ./common/killservice.nix
               ./common/xplatform.nix
+              ./modules/ifupdown2
               inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t14s
               inputs.nixos-hardware.nixosModules.common-cpu-amd
               inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate

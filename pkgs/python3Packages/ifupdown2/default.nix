@@ -2,6 +2,7 @@
 , fetchFromGitHub
 , buildPythonPackage
 , six
+, setuptools
 }:
 let
   versiondata = (builtins.fromJSON (builtins.readFile ./version.json));
@@ -13,6 +14,7 @@ buildPythonPackage rec {
 
   propagatedBuildInputs = [
     six
+    setuptools
   ];
 
   meta = {

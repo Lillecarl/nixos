@@ -40,6 +40,7 @@ prev.lib.filterAttrs
 
     xonsh-joined = prev.callPackage ../pkgs/xonsh-joined { };
     xonsh-wrapper = final.callPackage ../pkgs/xonsh-wrapper { };
+    ifupdown2 = python3Packages.ifupdown2;
 
     #salt = prev.salt.overrideAttrs (final: prev: {
     #  src = /home/lillecarl/Code/nent/saltstack;
