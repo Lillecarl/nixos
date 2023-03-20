@@ -38,7 +38,7 @@ _xontribs_installed = set(get_xontribs().keys())
 
 _xontribs_to_load = (
   "abbrevs",
-  "autoxsh",
+  #"autoxsh", # In development
   "direnv",
   "fzf-widgets",
   #"output_search", # This is very broken sadly
