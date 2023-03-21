@@ -23,6 +23,9 @@
     # Web browsers
     brave
 
+    # Office
+    libreoffice
+
     # Chat apps
     slack # Slack chat app
     element-desktop # Element Slack app
