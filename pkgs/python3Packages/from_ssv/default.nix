@@ -11,7 +11,8 @@ in
 python3Packages.buildPythonPackage rec {
   pname = "from_ssv";
   version = versiondata.version;
-  src = fetchFromGithub versiondata;
+  src = fetchFromGitHub versiondata;
+  #src = /home/lillecarl/Code/carl/from_ssv;
 
   propagatedBuildInputs = [
     pytest
