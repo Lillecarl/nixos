@@ -68,8 +68,8 @@
   {
     "name": "python",
     "publisher": "ms-python",
-    "version": "2023.5.10752340",
-    "sha256": "04zhh6p5h3cgp2q6dq5rjrishmzj1ah0xf7f37fydrs0xgara183"
+    "version": "2023.5.10791707",
+    "sha256": "0bb8s2z5xz4lzmb4bs8485n0x01h7ha5qk2ybjylgk52d52f39na"
   },
   {
     "name": "vscode-pylance",
@@ -80,8 +80,8 @@
   {
     "name": "remote-ssh",
     "publisher": "ms-vscode-remote",
-    "version": "0.99.2023031515",
-    "sha256": "1pm1a4m1x9x6s4669jhl756acbzi608lqfzzhhhy7fvp8hjd1gjz"
+    "version": "0.99.2023032015",
+    "sha256": "1snrps1fvawhw2wc93mg8vpqzv9yr5wgmir843i9bdkfrssrj350"
   },
   {
     "name": "remote-ssh-edit",
@@ -110,8 +110,8 @@
   {
     "name": "vscode-yaml",
     "publisher": "redhat",
-    "version": "1.12.1",
-    "sha256": "1dsbfc167r3069a8x3skdj1pcmr1gqqliy8f66zv2dcr1gapciy1"
+    "version": "1.12.2",
+    "sha256": "193spsdrfwl6yf1c9k10c6s6azyq15h4jgz76gqz44c4d2yx0c8j"
   },
   {
     "name": "nix",
