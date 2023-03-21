@@ -33,7 +33,7 @@
   boot.loader = {
     efi = {
       canTouchEfiVariables = true;
-      efiSysMountPoint = "/boot/EFI"; # ← use the same mount point here.
+      efiSysMountPoint = "/boot/efi"; # ← use the same mount point here.
     };
     grub = {
       enable = true;
@@ -44,7 +44,7 @@
         {
           devices = [ "/dev/sdb" ];
           path = "/boot-fallback";
-          efiSysMountPoint = "/boot-fallback/EFI";
+          efiSysMountPoint = "/boot-fallback/efi";
         }
       ];
     };
