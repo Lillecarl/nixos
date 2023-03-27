@@ -21,6 +21,8 @@
     ".config/powershell/Microsoft.PowerShell_profile.ps1".source = ../dotfiles/.config/powershell/Microsoft.PowerShell_profile.ps1;
   };
 
+  home.sessionVariables = config.pam.sessionVariables;
+
   services.gpg-agent = {
     enable = true;
     enableSshSupport = true;
