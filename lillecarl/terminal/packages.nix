@@ -2,6 +2,7 @@
 {
   home.packages = with pkgs; [
     inputs.devenv.defaultPackage.x86_64-linux # devenv package
+    awscli2 # AWS cli tool
     carapace # completion engine
     salt-pepper # salt-api CLI tool
     xonsh-wrapper # xonsh shell
