@@ -4,7 +4,7 @@
     sessionVariables = rec {
       EDITOR = "${pkgs.neovim}/bin/nvim";
       VISUAL = "${pkgs.neovim}/bin/nvim";
-      PAGER  = "${pkgs.moar}/bin/moar";
+      PAGER = "${pkgs.moar}/bin/moar";
       # Git configuration (For sending over SSH)
       GIT_AUTHOR_NAME = "Carl Hjerpe";
       GIT_AUTHOR_EMAIL = "git@lillecarl.com";

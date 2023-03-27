@@ -80,8 +80,8 @@
   {
     "name": "remote-ssh",
     "publisher": "ms-vscode-remote",
-    "version": "0.101.2023032415",
-    "sha256": "0bzg9g3nxig3d359f248flybxry3nihq8l07r6i95jv5wr3h5svk"
+    "version": "0.101.2023032715",
+    "sha256": "1z308sya56h29cv3nz4gbngs6lpj2n7bn4jqlq0l2f2k88sn8yfi"
   },
   {
     "name": "remote-ssh-edit",
