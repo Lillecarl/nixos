@@ -4,6 +4,7 @@
     ./neovim.nix
     ./nushell.nix
     ./packages.nix
+    ./pam.nix
     ./ssh.nix
     ./starship.nix
     ./tealdeer.nix
