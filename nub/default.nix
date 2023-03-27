@@ -19,7 +19,7 @@ rec
   #};
 
   networking.ifupdown2 = {
-    enable = true;
+    enable = false;
 
     extraConfig = ''
       auto ifbr0
@@ -83,6 +83,16 @@ rec
 
       configuration = {
         master = "localhost";
+
+        file_roots = {
+          base = [ "/srv/salt/salt" ];
+        };
+        pillar_roots = {
+          base = [ "/srv/salt/pillar" ];
+        };
+        master_roots = {
+          base = [ "/srv/salt/salt-master" ];
+        };
       };
     };
   };
