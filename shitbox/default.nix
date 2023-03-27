@@ -14,20 +14,7 @@
   nixpkgs = {
     # Allow proprietary software to be installed
     config.allowUnfree = true;
-    config.permittedInsecurePackages = [
-      "electron-12.2.3"
-    ];
   };
-
-  #services.hydra = {
-  #  enable = true;
-  #  hydraURL = "http://localhost:3000"; # externally visible URL
-  #  notificationSender = "hydra@localhost"; # e-mail of hydra service
-  #  # a standalone hydra will require you to unset the buildMachinesFiles list to avoid using a nonexistant /etc/nix/machines
-  #  buildMachinesFiles = [ ];
-  #  # you will probably also want, otherwise *everything* will be built from scratch
-  #  useSubstitutes = true;
-  #};
 
   nix.buildMachines = [
     {
@@ -42,12 +29,7 @@
   networking = {
     hostName = "shitbox";
     hostId = "43211234";
-    #useNetworkd = true;
     useDHCP = false;
-    #nameservers = [ "1.1.1.1" ];
-    #bridges.virbr0.interfaces = [ "eno1" ];
-    #interfaces.eno1.useDHCP = false;
-    #interfaces.virbr0.useDHCP = true;
     networkmanager = {
       enable = true;
       unmanaged = [ "virbr0" "lxdbr0" ];
