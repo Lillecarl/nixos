@@ -19,6 +19,8 @@ rec
     git
   ];
 
+  programs.zsh.enable = true;
+
   # XDG Base Directory Specification
   environment.sessionVariables = rec {
     XDG_CACHE_HOME = "\${HOME}/.cache";
