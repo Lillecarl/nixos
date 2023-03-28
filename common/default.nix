@@ -67,9 +67,6 @@
         ln -s ${pkgs.qemu}/libexec/virtiofsd $out/bin/
       '';
     })
-    #qtile
-    wdisplays
-    kanshi
 
     # Commandline tools (CLI)
     virtiofsd # VirtIO filesystem daemon
