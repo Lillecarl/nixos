@@ -8,7 +8,7 @@
 
 python3.pkgs.buildPythonApplication rec {
   pname = "salt";
-  version = "master";
+  version = "3006";
 
   src = /home/lillecarl/Code/nent/saltstack;
 
