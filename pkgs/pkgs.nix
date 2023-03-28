@@ -50,6 +50,7 @@ prev.lib.filterAttrs
 
     # Newer salt version, currently in development
     salt3006 = prev.callPackage ./salt { };
+    salt = prev.callPackage ./salt { };
     # Desktop items to enable Wayland for packages that prefer X
     brave-wayland = prev.callPackage ../pkgs/desktopItemOverrides/brave.nix { };
     slack-wayland = prev.callPackage ../pkgs/desktopItemOverrides/slack.nix { };
