@@ -16,6 +16,7 @@ let
       HostkeyAlgorithms = "+ssh-rsa";
       KexAlgorithms = "+diffie-hellman-group1-sha1";
       Ciphers = "+3des-cbc";
+      StrictHostKeyChecking = "accept-new";
     };
   };
 in
