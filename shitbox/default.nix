@@ -128,7 +128,6 @@
     numactl
     looking-glass-client
     barrier
-    etcher
     ark
     archiver
     libarchive
