@@ -35,9 +35,26 @@ let
           };
         }
         {
+          type = "partition";
+          name = "boot";
+          start = "1GiB";
+          end = "2GiB";
+          bootable = false;
+          fs-type = "ext4";
+          content = {
+            type = "filesystem";
+            format = "ext4";
+            mountpoint = "/${bootloc}";
+            mountOptions = [
+              "defaults"
+              "sync"
+            ];
+          };
+        }
+        {
           name = "root";
           type = "partition";
-          start = "1GiB";
+          start = "2GiB";
           end = "100%";
           part-type = "primary";
           content = {
