@@ -36,7 +36,7 @@ let
         }
         {
           type = "partition";
-          name = "ESP";
+          name = "boot";
           start = "1GiB";
           end = "2GiB";
           bootable = false;
