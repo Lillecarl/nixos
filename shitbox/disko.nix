@@ -39,7 +39,7 @@ let
           name = "ESP";
           start = "1GiB";
           end = "2GiB";
-          bootable = true;
+          bootable = false;
           fs-type = "ext4";
           content = {
             type = "filesystem";
@@ -47,6 +47,7 @@ let
             mountpoint = "/${bootloc}";
             mountOptions = [
               "defaults"
+              "sync"
             ];
           };
         }
@@ -69,7 +70,7 @@ in
   disk = {
     # 1GiB boot, rest mdraid
     "${disk1}" = samedisk { disk = disk1; bootloc = "boot"; };
-    "${disk2}" = samedisk { disk = disk2; bootloc = "boot-fallback"; };
+    "${disk2}" = samedisk { disk = disk2; bootloc = "boot2"; };
   };
   mdadm = {
     root = {

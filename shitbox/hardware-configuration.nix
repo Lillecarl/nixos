@@ -43,8 +43,8 @@
       mirroredBoots = [
         {
           devices = [ "/dev/sdb" ];
-          path = "/boot-fallback";
-          efiSysMountPoint = "/boot-fallback/efi";
+          path = "/boot2";
+          efiSysMountPoint = "/boot2/efi";
         }
       ];
     };
