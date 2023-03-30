@@ -370,7 +370,7 @@
     },
     "nixpkgs-channel": {
       "locked": {
-        "narHash": "sha256-Jq3FkQkMdEx8xYIp6HjXaXRvNp7P9sjG/Lwz02GeQVc=",
+        "narHash": "sha256-11SZwKg/Z6t/59QCvXSkpTLH7uAGbKBNJNHb5jdIbAQ=",
         "type": "tarball",
         "url": "https://nixos.org/channels/nixos-unstable/nixexprs.tar.xz"
       },
