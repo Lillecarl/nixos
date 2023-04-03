@@ -1,6 +1,7 @@
 { config
 , pkgs
-, ... }:
+, ...
+}:
 {
   imports = [
     # Import hardware configuration
