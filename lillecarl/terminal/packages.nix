@@ -1,7 +1,6 @@
 { config, pkgs, inputs, ... }:
 {
   home.packages = with pkgs; [
-    inputs.devenv.defaultPackage.x86_64-linux # devenv package
     salt # RCE as a service
     awscli2 # AWS cli tool
     carapace # completion engine
