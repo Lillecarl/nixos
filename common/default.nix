@@ -123,7 +123,6 @@
     (lowPrio termshark) # Wireshark TUI?
     entr # Run commands when files change
     pv # Monitor pipe progress
-    mailutils # Sending mail from commandline 
     libnotify # Cli utils for sending KDE notifications
     vim # Modal CLI text editor
     neovim # Modal CLI text editor, modern version of Vim
@@ -307,14 +306,7 @@
     fonts = with pkgs; [
       corefonts
       nerdfonts
-      powerline-fonts
       helvetica-neue-lt-std
-      xkcd-font
-      hack-font
-      fira-code
-      fira-code-symbols
-      jetbrains-mono
-      unifont
     ];
   };
 
