@@ -7,6 +7,5 @@
     ".config/xonsh/rc.d/abbrevs.xsh".source = ../dotfiles/.config/xonsh/rc.d/abbrevs.xsh;
     ".config/xonsh/rc.d/keybindings.xsh".source = ../dotfiles/.config/xonsh/rc.d/keybindings.xsh;
     ".config/xonsh/rc.d/prompt.xsh".source = ../dotfiles/.config/xonsh/rc.d/prompt.xsh;
-    ".config/xonsh/rc.d/predictors.xsh".source = ../dotfiles/.config/xonsh/rc.d/predictors.xsh;
   };
 }
