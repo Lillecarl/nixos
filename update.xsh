@@ -19,7 +19,7 @@ gdata = list()
 gitroot = $(git rev-parse --show-toplevel).strip()
 
 def updatenix():
-  print("Updating nix")
+  print("Updating flake inputs")
   # Update nix flake lockfile
   nix flake lock --recreate-lock-file @(gitroot)
 
