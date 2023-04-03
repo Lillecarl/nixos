@@ -1,4 +1,7 @@
-{ config, pkgs, lib, ... }:
+{ config
+, pkgs
+, lib
+, ... }:
 let
   kubeEnable = false;
   prometheusEnable = false;

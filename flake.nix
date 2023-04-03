@@ -1,37 +1,48 @@
 {
   inputs = {
+    # nixos branch, calling it nixpkgs because that's the default everyone uses.
     nixpkgs.url = github:NixOS/nixpkgs/nixos-unstable;
+    # Stable nixpkgs, when packages are broken in unstable this is useful
     nixpkgs-stable.url = github:NixOS/nixpkgs/nixos-22.11;
+    # NixOS hardware configuration modules/library
     nixos-hardware.url = github:NixOS/nixos-hardware/master;
+    # Wayland packages for NixOS
     nixpkgs-wayland = {
       url = "github:nix-community/nixpkgs-wayland";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # Current unused, provides flake helpers
     flake-utils.url = "github:numtide/flake-utils";
+    # Support splitting flake into subflakes
     flake-parts.url = "github:hercules-ci/flake-parts";
-    nixpkgs-channel.url = "https://nixos.org/channels/nixos-unstable/nixexprs.tar.xz";
+    # Supposed to moutn and download debug files on the fly
     dwarffs = {
       url = "github:edolstra/dwarffs";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
+    # Manage home environment with Nix
     home-manager = {
       url = github:nix-community/home-manager;
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
+    # Configure KDE user settings with Nix
     plasma-manager = {
       url = github:pjones/plasma-manager;
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
-
-    devenv.url = "github:cachix/devenv/latest";
-
+    # Disk Partitioning with Nix
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # Gives me a pre-computed programs.sqlite for command-not-found
+    flake-programs-sqlite = {
+      url = "github:wamserma/flake-programs-sqlite";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    # Cachix project I'll evaluate eventually
+    devenv.url = "github:cachix/devenv/latest";
   };
 
   outputs = { self, flake-parts, ... } @inputs:
@@ -58,7 +69,10 @@
               inputs.nixos-hardware.nixosModules.common-pc-ssd
               inputs.nixos-hardware.nixosModules.common-pc
             ];
-            specialArgs = { inherit inputs; };
+            specialArgs = {
+              inherit inputs;
+              programs-sqlite-db = inputs.flake-programs-sqlite.packages."x86_64-linux".programs-sqlite;
+            };
           };
           nub = inputs.nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";
@@ -81,7 +95,10 @@
               inputs.nixos-hardware.nixosModules.common-pc
               inputs.dwarffs.nixosModules.dwarffs
             ];
-            specialArgs = { inherit inputs; };
+            specialArgs = {
+              inherit inputs;
+              programs-sqlite-db = inputs.flake-programs-sqlite.packages."x86_64-linux".programs-sqlite;
+            };
           };
           nubvm = inputs.nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";
@@ -92,7 +109,10 @@
               inputs.nixos-hardware.nixosModules.common-pc-ssd
               inputs.nixos-hardware.nixosModules.common-pc
             ];
-            specialArgs = { inherit inputs; };
+            specialArgs = {
+              inherit inputs;
+              programs-sqlite-db = inputs.flake-programs-sqlite.packages."x86_64-linux".programs-sqlite;
+            };
           };
         };
       };

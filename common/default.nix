@@ -1,4 +1,9 @@
-{ inputs, config, pkgs, lib, ... }:
+{ inputs
+, config
+, pkgs
+, lib
+, programs-sqlite-db
+, ... }:
 {
   security.pam.services.login.enableKwallet = true;
   security.pam.services.session.enableKwallet = true;

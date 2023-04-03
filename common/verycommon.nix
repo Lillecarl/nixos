@@ -1,9 +1,10 @@
-{ inputs, config, pkgs, lib, ... }:
+{ inputs
+, config
+, pkgs
+, lib
+, programs-sqlite-db
+, ... }:
 let
-  programs_sqlite = pkgs.runCommandLocal "programs_sqlite" { } ''
-    cp ${inputs.nixpkgs-channel}/programs.sqlite $out
-  '';
-
   pkgs-overlay = import ../pkgs;
 in
 rec
@@ -106,6 +107,7 @@ rec
   };
 
   # Make command not found suggest nix derivations
-  programs.command-not-found.dbPath = programs_sqlite;
+  programs.command-not-found.dbPath = programs-sqlite-db;
+  # Enable IO perf monitoring
   programs.iotop.enable = true;
 }

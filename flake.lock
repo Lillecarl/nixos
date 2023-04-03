@@ -135,6 +135,27 @@
         "type": "github"
       }
     },
+    "flake-programs-sqlite": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "utils": "utils"
+      },
+      "locked": {
+        "lastModified": 1680224812,
+        "narHash": "sha256-n+huq5DTkRf5KhJZMMmdHFIbF19NPtX67BuGQhXBLFw=",
+        "owner": "wamserma",
+        "repo": "flake-programs-sqlite",
+        "rev": "11715c865c5463f96e145b8b0e7d48eff5aa09da",
+        "type": "github"
+      },
+      "original": {
+        "owner": "wamserma",
+        "repo": "flake-programs-sqlite",
+        "type": "github"
+      }
+    },
     "flake-utils": {
       "locked": {
         "lastModified": 1667395993,
@@ -207,7 +228,7 @@
         "nixpkgs": [
           "nixpkgs"
         ],
-        "utils": "utils"
+        "utils": "utils_2"
       },
       "locked": {
         "lastModified": 1679394816,
@@ -366,17 +387,6 @@
         "ref": "nixpkgs-unstable",
         "repo": "nixpkgs",
         "type": "github"
-      }
-    },
-    "nixpkgs-channel": {
-      "locked": {
-        "narHash": "sha256-11SZwKg/Z6t/59QCvXSkpTLH7uAGbKBNJNHb5jdIbAQ=",
-        "type": "tarball",
-        "url": "https://nixos.org/channels/nixos-unstable/nixexprs.tar.xz"
-      },
-      "original": {
-        "type": "tarball",
-        "url": "https://nixos.org/channels/nixos-unstable/nixexprs.tar.xz"
       }
     },
     "nixpkgs-lib": {
@@ -604,17 +614,32 @@
         "disko": "disko",
         "dwarffs": "dwarffs",
         "flake-parts": "flake-parts",
+        "flake-programs-sqlite": "flake-programs-sqlite",
         "flake-utils": "flake-utils_2",
         "home-manager": "home-manager",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_3",
-        "nixpkgs-channel": "nixpkgs-channel",
         "nixpkgs-stable": "nixpkgs-stable_2",
         "nixpkgs-wayland": "nixpkgs-wayland",
         "plasma-manager": "plasma-manager"
       }
     },
     "utils": {
+      "locked": {
+        "lastModified": 1667395993,
+        "narHash": "sha256-nuEHfE/LcWyuSWnS8t12N1wc105Qtau+/OdUAjtQ0rA=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "5aed5285a952e0b949eb3ba02c12fa4fcfef535f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "utils_2": {
       "locked": {
         "lastModified": 1676283394,
         "narHash": "sha256-XX2f9c3iySLCw54rJ/CZs+ZK6IQy7GXNY4nSOyu2QG4=",
