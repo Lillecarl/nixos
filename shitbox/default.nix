@@ -169,11 +169,6 @@
         '';
       };
     };
-    lxd = {
-      enable = true;
-      zfsSupport = true;
-      recommendedSysctlSettings = true;
-    };
   };
 
   # This value determines the NixOS release from which the default
