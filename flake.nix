@@ -18,6 +18,12 @@
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-22.11";
     # NixOS hardware configuration modules/library
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    # Use Nix as Terraform
+    terranix = {
+      url = "github:terranix/terranix";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
+    };
     # Wayland packages for NixOS
     nixpkgs-wayland = {
       url = "github:nix-community/nixpkgs-wayland";
@@ -67,6 +73,7 @@
       imports = [
         inputs.flake-parts.flakeModules.easyOverlay
         ./lillecarl/flake-module.nix
+        ./terraform/flake-module.nix
       ];
       systems = [ "x86_64-linux" "x86_64-darwin" ];
       flake = rec {
