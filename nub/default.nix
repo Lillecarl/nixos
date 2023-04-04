@@ -141,7 +141,7 @@ rec
     turbostat
     cpupower
   ];
-  boot.blacklistedKernelModules = [ "k10temp" ];
+  boot.blacklistedKernelModules = [ "acpi_cpufreq" "k10temp" ];
 
   # Activate kernel modules (choose from built-ins and extra ones)
   boot.kernelModules = [
