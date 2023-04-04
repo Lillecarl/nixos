@@ -26,8 +26,8 @@
   {
     "name": "gitlens",
     "publisher": "eamodio",
-    "version": "2023.3.2105",
-    "sha256": "1ngr5vdjkfayl3iqxp2wbba6caf55k1drpamkra21hf2pc7dp9a8"
+    "version": "2023.3.3105",
+    "sha256": "0q5i12jc9r75pm5ccjjkhz20f2y4i70fijn5krcbwjg1i0wrc229"
   },
   {
     "name": "xonsh",
@@ -62,26 +62,26 @@
   {
     "name": "isort",
     "publisher": "ms-python",
-    "version": "2023.9.10591013",
-    "sha256": "1ld2jc0lxznvl3vyv7w97hn9nzri76ilgq470k6lcf2pmb1dlii5"
+    "version": "2023.9.10931010",
+    "sha256": "1ziq7fmzywm4hdg5ww7ka4x8g5biwvgcicsmwygl9mv8l7fvjnm2"
   },
   {
     "name": "python",
     "publisher": "ms-python",
-    "version": "2023.5.10791707",
-    "sha256": "0bb8s2z5xz4lzmb4bs8485n0x01h7ha5qk2ybjylgk52d52f39na"
+    "version": "2023.7.10931008",
+    "sha256": "0dvjd8x7ib19am7580x4gnq5x4pc370vhnwja2cnq2g35y2g3zjj"
   },
   {
     "name": "vscode-pylance",
     "publisher": "ms-python",
-    "version": "2023.3.25",
-    "sha256": "1x2n2h6x345hk04bw95q235kly46xy3xv3z7xrda8qjavcj8831f"
+    "version": "2023.3.41",
+    "sha256": "01av020hgza9n4hlgil9gxbw6j41jx3mfqwzw57spw336gccz65p"
   },
   {
     "name": "remote-ssh",
     "publisher": "ms-vscode-remote",
-    "version": "0.99.2023032015",
-    "sha256": "1snrps1fvawhw2wc93mg8vpqzv9yr5wgmir843i9bdkfrssrj350"
+    "version": "0.101.2023032915",
+    "sha256": "1fpinpwsjvw248lcs0g190ampwsr8hxzxbjxcx40kx2zhjbzg5lp"
   },
   {
     "name": "remote-ssh-edit",
@@ -92,14 +92,14 @@
   {
     "name": "cpptools",
     "publisher": "ms-vscode",
-    "version": "1.15.0",
-    "sha256": "1skg7qy6phgkf9jdr8d9asfsg87nfpnrlnzhfwbaj5vr3q2r5ygx"
+    "version": "1.15.1",
+    "sha256": "0s1jvvdgvd5zb5wfxjar89w9q519nv5nks2zgc7f4mbhv1h5ikks"
   },
   {
     "name": "remote-explorer",
     "publisher": "ms-vscode",
-    "version": "0.3.2023021509",
-    "sha256": "0rwsr7rmynzkxgi709777wwn8kiaghm9z33irxxpf9fqvb1lig7d"
+    "version": "0.5.2023040309",
+    "sha256": "1fx6k64adcbwfb35xn5db0dcfs88gwb3mwa6175xvqsxi322rw2i"
   },
   {
     "name": "ansible",
