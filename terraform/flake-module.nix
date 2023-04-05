@@ -23,23 +23,11 @@
       apps = {
         apply = {
           type = "app";
-          #program = toString (pkgs.writers.writeBash "apply" ''
-          #  if [[ -e ./terraform/config.tf.json ]]; then rm -f ./terraform/config.tf.json; fi
-          #  cp ${terraformConfiguration} ./terraform/config.tf.json \
-          #    && ${pkgs.terraform}/bin/terraform -chdir="./terraform" init \
-          #    && ${pkgs.terraform}/bin/terraform -chdir="./terraform" apply
-          #'');
           program = tfrun "apply";
         };
         # nix run ".#destroy"
         destroy = {
           type = "app";
-          #program = toString (pkgs.writers.writeBash "destroy" ''
-          #  if [[ -e ./terraform/config.tf.json ]]; then rm -f ./terraform/config.tf.json; fi
-          #  cp ${terraformConfiguration} ./terraform/config.tf.json \
-          #    && ${pkgs.terraform}/bin/terraform init \
-          #    && ${pkgs.terraform}/bin/terraform destroy
-          #'');
           program = tfrun "destroy";
         };
       };
