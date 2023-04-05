@@ -26,8 +26,8 @@
   {
     "name": "gitlens",
     "publisher": "eamodio",
-    "version": "2023.3.3105",
-    "sha256": "0q5i12jc9r75pm5ccjjkhz20f2y4i70fijn5krcbwjg1i0wrc229"
+    "version": "2023.4.505",
+    "sha256": "11davds8h9k59qdrq2r35jpz519cyvjvbcjv3s16f82cn6j1wyjl"
   },
   {
     "name": "xonsh",
@@ -68,8 +68,8 @@
   {
     "name": "python",
     "publisher": "ms-python",
-    "version": "2023.7.10931008",
-    "sha256": "0dvjd8x7ib19am7580x4gnq5x4pc370vhnwja2cnq2g35y2g3zjj"
+    "version": "2023.7.10951006",
+    "sha256": "0p56f5x1qzzxsljh17cddirhcj3x5n9nzg33g8nfgd6a147lvawg"
   },
   {
     "name": "vscode-pylance",
@@ -98,8 +98,8 @@
   {
     "name": "remote-explorer",
     "publisher": "ms-vscode",
-    "version": "0.5.2023040309",
-    "sha256": "1fx6k64adcbwfb35xn5db0dcfs88gwb3mwa6175xvqsxi322rw2i"
+    "version": "0.5.2023040509",
+    "sha256": "17swjb0r926jipfa8rj03h86k1rqwcda6cdvqd7jpd3qdbyf8n35"
   },
   {
     "name": "ansible",
