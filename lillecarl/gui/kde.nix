@@ -360,7 +360,7 @@
       "kwinrc"."Xwayland"."Scale" = 1;
       "kxkbrc"."Layout"."DisplayNames" = ",";
       "kxkbrc"."Layout"."LayoutList" = "us,se";
-      "kxkbrc"."Layout"."Options" = "caps:escape,grp:alt_shift_toggle";
+      "kxkbrc"."Layout"."Options" = "caps:escape";
       "kxkbrc"."Layout"."ResetOldOptions" = true;
       "kxkbrc"."Layout"."Use" = true;
       "kxkbrc"."Layout"."VariantList" = ",";
