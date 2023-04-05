@@ -22,7 +22,7 @@
 
   programs.dconf.enable = true;
   # Enable xwayland, not everything is wayland yet.
-  programs.xwayland.enable = true;
+  #programs.xwayland.enable = true;
   # Enable the X11 windowing system.
   services.xserver.enable = true; # Not sure why this is required.
   # Enable the Plasma 5 Desktop Environment.
