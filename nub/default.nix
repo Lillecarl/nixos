@@ -23,11 +23,15 @@ rec
   #};
 
   networking.ifupdown2 = {
-    enable = false;
+    enable = true;
 
     extraConfig = ''
       auto ifbr0
-      iface ifbr0 inet manual
+      iface ifbr0
+          bridge-pvid 1
+          bridge-vids 100 200
+          bridge-vlan-aware yes
+          address 10.255.255.1/24
     '';
   };
 

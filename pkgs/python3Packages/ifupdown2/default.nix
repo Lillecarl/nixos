@@ -1,8 +1,18 @@
 { lib
 , fetchFromGitHub
 , buildPythonPackage
-, six
 , setuptools
+, six
+, iproute2
+, bridge-utils
+, procps
+, service-wrapper
+, kmod
+, pstree
+, busybox
+, ethtool
+, systemd
+, dpkg
 }:
 let
   versiondata = (builtins.fromJSON (builtins.readFile ./version.json));
@@ -15,11 +25,21 @@ buildPythonPackage rec {
   propagatedBuildInputs = [
     six
     setuptools
+    iproute2
+    bridge-utils
+    procps
+    service-wrapper
+    kmod
+    pstree
+    busybox
+    ethtool
+    systemd
+    dpkg
   ];
 
   meta = {
     description = "Linux Interface Network Manager 2";
-    homepage = "https://github.com/CumulusNetworks/ifupdown2";
+    homepage = "https://github.com/Lillecarl/ifupdown2";
     license = lib.licenses.gpl2;
   };
 }
