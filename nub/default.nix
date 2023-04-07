@@ -202,8 +202,10 @@ rec
     config.allowUnfree = true;
   };
 
-  networking = {
+  networking = rec {
     hostName = "nub"; # System hostname
+    domain = "viaplay.io"; # System domain
+    fqdn = "${config.networking.hostName}.${config.networking.domain}";
     nftables.enable = true; # Enable nftables
     firewall.enable = false; # Disable iptables
     networkmanager = {
