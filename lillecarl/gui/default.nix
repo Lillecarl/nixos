@@ -24,7 +24,7 @@
     brave
 
     # Office
-    libreoffice
+    #libreoffice
 
     # Chat apps
     slack # Slack chat app

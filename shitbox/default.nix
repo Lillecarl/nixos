@@ -115,7 +115,6 @@
     qtcreator
     units
     heroku
-    libreoffice
     piper
     syncthing
     nmap
