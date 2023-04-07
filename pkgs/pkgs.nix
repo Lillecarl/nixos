@@ -39,7 +39,7 @@ prev.lib.filterAttrs
     acme-dns = prev.callPackage ../pkgs/acme-dns { };
     salt-pepper = prev.callPackage ../pkgs/salt-pepper { };
     splunk-otel-collector = prev.callPackage ../pkgs/splunk-otel-collector { };
-    xwaylandvideobridge = prev.callPackages ../pkgs/xwaylandvideobridge { };
+    xwaylandvideobridge = prev.callPackage ../pkgs/xwaylandvideobridge { };
 
     xonsh-joined = prev.callPackage ../pkgs/xonsh-joined { };
     xonsh-wrapper = final.callPackage ../pkgs/xonsh-wrapper { };

@@ -72,7 +72,7 @@ rec
 
   services.salt = rec {
     master = {
-      enable = false;
+      enable = true;
 
       configuration = {
         log_level = "debug";
@@ -285,6 +285,7 @@ rec
   programs.kdeconnect.enable = true;
 
   environment.systemPackages = with pkgs; [
+    ifupdown2 # ifupdown2 from Cumulus Networks
     xwaylandvideobridge # xwayland video bridge
     kdeconnect # Utility for connecting smartphone with KDE.
     winbox # MikroTik winbox, until we're rid of this crap at work.
