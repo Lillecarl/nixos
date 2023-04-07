@@ -38,6 +38,7 @@ python3.pkgs.buildPythonApplication rec {
     requests
     looseversion
     packaging
+    setuptools
   ] ++ extraInputs;
 
   patches = [
