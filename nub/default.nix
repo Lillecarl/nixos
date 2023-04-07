@@ -76,6 +76,7 @@ rec
 
       configuration = {
         log_level = "debug";
+        mine_interval = 1;
         file_roots = {
           base = [ "/srv/salt/salt" ];
         };
@@ -85,6 +86,15 @@ rec
         master_roots = {
           base = [ "/srv/salt/salt-master" ];
         };
+        ext_pillar = [
+          {
+            file_tree = {
+              root_dir = "/srv/salt/pillar/";
+              render_default = "jinja|yaml";
+              template = true;
+            };
+          }
+        ];
       };
     };
     minion = {
