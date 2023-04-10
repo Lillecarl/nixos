@@ -66,6 +66,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.utils.follows = "flake-utils";
     };
+    # Configure non-nixos systems with Nix modules
+    system-manager = {
+      url = "github:numtide/system-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
+    };
   };
 
   outputs = { self, flake-parts, ... } @inputs:
@@ -74,6 +80,7 @@
         inputs.flake-parts.flakeModules.easyOverlay
         ./lillecarl/flake-module.nix
         ./terraform/flake-module.nix
+        ./system-manager/flake-module.nix
       ];
       systems = [ "x86_64-linux" "x86_64-darwin" ];
       flake = rec {

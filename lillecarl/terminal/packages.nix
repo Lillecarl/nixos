@@ -1,6 +1,7 @@
 { config, pkgs, inputs, ... }:
 {
   home.packages = with pkgs; [
+    inputs.system-manager.packages.x86_64-linux.system-manager
     salt # RCE as a service
     awscli2 # AWS cli tool
     carapace # completion engine
