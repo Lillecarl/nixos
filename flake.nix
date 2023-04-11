@@ -145,6 +145,13 @@
               programs-sqlite-db = inputs.flake-programs-sqlite.packages."x86_64-linux".programs-sqlite;
             };
           };
+          nonixos = inputs.nixpkgs.lib.nixosSystem {
+            system = "x86_64-linux";
+            modules = [
+              ./nonixos
+            ];
+            specialArgs = { inherit inputs; };
+          };
         };
       };
       perSystem = { config, system, pkgs, inputs', ... }:
