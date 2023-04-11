@@ -96,10 +96,16 @@
         bookmarks = [
           {
             toolbar = true;
-            bookmarks = [{
-              name = "Home Manager";
-              url = "https://nixos.wiki/wiki/Home_Manager";
-            }];
+            bookmarks = [
+              {
+                name = "Home Manager";
+                url = "https://nixos.wiki/wiki/Home_Manager";
+              }
+              {
+                name = "Noogle Nix Search";
+                url = "https://noogle.dev/";
+              }
+            ];
           }
           {
             toolbar = true;
