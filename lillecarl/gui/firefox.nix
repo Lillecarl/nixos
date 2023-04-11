@@ -6,11 +6,8 @@
 
     profiles = {
       lillecarl = {
-        id = 1337;
+        id = 0;
         isDefault = true;
-      };
-      empty = {
-        id = 321;
       };
     };
   };
