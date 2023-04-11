@@ -78,28 +78,16 @@
     flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
         inputs.flake-parts.flakeModules.easyOverlay
-        ./shitbox/flake-module.nix
-        ./nub/flake-module.nix
         ./lillecarl/flake-module.nix
-        ./terraform/flake-module.nix
+        ./nub/flake-module.nix
+        ./nubvm/flake-module.nix
+        ./shitbox/flake-module.nix
         ./system-manager/flake-module.nix
+        ./terraform/flake-module.nix
       ];
       systems = [ "x86_64-linux" "x86_64-darwin" ];
       flake = rec {
         nixosConfigurations = rec {
-          nubvm = inputs.nixpkgs.lib.nixosSystem {
-            system = "x86_64-linux";
-            modules = [
-              ./nubvm
-              ./common/verycommon.nix
-              inputs.disko.nixosModules.disko
-              inputs.nixos-hardware.nixosModules.common-pc-ssd
-              inputs.nixos-hardware.nixosModules.common-pc
-            ];
-            specialArgs = {
-              inherit inputs;
-              programs-sqlite-db = inputs.flake-programs-sqlite.packages."x86_64-linux".programs-sqlite;
-            };
           };
           nonixos = inputs.nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";
