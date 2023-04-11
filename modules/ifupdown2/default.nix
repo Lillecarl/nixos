@@ -42,6 +42,7 @@ in
       serviceConfig = {
         Type = "oneshot";
         ExecStart = pkgs.writeShellScript "ifreload-helper" ''
+          ${pkgs.coreutils-full}/bin/mkdir -p /run/network/
           ${pkgs.ifupdown2}/bin/ifreload --all --syntax-check
           ${pkgs.ifupdown2}/bin/ifreload --all
         '';
