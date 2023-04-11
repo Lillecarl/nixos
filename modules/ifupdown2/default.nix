@@ -23,7 +23,22 @@ in
       extraPackages = mkOption {
         type = types.listOf types.package;
         default = [ ];
-        example = literalExpression "[ pkgs.mstpd pkgs.dpkg]";
+        example = literalExpression ''
+          [
+            pkgs.bridge-utils
+            pkgs.dpkg
+            pkgs.ethtool
+            pkgs.iproute2
+            pkgs.kmod
+            pkgs.mstpd
+            pkgs.openvswitch
+            pkgs.ppp
+            pkgs.procps
+            pkgs.pstree
+            pkgs.service-wrapper
+            pkgs.systemd
+          ]
+        '';
         description = lib.mdDoc ''
           The set of packages to add to $PATH of ifreload
         '';

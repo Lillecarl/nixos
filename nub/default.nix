@@ -25,6 +25,21 @@ rec
   networking.ifupdown2 = {
     enable = true;
 
+    extraPackages = [
+      pkgs.bridge-utils
+      pkgs.dpkg
+      pkgs.ethtool
+      pkgs.iproute2
+      pkgs.kmod
+      pkgs.mstpd
+      pkgs.openvswitch
+      pkgs.ppp
+      pkgs.procps
+      pkgs.pstree
+      pkgs.service-wrapper
+      pkgs.systemd
+    ];
+
     extraConfig = ''
       auto ifbr0
       iface ifbr0
