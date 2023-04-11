@@ -1,4 +1,8 @@
-{ config, lib, pkgs, ... }:
+{ config
+, lib
+, pkgs
+, extraPackages ? [ ]
+, ... }:
 
 with lib;
 
@@ -15,6 +19,14 @@ in
           Whether to enable ifupdown2 for device configuration. 
         '';
       };
+      extraPackages = mkOption {
+        type = types.listOf types.package;
+        default = [];
+        example = literalExpression "[ pkgs.mstpd pkgs.dpkg]";
+        description = lib.mdDoc ''
+          The set of packages to add to $PATH of ifreload
+        '';
+      };
       extraConfig = mkOption {
         type = types.lines;
         default = null;
@@ -25,10 +37,18 @@ in
     };
   };
 
-  config = mkIf cfg.enable {
+  config = mkIf cfg.enable
+  (let
+    ifupdown2_pkg = pkgs.ifupdown2.overrideAttrs (final: prev: {
+      propagatedBuildInputs = prev.propagatedBuildInputs ++ cfg.extraPackages;
+    });
+  in
+  {
     environment.etc."network/interfaces".text = cfg.extraConfig;
     environment.etc."network/ifupdown2/addons.conf".source = ./addons.conf;
     environment.etc."network/ifupdown2/ifupdown2.conf".source = ./ifupdown2.conf;
+
+    environment.systemPackages = [ ifupdown2_pkg ];
 
     systemd.services.ifupdown2 = {
       wantedBy = [ "multi-user.target" ];
@@ -43,11 +63,11 @@ in
         Type = "oneshot";
         ExecStart = pkgs.writeShellScript "ifreload-helper" ''
           ${pkgs.coreutils-full}/bin/mkdir -p /run/network/
-          ${pkgs.ifupdown2}/bin/ifreload --all --debug --syntax-check
-          ${pkgs.ifupdown2}/bin/ifreload --all --debug
+          ${ifupdown2_pkg}/bin/ifreload --all --debug --syntax-check
+          ${ifupdown2_pkg}/bin/ifreload --all --debug
         '';
         RemainAfterExit = true;
       };
     };
-  };
+  });
 }
