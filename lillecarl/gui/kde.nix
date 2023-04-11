@@ -32,6 +32,9 @@
       "kwin"."Switch to Desktop 7" = "Alt+7";
       "kwin"."Switch to Desktop 8" = "Alt+8";
 
+      # Default Browser
+      "kdeglobals"."General"."BrowserApplication" = "firefox.desktop";
+
       "kaccess"."Toggle Screen Reader On and Off" = [ ];
       "kcm_touchpad"."Disable Touchpad" = "Touchpad Off";
       "kcm_touchpad"."Enable Touchpad" = "Touchpad On";
@@ -311,7 +314,6 @@
       "kded5rc"."Module-device_automounter"."autoload" = false;
       "kded5rc"."PlasmaBrowserIntegration"."shownCount" = 4;
       "kdeglobals"."KDE"."AnimationDurationFactor" = 0;
-      "kdeglobals"."General"."BrowserApplication" = "brave-browser.desktop";
       "kdeglobals"."General"."XftHintStyle" = "hintslight";
       "kdeglobals"."General"."fixed" = "Hack Nerd Font Mono,10,-1,5,50,0,0,0,0,0";
       "kdeglobals"."KDE"."SingleClick" = false;
