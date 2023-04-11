@@ -20,8 +20,8 @@
   {
     "name": "vsliveshare",
     "publisher": "MS-vsliveshare",
-    "version": "1.0.5834",
-    "sha256": "0xh719xmacgyn59xvbl4isb5xvg5i11bjmqpqra5pm8niyyy59zq"
+    "version": "1.0.5857",
+    "sha256": "083yjsmx98a1w9l7z103rj3h9zshxjnanvm5xygv78753vq4vdzh"
   },
   {
     "name": "vscode-ron",
@@ -74,8 +74,8 @@
   {
     "name": "python",
     "publisher": "ms-python",
-    "version": "2023.7.11011008",
-    "sha256": "00fv6y6j02j2j22kxywkpg8s2dwgkk33gwysl5hnqgv7632wdlwf"
+    "version": "2023.7.11011538",
+    "sha256": "0wm9d75jvrra9abyknn8nksbc27rr274zjwd5jyrf488i1mha8s0"
   },
   {
     "name": "vscode-pylance",
