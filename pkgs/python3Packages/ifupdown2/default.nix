@@ -3,20 +3,6 @@
 , buildPythonPackage
 , setuptools
 , six
-
-, bridge-utils
-, busybox
-, dpkg
-, ethtool
-, iproute2
-, kmod
-, mstpd
-, openvswitch
-, ppp
-, procps
-, pstree
-, service-wrapper
-, systemd
 }:
 let
   versiondata = (builtins.fromJSON (builtins.readFile ./version.json));
@@ -29,20 +15,6 @@ buildPythonPackage rec {
   propagatedBuildInputs = [
     setuptools
     six
-
-    bridge-utils
-    busybox
-    dpkg
-    ethtool
-    iproute2
-    kmod
-    mstpd
-    openvswitch
-    ppp
-    procps
-    pstree
-    service-wrapper
-    systemd
   ];
 
   meta = {
