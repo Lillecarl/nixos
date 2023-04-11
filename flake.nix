@@ -77,6 +77,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
     };
+    nil = {
+      url = github:oxalica/nil;
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
+    };
     nur.url = github:nix-community/NUR;
   };
 
