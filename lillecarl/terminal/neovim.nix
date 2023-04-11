@@ -33,12 +33,12 @@ in
           #  filetypes = [ "nix" ];
           #};
           nix = {
-            command =  "${nil}/bin/nil";
-            filetypes = ["nix"];
-            rootPatterns =  ["flake.nix"];
+            command = "${nil}/bin/nil";
+            filetypes = [ "nix" ];
+            rootPatterns = [ "flake.nix" ];
             settings = {
               nil = {
-                formatting = { command = ["${pkgs.nixpkgs-fmt}/bin/nixpkgs-fmt"]; };
+                formatting = { command = [ "${pkgs.nixpkgs-fmt}/bin/nixpkgs-fmt" ]; };
               };
             };
           };
