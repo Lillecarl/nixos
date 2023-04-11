@@ -26,8 +26,8 @@
   {
     "name": "gitlens",
     "publisher": "eamodio",
-    "version": "2023.4.1005",
-    "sha256": "08vj2jldv4g50z1y5zdrlhj9jyhfv4887az8nk5q4pcalw08z5l3"
+    "version": "2023.4.1105",
+    "sha256": "195igaspn7dbd7hplc25y758is0595y82snzgcwjzivbi3hf8g8p"
   },
   {
     "name": "xonsh",
@@ -68,8 +68,8 @@
   {
     "name": "python",
     "publisher": "ms-python",
-    "version": "2023.7.11001005",
-    "sha256": "134f1f2zg2h31apjq9bx9lb4c1942kzf1w5il322917izgsr2gn6"
+    "version": "2023.7.11011008",
+    "sha256": "00fv6y6j02j2j22kxywkpg8s2dwgkk33gwysl5hnqgv7632wdlwf"
   },
   {
     "name": "vscode-pylance",
