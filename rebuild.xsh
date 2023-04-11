@@ -4,9 +4,12 @@ from pathlib import Path
 from time import sleep
 import socket
 
+def check_connection(address):
+  return !(ping @(address) -c 1 -W 1 > /dev/null)
+
 # Nix might try to rebuild the world if we don't have internet
-def block_until_internet():
-  while not !(ping 1.1.1.1 -c 1 -W 1 > /dev/null):
+def block_until_internet(address):
+  while not check_connection(address):
     print("No internet, retrying (indefinitely)")
     sleep(1)
 
@@ -18,13 +21,18 @@ def commonargs(buildtype):
     flakepath += "#lillecarl-term"
   commonargs = ["--flake", flakepath, "--keep-failed", "-v", "--impure"]
 
+  if check_connection("shitbox"):
+    commonargs += ["--builders", "ssh://shitbox"]
+
   return commonargs
 
 
 
 sudo echo "Building nixos"
-block_until_internet()
+block_until_internet("1.1.1.1")
+print(" ".join(commonargs("nixos")))
 nixos-rebuild switch --use-remote-sudo @(commonargs("nixos"))
 echo "Building home"
-block_until_internet()
+block_until_internet("1.1.1.1")
+print(" ".join(commonargs("home-manager")))
 home-manager switch -b old @(commonargs("home-manager"))
