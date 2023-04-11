@@ -5,6 +5,8 @@ in
 {
   nixpkgs.overlays = [
     pkgs-overlay
+    inputs.nixpkgs-wayland.overlay
+    inputs.nur.overlay
   ];
 
   nixpkgs = {

@@ -26,6 +26,7 @@ in
           ./gui
           ./terminal
           ./default.nix
+          inputs.nur.nixosModules.nur
           inputs.plasma-manager.homeManagerModules.plasma-manager
         ];
       };

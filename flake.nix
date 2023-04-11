@@ -72,6 +72,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
     };
+    mozilla-addons-to-nix = {
+      url = "sourcehut:~rycee/mozilla-addons-to-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
+    };
+    nur.url = github:nix-community/NUR;
   };
 
   outputs = { self, flake-parts, ... } @inputs:

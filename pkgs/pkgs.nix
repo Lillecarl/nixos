@@ -63,6 +63,8 @@ prev.lib.filterAttrs
     };
     # Inject node packages
     nodePackages = nodePackages // prev.nodePackages;
+    # firefox addons
+    firefoxAddons = prev.callPackage ./firefoxAddons { };
   }
 // (if flake == true then python3Packages else { })
   // (if flake == true then nodePackages else { })
