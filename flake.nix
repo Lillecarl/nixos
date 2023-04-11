@@ -78,6 +78,7 @@
     flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
         inputs.flake-parts.flakeModules.easyOverlay
+        ./shitbox/flake-module.nix
         ./lillecarl/flake-module.nix
         ./terraform/flake-module.nix
         ./system-manager/flake-module.nix
@@ -85,26 +86,6 @@
       systems = [ "x86_64-linux" "x86_64-darwin" ];
       flake = rec {
         nixosConfigurations = rec {
-          shitbox = inputs.nixpkgs.lib.nixosSystem {
-            system = "x86_64-linux";
-            modules = [
-              ./shitbox
-              ./common
-              ./common/flatpak.nix
-              ./common/verycommon.nix
-              ./common/keybindings.nix
-              ./common/killservice.nix
-              inputs.disko.nixosModules.disko
-              inputs.nixos-hardware.nixosModules.common-gpu-nvidia-disable
-              inputs.nixos-hardware.nixosModules.common-cpu-amd
-              inputs.nixos-hardware.nixosModules.common-pc-ssd
-              inputs.nixos-hardware.nixosModules.common-pc
-            ];
-            specialArgs = {
-              inherit inputs;
-              programs-sqlite-db = inputs.flake-programs-sqlite.packages."x86_64-linux".programs-sqlite;
-            };
-          };
           nub = inputs.nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";
             modules = [
