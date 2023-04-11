@@ -283,14 +283,8 @@
     scrcpy # Print-screen tool
     winePackages.wayland # Win32 API compability layer for Linux
     wine64Packages.wayland # Win32 API compability layer for Linux
-    krita # KDE alternative to GIMP
     gimp # Photoshop alternative
-    kdenlive # KDE alternative to Windows Movie Maker
     webcamoid # Webcam application
-    #mkchromecast # Chromecast CLI
-    #gnomecast # Chromecast CLI
-    #castnow # Chromecast CLI
-    #catt # Chromecast CLI
 
     # Web browsers
     firefox # The browser I'd love to use
