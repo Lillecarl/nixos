@@ -14,15 +14,11 @@
   systemd.package = pkgs.systemd.override {};
   systemd.oomd.enable = false;
   systemd.coredump.enable = false;
-  systemd.services.systemd-importd.enable = false;
-  systemd.services.systemd-modules-load.enable = true;
-  systemd.services.container-.enable = false;
   environment.systemPackages = lib.mkForce [];
   environment.defaultPackages = lib.mkForce [];
   services.dbus.enable = lib.mkForce false;
   # Required to build nixos
   fileSystems = { "/" = { device = "/dev/null"; }; };
 
-  system.stateVersion = "22.11"; # Did you read the comment?
-
+  system.stateVersion = "22.11";
 }
