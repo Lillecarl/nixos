@@ -1,5 +1,11 @@
 [
   {
+    "name": "copilot",
+    "publisher": "GitHub",
+    "version": "1.82.15",
+    "sha256": "1nfgfi827xiz347dmdyk3d5yhfjlaz1lx9ygssxjdm89zgpw13xz"
+  },
+  {
     "name": "EditorConfig",
     "publisher": "EditorConfig",
     "version": "0.16.4",
