@@ -1,4 +1,8 @@
+{ inputs, ... }:
 {
+  home.packages = [
+    inputs.plasma-manager.packages."x86_64-linux".rc2nix
+  ];
   programs.plasma = {
     enable = true;
     workspace.clickItemTo = "select";
