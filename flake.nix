@@ -79,6 +79,7 @@
       imports = [
         inputs.flake-parts.flakeModules.easyOverlay
         ./lillecarl/flake-module.nix
+        ./nonixos/flake-module.nix
         ./nub/flake-module.nix
         ./nubvm/flake-module.nix
         ./shitbox/flake-module.nix
@@ -86,18 +87,7 @@
         ./terraform/flake-module.nix
       ];
       systems = [ "x86_64-linux" "x86_64-darwin" ];
-      flake = rec {
-        nixosConfigurations = rec {
-          };
-          nonixos = inputs.nixpkgs.lib.nixosSystem {
-            system = "x86_64-linux";
-            modules = [
-              ./nonixos
-            ];
-            specialArgs = { inherit inputs; };
-          };
-        };
-      };
+      flake = { };
       perSystem = { config, system, pkgs, inputs', ... }:
         let
           pkgs_overlaid = (pkgs.extend (import ./pkgs));
