@@ -1,4 +1,7 @@
 { config, pkgs, inputs, ... }:
+let
+  nil = inputs.nil.packages."x86_64-linux".default;
+in
 {
   programs.neovim = {
     enable = true;
@@ -25,9 +28,19 @@
 
       settings = {
         languageserver = {
+          #nix = {
+          #  command = "${pkgs.rnix-lsp}/bin/rnix-lsp";
+          #  filetypes = [ "nix" ];
+          #};
           nix = {
-            command = "${pkgs.rnix-lsp}/bin/rnix-lsp";
-            filetypes = [ "nix" ];
+            command =  "${nil}/bin/nil";
+            filetypes = ["nix"];
+            rootPatterns =  ["flake.nix"];
+            settings = {
+              nil = {
+                formatting = { command = ["${pkgs.nixpkgs-fmt}/bin/nixpkgs-fmt"]; };
+              };
+            };
           };
           terraform = {
             command = "${pkgs.terraform-lsp}/bin/terraform-lsp";
