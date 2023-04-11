@@ -36,9 +36,6 @@
       "kwin"."Switch to Desktop 7" = "Alt+7";
       "kwin"."Switch to Desktop 8" = "Alt+8";
 
-      # Default Browser
-      "kdeglobals"."General"."BrowserApplication" = "firefox.desktop";
-
       "kaccess"."Toggle Screen Reader On and Off" = [ ];
       "kcm_touchpad"."Disable Touchpad" = "Touchpad Off";
       "kcm_touchpad"."Enable Touchpad" = "Touchpad On";
@@ -302,6 +299,9 @@
       "plasma-localerc"."Formats"."LC_NUMERIC" = "en_DK.UTF-8";
       "plasma-localerc"."Formats"."LC_PAGE" = "en_DK.UTF-8";
       "plasma-localerc"."Formats"."LC_TIME" = "sv_SE.UTF-8";
+
+      # Default Browser
+      "kdeglobals"."General"."BrowserApplication" = "firefox.desktop";
 
       "dolphinrc"."KFileDialog Settings"."Places Icons Auto-resize" = false;
       "dolphinrc"."KFileDialog Settings"."Places Icons Static Size" = 22;
