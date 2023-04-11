@@ -1,2 +1,1 @@
-final: prev: rec {
-}
+final: prev: rec { }
