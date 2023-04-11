@@ -63,6 +63,8 @@
     useXkbConfig = true;
   };
 
+  environment.homeBinInPath = true;
+
   environment.systemPackages = with pkgs; [
     # Temporary lab
     xorg.xwininfo # Information about X windows (Used to find things using XWayland)
