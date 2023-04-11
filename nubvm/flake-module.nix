@@ -1,10 +1,10 @@
-{ inputs, lib, ... }:
+{ inputs, ... }:
 {
   flake = {
-    nixosConfigurations.nub = inputs.nixpkgs.lib.nixosSystem {
+    nixosConfigurations.nubvm = inputs.nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
-        ./default
+        ./default.nix
         ../common/verycommon.nix
         inputs.disko.nixosModules.disko
         inputs.nixos-hardware.nixosModules.common-pc-ssd
