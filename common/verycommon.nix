@@ -23,6 +23,7 @@ rec
   ];
 
   programs.zsh.enable = true;
+  programs.nix-ld.enable = true;
 
   # XDG Base Directory Specification
   environment.sessionVariables = rec {
