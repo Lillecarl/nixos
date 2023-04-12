@@ -17,8 +17,18 @@
   #boot.kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_latest;
   boot.initrd.kernelModules = [ "amdgpu" "vfio-pci" ];
   boot.extraModprobeConfig = "options vfio-pci ids=10de:2487,10de:228b";
-  boot.blacklistedKernelModules = [ "nvidiafb" "nouveau" "nvidia_drm" "nvidia" ];
-  boot.kernelModules = [ "amdgpu" "kvm-amd" "wl" "vfio_virqfd" "vfio_pci" "vfio_iommu_type1" "vfio" "i2c-dev" ];
+  boot.kernelModules = [
+    "drivetemp"
+    "nct6775"
+    "amdgpu"
+    "kvm-amd"
+    "wl"
+    "vfio_virqfd"
+    "vfio_pci"
+    "vfio_iommu_type1"
+    "vfio"
+    "i2c-dev"
+  ];
   boot.kernelParams = [
     "amd_iommu=on"
     "mitigations=off"
@@ -28,6 +38,7 @@
     "radeon.cik_support=0"
     "amdgpu.si_support=1"
     "amdgpu.cik_support=1"
+    "acpi_enforce_resources=lax"
   ];
 
   boot.loader = {
