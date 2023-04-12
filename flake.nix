@@ -90,6 +90,7 @@
       imports = [
         inputs.flake-parts.flakeModules.easyOverlay
         ./lillecarl/flake-module.nix
+        ./modules/flake-module.nix
         ./nonixos/flake-module.nix
         ./nub/flake-module.nix
         ./nubvm/flake-module.nix
