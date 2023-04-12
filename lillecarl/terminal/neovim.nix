@@ -12,15 +12,16 @@ in
     #defaultEditor = true;
 
     plugins = with pkgs.vimPlugins; [
-      nvim-treesitter
-      coc-pyright
       coc-clangd
-      vim-nix
-      nerdtree
-      fugitive
-      surround
+      coc-pyright
+      copilot-lua
       ctrlp
+      fugitive
+      nerdtree
+      nvim-treesitter
+      surround
       vim-airline
+      vim-nix
     ];
 
     coc = {
