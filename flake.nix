@@ -45,13 +45,13 @@
     };
     # Manage home environment with Nix
     home-manager = {
-      url = github:nix-community/home-manager;
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.utils.follows = "flake-utils";
     };
     # Configure KDE user settings with Nix
     plasma-manager = {
-      url = github:pjones/plasma-manager;
+      url = "github:pjones/plasma-manager";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
@@ -78,7 +78,7 @@
       inputs.flake-utils.follows = "flake-utils";
     };
     nil = {
-      url = github:oxalica/nil;
+      url = "github:oxalica/nil";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
     };
