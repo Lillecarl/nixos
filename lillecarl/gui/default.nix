@@ -16,9 +16,9 @@
 
   home.packages = with pkgs; [
     # Desktop item overrides
-    (hiPrio vscode-wayland)
-    (hiPrio slack-wayland)
-    (hiPrio brave-wayland)
+    #(hiPrio vscode-wayland)
+    #(hiPrio slack-wayland)
+    #(hiPrio brave-wayland)
 
     # Web browsers
     brave
