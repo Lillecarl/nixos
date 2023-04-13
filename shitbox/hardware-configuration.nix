@@ -27,7 +27,6 @@
     "vfio_pci"
     "vfio_iommu_type1"
     "vfio"
-    "i2c-dev"
   ];
   boot.kernelParams = [
     "amd_iommu=on"
@@ -86,6 +85,7 @@
   };
 
   hardware.enableAllFirmware = true;
+  hardware.i2c.enable = true;
   hardware.cpu.amd.updateMicrocode = true;
   powerManagement.cpuFreqGovernor = "performance";
 }
