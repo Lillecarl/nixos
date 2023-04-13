@@ -1,5 +1,17 @@
 [
   {
+    "name": "shebang-language-associator",
+    "publisher": "davidhewitt",
+    "version": "1.4.0",
+    "sha256": "1m1vqbmlhnbrkv298vhwfhgzpx7c61kv5h3gyqgpy260bn58nr5i"
+  },
+  {
+    "name": "solarized",
+    "publisher": "ryanolsonx",
+    "version": "2.1.0",
+    "sha256": "0my6qhzp25x6x6qccgxi0qymk62qkrd19wrafliaibidwlrcvx8x"
+  },
+  {
     "name": "copilot",
     "publisher": "GitHub",
     "version": "1.82.15",
