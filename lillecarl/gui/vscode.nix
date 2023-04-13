@@ -47,6 +47,7 @@
           "language" = "python";
         }
       ];
+      "workbench.colorTheme" = "Solarized Dark+";
     };
   };
 }
