@@ -166,6 +166,10 @@ in
         disabled = false;
       };
 
+      kubernetes = {
+        disabled = false;
+      };
+
       # Display which shell we're in
       # Do we actually need this? We use xonsh all the time.
       env_var.STARSHIP_SHELL = {
