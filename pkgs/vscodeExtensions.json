@@ -32,8 +32,8 @@
   {
     "name": "gitlens",
     "publisher": "eamodio",
-    "version": "2023.4.1105",
-    "sha256": "195igaspn7dbd7hplc25y758is0595y82snzgcwjzivbi3hf8g8p"
+    "version": "2023.4.1305",
+    "sha256": "1aiw4r6gv3x18krpdgnx721s3a4jg0fa6l5hp4865kzjfv7m0032"
   },
   {
     "name": "xonsh",
@@ -98,8 +98,8 @@
   {
     "name": "cpptools",
     "publisher": "ms-vscode",
-    "version": "1.15.1",
-    "sha256": "0s1jvvdgvd5zb5wfxjar89w9q519nv5nks2zgc7f4mbhv1h5ikks"
+    "version": "1.15.2",
+    "sha256": "02mvkr9xmllav6vyxhpyydjf4802chchz656q1cpdplci7314shd"
   },
   {
     "name": "remote-explorer",

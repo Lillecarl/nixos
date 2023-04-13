@@ -1,7 +1,7 @@
 {
   "owner": "anki-code",
   "repo": "tokenize-output",
-  "rev": "c422cb8460fc42b1acd836198f7fee30375e82ba",
-  "sha256": "YLGpy7/eP84WX+i7JQwZqQ7Im34UaKZGnujJi36VNmk=",
-  "version": "0.4.9"
+  "rev": "91fcf8feae32365ffd7dbd459121dc9c7e0bb325",
+  "sha256": "FRd5mPDViW0moQfwV+T4cVP/Lrlx2k2yvAs/Wh6lRNg=",
+  "version": "0.4.10"
 }
