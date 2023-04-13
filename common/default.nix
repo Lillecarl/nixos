@@ -1,14 +1,11 @@
-{ inputs
-, config
-, pkgs
-, lib
-, programs-sqlite-db
+{ pkgs
 , ...
 }:
 {
   security.pam.services.login.enableKwallet = true;
   security.pam.services.session.enableKwallet = true;
   programs.firefox.nativeMessagingHosts.tridactyl = true;
+  hardware.uinput.enable = true;
 
   # Select internationalisation properties.
   i18n = rec {
