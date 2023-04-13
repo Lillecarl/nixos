@@ -104,14 +104,15 @@ rec
     #shell = "${pkgs.xonsh}/bin/xonsh";
     isNormalUser = true;
     extraGroups = [
-      "wheel" # enables sudo
-      "libvirtd" # allow use of libvirt without sudo
-      "networkmanager" # allow editing network connections without sudo
-      "lxd" # allow userspace container management without sudo
-      "flatpak" # allow managing flatpak
-      "adbusers" # allow usage of adb
-      "podman" # allow usage of adb
-      "wireshark" # allow wireshark dumpcap
+      "wheel"
+      "libvirtd"
+      "networkmanager"
+      "lxd"
+      "flatpak"
+      "adbusers"
+      "podman"
+      "wireshark"
+      "i2c"
     ];
   };
 
