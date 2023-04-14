@@ -92,8 +92,8 @@
   {
     "name": "vscode-pylance",
     "publisher": "ms-python",
-    "version": "2023.4.11",
-    "sha256": "1gayih5z1d0f7vljrzzdhaw5hf9q9gycasri273y5a0h7gw1hh7f"
+    "version": "2023.4.21",
+    "sha256": "1y1bw1nbn59av37ym6dl5v6c1d5wif3l7galcv313q0y5ayqrd5k"
   },
   {
     "name": "remote-ssh",
