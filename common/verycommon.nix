@@ -48,6 +48,7 @@ rec
     package = pkgs.nixVersions.stable;
     extraOptions = ''
       experimental-features = nix-command flakes repl-flake
+      builders-use-substitutes = true
     '';
     settings = {
       auto-optimise-store = true;
@@ -70,6 +71,18 @@ rec
     };
     registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
     nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
+    buildMachines = [
+      {
+        hostName = "shitbox";
+        sshUser = "lillecarl";
+        system = "x86_64-linux";
+        maxJobs = 1;
+        speedFactor = 2;
+        supportedFeatures = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
+        mandatoryFeatures = [ ];
+      }
+    ];
+    distributedBuilds = true;
   };
 
   # Give applications 15 seconds to shut down when shutting down the computer
