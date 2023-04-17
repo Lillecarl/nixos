@@ -31,6 +31,11 @@
       };
     };
   };
+  # Enable qtile window manager
+  services.xserver.windowManager.qtile = {
+    enable = true;
+    backend = "wayland";
+  };
   services.xserver.displayManager.defaultSession = "plasmawayland";
   #services.xserver.displayManager.lightdm.enable = true;
   services.xserver.desktopManager.plasma5.enable = true;
