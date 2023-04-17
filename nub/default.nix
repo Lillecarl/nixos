@@ -163,7 +163,7 @@ rec
     turbostat
     cpupower
   ];
-  boot.blacklistedKernelModules = [ "acpi_cpufreq" "k10temp" ];
+  boot.blacklistedKernelModules = [ "acpi_cpufreq" ];
 
   # Activate kernel modules (choose from built-ins and extra ones)
   boot.kernelModules = [
@@ -172,6 +172,7 @@ rec
     # Virtual Microphone, built-in
     #"snd-aloop"
     "tp_smapi"
+    "k10temp"
   ];
 
   # Set initial kernel module settings
