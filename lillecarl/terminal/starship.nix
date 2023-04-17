@@ -175,7 +175,9 @@ in
       };
 
       battery = {
-        threshold = 20;
+        display = {
+          threshold = 20;
+        };
       };
 
       # Display which shell we're in
