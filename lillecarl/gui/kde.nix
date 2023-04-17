@@ -282,8 +282,9 @@
       "kwinrc"."Script-bismuth"."tileLayoutGap" = 5;
 
       # Focus follows mouse
-      "kwinrc"."Windows"."FocusPolicy" = "FocusFollowsMouse";
+      "kwinrc"."Windows"."FocusPolicy" = "";
       "kwinrc"."Windows"."FocusStealingPreventionLevel" = 0;
+      "kwinrc"."Windows"."NextFocusPrefersMouse" = true;
 
       # WezTerm
       "kglobalshortcutsrc"."org.wezfurlong.wezterm.desktop"."_k_friendly_name" = "WezTerm";
