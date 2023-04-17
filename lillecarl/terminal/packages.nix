@@ -3,6 +3,7 @@
   home.packages = with pkgs; [
     inputs.system-manager.packages.x86_64-linux.system-manager
     inputs.mozilla-addons-to-nix.packages.x86_64-linux.default
+    jekyll # Static site generator
     salt # RCE as a service
     awscli2 # AWS cli tool
     carapace # completion engine
