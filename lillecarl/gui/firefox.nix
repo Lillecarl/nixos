@@ -63,6 +63,7 @@
           "datareporting.healthreport.service.enabled" = false; # setting Firefox Health Report functionality (https://wiki.mozilla.org/Firefox_Health_Report)
           "datareporting.healthreport.uploadEnabled" = false; # setting Firefox Health Report uploading functionality.
           "datareporting.policy.dataSubmissionEnabled" = false; # this is the data submission master kill switch. (https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/internals/preferences.html)
+          "dom.successive_dialog_time_limit" = 1; # don't allow websites to abuse prompts.
           "general.autoScroll" = true; # press scroll wheel scroll
           "privacy.annotate_channels.strict_list.enabled" = true; # strict browsing
           "privacy.annotate_channels.strict_list.pbmode.enabled" = true; # strict browsing

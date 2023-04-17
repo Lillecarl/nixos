@@ -166,6 +166,18 @@ in
         disabled = false;
       };
 
+      kubernetes = {
+        disabled = false;
+      };
+
+      sudo = {
+        disabled = false;
+      };
+
+      battery = {
+        threshold = 20;
+      };
+
       # Display which shell we're in
       # Do we actually need this? We use xonsh all the time.
       env_var.STARSHIP_SHELL = {
