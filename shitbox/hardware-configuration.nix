@@ -40,6 +40,14 @@
     "acpi_enforce_resources=lax"
   ];
 
+  boot.extraModulePackages = with config.boot.kernelPackages; [
+    v4l2loopback.out
+    usbip
+    zenpower
+    turbostat
+    cpupower
+  ];
+
   boot.loader = {
     efi = {
       canTouchEfiVariables = true;
