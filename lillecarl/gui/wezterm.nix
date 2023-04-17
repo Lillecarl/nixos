@@ -24,6 +24,8 @@
           'xonsh',
           'tmux',
           'zellij',
+          'python',
+          'python3',
         },
       }
     '';
