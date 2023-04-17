@@ -6,6 +6,7 @@
   security.pam.services.session.enableKwallet = true;
   programs.firefox.nativeMessagingHosts.tridactyl = true;
   hardware.uinput.enable = true;
+  boot.tmp.useTmpfs = true;
 
   # Select internationalisation properties.
   i18n = rec {
