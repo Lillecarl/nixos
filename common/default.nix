@@ -115,7 +115,6 @@
     exa # cat replacement
     sipcalc # Subnet calculator
     buildah # Build OCI images
-    debootstrap # Create Debian system in a chroot/systemd-nspawn
     bind # brings the dig command
     dogdns # dig without poop
     whois # whois command
@@ -169,7 +168,6 @@
     git-cola
     git-fire # Save your code, then your life
     bfg-repo-cleaner # Clean repos that are huge
-    alacritty # Fast crossplatform terminal emulator
     xclip # | "xclip -sel clip" is what you want
     wl-clipboard # Wayland clipboard manipulation
     ansible # Server automation tool
