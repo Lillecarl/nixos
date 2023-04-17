@@ -21,8 +21,8 @@ def commonargs(buildtype):
     flakepath += "#lillecarl-term"
   commonargs = ["--flake", flakepath, "--keep-failed", "-v", "--impure"]
 
-  if check_connection("shitbox"):
-    commonargs += ["--builders", "ssh://shitbox"]
+  if check_connection("shitbox") and "shitbox" not in socket.gethostname():
+    commonargs += ["--builders", "ssh://lillecarl@shitbox?ssh-key=/home/lillecarl/.ssh/id_ed25519"]
 
   return commonargs
 
