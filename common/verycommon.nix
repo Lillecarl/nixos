@@ -12,7 +12,7 @@ rec
 {
   nixpkgs.overlays = [
     pkgs-overlay
-    inputs.nixpkgs-wayland.overlay
+    #inputs.nixpkgs-wayland.overlay
     inputs.nur.overlay
   ];
 
