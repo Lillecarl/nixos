@@ -50,13 +50,6 @@ rec
     '';
   };
 
-  boot.binfmt = {
-    emulatedSystems = [
-      "x86_64-windows"
-      "i686-windows"
-    ];
-  };
-
   services.tp-auto-kbbl = {
     enable = true;
     device = "/dev/input/by-path/platform-i8042-serio-0-event-kbd";
@@ -220,7 +213,6 @@ rec
   networking = rec {
     hostName = "nub"; # System hostname
     domain = "viaplay.io"; # System domain
-    fqdn = "${config.networking.hostName}.${config.networking.domain}";
     nftables.enable = true; # Enable nftables
     firewall.enable = false; # Disable iptables
     networkmanager = {
