@@ -52,10 +52,6 @@ prev.lib.filterAttrs
     # Newer salt version, currently in development
     salt3006 = prev.callPackage ./salt { };
     salt = prev.callPackage ./salt { };
-    # Desktop items to enable Wayland for packages that prefer X
-    brave-wayland = prev.callPackage ../pkgs/desktopItemOverrides/brave.nix { };
-    slack-wayland = prev.callPackage ../pkgs/desktopItemOverrides/slack.nix { };
-    vscode-wayland = prev.callPackage ../pkgs/desktopItemOverrides/vscode.nix { };
     # Inject python3 packages
     python3Packages = python3Packages // prev.python3Packages;
     python3 = prev.python3.override {
