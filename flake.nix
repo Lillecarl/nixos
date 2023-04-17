@@ -47,7 +47,6 @@
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.utils.follows = "flake-utils";
     };
     # Configure KDE user settings with Nix
     plasma-manager = {
