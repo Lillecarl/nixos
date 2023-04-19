@@ -4,7 +4,10 @@
 {
   security.pam.services.login.enableKwallet = true;
   security.pam.services.session.enableKwallet = true;
-  programs.firefox.nativeMessagingHosts.tridactyl = true;
+  programs.firefox = {
+    enable = true;
+    nativeMessagingHosts.tridactyl = true;
+  };
   hardware.uinput.enable = true;
   boot.tmp.useTmpfs = true;
 
