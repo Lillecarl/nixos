@@ -1,5 +1,7 @@
-{ config, pkgs, ... }:
-{
+{ config
+, pkgs
+, ...
+}: {
   programs.vscode = {
     enable = true;
 
@@ -11,7 +13,9 @@
 
     extensions = pkgs.vscode-utils.extensionsFromVscodeMarketplace (
       builtins.fromJSON (
-        builtins.readFile ../../pkgs/vscodeExtensions.json));
+        builtins.readFile ../../pkgs/vscodeExtensions.json
+      )
+    );
 
     userSettings = {
       "editor.fontFamily" = "'Hack Nerd Font', 'monospace', monospace";

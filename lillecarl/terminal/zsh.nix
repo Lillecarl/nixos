@@ -1,7 +1,10 @@
 # zsh is my login shell because xonsh is too weird to be login shell.
 # This is only a bare-minimum configuration.
-{ config, pkgs, inputs, ... }:
-{
+{ config
+, pkgs
+, inputs
+, ...
+}: {
   programs.zsh = {
     enable = true;
 

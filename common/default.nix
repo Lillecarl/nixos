@@ -1,7 +1,4 @@
-{ pkgs
-, ...
-}:
-{
+{ pkgs, ... }: {
   security.pam.services.login.enableKwallet = true;
   security.pam.services.session.enableKwallet = true;
   programs.firefox = {
@@ -87,9 +84,9 @@
     rmtrash # rm compatible remove tool
     inetutils # Common internet utilities
     nmap # Network scanner
-    vagrant # Create 
+    vagrant # Create
     execline # Tools for dbus n stuff
-    handlr # xdg-open alternative 
+    handlr # xdg-open alternative
     cookiecutter # Simple project template engine
     distrobuilder # Build other distros
     x11docker # Run GUI applications with docker

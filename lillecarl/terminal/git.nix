@@ -1,5 +1,8 @@
-{ config, pkgs, inputs, ... }:
-{
+{ config
+, pkgs
+, inputs
+, ...
+}: {
   programs.git = {
     enable = true;
     userName = "Carl Hjerpe";
@@ -9,6 +12,10 @@
     signing = {
       key = "3916387439FCDA33";
       signByDefault = false;
+    };
+
+    extraConfig = {
+      push.autoSetupRemote = true;
     };
   };
 }

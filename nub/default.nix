@@ -108,9 +108,11 @@ rec
     minion = {
       enable = true;
 
-      configuration = master.configuration // {
-        master = "127.0.0.1";
-      };
+      configuration =
+        master.configuration
+        // {
+          master = "127.0.0.1";
+        };
     };
   };
 
@@ -131,26 +133,25 @@ rec
     handlers = {
       mic-led = {
         action = ''
-                    vals=($1)  # space separated string to array of multiple values
-                    case ''${vals[1]} in
-                        F20)
-          	          if ${pkgs.systemd}/bin/machinectl shell lillecarl@ ${pkgs.pulseaudio}/bin/pactl get-source-mute alsa_input.pci-0000_05_00.6.HiFi__hw_acp__source | ${pkgs.gnugrep}/bin/grep "Mute: yes"
-          		  then
-          	            echo 1 > /sys/class/leds/platform::micmute/brightness
-          		  else
-          	            echo 0 > /sys/class/leds/platform::micmute/brightness
-          		  fi
-                            ;;
-                        *)
-                            echo unknown >> /tmp/acpi.log
-                            ;;
-                    esac
+                vals=($1)  # space separated string to array of multiple values
+                case ''${vals[1]} in
+                    F20)
+                 if ${pkgs.systemd}/bin/machinectl shell lillecarl@ ${pkgs.pulseaudio}/bin/pactl get-source-mute alsa_input.pci-0000_05_00.6.HiFi__hw_acp__source | ${pkgs.gnugrep}/bin/grep "Mute: yes"
+          then
+                   echo 1 > /sys/class/leds/platform::micmute/brightness
+          else
+                   echo 0 > /sys/class/leds/platform::micmute/brightness
+          fi
+                        ;;
+                    *)
+                        echo unknown >> /tmp/acpi.log
+                        ;;
+                esac
         '';
         event = "button/*";
       };
     };
   };
-
 
   systemd.targets.hibernate.enable = false;
   systemd.targets.hybrid-sleep.enable = false;
@@ -345,8 +346,8 @@ rec
       wantedBy = [ "sleep.target" ];
       before = [ "sleep.target" ];
       script = ''
-                ${pkgs.procps}/bin/pgrep gpclient | xargs kill
-        	${pkgs.iproute2}/bin/ip link del tun0
+               ${pkgs.procps}/bin/pgrep gpclient | xargs kill
+        ${pkgs.iproute2}/bin/ip link del tun0
       '';
     };
   };

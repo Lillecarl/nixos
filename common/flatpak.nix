@@ -1,5 +1,8 @@
-{ config, pkgs, lib, ... }:
-rec
+{ config
+, pkgs
+, lib
+, ...
+}: rec
 {
   systemd.services = {
     UpdateFlatpaks = rec {

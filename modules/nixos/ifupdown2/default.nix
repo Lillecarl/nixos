@@ -4,10 +4,7 @@
 , extraPackages ? [ ]
 , ...
 }:
-
-with lib;
-
-let
+with lib; let
   cfg = config.networking.ifupdown2;
 in
 {
@@ -17,7 +14,7 @@ in
         type = types.bool;
         default = true;
         description = lib.mdDoc ''
-          Whether to enable ifupdown2 for device configuration. 
+          Whether to enable ifupdown2 for device configuration.
         '';
       };
       extraPackages = mkOption {
@@ -53,39 +50,40 @@ in
     };
   };
 
-  config = mkIf cfg.enable
-    (
-      let
-        ifupdown2_pkg = pkgs.ifupdown2.overrideAttrs (final: prev: {
-          propagatedBuildInputs = prev.propagatedBuildInputs ++ cfg.extraPackages;
-        });
-      in
-      {
-        environment.etc."network/interfaces".text = cfg.extraConfig;
-        environment.etc."network/ifupdown2/addons.conf".source = ./addons.conf;
-        environment.etc."network/ifupdown2/ifupdown2.conf".source = ./ifupdown2.conf;
+  config =
+    mkIf cfg.enable
+      (
+        let
+          ifupdown2_pkg = pkgs.ifupdown2.overrideAttrs (final: prev: {
+            propagatedBuildInputs = prev.propagatedBuildInputs ++ cfg.extraPackages;
+          });
+        in
+        {
+          environment.etc."network/interfaces".text = cfg.extraConfig;
+          environment.etc."network/ifupdown2/addons.conf".source = ./addons.conf;
+          environment.etc."network/ifupdown2/ifupdown2.conf".source = ./ifupdown2.conf;
 
-        environment.systemPackages = [ ifupdown2_pkg ];
+          environment.systemPackages = [ ifupdown2_pkg ];
 
-        systemd.services.ifupdown2 = {
-          wantedBy = [ "multi-user.target" ];
-          wants = [ "network.target" ];
-          before = [ "network-online.target" ];
-          restartTriggers = [
-            config.environment.etc."network/interfaces".source
-            config.environment.etc."network/ifupdown2/ifupdown2.conf".source
-          ];
+          systemd.services.ifupdown2 = {
+            wantedBy = [ "multi-user.target" ];
+            wants = [ "network.target" ];
+            before = [ "network-online.target" ];
+            restartTriggers = [
+              config.environment.etc."network/interfaces".source
+              config.environment.etc."network/ifupdown2/ifupdown2.conf".source
+            ];
 
-          serviceConfig = {
-            Type = "oneshot";
-            ExecStart = pkgs.writeShellScript "ifreload-helper" ''
-              ${pkgs.coreutils-full}/bin/mkdir -p /run/network/
-              ${ifupdown2_pkg}/bin/ifreload --all --debug --syntax-check
-              ${ifupdown2_pkg}/bin/ifreload --all --debug
-            '';
-            RemainAfterExit = true;
+            serviceConfig = {
+              Type = "oneshot";
+              ExecStart = pkgs.writeShellScript "ifreload-helper" ''
+                ${pkgs.coreutils-full}/bin/mkdir -p /run/network/
+                ${ifupdown2_pkg}/bin/ifreload --all --debug --syntax-check
+                ${ifupdown2_pkg}/bin/ifreload --all --debug
+              '';
+              RemainAfterExit = true;
+            };
           };
-        };
-      }
-    );
+        }
+      );
 }

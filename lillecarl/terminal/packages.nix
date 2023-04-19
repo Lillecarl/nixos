@@ -1,5 +1,8 @@
-{ config, pkgs, inputs, ... }:
-{
+{ config
+, pkgs
+, inputs
+, ...
+}: {
   home.packages = with pkgs; [
     inputs.system-manager.packages.x86_64-linux.system-manager
     inputs.mozilla-addons-to-nix.packages.x86_64-linux.default

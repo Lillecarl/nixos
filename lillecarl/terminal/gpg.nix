@@ -1,5 +1,8 @@
-{ config, pkgs, inputs, ... }:
-{
+{ config
+, pkgs
+, inputs
+, ...
+}: {
   services.gpg-agent = {
     enable = true;
     enableSshSupport = true;

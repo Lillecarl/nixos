@@ -1,5 +1,8 @@
-{ config, pkgs, lib, ... }:
-{
+{ config
+, pkgs
+, lib
+, ...
+}: {
   # These tools are common across MacOS and Linux
   environment.systemPackages = with pkgs; [
     vim # Editor
@@ -36,5 +39,4 @@
     jless # JSON TUI browser
     thefuck # Command fixing tool
   ];
-
 }

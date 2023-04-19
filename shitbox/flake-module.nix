@@ -1,5 +1,7 @@
-{ inputs, lib, ... }:
-{
+{ inputs
+, lib
+, ...
+}: {
   flake = {
     nixosConfigurations.shitbox = inputs.nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";

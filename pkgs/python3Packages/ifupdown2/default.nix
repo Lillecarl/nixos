@@ -3,9 +3,10 @@
 , buildPythonPackage
 , setuptools
 , six
+,
 }:
 let
-  versiondata = (builtins.fromJSON (builtins.readFile ./version.json));
+  versiondata = builtins.fromJSON (builtins.readFile ./version.json);
 in
 buildPythonPackage rec {
   pname = "ifupdown2";

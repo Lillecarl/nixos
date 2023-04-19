@@ -1,5 +1,8 @@
-{ config, pkgs, lib, ... }:
-rec
+{ config
+, pkgs
+, lib
+, ...
+}: rec
 {
   # Kills KDE if it hangs on shutdown
   systemd.services.KWinKill = {
@@ -21,4 +24,3 @@ rec
     reloadIfChanged = false;
   };
 }
-

@@ -1,5 +1,7 @@
-{ inputs, lib, ... }:
-{
+{ inputs
+, lib
+, ...
+}: {
   flake = {
     nixosConfigurations.nub = inputs.nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";

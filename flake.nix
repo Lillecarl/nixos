@@ -84,7 +84,11 @@
     nur.url = github:nix-community/NUR;
   };
 
-  outputs = { self, flake-parts, ... } @inputs:
+  outputs =
+    { self
+    , flake-parts
+    , ...
+    } @ inputs:
     flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
         inputs.flake-parts.flakeModules.easyOverlay
@@ -99,27 +103,34 @@
       ];
       systems = [ "x86_64-linux" "x86_64-darwin" ];
       flake = { };
-      perSystem = { config, system, pkgs, inputs', ... }:
+      perSystem =
+        { config
+        , system
+        , pkgs
+        , inputs'
+        , ...
+        }:
         let
-          pkgs_overlaid = (pkgs.extend (import ./pkgs));
-          own_pkgs = (import ./pkgs/pkgs.nix pkgs_overlaid pkgs_overlaid true);
+          pkgs_overlaid = pkgs.extend (import ./pkgs);
+          own_pkgs = import ./pkgs/pkgs.nix pkgs_overlaid pkgs_overlaid true;
         in
         {
           formatter = pkgs.nixpkgs-fmt;
           packages = own_pkgs;
           legacyPackages = pkgs_overlaid;
-          devShells.default = (pkgs_overlaid.buildFHSUserEnv rec {
-            name = "testuserenv";
+          devShells.default =
+            (pkgs_overlaid.buildFHSUserEnv rec {
+              name = "testuserenv";
 
-            targetPkgs = pkgs: (with pkgs_overlaid; [
-              xonsh
-              apt
-            ]);
+              targetPkgs = pkgs: (with pkgs_overlaid; [
+                xonsh
+                apt
+              ]);
 
-            multiPkgs = targetPkgs;
+              multiPkgs = targetPkgs;
 
-            runScript = "bash";
-          }).env;
+              runScript = "bash";
+            }).env;
         };
     };
 }

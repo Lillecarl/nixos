@@ -1,5 +1,8 @@
-{ config, pkgs, inputs, ... }:
-{
+{ config
+, pkgs
+, inputs
+, ...
+}: {
   pam = {
     sessionVariables = rec {
       EDITOR = "${pkgs.neovim}/bin/nvim";

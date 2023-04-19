@@ -1,5 +1,8 @@
-{ config, pkgs, inputs, ... }:
-{
+{ config
+, pkgs
+, inputs
+, ...
+}: {
   home.file = {
     # Replace this list once https://github.com/nix-community/home-manager/pull/3235 is ready and merged
     ".config/xonsh/rc.xsh".source = ../dotfiles/.config/xonsh/rc.xsh;

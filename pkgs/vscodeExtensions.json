@@ -32,8 +32,8 @@
   {
     "name": "vsliveshare",
     "publisher": "MS-vsliveshare",
-    "version": "1.0.5857",
-    "sha256": "083yjsmx98a1w9l7z103rj3h9zshxjnanvm5xygv78753vq4vdzh"
+    "version": "1.0.5862",
+    "sha256": "0cj2fqqg4jymzb2l1z9vjhx780cs1qa8ibinfnq5s1h2i4asaa8q"
   },
   {
     "name": "vscode-ron",
@@ -44,8 +44,8 @@
   {
     "name": "gitlens",
     "publisher": "eamodio",
-    "version": "2023.4.1305",
-    "sha256": "1aiw4r6gv3x18krpdgnx721s3a4jg0fa6l5hp4865kzjfv7m0032"
+    "version": "2023.4.1805",
+    "sha256": "1r5jwib3qbvk0w7wlm8api1s4fyy8hkv7wl8mbjr69gszs1ky43w"
   },
   {
     "name": "xonsh",
@@ -86,8 +86,8 @@
   {
     "name": "python",
     "publisher": "ms-python",
-    "version": "2023.7.11011538",
-    "sha256": "0wm9d75jvrra9abyknn8nksbc27rr274zjwd5jyrf488i1mha8s0"
+    "version": "2023.7.11081008",
+    "sha256": "1ah2w7msyzx6k6vyaaikfrzh4ywmx3802rbbwlsckkwp98smfhm7"
   },
   {
     "name": "vscode-pylance",

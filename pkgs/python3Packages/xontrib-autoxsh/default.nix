@@ -1,9 +1,10 @@
 { lib
 , python3Packages
 , fetchFromGitHub
+,
 }:
 let
-  versiondata = (builtins.fromJSON (builtins.readFile ./version.json));
+  versiondata = builtins.fromJSON (builtins.readFile ./version.json);
 in
 python3Packages.buildPythonPackage rec {
   pname = "xontrib-autoxsh";

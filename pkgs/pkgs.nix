@@ -27,13 +27,16 @@ let
 
     from_ssv = prev.python3Packages.callPackage ../pkgs/python3Packages/from_ssv { };
   };
-  nodePackages = (prev.callPackages ./node-packages { });
+  nodePackages = prev.callPackages ./node-packages { };
 in
 prev.lib.filterAttrs
-  (n: v: flake == false ||
-  # Flake is implicitly true here
-  # Filter out package sets if we're called from a flake.
-  (n != "python3Packages" && n != "nodePackages"))
+  (n: v:
+    flake
+    == false
+    ||
+    # Flake is implicitly true here
+    # Filter out package sets if we're called from a flake.
+    (n != "python3Packages" && n != "nodePackages"))
   {
     # Stand-alone packages
     acme-dns = prev.callPackage ../pkgs/acme-dns { };
@@ -51,7 +54,7 @@ prev.lib.filterAttrs
 
     # Newer salt version, currently in development
     salt3006 = prev.callPackage ./salt { };
-    salt = prev.callPackage ./salt { };
+    #salt = prev.callPackage ./salt { };
     # Inject python3 packages
     python3Packages = python3Packages // prev.python3Packages;
     python3 = prev.python3.override {
@@ -62,5 +65,13 @@ prev.lib.filterAttrs
     # firefox addons
     firefoxAddons = prev.callPackage ./firefoxAddons { };
   }
-// (if flake == true then python3Packages else { })
-  // (if flake == true then nodePackages else { })
+// (
+  if flake == true
+  then python3Packages
+  else { }
+)
+  // (
+  if flake == true
+  then nodePackages
+  else { }
+)

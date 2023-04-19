@@ -8,17 +8,20 @@ let
   mkHome = system: customArgs:
     withSystem system ({ pkgs, ... }:
       inputs.home-manager.lib.homeManagerConfiguration {
-        pkgs = (pkgs // {
-          config.allowUnfree = true;
-          config.permittedInsecurePackages = [
-            "electron-21.4.0"
-          ];
-        });
-        extraSpecialArgs = {
-          inherit self;
-          inherit inputs;
-        }
-        // customArgs.extraSpecialArgs;
+        pkgs =
+          pkgs
+          // {
+            config.allowUnfree = true;
+            config.permittedInsecurePackages = [
+              "electron-21.4.0"
+            ];
+          };
+        extraSpecialArgs =
+          {
+            inherit self;
+            inherit inputs;
+          }
+          // customArgs.extraSpecialArgs;
         modules = with self.homeModules; [ ] ++ customArgs.modules;
       });
 in

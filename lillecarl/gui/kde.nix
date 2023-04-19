@@ -1,5 +1,4 @@
-{ inputs, ... }:
-{
+{ inputs, ... }: {
   home.packages = [
     inputs.plasma-manager.packages."x86_64-linux".rc2nix
   ];

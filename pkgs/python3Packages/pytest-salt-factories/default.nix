@@ -3,6 +3,7 @@
 , buildPythonPackage
 , fetchFromGitHub
 , setuptools
+,
 }:
 buildPythonPackage rec {
   pname = "pytest-salt-factories";

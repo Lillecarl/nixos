@@ -1,7 +1,4 @@
-{ pkgs
-, ...
-}:
-{
+{ pkgs, ... }: {
   imports = [
     ./brave.nix
     ./firefox.nix
@@ -15,7 +12,6 @@
     ".config/qtile/config.py".source = ../dotfiles/.config/qtile/config.py;
     ".config/qtile/battery.py".source = ../dotfiles/.config/qtile/battery.py;
   };
-
 
   home.packages = with pkgs; [
     # Web browsers

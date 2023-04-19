@@ -3,6 +3,7 @@
 , xonsh
 , xonsh-wrapper
 , lib
+,
 }:
 symlinkJoin {
   name = "xonsh-joined";

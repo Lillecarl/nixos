@@ -1,6 +1,8 @@
-{ config, lib, pkgs, ... }:
-
-{
+{ config
+, lib
+, pkgs
+, ...
+}: {
   config = {
     nixpkgs.hostPlatform = "x86_64-linux";
     nixpkgs.overlays = [ ./overlay.nix ];

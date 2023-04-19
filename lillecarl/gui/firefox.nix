@@ -1,5 +1,8 @@
-{ config, pkgs, inputs, ... }:
-{
+{ config
+, pkgs
+, inputs
+, ...
+}: {
   programs.firefox = {
     enable = true;
     package = pkgs.firefox;
@@ -15,12 +18,17 @@
 
           engines = {
             "Kagi" = {
-              urls = [{
-                template = "https://kagi.com/search";
-                params = [
-                  { name = "q"; value = "{searchTerms}"; }
-                ];
-              }];
+              urls = [
+                {
+                  template = "https://kagi.com/search";
+                  params = [
+                    {
+                      name = "q";
+                      value = "{searchTerms}";
+                    }
+                  ];
+                }
+              ];
               icon = builtins.fetchurl {
                 url = "https://assets.kagi.com/v1/favicon-32x32.png";
                 sha256 = "sha256:1gmpn60hzzrmq1r5isfwvycnv793md578yz57fjr16zkilaw6svs";
@@ -86,7 +94,7 @@
 
         userChrome = ''
           /* Hide tab bar */
-          #tabbrowser-tabs { 
+          #tabbrowser-tabs {
             visibility: collapse !important;
           }
           /* Hide side-bad header */

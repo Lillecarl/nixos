@@ -1,4 +1,9 @@
-{ config, pkgs, lib, inputs, ... }:
+{ config
+, pkgs
+, lib
+, inputs
+, ...
+}:
 let
   pkgs-overlay = import ../pkgs;
 in

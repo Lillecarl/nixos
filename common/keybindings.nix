@@ -1,4 +1,7 @@
-{ config, pkgs, ... }:
+{ config
+, pkgs
+, ...
+}:
 let
   # machinectl gives us a shell to run a command as a user with dbus and everything set up by systemd
   mctl_shell_qdbus = "${pkgs.systemd}/bin/machinectl shell lillecarl@ /run/current-system/sw/bin/qdbus";
@@ -290,20 +293,20 @@ let
         username = os.getlogin()
         print(username)
         pid = 0
-  
+
         for proc in psutil.process_iter(['pid', 'name', 'username']):
           if proc.info['username'] == username and proc.info['name'].find(sys.argv[1]) >= 0 :
             print(proc.info['name'])
             pid = proc.info['pid']
             break
-  
+
         return pid
 
       if __name__ == "__main__":
         pid = findproc(sys.argv[1])
 
         print(pid)
-  
+
         if pid:
           envsteal(pid)
           @(sys.argv[2])
@@ -325,105 +328,165 @@ rec
         command = "${mctl_shell_qdbus} org.kde.krunner /App org.kde.krunner.App.query \"window: \" &";
         attributes = keyAttributes;
       }
-      { keys = [ KEY_LEFTMETA KEY_TAB ]; events = [ "rel" ]; attributes = releaseAttributes; }
+      {
+        keys = [ KEY_LEFTMETA KEY_TAB ];
+        events = [ "rel" ];
+        attributes = releaseAttributes;
+      }
       {
         keys = [ KEY_SPACE KEY_LEFTALT ];
         events = [ "key" ];
         command = "${mctl_shell_qdbus} org.kde.krunner /App org.kde.krunner.App.query \"\" &";
         attributes = keyAttributes;
       }
-      { keys = [ KEY_SPACE KEY_LEFTALT ]; events = [ "rel" ]; attributes = releaseAttributes; }
+      {
+        keys = [ KEY_SPACE KEY_LEFTALT ];
+        events = [ "rel" ];
+        attributes = releaseAttributes;
+      }
       {
         keys = [ KEY_LEFT KEY_LEFTMETA ];
         events = [ "key" ];
         command = invokeShortcut "Window Quick Tile Left";
         attributes = keyAttributes;
       }
-      { keys = [ KEY_LEFT KEY_LEFTMETA ]; events = [ "rel" ]; attributes = releaseAttributes; }
+      {
+        keys = [ KEY_LEFT KEY_LEFTMETA ];
+        events = [ "rel" ];
+        attributes = releaseAttributes;
+      }
       {
         keys = [ KEY_RIGHT KEY_LEFTMETA ];
         events = [ "key" ];
         command = invokeShortcut "Window Quick Tile Right";
         attributes = keyAttributes;
       }
-      { keys = [ KEY_RIGHT KEY_LEFTMETA ]; events = [ "rel" ]; attributes = releaseAttributes; }
+      {
+        keys = [ KEY_RIGHT KEY_LEFTMETA ];
+        events = [ "rel" ];
+        attributes = releaseAttributes;
+      }
       {
         keys = [ KEY_UP KEY_LEFTMETA ];
         events = [ "key" ];
         command = invokeShortcut "Window Quick Tile Top";
         attributes = keyAttributes;
       }
-      { keys = [ KEY_UP KEY_LEFTMETA ]; events = [ "rel" ]; attributes = releaseAttributes; }
+      {
+        keys = [ KEY_UP KEY_LEFTMETA ];
+        events = [ "rel" ];
+        attributes = releaseAttributes;
+      }
       {
         keys = [ KEY_DOWN KEY_LEFTMETA ];
         events = [ "key" ];
         command = invokeShortcut "Window Quick Tile Bottom";
         attributes = keyAttributes;
       }
-      { keys = [ KEY_DOWN KEY_LEFTMETA ]; events = [ "rel" ]; attributes = releaseAttributes; }
+      {
+        keys = [ KEY_DOWN KEY_LEFTMETA ];
+        events = [ "rel" ];
+        attributes = releaseAttributes;
+      }
       {
         keys = [ KEY_LEFT KEY_UP KEY_LEFTMETA ];
         events = [ "key" ];
         command = invokeShortcut "Window Quick Tile Top Left";
         attributes = keyAttributes;
       }
-      { keys = [ KEY_LEFT KEY_UP KEY_LEFTMETA ]; events = [ "rel" ]; attributes = releaseAttributes; }
+      {
+        keys = [ KEY_LEFT KEY_UP KEY_LEFTMETA ];
+        events = [ "rel" ];
+        attributes = releaseAttributes;
+      }
       {
         keys = [ KEY_RIGHT KEY_UP KEY_LEFTMETA ];
         events = [ "key" ];
         command = invokeShortcut "Window Quick Tile Top Right";
         attributes = keyAttributes;
       }
-      { keys = [ KEY_RIGHT KEY_UP KEY_LEFTMETA ]; events = [ "rel" ]; attributes = releaseAttributes; }
+      {
+        keys = [ KEY_RIGHT KEY_UP KEY_LEFTMETA ];
+        events = [ "rel" ];
+        attributes = releaseAttributes;
+      }
       {
         keys = [ KEY_LEFT KEY_DOWN KEY_LEFTMETA ];
         events = [ "key" ];
         command = invokeShortcut "Window Quick Tile Bottom Left";
         attributes = keyAttributes;
       }
-      { keys = [ KEY_LEFT KEY_DOWN KEY_LEFTMETA ]; events = [ "rel" ]; attributes = releaseAttributes; }
+      {
+        keys = [ KEY_LEFT KEY_DOWN KEY_LEFTMETA ];
+        events = [ "rel" ];
+        attributes = releaseAttributes;
+      }
       {
         keys = [ KEY_RIGHT KEY_DOWN KEY_LEFTMETA ];
         events = [ "key" ];
         command = invokeShortcut "Window Quick Tile Bottom Right";
         attributes = keyAttributes;
       }
-      { keys = [ KEY_RIGHT KEY_DOWN KEY_LEFTMETA ]; events = [ "rel" ]; attributes = releaseAttributes; }
+      {
+        keys = [ KEY_RIGHT KEY_DOWN KEY_LEFTMETA ];
+        events = [ "rel" ];
+        attributes = releaseAttributes;
+      }
       {
         keys = [ KEY_F KEY_LEFTMETA ];
         events = [ "key" ];
         command = invokeShortcut "Window Maximize";
         attributes = keyAttributes;
       }
-      { keys = [ KEY_F KEY_LEFTMETA ]; events = [ "rel" ]; attributes = releaseAttributes; }
+      {
+        keys = [ KEY_F KEY_LEFTMETA ];
+        events = [ "rel" ];
+        attributes = releaseAttributes;
+      }
       {
         keys = [ KEY_LEFTCTRL KEY_C ];
         events = [ "key" ];
         command = invokeShortcut "Copy";
         attributes = keyAttributes;
       }
-      { keys = [ KEY_LEFTCTRL KEY_C ]; events = [ "rel" ]; attributes = releaseAttributes; }
+      {
+        keys = [ KEY_LEFTCTRL KEY_C ];
+        events = [ "rel" ];
+        attributes = releaseAttributes;
+      }
       {
         keys = [ KEY_LEFTCTRL KEY_X ];
         events = [ "key" ];
         command = invokeShortcut "Cut";
         attributes = keyAttributes;
       }
-      { keys = [ KEY_LEFTCTRL KEY_X ]; events = [ "rel" ]; attributes = releaseAttributes; }
+      {
+        keys = [ KEY_LEFTCTRL KEY_X ];
+        events = [ "rel" ];
+        attributes = releaseAttributes;
+      }
       {
         keys = [ KEY_LEFTCTRL KEY_V ];
         events = [ "key" ];
         command = invokeShortcut "Paste";
         attributes = keyAttributes;
       }
-      { keys = [ KEY_LEFTCTRL KEY_V ]; events = [ "rel" ]; attributes = releaseAttributes; }
+      {
+        keys = [ KEY_LEFTCTRL KEY_V ];
+        events = [ "rel" ];
+        attributes = releaseAttributes;
+      }
       {
         keys = [ KEY_PRINTSCREEN ];
         events = [ "key" ];
         command = invokeCommand "spectacle";
         attributes = keyAttributes;
       }
-      { keys = [ KEY_PRINTSCREEN ]; events = [ "rel" ]; attributes = releaseAttributes; }
+      {
+        keys = [ KEY_PRINTSCREEN ];
+        events = [ "rel" ];
+        attributes = releaseAttributes;
+      }
     ];
   };
 }

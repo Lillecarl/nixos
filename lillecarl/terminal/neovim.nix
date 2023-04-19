@@ -1,4 +1,8 @@
-{ config, pkgs, inputs, ... }:
+{ config
+, pkgs
+, inputs
+, ...
+}:
 let
   nil = inputs.nil.packages."x86_64-linux".default;
 in

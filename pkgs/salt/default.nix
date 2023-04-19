@@ -4,8 +4,8 @@
 , openssl
 , fetchpatch
 , extraInputs ? [ ]
+,
 }:
-
 python3.pkgs.buildPythonApplication rec {
   pname = "salt";
   version = "3006";
@@ -25,21 +25,23 @@ python3.pkgs.buildPythonApplication rec {
     cherrypy
   ];
 
-  propagatedBuildInputs = with python3.pkgs; [
-    distro
-    jinja2
-    jmespath
-    markupsafe
-    msgpack
-    psutil
-    pycryptodomex
-    pyyaml
-    pyzmq25
-    requests
-    looseversion
-    packaging
-    setuptools
-  ] ++ extraInputs;
+  propagatedBuildInputs = with python3.pkgs;
+    [
+      distro
+      jinja2
+      jmespath
+      markupsafe
+      msgpack
+      psutil
+      pycryptodomex
+      pyyaml
+      pyzmq25
+      requests
+      looseversion
+      packaging
+      setuptools
+    ]
+    ++ extraInputs;
 
   patches = [
     ./fix-libcrypto-loading.patch

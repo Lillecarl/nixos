@@ -1,9 +1,10 @@
 { lib
 , buildGoModule
 , fetchFromGitHub
+,
 }:
 let
-  versiondata = (builtins.fromJSON (builtins.readFile ./version.json));
+  versiondata = builtins.fromJSON (builtins.readFile ./version.json);
 in
 # If you don't know how to get the sha256's ahead of time, just build and check CLI output.
 buildGoModule rec {

@@ -1,4 +1,8 @@
-{ config, pkgs, inputs, ... }:
+{ config
+, pkgs
+, inputs
+, ...
+}:
 let
   internalSSH = {
     user = "carl.hjerpe";
@@ -36,6 +40,5 @@ in
 
     serverAliveInterval = 10;
     serverAliveCountMax = 6;
-
   };
 }
