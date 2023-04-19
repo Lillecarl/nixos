@@ -86,8 +86,8 @@
   {
     "name": "python",
     "publisher": "ms-python",
-    "version": "2023.7.11081008",
-    "sha256": "1ah2w7msyzx6k6vyaaikfrzh4ywmx3802rbbwlsckkwp98smfhm7"
+    "version": "2023.7.11091004",
+    "sha256": "0di5mg3ilc1f5rzq9irg04cf7swp5vvgd5g0zi6zjn2r9p8cz9x1"
   },
   {
     "name": "vscode-pylance",
