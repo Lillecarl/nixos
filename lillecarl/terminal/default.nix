@@ -23,6 +23,8 @@
 
   home.sessionVariables = config.pam.sessionVariables;
 
+  xdg.enable = true;
+
   programs.zellij = {
     enable = true;
 
