@@ -12,14 +12,12 @@ let
       partitions = [
         {
           name = "boot";
-          type = "partition";
           start = "0";
           end = "1MiB";
           bootable = true;
           flags = [ "bios_grub" ];
         }
         {
-          type = "partition";
           name = "ESP";
           start = "1MiB";
           end = "1GiB";
@@ -35,7 +33,6 @@ let
           };
         }
         {
-          type = "partition";
           name = "boot";
           start = "1GiB";
           end = "2GiB";
@@ -53,7 +50,6 @@ let
         }
         {
           name = "root";
-          type = "partition";
           start = "2GiB";
           end = "100%";
           part-type = "primary";
@@ -81,7 +77,6 @@ in
         format = "gpt";
         partitions = [
           {
-            type = "partition";
             name = "primary";
             start = "1MiB";
             end = "100%";
@@ -103,7 +98,6 @@ in
       type = "lvm_vg";
       lvs = {
         nixos = {
-          type = "lvm_lv";
           size = "250G";
           content = {
             type = "btrfs";
@@ -135,11 +129,9 @@ in
           };
         };
         windows = {
-          type = "lvm_lv";
           size = "250G";
         };
         swap = {
-          type = "lvm_lv";
           size = "32G";
           content = {
             type = "swap";
