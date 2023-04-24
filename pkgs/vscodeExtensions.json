@@ -14,8 +14,8 @@
   {
     "name": "copilot",
     "publisher": "GitHub",
-    "version": "1.82.15",
-    "sha256": "1nfgfi827xiz347dmdyk3d5yhfjlaz1lx9ygssxjdm89zgpw13xz"
+    "version": "1.84.51",
+    "sha256": "1w6ir3g1fh51k0ysa1kc1y4czij9x0iangfiw50566vnixzm7d96"
   },
   {
     "name": "EditorConfig",
@@ -44,8 +44,8 @@
   {
     "name": "gitlens",
     "publisher": "eamodio",
-    "version": "2023.4.1805",
-    "sha256": "1r5jwib3qbvk0w7wlm8api1s4fyy8hkv7wl8mbjr69gszs1ky43w"
+    "version": "2023.4.2405",
+    "sha256": "1d3k961bxj021hvls9bhd0qi1i21rbg6kgcz91n7db8xsnqzjv6c"
   },
   {
     "name": "xonsh",
@@ -68,8 +68,8 @@
   {
     "name": "vscode-clangd",
     "publisher": "llvm-vs-code-extensions",
-    "version": "0.1.23",
-    "sha256": "125incws4n688irqii3s2a1cznj0kvkbhv3sa8585chj5g4zvmfy"
+    "version": "0.1.24",
+    "sha256": "0s7n3r3fkb6xh38yv8q0nj0js1dkxl53xhr1dvqia7gh71i6rsn8"
   },
   {
     "name": "vscode-kubernetes-tools",
@@ -80,20 +80,20 @@
   {
     "name": "isort",
     "publisher": "ms-python",
-    "version": "2023.9.10931010",
-    "sha256": "1ziq7fmzywm4hdg5ww7ka4x8g5biwvgcicsmwygl9mv8l7fvjnm2"
+    "version": "2023.9.11141005",
+    "sha256": "1hk75jpwl4v7910f5dw0zwb33bij1a76jpishv23dm81dd5g3s9p"
   },
   {
     "name": "python",
     "publisher": "ms-python",
-    "version": "2023.7.11081008",
-    "sha256": "1ah2w7msyzx6k6vyaaikfrzh4ywmx3802rbbwlsckkwp98smfhm7"
+    "version": "2023.7.11141008",
+    "sha256": "0m8czrjn8dpja5qi5rsryyrcy03rblh31lqh8hznblmkj8hrz05d"
   },
   {
     "name": "vscode-pylance",
     "publisher": "ms-python",
-    "version": "2023.4.21",
-    "sha256": "1y1bw1nbn59av37ym6dl5v6c1d5wif3l7galcv313q0y5ayqrd5k"
+    "version": "2023.4.31",
+    "sha256": "07iqn33xlb2i84ng2gkn0a8qb3pj6akgakcqlxyqppdlvh2rz0la"
   },
   {
     "name": "remote-ssh",
