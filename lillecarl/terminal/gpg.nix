@@ -14,5 +14,6 @@
 
     mutableKeys = true;
     mutableTrust = true;
+    homedir = "${config.xdg.dataHome}/gnupg";
   };
 }

@@ -1,0 +1,1 @@
+example firefox utl https://addons.mozilla.org/api/v4/addons/addon/adblocker-ultimate/?app=firefox&lang=en-US

@@ -18,5 +18,14 @@
         "keychain"
       ];
     };
+    initExtra = ''
+      compinit -d "$XDG_CACHE_HOME"/zsh/zcompdump-"$ZSH_VERSION"
+      export HISTFILE="$XDG_STATE_HOME"/zsh/history
+    '';
+    dotDir = ".config/zsh";
+  };
+
+  home.file = {
+    "${config.xdg.stateHome}/zsh/.keep".text = "";
   };
 }

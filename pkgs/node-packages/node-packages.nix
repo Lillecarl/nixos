@@ -823,6 +823,15 @@ let
         sha512 = "qctsuLZmIQ0+vSSMfoVvyFe2+GSEvnmZ2ezTup1SBse9+twCCeial6EEi3Nc2KFcf6+qz2FBPnjXsk8xhKSaPQ==";
       };
     };
+    "isarray-2.0.5" = {
+      name = "isarray";
+      packageName = "isarray";
+      version = "2.0.5";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/isarray/-/isarray-2.0.5.tgz";
+        sha512 = "xHjhDr3cNBK0BzdUJSPXZntQUx/mwMS5Rw4A7lPJ90XGAO6ISP/ePDNuo0vhqOZU+UD5JoodwCAAoZQd3FeAKw==";
+      };
+    };
     "js-yaml-3.14.1" = {
       name = "js-yaml";
       packageName = "js-yaml";
@@ -922,13 +931,13 @@ let
         sha512 = "1mxKf0e58bvyjSCtKYY4sRe9itRk3PJpquJOjeIkz885CczcI4IvJJDLPS72oowuSh+pBxUFROpX+TU++hxhZQ==";
       };
     };
-    "object.getownpropertydescriptors-2.1.5" = {
+    "object.getownpropertydescriptors-2.1.6" = {
       name = "object.getownpropertydescriptors";
       packageName = "object.getownpropertydescriptors";
-      version = "2.1.5";
+      version = "2.1.6";
       src = fetchurl {
-        url = "https://registry.npmjs.org/object.getownpropertydescriptors/-/object.getownpropertydescriptors-2.1.5.tgz";
-        sha512 = "yDNzckpM6ntyQiGTik1fKV1DcVDRS+w8bvpWNCBanvH5LfRX9O8WTHqQzG4RZwRAM4I0oU7TV11Lj5v0g20ibw==";
+        url = "https://registry.npmjs.org/object.getownpropertydescriptors/-/object.getownpropertydescriptors-2.1.6.tgz";
+        sha512 = "lq+61g26E/BgHv0ZTFgRvi7NMEPuAxLkFU7rukXjc/AlwH4Am5xXVnIXy3un1bg/JPbXHrixRkK1itUzzPiIjQ==";
       };
     };
     "once-1.4.0" = {
@@ -974,6 +983,15 @@ let
       src = fetchurl {
         url = "https://registry.npmjs.org/requirefresh/-/requirefresh-2.3.0.tgz";
         sha512 = "oskKAg0pSlPnJAkFMrcqrHeCGzYunl4Hkl+N/NW3nnFWDHRg97yb475HtF5ax8LP9i8QvVkenVIhjNb+h+P7nA==";
+      };
+    };
+    "safe-array-concat-1.0.0" = {
+      name = "safe-array-concat";
+      packageName = "safe-array-concat";
+      version = "1.0.0";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/safe-array-concat/-/safe-array-concat-1.0.0.tgz";
+        sha512 = "9dVEFruWIsnie89yym+xWTAYASdpw3CJV7Li/6zBewGf9z2i1j31rP6jnY0pHEO4QZh6N0K11bFjWmdR8UGdPQ==";
       };
     };
     "safe-regex-test-1.0.0" = {
@@ -1156,13 +1174,13 @@ let
         sha512 = "61pPlCD9h51VoreyJ0BReideM3MDKMKnh6+V9L08331ipq6Q8OFXZYiqP6n/tbHx4s5I9uRhcye6BrbkizkBDw==";
       };
     };
-    "util.promisify-1.1.1" = {
+    "util.promisify-1.1.2" = {
       name = "util.promisify";
       packageName = "util.promisify";
-      version = "1.1.1";
+      version = "1.1.2";
       src = fetchurl {
-        url = "https://registry.npmjs.org/util.promisify/-/util.promisify-1.1.1.tgz";
-        sha512 = "/s3UsZUrIfa6xDhr7zZhnE9SLQ5RIXyYfiVnMMyMDzOc8WhWN4Nbh36H842OyurKbCDAesZOJaVyvmSl6fhGQw==";
+        url = "https://registry.npmjs.org/util.promisify/-/util.promisify-1.1.2.tgz";
+        sha512 = "PBdZ03m1kBnQ5cjjO0ZvJMJS+QsbyIcFwi4hY4U76OQsCO9JrOYjbCFgIF76ccFg9xnJo7ZHPkqyj1GqmdS7MA==";
       };
     };
     "voc-1.2.0" = {
@@ -1334,6 +1352,7 @@ in
       sources."is-symbol-1.0.4"
       sources."is-typed-array-1.1.10"
       sources."is-weakref-1.0.2"
+      sources."isarray-2.0.5"
       sources."js-yaml-3.14.1"
       sources."json-schema-traverse-0.3.1"
       sources."json5-0.5.1"
@@ -1345,12 +1364,13 @@ in
       sources."object-inspect-1.12.3"
       sources."object-keys-1.1.1"
       sources."object.assign-4.1.4"
-      sources."object.getownpropertydescriptors-2.1.5"
+      sources."object.getownpropertydescriptors-2.1.6"
       sources."once-1.4.0"
       sources."path-is-absolute-1.0.1"
       sources."printj-1.1.2"
       sources."regexp.prototype.flags-1.5.0"
       sources."requirefresh-2.3.0"
+      sources."safe-array-concat-1.0.0"
       sources."safe-regex-test-1.0.0"
       sources."safefs-4.2.0"
       sources."safer-buffer-2.1.2"
@@ -1370,7 +1390,7 @@ in
       sources."typed-array-length-1.0.4"
       sources."typescript-2.9.2"
       sources."unbox-primitive-1.0.2"
-      sources."util.promisify-1.1.1"
+      sources."util.promisify-1.1.2"
       sources."voc-1.2.0"
       sources."which-boxed-primitive-1.0.2"
       sources."which-typed-array-1.1.9"
