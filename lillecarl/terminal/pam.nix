@@ -19,6 +19,4 @@
       XAUTHORITY = "\"$XDG_RUNTIME_DIR\"/Xauthority";
     };
   };
-  programs.gpg.homedir = "${config.xdg.dataHome}/gnupg";
-  programs.zsh.dotDir = "${config.xdg.configHome}/zsh";
 }
