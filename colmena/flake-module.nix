@@ -6,7 +6,7 @@
         nixpkgs = import inputs.nixpkgs {
           system = "x86_64-linux";
           overlays = [
-            #../pkgs
+            ../pkgs
           ];
         };
         specialArgs = {
@@ -18,10 +18,6 @@
         deployment = {
           allowLocalDeployment = true;
           targetHost = null;
-
-          #targetHost = "somehost.tld";
-          #targetPort = 1234;
-          #targetUser = "luser";
         };
         imports = [
           ../nub/default.nix
