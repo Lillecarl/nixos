@@ -14,10 +14,11 @@
       GIT_COMMITTER_NAME = GIT_AUTHOR_NAME;
       GIT_COMMITTER_EMAIL = GIT_AUTHOR_EMAIL;
       EMAIL = GIT_AUTHOR_EMAIL;
-      GTK2_RC_FILES="${config.xdg.configHome}/gtk-2.0/gtkrc";
-      XCOMPOSECACHE="${config.xdg.cacheHome}/X11/xcompose";
-      XAUTHORITY="\"$XDG_RUNTIME_DIR\"/Xauthority";
+      GTK2_RC_FILES = "${config.xdg.configHome}/gtk-2.0/gtkrc";
+      XCOMPOSECACHE = "${config.xdg.cacheHome}/X11/xcompose";
+      XAUTHORITY = "\"$XDG_RUNTIME_DIR\"/Xauthority";
     };
   };
   programs.gpg.homedir = "${config.xdg.dataHome}/gnupg";
+  programs.zsh.dotDir = "${config.xdg.configHome}/zsh";
 }
