@@ -1,0 +1,11 @@
+<filesystem type="mount" accessmode="passthrough">
+  <driver type="virtiofs" queue="1024"/>
+  <binary path="/run/current-system/sw/bin/virtiofsd" xattr="on">
+    <cache mode="always"/>
+    <lock posix="on" flock="on"/>
+  </binary>
+  <source dir="/home/lillecarl/Documents"/>
+  <target dir="documents"/>
+  <address type="pci" domain="0x0000" bus="0x0a" slot="0x00" function="0x0"/>
+</filesystem>
+
