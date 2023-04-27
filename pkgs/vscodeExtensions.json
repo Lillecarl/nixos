@@ -32,8 +32,8 @@
   {
     "name": "vsliveshare",
     "publisher": "MS-vsliveshare",
-    "version": "1.0.5862",
-    "sha256": "0cj2fqqg4jymzb2l1z9vjhx780cs1qa8ibinfnq5s1h2i4asaa8q"
+    "version": "1.0.5864",
+    "sha256": "1dncvc9j8g1wl1k2pp2jgijqp48ljc8198f8iycidz683f4kvlji"
   },
   {
     "name": "vscode-ron",
@@ -44,8 +44,8 @@
   {
     "name": "gitlens",
     "publisher": "eamodio",
-    "version": "2023.4.2405",
-    "sha256": "1d3k961bxj021hvls9bhd0qi1i21rbg6kgcz91n7db8xsnqzjv6c"
+    "version": "2023.4.2505",
+    "sha256": "1xy89x8hq4ggpzxyjvvaimylkarway8521c1jnzrv9jf95q6jxxg"
   },
   {
     "name": "xonsh",
@@ -110,8 +110,8 @@
   {
     "name": "cpptools",
     "publisher": "ms-vscode",
-    "version": "1.15.2",
-    "sha256": "02mvkr9xmllav6vyxhpyydjf4802chchz656q1cpdplci7314shd"
+    "version": "1.15.3",
+    "sha256": "0rsmf7kcgif8m611x2z53qmdchy7193g6d2y3dgs74i0wm00bcab"
   },
   {
     "name": "remote-explorer",
