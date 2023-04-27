@@ -42,7 +42,7 @@ in
         extraSpecialArgs = { };
         modules = [
           ./terminal
-          ./default
+          ./default.nix
         ];
       };
     };
