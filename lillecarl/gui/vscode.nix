@@ -9,7 +9,7 @@
     enableUpdateCheck = false;
     mutableExtensionsDir = false;
 
-    package = pkgs.vscodium;
+    package = pkgs.vscode;
 
     extensions = pkgs.vscode-utils.extensionsFromVscodeMarketplace (
       builtins.fromJSON (
