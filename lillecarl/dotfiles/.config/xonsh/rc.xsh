@@ -53,6 +53,7 @@ xontrib load @(_xontribs_installed.intersection(_xontribs_to_load))
 $XONTRIB_OUTPUT_SEARCH_REGEXES = [
   re.compile(r'at \d{2}:\d{2}:\d{2}(\.\d+)?'),
   re.compile(r'~.* 🐚 xonsh')
+  re.compile(r'took [0-9|h|m|s]*s')
 ]
 
 # Globbing files with “*” or “**” will also match dotfiles, or those ‘hidden’ files whose names begin with a literal ‘.’. 
