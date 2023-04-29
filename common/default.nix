@@ -84,7 +84,6 @@
     rmtrash # rm compatible remove tool
     inetutils # Common internet utilities
     nmap # Network scanner
-    vagrant # Create
     execline # Tools for dbus n stuff
     handlr # xdg-open alternative
     cookiecutter # Simple project template engine
