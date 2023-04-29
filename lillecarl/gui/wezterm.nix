@@ -7,6 +7,8 @@
     enable = true;
 
     extraConfig = ''
+      local act = wezterm.action
+
       return {
         check_for_updates = false,
         color_scheme = 'Solarized (dark) (terminal.sexy)',
@@ -29,6 +31,28 @@
           'zellij',
           'python',
           'python3',
+        },
+        keys = {
+          {
+            key = "h",
+            mods = "ALT",
+            action = act.ActivatePaneDirection 'Left',
+          },
+          {
+            key = "l",
+            mods = "ALT",
+            action = act.ActivatePaneDirection 'Right',
+          },
+          {
+            key = "k",
+            mods = "ALT",
+            action = act.ActivatePaneDirection 'Up',
+          },
+          {
+            key = "j",
+            mods = "ALT",
+            action = act.ActivatePaneDirection 'Down',
+          },
         },
       }
     '';
