@@ -7,6 +7,7 @@
   imports = [
     ./hardware-configuration.nix
     ../common/k3s.nix
+    ../nixos/config/adb.nix
   ];
 
   # Use the systemd-boot EFI boot loader.
