@@ -5,7 +5,7 @@
 }: {
   config = {
     nixpkgs.hostPlatform = "x86_64-linux";
-    nixpkgs.overlays = [ ./overlay.nix ];
+    #nixpkgs.overlays = [ ./overlay.nix ];
 
     environment.etc = {
       "system-manager.conf.test".text = ''
