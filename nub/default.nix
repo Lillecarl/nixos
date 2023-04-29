@@ -6,6 +6,7 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ../common/k3s.nix
   ];
 
   # Use the systemd-boot EFI boot loader.
