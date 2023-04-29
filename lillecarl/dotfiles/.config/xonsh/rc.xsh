@@ -49,6 +49,12 @@ _xontribs_to_load = (
 )
 xontrib load @(_xontribs_installed.intersection(_xontribs_to_load))
 
+# Clean up prompt stuff from output_search
+$XONTRIB_OUTPUT_SEARCH_REGEXES = [
+  re.compile(r'at \d{2}:\d{2}:\d{2}(\.\d+)?'),
+  re.compile(r'~.* 🐚 xonsh')
+]
+
 # Globbing files with “*” or “**” will also match dotfiles, or those ‘hidden’ files whose names begin with a literal ‘.’. 
 # Note! This affects also on rsync and other tools.
 $DOTGLOB = True
