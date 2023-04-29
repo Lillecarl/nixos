@@ -3,11 +3,6 @@
 , lib
 , ...
 }:
-let
-  kubeEnable = false;
-  prometheusEnable = false;
-in
-rec
 {
   imports = [
     ./hardware-configuration.nix
@@ -280,12 +275,6 @@ rec
   services.printing.enable = false;
   # Enable GlobalProtect VPN
   services.globalprotect.enable = true;
-
-  # Fix local Kubernetes
-  services.k3s = lib.mkIf kubeEnable {
-    enable = true;
-    role = "server";
-  };
 
   virtualisation = {
     libvirtd = {
