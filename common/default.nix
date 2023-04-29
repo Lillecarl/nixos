@@ -301,7 +301,7 @@
 
     fonts = with pkgs; [
       corefonts
-      nerdfonts
+      (nerdfonts.override { fonts = [ "Hack" "FiraCode" "DroidSansMono" ]; })
       helvetica-neue-lt-std
     ];
   };
