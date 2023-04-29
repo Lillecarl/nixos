@@ -8,7 +8,7 @@ let
 in
 python3Packages.buildPythonPackage rec {
   pname = "pyping3";
-  version = versiondata.version;
+  version = "0.0.1";
   src = fetchFromGitHub versiondata;
 
   meta = {
