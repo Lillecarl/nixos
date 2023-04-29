@@ -9,9 +9,9 @@ symlinkJoin {
   name = "xonsh-joined";
   # recurse all listed dependencies
   paths = with python3.pkgs; (python3.pkgs.requiredPythonModules [
-    coconut
     (lib.hiPrio xonsh-wrapper)
     PyGithub
+    coconut
     from_ssv
     jinja2
     kubernetes
@@ -19,6 +19,7 @@ symlinkJoin {
     munch
     plumbum
     psutil
+    pyping
     pyyaml
     sh
     xonsh

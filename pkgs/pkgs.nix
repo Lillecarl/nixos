@@ -26,6 +26,7 @@ let
     ifupdown2 = prev.python3Packages.callPackage ../pkgs/python3Packages/ifupdown2 { };
 
     from_ssv = prev.python3Packages.callPackage ../pkgs/python3Packages/from_ssv { };
+    pyping = prev.python3Packages.callPackage ../pkgs/python3Packages/pyping { };
   };
   nodePackages = prev.callPackages ./node-packages { };
 in
