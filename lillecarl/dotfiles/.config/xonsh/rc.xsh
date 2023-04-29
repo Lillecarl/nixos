@@ -13,6 +13,7 @@ import time
 import json
 import platform
 import os
+import re as _re
 from from_ssv import from_ssv
 
 from prompt_toolkit.keys import Keys
@@ -51,9 +52,9 @@ xontrib load @(_xontribs_installed.intersection(_xontribs_to_load))
 
 # Clean up prompt stuff from output_search
 $XONTRIB_OUTPUT_SEARCH_REGEXES = [
-  re.compile(r'at \d{2}:\d{2}:\d{2}(\.\d+)?'),
-  re.compile(r'~.* 🐚 xonsh')
-  re.compile(r'took [0-9|h|m|s]*s')
+  _re.compile(r'at \d{2}:\d{2}:\d{2}(\.\d+)?'),
+  _re.compile(r'~.* 🐚 xonsh'),
+  _re.compile(r'took [0-9|h|m|s]*s')
 ]
 
 # Globbing files with “*” or “**” will also match dotfiles, or those ‘hidden’ files whose names begin with a literal ‘.’. 
