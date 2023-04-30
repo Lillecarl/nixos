@@ -44,8 +44,8 @@
   {
     "name": "gitlens",
     "publisher": "eamodio",
-    "version": "2023.4.2805",
-    "sha256": "0h34ifclqrl1q85x6wf5zwvfgiz93xf0h06g1gfbyin09c56xp1l"
+    "version": "2023.4.3005",
+    "sha256": "0xi378cw0cwknnfg5cjnlm6pgismr7h4gpx90nnbkvcq52d2g5z7"
   },
   {
     "name": "xonsh",
