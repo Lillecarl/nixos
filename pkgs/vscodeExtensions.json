@@ -27,7 +27,7 @@
     "name": "terraform",
     "publisher": "HashiCorp",
     "version": "2.26.0",
-    "sha256": "sha256-TYcZhi8gU84e9yPvtD2JrNLaLYAx7jZiH90EHGBY5ns="
+    "sha256": "1wmjbcswxhq0ii1mq0z8ca0d8vy974k62r41fpxz4pxhvlsvavrz"
   },
   {
     "name": "vsliveshare",

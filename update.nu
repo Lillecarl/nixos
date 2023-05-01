@@ -8,7 +8,7 @@ def updatevscode [] {
 
   let $data = ($extpath | open)
 
-  let $updated_data = ($data | par-each {|it|
+  let $updated_data = ($data | par-each --threads ($data | length) {|it|
     $"Processing ($it.publisher)-($it.name)" | print
     let URL = $"https://($it.publisher).gallery.vsassets.io/_apis/public/gallery/publisher/($it.publisher)/extension/($it.name)/latest/assetbyname/Microsoft.VisualStudio.Services.VSIXPackage"
     let NAME = $"($it.publisher)-($it.name)"
