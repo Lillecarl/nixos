@@ -69,14 +69,6 @@
   environment.systemPackages = with pkgs; [
     # Temporary lab
     xorg.xwininfo # Information about X windows (Used to find things using XWayland)
-    # virtiofsd link
-    (pkgs.stdenv.mkDerivation {
-      name = "virtiofsd-link";
-      buildCommand = ''
-        mkdir -p $out/bin
-        ln -s ${pkgs.qemu}/libexec/virtiofsd $out/bin/
-      '';
-    })
 
     # Commandline tools (CLI)
     virtiofsd # VirtIO filesystem daemon
