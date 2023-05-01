@@ -126,6 +126,7 @@ rec
       "podman"
       "wireshark"
       "i2c"
+      "video"
     ];
   };
 
