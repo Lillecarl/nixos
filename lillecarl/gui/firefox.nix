@@ -60,6 +60,7 @@
         ];
 
         settings = {
+          "app.update.auto" = false; # don't auto update
           "browser.aboutConfig.showWarning" = false; # to show warning prompt when accessing about:config page.
           "browser.ctrlTab.sortByRecentlyUsed" = true; # ctrl + tab sort tabs by recently used
           "browser.newtabpage.activity-stream.feeds.telemetry" = false; # disable telemetry
@@ -72,6 +73,7 @@
           "datareporting.healthreport.uploadEnabled" = false; # setting Firefox Health Report uploading functionality.
           "datareporting.policy.dataSubmissionEnabled" = false; # this is the data submission master kill switch. (https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/internals/preferences.html)
           "dom.successive_dialog_time_limit" = 1; # don't allow websites to abuse prompts.
+          "extensions.update.autoUpdateDefault" = false; # don't auto update extensions
           "general.autoScroll" = true; # press scroll wheel scroll
           "privacy.annotate_channels.strict_list.enabled" = true; # strict browsing
           "privacy.annotate_channels.strict_list.pbmode.enabled" = true; # strict browsing
@@ -84,9 +86,12 @@
           "toolkit.telemetry.bhrPing.enabled" = false; # disable telemetry
           "toolkit.telemetry.enabled" = false; # disable telemetry
           "toolkit.telemetry.firstShutdownPing.enabled" = false; # disable telemetry
+          "toolkit.telemetry.newProfilePing.enabled" = false; # don't ping things
+          "toolkit.telemetry.pioneer-new-studies-available" = false; # don't ping things
           "toolkit.telemetry.prompted" = 2; # we've been asked about telemetry
           "toolkit.telemetry.rejected" = true; # we rejected telemetry
           "toolkit.telemetry.server" = ""; # unconfigure telemetry server
+          "toolkit.telemetry.shutdownPingSender.enabled" = false; # don't ping things
           "toolkit.telemetry.unified" = false; # not sure
           "toolkit.telemetry.unifiedIsOptIn" = false; # don't opt in
           "toolkit.telemetry.updatePing.enabled" = false; # don't ping things
