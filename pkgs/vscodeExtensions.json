@@ -26,8 +26,8 @@
   {
     "name": "terraform",
     "publisher": "HashiCorp",
-    "version": "2.26.0",
-    "sha256": "1wmjbcswxhq0ii1mq0z8ca0d8vy974k62r41fpxz4pxhvlsvavrz"
+    "version": "2.26.2023050414",
+    "sha256": "0h22libqpm2y0krv21wjxsy8gp98n37lhb67dcqkrnhaa60w5iq5"
   },
   {
     "name": "vsliveshare",
@@ -44,8 +44,8 @@
   {
     "name": "gitlens",
     "publisher": "eamodio",
-    "version": "2023.5.205",
-    "sha256": "1qc3klf1nhsviyl2375p0ypkcdar3pj28bi028qgj0ch3cx3yjdg"
+    "version": "2023.5.305",
+    "sha256": "06hq957qa1mmwld7s28y06i0d69xkr5k0728iikxbyahxn05ahkk"
   },
   {
     "name": "xonsh",
@@ -86,20 +86,20 @@
   {
     "name": "python",
     "publisher": "ms-python",
-    "version": "2023.7.11181009",
-    "sha256": "1149rzlaz2lig09ccnccqakmprnbji88kv7f8hqb8m65fxppdc4c"
+    "version": "2023.9.11241009",
+    "sha256": "1jfly09nxkx1z10hssd50v5j1msijnv53zdm56n5gv0ap4rgq65l"
   },
   {
     "name": "vscode-pylance",
     "publisher": "ms-python",
-    "version": "2023.4.41",
-    "sha256": "03vvlbxgcabyvdxx1648s8bl80xpj23d3vi3bi998gamq0r35maa"
+    "version": "2023.5.11",
+    "sha256": "18nydn5i4cryakwxlzd5jhadrqrv01wgy01fphx7a7ahfxvivdxk"
   },
   {
     "name": "remote-ssh",
     "publisher": "ms-vscode-remote",
-    "version": "0.101.2023041015",
-    "sha256": "0h5y1dygi42ibh9iv6nj66a81kll2xlnn9lp4mbl7mwi2217b0bd"
+    "version": "0.101.2023050215",
+    "sha256": "1dzs8cg39i70hm1pr54qh5iz5xaglp1w4hxbwdbpm4mp88rhgg38"
   },
   {
     "name": "remote-ssh-edit",

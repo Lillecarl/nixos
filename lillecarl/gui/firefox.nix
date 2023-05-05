@@ -50,8 +50,11 @@
           decentraleyes
           multi-account-containers
           onetab
+          pkgs.firefoxAddons.shortkeys
           pkgs.firefoxAddons.kagi-search-for-firefox
+          pkgs.firefoxAddons.zen-fox
           privacy-badger
+          privacy-pass
           sponsorblock
           temporary-containers
           tree-style-tab
