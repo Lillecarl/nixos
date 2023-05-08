@@ -161,7 +161,13 @@
     turbostat
     cpupower
   ];
-  boot.blacklistedKernelModules = [ "acpi_cpufreq" ];
+  boot.blacklistedKernelModules = [
+    "acpi_cpufreq"
+    "ip_tables"
+    "iptable_nat"
+    "iptable_filter"
+    "ip_set"
+  ];
 
   # Activate kernel modules (choose from built-ins and extra ones)
   boot.kernelModules = [
