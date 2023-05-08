@@ -26,6 +26,7 @@ in
       surround
       vim-airline
       vim-nix
+      vim-nftables
     ];
 
     coc = {
