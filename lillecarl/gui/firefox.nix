@@ -72,6 +72,7 @@
           "browser.ping-centre.telemetry" = false; # some kind of telemetry
           "browser.shell.checkDefaultBrowser" = false; # don't ask about default browser
           "browser.startup.homepage" = "about:blank"; # set startup page to empty page
+          "browser.startup.page" = 3; # restore sessions on startup
           "datareporting.healthreport.service.enabled" = false; # setting Firefox Health Report functionality (https://wiki.mozilla.org/Firefox_Health_Report)
           "datareporting.healthreport.uploadEnabled" = false; # setting Firefox Health Report uploading functionality.
           "datareporting.policy.dataSubmissionEnabled" = false; # this is the data submission master kill switch. (https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/internals/preferences.html)
