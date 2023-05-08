@@ -303,6 +303,10 @@
       # Default Browser
       "kdeglobals"."General"."BrowserApplication" = "firefox.desktop";
 
+      # KDE theme
+      "kcminputrc"."Mouse"."cursorTheme" = "Sweet-cursors";
+      "plasmarc"."Theme"."name" = "Sweet-mars";
+
       "dolphinrc"."KFileDialog Settings"."Places Icons Auto-resize" = false;
       "dolphinrc"."KFileDialog Settings"."Places Icons Static Size" = 22;
       "dolphinrc"."Open-with settings"."CompletionMode" = 1;
@@ -312,7 +316,6 @@
       "kcminputrc"."Libinput.1267.12693.ELAN0678:00 04F3:3195 Touchpad"."TapDragLock" = true;
       "kcminputrc"."Libinput.1267.12693.ELAN0678:00 04F3:3195 Touchpad"."TapToClick" = true;
       "kcminputrc"."Mouse"."X11LibInputXAccelProfileFlat" = false;
-      "kcminputrc"."Mouse"."cursorTheme" = "breeze_cursors";
       "kcminputrc"."Tmp"."update_info" = "delete_cursor_old_default_size.upd:DeleteCursorOldDefaultSize";
       "kded5rc"."Module-browserintegrationreminder"."autoload" = false;
       "kded5rc"."Module-device_automounter"."autoload" = false;
@@ -371,7 +374,6 @@
       "kxkbrc"."Layout"."Use" = true;
       "kxkbrc"."Layout"."VariantList" = ",";
       "plasma-localerc"."Formats"."LANG" = "en_US.UTF-8";
-      "plasmarc"."Theme"."name" = "breeze-dark";
       "plasmarc"."Wallpapers"."usersWallpapers" = "";
       "systemsettingsrc"."systemsettings_sidebar_mode"."HighlightNonDefaultSettings" = true;
     };
