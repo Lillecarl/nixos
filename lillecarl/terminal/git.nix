@@ -18,4 +18,11 @@
       push.autoSetupRemote = true;
     };
   };
+
+  programs.gitui = {
+    enable = true;
+    # Maybe configure keyconfig at some point, but the gitui keybinding engine doesn't
+    # seem to support multiple keys for the same action, there's also no context for keybindings
+    # to use to have the same key o different things in different views
+  };
 }
