@@ -32,6 +32,8 @@ def commonargs(buildtype):
 
 
 sudo echo "Building nixos"
+if hostname == "shitbox":
+  sudo virsh dumpxml win10 > ./shitbox/win10.xml
 block_until_internet("1.1.1.1")
 print(" ".join(commonargs("nixos")))
 nixos-rebuild switch --use-remote-sudo @(commonargs("nixos"))
