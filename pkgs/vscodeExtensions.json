@@ -14,8 +14,8 @@
   {
     "name": "copilot",
     "publisher": "GitHub",
-    "version": "1.85.75",
-    "sha256": "00qa7zgzyybw5sa1v0lpbmbjgkx79wbd9la716sqix1l8vir76qx"
+    "version": "1.86.82",
+    "sha256": "114ig175iz6fv40wiiq7xprdr1apikvl0jkkh8ygvfr6n27amila"
   },
   {
     "name": "EditorConfig",
@@ -44,8 +44,8 @@
   {
     "name": "gitlens",
     "publisher": "eamodio",
-    "version": "2023.5.505",
-    "sha256": "1nnk54yyk4pbarwmm65wxjaqsgngpbd5mf59bal0l25ib7sjabdj"
+    "version": "2023.5.905",
+    "sha256": "114bh275zhvcy6bjlzph36xbx0h3s5q83dnj3il42wqcx5lbfhys"
   },
   {
     "name": "xonsh",
