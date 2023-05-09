@@ -6,7 +6,7 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ../common/k3s.nix
+    #../common/k3s.nix
     ../common/postgresql.nix
     ../common/sway.nix
     ../nixos/config/adb.nix
