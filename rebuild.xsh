@@ -4,6 +4,8 @@ from pathlib import Path
 from time import sleep
 import socket
 
+hostname = socket.gethostname()
+
 def check_connection(address):
   return !(ping @(address) -c 1 -W 1 > /dev/null)
 
@@ -15,13 +17,13 @@ def block_until_internet(address):
 
 def commonargs(buildtype):
   flakepath = "/home/lillecarl/Code/nixos"
-  if buildtype == "home-manager" and (socket.gethostname() == "nub" or socket.gethostname() == "shitbox"):
+  if buildtype == "home-manager" and (hostname == "nub" or hostname == "shitbox"):
     flakepath += "#lillecarl-gui"
   elif buildtype == "home-manager":
     flakepath += "#lillecarl-term"
   commonargs = ["--flake", flakepath, "--keep-failed", "-v", "--impure"]
 
-  if check_connection("shitbox") and "shitbox" not in socket.gethostname():
+  if check_connection("shitbox") and "shitbox" not in hostname:
     #commonargs += ["--builders", "ssh://lillecarl@shitbox?ssh-key=/home/lillecarl/.ssh/id_ed25519"]
     commonargs += ["--builders", "ssh://lillecarl@shitbox x86_64-linux"]
 
