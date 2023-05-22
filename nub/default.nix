@@ -49,6 +49,8 @@
     '';
   };
 
+  services.mullvad-vpn.enable = true;
+
   services.tp-auto-kbbl = {
     enable = true;
     device = "/dev/input/by-path/platform-i8042-serio-0-event-kbd";
@@ -303,6 +305,7 @@
   programs.kdeconnect.enable = true;
 
   environment.systemPackages = with pkgs; [
+    config.boot.kernelPackages.zenpower # zenpower
     xwaylandvideobridge # xwayland video bridge
     kdeconnect # Utility for connecting smartphone with KDE.
     winbox # MikroTik winbox, until we're rid of this crap at work.
