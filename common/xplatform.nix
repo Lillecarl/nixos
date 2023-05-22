@@ -22,7 +22,6 @@
     tealdeer # tldr manpages
     cheat # tldr alternative
     ripgrep # Nice grep
-    powershell # scripting shell from MS
     cli53 # Route53 CLI
     unixtools.watch # watch command
     git-open # Open Git repos from cli in web
