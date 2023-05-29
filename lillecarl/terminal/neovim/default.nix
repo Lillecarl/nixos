@@ -1,10 +1,12 @@
-{ config
+{ self
+, config
 , pkgs
 , inputs
 , ...
 }:
 let
   nil = inputs.nil.packages."x86_64-linux".default;
+  luaPath = "${config.home.homeDirectory}/.config/nvim/lua/";
 in
 {
   programs.neovim = {
@@ -69,5 +71,16 @@ in
       set ignorecase
       set smartcase
     '';
+
+    extraLuaConfig = ''
+    '';
   };
+
+  xdg.configFile = {
+    "nvim/lua/.keep" = { text = "keep"; };
+  };
+
+  systemd.user.tmpfiles.rules = [
+      "L ${luaPath}/init.lua - - - - ${self}/lillecarl/terminal/neovim/lua/init.lua"
+  ];
 }
