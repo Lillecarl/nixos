@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, inputs, ... }: {
   security.pam.services.login.enableKwallet = true;
   security.pam.services.session.enableKwallet = true;
   programs.firefox = {
@@ -67,6 +67,9 @@
   environment.homeBinInPath = true;
 
   environment.systemPackages = with pkgs; [
+    (callPackage "${inputs.nixpkgs}/pkgs/applications/networking/browsers/tor-browser-bundle-bin" {
+      useHardenedMalloc = false;
+    })
     # Temporary lab
     xorg.xwininfo # Information about X windows (Used to find things using XWayland)
 
