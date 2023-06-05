@@ -6,7 +6,7 @@
   imports = [
     ./git.nix
     ./gpg.nix
-    ./neovim.nix
+    ./neovim
     ./nushell.nix
     ./packages.nix
     ./pam.nix
