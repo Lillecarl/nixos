@@ -22,7 +22,7 @@
   #};
 
   networking.ifupdown2 = {
-    enable = true;
+    enable = false;
 
     extraPackages = [
       pkgs.bridge-utils
