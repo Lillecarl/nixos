@@ -81,6 +81,6 @@ in
   };
 
   systemd.user.tmpfiles.rules = [
-      "L ${luaPath}/init.lua - - - - ${self}/lillecarl/terminal/neovim/lua/init.lua"
+    "L ${luaPath}/init.lua - - - - ${self}/lillecarl/terminal/neovim/lua/init.lua"
   ];
 }
