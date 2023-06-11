@@ -101,6 +101,7 @@
         ./shitbox/flake-module.nix
         ./system-manager/flake-module.nix
         ./terraform/flake-module.nix
+        ./nixos-installer/flake-module.nix
       ];
       systems = [ "x86_64-linux" "x86_64-darwin" ];
       flake = { };
