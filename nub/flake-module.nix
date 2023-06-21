@@ -2,7 +2,7 @@
 , lib
 , ...
 }: {
-  flake = {
+  flake = rec {
     nixosConfigurations.nub = inputs.nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
@@ -28,6 +28,17 @@
         inherit inputs;
         programs-sqlite-db = inputs.flake-programs-sqlite.packages."x86_64-linux".programs-sqlite;
       };
+    };
+    nixosConfigurations.newnub = nixosConfigurations.nub.extendModules {
+      modules = [
+        inputs.disko.nixosModules.disko
+        (
+          { config, ... }:
+          {
+            disko.devices = (import ./disko.nix { }).disko.devices;
+          }
+        )
+      ];
     };
   };
 }
