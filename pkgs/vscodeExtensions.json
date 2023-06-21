@@ -32,8 +32,8 @@
   {
     "name": "vsliveshare",
     "publisher": "MS-vsliveshare",
-    "version": "1.0.5864",
-    "sha256": "1dncvc9j8g1wl1k2pp2jgijqp48ljc8198f8iycidz683f4kvlji"
+    "version": "1.0.5873",
+    "sha256": "1c5bqz267va6lkg2zrz99drypdskrhyq0573gpy06icfj5pdl1m7"
   },
   {
     "name": "vscode-ron",
@@ -44,8 +44,8 @@
   {
     "name": "gitlens",
     "publisher": "eamodio",
-    "version": "2023.6.505",
-    "sha256": "0mab2daz3rf8z6w2mdrys40pi6gqcxmccbaqk3m3b24dv4lg5cjk"
+    "version": "2023.6.1005",
+    "sha256": "1ph29my7qak84z99knqapwvrfzm050b67blzhgff6cskiccjnhsj"
   },
   {
     "name": "xonsh",
@@ -74,32 +74,32 @@
   {
     "name": "vscode-kubernetes-tools",
     "publisher": "ms-kubernetes-tools",
-    "version": "1.3.11",
-    "sha256": "1jr74lrjbmciam2zpfajicnj662fij37l31x46i0idhmvvsrssr3"
+    "version": "1.3.13",
+    "sha256": "14r16wqbz69n5sixw7178zpv8jx6pf316gdv0h8pk1biijss9cg3"
   },
   {
     "name": "isort",
     "publisher": "ms-python",
-    "version": "2023.9.11141005",
-    "sha256": "1hk75jpwl4v7910f5dw0zwb33bij1a76jpishv23dm81dd5g3s9p"
+    "version": "2023.9.11571010",
+    "sha256": "1vm2zdmwi8zziif7x2drn54yqnhzinw1v2s8bxr7ghd17wpa4gih"
   },
   {
     "name": "python",
     "publisher": "ms-python",
-    "version": "2023.9.11561008",
-    "sha256": "073js6lb0wd4xlpfab4z80d0576sa3s5frc4p14gjczgkyp42s9g"
+    "version": "2023.11.11581008",
+    "sha256": "0xfpg4rpiax9nz4b5ah4m2kn7ir996b4s9zfmbmmrkizvz5cdhi4"
   },
   {
     "name": "vscode-pylance",
     "publisher": "ms-python",
-    "version": "2023.5.51",
-    "sha256": "05sj39hyjhbf894dk6gaxqqi5h6g25l9x70b3mvp27hl2m8rbxxs"
+    "version": "2023.6.11",
+    "sha256": "1m3sav842hlnjjm70bfnfcsdqh643m9p5jxiyk80awa55sfmrr3d"
   },
   {
     "name": "remote-ssh",
     "publisher": "ms-vscode-remote",
-    "version": "0.103.2023051015",
-    "sha256": "09g6jd3588nz0rh6ag3mwdsl66l9mcips1m6y43v9v26ycsab9qd"
+    "version": "0.103.2023060715",
+    "sha256": "02pf719bcnqr4w3fhaa99n6vlbsdrlv54rs46d3402329vxiak1w"
   },
   {
     "name": "remote-ssh-edit",
@@ -111,7 +111,7 @@
     "name": "cpptools",
     "publisher": "ms-vscode",
     "version": "1.16.0",
-    "sha256": "sha256-YJpR82jhBLac86KcFANCRq7+wDpN4y8JExpSrj1tuCA="
+    "sha256": "1zm4sb5j4crhjq3ik1f927y2yspaw3a1mjka8yzmbxcvq5vdnykc"
   },
   {
     "name": "remote-explorer",
@@ -122,8 +122,8 @@
   {
     "name": "ansible",
     "publisher": "redhat",
-    "version": "2.2.70",
-    "sha256": "16qqvmsljvmbdq4la3i6l2xdcbm8m7fz0l409wbgvwv04m0xjwr7"
+    "version": "2.3.74",
+    "sha256": "0b7g14dzk4xpf9ffn4bsmarij2rwdcbq9gpi344l5ijrxisjld7g"
   },
   {
     "name": "vscode-yaml",

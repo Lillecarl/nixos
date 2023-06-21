@@ -53,7 +53,5 @@ with lib;
       ));
     };
   };
-  config = {
-
-  };
+  config = { };
 }
