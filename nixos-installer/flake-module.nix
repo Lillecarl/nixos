@@ -9,7 +9,10 @@
         ./default.nix
         "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-plasma5.nix"
       ];
-      specialArgs = { inherit inputs; };
+      specialArgs = {
+        inherit inputs;
+        programs-sqlite-db = inputs.flake-programs-sqlite.packages."x86_64-linux".programs-sqlite;
+      };
     };
   };
 }
