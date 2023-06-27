@@ -13,6 +13,7 @@
     <access mode='shared'/>
   </memoryBacking>
   <vcpu placement='auto'>10</vcpu>
+  <iothreads>2</iothreads>
   <numatune>
     <memory mode='strict' placement='auto'/>
   </numatune>
