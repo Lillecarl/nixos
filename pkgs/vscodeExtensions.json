@@ -14,8 +14,8 @@
   {
     "name": "copilot",
     "publisher": "GitHub",
-    "version": "1.93.189",
-    "sha256": "1wpjmcqabrjh9vms2vklr2fz9sxi6lx4nmc3cnw2bzrnfyhy0khi"
+    "version": "1.96.268",
+    "sha256": "07mp8zxgzvhkrv1j118y998g3nk9k969v4r6jaij26xi0lf8wlxp"
   },
   {
     "name": "EditorConfig",
@@ -26,8 +26,8 @@
   {
     "name": "terraform",
     "publisher": "HashiCorp",
-    "version": "2.27.2023062109",
-    "sha256": "1nb6vz2a6sh32mx1cc1hq61gfvgq632rbki7i3swj2f9jmzn1j85"
+    "version": "2.27.2023071109",
+    "sha256": "1yjmvm65rjfcr0qvkpmi91h06yb32lfi3wdygqjigwrsmzxg3gwa"
   },
   {
     "name": "vsliveshare",
@@ -44,8 +44,8 @@
   {
     "name": "gitlens",
     "publisher": "eamodio",
-    "version": "2023.6.2705",
-    "sha256": "1r5m9ggzsfc0amdqdfim2mcs61xxfy5sl9428y8jcyzxh558lwm7"
+    "version": "2023.7.1805",
+    "sha256": "0qjwg52y5ndpdzpnhi1syj2gk73spl7i2il5isgj6ydy7bs04zij"
   },
   {
     "name": "xonsh",
@@ -80,26 +80,26 @@
   {
     "name": "isort",
     "publisher": "ms-python",
-    "version": "2023.9.11781018",
-    "sha256": "0lg59gfz9dk3i6sw158shxv3wcnmcal53xgaqc250hzy0d4s1zvs"
+    "version": "2023.11.11921012",
+    "sha256": "1zrkfcwc9k881wfkmhzmlkppq8z9ci9zak9i1yaf57nwaqs1sfix"
   },
   {
     "name": "python",
     "publisher": "ms-python",
-    "version": "2023.11.11781018",
-    "sha256": "17r1ylksi02h8nd0wwm29y24zm195xgb54m3pap8vszvl35azxqm"
+    "version": "2023.13.11991005",
+    "sha256": "0jjkib52s2z1hny29k42hh82y85306122mj2x7nc7nq017f7pkn1"
   },
   {
     "name": "vscode-pylance",
     "publisher": "ms-python",
-    "version": "2023.6.31",
-    "sha256": "04fjqcnn6w77jd6pcvzgv7wi11mxrdm9qn03iv68080fhg16fkf4"
+    "version": "2023.7.21",
+    "sha256": "0smd1cl73251hknv4cvdlbq4ric0j1yd2p72zpvfh559al5r5cbm"
   },
   {
     "name": "remote-ssh",
     "publisher": "ms-vscode-remote",
-    "version": "0.103.2023062115",
-    "sha256": "01fshvm2j4bx6ray75rap7yczhc52bnvpww65rg4kvdsabxr71v8"
+    "version": "0.103.2023071415",
+    "sha256": "04rdprfj3ihsfc35d87pdgyyz7jgf05r8vzz39fxwr8977marp5z"
   },
   {
     "name": "remote-ssh-edit",
@@ -116,8 +116,8 @@
   {
     "name": "remote-explorer",
     "publisher": "ms-vscode",
-    "version": "0.5.2023062609",
-    "sha256": "1zvxmqhnacpa8zz8b0s45ra8q9qcznpabpnd235pn8gs3c6bjqc4"
+    "version": "0.5.2023071709",
+    "sha256": "01k349ya7zym88d8xildbl3i03aviirpdv2k1dsrgm3ghzrda3kx"
   },
   {
     "name": "ansible",
