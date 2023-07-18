@@ -15,7 +15,7 @@
     "vfio-pci"
     "amdgpu"
   ];
-  boot.kernelPackages = with pkgs.linuxKernel.packages; linux_5_15;
+  boot.kernelPackages = with pkgs.linuxKernel.packages; linux_6_3;
   #boot.kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_latest;
   boot.initrd.kernelModules = [ "amdgpu" "vfio-pci" ];
   boot.extraModprobeConfig = "options vfio-pci ids=10de:2487,10de:228b";
@@ -37,9 +37,10 @@
     # Something something HAWAII maybe?
     "radeon.si_support=0"
     "radeon.cik_support=0"
-    "amdgpu.si_support=1"
+    "amdgpu.si_support=0"
     "amdgpu.cik_support=1"
     "acpi_enforce_resources=lax"
+    "delayacct"
   ];
 
   boot.extraModulePackages = with config.boot.kernelPackages; [
