@@ -44,6 +44,7 @@ rec
 
     POWERSHELL_TELEMETRY_OPTOUT = "yes"; # No powershell telemetry
     NIXOS_OZONE_WL = "1"; # Use Wayland whenever we can
+    PIP_DISABLE_PIP_VERSION_CHECK = "1"; # Disable pip version warnings
   };
 
   services.fstrim.enable = true;
