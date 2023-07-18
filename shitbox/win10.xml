@@ -235,7 +235,7 @@
     <panic model='hyperv'/>
     <shmem name='looking-glass'>
       <model type='ivshmem-plain'/>
-      <size unit='M'>32</size>
+      <size unit='M'>128</size>
       <address type='pci' domain='0x0000' bus='0x10' slot='0x01' function='0x0'/>
     </shmem>
   </devices>
