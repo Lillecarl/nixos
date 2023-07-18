@@ -3,6 +3,7 @@ let
   # python3 packages
   python3Packages = {
     xonsh-direnv = prev.callPackage ../pkgs/python3Packages/xonsh-direnv { };
+    xontrib-abbrevs = prev.callPackage ../pkgs/python3Packages/xontrib-abbrevs { };
     xontrib-argcomplete = prev.callPackage ../pkgs/python3Packages/xontrib-argcomplete { };
     xontrib-autoxsh = prev.callPackage ../pkgs/python3Packages/xontrib-autoxsh { };
     xontrib-fzf-widgets = prev.callPackage ../pkgs/python3Packages/xontrib-fzf-widgets { };

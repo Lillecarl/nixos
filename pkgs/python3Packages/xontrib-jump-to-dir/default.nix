@@ -1,5 +1,5 @@
 { lib
-, xonsh
+, xonsh-unwrapped
 , python3Packages
 , fetchFromGitHub
 ,
@@ -12,7 +12,7 @@ python3Packages.buildPythonPackage rec {
   version = versiondata.version;
   src = fetchFromGitHub versiondata;
 
-  propagatedBuildInputs = [ xonsh ];
+  propagatedBuildInputs = [ xonsh-unwrapped ];
 
   meta = {
     description = "Jump to used before directory by part of the path. Lightweight zero-dependency implementation of autojump or zoxide projects functionality.";
