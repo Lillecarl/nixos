@@ -10,9 +10,9 @@
     # Add disko command
     inputs.disko.packages.${pkgs.system}.default
     # Add useful CLI tools
-    inputs.nixpkgs.ripgrep
-    inputs.nixpkgs.gitui
-    inputs.nixpkgs.htop
+    pkgs.ripgrep
+    pkgs.gitui
+    pkgs.htop
   ];
 
   nix = {
