@@ -1,0 +1,2 @@
+#ssh lillecarl@192.168.88.189
+git clone lillecarl@192.168.88.189:/home/lillecarl/Code/nixos
