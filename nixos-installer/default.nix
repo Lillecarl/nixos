@@ -12,6 +12,7 @@
     # Add useful CLI tools
     inputs.nixpkgs.ripgrep
     inputs.nixpkgs.gitui
+    inputs.nixpkgs.htop
   ];
 
   nix = {
