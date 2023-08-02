@@ -9,7 +9,7 @@
     configFile.text = ''
       $env.config = {
         edit_mode: vi
-        # direnv integration
+        show_banner: false
         hooks: {
           pre_prompt: [{
             code: "
