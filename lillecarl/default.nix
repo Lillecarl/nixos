@@ -27,5 +27,6 @@ in
   home.homeDirectory = "/home/lillecarl";
   home.stateVersion = "22.05";
   home.enableNixpkgsReleaseCheck = true;
+  news.display = "silent";
   programs.home-manager.enable = true;
 }
