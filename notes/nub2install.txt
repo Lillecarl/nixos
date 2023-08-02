@@ -1,0 +1,3 @@
+#ssh lillecarl@192.168.88.189
+nix --extra-experimental-features "flakes nix-command flakes-repl" shell github:nix-community/disko
+git clone lillecarl@192.168.88.189:/home/lillecarl/Code/nixos

@@ -74,7 +74,7 @@
     enable = true;
 
     IPCAllowedUsers = [ "root" "lillecarl" ];
-    implictPolicyTarget = "allow"; # Allow everything
+    implicitPolicyTarget = "allow"; # Allow everything
   };
 
   services.salt = rec {

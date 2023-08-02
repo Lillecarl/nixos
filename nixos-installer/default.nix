@@ -6,19 +6,24 @@
 , ...
 }:
 {
-  imports = [
-    ../common/verycommon.nix
-  ];
-
   environment.systemPackages = [
+    # Add disko command
     inputs.disko.packages.${pkgs.system}.default
+    # Add useful CLI tools
+    pkgs.ripgrep
+    pkgs.gitui
+    pkgs.htop
   ];
 
-  isoImage = {
-    squashfsCompression = "zstd -Xcompression-level 6";
-    makeEfiBootable = true;
-    makeUsbBootable = true;
+  nix = {
+    # Enable flakes
+    extraOptions = ''
+      experimental-features = nix-command flakes repl-flake
+    '';
+    # Add flake inputs to flake registry
+    registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
+    nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
   };
 
-  system.stateVersion = "23.05";
+  system.stateVersion = "23.11";
 }

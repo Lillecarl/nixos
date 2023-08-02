@@ -9,7 +9,7 @@
         format = "gpt";
         partitions = [
           {
-            name = "boot";
+            name = "MBR";
             start = "0";
             end = "1MiB";
             bootable = true;
@@ -24,21 +24,6 @@
             content = {
               type = "filesystem";
               format = "vfat";
-              mountpoint = "/boot/efi";
-              mountOptions = [
-                "sync"
-              ];
-            };
-          }
-          {
-            name = "boot";
-            start = "1GiB";
-            end = "2GiB";
-            bootable = false;
-            fs-type = "ext4";
-            content = {
-              type = "filesystem";
-              format = "ext4";
               mountpoint = "/boot";
               mountOptions = [
                 "defaults"
@@ -48,7 +33,7 @@
           }
           {
             name = "root";
-            start = "2GiB";
+            start = "1GiB";
             end = "100%";
             part-type = "primary";
             content = {
@@ -90,9 +75,11 @@
               # Mountpoints inferred from subvolume name
               "/home" = {
                 mountOptions = [ "compress=zstd" ];
+                mountpoint = "/home";
               };
               "/nix" = {
                 mountOptions = [ "compress=zstd" "noatime" ];
+                mountpoint = "/nix";
               };
               "/var" = { };
               "/srv" = { };
