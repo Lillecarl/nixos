@@ -300,12 +300,14 @@
       "plasma-localerc"."Formats"."LC_PAGE" = "en_DK.UTF-8";
       "plasma-localerc"."Formats"."LC_TIME" = "sv_SE.UTF-8";
 
-      # Default Browser
-      "kdeglobals"."General"."BrowserApplication" = "firefox.desktop";
-
       # KDE theme
       "kcminputrc"."Mouse"."cursorTheme" = "Sweet-cursors";
       "plasmarc"."Theme"."name" = "Sweet-mars";
+
+      # Default applications
+      "kdeglobals"."General"."BrowserApplication" = "firefox.desktop";
+      "kdeglobals"."General"."TerminalApplication" = "wezterm start --cwd .";
+      "kdeglobals"."General"."TerminalService" = "org.wezfurlong.wezterm.desktop";
 
       "dolphinrc"."KFileDialog Settings"."Places Icons Auto-resize" = false;
       "dolphinrc"."KFileDialog Settings"."Places Icons Static Size" = 22;
