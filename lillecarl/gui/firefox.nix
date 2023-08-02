@@ -118,6 +118,7 @@
           "toolkit.telemetry.unified" = false;
           "toolkit.telemetry.updatePing.enabled" = false;
           # Misc
+          "accessibility.force_disabled" = 1; # disable accessibility, improves performance
           "app.update.auto" = false; # don't auto update
           "browser.aboutConfig.showWarning" = false; # to show warning prompt when accessing about:config page.
           "browser.ctrlTab.sortByRecentlyUsed" = true; # ctrl + tab sort tabs by recently used
