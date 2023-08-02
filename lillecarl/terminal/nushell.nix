@@ -7,7 +7,7 @@
     enable = true;
 
     configFile.text = ''
-      let-env config = {
+      $env.config = {
         edit_mode: vi
         # direnv integration
         hooks: {
