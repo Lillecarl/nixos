@@ -6,6 +6,7 @@
   home.packages = with pkgs; [
     #inputs.system-manager.packages.x86_64-linux.system-manager
     #inputs.mozilla-addons-to-nix.packages.x86_64-linux.default
+    inputs.nh.packages.x86_64-linux.default
     scrcpy # Remote your android over adb
     kubevirt # virtctl tool for kubevirt
     colmena # Stateless Nix deploy tool
