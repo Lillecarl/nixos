@@ -290,10 +290,10 @@
 
   fonts = {
     fontDir.enable = true;
-    enableDefaultFonts = true;
+    enableDefaultPackages = true;
     enableGhostscriptFonts = true;
 
-    fonts = with pkgs; [
+    packages = with pkgs; [
       corefonts
       (nerdfonts.override { fonts = [ "Hack" "FiraCode" "DroidSansMono" ]; })
       helvetica-neue-lt-std

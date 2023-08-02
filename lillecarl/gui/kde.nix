@@ -247,7 +247,7 @@
       "systemsettings.desktop"."powerdevilprofilesconfig" = [ ];
       "systemsettings.desktop"."screenlocker" = [ ];
     };
-    files = {
+    configFile = {
       #Bismuth
       "kglobalshortcutsrc"."bismuth"."_k_friendly_name" = "Window Tiling";
       "kwinrc"."Plugins"."bismuthEnabled" = true;

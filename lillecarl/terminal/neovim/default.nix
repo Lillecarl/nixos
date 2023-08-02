@@ -1,11 +1,9 @@
 { self
 , config
 , pkgs
-, inputs
 , ...
 }:
 let
-  nil = inputs.nil.packages."x86_64-linux".default;
   luaPath = "${config.home.homeDirectory}/.config/nvim/lua/";
 in
 {
@@ -41,7 +39,7 @@ in
           #  filetypes = [ "nix" ];
           #};
           nix = {
-            command = "${nil}/bin/nil";
+            command = "${pkgs.nil}/bin/nil";
             filetypes = [ "nix" ];
             rootPatterns = [ "flake.nix" ];
             settings = {
