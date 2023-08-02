@@ -143,6 +143,7 @@ in
 {
   programs.starship = {
     enable = true;
+    enableNushellIntegration = true;
 
     settings =
       builtins.fromTOML icons
@@ -188,4 +189,5 @@ in
         };
       };
   };
+  programs.keychain.enableNushellIntegration = true;
 }
