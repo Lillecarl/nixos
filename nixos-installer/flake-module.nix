@@ -7,7 +7,7 @@
       system = "x86_64-linux";
       modules = [
         ./default.nix
-        "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-plasma5.nix"
+        "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-plasma5-new-kernel.nix"
       ];
       specialArgs = {
         inherit inputs;
