@@ -17,47 +17,9 @@
   boot.extraModulePackages = [ ];
   boot.extraModprobeConfig = "options kvm_amd nested=1";
 
-  boot.initrd.luks.devices."1337".device = "/dev/disk/by-uuid/2bb21eac-b00e-4a9d-84f0-19d3c3d04dfe";
-  boot.initrd.luks.devices."1337".allowDiscards = true;
-
   hardware.opengl = {
     driSupport32Bit = false;
   };
-
-  zramSwap = {
-    enable = true;
-    priority = 15;
-  };
-
-  fileSystems."/" = {
-    device = "/dev/vg1/root";
-    fsType = "btrfs";
-    options = [
-      "defaults"
-      "discard=async"
-      "ssd"
-      "space_cache=v2"
-      "lazytime"
-    ];
-  };
-
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/6F2C-B215";
-    fsType = "vfat";
-    options = [
-      "defaults"
-      "discard"
-      "flush"
-    ];
-  };
-
-  swapDevices = [
-    {
-      device = "/dev/vg1/swap";
-      discardPolicy = "both";
-      priority = 10;
-    }
-  ];
 
   hardware.cpu.amd.updateMicrocode = true;
 }
