@@ -96,12 +96,9 @@
     flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
         inputs.flake-parts.flakeModules.easyOverlay
-        ./colmena/flake-module.nix
         ./lillecarl/flake-module.nix
         ./modules/flake-module.nix
-        ./nonixos/flake-module.nix
         ./nub/flake-module.nix
-        ./nubvm/flake-module.nix
         ./shitbox/flake-module.nix
         ./system-manager/flake-module.nix
         ./terraform/flake-module.nix
