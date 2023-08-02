@@ -45,6 +45,7 @@ rec
     POWERSHELL_TELEMETRY_OPTOUT = "yes"; # No powershell telemetry
     NIXOS_OZONE_WL = "1"; # Use Wayland whenever we can
     PIP_DISABLE_PIP_VERSION_CHECK = "1"; # Disable pip version warnings
+    FLAKE = "/home/lillecarl/Code/nixos"; # for use with "nh"
   };
 
   services.fstrim.enable = true;
@@ -65,6 +66,7 @@ rec
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
         "nixpkgs-wayland.cachix.org-1:3lwxaILxMRkVhehr5StQprHdEo4IrE8sRho9R9HOLYA="
         "rycee.cachix.org-1:TiiXyeSk0iRlzlys4c7HiXLkP3idRf20oQ/roEUAh/A="
+        "viperml.cachix.org-1:qZhKBMTfmcLL+OG6fj/hzsMEedgKvZVFRRAhq7j8Vh8="
       ];
       substituters = [
         "https://cache.nixos.org"
@@ -72,6 +74,7 @@ rec
         "https://nix-community.cachix.org"
         "https://nixpkgs-wayland.cachix.org"
         "https://rycee.cachix.org"
+        "https://viperml.cachix.org"
       ];
     };
     registry = lib.mapAttrs (_: value: { flake = value; }) inputs;

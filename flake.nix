@@ -4,6 +4,10 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-lib.url = "github:NixOS/nixpkgs/nixos-unstable?dir=lib";
     nix-community-lib.url = "github:nix-community/nixpkgs.lib/master";
+    nh = {
+      url = "github:viperML/nh";
+      inputs.nixpkgs.follows = "nixpkgs"; # override this repo's nixpkgs snapshot
+    };
     nix-eval-jobs = {
       url = "github:nix-community/nix-eval-jobs/main";
       inputs.nixpkgs.follows = "nixpkgs";
