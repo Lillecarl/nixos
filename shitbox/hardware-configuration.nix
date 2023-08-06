@@ -37,7 +37,7 @@
     # Something something HAWAII maybe?
     "radeon.si_support=0"
     "radeon.cik_support=0"
-    "amdgpu.si_support=0"
+    "amdgpu.si_support=1"
     "amdgpu.cik_support=1"
     "acpi_enforce_resources=lax"
     "delayacct"
