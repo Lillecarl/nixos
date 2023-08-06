@@ -15,7 +15,7 @@
     "vfio-pci"
     "amdgpu"
   ];
-  boot.kernelPackages = with pkgs.linuxKernel.packages; linux_6_3;
+  boot.kernelPackages = with pkgs.linuxKernel.packages; linux_lqx;
   #boot.kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_latest;
   boot.initrd.kernelModules = [ "amdgpu" "vfio-pci" ];
   boot.extraModprobeConfig = "options vfio-pci ids=10de:2487,10de:228b";
