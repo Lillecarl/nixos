@@ -24,6 +24,7 @@ symlinkJoin {
     sh
     xonsh
     xonsh-direnv
+    xontrib-abbrevs
     xontrib-argcomplete
     xontrib-autoxsh
     xontrib-fzf-widgets
