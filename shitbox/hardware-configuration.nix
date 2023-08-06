@@ -75,22 +75,6 @@
   #  usbip
   #];
 
-  boot.postBootCommands = ''
-    ${pkgs.kmod}/bin/modprobe -r nvidiafb
-    ${pkgs.kmod}/bin/modprobe -r nouveau
-
-    echo 0 > /sys/class/vtconsole/vtcon0/bind
-    echo 0 > /sys/class/vtconsole/vtcon1/bind
-    echo efi-framebuffer.0 > /sys/bus/platform/drivers/efi-framebuffer/unbind
-
-    DEVS="0000:08:00.0 0000:08:00.1"
-
-    for DEV in $DEVS; do
-      echo "vfio-pci" > /sys/bus/pci/devices/$DEV/driver_override
-    done
-    ${pkgs.kmod}/bin/modprobe -i vfio-pci
-  '';
-
   boot.kernel.sysctl = {
     "vm.swappiness" = 1;
   };
