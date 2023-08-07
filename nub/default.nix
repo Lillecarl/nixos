@@ -19,6 +19,8 @@
   boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
   boot.kernel.sysctl = {
     "vm.max_map_count" = 1048576;
+    "vm.laptop_mode" = 5;
+    "vm.dirty_writeback_centisecs" = 1500;
   };
 
   networking.ifupdown2 = {
