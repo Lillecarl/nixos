@@ -34,8 +34,6 @@ in
       "10.0.0.0/8" = internalSSH;
       "192.168.0.0/16" = internalSSH;
       "172.16.0.0/12" = internalSSH;
-      "*.viaplay.cloud" = internalSSH;
-      "*.viaplay.io" = internalSSH;
     };
 
     serverAliveInterval = 10;

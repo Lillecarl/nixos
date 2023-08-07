@@ -128,9 +128,5 @@ if which("keychain"):
   source-bash $(keychain --eval -q) --suppress-skip-message
   # Load personal key
   keychain -q id_ed25519
-  # Load work keys
-  if $HOSTNAME == "nub":
-    keychain -q ed_viaplay
-    keychain -q rsa_viaplay
 
 $THREAD_SUBPROCS = old_subprocs
