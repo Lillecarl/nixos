@@ -17,6 +17,7 @@
         inputs.disko.nixosModules.disko
         inputs.dwarffs.nixosModules.dwarffs
         inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t14-amd-gen3
+        inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
         (
           { config, ... }:
           {
