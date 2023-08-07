@@ -51,26 +51,6 @@ prev.lib.filterAttrs
     xonsh-wrapper = final.callPackage ../pkgs/xonsh-wrapper { };
     ifupdown2 = python3Packages.ifupdown2;
 
-    qtile = prev.qtile.overrideAttrs (new: old: {
-      passthru.providedSessions = [ "qtile" "qtile-wayland" ];
-      postPatch = ''
-        mkdir -p $out/share/wayland-sessions
-        mkdir -p $out/share/xsessions
-        install resources/qtile.desktop -Dt $out/share/xsessions
-        install resources/qtile-wayland.desktop -Dt $out/share/wayland-sessions
-      '';
-    });
-
-    qtile-unwrapped = prev.qtile-unwrapped.overrideAttrs (new: old: {
-      passthru.providedSessions = [ "qtile" "qtile-wayland" ];
-      postPatch = old.postPatch + ''
-        mkdir -p $out/share/wayland-sessions
-        mkdir -p $out/share/xsessions
-        install resources/qtile.desktop -Dt $out/share/xsessions
-        install resources/qtile-wayland.desktop -Dt $out/share/wayland-sessions
-      '';
-    });
-
     #salt = prev.salt.overrideAttrs (final: prev: {
     #  src = /home/lillecarl/Code/nent/saltstack;
     #});
