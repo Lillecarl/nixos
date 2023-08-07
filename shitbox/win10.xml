@@ -12,11 +12,8 @@
     <source type='memfd'/>
     <access mode='shared'/>
   </memoryBacking>
-  <vcpu placement='auto'>10</vcpu>
+  <vcpu placement='static' cpuset='2-11'>10</vcpu>
   <iothreads>2</iothreads>
-  <numatune>
-    <memory mode='strict' placement='auto'/>
-  </numatune>
   <os>
     <type arch='x86_64' machine='pc-q35-7.2'>hvm</type>
     <loader readonly='yes' type='pflash'>/run/libvirt/nix-ovmf/OVMF_CODE.fd</loader>
@@ -219,6 +216,13 @@
         <address domain='0x0000' bus='0x08' slot='0x00' function='0x1'/>
       </source>
       <address type='pci' domain='0x0000' bus='0x06' slot='0x00' function='0x0'/>
+    </hostdev>
+    <hostdev mode='subsystem' type='usb' managed='yes'>
+      <source>
+        <vendor id='0x046d'/>
+        <product id='0xc21d'/>
+      </source>
+      <address type='usb' bus='0' port='1'/>
     </hostdev>
     <redirdev bus='usb' type='spicevmc'>
       <address type='usb' bus='0' port='2'/>

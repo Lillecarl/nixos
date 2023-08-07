@@ -128,13 +128,21 @@ in
               # Mountpoints inferred from subvolume name
               "/home" = {
                 mountOptions = [ "compress=zstd" ];
+                mountpoint = "/home";
               };
               "/nix" = {
                 mountOptions = [ "compress=zstd" "noatime" ];
+                mountpoint = "/nix";
               };
-              "/var" = { };
-              "/srv" = { };
-              "/tmp" = { };
+              "/var" = {
+                mountpoint = "/var";
+              };
+              "/srv" = {
+                mountpoint = "/srv";
+              };
+              #"/tmp" = {
+              #  mountpoint = "/tmp";
+              #};
             };
           };
         };

@@ -15,7 +15,7 @@
     "vfio-pci"
     "amdgpu"
   ];
-  boot.kernelPackages = with pkgs.linuxKernel.packages; linux_6_3;
+  boot.kernelPackages = with pkgs.linuxKernel.packages; linux_lqx;
   #boot.kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_latest;
   boot.initrd.kernelModules = [ "amdgpu" "vfio-pci" ];
   boot.extraModprobeConfig = "options vfio-pci ids=10de:2487,10de:228b";
@@ -37,7 +37,7 @@
     # Something something HAWAII maybe?
     "radeon.si_support=0"
     "radeon.cik_support=0"
-    "amdgpu.si_support=0"
+    "amdgpu.si_support=1"
     "amdgpu.cik_support=1"
     "acpi_enforce_resources=lax"
     "delayacct"
@@ -74,22 +74,6 @@
   #boot.extraModulePackages = with config.boot.kernelPackages; [
   #  usbip
   #];
-
-  boot.postBootCommands = ''
-    ${pkgs.kmod}/bin/modprobe -r nvidiafb
-    ${pkgs.kmod}/bin/modprobe -r nouveau
-
-    echo 0 > /sys/class/vtconsole/vtcon0/bind
-    echo 0 > /sys/class/vtconsole/vtcon1/bind
-    echo efi-framebuffer.0 > /sys/bus/platform/drivers/efi-framebuffer/unbind
-
-    DEVS="0000:08:00.0 0000:08:00.1"
-
-    for DEV in $DEVS; do
-      echo "vfio-pci" > /sys/bus/pci/devices/$DEV/driver_override
-    done
-    ${pkgs.kmod}/bin/modprobe -i vfio-pci
-  '';
 
   boot.kernel.sysctl = {
     "vm.swappiness" = 1;
