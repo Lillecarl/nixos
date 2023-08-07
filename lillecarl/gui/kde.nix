@@ -301,8 +301,8 @@
       "plasma-localerc"."Formats"."LC_TIME" = "sv_SE.UTF-8";
 
       # KDE theme
-      "kcminputrc"."Mouse"."cursorTheme" = "Sweet-cursors";
-      "plasmarc"."Theme"."name" = "Sweet-mars";
+      "kcminputrc"."Mouse"."cursorTheme" = "breeze_cursors";
+      "plasmarc"."Theme"."name" = "breeze-dark";
 
       # Default applications
       "kdeglobals"."General"."BrowserApplication" = "firefox.desktop";
