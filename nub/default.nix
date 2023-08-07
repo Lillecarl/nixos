@@ -219,7 +219,7 @@
 
   networking = rec {
     hostName = "nub"; # System hostname
-    domain = "viaplay.io"; # System domain
+    domain = "helicon.ai"; # System domain
     nftables.enable = true; # Enable nftables
     firewall.enable = false; # Disable iptables
     networkmanager = {
