@@ -1,0 +1,1 @@
+https://<workplace>.slack.com/ssb/signin_redirect/fallback
