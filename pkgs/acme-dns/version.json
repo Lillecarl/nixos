@@ -2,6 +2,6 @@
   "owner": "joohoi",
   "repo": "acme-dns",
   "rev": "a33c09accf392a1f2e08628c4766074fc1d1abc1",
-  "sha256": "qQwvhouqzkChWeu65epgoeMNqZyAD18T+xqEMgdMbhA=",
+  "hash": "sha256-qQwvhouqzkChWeu65epgoeMNqZyAD18T+xqEMgdMbhA=",
   "version": "v1.0"
 }
