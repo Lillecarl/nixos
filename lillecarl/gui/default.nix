@@ -7,8 +7,7 @@
     ./vscode.nix
     ./wezterm.nix
   ];
-  home.file = {
-  };
+  home.file = { };
 
   home.packages = with pkgs; [
     # Web browsers
