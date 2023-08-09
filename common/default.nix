@@ -21,10 +21,10 @@
 
   programs.dconf.enable = true;
   # Enable the X11 windowing system.
-  services.xserver.enable = true; # Not sure why this is required.
+  services.xserver.enable = false; # Not sure why this is required.
   # Enable the Plasma 5 Desktop Environment.
   services.xserver.displayManager.sddm = {
-    enable = true;
+    enable = false;
     settings = {
       General = {
         DisplayServer = "wayland";
