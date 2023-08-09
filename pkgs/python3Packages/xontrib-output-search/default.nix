@@ -8,7 +8,7 @@ let
 in
 python3Packages.buildPythonPackage rec {
   pname = "xontrib-output-search";
-  version = versiondata.version;
+  version = "1337";
   src = fetchFromGitHub versiondata;
   propagatedBuildInputs = with python3Packages; [
     tokenize-output
