@@ -27,6 +27,7 @@ symlinkJoin {
     xontrib-abbrevs
     xontrib-argcomplete
     xontrib-autoxsh
+    xontrib-back2dir
     xontrib-fzf-widgets
     xontrib-jump-to-dir
     xontrib-onepath
