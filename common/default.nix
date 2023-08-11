@@ -24,36 +24,12 @@
 
   programs.dconf.enable = true;
   # Enable the X11 windowing system.
-  services.xserver.enable = false; # Not sure why this is required.
-  # Enable the Plasma 5 Desktop Environment.
-  services.xserver.displayManager.sddm = {
-    enable = false;
-    settings = {
-      General = {
-        DisplayServer = "wayland";
-      };
-    };
-  };
-  services.xserver.displayManager.defaultSession = "plasmawayland";
-  #services.xserver.displayManager.lightdm.enable = true;
-  services.xserver.desktopManager.plasma5.enable = true;
-  services.xserver.desktopManager.plasma5.runUsingSystemd = true;
-  # Enable touchpad support (enabled default in most desktopManager).
-  services.xserver.libinput = {
-    enable = true;
-
-    touchpad.disableWhileTyping = true;
-    touchpad.naturalScrolling = true;
-  };
-
-  # Configure keymap in X11
-  services.xserver.layout = "us";
   # Allow local clients to connect to my X server
   services.xserver.displayManager.setupCommands = ''
     ${pkgs.xorg.xhost}/bin/xhost +local:
   '';
   # Replace caps-lock with caps
-  services.xserver.xkbOptions = "esc:swapcaps";
+  services.xserver.xkbOptions = "caps:escape";
   # Disable network-manager wait-online service that prohibits nixos-rebuild
   systemd.services.NetworkManager-wait-online.enable = false;
 
