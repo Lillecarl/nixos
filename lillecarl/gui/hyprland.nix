@@ -126,12 +126,12 @@ in
       # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
       bind = $mainMod, Q, exec, ${pkgs.wezterm}/bin/wezterm-gui
       bind = Ctrl_L Alt_L, delete, exec, ${pkgs.swaylock}/bin/swaylock -i ${self}/resources/lockscreen.jpg --color 000000
-      bind = , code:121, exec, ${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle
-      bind = , code:122, exec, ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -5%
-      bind = , code:123, exec, ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5%
-      bind = , code:198, exec, ${pkgs.mictoggle}
-      bind = , code:232, exec, ${pkgs.light}/bin/light -U 10
-      bind = , code:233, exec, ${pkgs.light}/bin/light -A 10
+      bindl = , code:121, exec, ${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle
+      bindl = , code:122, exec, ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -5%
+      bindl = , code:123, exec, ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5%
+      bindl = , code:198, exec, ${pkgs.mictoggle}
+      bindl = , code:232, exec, ${pkgs.light}/bin/light -U 10
+      bindl = , code:233, exec, ${pkgs.light}/bin/light -A 10
       bind = $mainMod, C, killactive,
       bind = $mainMod, M, exit,
       bind = $mainMod, E, exec, dolphin
