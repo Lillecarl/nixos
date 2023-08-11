@@ -1,5 +1,6 @@
 { inputs
 , pkgs
+, self
 , ...
 }:
 let
@@ -124,7 +125,7 @@ in
       
       # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
       bind = $mainMod, Q, exec, ${pkgs.wezterm}/bin/wezterm-gui
-      bind = Ctrl_L Alt_L, delete, exec, ${pkgs.swaylock}/bin/swaylock
+      bind = Ctrl_L Alt_L, delete, exec, ${pkgs.swaylock}/bin/swaylock -i ${self}/resources/lockscreen.jpg --color 000000
       bind = , code:121, exec, ${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle
       bind = , code:122, exec, ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -5%
       bind = , code:123, exec, ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5%
@@ -137,7 +138,7 @@ in
       bind = $mainMod, V, togglefloating,
       bind = $mainMod, R, exec, ${pkgs.wofi}/bin/wofi --show drun
       bind = $mainMod, P, pseudo, # dwindle
-      bind = $mainMod, J, togglesplit, # dwindle
+      bind = $mainMod, I, togglesplit, # dwindle
       
       # Move focus with mainMod + arrow keys
       bind = $mainMod, left, movefocus, l
