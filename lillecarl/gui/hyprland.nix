@@ -40,6 +40,7 @@ in
       
           touchpad {
               natural_scroll = true
+              disable_while_typing = 1
           }
       
           sensitivity = 0 # -1.0 - 1.0, 0 means no modification.
@@ -49,7 +50,7 @@ in
           # See https://wiki.hyprland.org/Configuring/Variables/ for more
       
           gaps_in = 5
-          gaps_out = 20
+          gaps_out = 5
           border_size = 2
           col.active_border = rgba(33ccffee) rgba(00ff99ee) 45deg
           col.inactive_border = rgba(595959aa)
@@ -60,7 +61,7 @@ in
       decoration {
           # See https://wiki.hyprland.org/Configuring/Variables/ for more
       
-          rounding = 10
+          rounding = 5
       
           blur {
               enabled = true
@@ -102,7 +103,7 @@ in
       
       gestures {
           # See https://wiki.hyprland.org/Configuring/Variables/ for more
-          workspace_swipe = false
+          workspace_swipe = true
       }
       
       # Example per-device config
@@ -123,6 +124,7 @@ in
       
       # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
       bind = $mainMod, Q, exec, ${pkgs.wezterm}/bin/wezterm-gui
+      bind = Ctrl_L Alt_L, delete, exec, ${pkgs.swaylock}/bin/swaylock
       bind = $mainMod, C, killactive,
       bind = $mainMod, M, exit,
       bind = $mainMod, E, exec, dolphin
