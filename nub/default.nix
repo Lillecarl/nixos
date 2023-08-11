@@ -5,7 +5,7 @@
 , ...
 }:
 let
-  plasma-starter = pkgs.writeShellScript "plasma-starter" ''
+  hyprland-starter = pkgs.writeShellScript "plasma-starter" ''
     export XDG_SESSION_TYPE=wayland
     export MOZ_ENABLE_WAYLAND=1
     export CLUTTER_BACKEND=wayland
@@ -14,7 +14,7 @@ let
     export ELM_ENGINE=wayland_egl
     export SDL_VIDEODRIVER=wayland
 
-    ${pkgs.plasma-workspace}/bin/startplasma-wayland > /tmp/plasma.log 2>&1;
+    "${inputs.hyprland.packages.${pkgs.system}.hyprland}/bin/Hyprland";
   '';
 in
 {
@@ -44,12 +44,7 @@ in
 
     settings = {
       default_session = {
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --remember --user-menu --asterisks --time --cmd ${plasma-starter}";
-        user = config.users.users.lillecarl.name;
-      };
-      hyprland = {
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --remember --user-menu --asterisks --time --cmd ${pkgs.hyprland}/bin/Hyprland";
-        user = config.users.users.lillecarl.name;
+        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --user-menu --asterisks --time --cmd ${hyprland-starter}";
       };
     };
   };
