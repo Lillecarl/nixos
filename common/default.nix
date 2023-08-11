@@ -1,8 +1,6 @@
 { pkgs, inputs, ... }: {
   security.pam.services.login.enableGnomeKeyring = true;
   security.pam.services.greetd.enableGnomeKeyring = true;
-  security.pam.services.login.enableKwallet = true;
-  security.pam.services.greetd.enableKwallet = true;
 
   programs.firefox = {
     enable = true;
