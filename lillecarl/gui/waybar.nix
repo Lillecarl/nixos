@@ -53,6 +53,7 @@ in
           on-click = "${pkgs.pavucontrol}/bin/pavucontrol";
         };
         battery = {
+          interval = 5;
           full-at = 85;
           format = "🔋{capacity}% {power}w";
         };
