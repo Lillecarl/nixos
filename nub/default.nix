@@ -49,6 +49,25 @@ in
     };
   };
 
+  xdg = {
+    portal = {
+      wlr.enable = false;
+
+      extraPortals = lib.mkForce [
+        pkgs.gnome.gnome-keyring
+        pkgs.xdg-desktop-portal-hyprland
+      ];
+    };
+  };
+
+  services.tlp = {
+    enable = true;
+
+    settings = {
+
+    };
+  };
+
   programs.hyprland = {
     enable = true;
     package = inputs.hyprland.packages.${pkgs.system}.hyprland;
@@ -342,6 +361,7 @@ in
   environment.systemPackages = with pkgs; [
     gnome.gnome-keyring
     gnome.seahorse
+    apple-cursor
     config.boot.kernelPackages.zenpower # zenpower
     xwaylandvideobridge # xwayland video bridge
     kdeconnect # Utility for connecting smartphone with KDE.
