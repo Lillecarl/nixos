@@ -11,6 +11,7 @@
 
       return {
         check_for_updates = false,
+        hide_mouse_cursor_when_typing = false,
         color_scheme = 'Solarized (dark) (terminal.sexy)',
         hide_tab_bar_if_only_one_tab = true,
         default_prog = { '/usr/bin/env', 'xonsh' },
