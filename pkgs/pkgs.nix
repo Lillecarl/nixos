@@ -68,6 +68,22 @@ prev.lib.filterAttrs
     nodePackages = nodePackages // prev.nodePackages;
     # firefox addons
     firefoxAddons = prev.callPackage ./firefoxAddons { };
+
+    mictoggle = prev.writeShellScript "mictoggler" ''
+      # Get default source
+      default_source=$(${prev.pulseaudio}/bin/pactl get-default-source)
+      # Get mute status
+      source_mute=$(${prev.pulseaudio}/bin/pactl get-source-mute "$default_source")
+      
+      mute=1
+      if [[ "$source_mute" == *"yes"* ]]; then
+        mute=0
+      fi
+
+      ${prev.pulseaudio}/bin/pactl set-source-mute @DEFAULT_SOURCE@ $mute
+      ${prev.coreutils-full}/bin/sleep 0.5
+      echo $mute > /sys/class/leds/platform\:\:micmute/brightness
+    '';
   }
 // (
   if flake == true

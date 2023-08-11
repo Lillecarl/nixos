@@ -105,6 +105,7 @@ in
       SUBSYSTEM=="i2c", DRIVER=="i2c_hid_acpi", ATTR{name}=="ELAN*", ATTR{power/wakeup}="disabled"
       # Limit battery max charge to 86% (85 in reality)
       ACTION=="add|change", SUBSYSTEM=="power_supply", ENV{POWER_SUPPLY_NAME}=="BAT0", ATTR{charge_control_start_threshold}="83", ATTR{charge_control_end_threshold}="86"
+      ACTION=="add", SUBSYSTEM=="leds", KERNEL=="platform::micmute" ATTR{trigger}="${pkgs.mictoggle}"
     '';
   };
 
