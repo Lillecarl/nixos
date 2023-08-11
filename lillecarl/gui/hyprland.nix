@@ -5,8 +5,23 @@
 }:
 let
   hyprctl = "${inputs.hyprland.packages.${pkgs.system}.hyprland}/bin/hyprctl";
+
+  cursorSettings = {
+    name = "macOS-BigSur";
+    size = 24;
+    package = pkgs.apple-cursor;
+  };
 in
 {
+  gtk = {
+    cursorTheme = cursorSettings // {
+      gtk.enable = true;
+      x11.enable = true;
+    };
+  };
+
+  home.pointerCursor = cursorSettings;
+
   wayland.windowManager.hyprland = {
     enable = true;
 
@@ -18,6 +33,7 @@ in
       exec-once = ${pkgs.waybar}/bin/waybar & ${pkgs.hyprpaper}/bin/hyprpaper
       
       env = XCURSOR_SIZE,24
+      env = XCURSOR_THEME,macOS-BigSur
       
       input {
           kb_layout = us
