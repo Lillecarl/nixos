@@ -4,6 +4,25 @@
 }:
 let
   hyprctl = "${inputs.hyprland.packages.${pkgs.system}.hyprland}/bin/hyprctl";
+  # This is the dirtiest ugly piece of garbage hack ever
+  mictoggle = pkgs.writeShellScript "mictoggler" ''
+    # Get default source
+    default_source=$(${pkgs.pulseaudio}/bin/pactl get-default-source)
+    # Get mute status
+    source_mute=$(${pkgs.pulseaudio}/bin/pactl get-source-mute "$default_source")
+    
+    
+    if [[ "$source_mute" == *"yes"* ]]; then
+      ${pkgs.pulseaudio}/bin/pactl set-source-mute @DEFAULT_SOURCE@ 0
+      ${pkgs.coreutils-full}/bin/sleep 0.5
+      echo 0 > /sys/class/leds/platform\:\:micmute/brightness
+    else
+      echo "Muting"
+      ${pkgs.pulseaudio}/bin/pactl set-source-mute @DEFAULT_SOURCE@ 1
+      ${pkgs.coreutils-full}/bin/sleep 0.5
+      echo 1 > /sys/class/leds/platform\:\:micmute/brightness
+    fi
+  '';
 in
 {
   wayland.windowManager.hyprland = {
@@ -125,6 +144,12 @@ in
       # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
       bind = $mainMod, Q, exec, ${pkgs.wezterm}/bin/wezterm-gui
       bind = Ctrl_L Alt_L, delete, exec, ${pkgs.swaylock}/bin/swaylock
+      bind = , code:121, exec, ${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle
+      bind = , code:122, exec, ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -5%
+      bind = , code:123, exec, ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5%
+      bind = , code:198, exec, ${mictoggle}
+      bind = , code:232, exec, ${pkgs.light}/bin/light -U 10
+      bind = , code:233, exec, ${pkgs.light}/bin/light -A 10
       bind = $mainMod, C, killactive,
       bind = $mainMod, M, exit,
       bind = $mainMod, E, exec, dolphin
