@@ -4,7 +4,7 @@
 }:
 {
   services.dunst = {
-    enable = true;
+    enable = false;
 
     settings = {
       global = {
