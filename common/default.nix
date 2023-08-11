@@ -1,6 +1,9 @@
 { pkgs, inputs, ... }: {
+  security.pam.services.login.enableGnomeKeyring = true;
+  security.pam.services.greetd.enableGnomeKeyring = true;
   security.pam.services.login.enableKwallet = true;
-  security.pam.services.session.enableKwallet = true;
+  security.pam.services.greetd.enableKwallet = true;
+
   programs.firefox = {
     enable = true;
     nativeMessagingHosts.tridactyl = true;
@@ -267,7 +270,6 @@
     colorpicker # Just a color picker
 
     # Misc
-    xdg-desktop-portal-kde # KDE portal (portals seem to be a Flatpak thing)
     plasma-browser-integration # KDE browser integration
     scrcpy # Print-screen tool
     winePackages.wayland # Win32 API compability layer for Linux
@@ -290,8 +292,13 @@
 
     packages = with pkgs; [
       corefonts
-      (nerdfonts.override { fonts = [ "Hack" "FiraCode" "DroidSansMono" ]; })
+      (
+        nerdfonts.override {
+          fonts = [ "Hack" "FiraCode" "DroidSansMono" ]; 
+        }
+      )
       helvetica-neue-lt-std
+      font-awesome
     ];
   };
 
@@ -397,10 +404,7 @@
   # Enable Flatpak
   services.flatpak.enable = true;
   # xdg desktop intergration (required for flatpak)
-  xdg.portal = {
-    enable = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-kde ];
-  };
+  xdg.portal.enable = true;
   # Enabled fwupd daemon, allows applications to update firmware
   services.fwupd.enable = true;
   # Enable the OpenSSH daemon.

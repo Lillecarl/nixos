@@ -1,5 +1,7 @@
 { config
 , pkgs
+, lib
+, inputs
 , ...
 }:
 let
@@ -35,22 +37,27 @@ in
     "vm.dirty_writeback_centisecs" = 1500;
   };
 
+  programs.xwayland.enable = true;
+
   services.greetd = {
     enable = true;
-
-    #package = pkgs.greetd.tuigreet;
 
     settings = {
       default_session = {
         command = "${pkgs.greetd.tuigreet}/bin/tuigreet --remember --user-menu --asterisks --time --cmd ${plasma-starter}";
         user = config.users.users.lillecarl.name;
       };
+      hyprland = {
+        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --remember --user-menu --asterisks --time --cmd ${pkgs.hyprland}/bin/Hyprland";
+        user = config.users.users.lillecarl.name;
+      };
     };
   };
 
-  #environment.etc."greetd/environments".text = ''
-  #  startplasma-wayland
-  #'';
+  programs.hyprland = {
+    enable = true;
+    package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+  };
 
   networking.ifupdown2 = {
     enable = false;
@@ -242,6 +249,7 @@ in
   };
 
   services.gnome.gnome-keyring.enable = true;
+  programs.seahorse.enable = true;
 
   nixpkgs = {
     # Allow proprietary software to be installed
@@ -336,6 +344,8 @@ in
   programs.kdeconnect.enable = true;
 
   environment.systemPackages = with pkgs; [
+    gnome.gnome-keyring
+    gnome.seahorse
     config.boot.kernelPackages.zenpower # zenpower
     xwaylandvideobridge # xwayland video bridge
     kdeconnect # Utility for connecting smartphone with KDE.

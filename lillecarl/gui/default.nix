@@ -1,10 +1,13 @@
 { pkgs, ... }: {
   imports = [
     ./brave.nix
+    ./dunst.nix
     ./firefox.nix
+    ./hyprland.nix
     ./kde.nix
     ./qutebrowser.nix
     ./vscode.nix
+    ./waybar.nix
     ./wezterm.nix
   ];
   home.file = { };

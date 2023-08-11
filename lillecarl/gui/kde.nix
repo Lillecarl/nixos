@@ -355,7 +355,6 @@
       "krunnerrc"."General"."FreeFloating" = true;
       "kscreenlockerrc"."Daemon"."LockGrace" = 10;
       "ksmserverrc"."General"."loginMode" = "emptySession";
-      "kwalletrc"."Wallet"."First Use" = false;
       "kwinrc"."Compositing"."OpenGLIsUnsafe" = false;
       "kwinrc"."Effect-windowview"."BorderActivateAll" = 9;
       "kwinrc"."NightColor"."Active" = true;

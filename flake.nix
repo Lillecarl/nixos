@@ -86,6 +86,7 @@
       inputs.flake-utils.follows = "flake-utils";
     };
     nur.url = "github:nix-community/NUR";
+    hyprland.url = "github:hyprwm/Hyprland";
   };
 
   outputs =

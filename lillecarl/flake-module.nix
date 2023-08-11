@@ -36,6 +36,7 @@ in
           ./default.nix
           inputs.nur.nixosModules.nur
           inputs.plasma-manager.homeManagerModules.plasma-manager
+          inputs.hyprland.homeManagerModules.default
         ];
       };
       lillecarl-term = mkHome "x86_64-linux" {
