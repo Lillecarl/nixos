@@ -11,17 +11,14 @@ let
     # Get mute status
     source_mute=$(${pkgs.pulseaudio}/bin/pactl get-source-mute "$default_source")
     
-    
+    mute=1
     if [[ "$source_mute" == *"yes"* ]]; then
-      ${pkgs.pulseaudio}/bin/pactl set-source-mute @DEFAULT_SOURCE@ 0
-      ${pkgs.coreutils-full}/bin/sleep 0.5
-      echo 0 > /sys/class/leds/platform\:\:micmute/brightness
-    else
-      echo "Muting"
-      ${pkgs.pulseaudio}/bin/pactl set-source-mute @DEFAULT_SOURCE@ 1
-      ${pkgs.coreutils-full}/bin/sleep 0.5
-      echo 1 > /sys/class/leds/platform\:\:micmute/brightness
+      mute=0
     fi
+
+    ${pkgs.pulseaudio}/bin/pactl set-source-mute @DEFAULT_SOURCE@ $mute
+    ${pkgs.coreutils-full}/bin/sleep 0.5
+    echo $mute > /sys/class/leds/platform\:\:micmute/brightness
   '';
 in
 {
