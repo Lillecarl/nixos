@@ -19,6 +19,7 @@
 
   home.file = {
     ".config/powershell/Microsoft.PowerShell_profile.ps1".source = ../dotfiles/.config/powershell/Microsoft.PowerShell_profile.ps1;
+    ".local/bin/.keep".text = "";
   };
 
   home.sessionVariables = config.pam.sessionVariables;
