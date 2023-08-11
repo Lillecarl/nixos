@@ -151,6 +151,18 @@ in
       bind = $mainMod, l, movefocus, r
       bind = $mainMod, k, movefocus, u
       bind = $mainMod, j, movefocus, d
+
+      # Resize windows with mainMod + shift + arrow keys
+      binde = $mainMod SHIFT, left, resizeactive, -10 0
+      binde = $mainMod SHIFT, right, resizeactive, 10 0
+      binde = $mainMod SHIFT, up, resizeactive, 0 -10
+      binde = $mainMod SHIFT, down, resizeactive, 0 10
+      
+      # Resize windows with mainMod + shift + arrow keys
+      binde = $mainMod SHIFT, h, resizeactive, -10 0
+      binde = $mainMod SHIFT, l, resizeactive, 10 0
+      binde = $mainMod SHIFT, k, resizeactive, 0 -10
+      binde = $mainMod SHIFT, j, resizeactive, 0 10
       
       # Switch workspaces with mainMod + [0-9]
       bind = $mainMod, 1, workspace, 1
