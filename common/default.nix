@@ -294,7 +294,7 @@
       corefonts
       (
         nerdfonts.override {
-          fonts = [ "Hack" "FiraCode" "DroidSansMono" ]; 
+          fonts = [ "Hack" "FiraCode" "DroidSansMono" ];
         }
       )
       helvetica-neue-lt-std
