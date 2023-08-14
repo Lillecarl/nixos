@@ -28,6 +28,7 @@
     # Media apps
     mpv # Media Player
     celluloid #  MPV GTK frontend wrapper
-    #vlc # VLC sucks in comparision to MPV
+    vlc # VLC sucks in comparision to MPV
+
   ];
 }
