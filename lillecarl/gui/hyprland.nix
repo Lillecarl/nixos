@@ -122,7 +122,8 @@ in
       bind = $mainMod, M, fullscreen,1
       bind = $mainMod, E, exec, dolphin
       bind = $mainMod, V, togglefloating,
-      bind = $mainMod, R, exec, ${pkgs.wofi}/bin/wofi --show drun
+      bind = $mainMod, R, exec, ${pkgs.rofi-wayland}/bin/rofi -show drun
+      bind = $mainMod, tab, exec, ${pkgs.rofi-wayland}/bin/rofi -show window
       bind = $mainMod, P, pseudo, # dwindle
       bind = $mainMod, I, togglesplit, # dwindle
       # Switch to US layout
