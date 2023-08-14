@@ -15,6 +15,8 @@
         transparency = 10;
         frame_color = "#eceff1";
         font = "Droid Sans 9";
+
+        icon_path = "/run/current-system/sw/share/icons/";
       };
 
       urgency_normal = {
