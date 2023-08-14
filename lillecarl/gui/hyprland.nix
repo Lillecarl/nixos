@@ -24,12 +24,18 @@ in
   };
 
   home.pointerCursor = cursorSettings;
+
   home.file.".config/hypr/linked.conf".source = config.lib.file.mkOutOfStoreSymlink "/home/lillecarl/Code/nixos/lillecarl/gui/hyprland.conf";
 
   home.file.".config/hypr/hyprpaper.conf".text = ''
     preload = ${wallpaper}
     wallpaper = ,${wallpaper}
   '';
+
+  services.clipman = {
+    enable = true;
+    systemdTarget = "hyprland-session.target";
+  };
 
   wayland.windowManager.hyprland = {
     enable = true;
