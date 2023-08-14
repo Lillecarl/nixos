@@ -17,13 +17,30 @@ let
 in
 {
   gtk = {
-    cursorTheme = cursorSettings // {
-      gtk.enable = true;
-      x11.enable = true;
+    enable = true;
+
+    theme = {
+      name = "Adwaita-dark";
+      package = pkgs.gnome.gnome-themes-extra;
     };
+
+    iconTheme = {
+      name = "Adwaita";
+      package = pkgs.gnome.adwaita-icon-theme;
+    };
+
+    cursorTheme = cursorSettings;
   };
 
-  home.pointerCursor = cursorSettings;
+  qt = {
+    enable = true;
+    platformTheme = "gtk";
+  };
+
+  home.pointerCursor = cursorSettings // {
+    gtk.enable = true;
+    x11.enable = true;
+  };
 
   home.file.".config/hypr/linked.conf".source = config.lib.file.mkOutOfStoreSymlink "/home/lillecarl/Code/nixos/lillecarl/gui/hyprland.conf";
 
@@ -31,6 +48,9 @@ in
     preload = ${wallpaper}
     wallpaper = ,${wallpaper}
   '';
+
+  services.gammastep.enable = false; # Screen temperature daemon. TODO: Enable and configure
+  services.wlsunset.enable = false; # Screen temperature daemon. TODO: Enable and configure
 
   services.clipman = {
     enable = true;
@@ -42,14 +62,12 @@ in
 
     xwayland.enable = true;
 
-
     extraConfig = ''
       # Source from home-manager file that can be live edited through out of store symlinks.
       source = ${config.xdg.configHome}/hypr/linked.conf
 
       $mainMod = SUPER
       
-      exec-once = ${pkgs.waybar}/bin/waybar
       exec-once = ${pkgs.hyprpaper}/bin/hyprpaper 
 
       # Launch terminal
