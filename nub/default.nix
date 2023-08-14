@@ -70,7 +70,7 @@ in
   };
 
   services.thinkfan = {
-    enable = true;
+    enable = false;
   };
 
   programs.hyprland = {
