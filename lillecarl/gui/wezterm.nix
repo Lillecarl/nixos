@@ -11,6 +11,7 @@
 
       return {
         check_for_updates = false,
+        window_close_confirmation = 'NeverPrompt',
         hide_mouse_cursor_when_typing = false,
         color_scheme = 'Solarized (dark) (terminal.sexy)',
         hide_tab_bar_if_only_one_tab = true,
@@ -22,17 +23,6 @@
         }),
         font_size = 10,
         enable_wayland = true,
-        skip_close_confirmation_for_processes_named = {
-          'bash',
-          'sh',
-          'zsh',
-          'fish',
-          'xonsh',
-          'tmux',
-          'zellij',
-          'python',
-          'python3',
-        },
         keys = {
           {
             key = "h",
