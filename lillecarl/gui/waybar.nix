@@ -2,29 +2,32 @@
 , pkgs
 , ...
 }:
+let
+  hyprctl = "${inputs.hyprland.packages.${pkgs.system}.hyprland}/bin/hyprctl";
+in
 {
   programs.waybar = {
     enable = true;
 
     package = pkgs.waybar-hyprland;
 
-    #style = ''
-    #  * {
-    #    font-family: Hack Nerd Font;
-    #  }
-    #'';
+    systemd = {
+      enable = true;
+      target = "hyprland-session.target";
+    };
+
+    style = builtins.readFile ./waybar.css;
 
     settings = {
       mainBar = {
         layer = "top";
         position = "top";
-        #output = [
-        #  "eDP-1"
-        #  "HDMI-A-1"
-        #];
-        modules-left = [ "wlr/taskbar" ];
+        output = [
+          "eDP-1"
+        ];
+        modules-left = [ "hyprland/workspaces" ];
         modules-center = [ "hyprland/window" ];
-        modules-right = [ "battery" "pulseaudio" "clock" ];
+        modules-right = [ "hyprland/language" "battery" "pulseaudio" "clock" ];
 
         clock = {
           interval = 1;
@@ -42,8 +45,8 @@
           format-source-muted = "";
           format-icons = {
             headphone = "";
-            hands-free = "";
-            headset = "";
+            hands-free = "";
+            headset = "";
             phone = "";
             portable = "";
             car = "";
@@ -55,6 +58,13 @@
           interval = 5;
           full-at = 85;
           format = "🔋{capacity}% {power}w";
+        };
+        "hyprland/language" = {
+          format = "KB: {}";
+          format-en = "🇺🇸";
+          format-se = "🇸🇪";
+          keyboard-name = "at-translated-set-2-keyboard";
+          on-click = "${hyprctl} switchxkblayout at-translated-set-2-keyboard next";
         };
       };
     };
