@@ -5,7 +5,7 @@
 , ...
 }:
 let
-  hyprland-starter = pkgs.writeShellScript "plasma-starter" ''
+  hyprland-starter = pkgs.writeShellScript "hyprland-starter" ''
     export XDG_SESSION_TYPE=wayland
     export MOZ_ENABLE_WAYLAND=1
     export CLUTTER_BACKEND=wayland
