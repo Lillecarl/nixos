@@ -361,7 +361,6 @@ in
     waydroid.enable = true;
   };
 
-  programs.kdeconnect.enable = true;
 
   environment.systemPackages = with pkgs; [
     gnome.gnome-keyring
@@ -369,7 +368,6 @@ in
     apple-cursor
     config.boot.kernelPackages.zenpower # zenpower
     xwaylandvideobridge # xwayland video bridge
-    kdeconnect # Utility for connecting smartphone with KDE.
     winbox # MikroTik winbox, until we're rid of this crap at work.
     #splunk-otel-collector # Temp testing
     screen # Just for TTY

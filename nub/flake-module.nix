@@ -10,8 +10,6 @@
         ../common
         ../common/flatpak.nix
         ../common/verycommon.nix
-        ../common/keybindings.nix
-        ../common/killservice.nix
         ../common/xplatform.nix
         ../modules/nixos/ifupdown2
         inputs.disko.nixosModules.disko

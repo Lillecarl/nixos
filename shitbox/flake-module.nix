@@ -10,8 +10,6 @@
         ../common
         ../common/flatpak.nix
         ../common/verycommon.nix
-        ../common/keybindings.nix
-        ../common/killservice.nix
         inputs.disko.nixosModules.disko
         inputs.nixos-hardware.nixosModules.common-gpu-nvidia-disable
         inputs.nixos-hardware.nixosModules.common-cpu-amd
