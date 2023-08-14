@@ -5,6 +5,7 @@
 }: {
   imports = [
     ./git.nix
+    ./gnome-keyring.nix
     ./gpg.nix
     ./neovim
     ./nushell.nix
