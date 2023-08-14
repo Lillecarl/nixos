@@ -114,7 +114,9 @@ in
       bindl = , code:232, exec, ${pkgs.light}/bin/light -U 10
       bindl = , code:233, exec, ${pkgs.light}/bin/light -A 10
       bind = $mainMod, C, killactive,
-      bind = $mainMod, M, exit,
+      bind = Ctrl_L Alt_L, end, exit,
+      bind = $mainMod, F, togglefloating,active
+      bind = $mainMod, M, fullscreen,1
       bind = $mainMod, E, exec, dolphin
       bind = $mainMod, V, togglefloating,
       bind = $mainMod, R, exec, ${pkgs.wofi}/bin/wofi --show drun
