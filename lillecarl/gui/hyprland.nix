@@ -5,6 +5,8 @@
 , ...
 }:
 let
+  hyprctl = "${inputs.hyprland.packages.${pkgs.system}.hyprland}/bin/hyprctl";
+
   cursorSettings = {
     name = "macOS-BigSur";
     size = 24;
@@ -43,17 +45,27 @@ in
       
       exec-once = ${pkgs.waybar}/bin/waybar
       exec-once = ${pkgs.hyprpaper}/bin/hyprpaper 
-      
+
+      # Launch terminal
       bind  = $mainMod     , Q       , exec, ${pkgs.wezterm}/bin/wezterm-gui
+      # Awesome locker
       bind  = Ctrl_L Alt_L , delete  , exec, ${pkgs.swaylock}/bin/swaylock -i ${self}/resources/lockscreen.jpg -s center --color 000000
+      # Media buttons
       bindl =             , code:121, exec, ${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle
       bindl =             , code:122, exec, ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -5%
       bindl =             , code:123, exec, ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5%
       bindl =             , code:198, exec, ${pkgs.mictoggle}
+      # Increase and decrease screen backlight
       bindl =             , code:232, exec, ${pkgs.light}/bin/light -U 10
       bindl =             , code:233, exec, ${pkgs.light}/bin/light -A 10
+      # drun app launcher
       bind  = $mainMod    , R       , exec, ${pkgs.rofi-wayland}/bin/rofi -show drun
+      # search application window titles
       bind  = $mainMod    , tab     , exec, ${pkgs.rofi-wayland}/bin/rofi -show window
+      # Switch to US layout
+      bindl = $mainMod, E, exec, ${hyprctl} switchxkblayout at-translated-set-2-keyboard 0
+      # Switch to SE layout
+      bindl = $mainMod, S, exec, ${hyprctl} switchxkblayout at-translated-set-2-keyboard 1
     '';
   };
 }
