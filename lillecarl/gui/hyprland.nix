@@ -36,10 +36,10 @@ in
       env = XCURSOR_THEME,macOS-BigSur
       
       input {
-          kb_layout = us
+          kb_layout = us,se
           kb_variant =
           kb_model =
-          kb_options = caps:escape
+          kb_options = caps:escape, grp:alt_shift_toggle
           kb_rules =
       
           follow_mouse = 1
@@ -122,6 +122,12 @@ in
       bind = $mainMod, R, exec, ${pkgs.wofi}/bin/wofi --show drun
       bind = $mainMod, P, pseudo, # dwindle
       bind = $mainMod, I, togglesplit, # dwindle
+      # Switch to US layout
+      bind = ALT SHIFT, E, exec, hyprctl switchxkblayout at-translated-set-2-keyboard 0
+      bind = $mainMod, E, exec, hyprctl switchxkblayout at-translated-set-2-keyboard 0
+      # Switch to SE layout
+      bind = ALT SHIFT, S, exec, hyprctl switchxkblayout at-translated-set-2-keyboard 1
+      bind = $mainMod, S, exec, hyprctl switchxkblayout at-translated-set-2-keyboard 1
       
       # Move focus with mainMod + arrow keys
       bind = $mainMod, left, movefocus, l
