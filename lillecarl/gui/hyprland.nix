@@ -28,7 +28,10 @@ in
     xwayland.enable = true;
 
     extraConfig = ''
-      monitor=,preferred,auto,auto
+      # Internal display, offset to fit work display
+      monitor = eDP-1 , 1920x1200, 760x1440, 1
+      # Work display, Dell Ultrawide thingy
+      monitor = DP-2  , 3440x1440, 0x0,      1, bitdepth, 10
       
       exec-once = ${pkgs.waybar}/bin/waybar & ${pkgs.hyprpaper}/bin/hyprpaper
       
