@@ -80,6 +80,8 @@ in
     package = inputs.hyprland.packages.${pkgs.system}.hyprland;
   };
 
+  programs.nm-applet.enable = true;
+
   networking.ifupdown2 = {
     enable = false;
 
