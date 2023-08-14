@@ -27,14 +27,13 @@ in
         ];
         modules-left = [ "hyprland/workspaces" ];
         modules-center = [ "hyprland/window" ];
-        modules-right = [ "hyprland/language" "battery" "pulseaudio" "clock" ];
+        modules-right = [ "custom/weather" "hyprland/language" "battery" "pulseaudio" "bluetooth" "tray" "clock" ];
 
         clock = {
           interval = 1;
           tooltip = true;
           format = "{:%Y-%m-%d\n %H:%M:%S}";
         };
-
         pulseaudio = {
           scroll-step = 1; # %, can be a float
           format = "🔊{volume}% {icon} {format_source}";
@@ -59,8 +58,22 @@ in
           full-at = 85;
           format = "🔋{capacity}% {power}w";
         };
+        bluetooth = {
+          format = "  {status} ";
+          format-disabled = "";
+          format-connected = " {num_connections} connected";
+          tooltip-format = "{controller_alias}\t{controller_address}";
+          tooltip-format-connected = "{controller_alias}\t{controller_address}\n\n{device_enumerate}";
+          tooltip-format-enumerate-connected = "{device_alias}\t{device_address}";
+        };
+        "custom/weather" = {
+          exec = "${pkgs.curl}/bin/curl -L \"wttr.in/Stockholm?format=%f+%p\"";
+          format = "{}";
+          interval = 3600;
+          #signal = 1;
+        };
         "hyprland/language" = {
-          format = "KB: {}";
+          format = " KB: {} ";
           format-en = "🇺🇸";
           format-se = "🇸🇪";
           keyboard-name = "at-translated-set-2-keyboard";
