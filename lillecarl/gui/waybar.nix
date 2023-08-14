@@ -16,7 +16,11 @@ in
       target = "hyprland-session.target";
     };
 
-    style = builtins.readFile ./waybar.css;
+    style = builtins.readFile "${pkgs.waybar-hyprland}/etc/xdg/waybar/style.css" + ''
+      * {
+        font-family: Hack Nerd Font Mono, FontAwesome, Roboto, Helvetica, Arial, sans-serif;
+      }
+    '';
 
     settings = {
       mainBar = {
