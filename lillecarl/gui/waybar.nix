@@ -66,6 +66,10 @@ in
           tooltip-format-connected = "{controller_alias}\t{controller_address}\n\n{device_enumerate}";
           tooltip-format-enumerate-connected = "{device_alias}\t{device_address}";
         };
+        tray = {
+          icon-size = 24;
+          spacing = 5;
+        };
         "custom/weather" = {
           exec = "${pkgs.curl}/bin/curl -L \"wttr.in/Stockholm?format=%f+%p\"";
           format = "{}";
