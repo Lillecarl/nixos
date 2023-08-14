@@ -2,12 +2,11 @@
 , pkgs
 , ...
 }:
-let
-  hyprctl = "${inputs.hyprland.packages.${pkgs.system}.hyprland}/bin/hyprctl";
-in
 {
   programs.waybar = {
     enable = true;
+
+    package = pkgs.waybar-hyprland;
 
     #style = ''
     #  * {
