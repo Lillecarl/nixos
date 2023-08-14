@@ -4,6 +4,7 @@
     ./dunst.nix
     ./firefox.nix
     ./hyprland.nix
+    ./kanshi.nix
     ./qutebrowser.nix
     ./vscode.nix
     ./waybar.nix

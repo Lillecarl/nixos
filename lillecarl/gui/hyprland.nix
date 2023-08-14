@@ -5,8 +5,6 @@
 , ...
 }:
 let
-  hyprctl = "${inputs.hyprland.packages.${pkgs.system}.hyprland}/bin/hyprctl";
-
   cursorSettings = {
     name = "macOS-BigSur";
     size = 24;
