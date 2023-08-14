@@ -39,7 +39,7 @@ in
       exec-once = ${pkgs.waybar}/bin/waybar & ${pkgs.hyprpaper}/bin/hyprpaper
       
       bind = $mainMod     , Q       , exec, ${pkgs.wezterm}/bin/wezterm-gui
-      bind = Ctrl_L Alt_L , delete  , exec, ${pkgs.swaylock}/bin/swaylock -i ${self}/resources/lockscreen.jpg --color 000000
+      bind = Ctrl_L Alt_L , delete  , exec, ${pkgs.swaylock}/bin/swaylock -i ${self}/resources/lockscreen.jpg -s center --color 000000
       bindl =             , code:121, exec, ${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle
       bindl =             , code:122, exec, ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -5%
       bindl =             , code:123, exec, ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5%
