@@ -6,6 +6,7 @@
     ./hyprland.nix
     ./kanshi.nix
     ./qutebrowser.nix
+    ./swaytools.nix
     ./vscode.nix
     ./waybar.nix
     ./wezterm.nix
