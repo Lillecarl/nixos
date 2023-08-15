@@ -17,6 +17,7 @@ def block_until_internet(address):
 
 def commonargs(buildtype):
   flakepath = "/home/lillecarl/Code/nixos"
+  Path(os.path.join(flakepath, ".flakepath")).write_text(flakepath)
   if buildtype == "home-manager" and (hostname == "nub" or hostname == "shitbox"):
     flakepath += "#lillecarl-gui"
   elif buildtype == "home-manager":

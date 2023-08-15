@@ -25,7 +25,7 @@ let
         modules = with self.homeModules; [ ] ++ customArgs.modules;
       });
 
-  flakeloc = "/home/lillecarl/Code/nixos";
+  flakeloc = builtins.readFile ../.flakepath;
 in
 {
   flake = {
