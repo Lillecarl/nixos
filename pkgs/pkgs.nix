@@ -69,12 +69,14 @@ prev.lib.filterAttrs
     # firefox addons
     firefoxAddons = prev.callPackage ./firefoxAddons { };
 
+    ulauncher-joined = prev.callPackage ../pkgs/ulauncher-joined { };
+
     mictoggle = prev.writeShellScript "mictoggler" ''
       # Get default source
       default_source=$(${prev.pulseaudio}/bin/pactl get-default-source)
       # Get mute status
       source_mute=$(${prev.pulseaudio}/bin/pactl get-source-mute "$default_source")
-      
+
       mute=1
       if [[ "$source_mute" == *"yes"* ]]; then
         mute=0
