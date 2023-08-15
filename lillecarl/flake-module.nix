@@ -12,26 +12,23 @@ let
           pkgs
           // {
             config.allowUnfree = true;
-            config.permittedInsecurePackages = [
-              "electron-21.4.0"
-            ];
           };
         extraSpecialArgs =
           {
             inherit self;
             inherit inputs;
+            flakeloc = builtins.readFile ../.flakepath;
           }
           // customArgs.extraSpecialArgs;
         modules = with self.homeModules; [ ] ++ customArgs.modules;
       });
 
-  flakeloc = builtins.readFile ../.flakepath;
 in
 {
   flake = {
     homeConfigurations = {
       lillecarl-gui = mkHome "x86_64-linux" {
-        extraSpecialArgs = { inherit flakeloc; };
+        extraSpecialArgs = { };
         modules = [
           ./gui
           ./terminal
@@ -41,7 +38,7 @@ in
         ];
       };
       lillecarl-term = mkHome "x86_64-linux" {
-        extraSpecialArgs = { inherit flakeloc; };
+        extraSpecialArgs = { };
         modules = [
           ./terminal
           ./default.nix
