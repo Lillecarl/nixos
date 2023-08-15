@@ -71,8 +71,6 @@ carliases['cd..'] = 'cd ..'
 carliases['ls'] = 'exa -lah'
 # Better cat
 carliases['cat'] = 'bat'
-# Better cp (rsync)
-carliases['cp'] = 'rsync --progress --recursive --archive'
 # Better grep
 carliases['grep'] = 'rg'
 # history-search alias
@@ -95,7 +93,7 @@ carliases["bluesound"] = lambda x: _blueprofile(args=["music"])
 carliases["nixshell"] = lambda x: ![nix shell @("nixos-unstable#{0}".format(x[0] if type(x) is list and len(x) > 0 else ""))]
 # Allow all connected USB devices
 carliases["usballow"] = lambda x: _usballow()
-# Edit 
+# Edit
 carliases['hmedit'] = lambda x: ![$EDITOR @(str(x[0]).replace('.config', 'Code/nixos/lillecarl/dotfiles/.config'))]
 
 # Add all carliases to aliases
