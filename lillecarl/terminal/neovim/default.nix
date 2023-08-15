@@ -1,6 +1,7 @@
 { self
 , config
 , pkgs
+, flakeloc
 , ...
 }:
 let
@@ -34,10 +35,6 @@ in
 
       settings = {
         languageserver = {
-          #nix = {
-          #  command = "${pkgs.rnix-lsp}/bin/rnix-lsp";
-          #  filetypes = [ "nix" ];
-          #};
           nix = {
             command = "${pkgs.nil}/bin/nil";
             filetypes = [ "nix" ];
@@ -71,14 +68,9 @@ in
     '';
 
     extraLuaConfig = ''
+      require("init2")
     '';
   };
 
-  xdg.configFile = {
-    "nvim/lua/.keep" = { text = "keep"; };
-  };
-
-  systemd.user.tmpfiles.rules = [
-    "L ${luaPath}/init.lua - - - - ${self}/lillecarl/terminal/neovim/lua/init.lua"
-  ];
+  home.file.".config/nvim/lua/init2.lua".source = config.lib.file.mkOutOfStoreSymlink "${flakeloc}/lillecarl/terminal/neovim/lua/init.lua";
 }

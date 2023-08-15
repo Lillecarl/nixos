@@ -1,6 +1,7 @@
 { inputs
 , config
 , pkgs
+, flakeloc
 , self
 , ...
 }:
@@ -42,7 +43,7 @@ in
     x11.enable = true;
   };
 
-  home.file.".config/hypr/linked.conf".source = config.lib.file.mkOutOfStoreSymlink "/home/lillecarl/Code/nixos/lillecarl/gui/hyprland.conf";
+  home.file.".config/hypr/linked.conf".source = config.lib.file.mkOutOfStoreSymlink "${flakeloc}/lillecarl/gui/hyprland.conf";
 
   home.file.".config/hypr/hyprpaper.conf".text = ''
     preload = ${wallpaper}
@@ -67,8 +68,8 @@ in
       source = ${config.xdg.configHome}/hypr/linked.conf
 
       $mainMod = SUPER
-      
-      exec-once = ${pkgs.hyprpaper}/bin/hyprpaper 
+
+      exec-once = ${pkgs.hyprpaper}/bin/hyprpaper
 
       # Launch terminal
       bind  = $mainMod     , Q       , exec, ${pkgs.wezterm}/bin/wezterm-gui

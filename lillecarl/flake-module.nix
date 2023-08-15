@@ -24,12 +24,14 @@ let
           // customArgs.extraSpecialArgs;
         modules = with self.homeModules; [ ] ++ customArgs.modules;
       });
+
+  flakeloc = "/home/lillecarl/Code/nixos";
 in
 {
   flake = {
     homeConfigurations = {
       lillecarl-gui = mkHome "x86_64-linux" {
-        extraSpecialArgs = { };
+        extraSpecialArgs = { inherit flakeloc; };
         modules = [
           ./gui
           ./terminal
@@ -39,7 +41,7 @@ in
         ];
       };
       lillecarl-term = mkHome "x86_64-linux" {
-        extraSpecialArgs = { };
+        extraSpecialArgs = { inherit flakeloc; };
         modules = [
           ./terminal
           ./default.nix
