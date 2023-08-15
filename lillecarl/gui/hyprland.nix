@@ -70,11 +70,14 @@ in
       $mainMod = SUPER
 
       exec-once = ${pkgs.hyprpaper}/bin/hyprpaper
+      exec-once = ${pkgs.ulauncher}/bin/ulauncher --hide-window
+      # Restart kanshi to reapply layout on configuration reload, since hyprland autoreconfigures screens
+      exec = ${pkgs.systemd}/bin/systemctl --user restart kanshi.service
 
       # Launch terminal
       bind  = $mainMod     , Q       , exec, ${pkgs.wezterm}/bin/wezterm-gui
       # Awesome locker
-      bind  = Ctrl_L Alt_L , delete  , exec, ${pkgs.swaylock}/bin/swaylock -i ${self}/resources/lockscreen.jpg -s center --color 000000
+      bind  = Ctrl_L Alt_L , delete  , exec, ${pkgs.swaylock}/bin/swaylock
       # Media buttons
       bindl =             , code:121, exec, ${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle
       bindl =             , code:122, exec, ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -5%
