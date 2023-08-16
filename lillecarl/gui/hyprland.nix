@@ -71,8 +71,8 @@ in
 
       exec-once = ${pkgs.hyprpaper}/bin/hyprpaper
       exec-once = ${pkgs.ulauncher}/bin/ulauncher --hide-window
-      # Restart kanshi to reapply layout on configuration reload, since hyprland autoreconfigures screens
-      exec = ${pkgs.systemd}/bin/systemctl --user restart kanshi.service
+      # Reload kanshi after hyprland reload since Hyprland will try to manage monitor locations.
+      exec = ${pkgs.kanshi}/bin/kanshictl reload
 
       # Launch terminal
       bind  = $mainMod     , Q       , exec, ${pkgs.wezterm}/bin/wezterm-gui
