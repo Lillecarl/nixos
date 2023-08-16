@@ -84,8 +84,8 @@ in
       bindl =             , code:123, exec, ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5%
       bindl =             , code:198, exec, ${pkgs.mictoggle}
       # Increase and decrease screen backlight
-      bindl =             , code:232, exec, ${pkgs.light}/bin/light -U 10
-      bindl =             , code:233, exec, ${pkgs.light}/bin/light -A 10
+      bindl =             , code:232, exec, ${pkgs.light}/bin/light -U 5
+      bindl =             , code:233, exec, ${pkgs.light}/bin/light -A 5
       # drun app launcher
       bind  = $mainMod    , R       , exec, ${pkgs.rofi-wayland}/bin/rofi -show drun
       # search application window titles
