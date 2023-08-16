@@ -4,7 +4,11 @@
 }:
 let
   swaylock = "${pkgs.swaylock}/bin/swaylock";
-  swaysleep = (pkgs.writers.writePython3 "swaysleep" { libraries = [ pkgs.python3.pkgs.plumbum ]; } ''
+  swaysleep = (pkgs.writers.writePython3 "swaysleep"
+  {
+    libraries = [ pkgs.python3.pkgs.plumbum ];
+    flakeIgnore = [ "E501" ]; # Lines too long when rendering Nix paths
+  } ''
     from pathlib import Path
     from plumbum import local
 
