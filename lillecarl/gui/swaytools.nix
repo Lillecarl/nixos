@@ -4,26 +4,22 @@
 }:
 let
   swaylock = "${pkgs.swaylock}/bin/swaylock";
-  swaysleep = pkgs.writers.writePython3 "swaysleep"
+  writePython3 = name: attrs: script: let
+    scriptHead = builtins.head (builtins.split "\n" script);
+    finalScriptString = builtins.replaceStrings [ scriptHead ] [ "" ] script;
+  in
+    pkgs.writers.writePython3 name attrs finalScriptString;
+
+  swaysleep = writePython3 "swaysleep"
     {
       libraries = [ pkgs.python3.pkgs.plumbum ];
       flakeIgnore = [ "E501" ]; # Lines too long when rendering Nix paths
     }
-    ''
-      from pathlib import Path
-      from plumbum import local
-
-      systemctl = local["${pkgs.systemd}/bin/systemctl"]
-
-      # Contains status about our laptop battery
-      batstat = Path("/sys/class/power_supply/BAT0/status").read_text()
-
-      if batstat.find("Discharging") != -1:
-          print("Suspending")
-          systemctl(["suspend"])
-      else:
-          print("Not suspending, we're not discharging")
-    '';
+    (builtins.replaceStrings
+      [ "\"systemctl\"" ]
+      [ "\"${pkgs.systemd}/bin/systemctl\"" ]
+      (builtins.readFile ./swaysleep.py)
+    );
 in
 {
   programs.swaylock = {
