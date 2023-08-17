@@ -10,6 +10,7 @@ symlinkJoin {
   # recurse all listed dependencies
   paths = with python3.pkgs; (python3.pkgs.requiredPythonModules [
     (lib.hiPrio xonsh-wrapper)
+    boto3
     PyGithub
     coconut
     from_ssv
