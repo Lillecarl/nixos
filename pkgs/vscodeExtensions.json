@@ -14,8 +14,8 @@
   {
     "name": "copilot",
     "publisher": "GitHub",
-    "version": "1.103.338",
-    "sha256": "0m7s4rarq1wmir15ggp9121yssls13max6sl4zgddvxkprx9alkp"
+    "version": "1.104.342",
+    "sha256": "1jjf9zr4k0ab36cyrq9djc5nrihwz7mav7qvg2s571056afdqr9b"
   },
   {
     "name": "EditorConfig",
@@ -86,20 +86,20 @@
   {
     "name": "python",
     "publisher": "ms-python",
-    "version": "2023.15.12271008",
-    "sha256": "1j063ns79kq2kc9r5zi0wgbkjvvx9m167fjmaighcwfph7sd0qgf"
+    "version": "2023.15.12291006",
+    "sha256": "07sf1zbca8xx815lgfdm9gnnp00ms107yr2d0741myn6qfbyxr7z"
   },
   {
     "name": "vscode-pylance",
     "publisher": "ms-python",
-    "version": "2023.8.21",
-    "sha256": "08b3vh51aikkawbav87hxmb6hy9yfky5b3pw19w26hr8sw67sdbv"
+    "version": "2023.8.31",
+    "sha256": "1hg067nchvkakzgw30hscf4h3vcq52n83jkg7bq1mk5c180xjgri"
   },
   {
     "name": "remote-ssh",
     "publisher": "ms-vscode-remote",
-    "version": "0.105.2023080715",
-    "sha256": "05jj80anjq4k6g4vm7idy308l5b1rnw2jiprdbp0cv54zp406hhv"
+    "version": "0.106.2023081615",
+    "sha256": "0kjrw96hrcqs6gm2q4dkp5hz8bdw1im0kfmkl2nic3f14k1hh9q1"
   },
   {
     "name": "remote-ssh-edit",
@@ -110,8 +110,8 @@
   {
     "name": "cpptools",
     "publisher": "ms-vscode",
-    "version": "1.17.2",
-    "sha256": "0ajx8vxr19yc8m872c9jk9sg93gfnm5ppp783qsfi7syzq1lnah3"
+    "version": "1.17.3",
+    "sha256": "0fvm97ijwvcbpjz2d0diqxl6j8liv79kq6p8yyy2w2a7rrrnnjz2"
   },
   {
     "name": "remote-explorer",
