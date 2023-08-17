@@ -1,10 +1,11 @@
 #! /usr/bin/env python3
 
 import argparse
-import base64
+import boto3
 import json
 import os
-import requests
+import random
+import string
 
 from datetime import datetime
 from pathlib import Path
@@ -27,7 +28,8 @@ args = parser.parse_args()
 basepath = Path("~/Screens/").expanduser()
 # Create ~/Screens if it doesn't exist
 basepath.mkdir(exist_ok=True)
-filename = os.path.join(basepath, datetime.now().strftime('%Y%m%d-%H%M%S') + ".png")
+filename= datetime.now().strftime('%Y%m%d-%H%M%S') + ".png"
+filepath = os.path.join(basepath, filename)
 
 pos = ""
 # Get active window from hyprland
@@ -51,23 +53,17 @@ elif args.mode == "screen":
       pos = "{},{} {}x{}".format(i["x"], i["y"], i["width"], i["height"])
 
 if args.edit:
-  (grim["-g", pos, "-"] | swappy["-f", "-", "-o", filename])()
+  (grim["-g", pos, "-"] | swappy["-f", "-", "-o", filepath])()
 else:
-  grim(["-g", pos, filename])
+  grim(["-g", pos, filepath])
 
 if args.upload:
-  apikey = "2a7e0bbdcf8777abafe2b05b531b11b3"
-  img64 = base64.b64encode(Path(filename).read_bytes())
+  secrets = json.loads(Path("~/.local/hemlisar/s3_prints.json").expanduser().read_text())
+  s3 = boto3.resource('s3', **secrets)
+  bucket = s3.Bucket('prints') # type: ignore
+  objectname = "{}_{}.png".format(filename.replace(".png", ""),
+                         ''.join(random.choices(string.ascii_lowercase + string.digits, k=10)))
 
-  params = {
-      'expiration': '86400',
-      'key': apikey,
-  }
+  bucket.upload_file(filepath, objectname) # type: ignore
+  (wlcopy["-n", "https://prints.lillecarl.com/{}".format(objectname)] & BG) # type: ignore
 
-  files = {
-      'image': (None, img64),
-  }
-
-  response = requests.post('https://api.imgbb.com/1/upload', params=params, files=files)
-  url = response.json()["data"]["url"]
-  (wlcopy["-n", url] & BG)
