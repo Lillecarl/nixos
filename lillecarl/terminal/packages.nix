@@ -48,6 +48,7 @@
     k2tf # Kubernetes YAML to Terraform
     tfk8s # Kubernetes YAML to Terraform
     terragrunt # Some weird Terraform abstraction
+    aws-vault # AWS Vault CLI (Used for MFA auth?)
     kubernetes-helm # Kubernetes package manager
     kompose # Kubernetes docker-compose like tool
     (lowPrio kubectl) # Kubernetes management cli
