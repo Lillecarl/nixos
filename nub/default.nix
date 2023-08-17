@@ -266,6 +266,8 @@ in
     enableRedistributableFirmware = true;
   };
 
+  services.blueman.enable = true;
+
   powerManagement = {
     enable = true;
     powertop.enable = true;
