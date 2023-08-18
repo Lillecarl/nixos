@@ -36,4 +36,18 @@
     ulauncher-joined # Python based launcher
     dfeet # D-Bus explorer
   ];
+
+  programs.obs-studio = {
+    enable = true;
+
+    plugins = builtins.attrValues {
+      inherit(pkgs.obs-studio-plugins)
+      wlrobs
+      obs-vkcapture
+      input-overlay
+      obs-gstreamer
+      looking-glass-obs
+      obs-pipewire-audio-capture;
+    };
+  };
 }
