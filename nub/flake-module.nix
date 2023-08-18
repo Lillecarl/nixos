@@ -8,6 +8,7 @@
       modules = [
         ./default.nix
         ../common
+        ../common/users.nix
         ../common/flatpak.nix
         ../common/verycommon.nix
         ../common/xplatform.nix
