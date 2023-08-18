@@ -82,6 +82,8 @@ in
     package = inputs.hyprland.packages.${pkgs.system}.hyprland;
   };
 
+  security.polkit.enable = true;
+
   programs.nm-applet.enable = true;
 
   networking.ifupdown2 = {
@@ -374,6 +376,7 @@ in
     gnome.gnome-keyring
     gnome.seahorse
     apple-cursor
+    polkit-kde-agent
     config.boot.kernelPackages.zenpower # zenpower
     xwaylandvideobridge # xwayland video bridge
     winbox # MikroTik winbox, until we're rid of this crap at work.
