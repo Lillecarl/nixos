@@ -21,22 +21,14 @@
   };
 
   programs.dconf.enable = true;
-  # Enable the X11 windowing system.
-  # Allow local clients to connect to my X server
-  services.xserver.displayManager.setupCommands = ''
-    ${pkgs.xorg.xhost}/bin/xhost +local:
-  '';
-  # Replace caps-lock with caps
-  services.xserver.xkbOptions = "caps:escape";
+
   # Disable network-manager wait-online service that prohibits nixos-rebuild
   systemd.services.NetworkManager-wait-online.enable = false;
 
-  # Use xserver keymap
+  # Use us keymap
   console = {
-    useXkbConfig = true;
+    keyMap = "us";
   };
-
-  environment.homeBinInPath = true;
 
   environment.systemPackages = with pkgs; [
     (callPackage "${inputs.nixpkgs}/pkgs/applications/networking/browsers/tor-browser-bundle-bin" {
@@ -55,7 +47,6 @@
     handlr # xdg-open alternative
     cookiecutter # Simple project template engine
     distrobuilder # Build other distros
-    x11docker # Run GUI applications with docker
     asciinema # Terminal session recorder
     asciinema-scenario # Make video from a text file
     mongodb-tools # MongoDB tools like dumping etc.
