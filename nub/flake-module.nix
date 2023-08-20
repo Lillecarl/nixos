@@ -13,6 +13,7 @@ in
         ../common/flatpak.nix
         ../common/greetd.nix
         ../common/hyprland.nix
+        ../common/nix.nix
         ../common/thinkpad.nix
         ../common/verycommon.nix
         ../common/xdg.nix

@@ -10,6 +10,7 @@
         ../common/flatpak.nix
         ../common/greetd.nix
         ../common/hyprland.nix
+        ../common/nix.nix
         ../common/verycommon.nix
         ../common/xdg.nix
         ./default.nix
