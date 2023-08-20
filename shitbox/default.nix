@@ -47,16 +47,6 @@
   #];
 
   services = {
-    xserver = {
-      # Enable the Plasma 5 Desktop Environment.
-      enable = true;
-      displayManager.sddm.enable = true;
-      desktopManager.plasma5.enable = true;
-      # Keyboard layout
-      layout = "us";
-      # Use AMD driver
-      videoDrivers = [ "amdgpu" ];
-    };
     ratbagd = {
       enable = true;
     };

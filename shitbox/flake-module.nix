@@ -8,6 +8,7 @@
       modules = [
         ./default.nix
         ../common
+        ../common/greetd.nix
         ../common/flatpak.nix
         ../common/verycommon.nix
         inputs.disko.nixosModules.disko

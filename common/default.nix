@@ -243,7 +243,6 @@
     colorpicker # Just a color picker
 
     # Misc
-    plasma-browser-integration # KDE browser integration
     scrcpy # Print-screen tool
     winePackages.wayland # Win32 API compability layer for Linux
     wine64Packages.wayland # Win32 API compability layer for Linux

@@ -9,6 +9,7 @@
         ./default.nix
         ../common
         ../common/flatpak.nix
+        ../common/greetd.nix
         ../common/verycommon.nix
         ../common/xplatform.nix
         ../modules/nixos/ifupdown2
