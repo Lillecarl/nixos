@@ -6,11 +6,13 @@
     nixosConfigurations.shitbox = inputs.nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
-        ./default.nix
         ../common
-        ../common/greetd.nix
         ../common/flatpak.nix
+        ../common/greetd.nix
+        ../common/hyprland.nix
         ../common/verycommon.nix
+        ../common/xdg.nix
+        ./default.nix
         inputs.disko.nixosModules.disko
         inputs.nixos-hardware.nixosModules.common-gpu-nvidia-disable
         inputs.nixos-hardware.nixosModules.common-cpu-amd
