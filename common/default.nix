@@ -217,7 +217,6 @@
     wezterm # Crossplatform terminal emulator, supports ligatures
     bitwarden # Password manger
     rofimoji # Emoji/Char picker for rofi
-    obs-studio # Screen recording/streaming utility
     filezilla # Free FTP/FTPS/SFTP software
     freerdp # Remote Desktop Protocol client
     kgpg # KDE pgp tool

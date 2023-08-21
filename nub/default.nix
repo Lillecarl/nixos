@@ -21,6 +21,8 @@
     "vm.dirty_writeback_centisecs" = 1500;
   };
 
+  security.polkit.enable = true;
+
 
   services.mullvad-vpn.enable = true;
 
@@ -254,6 +256,7 @@
     gnome.gnome-keyring
     gnome.seahorse
     apple-cursor
+    polkit-kde-agent
     config.boot.kernelPackages.zenpower # zenpower
     xwaylandvideobridge # xwayland video bridge
     winbox # MikroTik winbox, until we're rid of this crap at work.

@@ -4,11 +4,8 @@
 }:
 let
   swaylock = "${pkgs.swaylock}/bin/swaylock";
-  writePython3 = name: attrs: script: let
-    scriptHead = builtins.head (builtins.split "\n" script);
-    finalScriptString = builtins.replaceStrings [ scriptHead ] [ "" ] script;
-  in
-    pkgs.writers.writePython3 name attrs finalScriptString;
+
+  writePython3 = import ../../lib/writePython3.nix { inherit pkgs; };
 
   swaysleep = writePython3 "swaysleep"
     {

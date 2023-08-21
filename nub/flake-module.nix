@@ -1,7 +1,7 @@
 { inputs
 , ...
 }:
-let 
+let
   system = "x86_64-linux";
 in
 {
@@ -10,6 +10,8 @@ in
       system = system;
       modules = [
         ../common
+        ../common/users.nix
+        ../common/nix.nix
         ../common/flatpak.nix
         ../common/greetd.nix
         ../common/hyprland.nix

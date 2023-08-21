@@ -5,7 +5,36 @@
 , ...
 }:
 let
+  writePython3 = import ../../lib/writePython3.nix { inherit pkgs; };
   hyprctl = "${inputs.hyprland.packages.${pkgs.system}.hyprland}/bin/hyprctl";
+
+  printScript = writePython3 "hyprprint"
+    {
+      libraries = [
+        pkgs.grim
+        pkgs.slurp
+        pkgs.swappy
+        pkgs.wl-clipboard
+        pkgs.python3.pkgs.boto3
+        pkgs.python3.pkgs.plumbum
+      ];
+    }
+    (builtins.replaceStrings
+      [
+        "\"grim\""
+        "\"slurp\""
+        "\"swappy\""
+        "\"hyprctl\""
+        "\"wl-copy\""
+      ]
+      [
+        "\"${pkgs.grim}/bin/grim\""
+        "\"${pkgs.slurp}/bin/slurp\""
+        "\"${pkgs.swappy}/bin/swappy\""
+        "\"${pkgs.hyprland}/bin/hyprctl\""
+        "\"${pkgs.wl-clipboard}/bin/wl-copy\""
+      ]
+      (builtins.readFile ../../print.py));
 
   cursorSettings = {
     name = "macOS-BigSur";
@@ -66,11 +95,6 @@ in
       # Source from home-manager file that can be live edited through out of store symlinks.
       source = ${config.xdg.configHome}/hypr/linked.conf
 
-      # shitbox monitor layout
-      monitor=DP-1,2560x1440@164.802002,1080x240,1.0
-      monitor=DVI-D-2,1920x1080@143.996002,0x0,1.0
-      monitor=DVI-D-2,transform,3
-
       $mainMod = SUPER
 
       exec-once = ${pkgs.hyprpaper}/bin/hyprpaper
@@ -94,9 +118,10 @@ in
       # search application window titles
       bind  = $mainMod    , tab     , exec, ${pkgs.rofi-wayland}/bin/rofi -show window
       # Switch to US layout
-      bindl = $mainMod, E, exec, ${hyprctl} switchxkblayout at-translated-set-2-keyboard 0
+      bindl = $mainMod, E           , exec, ${hyprctl} switchxkblayout at-translated-set-2-keyboard 0
       # Switch to SE layout
-      bindl = $mainMod, S, exec, ${hyprctl} switchxkblayout at-translated-set-2-keyboard 1
+      bindl = $mainMod, S           , exec, ${hyprctl} switchxkblayout at-translated-set-2-keyboard 1
+      bind  =         , Print       , exec, ${printScript} screen --edit --upload
     '';
   };
 }

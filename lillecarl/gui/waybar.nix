@@ -26,9 +26,6 @@ in
       mainBar = {
         layer = "top";
         position = "top";
-        output = [
-          "eDP-1"
-        ];
         modules-left = [ "hyprland/workspaces" ];
         modules-center = [ "hyprland/window" ];
         modules-right = [ "custom/weather" "hyprland/language" "backlight" "battery" "pulseaudio" "bluetooth" "tray" "clock" ];
