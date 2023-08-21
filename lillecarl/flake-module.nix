@@ -17,7 +17,7 @@ let
           {
             inherit self;
             inherit inputs;
-            flakeloc = builtins.readFile ../.flakepath;
+            flakeloc = "/home/lillecarl/Code/nixos";
           }
           // customArgs.extraSpecialArgs;
         modules = with self.homeModules; [ ] ++ customArgs.modules;
