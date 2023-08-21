@@ -1,7 +1,7 @@
 {
   "owner": "signalfx",
   "repo": "splunk-otel-collector",
-  "rev": "0731bb43fedb0da0e7b63b6265345ff7151e61e1",
-  "hash": "sha256-yssKaF0wcIVy0QZ/qlcgEPsEz93hhKc1JCH45Xvy4xI=",
-  "version": "v0.82.0"
+  "rev": "e114dd6c974e4189543faad36d47582c10ab33a7",
+  "hash": "sha256-VFQCo1LEJT3FTh4c5VnqQ1Ylxh3ls98gqZV98kdsJA8=",
+  "version": "v0.83.0"
 }
