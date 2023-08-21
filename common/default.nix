@@ -1,11 +1,15 @@
 { pkgs, inputs, ... }: {
   security.pam.services.login.enableGnomeKeyring = true;
   security.pam.services.greetd.enableGnomeKeyring = true;
+  security.pam.services.swaylock.text = ''
+    auth include login
+  '';
 
   programs.firefox = {
     enable = true;
     nativeMessagingHosts.tridactyl = true;
   };
+
   hardware.uinput.enable = true;
   boot.tmp.useTmpfs = true;
 
