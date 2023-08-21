@@ -1,10 +1,11 @@
 { pkgs, ... }: {
   imports = [
+    #./dunst.nix
     ./brave.nix
-    ./dunst.nix
     ./firefox.nix
     ./hyprland.nix
     ./kanshi.nix
+    ./mako.nix
     ./qutebrowser.nix
     ./swaytools.nix
     ./vscode.nix
