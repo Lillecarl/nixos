@@ -22,10 +22,8 @@
   };
 
   security.polkit.enable = true;
-
-
   services.mullvad-vpn.enable = true;
-
+  programs.noisetorch.enable = true;
 
   services.udev = {
     enable = true;
