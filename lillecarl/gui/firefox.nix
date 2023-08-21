@@ -141,7 +141,11 @@
           "toolkit.telemetry.prompted" = 2; # we've been asked about telemetry
           "toolkit.telemetry.rejected" = true; # we rejected telemetry
           "toolkit.telemetry.unifiedIsOptIn" = false; # don't opt in
-          "privacy.webrtc.legacyGlobalIndicator" = false; # Disable the stupid sharing indicator
+
+          # Meeting overlay thingie doesn't work well when tiling
+          "privacy.webrtc.legacyGlobalIndicator" = false;
+          "privacy.webrtc.hideGlobalIndicator" = true;
+          "browser.privatebrowsing.enable-new-indicator" = true;
         };
 
         userChrome = ''
