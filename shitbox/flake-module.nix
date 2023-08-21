@@ -8,6 +8,7 @@
       modules = [
         ../common
         ../common/flatpak.nix
+        ../common/users.nix
         ../common/greetd.nix
         ../common/hyprland.nix
         ../common/nix.nix
