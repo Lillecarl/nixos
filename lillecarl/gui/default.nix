@@ -41,13 +41,13 @@
     enable = true;
 
     plugins = builtins.attrValues {
-      inherit(pkgs.obs-studio-plugins)
-      wlrobs
-      obs-vkcapture
-      input-overlay
-      obs-gstreamer
-      looking-glass-obs
-      obs-pipewire-audio-capture;
+      inherit (pkgs.obs-studio-plugins)
+        wlrobs
+        obs-vkcapture
+        input-overlay
+        obs-gstreamer
+        looking-glass-obs
+        obs-pipewire-audio-capture;
     };
   };
 }

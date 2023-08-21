@@ -6,7 +6,36 @@
 , ...
 }:
 let
+  writePython3 = import ../../lib/writePython3.nix { inherit pkgs; };
   hyprctl = "${inputs.hyprland.packages.${pkgs.system}.hyprland}/bin/hyprctl";
+
+  printScript = writePython3 "hyprprint"
+    {
+      libraries = [
+        pkgs.grim
+        pkgs.slurp
+        pkgs.swappy
+        pkgs.wl-clipboard
+        pkgs.python3.pkgs.boto3
+        pkgs.python3.pkgs.plumbum
+      ];
+    }
+    (builtins.replaceStrings
+    [
+      "\"grim\""
+      "\"slurp\""
+      "\"swappy\""
+      "\"hyprctl\""
+      "\"wl-copy\""
+    ]
+    [
+      "\"${pkgs.grim}/bin/grim\""
+      "\"${pkgs.slurp}/bin/slurp\""
+      "\"${pkgs.swappy}/bin/swappy\""
+      "\"${pkgs.hyprland}/bin/hyprctl\""
+      "\"${pkgs.wl-clipboard}/bin/wl-copy\""
+    ]
+    (builtins.readFile ../../print.py));
 
   cursorSettings = {
     name = "macOS-BigSur";
@@ -92,9 +121,10 @@ in
       # search application window titles
       bind  = $mainMod    , tab     , exec, ${pkgs.rofi-wayland}/bin/rofi -show window
       # Switch to US layout
-      bindl = $mainMod, E, exec, ${hyprctl} switchxkblayout at-translated-set-2-keyboard 0
+      bindl = $mainMod, E           , exec, ${hyprctl} switchxkblayout at-translated-set-2-keyboard 0
       # Switch to SE layout
-      bindl = $mainMod, S, exec, ${hyprctl} switchxkblayout at-translated-set-2-keyboard 1
+      bindl = $mainMod, S           , exec, ${hyprctl} switchxkblayout at-translated-set-2-keyboard 1
+      bind  =         , Print       , exec, ${printScript} screen --edit --upload
     '';
   };
 }

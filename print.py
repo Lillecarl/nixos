@@ -11,11 +11,12 @@ from datetime import datetime
 from pathlib import Path
 from plumbum import local, BG
 
-grim = local["grim"]
-slurp = local["slurp"]
-swappy = local["swappy"]
-hyprctl = local["hyprctl"]
-wlcopy = local["wl-copy"]
+grim = local["grim"]  # noqa: E501
+slurp = local["slurp"]  # noqa: E501
+swappy = local["swappy"]  # noqa: E501
+hyprctl = local["hyprctl"]  # noqa: E501
+wlcopy = local["wl-copy"]  # noqa: E501
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument('mode')
@@ -28,7 +29,7 @@ args = parser.parse_args()
 basepath = Path("~/Screens/").expanduser()
 # Create ~/Screens if it doesn't exist
 basepath.mkdir(exist_ok=True)
-filename= datetime.now().strftime('%Y%m%d-%H%M%S') + ".png"
+filename = datetime.now().strftime('%Y%m%d-%H%M%S') + ".png"
 filepath = os.path.join(basepath, filename)
 
 pos = ""
@@ -36,34 +37,51 @@ pos = ""
 activewindow = json.loads(hyprctl(["activewindow", "-j"]))
 
 if args.mode == "region":
-  # Get coords to print with slurp (Rectangle overlay select)
-  pos = slurp().strip()
+    # Get coords to print with slurp (Rectangle overlay select)
+    pos = slurp().strip()
 elif args.mode == "window":
-  # Get coords to print from activewindow
-  windowloc = activewindow["at"]
-  windowsize = activewindow["size"]
-  pos = "{},{} {}x{}".format(windowloc[0], windowloc[1], windowsize[0], windowsize[1])
+    # Get coords to print from activewindow
+    windowloc = activewindow["at"]
+    windowsize = activewindow["size"]
+    pos = "{},{} {}x{}".format(
+            windowloc[0],
+            windowloc[1],
+            windowsize[0],
+            windowsize[1])
 elif args.mode == "screen":
-  # Get coords to print by checking which monitor activewindowbelongs to
-  # then extract where monitor is located and how big it is
-  monitorid = activewindow["monitor"]
-  monitors = json.loads(hyprctl(["monitors", "-j"]))
-  for i in monitors:
-    if i["id"] == monitorid:
-      pos = "{},{} {}x{}".format(i["x"], i["y"], i["width"], i["height"])
+    # Get coords to print by checking which monitor activewindowbelongs to
+    # then extract where monitor is located and how big it is
+    monitorid = activewindow["monitor"]
+    monitors = json.loads(hyprctl(["monitors", "-j"]))
+    for i in monitors:
+        if i["id"] == monitorid:
+            pos = "{},{} {}x{}".format(
+                    i["x"],
+                    i["y"],
+                    i["width"],
+                    i["height"])
 
 if args.edit:
-  (grim["-g", pos, "-"] | swappy["-f", "-", "-o", filepath])()
+    (grim["-g", pos, "-"] | swappy["-f", "-", "-o", filepath])()
 else:
-  grim(["-g", pos, filepath])
+    grim(["-g", pos, filepath])
 
 if args.upload:
-  secrets = json.loads(Path("~/.local/hemlisar/s3_prints.json").expanduser().read_text())
-  s3 = boto3.resource('s3', **secrets)
-  bucket = s3.Bucket('prints') # type: ignore
-  objectname = "{}_{}.png".format(filename.replace(".png", ""),
-                         ''.join(random.choices(string.ascii_lowercase + string.digits, k=10)))
+    secrets = json.loads(Path("~/.local/hemlisar/s3_prints.json").
+                         expanduser().
+                         read_text())
+    s3 = boto3.resource('s3', **secrets)
+    bucket = s3.Bucket('prints')  # type: ignore
+    objectname = "{}_{}.png".format(
+            filename.replace(".png", ""),
+            ''.join(
+                random.choices(
+                    string.ascii_lowercase +
+                    string.digits, k=10)
+                )
+            )
 
-  bucket.upload_file(filepath, objectname) # type: ignore
-  (wlcopy["-n", "https://prints.lillecarl.com/{}".format(objectname)] & BG) # type: ignore
-
+    bucket.upload_file(filepath, objectname)  # type: ignore
+    (wlcopy["-n",
+            "https://prints.lillecarl.com/{}".format(objectname)]
+     & BG)  # type: ignore
