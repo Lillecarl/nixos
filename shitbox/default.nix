@@ -9,20 +9,6 @@
 
   disko.devices = import ./disko.nix { };
 
-  nixpkgs = {
-    # Allow proprietary software to be installed
-    config.allowUnfree = true;
-  };
-
-  nix.buildMachines = [
-    {
-      hostName = "localhost";
-      system = "x86_64-linux";
-      supportedFeatures = [ "kvm" "nixos-test" "big-parallel" "benchmark" ];
-      maxJobs = 8;
-    }
-  ];
-
   # Networking, virbr0 is WAN iface
   networking = {
     hostName = "shitbox";
@@ -37,26 +23,8 @@
 
   hardware.opengl.enable = true;
   hardware.opengl.driSupport32Bit = true;
-  #hardware.opengl.extraPackages = with pkgs; [
-  #  rocm-opencl-icd
-  #  rocm-opencl-runtime
-  #  amdvlk
-  #];
-  #hardware.opengl.extraPackages32 = with pkgs; [
-  #  driversi686Linux.amdvlk
-  #];
 
   services = {
-    xserver = {
-      # Enable the Plasma 5 Desktop Environment.
-      enable = true;
-      displayManager.sddm.enable = true;
-      desktopManager.plasma5.enable = true;
-      # Keyboard layout
-      layout = "us";
-      # Use AMD driver
-      videoDrivers = [ "amdgpu" ];
-    };
     ratbagd = {
       enable = true;
     };
@@ -108,7 +76,6 @@
     qemu_kvm
     dmidecode
     ksnip
-    #tridactyl-native
     lshw
     bridge-utils
     qtcreator
@@ -136,12 +103,6 @@
     smartmontools
     ddcutil # Monitor control
   ];
-
-  #environment.etc = {
-  #  "X11/xorg.conf.d/90-nvidia-i2c.conf" = {
-  #    source = "${pkgs.ddcutil}/share/ddcutil/data/90-nvidia-i2c.conf";
-  #  };
-  #};
 
   virtualisation = {
     libvirtd = {

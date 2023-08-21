@@ -4,7 +4,6 @@
     ./brave.nix
     ./firefox.nix
     ./hyprland.nix
-    ./kanshi.nix
     ./mako.nix
     ./qutebrowser.nix
     ./swaytools.nix

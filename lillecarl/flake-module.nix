@@ -26,7 +26,7 @@ let
 in
 {
   flake = {
-    homeConfigurations = {
+    homeConfigurations = rec {
       lillecarl-gui = mkHome "x86_64-linux" {
         extraSpecialArgs = { };
         modules = [
@@ -37,6 +37,8 @@ in
           inputs.hyprland.homeManagerModules.default
         ];
       };
+      "lillecarl@shitbox" = lillecarl-gui;
+      "lillecarl@nub" = lillecarl-gui;
       lillecarl-term = mkHome "x86_64-linux" {
         extraSpecialArgs = { };
         modules = [

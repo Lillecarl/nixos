@@ -2,7 +2,6 @@
 , config
 , pkgs
 , flakeloc
-, self
 , ...
 }:
 let
@@ -96,13 +95,16 @@ in
       # Source from home-manager file that can be live edited through out of store symlinks.
       source = ${config.xdg.configHome}/hypr/linked.conf
 
+      # shitbox monitor layout
+      monitor=DP-1,2560x1440@164.802002,1080x240,1.0
+      monitor=DVI-D-2,1920x1080@143.996002,0x0,1.0
+      monitor=DVI-D-2,transform,3
+
       $mainMod = SUPER
 
       exec-once = ${pkgs.hyprpaper}/bin/hyprpaper
       exec-once = ${pkgs.ulauncher}/bin/ulauncher --hide-window
       exec-once = ${pkgs.blueman}/bin/blueman-applet
-      # Reload kanshi after hyprland reload since Hyprland will try to manage monitor locations.
-      exec = ${pkgs.kanshi}/bin/kanshictl reload
 
       # Launch terminal
       bind  = $mainMod     , Q       , exec, ${pkgs.wezterm}/bin/wezterm-gui

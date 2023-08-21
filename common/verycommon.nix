@@ -16,10 +16,6 @@ rec
     inputs.nur.overlay
   ];
 
-  nixpkgs.config.permittedInsecurePackages = [
-    "nodejs-16.20.0"
-  ];
-
   environment.systemPackages = with pkgs; [
     home-manager
     vim

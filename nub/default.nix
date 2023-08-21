@@ -4,26 +4,10 @@
 , inputs
 , ...
 }:
-let
-  hyprland-starter = pkgs.writeShellScript "hyprland-starter" ''
-    export XDG_SESSION_TYPE=wayland
-    export MOZ_ENABLE_WAYLAND=1
-    export CLUTTER_BACKEND=wayland
-    export QT_QPA_PLATFORM=wayland-egl
-    export ECORE_EVAS_ENGINE=wayland-egl
-    export ELM_ENGINE=wayland_egl
-    export SDL_VIDEODRIVER=wayland
-
-    "${inputs.hyprland.packages.${pkgs.system}.hyprland}/bin/Hyprland";
-  '';
-in
 {
   imports = [
     ./hardware-configuration.nix
-    #../common/k3s.nix
-    ../common/postgresql.nix
-    ../common/sway.nix
-    ../nixos/config/adb.nix
+    ./tlp.nix
   ];
 
   # Use the systemd-boot EFI boot loader.
@@ -37,93 +21,11 @@ in
     "vm.dirty_writeback_centisecs" = 1500;
   };
 
-  programs.xwayland.enable = true;
-
-  services.greetd = {
-    enable = true;
-
-    settings = {
-      default_session = {
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --user-menu --asterisks --time --cmd ${hyprland-starter}";
-      };
-    };
-  };
-
-  xdg = {
-    portal = {
-      wlr.enable = false;
-
-      extraPortals = lib.mkForce [
-        pkgs.gnome.gnome-keyring
-        pkgs.xdg-desktop-portal-hyprland
-      ];
-    };
-  };
-
-  services.tlp = {
-    enable = true;
-
-    settings = {
-      CPU_SCALING_GOVERNOR_ON_AC = "powersave";
-      CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
-      CPU_ENERGY_PERF_POLICY_ON_BAT = "balance_power";
-      CPU_ENERGY_PERF_POLICY_ON_AC = "balance_power";
-      START_CHARGE_THRESH_BAT0 = 80;
-      STOP_CHARGE_THRESH_BAT0 = 85;
-    };
-  };
-
-  services.thinkfan = {
-    enable = false;
-  };
-
-  programs.hyprland = {
-    enable = true;
-    package = inputs.hyprland.packages.${pkgs.system}.hyprland;
-  };
-
   security.polkit.enable = true;
 
-  programs.nm-applet.enable = true;
-
-  networking.ifupdown2 = {
-    enable = false;
-
-    extraPackages = [
-      pkgs.bridge-utils
-      pkgs.dpkg
-      pkgs.ethtool
-      pkgs.iproute2
-      pkgs.kmod
-      pkgs.mstpd
-      pkgs.openvswitch
-      pkgs.ppp
-      pkgs.procps
-      pkgs.pstree
-      pkgs.service-wrapper
-      pkgs.systemd
-    ];
-
-    extraConfig = ''
-      auto ifbr0
-      iface ifbr0
-          bridge-pvid 1
-          bridge-vids 100 200
-          bridge-vlan-aware yes
-          address 10.255.255.1/24
-    '';
-  };
 
   services.mullvad-vpn.enable = true;
 
-  services.tp-auto-kbbl = {
-    enable = true;
-    device = "/dev/input/by-path/platform-i8042-serio-0-event-kbd";
-    arguments = [
-      "-b 1"
-      "-t 2"
-    ];
-  };
 
   services.udev = {
     enable = true;
@@ -194,28 +96,6 @@ in
 
   services.acpid = {
     enable = true;
-
-    handlers = {
-      mic-led = {
-        action = ''
-                vals=($1)  # space separated string to array of multiple values
-                case ''${vals[1]} in
-                    F20)
-                 if ${pkgs.systemd}/bin/machinectl shell lillecarl@ ${pkgs.pulseaudio}/bin/pactl get-source-mute alsa_input.pci-0000_05_00.6.HiFi__hw_acp__source | ${pkgs.gnugrep}/bin/grep "Mute: yes"
-          then
-                   echo 1 > /sys/class/leds/platform::micmute/brightness
-          else
-                   echo 0 > /sys/class/leds/platform::micmute/brightness
-          fi
-                        ;;
-                    *)
-                        echo unknown >> /tmp/acpi.log
-                        ;;
-                esac
-        '';
-        event = "button/*";
-      };
-    };
   };
 
   systemd.targets.hibernate.enable = false;
@@ -401,26 +281,11 @@ in
     config.boot.kernelPackages.usbip
   ];
 
-  environment.shellInit = ''
-    export GTK_PATH=$GTK_PATH:${pkgs.libsForQt5.breeze-gtk}/lib/gtk-2.0
-    export GTK2_RC_FILES=$GTK2_RC_FILES:${pkgs.libsForQt5.breeze-gtk}/share/themes/breeze-gtk/gtk-2.0/gtkrc
-  '';
-
   systemd = {
     # upower systemd service
     services.upower.enable = true;
 
     services.systemd-networkd-wait-online.enable = false;
-
-    services.before-sleep = {
-      enable = true;
-      wantedBy = [ "sleep.target" ];
-      before = [ "sleep.target" ];
-      script = ''
-               ${pkgs.procps}/bin/pgrep gpclient | xargs kill
-        ${pkgs.iproute2}/bin/ip link del tun0
-      '';
-    };
   };
 
   # Enables upower daemon
@@ -429,6 +294,34 @@ in
   services.postfix = {
     enable = true;
     setSendmail = true;
+  };
+
+  networking.ifupdown2 = {
+    enable = false;
+
+    extraPackages = [
+      pkgs.bridge-utils
+      pkgs.dpkg
+      pkgs.ethtool
+      pkgs.iproute2
+      pkgs.kmod
+      pkgs.mstpd
+      pkgs.openvswitch
+      pkgs.ppp
+      pkgs.procps
+      pkgs.pstree
+      pkgs.service-wrapper
+      pkgs.systemd
+    ];
+
+    extraConfig = ''
+      auto ifbr0
+      iface ifbr0
+          bridge-pvid 1
+          bridge-vids 100 200
+          bridge-vlan-aware yes
+          address 10.255.255.1/24
+    '';
   };
 
   system.stateVersion = "22.05";

@@ -18,7 +18,12 @@
   boot.kernelPackages = with pkgs.linuxKernel.packages; linux_lqx;
   #boot.kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_latest;
   boot.initrd.kernelModules = [ "amdgpu" "vfio-pci" ];
-  boot.extraModprobeConfig = "options vfio-pci ids=10de:2487,10de:228b";
+  boot.extraModprobeConfig = ''
+    options vfio-pci ids=10de:2487,10de:228b
+    blacklist nouveau
+    options nouveau modeset=0
+  '';
+  boot.blacklistedKernelModules = [ "nouveau" "nvidia" "nvidia_drm" "nvidia_modeset" ];
   boot.kernelModules = [
     "drivetemp"
     "nct6775"
@@ -70,10 +75,6 @@
       ];
     };
   };
-
-  #boot.extraModulePackages = with config.boot.kernelPackages; [
-  #  usbip
-  #];
 
   boot.kernel.sysctl = {
     "vm.swappiness" = 1;
