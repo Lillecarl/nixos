@@ -32,8 +32,8 @@
   {
     "name": "vsliveshare",
     "publisher": "MS-vsliveshare",
-    "version": "1.0.5877",
-    "sha256": "0fg636hjajw86z4invklys55d7k2sckmzvjb81hwbzdjv1dywxab"
+    "version": "1.0.5883",
+    "sha256": "1zgjz25s1x1n93va7xbadmfjkqr2rahsrhpiw22xsshvswh4pp04"
   },
   {
     "name": "vscode-ron",
@@ -98,8 +98,8 @@
   {
     "name": "remote-ssh",
     "publisher": "ms-vscode-remote",
-    "version": "0.106.2023081815",
-    "sha256": "1v3rw0669z9qc9wdkprjna3005ii14x6dzrpxv4n2cc8mk8wyv03"
+    "version": "0.106.2023082115",
+    "sha256": "1dc6lfcdxl4ni6j42zxkwki4382wck0p66i08ly548qwmq15d1i4"
   },
   {
     "name": "remote-ssh-edit",
@@ -110,8 +110,8 @@
   {
     "name": "cpptools",
     "publisher": "ms-vscode",
-    "version": "1.17.3",
-    "sha256": "0fvm97ijwvcbpjz2d0diqxl6j8liv79kq6p8yyy2w2a7rrrnnjz2"
+    "version": "1.17.4",
+    "sha256": "1bflmag9cnbw4b9c3zs3fydj2h6ilkfrskqq3vazs1nh3hk3j9j5"
   },
   {
     "name": "remote-explorer",
