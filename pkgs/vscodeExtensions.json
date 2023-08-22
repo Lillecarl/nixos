@@ -14,8 +14,8 @@
   {
     "name": "copilot",
     "publisher": "GitHub",
-    "version": "1.105.350",
-    "sha256": "1s60dl7hdlid2jag0sdm7mxdbwzg97zp76sjq35w346nrhs89r9s"
+    "version": "1.105.352",
+    "sha256": "1nibw9pr4bz2h268bwimb3lap6vbzv27889yx0hfnjx0jwrjg3ih"
   },
   {
     "name": "EditorConfig",
@@ -44,8 +44,8 @@
   {
     "name": "gitlens",
     "publisher": "eamodio",
-    "version": "2023.8.1905",
-    "sha256": "1dqnjgfxbqdhb5d1v0lfg4h6a8wjdi8vma08mlqb9rdz4jlc1lz4"
+    "version": "2023.8.2205",
+    "sha256": "0zx333d55qkv51l7zir3r0c6gwzjlx7rk164bav8cfvd3k75qkbq"
   },
   {
     "name": "xonsh",
@@ -86,8 +86,8 @@
   {
     "name": "python",
     "publisher": "ms-python",
-    "version": "2023.15.12331008",
-    "sha256": "05kxn4y2f15cavqyxm369cwvqxkqmns5jrxy5h740zqsgs6k8am4"
+    "version": "2023.15.12341006",
+    "sha256": "0vvyrqk2ym2r7hfvv8g0cn2r699ww0wk93vqisy7f92w1csjbyzg"
   },
   {
     "name": "vscode-pylance",
