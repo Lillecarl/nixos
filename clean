@@ -1,0 +1,4 @@
+#! /usr/bin/env bash
+
+home-manager expire-generations "-$1 days"
+sudo nix-collect-garbage --delete-older-than $1d
