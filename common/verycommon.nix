@@ -1,19 +1,17 @@
 { inputs
-, config
 , pkgs
-, lib
 , programs-sqlite-db
 , ...
 }:
 let
   pkgs-overlay = import ../pkgs;
 in
-rec
 {
   nixpkgs.overlays = [
-    pkgs-overlay
     #inputs.nixpkgs-wayland.overlay
+    inputs.hyprland.overlays.default
     inputs.nur.overlay
+    pkgs-overlay
   ];
 
   environment.systemPackages = with pkgs; [
@@ -26,7 +24,7 @@ rec
   programs.nix-ld.enable = true;
 
   # XDG Base Directory Specification
-  environment.sessionVariables = rec {
+  environment.sessionVariables = {
     XDG_CACHE_HOME = "\${HOME}/.cache";
     XDG_CONFIG_HOME = "\${HOME}/.config";
     XDG_BIN_HOME = "\${HOME}/.local/bin";

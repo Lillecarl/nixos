@@ -9,9 +9,10 @@ let
 in
 {
   nixpkgs.overlays = [
-    pkgs-overlay
+    inputs.hyprland.overlays.default
     inputs.nixpkgs-wayland.overlay
     inputs.nur.overlay
+    pkgs-overlay
   ];
 
   nixpkgs = {

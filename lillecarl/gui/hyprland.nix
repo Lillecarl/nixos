@@ -6,7 +6,7 @@
 }:
 let
   writePython3 = import ../../lib/writePython3.nix { inherit pkgs; };
-  hyprctl = "${inputs.hyprland.packages.${pkgs.system}.hyprland}/bin/hyprctl";
+  hyprctl = "${pkgs.hyprland}/bin/hyprctl";
 
   printScript = writePython3 "hyprprint"
     {
@@ -31,7 +31,7 @@ let
         "\"${pkgs.grim}/bin/grim\""
         "\"${pkgs.slurp}/bin/slurp\""
         "\"${pkgs.swappy}/bin/swappy\""
-        "\"${pkgs.hyprland}/bin/hyprctl\""
+        "${hyprctl}"
         "\"${pkgs.wl-clipboard}/bin/wl-copy\""
       ]
       (builtins.readFile ../../print.py));

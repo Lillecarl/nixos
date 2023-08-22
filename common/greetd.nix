@@ -12,7 +12,7 @@ let
     export ELM_ENGINE=wayland_egl
     export SDL_VIDEODRIVER=wayland
 
-    "${inputs.hyprland.packages.${pkgs.system}.hyprland}/bin/Hyprland";
+    "${pkgs.hyprland}/bin/Hyprland";
   '';
 in
 {

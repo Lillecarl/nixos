@@ -5,7 +5,7 @@
 {
   programs.hyprland = {
     enable = true;
-    package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+    package = pkgs.hyprland;
   };
 
   programs.nm-applet.enable = true;
