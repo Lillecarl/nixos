@@ -1,12 +1,5 @@
-{ inputs
-, pkgs
-, ...
-}:
+{ ... }:
 {
-  programs.hyprland = {
-    enable = true;
-    package = pkgs.hyprland;
-  };
-
+  programs.hyprland.enable = true;
   programs.nm-applet.enable = true;
 }

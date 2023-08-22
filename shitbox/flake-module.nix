@@ -16,9 +16,10 @@
         ../common/xdg.nix
         ./default.nix
         inputs.disko.nixosModules.disko
+        inputs.hyprland.nixosModules.default
         inputs.nixos-hardware.nixosModules.common-cpu-amd
-        inputs.nixos-hardware.nixosModules.common-pc-ssd
         inputs.nixos-hardware.nixosModules.common-pc
+        inputs.nixos-hardware.nixosModules.common-pc-ssd
       ];
       specialArgs = {
         inherit inputs;
