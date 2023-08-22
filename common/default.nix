@@ -8,6 +8,8 @@
   programs.firefox = {
     enable = true;
     nativeMessagingHosts.tridactyl = true;
+    nativeMessagingHosts.ff2mpv = true;
+    nativeMessagingHosts.fxCast = true;
   };
 
   hardware.uinput.enable = true;

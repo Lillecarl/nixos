@@ -3,6 +3,10 @@
 , inputs
 , ...
 }: {
+  home.packages = [
+    pkgs.vim-full # Required for tridactyl nativemessaging host thingy
+  ];
+
   programs.firefox = {
     enable = true;
     package = pkgs.firefox;
