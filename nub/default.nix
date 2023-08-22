@@ -33,6 +33,8 @@
       # Limit battery max charge to 86% (85 in reality)
       ACTION=="add|change", SUBSYSTEM=="power_supply", ENV{POWER_SUPPLY_NAME}=="BAT0", ATTR{charge_control_start_threshold}="83", ATTR{charge_control_end_threshold}="86"
       ACTION=="add", SUBSYSTEM=="leds", KERNEL=="platform::micmute" ATTR{trigger}="${pkgs.mictoggle}"
+      ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="amdgpu_bl0", RUN{program}+="${pkgs.coreutils-full}/bin/chmod a+rw /sys/class/backlight/%k/brightness"
+      ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="amdgpu_bl0", MODE="0666"
     '';
   };
 
