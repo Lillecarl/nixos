@@ -122,6 +122,7 @@ in
       # Switch to SE layout
       bindl = $mainMod, S           , exec, ${hyprctl} switchxkblayout at-translated-set-2-keyboard 1
       bind  =         , Print       , exec, ${printScript} screen --edit --upload
+      bind  = $mainMod, Print       , exec, ${printScript} window --edit --upload
     '';
   };
 }
