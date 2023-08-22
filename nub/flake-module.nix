@@ -26,6 +26,7 @@ in
         inputs.disko.nixosModules.disko
         inputs.dwarffs.nixosModules.dwarffs
         inputs.hyprland.nixosModules.default
+        inputs.lanzaboote.nixosModules.lanzaboote
         inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
         inputs.nixos-hardware.nixosModules.common-pc-laptop-acpi_call
         inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t14-amd-gen3

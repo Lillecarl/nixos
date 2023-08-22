@@ -257,6 +257,7 @@
     gnome.seahorse
     apple-cursor
     polkit-kde-agent
+    sbctl # sb = secure boot
     config.boot.kernelPackages.zenpower # zenpower
     xwaylandvideobridge # xwayland video bridge
     winbox # MikroTik winbox, until we're rid of this crap at work.
