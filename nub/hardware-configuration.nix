@@ -8,14 +8,10 @@
     "xhci_pci"
     "usb_storage"
     "sd_mod"
-    "tpm_crb"
-    "tpm_tis"
   ];
   boot.initrd.kernelModules = [
     "dm-snapshot"
     "thinkpad_acpi"
-    "tpm_crb"
-    "tpm_tis"
   ];
   boot.initrd.systemd.enable = true;
 
