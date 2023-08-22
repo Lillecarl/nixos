@@ -31,7 +31,7 @@ let
         "\"${pkgs.grim}/bin/grim\""
         "\"${pkgs.slurp}/bin/slurp\""
         "\"${pkgs.swappy}/bin/swappy\""
-        "${hyprctl}"
+        "\"${hyprctl}\""
         "\"${pkgs.wl-clipboard}/bin/wl-copy\""
       ]
       (builtins.readFile ../../print.py));
