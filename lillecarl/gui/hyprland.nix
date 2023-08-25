@@ -83,6 +83,7 @@ in
 
   services.clipman = {
     enable = true;
+    package = pkgs.clipman-wrapped;
     systemdTarget = "hyprland-session.target";
   };
 

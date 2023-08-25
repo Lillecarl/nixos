@@ -86,6 +86,14 @@ prev.lib.filterAttrs
       ${prev.coreutils-full}/bin/sleep 0.5
       echo $mute > /sys/class/leds/platform\:\:micmute/brightness
     '';
+
+    clipman-wrapped = prev.symlinkJoin {
+      name = "clipman-wrapped";
+      paths = [
+        prev.wl-clipboard
+        prev.clipman
+      ];
+    };
   }
 // (
   if flake == true
