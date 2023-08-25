@@ -9,14 +9,14 @@ in
   programs.waybar = {
     enable = true;
 
-    package = pkgs.waybar-hyprland;
+    package = pkgs.waybar;
 
     systemd = {
       enable = true;
       target = "hyprland-session.target";
     };
 
-    style = builtins.readFile "${pkgs.waybar-hyprland}/etc/xdg/waybar/style.css" + ''
+    style = builtins.readFile "${pkgs.waybar}/etc/xdg/waybar/style.css" + ''
       * {
         font-family: Hack Nerd Font Mono, FontAwesome, Roboto, Helvetica, Arial, sans-serif;
       }
