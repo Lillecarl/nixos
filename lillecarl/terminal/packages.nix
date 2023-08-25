@@ -4,68 +4,69 @@
 , ...
 }: {
   home.packages = with pkgs; [
-    #inputs.system-manager.packages.x86_64-linux.system-manager
+    #awscli2 # AWS CLI tooling
+    #httpie # A modern, user-friendly command-line HTTP client for the API era.
     #inputs.mozilla-addons-to-nix.packages.x86_64-linux.default
-    inputs.nh.packages.x86_64-linux.default
-    tealdeer # tldr pages
-    scrcpy # Remote your android over adb
-    kubevirt # virtctl tool for kubevirt
-    colmena # Stateless Nix deploy tool
-    jekyll # Static site generator
-    salt # RCE as a service
+    #inputs.system-manager.packages.x86_64-linux.system-manager
+    (lowPrio kubectl) # Kubernetes management cli
+    age # Modern crypto written in Go
+    ansible-lint # Ansible linting software
+    aws-vault # AWS Vault CLI (Used for MFA auth?)
     awscli2 # AWS cli tool
+    bat # Better cat
+    broot # A new way to see and navigate directory trees
     carapace # completion engine
-    salt-pepper # salt-api CLI tool
-    xonsh-wrapper # xonsh shell
-    moar # Better pager
-    rbw # Unofficial Bitwarden CLI client
+    choose # A human-friendly and fast alternative to cut and (sometimes) awk
+    cmatrix # Cool matrix style scrolling, really cpu intense
+    cmctl # cert-manager CLI
+    colmena # Stateless Nix deploy tool
+    cowsay # Make a cow say shit
     delta # Diffing software
+    direnv # Do stuff on cd.
     du-dust # A more intuitive version of du written in rust.
     duf # A better df alternative
-    broot # A new way to see and navigate directory trees
-    fd # A simple, fast and user-friendly alternative to find
-    bat # Better cat
-    exa # Better ls
-    direnv # Do stuff on cd.
-    gitui # Fast Git TUI.
-    choose # A human-friendly and fast alternative to cut and (sometimes) awk
-    gping # ping, but with a graph.
-    procs # A modern replacement for ps written in Rust.
-    #httpie # A modern, user-friendly command-line HTTP client for the API era.
-    ansible-lint # Ansible linting software
-    cowsay # Make a cow say shit
-    fortune # Fortune cookies in CLI
-    toilet # Ascii art text
-    cmatrix # Cool matrix style scrolling, really cpu intense
     envsubst # Templating with environment variables, commonly used with k8s
+    exa # Better ls
+    fd # A simple, fast and user-friendly alternative to find
+    fortune # Fortune cookies in CLI
     fzf # fzf cli fuzzy search tool
     gh # Github CLI
-    #awscli2 # AWS CLI tooling
-    zellij # discoverable terminal multiplexer written in rust
-    zoxide # Rust implementation of z/autojump
-    age # Modern crypto written in Go
-    rage # Modern crypto written in Rust (Compatible with Age)
-    tfswitch # Terraform version switcher
+    gitui # Fast Git TUI.
+    gping # ping, but with a graph.
+    gron # Flatten JSON to make it easy to grep
+    htop # NCurses "task manager"
+    inputs.nh.packages.x86_64-linux.default
+    jekyll # Static site generator
+    jq # CLI JSON utility, piping JSON here will always pretty-print it
     k2tf # Kubernetes YAML to Terraform
-    tfk8s # Kubernetes YAML to Terraform
-    terragrunt # Some weird Terraform abstraction
-    aws-vault # AWS Vault CLI (Used for MFA auth?)
-    kubernetes-helm # Kubernetes package manager
     kompose # Kubernetes docker-compose like tool
-    (lowPrio kubectl) # Kubernetes management cli
+    krew # kubectl plugin manager
     kubectx # Kube switcher
     kubernetes # Kubernetes packages
-    cmctl # cert-manager CLI
-    krew # kubectl plugin manager
-    operator-sdk # Kubernetes Operator Lifecycle Management(OLM) SDK
-    packer # Tool to create images and stuff from Hashicorp
-    ripgrep # Modern rusty grep
-    tmate # terminal multiplexer with online sharing
-    htop # NCurses "task manager"
-    jq # CLI JSON utility, piping JSON here will always pretty-print it
-    yq # CLI YAML utility, useful for those that thing YAML is a bit shit
-    gron # Flatten JSON to make it easy to grep
+    kubernetes-helm # Kubernetes package manager
+    kubevirt # virtctl tool for kubevirt
+    moar # Better pager
     node2nix # Generate nix packages from NPM packages
     nodePackages.pajv # JSON Schema Validator for multiple formats
+    openvpn # VPN software
+    operator-sdk # Kubernetes Operator Lifecycle Management(OLM) SDK
+    packer # Tool to create images and stuff from Hashicorp
+    procs # A modern replacement for ps written in Rust.
+    rage # Modern crypto written in Rust (Compatible with Age)
+    rbw # Unofficial Bitwarden CLI client
+    ripgrep # Modern rusty grep
+    salt # RCE as a service
+    salt-pepper # salt-api CLI tool
+    scrcpy # Remote your android over adb
+    tealdeer # tldr pages
+    terragrunt # Some weird Terraform abstraction
+    tfk8s # Kubernetes YAML to Terraform
+    tfswitch # Terraform version switcher
+    tmate # terminal multiplexer with online sharing
+    toilet # Ascii art text
+    xonsh-wrapper # xonsh shell
+    yq # CLI YAML utility, useful for those that thing YAML is a bit shit
+    zellij # discoverable terminal multiplexer written in rust
+    zoxide # Rust implementation of z/autojump
   ];
 }
