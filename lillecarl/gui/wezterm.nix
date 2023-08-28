@@ -15,7 +15,7 @@
         hide_mouse_cursor_when_typing = false,
         color_scheme = 'Solarized (dark) (terminal.sexy)',
         hide_tab_bar_if_only_one_tab = true,
-        default_prog = { '/usr/bin/env', 'xonsh' },
+        default_prog = { '${pkgs.nushell}/bin/nu' },
         font = wezterm.font_with_fallback({
           'Hack Nerd Font',
           'Hack',
