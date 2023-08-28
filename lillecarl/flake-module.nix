@@ -17,7 +17,7 @@ let
           {
             inherit self;
             inherit inputs;
-            flakeloc = "/home/lillecarl/Code/nixos";
+            flakeloc = builtins.getEnv "FLAKELOC";
           }
           // customArgs.extraSpecialArgs;
         modules = with self.homeModules; [ ] ++ customArgs.modules;

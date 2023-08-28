@@ -16,14 +16,8 @@ def block_until_internet(address):
     sleep(1)
 
 def commonargs(buildtype):
-  flakepath = "/home/lillecarl/Code/nixos"
-  Path(os.path.join(flakepath, ".flakepath")).write_text(flakepath)
   git update-index --skip-worktree ".flakepath"
   commonargs = ["--flake", flakepath, "--keep-failed", "-v", "--impure"]
-
-  #if check_connection("shitbox") and "shitbox" not in hostname:
-    #commonargs += ["--builders", "ssh://lillecarl@shitbox?ssh-key=/home/lillecarl/.ssh/id_ed25519"]
-    #commonargs += ["--builders", "ssh://lillecarl@shitbox x86_64-linux"]
 
   return commonargs
 
