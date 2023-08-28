@@ -10,13 +10,13 @@ in
       system = system;
       modules = [
         ../common
-        ../common/users.nix
-        ../common/nix.nix
+        ../common/fish.nix
         ../common/flatpak.nix
         ../common/greetd.nix
         ../common/hyprland.nix
         ../common/nix.nix
         ../common/thinkpad.nix
+        ../common/users.nix
         ../common/verycommon.nix
         ../common/xdg.nix
         ../common/xplatform.nix
