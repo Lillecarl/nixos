@@ -53,7 +53,7 @@ in
           clangd = {
             command = "${pkgs.clang-tools}/bin/clangd";
             rootPatterns = [ "compile_flags.txt" "compile_commands.json" ];
-            filetypes = [ "c" "cc" "cpp" "c++" "objc" "objcpp" ];
+            filetypes = [ "c" "cc" "cpp" "c++" "objc" "objcpp" "h" "hpp" ];
           };
         };
       };
