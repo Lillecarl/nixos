@@ -54,6 +54,9 @@ in
           };
           on-click = "${pkgs.pavucontrol}/bin/pavucontrol";
         };
+        backlight = {
+          format = "{percent}%💡";
+        };
         battery = {
           interval = 5;
           full-at = 85;
