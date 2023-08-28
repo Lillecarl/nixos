@@ -15,6 +15,7 @@
     ./ssh.nix
     ./starship.nix
     ./tealdeer.nix
+    ./tmux.nix
     ./xonsh.nix
     ./zsh.nix
   ];
