@@ -5,6 +5,7 @@
 }: {
   imports = [
     ./editorconfig.nix
+    ./fish.nix
     ./git.nix
     ./gnome-keyring.nix
     ./gpg.nix
