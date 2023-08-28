@@ -1,11 +1,13 @@
 function Invoke-MySudo {
   & /usr/bin/env sudo -E pwsh -command "$args"
 }
+Set-Alias sudo Invoke-MySudo
+
+Set-PSReadlineOption -EditMode vi
 
 $env:SHELL = "pwsh"
 $env:POWERSHELL_UPDATECHECK = 'Off'
 
-Set-Alias sudo Invoke-MySudo
 
 # Load starship
 Invoke-Expression (&starship init powershell)
