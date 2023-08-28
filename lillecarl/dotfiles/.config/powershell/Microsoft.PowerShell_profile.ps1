@@ -3,10 +3,10 @@ function Invoke-MySudo {
 }
 
 $env:SHELL = "pwsh"
+$env:POWERSHELL_UPDATECHECK = 'Off'
 
 Set-Alias sudo Invoke-MySudo
 
 # Load starship
 Invoke-Expression (&starship init powershell)
 
-#Clear-Host
