@@ -96,7 +96,14 @@
     , flake-parts
     , ...
     } @ inputs:
-    flake-parts.lib.mkFlake { inherit inputs; } {
+    flake-parts.lib.mkFlake {
+      inherit inputs;
+      specialArgs = {
+        flakeloc = if builtins.getEnv "FLAKELOC" == ""
+        then builtins.abort "env var FLAKELOC is not properly configured"
+        else builtins.getEnv "FLAKELOC";
+      };
+    } {
       imports = [
         inputs.flake-parts.flakeModules.easyOverlay
         ./lillecarl/flake-module.nix

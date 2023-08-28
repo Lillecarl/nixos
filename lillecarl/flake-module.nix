@@ -1,7 +1,7 @@
 { self
 , inputs
 , withSystem
-, nixpkgs-unfree
+, flakeloc
 , ...
 }:
 let
@@ -17,12 +17,11 @@ let
           {
             inherit self;
             inherit inputs;
-            flakeloc = builtins.getEnv "FLAKELOC";
+            inherit flakeloc;
           }
           // customArgs.extraSpecialArgs;
         modules = with self.homeModules; [ ] ++ customArgs.modules;
       });
-
 in
 {
   flake = {
