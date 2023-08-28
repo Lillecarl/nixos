@@ -26,8 +26,10 @@ in
       nvim-treesitter
       surround
       vim-airline
-      vim-nix
+      vim-hcl
       vim-nftables
+      vim-nix
+      vim-tmux-navigator
     ];
 
     coc = {
