@@ -16,8 +16,7 @@ def block_until_internet(address):
     sleep(1)
 
 def commonargs(buildtype):
-  git update-index --skip-worktree ".flakepath"
-  commonargs = ["--flake", flakepath, "--keep-failed", "-v", "--impure"]
+  commonargs = ["--flake", $FLAKELOC, "--keep-failed", "-v", "--impure"]
 
   return commonargs
 
