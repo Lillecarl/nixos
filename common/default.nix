@@ -35,12 +35,7 @@
   };
 
   environment.systemPackages = with pkgs; [
-    (callPackage "${inputs.nixpkgs}/pkgs/applications/networking/browsers/tor-browser-bundle-bin" {
-      useHardenedMalloc = false;
-    })
-    # Temporary lab
-    xorg.xwininfo # Information about X windows (Used to find things using XWayland)
-
+    tor-browser-bundle-bin
     # Commandline tools (CLI)
     virtiofsd # VirtIO filesystem daemon
     home-manager # Tool to build your home environment in a reproducible fashion, anywhere with Nix!
