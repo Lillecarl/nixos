@@ -9,6 +9,7 @@
     "usb_storage"
     "sd_mod"
   ];
+
   boot.initrd.kernelModules = [
     "dm-snapshot"
     "thinkpad_acpi"
