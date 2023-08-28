@@ -16,6 +16,7 @@
       plugins = [
         "vi-mode"
         "keychain"
+        "direnv"
       ];
     };
     initExtra = ''
