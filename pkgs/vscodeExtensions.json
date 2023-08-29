@@ -14,8 +14,8 @@
   {
     "name": "copilot",
     "publisher": "GitHub",
-    "version": "1.105.364",
-    "sha256": "0p3kxdqvsc8v5cjhn354j1qgzr2d07di5vbx7rdlp4ar3k9xfqhc"
+    "version": "1.105.366",
+    "sha256": "03zwgclgy6sb1jy6jibimyfj4w6lbiz2g5r93gnfxavjhkrv4lmy"
   },
   {
     "name": "EditorConfig",
@@ -110,8 +110,8 @@
   {
     "name": "cpptools",
     "publisher": "ms-vscode",
-    "version": "1.17.4",
-    "sha256": "1bflmag9cnbw4b9c3zs3fydj2h6ilkfrskqq3vazs1nh3hk3j9j5"
+    "version": "1.17.5",
+    "sha256": "1mkdsps8h7k9w3ps2vzr8xmxh0rf3m14wgy5skqhs0r8r31h801c"
   },
   {
     "name": "remote-explorer",

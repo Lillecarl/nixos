@@ -535,13 +535,13 @@ let
         sha512 = "yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A==";
       };
     };
-    "function.prototype.name-1.1.5" = {
+    "function.prototype.name-1.1.6" = {
       name = "function.prototype.name";
       packageName = "function.prototype.name";
-      version = "1.1.5";
+      version = "1.1.6";
       src = fetchurl {
-        url = "https://registry.npmjs.org/function.prototype.name/-/function.prototype.name-1.1.5.tgz";
-        sha512 = "uN7m/BzVKQnCUF/iW8jYea67v++2u7m5UgENbHRtdDVclOUP+FMPlCNdmk0h/ysGyo2tavMJEDqJAkJdRa1vMA==";
+        url = "https://registry.npmjs.org/function.prototype.name/-/function.prototype.name-1.1.6.tgz";
+        sha512 = "Z5kx79swU5P27WEayXM1tBi5Ze/lbIyiNgU3qyXUOf9b2rgXYyF9Dy9Cx+IQv/Lc8WCG6L82zwUPpSS9hGehIg==";
       };
     };
     "functions-have-names-1.2.3" = {
@@ -1356,7 +1356,7 @@ in
       sources."frac-0.3.1"
       sources."fs.realpath-1.0.0"
       sources."function-bind-1.1.1"
-      sources."function.prototype.name-1.1.5"
+      sources."function.prototype.name-1.1.6"
       sources."functions-have-names-1.2.3"
       sources."get-intrinsic-1.2.1"
       sources."get-symbol-description-1.0.0"
