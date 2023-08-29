@@ -96,54 +96,57 @@
     , flake-parts
     , ...
     } @ inputs:
-    flake-parts.lib.mkFlake {
-      inherit inputs;
-      specialArgs = {
-        flakeloc = if builtins.getEnv "FLAKELOC" == ""
-        then builtins.abort "env var FLAKELOC is not properly configured"
-        else builtins.getEnv "FLAKELOC";
-      };
-    } {
-      imports = [
-        inputs.flake-parts.flakeModules.easyOverlay
-        ./lillecarl/flake-module.nix
-        ./modules/flake-module.nix
-        ./nub/flake-module.nix
-        ./shitbox/flake-module.nix
-        ./system-manager/flake-module.nix
-        ./terraform/flake-module.nix
-        ./nixos-installer/flake-module.nix
-      ];
-      systems = [ "x86_64-linux" "x86_64-darwin" ];
-      flake = { };
-      perSystem =
-        { config
-        , system
-        , pkgs
-        , inputs'
-        , ...
-        }:
-        let
-          pkgs_overlaid = pkgs.extend (import ./pkgs);
-          own_pkgs = import ./pkgs/pkgs.nix pkgs_overlaid pkgs_overlaid true;
-        in
-        {
-          formatter = pkgs.nixpkgs-fmt;
-          packages = own_pkgs;
-          legacyPackages = pkgs_overlaid;
-          devShells.default =
-            (pkgs_overlaid.buildFHSUserEnv rec {
-              name = "testuserenv";
-
-              targetPkgs = pkgs: (with pkgs_overlaid; [
-                xonsh
-                apt
-              ]);
-
-              multiPkgs = targetPkgs;
-
-              runScript = "bash";
-            }).env;
+    flake-parts.lib.mkFlake
+      {
+        inherit inputs;
+        specialArgs = {
+          flakeloc =
+            if builtins.getEnv "FLAKELOC" == ""
+            then builtins.abort "env var FLAKELOC is not properly configured"
+            else builtins.getEnv "FLAKELOC";
         };
-    };
+      }
+      {
+        imports = [
+          inputs.flake-parts.flakeModules.easyOverlay
+          ./lillecarl/flake-module.nix
+          ./modules/flake-module.nix
+          ./nub/flake-module.nix
+          ./shitbox/flake-module.nix
+          ./system-manager/flake-module.nix
+          ./terraform/flake-module.nix
+          ./nixos-installer/flake-module.nix
+        ];
+        systems = [ "x86_64-linux" "x86_64-darwin" ];
+        flake = { };
+        perSystem =
+          { config
+          , system
+          , pkgs
+          , inputs'
+          , ...
+          }:
+          let
+            pkgs_overlaid = pkgs.extend (import ./pkgs);
+            own_pkgs = import ./pkgs/pkgs.nix pkgs_overlaid pkgs_overlaid true;
+          in
+          {
+            formatter = pkgs.nixpkgs-fmt;
+            packages = own_pkgs;
+            legacyPackages = pkgs_overlaid;
+            devShells.default =
+              (pkgs_overlaid.buildFHSUserEnv rec {
+                name = "testuserenv";
+
+                targetPkgs = pkgs: (with pkgs_overlaid; [
+                  xonsh
+                  apt
+                ]);
+
+                multiPkgs = targetPkgs;
+
+                runScript = "bash";
+              }).env;
+          };
+      };
 }
