@@ -11,8 +11,19 @@
   programs.fish = {
     enable = true;
 
-    plugins = [
-    ];
+    plugins =
+      builtins.map
+        (
+          plug: {
+            name = plug.name;
+            src = pkgs.fetchFromGitHub plug.src;
+          }
+        )
+        (
+          builtins.fromJSON (
+            builtins.readFile ./fishPlugins.json
+          )
+        );
 
     interactiveShellInit = ''
       ${pkgs.starship}/bin/starship init fish | source
