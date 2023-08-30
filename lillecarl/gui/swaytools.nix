@@ -12,7 +12,8 @@ let
       libraries = [ pkgs.python3.pkgs.plumbum ];
       flakeIgnore = [ "E501" ]; # Lines too long when rendering Nix paths
     }
-    (builtins.replaceStrings
+    (
+      builtins.replaceStrings
       [ "\"systemctl\"" ]
       [ "\"${pkgs.systemd}/bin/systemctl\"" ]
       (builtins.readFile ./swaysleep.py)
