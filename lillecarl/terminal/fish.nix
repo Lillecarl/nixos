@@ -6,7 +6,7 @@
 {
   programs.starship.enableFishIntegration = true;
 
-  home.file.".config/fish/conf.d".source = config.lib.file.mkOutOfStoreSymlink "${flakeloc}/lillecarl/terminal/fish";
+  home.file.".config/fish/linked.conf".source = config.lib.file.mkOutOfStoreSymlink "${flakeloc}/lillecarl/terminal/fish/linked.conf";
 
   programs.fish = {
     enable = true;
@@ -16,7 +16,7 @@
 
     interactiveShellInit = ''
       ${pkgs.starship}/bin/starship init fish | source
-      source ${config.home.homeDirectory}/.config/fish/conf.d/*.conf
+      source ${config.home.homeDirectory}/.config/fish/*.conf
     '';
 
     shellInit = ''
