@@ -67,13 +67,13 @@ let
         sha512 = "Fe4Ti2YgM1onQgrcCD8dUhFuZgHQxzqylSl1C5IDJVVVqY5D07h8RghIXL9sZ6COZ0e+oTL5IusTv5eXABJ9Kw==";
       };
     };
-    "array.prototype.reduce-1.0.5" = {
+    "array.prototype.reduce-1.0.6" = {
       name = "array.prototype.reduce";
       packageName = "array.prototype.reduce";
-      version = "1.0.5";
+      version = "1.0.6";
       src = fetchurl {
-        url = "https://registry.npmjs.org/array.prototype.reduce/-/array.prototype.reduce-1.0.5.tgz";
-        sha512 = "kDdugMl7id9COE8R7MHF5jWk7Dqt/fs4Pv+JXoICnYwqpjjjbUurz6w5fT5IG6brLdJhv6/VoHB0H7oyIBXd+Q==";
+        url = "https://registry.npmjs.org/array.prototype.reduce/-/array.prototype.reduce-1.0.6.tgz";
+        sha512 = "UW+Mz8LG/sPSU8jRDCjVr6J/ZKAGpHfwrZ6kWTG5qCxIEiXdVshqGnu5vEZA8S1y6X4aCSbQZ0/EEsfvEvBiSg==";
       };
     };
     "arraybuffer.prototype.slice-1.0.1" = {
@@ -1310,7 +1310,7 @@ in
       sources."arguments-extended-0.0.3"
       sources."array-buffer-byte-length-1.0.0"
       sources."array-extended-0.0.11"
-      sources."array.prototype.reduce-1.0.5"
+      sources."array.prototype.reduce-1.0.6"
       sources."arraybuffer.prototype.slice-1.0.1"
       sources."assert-plus-1.0.0"
       sources."available-typed-arrays-1.0.5"
