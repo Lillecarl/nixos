@@ -2,7 +2,7 @@
 
 from pathlib import Path
 from time import sleep
-from plumbum import local, BG, FG
+from plumbum import local, FG
 from os import environ
 import socket
 
@@ -14,6 +14,7 @@ nixos_rebuild = local["nixos-rebuild"]
 home_manager = local["home-manager"]
 
 hostname = socket.gethostname()
+commonargs = ["--flake", environ["FLAKELOC"], "--keep-failed", "-v", "--impure"]
 
 def check_connection(address):
     try:
@@ -30,17 +31,12 @@ def block_until_internet(address):
     print("No internet, retrying (indefinitely)")
     sleep(1)
 
-def commonargs(buildtype):
-  commonargs = ["--flake", environ["FLAKELOC"], "--keep-failed", "-v", "--impure"]
-
-  return commonargs
-
-sudo[echo["Building nixos"]] & FG
+sudo[echo["Building nixos"]] & FG  # type: ignore
 if hostname == "shitbox":
     print("Dumping Windows VM XML")
     (sudo(virsh("dumpxml", "win10") > "./shitbox/win10.xml"))
 block_until_internet("1.1.1.1")
-nixos_rebuild["switch", "--use-remote-sudo", commonargs("nixos")] & FG
+nixos_rebuild["switch", "--use-remote-sudo", commonargs] & FG  # type: ignore
 print("Building home")
 block_until_internet("1.1.1.1")
-home_manager["switch", "-b", "old", commonargs("home-manager")] & FG
+home_manager["switch", "-b", "old", commonargs] & FG  # type: ignore
