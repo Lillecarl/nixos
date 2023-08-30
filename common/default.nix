@@ -55,10 +55,7 @@
     proxychains-ng # Proxy things through SOCKS
     sl # Train riding over screen in CLI
     tealdeer # Like, TL;DR manpages
-    xprintidle-ng # print idle time
     wireguard-tools # Wireguard tools
-    go # Golang
-    dotnet-sdk_6 # Latest dotnet
     aws-nuke # Nuke AWS account completely
     tfswitch # Terraform version switcher
     terragrunt # Terraform Wrapper that does nice things
@@ -87,10 +84,8 @@
     vim # Modal CLI text editor
     neovim # Modal CLI text editor, modern version of Vim
     amp # Modal CLI text editor, modern, rust
-    kakoune # Modal editor, faster because of fewer keystrokes
     helix #  Modern modal editor, written in Rust
     direnv # Tool for setting env-vars when entering directories
-    emacs # well, it's emacs...
     ripgrep # Modern rusty grep
     lsof # Check who uses file
     ripgrep # Rust grep implmenetation, not POSIX compliant
@@ -125,11 +120,7 @@
     github-cli # CLI for github interactions
     git-open # Open repo with browser in $sourcecontrol website
     git-imerge # interactive and incremental git merging utility
-    git-trim
-    git-cola
-    git-fire # Save your code, then your life
     bfg-repo-cleaner # Clean repos that are huge
-    xclip # | "xclip -sel clip" is what you want
     wl-clipboard # Wayland clipboard manipulation
     ansible # Server automation tool
     iftop # Show interface throughput and which IP's
@@ -165,13 +156,8 @@
     bitwarden-cli # Password manager CLI
     thefuck # Command that corrects your previous command
     speedtest-cli # Speedtest from the commandline
-    poppler_utils # Utilities for PDF rendering
     imagemagick # CLI for doing image stuff
     waypipe # Wayland forwarding (Like X11 forwarding, but for Wayland)
-    xbindkeys # Binding keys for X
-    xorg.xev # Monitor Keypresses, useful when troubleshooting keylayouts
-    xorg.xhost # Not sure, used for X11 socket forwarding
-    xorg.xinit # Well starting x?
     libinput # Libinput CLI tooling
     brightnessctl # Control brightness of things
     conntrack-tools # Connection tracking userspace tools
@@ -181,55 +167,33 @@
     unzip # Decompress zip files
     unrar # Decompress rar files
     libressl # Crypto library, userspace tools
-    libsecret # Library for storing secrets securely in userspace
     fsql # Query the filesystem with SQL
     pstree # Show process tree as a tree
     gist # Tool to post files to gist.github.com straight away
 
     # Programming tools
     kdiff3 # Well know diffing tool
-    ruby # Ruby programming language
-    #python3 # Language interpreter
-    #python39Packages.boto3 # AWS Python library
-    nodejs # Javascript with OS access
-    #gnumake # GNU make
-    #clang # Cool modular C/C++ compiler
-    #(lowPrio gcc) # Old but gold C/C++ and others compiler
 
     # System tools
     putty # TTY tool for uncool people
     ark # Archiving tool
     gparted # GUI partition manager
     wireshark # Defactor network traffic sniffing tool
-    ksystemlog # KDE syslog viewer
     nix-bash-completions # Nix completions in bash
     bash-completion # Bash cli autocomplete
     hardinfo # Hardware information
     debootstrap # Bootstrap Debian based (deb package manager) Linux distros
 
     # Productivity tools
-    #libsForQt5.bismuth # Tiling plugin for KDE that works with Wayland
-    tigervnc # VNC client
     mongodb-compass # MongoDB GUI
     dbeaver # SQL database GUI
-    #pgadmin4 # SQL database GUI
     wezterm # Crossplatform terminal emulator, supports ligatures
     bitwarden # Password manger
     rofimoji # Emoji/Char picker for rofi
     filezilla # Free FTP/FTPS/SFTP software
     freerdp # Remote Desktop Protocol client
-    kgpg # KDE pgp tool
-    copyq # Clipboard manager
-    qview # Image viewer
-    kate # KDE text editor
-    geany # Supposed to be like Notepad++
-    ghostwriter # Markdown editor
-    audacity # Audio software
-    qtractor # Audio software
     qbittorrent # OpenSource Qt Bittorrent client
     okular # PDF viewer
-    libsForQt5.kcolorpicker # Color Picker for Qt/KDE
-    colorpicker # Just a color picker
 
     # Misc
     scrcpy # Print-screen tool
