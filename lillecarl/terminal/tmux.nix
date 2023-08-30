@@ -4,7 +4,7 @@
 , ...
 }:
 let
-  getHomeFilePath = path: config.home.homeDirectory + config.home.file.${path}.target;
+  getHomeFilePath = path: config.home.homeDirectory + "/" + config.home.file.${path}.target;
   mkOutOfStoreAbsLink = path: config.lib.file.mkOutOfStoreSymlink "${flakeloc}/${path}";
 in
 {
