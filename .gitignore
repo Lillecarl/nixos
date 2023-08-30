@@ -8,5 +8,8 @@ result
 .devenv*
 devenv.local.nix
 
+# direnv
+.direnv
+
 # nix build results
 result
