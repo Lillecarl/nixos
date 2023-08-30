@@ -6,7 +6,7 @@ let
 in
 {
   users = {
-    defaultUserShell = pkgs.zsh;
+    defaultUserShell = pkgs.fish;
     enforceIdUniqueness = true;
     mutableUsers = false;
 
