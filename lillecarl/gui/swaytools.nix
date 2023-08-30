@@ -14,9 +14,9 @@ let
     }
     (
       builtins.replaceStrings
-      [ "\"systemctl\"" ]
-      [ "\"${pkgs.systemd}/bin/systemctl\"" ]
-      (builtins.readFile ./swaysleep.py)
+        [ "\"systemctl\"" ]
+        [ "\"${pkgs.systemd}/bin/systemctl\"" ]
+        (builtins.readFile ./swaysleep.py)
     );
 in
 {
