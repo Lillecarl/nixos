@@ -4,9 +4,6 @@
 , flakeloc
 , ...
 }:
-let
-  luaPath = "${config.home.homeDirectory}/.config/nvim/lua/";
-in
 {
   programs.neovim = {
     enable = true;
