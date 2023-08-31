@@ -15,6 +15,7 @@
           pkgs.pokemonsay
           (pkgs.python3.withPackages (ps: with ps; [
             plumbum
+            PyGithub
           ]))
         ];
 
