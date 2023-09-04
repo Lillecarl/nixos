@@ -940,13 +940,13 @@ let
         sha512 = "1mxKf0e58bvyjSCtKYY4sRe9itRk3PJpquJOjeIkz885CczcI4IvJJDLPS72oowuSh+pBxUFROpX+TU++hxhZQ==";
       };
     };
-    "object.getownpropertydescriptors-2.1.6" = {
+    "object.getownpropertydescriptors-2.1.7" = {
       name = "object.getownpropertydescriptors";
       packageName = "object.getownpropertydescriptors";
-      version = "2.1.6";
+      version = "2.1.7";
       src = fetchurl {
-        url = "https://registry.npmjs.org/object.getownpropertydescriptors/-/object.getownpropertydescriptors-2.1.6.tgz";
-        sha512 = "lq+61g26E/BgHv0ZTFgRvi7NMEPuAxLkFU7rukXjc/AlwH4Am5xXVnIXy3un1bg/JPbXHrixRkK1itUzzPiIjQ==";
+        url = "https://registry.npmjs.org/object.getownpropertydescriptors/-/object.getownpropertydescriptors-2.1.7.tgz";
+        sha512 = "PrJz0C2xJ58FNn11XV2lr4Jt5Gzl94qpy9Lu0JlfEj14z88sqbSBJCBEzdlNUCzY2gburhbrwOZ5BHCmuNUy0g==";
       };
     };
     "once-1.4.0" = {
@@ -1401,7 +1401,7 @@ in
       sources."object-inspect-1.12.3"
       sources."object-keys-1.1.1"
       sources."object.assign-4.1.4"
-      sources."object.getownpropertydescriptors-2.1.6"
+      sources."object.getownpropertydescriptors-2.1.7"
       sources."once-1.4.0"
       sources."path-is-absolute-1.0.1"
       sources."printj-1.1.2"
