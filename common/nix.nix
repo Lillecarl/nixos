@@ -12,6 +12,7 @@
     extraOptions = ''
       experimental-features = nix-command flakes repl-flake
       builders-use-substitutes = true
+      extra-nix-path = flakes:nixpkgs
     '';
     settings = {
       auto-optimise-store = true;
