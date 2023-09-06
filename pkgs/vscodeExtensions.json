@@ -8,14 +8,14 @@
   {
     "name": "solarized",
     "publisher": "ryanolsonx",
-    "version": "2.1.0",
-    "sha256": "0my6qhzp25x6x6qccgxi0qymk62qkrd19wrafliaibidwlrcvx8x"
+    "version": "2.2.0",
+    "sha256": "0abhpab31j6lp2lrqdlrqsj39blzrpy24wpgwdk64d7nisfc8169"
   },
   {
     "name": "copilot",
     "publisher": "GitHub",
-    "version": "1.108.382",
-    "sha256": "1v4am7d0bbnfmlh2kwh0j68hnrksz9amkwlym5gqs9y20ahlz0ll"
+    "version": "1.109.387",
+    "sha256": "1911qmk46yvn8f0flxizmv7hjlz71dzi1sfmnyvymy2ahqvkn6xb"
   },
   {
     "name": "EditorConfig",
@@ -116,8 +116,8 @@
   {
     "name": "remote-explorer",
     "publisher": "ms-vscode",
-    "version": "0.5.2023071709",
-    "sha256": "01k349ya7zym88d8xildbl3i03aviirpdv2k1dsrgm3ghzrda3kx"
+    "version": "0.5.2023090409",
+    "sha256": "14g2hlid8q12bca2blxlvg7sccd1pq71qzb8h7iwph5yvrhy4pjn"
   },
   {
     "name": "ansible",

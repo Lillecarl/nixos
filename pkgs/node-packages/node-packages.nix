@@ -76,13 +76,13 @@ let
         sha512 = "UW+Mz8LG/sPSU8jRDCjVr6J/ZKAGpHfwrZ6kWTG5qCxIEiXdVshqGnu5vEZA8S1y6X4aCSbQZ0/EEsfvEvBiSg==";
       };
     };
-    "arraybuffer.prototype.slice-1.0.1" = {
+    "arraybuffer.prototype.slice-1.0.2" = {
       name = "arraybuffer.prototype.slice";
       packageName = "arraybuffer.prototype.slice";
-      version = "1.0.1";
+      version = "1.0.2";
       src = fetchurl {
-        url = "https://registry.npmjs.org/arraybuffer.prototype.slice/-/arraybuffer.prototype.slice-1.0.1.tgz";
-        sha512 = "09x0ZWFEjj4WD8PDbykUwo3t9arLn8NIzmmYEJFpYekOAQjpkGSyrQhNoRTcwwcFRu+ycWF78QZ63oWTqSjBcw==";
+        url = "https://registry.npmjs.org/arraybuffer.prototype.slice/-/arraybuffer.prototype.slice-1.0.2.tgz";
+        sha512 = "yMBKppFur/fbHu9/6USUe03bZ4knMYiwFBcyiaXB8Go0qNehwX6inYPzK9U0NeQvGxKthcmHcaR8P5MStSRBAw==";
       };
     };
     "assert-plus-1.0.0" = {
@@ -994,13 +994,13 @@ let
         sha512 = "oskKAg0pSlPnJAkFMrcqrHeCGzYunl4Hkl+N/NW3nnFWDHRg97yb475HtF5ax8LP9i8QvVkenVIhjNb+h+P7nA==";
       };
     };
-    "safe-array-concat-1.0.0" = {
+    "safe-array-concat-1.0.1" = {
       name = "safe-array-concat";
       packageName = "safe-array-concat";
-      version = "1.0.0";
+      version = "1.0.1";
       src = fetchurl {
-        url = "https://registry.npmjs.org/safe-array-concat/-/safe-array-concat-1.0.0.tgz";
-        sha512 = "9dVEFruWIsnie89yym+xWTAYASdpw3CJV7Li/6zBewGf9z2i1j31rP6jnY0pHEO4QZh6N0K11bFjWmdR8UGdPQ==";
+        url = "https://registry.npmjs.org/safe-array-concat/-/safe-array-concat-1.0.1.tgz";
+        sha512 = "6XbUAseYE2KtOuGueyeobCySj9L4+66Tn6KQMOPQJrAJEowYKW/YR/MGJZl7FdydUdaFu4LYyDZjxf4/Nmo23Q==";
       };
     };
     "safe-regex-test-1.0.0" = {
@@ -1111,13 +1111,13 @@ let
         sha512 = "JySq+4mrPf9EsDBEDYMOb/lM7XQLulwg5R/m1r0PXEFqrV0qHvl58sdTilSXtKOflCsK2E8jxf+GKC0T07RWwQ==";
       };
     };
-    "string.prototype.trimstart-1.0.6" = {
+    "string.prototype.trimstart-1.0.7" = {
       name = "string.prototype.trimstart";
       packageName = "string.prototype.trimstart";
-      version = "1.0.6";
+      version = "1.0.7";
       src = fetchurl {
-        url = "https://registry.npmjs.org/string.prototype.trimstart/-/string.prototype.trimstart-1.0.6.tgz";
-        sha512 = "omqjMDaY92pbn5HOX7f9IccLA+U1tA9GvtU4JrodiXFfYB7jPzzHpRzpglLAjtUV6bB557zwClJezTqnAiYnQA==";
+        url = "https://registry.npmjs.org/string.prototype.trimstart/-/string.prototype.trimstart-1.0.7.tgz";
+        sha512 = "NGhtDFu3jCEm7B4Fy0DpLewdJQOZcQ0rGbwQ/+stjnrp2i+rlKeCvos9hOIeCmqwratM47OBxY7uFZzjxHXmrg==";
       };
     };
     "strip-json-comments-2.0.1" = {
@@ -1311,7 +1311,7 @@ in
       sources."array-buffer-byte-length-1.0.0"
       sources."array-extended-0.0.11"
       sources."array.prototype.reduce-1.0.6"
-      sources."arraybuffer.prototype.slice-1.0.1"
+      sources."arraybuffer.prototype.slice-1.0.2"
       sources."assert-plus-1.0.0"
       sources."available-typed-arrays-1.0.5"
       sources."balanced-match-1.0.2"
@@ -1407,7 +1407,7 @@ in
       sources."printj-1.1.2"
       sources."regexp.prototype.flags-1.5.0"
       sources."requirefresh-2.3.0"
-      sources."safe-array-concat-1.0.0"
+      sources."safe-array-concat-1.0.1"
       sources."safe-regex-test-1.0.0"
       sources."safefs-4.2.0"
       sources."safer-buffer-2.1.2"
@@ -1419,7 +1419,7 @@ in
       sources."string-extended-0.0.8"
       sources."string.prototype.trim-1.2.7"
       sources."string.prototype.trimend-1.0.6"
-      sources."string.prototype.trimstart-1.0.6"
+      sources."string.prototype.trimstart-1.0.7"
       sources."strip-json-comments-2.0.1"
       sources."toml-j0.4-1.1.1"
       sources."tomlify-j0.4-2.2.1"
