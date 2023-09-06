@@ -7,6 +7,10 @@ let
   hyprctl = "${pkgs.hyprland}/bin/hyprctl";
 in
 {
+  home.packages = [
+    pkgs.networkmanagerapplet # For nm-applet icons
+  ];
+
   programs.waybar = {
     enable = true;
 
