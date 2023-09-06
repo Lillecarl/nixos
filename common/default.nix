@@ -35,7 +35,6 @@
   };
 
   environment.systemPackages = with pkgs; [
-    tor-browser-bundle-bin
     # Commandline tools (CLI)
     virtiofsd # VirtIO filesystem daemon
     home-manager # Tool to build your home environment in a reproducible fashion, anywhere with Nix!
@@ -47,21 +46,12 @@
     cookiecutter # Simple project template engine
     distrobuilder # Build other distros
     asciinema # Terminal session recorder
-    asciinema-scenario # Make video from a text file
     mongodb-tools # MongoDB tools like dumping etc.
     starship # Shell prompt
-    mcfly # Improved shell history
     bat # Cat clone with syntax highlight and git integration
-    proxychains-ng # Proxy things through SOCKS
-    sl # Train riding over screen in CLI
     tealdeer # Like, TL;DR manpages
     wireguard-tools # Wireguard tools
     aws-nuke # Nuke AWS account completely
-    tfswitch # Terraform version switcher
-    terragrunt # Terraform Wrapper that does nice things
-    youtube-dl # Download media from a lot of different websites
-    zellij # discoverable terminal multiplexer written in rust
-    zoxide # Rust implementation of z/autojump
     age # Modern crypto written in Go
     rage # Modern crypto written in Rust (Compatible with Age)
     chezmoi # dotfile manager
