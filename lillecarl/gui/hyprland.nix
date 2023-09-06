@@ -46,6 +46,9 @@ let
   wallpaper = "${inputs.nixos-artwork}/wallpapers/nix-wallpaper-watersplash.png";
 in
 {
+  home.packages = [
+    pkgs.rofi # Required for clipman picker
+  ];
   gtk = {
     enable = true;
 
@@ -126,9 +129,10 @@ in
       bindl = $mainMod, E       , exec, ${hyprctl} switchxkblayout ${keyboardName} 0
       # Switch to SE layout
       bindl = $mainMod, S       , exec, ${hyprctl} switchxkblayout ${keyboardName} 1
-      bind  =                   , Print       , exec, ${printScript} screen --edit --upload
-      bind  = $mainMod          , Print       , exec, ${printScript} window --edit --upload
-      bind  = $mainMod Shift_L  , Print       , exec, ${printScript} region --edit --upload
+      bind  =                   , Print   , exec, ${printScript} screen --edit --upload
+      bind  = $mainMod          , Print   , exec, ${printScript} window --edit --upload
+      bind  = $mainMod Shift_L  , Print   , exec, ${printScript} region --edit --upload
+      bind  = Ctrl_L Alt_L      , V       , exec, ${pkgs.clipman}/bin/clipman pick --tool=rofi
     '';
   };
 }
