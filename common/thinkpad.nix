@@ -3,8 +3,10 @@
 , ...
 }:
 {
+  systemd.services.thinkfan.enable = false;
+
   services.thinkfan = {
-    enable = false;
+    enable = true;
   };
 
   services.tp-auto-kbbl = {
