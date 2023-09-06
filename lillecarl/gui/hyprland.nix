@@ -107,27 +107,28 @@ in
       exec-once = ${pkgs.blueman}/bin/blueman-applet
 
       # Launch terminal
-      bind  = $mainMod     , Q       , exec, ${pkgs.wezterm}/bin/wezterm-gui
+      bind  = $mainMod          , Q       , exec, ${pkgs.wezterm}/bin/wezterm-gui
       # Awesome locker
-      bind  = Ctrl_L Alt_L , delete  , exec, ${pkgs.swaylock}/bin/swaylock
+      bind  = Ctrl_L Alt_L      , delete  , exec, ${pkgs.swaylock}/bin/swaylock
       # Media buttons
-      bindl =             , code:121, exec, ${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle
-      bindl =             , code:122, exec, ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -5%
-      bindl =             , code:123, exec, ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5%
-      bindl =             , code:198, exec, ${pkgs.mictoggle}
+      bindl =                   , code:121, exec, ${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle
+      bindl =                   , code:122, exec, ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -5%
+      bindl =                   , code:123, exec, ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5%
+      bindl =                   , code:198, exec, ${pkgs.mictoggle}
       # Increase and decrease screen backlight
-      bindl =             , code:232, exec, ${pkgs.light}/bin/light -U 5
-      bindl =             , code:233, exec, ${pkgs.light}/bin/light -A 5
+      bindl =                   , code:232, exec, ${pkgs.light}/bin/light -U 5
+      bindl =                   , code:233, exec, ${pkgs.light}/bin/light -A 5
       # drun app launcher
-      bind  = $mainMod    , R       , exec, ${pkgs.rofi-wayland}/bin/rofi -show drun
+      bind  = $mainMod          , R       , exec, ${pkgs.rofi-wayland}/bin/rofi -show drun
       # search application window titles
-      bind  = $mainMod    , tab     , exec, ${pkgs.rofi-wayland}/bin/rofi -show window
+      bind  = $mainMod          , tab     , exec, ${pkgs.rofi-wayland}/bin/rofi -show window
       # Switch to US layout
-      bindl = $mainMod, E           , exec, ${hyprctl} switchxkblayout ${keyboardName} 0
+      bindl = $mainMod, E       , exec, ${hyprctl} switchxkblayout ${keyboardName} 0
       # Switch to SE layout
-      bindl = $mainMod, S           , exec, ${hyprctl} switchxkblayout ${keyboardName} 1
-      bind  =         , Print       , exec, ${printScript} screen --edit --upload
-      bind  = $mainMod, Print       , exec, ${printScript} window --edit --upload
+      bindl = $mainMod, S       , exec, ${hyprctl} switchxkblayout ${keyboardName} 1
+      bind  =                   , Print       , exec, ${printScript} screen --edit --upload
+      bind  = $mainMod          , Print       , exec, ${printScript} window --edit --upload
+      bind  = $mainMod Shift_L  , Print       , exec, ${printScript} region --edit --upload
     '';
   };
 }
