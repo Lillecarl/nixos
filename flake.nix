@@ -135,19 +135,6 @@
             formatter = pkgs.nixpkgs-fmt;
             packages = own_pkgs;
             legacyPackages = pkgs_overlaid;
-            devShells.default =
-              (pkgs_overlaid.buildFHSUserEnv rec {
-                name = "testuserenv";
-
-                targetPkgs = pkgs: (with pkgs_overlaid; [
-                  xonsh
-                  apt
-                ]);
-
-                multiPkgs = targetPkgs;
-
-                runScript = "bash";
-              }).env;
           };
       };
 }
