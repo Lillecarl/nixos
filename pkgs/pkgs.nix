@@ -71,6 +71,11 @@ prev.lib.filterAttrs
 
     ulauncher-joined = prev.callPackage ../pkgs/ulauncher-joined { };
 
+    hyprland = prev.hyprland.overrideAttrs (finalAttrs: previousAttrs: {
+      enableDebugging = true;
+      debug = true;
+    });
+
     mictoggle = prev.writeShellScript "mictoggler" ''
       # Get default source
       default_source=$(${prev.pulseaudio}/bin/pactl get-default-source)
