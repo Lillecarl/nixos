@@ -9,6 +9,7 @@
     ./vscode.nix
     ./waybar.nix
     ./wezterm.nix
+    ./wob.nix
   ];
   home.file = { };
 
