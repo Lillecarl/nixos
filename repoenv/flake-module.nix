@@ -10,7 +10,7 @@
     , ...
     }:
     {
-      devShells.pyenv = pkgs.mkShell {
+      devShells.default = pkgs.mkShell {
         packages = [
           pkgs.pokemonsay
           (pkgs.python3.withPackages (ps: with ps; [
@@ -22,7 +22,6 @@
         ];
 
         shellHook = ''
-          exec $SHELL
         '';
       };
     };
