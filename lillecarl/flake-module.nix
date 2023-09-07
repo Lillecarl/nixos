@@ -25,8 +25,8 @@ let
 in
 {
   flake = {
-    homeConfigurations = rec {
-      lillecarl-gui = mkHome "x86_64-linux" {
+    homeConfigurations = let
+      guibase = {
         extraSpecialArgs = { };
         modules = [
           ./gui
@@ -36,8 +36,19 @@ in
           inputs.hyprland.homeManagerModules.default
         ];
       };
-      "lillecarl@shitbox" = lillecarl-gui;
-      "lillecarl@nub" = lillecarl-gui;
+    in
+    {
+      lillecarl-gui = mkHome "x86_64-linux" guibase;
+      "lillecarl@shitbox" = mkHome "x86_64-linux" (guibase // {
+        extraSpecialArgs = {
+          keyboardName = "daskeyboard";
+        };
+      });
+      "lillecarl@nub" = mkHome "x86_64-linux" (guibase // {
+        extraSpecialArgs = {
+          keyboardName = "at-translated-set-2-keyboard";
+        };
+      });
       lillecarl-term = mkHome "x86_64-linux" {
         extraSpecialArgs = { };
         modules = [

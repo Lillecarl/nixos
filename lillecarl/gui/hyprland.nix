@@ -2,6 +2,7 @@
 , config
 , pkgs
 , flakeloc
+, keyboardName
 , ...
 }:
 let
@@ -122,9 +123,9 @@ in
       # search application window titles
       bind  = $mainMod    , tab     , exec, ${pkgs.rofi-wayland}/bin/rofi -show window
       # Switch to US layout
-      bindl = $mainMod, E           , exec, ${hyprctl} switchxkblayout at-translated-set-2-keyboard 0
+      bindl = $mainMod, E           , exec, ${hyprctl} switchxkblayout ${keyboardName} 0
       # Switch to SE layout
-      bindl = $mainMod, S           , exec, ${hyprctl} switchxkblayout at-translated-set-2-keyboard 1
+      bindl = $mainMod, S           , exec, ${hyprctl} switchxkblayout ${keyboardName} 1
       bind  =         , Print       , exec, ${printScript} screen --edit --upload
       bind  = $mainMod, Print       , exec, ${printScript} window --edit --upload
     '';

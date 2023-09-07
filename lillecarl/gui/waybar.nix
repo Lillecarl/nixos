@@ -1,5 +1,6 @@
 { inputs
 , pkgs
+, keyboardName
 , ...
 }:
 let
@@ -84,8 +85,8 @@ in
           format = " KB: {} ";
           format-en = "🇺🇸";
           format-se = "🇸🇪";
-          keyboard-name = "at-translated-set-2-keyboard";
-          on-click = "${hyprctl} switchxkblayout at-translated-set-2-keyboard next";
+          keyboard-name = keyboardName;
+          on-click = "${hyprctl} switchxkblayout ${keyboardName} next";
         };
       };
     };
