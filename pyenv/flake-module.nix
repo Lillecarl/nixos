@@ -17,6 +17,7 @@
             plumbum
             PyGithub
             requests
+            psutil
           ]))
         ];
 
