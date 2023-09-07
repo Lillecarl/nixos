@@ -1,6 +1,5 @@
 { pkgs, ... }: {
   imports = [
-    #./dunst.nix
     ./brave.nix
     ./firefox.nix
     ./hyprland.nix
