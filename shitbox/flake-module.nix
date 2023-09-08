@@ -7,6 +7,7 @@
       system = "x86_64-linux";
       modules = [
         ../common
+        ../common/fish.nix
         ../common/flatpak.nix
         ../common/users.nix
         ../common/greetd.nix
