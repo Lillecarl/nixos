@@ -16,6 +16,7 @@
   home.packages = with pkgs; [
     # Web browsers
     brave
+    # firefox # firefox is installed through a module
 
     # Office
     #libreoffice
