@@ -3,12 +3,13 @@
 import json
 import re
 
-from time import sleep
+from time import sleep, time
 from plumbum import local
 from psutil import cpu_percent
 
 sensors = local["sensors"]
 fanpath = local.path("/proc/acpi/ibm/fan")
+_lastwrite = time()
 
 def setwatchdog():
     # Set timeout to 120 (fallback to auto fan)
@@ -34,7 +35,9 @@ def getlevel():
 
     return 0
 
-def setlevel(level: int):
+
+def setlevel(level: int, force: bool = False):
+    global _lastwrite
     curlevel = getlevel()
 
     if level > 8:
@@ -42,8 +45,11 @@ def setlevel(level: int):
     elif level < 0:
         level = 0
 
-    if level == curlevel:
-        return
+    if level == curlevel and not force:
+        return False
+
+    if time() - _lastwrite < 2:
+        return False
 
     print(f"setting fanlevel to {level}")
 
@@ -51,6 +57,10 @@ def setlevel(level: int):
         fanpath.write("level full-speed")
     else:
         fanpath.write(f"level {level}")
+
+    _lastwrite = time()
+
+    return True
 
 def gettemp():
     sensordata: dict[str, dict] = json.loads(sensors["-j"]())
@@ -67,20 +77,22 @@ def setfan(cpu_avg: float):
     print("cpu_avg: {}".format(cpu_avg))
 
     if temp < 55:
-        setlevel(0)
+        return setlevel(0)
     elif temp > 55 and cpu_avg > 20:
         if cpu_avg > 25:
-            setlevel(level + 1)
+            return setlevel(level + 1)
         else:
             setlevel(level + 2)
     elif temp > 65:
-        setlevel(level + 1)
+        return setlevel(level + 1)
     elif cpu_avg < 3:
-        setlevel(level - 2)
+        return setlevel(level - 2)
     else:
-        setlevel(level - 1)
+        return setlevel(level - 1)
 
 def main():
+    setwatchdog()
+    watchdog_counter: int = 0
     fan_counter: int = 0
     fan_interval: int = 5
 
@@ -88,18 +100,27 @@ def main():
 
     while True:
         sleep(1)
-        setwatchdog()
         cpu_pct = cpu_percent()
-        print("cpu_load: {}".format(cpu_pct))
+        print("cpu_pct: {} fan_counter: {} watchdog_counter {}".format(
+            cpu_pct,
+            fan_counter,
+            watchdog_counter
+            ))
 
         fan_counter += 1
+        watchdog_counter += 1
         cpu_total = cpu_total + cpu_pct
 
         if fan_counter >= 5:
             cpu_avg: float = cpu_total / fan_interval
-            setfan(cpu_avg)
+            if setfan(cpu_avg):
+                watchdog_counter = 0
             fan_counter = 0
             cpu_total = 0
+
+        if watchdog_counter > 110:
+            setlevel(getlevel(), True)
+            watchdog_counter = 0
 
 if __name__ == "__main__":
     exit(main())
