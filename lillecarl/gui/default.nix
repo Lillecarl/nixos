@@ -22,7 +22,7 @@
 
     # Chat apps
     slack # Slack chat app
-    element-desktop # Element Slack app
+    element-desktop-wayland # Element Slack app
     teams-for-linux # Open-Source Teams Electron App
     discord # Gaming chat application
     signal-desktop # Secure messenger
