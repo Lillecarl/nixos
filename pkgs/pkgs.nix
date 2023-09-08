@@ -75,6 +75,31 @@ prev.lib.filterAttrs
       enableDebugging = true;
       debug = true;
     });
+    obs-studio = prev.obs-studio.overrideAttrs (finalAttrs: previousAttrs: rec {
+      version = "30.0.0-beta2";
+      src = prev.fetchFromGitHub {
+        owner = "obsproject";
+        repo = "obs-studio";
+        rev = version;
+        sha256 = "sha256-OhsPKLNzA88PecIduB8GsxvyzRwIrdxYQbJVJIspfuQ=";
+        fetchSubmodules = true;
+      };
+
+      patches = [
+        (builtins.fetchurl {
+          url = "https://raw.githubusercontent.com/NixOS/nixpkgs/2f9286912cb215969ece465147badf6d07aa43fe/pkgs/applications/video/obs-studio/fix-nix-plugin-path.patch";
+          sha256 = "sha256:0dn1lrw77f3322bizagdpxh79ars53nj6yardw2fhdzgk50fcjna";
+        })
+      ];
+
+      buildInputs = previousAttrs.buildInputs ++ [
+        prev.libdatachannel
+      ];
+
+      cmakeFlags = previousAttrs.cmakeFlags ++ [
+        "-DENABLE_QSV11=OFF"
+      ];
+    });
 
     mictoggle = prev.writeShellScript "mictoggler" ''
       # Get default source
