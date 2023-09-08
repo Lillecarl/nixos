@@ -40,14 +40,14 @@
   programs.obs-studio = {
     enable = true;
 
-    plugins = builtins.attrValues {
-      inherit (pkgs.obs-studio-plugins)
-        wlrobs
-        obs-vkcapture
-        input-overlay
-        obs-gstreamer
-        looking-glass-obs
-        obs-pipewire-audio-capture;
-    };
+    plugins = with pkgs.obs-studio-plugins; [
+      input-overlay
+      looking-glass-obs
+      obs-backgroundremoval
+      obs-gstreamer
+      obs-vaapi
+      obs-vkcapture
+      wlrobs
+    ];
   };
 }
