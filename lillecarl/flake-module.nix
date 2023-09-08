@@ -25,37 +25,38 @@ let
 in
 {
   flake = {
-    homeConfigurations = let
-      guibase = {
-        extraSpecialArgs = { };
-        modules = [
-          ./gui
-          ./terminal
-          ./default.nix
-          inputs.nur.nixosModules.nur
-          inputs.hyprland.homeManagerModules.default
-        ];
-      };
-    in
-    {
-      lillecarl-gui = mkHome "x86_64-linux" guibase;
-      "lillecarl@shitbox" = mkHome "x86_64-linux" (guibase // {
-        extraSpecialArgs = {
-          keyboardName = "daskeyboard";
+    homeConfigurations =
+      let
+        guibase = {
+          extraSpecialArgs = { };
+          modules = [
+            ./gui
+            ./terminal
+            ./default.nix
+            inputs.nur.nixosModules.nur
+            inputs.hyprland.homeManagerModules.default
+          ];
         };
-      });
-      "lillecarl@nub" = mkHome "x86_64-linux" (guibase // {
-        extraSpecialArgs = {
-          keyboardName = "at-translated-set-2-keyboard";
+      in
+      {
+        lillecarl-gui = mkHome "x86_64-linux" guibase;
+        "lillecarl@shitbox" = mkHome "x86_64-linux" (guibase // {
+          extraSpecialArgs = {
+            keyboardName = "daskeyboard";
+          };
+        });
+        "lillecarl@nub" = mkHome "x86_64-linux" (guibase // {
+          extraSpecialArgs = {
+            keyboardName = "at-translated-set-2-keyboard";
+          };
+        });
+        lillecarl-term = mkHome "x86_64-linux" {
+          extraSpecialArgs = { };
+          modules = [
+            ./terminal
+            ./default.nix
+          ];
         };
-      });
-      lillecarl-term = mkHome "x86_64-linux" {
-        extraSpecialArgs = { };
-        modules = [
-          ./terminal
-          ./default.nix
-        ];
       };
-    };
   };
 }
