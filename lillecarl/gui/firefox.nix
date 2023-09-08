@@ -137,7 +137,7 @@
           "privacy.annotate_channels.strict_list.enabled" = true; # strict browsing
           "privacy.annotate_channels.strict_list.pbmode.enabled" = true; # strict browsing
           "privacy.donottrackheader.enabled" = true; # setting whether to send DNT header or not. (https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/DNT)
-          "privacy.resistFingerprinting" = true; # resist fingerprinting
+          "privacy.resistFingerprinting" = false; # can't use this because it fucks with timezone
           "privacy.trackingprotection.enabled" = true; # tracking protection
           "privacy.trackingprotection.socialtracking.enabled" = true; # social tracking protection
           "toolkit.legacyUserProfileCustomizations.stylesheets" = true; # enable userChrome
