@@ -75,7 +75,6 @@
     neovim # Modal CLI text editor, modern version of Vim
     amp # Modal CLI text editor, modern, rust
     helix #  Modern modal editor, written in Rust
-    direnv # Tool for setting env-vars when entering directories
     ripgrep # Modern rusty grep
     lsof # Check who uses file
     ripgrep # Rust grep implmenetation, not POSIX compliant
@@ -96,12 +95,10 @@
     nix-top # See what nix is doing when it's doing things
     nix-tree # visualize the Nix store interactively
     nix-update # Tool to help updating nix packages
-    nix-direnv # Nix direnv implementation
     nix-prefetch # nix prefetcher
     nix-prefetch-github # fetch nix package from github
     comma # Run stuff without installing it
     lorri # nix-shell alternative
-    direnv # Do environment things based on cd
     pijul # Patch based git alternative (Similiar to darcs but written in rust)
     gitFull # Git and all beloning standard packages
     lazygit # Git TUI, golang
