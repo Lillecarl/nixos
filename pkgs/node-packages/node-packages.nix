@@ -1093,22 +1093,22 @@ let
         sha512 = "CK46p3AxBvBhJbBi6WrF9bCcaWH20E4NwlLSzpooG2nXWvcP2gy2YR8VN6fSwZyrbcvL4S4zoNKbR0QG52X4rw==";
       };
     };
-    "string.prototype.trim-1.2.7" = {
+    "string.prototype.trim-1.2.8" = {
       name = "string.prototype.trim";
       packageName = "string.prototype.trim";
-      version = "1.2.7";
+      version = "1.2.8";
       src = fetchurl {
-        url = "https://registry.npmjs.org/string.prototype.trim/-/string.prototype.trim-1.2.7.tgz";
-        sha512 = "p6TmeT1T3411M8Cgg9wBTMRtY2q9+PNy9EV1i2lIXUN/btt763oIfxwN3RR8VU6wHX8j/1CFy0L+YuThm6bgOg==";
+        url = "https://registry.npmjs.org/string.prototype.trim/-/string.prototype.trim-1.2.8.tgz";
+        sha512 = "lfjY4HcixfQXOfaqCvcBuOIapyaroTXhbkfJN3gcB1OtyupngWK4sEET9Knd0cXd28kTUqu/kHoV4HKSJdnjiQ==";
       };
     };
-    "string.prototype.trimend-1.0.6" = {
+    "string.prototype.trimend-1.0.7" = {
       name = "string.prototype.trimend";
       packageName = "string.prototype.trimend";
-      version = "1.0.6";
+      version = "1.0.7";
       src = fetchurl {
-        url = "https://registry.npmjs.org/string.prototype.trimend/-/string.prototype.trimend-1.0.6.tgz";
-        sha512 = "JySq+4mrPf9EsDBEDYMOb/lM7XQLulwg5R/m1r0PXEFqrV0qHvl58sdTilSXtKOflCsK2E8jxf+GKC0T07RWwQ==";
+        url = "https://registry.npmjs.org/string.prototype.trimend/-/string.prototype.trimend-1.0.7.tgz";
+        sha512 = "Ni79DqeB72ZFq1uH/L6zJ+DKZTkOtPIHovb3YZHQViE+HDouuU4mBrLOLDn5Dde3RF8qw5qVETEjhu9locMLvA==";
       };
     };
     "string.prototype.trimstart-1.0.7" = {
@@ -1417,8 +1417,8 @@ in
       sources."sprintf-js-1.0.3"
       sources."ssf-0.8.2"
       sources."string-extended-0.0.8"
-      sources."string.prototype.trim-1.2.7"
-      sources."string.prototype.trimend-1.0.6"
+      sources."string.prototype.trim-1.2.8"
+      sources."string.prototype.trimend-1.0.7"
       sources."string.prototype.trimstart-1.0.7"
       sources."strip-json-comments-2.0.1"
       sources."toml-j0.4-1.1.1"

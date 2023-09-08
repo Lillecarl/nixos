@@ -14,8 +14,8 @@
   {
     "name": "copilot",
     "publisher": "GitHub",
-    "version": "1.110.391",
-    "sha256": "1qhav0kp8wmh46wy1p09mddnj97bj4zfbjq9amvyzs2c91nsh99n"
+    "version": "1.110.392",
+    "sha256": "0zpkbn6l9xcvyp4shd7kdmhk4r7z713va2636xy7ldfhpw6pyypr"
   },
   {
     "name": "EditorConfig",
