@@ -34,7 +34,8 @@ def block_until_internet(address):
 sudo[echo["Building nixos"]] & FG  # type: ignore
 if hostname == "shitbox":
     print("Dumping Windows VM XML")
-    (sudo(virsh("dumpxml", "win10") > "./shitbox/win10.xml"))
+    xml = sudo[virsh["dumpxml", "win10"]]()
+    local.path("shitbox/win10.xml").write(xml)
 block_until_internet("1.1.1.1")
 nixos_rebuild["switch", "--use-remote-sudo", commonargs] & FG  # type: ignore
 print("Building home")
