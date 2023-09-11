@@ -330,6 +330,6 @@
     pulse.enable = true;
     wireplumber.enable = true;
     socketActivation = true;
-    systemWide = true;
+    systemWide = false;
   };
 }
