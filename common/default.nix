@@ -326,10 +326,10 @@
   services.pipewire = {
     enable = true;
     alsa.enable = true; # Required by: Audacity
-    #alsa.support32Bit = true; # Probably never required on NixOS
     jack.enable = true; # Required by: Qtractor
     pulse.enable = true;
-    socketActivation = true;
     wireplumber.enable = true;
+    socketActivation = true;
+    systemWide = true;
   };
 }
