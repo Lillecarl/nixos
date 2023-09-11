@@ -10,6 +10,8 @@
     nativeMessagingHosts.fxCast = true;
   };
 
+  environment.enableDebugInfo = true;
+
   hardware.uinput.enable = true;
   boot.tmp.useTmpfs = true;
 
