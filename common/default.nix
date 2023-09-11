@@ -60,7 +60,6 @@
     sshfs # Mount SFTP as filesystem
     rclone # rsync for clouds (+ loads of other cool things)
     gnumake # Make for packer for rhel template
-    exa # cat replacement
     sipcalc # Subnet calculator
     buildah # Build OCI images
     bind # brings the dig command

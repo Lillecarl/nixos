@@ -26,7 +26,7 @@
     du-dust # A more intuitive version of du written in rust.
     duf # A better df alternative
     envsubst # Templating with environment variables, commonly used with k8s
-    exa # Better ls
+    eza # Better ls
     fd # A simple, fast and user-friendly alternative to find
     fortune # Fortune cookies in CLI
     fzf # fzf cli fuzzy search tool
