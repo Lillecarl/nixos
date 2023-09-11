@@ -32,7 +32,7 @@ in
       mainBar = {
         layer = "top";
         position = "top";
-        modules-left = [ "hyprland/workspaces" ];
+        modules-left = [ "idle_inhibitor" "hyprland/workspaces" ];
         modules-center = [ "hyprland/window" ];
         modules-right = [
           "custom/weather"
