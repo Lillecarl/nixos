@@ -52,13 +52,7 @@ prev.lib.filterAttrs
     xonsh-wrapper = final.callPackage ../pkgs/xonsh-wrapper { };
     ifupdown2 = python3Packages.ifupdown2;
 
-    #salt = prev.salt.overrideAttrs (final: prev: {
-    #  src = /home/lillecarl/Code/nent/saltstack;
-    #});
 
-    # Newer salt version, currently in development
-    salt3006 = prev.callPackage ./salt { };
-    #salt = prev.callPackage ./salt { };
     # Inject python3 packages
     python3Packages = python3Packages // prev.python3Packages;
     python3 = prev.python3.override {
