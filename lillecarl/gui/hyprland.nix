@@ -47,7 +47,7 @@ let
     ${pkgs.pulseaudio}/bin/pactl --format=json list sinks | ${pkgs.jq}/bin/jq ".[0].volume.\"front-left\".value_percent" -r | ${pkgs.gnused}/bin/sed "s/%//g" > /run/user/1000/wob.sock
   '';
 
-  lightScript = pkgs.writeScript "volScript" ''
+  lightScript = pkgs.writeScript "lightScript" ''
     if [[ "$1" == "up" ]]
     then
       ${pkgs.light}/bin/light -A 5
