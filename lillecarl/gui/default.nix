@@ -21,6 +21,8 @@
     # Office
     #libreoffice
 
+    dfeet # GUI browser for dbus
+
     # Chat apps
     slack # Slack chat app
     element-desktop-wayland # Element Slack app
