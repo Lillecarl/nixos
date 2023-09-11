@@ -4,6 +4,7 @@
 , ...
 }: {
   imports = [
+    ./direnv.nix
     ./editorconfig.nix
     ./fish.nix
     ./git.nix
