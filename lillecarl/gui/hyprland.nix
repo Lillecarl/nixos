@@ -96,6 +96,7 @@ in
   };
 
   home.file.".config/hypr/linked.conf".source = config.lib.file.mkOutOfStoreSymlink "${flakeloc}/lillecarl/gui/hyprland.conf";
+  home.file.".config/hypr/hyprlandd.conf".source = "${config.xdg.configHome}/hypr/hyprland.conf";
 
   home.file.".config/hypr/hyprpaper.conf".text = ''
     preload = ${wallpaper}
