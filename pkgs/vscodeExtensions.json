@@ -14,8 +14,8 @@
   {
     "name": "copilot",
     "publisher": "GitHub",
-    "version": "1.110.397",
-    "sha256": "0a3pklbc7cnv12cmsrnc3rbnp8ji07r8zq0aj4fyn2l0rj08hpi7"
+    "version": "1.110.401",
+    "sha256": "08b6yf787q3ayfgj1al6a4kh6bck90f1k1gnnmyyq4siprl2jv2x"
   },
   {
     "name": "EditorConfig",
@@ -98,8 +98,8 @@
   {
     "name": "remote-ssh",
     "publisher": "ms-vscode-remote",
-    "version": "0.107.2023090815",
-    "sha256": "1xj1fafw2743xw1m9ybp2gyc9ygzyiqxd0x3glghziw0m6gmwnzv"
+    "version": "0.107.2023091115",
+    "sha256": "18l9237b9kmv8y6mmir9bzz8w88018pxm8r0w89l77ysqjpaz455"
   },
   {
     "name": "remote-ssh-edit",
