@@ -6,100 +6,16 @@
     "sha256": "1m1vqbmlhnbrkv298vhwfhgzpx7c61kv5h3gyqgpy260bn58nr5i"
   },
   {
-    "name": "solarized",
-    "publisher": "ryanolsonx",
-    "version": "2.2.0",
-    "sha256": "0abhpab31j6lp2lrqdlrqsj39blzrpy24wpgwdk64d7nisfc8169"
-  },
-  {
-    "name": "copilot",
-    "publisher": "GitHub",
-    "version": "1.110.401",
-    "sha256": "08b6yf787q3ayfgj1al6a4kh6bck90f1k1gnnmyyq4siprl2jv2x"
-  },
-  {
-    "name": "EditorConfig",
-    "publisher": "EditorConfig",
-    "version": "0.16.4",
-    "sha256": "0fa4h9hk1xq6j3zfxvf483sbb4bd17fjl5cdm3rll7z9kaigdqwg"
-  },
-  {
-    "name": "terraform",
-    "publisher": "HashiCorp",
-    "version": "2.27.2023071109",
-    "sha256": "1yjmvm65rjfcr0qvkpmi91h06yb32lfi3wdygqjigwrsmzxg3gwa"
-  },
-  {
-    "name": "vsliveshare",
-    "publisher": "MS-vsliveshare",
-    "version": "1.0.5883",
-    "sha256": "1zgjz25s1x1n93va7xbadmfjkqr2rahsrhpiw22xsshvswh4pp04"
-  },
-  {
-    "name": "vscode-ron",
-    "publisher": "a5huynh",
-    "version": "0.10.0",
-    "sha256": "1q4hix1lk1xwfx0216xkakrp8jf7pwm603xjmp8pyfa7nh9rhv0f"
-  },
-  {
-    "name": "gitlens",
-    "publisher": "eamodio",
-    "version": "2023.9.905",
-    "sha256": "1mzyc3sinkg4zmbyh2a85iqdqa7wsnh99hqvk6f8m2jcfhpfrwyb"
-  },
-  {
-    "name": "xonsh",
-    "publisher": "jnoortheen",
-    "version": "0.2.6",
-    "sha256": "047v3czmb8557gnhbcw5q96v5azqpmfpf04q8xppgrg7hb6lh6hj"
-  },
-  {
     "name": "vscode-graphviz",
     "publisher": "joaompinto",
     "version": "0.0.6",
     "sha256": "17z5zgr8l94mj8dgqxwsrpixnkz0778fp1g4rxc7i56wb1zbik3w"
   },
   {
-    "name": "saltstack",
-    "publisher": "korekontrol",
-    "version": "0.0.9",
-    "sha256": "19xrai35rf4mx9n5q8q34q6rbqlwgpw04iz3d5gc04yyj45cky4a"
-  },
-  {
-    "name": "vscode-clangd",
-    "publisher": "llvm-vs-code-extensions",
-    "version": "0.1.24",
-    "sha256": "0s7n3r3fkb6xh38yv8q0nj0js1dkxl53xhr1dvqia7gh71i6rsn8"
-  },
-  {
-    "name": "vscode-kubernetes-tools",
-    "publisher": "ms-kubernetes-tools",
-    "version": "1.3.13",
-    "sha256": "14r16wqbz69n5sixw7178zpv8jx6pf316gdv0h8pk1biijss9cg3"
-  },
-  {
-    "name": "isort",
-    "publisher": "ms-python",
-    "version": "2023.11.12061012",
-    "sha256": "0xmjm8rqma52amwlw9a0cs1pki0gnpafss9s2my3lasfnw1s1b8r"
-  },
-  {
-    "name": "python",
-    "publisher": "ms-python",
-    "version": "2023.17.12541009",
-    "sha256": "03a5k9dcpw4pd6v3vfr2vynl2xdkg2hqkvq934fxqwglsi2w9vml"
-  },
-  {
-    "name": "vscode-pylance",
-    "publisher": "ms-python",
-    "version": "2023.9.12",
-    "sha256": "1ny5ikkbyfcgbnpd52vb7r2xsby2anqkkwlrqzvza4zi669qmrnq"
-  },
-  {
     "name": "remote-ssh",
     "publisher": "ms-vscode-remote",
-    "version": "0.107.2023091115",
-    "sha256": "18l9237b9kmv8y6mmir9bzz8w88018pxm8r0w89l77ysqjpaz455"
+    "version": "0.107.2023091215",
+    "sha256": "1s44hx8dz35741hfi7fyyxq598plb6l5dwzf3pvylrwkimypszz4"
   },
   {
     "name": "remote-ssh-edit",
@@ -124,23 +40,5 @@
     "publisher": "redhat",
     "version": "2.7.98",
     "sha256": "0bl7bzcz77fm9i6n8wgw3qqflir6lpry7h32icfdcvlhhz87hxkg"
-  },
-  {
-    "name": "vscode-yaml",
-    "publisher": "redhat",
-    "version": "1.14.0",
-    "sha256": "0pww9qndd2vsizsibjsvscz9fbfx8srrj67x4vhmwr581q674944"
-  },
-  {
-    "name": "nix",
-    "publisher": "bbenoist",
-    "version": "1.0.1",
-    "sha256": "0zd0n9f5z1f0ckzfjr38xw2zzmcxg1gjrava7yahg5cvdcw6l35b"
-  },
-  {
-    "name": "vim",
-    "publisher": "vscodevim",
-    "version": "1.26.0",
-    "sha256": "0hxb58ygjbqk6qmkp1r421zzib2r1vmz7agbi7bcmjxjpr3grw2w"
   }
 ]

@@ -11,11 +11,28 @@
 
     package = pkgs.vscode;
 
-    extensions = pkgs.vscode-utils.extensionsFromVscodeMarketplace (
-      builtins.fromJSON (
-        builtins.readFile ../../pkgs/vscodeExtensions.json
-      )
-    );
+    extensions = pkgs.vscode-utils.extensionsFromVscodeMarketplace
+      (
+        (builtins.fromJSON
+          (builtins.readFile ../../pkgs/vscodeExtensions.json)
+        )
+      ) ++
+    (with pkgs.vscode-extensions; [
+      bbenoist.nix
+      catppuccin.catppuccin-vsc
+      catppuccin.catppuccin-vsc-icons
+      eamodio.gitlens
+      editorconfig.editorconfig
+      github.copilot
+      hashicorp.terraform
+      llvm-vs-code-extensions.vscode-clangd
+      ms-kubernetes-tools.vscode-kubernetes-tools
+      ms-python.python
+      ms-python.vscode-pylance
+      ms-vsliveshare.vsliveshare
+      redhat.vscode-yaml
+      vscodevim.vim
+    ]);
 
     userSettings = {
       "editor.fontFamily" = "'Hack Nerd Font', 'monospace', monospace";
@@ -31,6 +48,8 @@
       "update.mode" = "none";
       "workbench.startupEditor" = "none";
       "vim.enableNeovim" = true;
+      "workbench.colorTheme" = "Catppuccin Mocha";
+      "workbench.iconTheme" = "catppuccin-mocha";
 
       # Executable path configurations
       "ansible.ansible.path" = "${pkgs.ansible}/bin/ansible";
@@ -51,7 +70,6 @@
           "language" = "python";
         }
       ];
-      "workbench.colorTheme" = "Solarized Dark+";
     };
   };
 }

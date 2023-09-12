@@ -9,7 +9,7 @@
 
   programs.firefox = {
     enable = true;
-    package = pkgs.firefox;
+    package = pkgs.firefox-wayland;
 
     profiles = {
       lillecarl = {

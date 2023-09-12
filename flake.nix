@@ -80,14 +80,18 @@
       inputs.flake-utils.follows = "flake-utils";
     };
     nur.url = "github:nix-community/NUR";
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v0.3.0";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     hyprland.url = "github:hyprwm/Hyprland";
     nixos-artwork = {
       url = "github:NixOS/nixos-artwork";
       flake = false;
     };
-    lanzaboote = {
-      url = "github:nix-community/lanzaboote/v0.3.0";
-      inputs.nixpkgs.follows = "nixpkgs";
+    catppuccin-waybar = {
+      url = "github:catppuccin/waybar";
+      flake = false;
     };
   };
 
