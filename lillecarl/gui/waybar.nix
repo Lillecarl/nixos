@@ -1,6 +1,7 @@
 { inputs
 , pkgs
 , keyboardName
+, bluetooth
 , ...
 }:
 let
@@ -33,7 +34,22 @@ in
         position = "top";
         modules-left = [ "hyprland/workspaces" ];
         modules-center = [ "hyprland/window" ];
-        modules-right = [ "custom/weather" "hyprland/language" "backlight" "battery" "pulseaudio" "bluetooth" "tray" "clock" ];
+        modules-right = [
+          "custom/weather"
+          "hyprland/language"
+          "backlight"
+          "battery"
+          "pulseaudio"
+        ]
+        ++ (if bluetooth then
+        [
+          "bluetooth"
+        ] else [])
+        ++
+        [
+          "tray"
+          "clock"
+        ];
 
         clock = {
           interval = 1;
