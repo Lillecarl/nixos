@@ -46,9 +46,9 @@ in
           "pulseaudio"
         ]
         ++ (if bluetooth then
-        [
-          "bluetooth"
-        ] else [])
+          [
+            "bluetooth"
+          ] else [ ])
         ++
         [
           "tray"
