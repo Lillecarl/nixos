@@ -6,6 +6,7 @@
     anchor = "center";
 
     extraConfig = ''
+      text-alignment=center
       [summary="Du presenterar för alla"]
       invisible=1
       [summary="Connection Established"]
