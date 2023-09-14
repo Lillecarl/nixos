@@ -319,13 +319,13 @@ let
         sha512 = "O659hy1gcHef7JnwtqdQlrj2c5DAEgtxm8pgFXofW7eUE1L4FjsSLlziovWcrOJAOFlEPaOJshY+0hBWCG/AnA==";
       };
     };
-    "define-data-property-1.0.1" = {
+    "define-data-property-1.1.0" = {
       name = "define-data-property";
       packageName = "define-data-property";
-      version = "1.0.1";
+      version = "1.1.0";
       src = fetchurl {
-        url = "https://registry.npmjs.org/define-data-property/-/define-data-property-1.0.1.tgz";
-        sha512 = "22M+6zEspQHx10bfFQl2ET39IvfuQ7+rZIH7+ard8fCC4hPmkOSy+8JhKxBRLaWUziJ0O63NTYT97LR8zUfPTw==";
+        url = "https://registry.npmjs.org/define-data-property/-/define-data-property-1.1.0.tgz";
+        sha512 = "UzGwzcjyv3OtAvolTj1GoyNYzfFR+iqbGjcnBEENZVCpM4/Ng1yhGNvS3lR/xDS74Tb2wGG9WzNSNIOS9UVb2g==";
       };
     };
     "define-properties-1.2.1" = {
@@ -1057,13 +1057,13 @@ let
         sha512 = "BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA==";
       };
     };
-    "set-function-name-2.0.0" = {
+    "set-function-name-2.0.1" = {
       name = "set-function-name";
       packageName = "set-function-name";
-      version = "2.0.0";
+      version = "2.0.1";
       src = fetchurl {
-        url = "https://registry.npmjs.org/set-function-name/-/set-function-name-2.0.0.tgz";
-        sha512 = "WmS8UHojv5s1eSoRSmzO5zzgDq8PE1/X/ij0k+9fMYmINCc6+j+SF3Om8YyucKn2yjnK4ItNZOoQycNnHsZJTw==";
+        url = "https://registry.npmjs.org/set-function-name/-/set-function-name-2.0.1.tgz";
+        sha512 = "tMNCiqYVkXIZgc2Hnoy2IvC/f8ezc5koaRFkCjrpWzGpCd3qbZXPzVy9MAZzK1ch/X0jvSkojys3oqJN0qCmdA==";
       };
     };
     "side-channel-1.0.4" = {
@@ -1351,7 +1351,7 @@ in
       sources."deasync-0.1.28"
       sources."deasync-promise-1.0.1"
       sources."declare.js-0.0.8"
-      sources."define-data-property-1.0.1"
+      sources."define-data-property-1.1.0"
       sources."define-properties-1.2.1"
       sources."eachr-3.3.0"
       sources."editions-2.3.1"
@@ -1432,7 +1432,7 @@ in
       sources."safer-buffer-2.1.2"
       sources."sax-1.2.4"
       sources."semver-6.3.1"
-      sources."set-function-name-2.0.0"
+      sources."set-function-name-2.0.1"
       sources."side-channel-1.0.4"
       sources."sprintf-js-1.0.3"
       sources."ssf-0.8.2"
