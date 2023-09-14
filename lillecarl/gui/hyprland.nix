@@ -118,7 +118,7 @@ in
     systemdIntegration = true;
     disableAutoreload = true;
 
-    xwayland.enable = true;
+    xwayland.enable = false;
 
     extraConfig = ''
       # Source from home-manager file that can be live edited through out of store symlinks.
