@@ -144,6 +144,10 @@ in
   programs.starship = {
     enable = true;
     enableNushellIntegration = true;
+    enableZshIntegration = true;
+    enableBashIntegration = true;
+    enableFishIntegration = true;
+    enableIonIntegration = true;
 
     settings = builtins.fromTOML icons // {
       # We don't use terraform workspaces so don't consume the space
