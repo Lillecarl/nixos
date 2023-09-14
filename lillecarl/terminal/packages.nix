@@ -10,6 +10,7 @@
     #inputs.system-manager.packages.x86_64-linux.system-manager
     (lowPrio kubectl) # Kubernetes management cli
     ngrok # reverse proxy
+    pass # GPG based password store
     age # Modern crypto written in Go
     ansible-lint # Ansible linting software
     aws-vault # AWS Vault CLI (Used for MFA auth?)
