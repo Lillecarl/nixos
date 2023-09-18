@@ -42,7 +42,6 @@ prev.lib.filterAttrs
     (n != "python3Packages" && n != "nodePackages"))
   {
     # Stand-alone packages
-    acme-dns = prev.callPackage ../pkgs/acme-dns { };
     salt-pepper = prev.callPackage ../pkgs/salt-pepper { };
     splunk-otel-collector = prev.callPackage ../pkgs/splunk-otel-collector { };
     keychain-wrapper = prev.callPackage ../pkgs/keychain-wrapper { };
