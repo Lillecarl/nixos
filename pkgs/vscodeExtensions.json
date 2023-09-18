@@ -24,12 +24,6 @@
     "sha256": "0cmh2d73y1kmp6a92h3z7gams7lnqvb7rgib52kqslm4hyhdmii6"
   },
   {
-    "name": "cpptools",
-    "publisher": "ms-vscode",
-    "version": "1.17.5",
-    "sha256": "1mkdsps8h7k9w3ps2vzr8xmxh0rf3m14wgy5skqhs0r8r31h801c"
-  },
-  {
     "name": "remote-explorer",
     "publisher": "ms-vscode",
     "version": "0.5.2023090609",

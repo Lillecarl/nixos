@@ -29,6 +29,7 @@
       ms-kubernetes-tools.vscode-kubernetes-tools
       ms-python.python
       ms-python.vscode-pylance
+      ms-vscode.cpptools
       ms-vsliveshare.vsliveshare
       redhat.vscode-yaml
       vscodevim.vim

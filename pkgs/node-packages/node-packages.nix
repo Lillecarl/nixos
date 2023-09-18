@@ -364,13 +364,13 @@ let
         sha512 = "e64Qj9+4aZzjzzFpZC7p5kmm/ccCrbLhAJplhsDXQFs87XTsXwOpH4s1Io2s90Tau/8r2j9f4l/thhDevRjzxw==";
       };
     };
-    "es-abstract-1.22.1" = {
+    "es-abstract-1.22.2" = {
       name = "es-abstract";
       packageName = "es-abstract";
-      version = "1.22.1";
+      version = "1.22.2";
       src = fetchurl {
-        url = "https://registry.npmjs.org/es-abstract/-/es-abstract-1.22.1.tgz";
-        sha512 = "ioRRcXMO6OFyRpyzV3kE1IIBd4WG5/kltnzdxSCqoP8CMGs/Li+M1uF5o7lOkZVFjDs+NLesthnF66Pg/0q0Lw==";
+        url = "https://registry.npmjs.org/es-abstract/-/es-abstract-1.22.2.tgz";
+        sha512 = "YoxfFcDmhjOgWPWsV13+2RNjq1F6UQnfs+8TftwNqtzlmFzEXvlUwdrNrYeaizfjQzRMxkZ6ElWMOJIFKdVqwA==";
       };
     };
     "es-array-method-boxes-properly-1.0.0" = {
@@ -1356,7 +1356,7 @@ in
       sources."eachr-3.3.0"
       sources."editions-2.3.1"
       sources."errlop-2.2.0"
-      sources."es-abstract-1.22.1"
+      sources."es-abstract-1.22.2"
       sources."es-array-method-boxes-properly-1.0.0"
       sources."es-set-tostringtag-2.0.1"
       sources."es-to-primitive-1.2.1"
