@@ -3,6 +3,7 @@
 , pkgs
 , flakeloc
 , keyboardName
+, bluetooth
 , ...
 }:
 let
@@ -128,8 +129,12 @@ in
 
       exec-once = ${pkgs.hyprpaper}/bin/hyprpaper
       exec-once = ${pkgs.ulauncher}/bin/ulauncher --hide-window
+    '' +
+    (if bluetooth then ''
       exec-once = ${pkgs.blueman}/bin/blueman-applet
-
+    '' else ""
+    )
+    + ''
       # Launch terminal
       bind  = $mainMod          , Q       , exec, ${pkgs.wezterm}/bin/wezterm-gui
       # Awesome locker
