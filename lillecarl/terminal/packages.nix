@@ -9,6 +9,7 @@
     #inputs.mozilla-addons-to-nix.packages.x86_64-linux.default
     #inputs.system-manager.packages.x86_64-linux.system-manager
     (lowPrio kubectl) # Kubernetes management cli
+    gdb # GNU debugger
     ngrok # reverse proxy
     pass # GPG based password store
     age # Modern crypto written in Go
