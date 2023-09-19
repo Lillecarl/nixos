@@ -26,7 +26,6 @@
         );
 
     interactiveShellInit = ''
-      ${pkgs.starship}/bin/starship init fish | source
       source ${config.home.homeDirectory}/.config/fish/*.conf
     '';
 
