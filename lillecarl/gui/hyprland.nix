@@ -95,6 +95,7 @@ in
 
   wayland.windowManager.hyprland = {
     enable = true;
+    package = pkgs.hyprland-carl;
 
     systemdIntegration = true;
     disableAutoreload = true;

@@ -31,6 +31,25 @@ let
     pyping = prev.python3Packages.callPackage ../pkgs/python3Packages/pyping { };
   };
   nodePackages = prev.callPackages ./node-packages { };
+
+  hyprland-debug = (prev.hyprland.override {
+    wrapRuntimeDeps = false;
+    debug = true;
+    enableXWayland = false;
+  }).overrideAttrs {
+    enableDebugging = true;
+    dontStrip = true;
+    separateDebugInfo = false;
+  };
+
+  hyprland-debug-joined = prev.symlinkJoin {
+    name = "hyprland-debug-joined";
+    paths = [
+      hyprland-debug
+      prev.pciutils
+      prev.binutils
+    ];
+  };
 in
 prev.lib.filterAttrs
   (n: v:
@@ -50,6 +69,15 @@ prev.lib.filterAttrs
     xonsh-wrapper = final.callPackage ../pkgs/xonsh-wrapper { };
     ifupdown2 = python3Packages.ifupdown2;
 
+    hyprland = hyprland-debug-joined;
+    hyprland-carl = hyprland-debug-joined;
+
+    # Shut up, you're spamming my logs
+    #xdg-desktop-portal-hyprland = prev.xdg-desktop-portal-hyprland.overrideAttrs {
+    #  postInstall = ''
+    #    wrapProgram $out/libexec/xdg-desktop-portal-hyprland --prefix PATH ":" ${prev.lib.makeBinPath [prev.hyprland-share-picker]} --add-flags "-q"
+    #  '';
+    #};
 
     # Inject python3 packages
     python3Packages = python3Packages // prev.python3Packages;
@@ -63,10 +91,6 @@ prev.lib.filterAttrs
 
     ulauncher-joined = prev.callPackage ../pkgs/ulauncher-joined { };
 
-    hyprland = prev.hyprland.overrideAttrs (finalAttrs: previousAttrs: {
-      enableDebugging = true;
-      debug = true;
-    });
     obs-studio = prev.obs-studio.overrideAttrs (finalAttrs: previousAttrs: rec {
       version = "30.0.0-beta2";
       src = prev.fetchFromGitHub {
