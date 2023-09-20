@@ -19,7 +19,7 @@
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
   boot.extraModprobeConfig = "options kvm_amd nested=1";
-  boot.kernelParams = [ "amd_pstate=guided" ];
+  boot.kernelParams = [ "amd_pstate=guided" "iommu=soft" ];
 
   boot.loader.systemd-boot.enable = lib.mkForce false;
 
