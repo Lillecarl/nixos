@@ -38,26 +38,6 @@ let
       ]
       (builtins.readFile ../../print.py));
 
-  volScript = pkgs.writeScript "volScript" ''
-    if [[ "$1" == "up" ]]
-    then
-      ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5%
-    else
-      ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -5%
-    fi
-    ${pkgs.pulseaudio}/bin/pactl --format=json list sinks | ${pkgs.jq}/bin/jq ".[0].volume.\"front-left\".value_percent" -r | ${pkgs.gnused}/bin/sed "s/%//g" > /run/user/1000/wob.sock
-  '';
-
-  lightScript = pkgs.writeScript "lightScript" ''
-    if [[ "$1" == "up" ]]
-    then
-      ${pkgs.light}/bin/light -A 5
-    else
-      ${pkgs.light}/bin/light -U 5
-    fi
-    ${pkgs.light}/bin/light -G > /run/user/1000/wob.sock
-  '';
-
   cursorSettings = {
     name = "macOS-BigSur";
     size = 24;
@@ -141,12 +121,12 @@ in
       bind  = Ctrl_L Alt_L      , delete  , exec, ${pkgs.swaylock}/bin/swaylock
       # Media buttons
       bindl =                   , code:121, exec, ${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle
-      bindl =                   , code:122, exec, ${volScript} down
-      bindl =                   , code:123, exec, ${volScript} up
+      bindl =                   , code:122, exec, ${pkgs.avizo}/bin/volumectl down
+      bindl =                   , code:123, exec, ${pkgs.avizo}/bin/volumectl up
       bindl =                   , code:198, exec, ${pkgs.mictoggle}
       # Increase and decrease screen backlight
-      bindl =                   , code:232, exec, ${lightScript} down
-      bindl =                   , code:233, exec, ${lightScript} up
+      bindl =                   , code:232, exec, ${pkgs.avizo}/bin/lightctl down
+      bindl =                   , code:233, exec, ${pkgs.avizo}/bin/lightctl up
       # drun app launcher
       bind  = $mainMod          , R       , exec, ${pkgs.rofi-wayland}/bin/rofi -show drun
       # search application window titles

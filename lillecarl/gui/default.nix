@@ -1,5 +1,6 @@
 { pkgs, ... }: {
   imports = [
+    ./avizo.nix
     ./brave.nix
     ./firefox.nix
     ./hyprland.nix
@@ -9,7 +10,6 @@
     ./vscode.nix
     ./waybar.nix
     ./wezterm.nix
-    ./wob.nix
   ];
   home.file = { };
 

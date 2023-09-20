@@ -1,0 +1,6 @@
+{ ... }:
+{
+  services.avizo = {
+    enable = true;
+  };
+}
