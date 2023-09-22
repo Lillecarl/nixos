@@ -62,9 +62,6 @@ let
     [lua]
     symbol = " "
 
-    [memory_usage]
-    symbol = " "
-
     [meson]
     symbol = "喝 "
 
@@ -139,6 +136,7 @@ let
     [spack]
     symbol = "🅢 "
   '';
+  flavour = "mocha";
 in
 {
   programs.starship = {
@@ -189,7 +187,9 @@ in
         format = "🐚 [$env_value]($style) ";
         style = "fg:green";
       };
-    };
+
+      palette = "catppuccin_${flavour}";
+    } // builtins.fromTOML (builtins.readFile "${inputs.catppuccin-starship}/palettes/${flavour}.toml");
   };
   programs.keychain.enableNushellIntegration = true;
 }
