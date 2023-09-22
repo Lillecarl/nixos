@@ -26,8 +26,8 @@
   {
     "name": "remote-explorer",
     "publisher": "ms-vscode",
-    "version": "0.5.2023090609",
-    "sha256": "1rscpqkn1ls5m05vbiwgrx7m49w9l9xp10kxi7ggdzyipa2vbb1d"
+    "version": "0.5.2023092115",
+    "sha256": "16irb6flqyh7hc4vkjf57b6glx9i7c1l73nq8hy8224zxf3ky6a8"
   },
   {
     "name": "ansible",
