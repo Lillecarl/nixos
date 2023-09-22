@@ -36,7 +36,6 @@
     vlc # VLC sucks in comparision to MPV
 
     wev # Like xev but for wayland, displays which keys you're pressing
-    ulauncher-joined # Python based launcher
     dfeet # D-Bus explorer
   ];
 
