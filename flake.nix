@@ -82,6 +82,7 @@
       url = "github:nix-community/lanzaboote/v0.3.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # Art
     nixos-artwork = {
       url = "github:NixOS/nixos-artwork";
       flake = false;
@@ -92,6 +93,10 @@
     };
     catppuccin-gitui = {
       url = "github:catppuccin/gitui";
+      flake = false;
+    };
+    catppuccin-hyprland = {
+      url = "github:catppuccin/hyprland";
       flake = false;
     };
   };

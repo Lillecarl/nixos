@@ -89,7 +89,8 @@ let
     bind  = $mainMod          , Print   , exec, ${printScript} window --edit --upload
     bind  = $mainMod Shift_L  , Print   , exec, ${printScript} region --edit --upload
     bind  = Ctrl_L Alt_L      , V       , exec, ${pkgs.clipman}/bin/clipman pick --tool=rofi
-  '';
+  '' +
+  builtins.readFile "${inputs.catppuccin-hyprland}/themes/mocha.conf";
 in
 {
   home.packages = [
