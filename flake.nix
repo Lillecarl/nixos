@@ -4,9 +4,14 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-lib.url = "github:NixOS/nixpkgs/nixos-unstable?dir=lib";
     nix-community-lib.url = "github:nix-community/nixpkgs.lib/master";
+    flake-utils.url = "github:numtide/flake-utils";
+    nur.url = "github:nix-community/NUR";
+    hyprland.url = "github:hyprwm/Hyprland";
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+
     nh = {
       url = "github:viperML/nh";
-      inputs.nixpkgs.follows = "nixpkgs"; # override this repo's nixpkgs snapshot
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-eval-jobs = {
       url = "github:nix-community/nix-eval-jobs/main";
@@ -18,10 +23,6 @@
       inputs.flake-utils.follows = "flake-utils";
       inputs.nixpkgs-lib.follows = "nix-community-lib";
     };
-    # Stable nixpkgs, when packages are broken in unstable this is useful
-    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-22.11";
-    # NixOS hardware configuration modules/library
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     # Use Nix as Terraform
     terranix = {
       url = "github:terranix/terranix";
@@ -35,8 +36,6 @@
       inputs.nix-eval-jobs.follows = "nix-eval-jobs";
       inputs.lib-aggregate.follows = "lib-aggregate";
     };
-    # Current unused, provides flake helpers
-    flake-utils.url = "github:numtide/flake-utils";
     # Support splitting flake into subflakes
     flake-parts = {
       url = "github:hercules-ci/flake-parts";
@@ -79,12 +78,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
     };
-    nur.url = "github:nix-community/NUR";
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v0.3.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    hyprland.url = "github:hyprwm/Hyprland";
     nixos-artwork = {
       url = "github:NixOS/nixos-artwork";
       flake = false;
