@@ -8,21 +8,21 @@ let
   };
 in
 {
-  environment.systemPackages = [finalPackage];
+  environment.systemPackages = [ finalPackage ];
   fonts.enableDefaultPackages = true;
 
   hardware.opengl.enable = true;
 
   programs = {
     dconf.enable = true;
-    xwayland.enable = false;
+    xwayland.enable = true;
   };
 
   security.polkit.enable = true;
 
   xdg.portal = {
     enable = true;
-    extraPortals = [finalPortalPackage];
+    extraPortals = [ finalPortalPackage ];
   };
 
   programs.nm-applet.enable = true;

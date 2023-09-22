@@ -35,7 +35,7 @@ let
   hyprland-debug = (prev.hyprland.override {
     wrapRuntimeDeps = false;
     debug = true;
-    enableXWayland = false;
+    enableXWayland = true;
   }).overrideAttrs {
     enableDebugging = true;
     dontStrip = true;
