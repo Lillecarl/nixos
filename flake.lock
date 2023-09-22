@@ -32,6 +32,22 @@
         "type": "github"
       }
     },
+    "catppuccin-gitui": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1687370019,
+        "narHash": "sha256-m6Tjch6A2ZPZ3/muvb/9sEAQUZfjnWqcwyhNVeqPS2c=",
+        "owner": "catppuccin",
+        "repo": "gitui",
+        "rev": "3c97c7af7247b1e0f4366a4d8fab650bcce54100",
+        "type": "github"
+      },
+      "original": {
+        "owner": "catppuccin",
+        "repo": "gitui",
+        "type": "github"
+      }
+    },
     "catppuccin-waybar": {
       "flake": false,
       "locked": {
@@ -948,6 +964,7 @@
     },
     "root": {
       "inputs": {
+        "catppuccin-gitui": "catppuccin-gitui",
         "catppuccin-waybar": "catppuccin-waybar",
         "disko": "disko",
         "dwarffs": "dwarffs",

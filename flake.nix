@@ -93,6 +93,10 @@
       url = "github:catppuccin/waybar";
       flake = false;
     };
+    catppuccin-gitui = {
+      url = "github:catppuccin/gitui";
+      flake = false;
+    };
   };
 
   outputs =
