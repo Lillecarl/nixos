@@ -17,7 +17,6 @@ in
     baseIndex = 1;
 
     plugins = with pkgs.tmuxPlugins; [
-      sensible
       vim-tmux-navigator
       catppuccin
     ];
