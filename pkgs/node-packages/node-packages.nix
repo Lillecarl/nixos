@@ -1039,13 +1039,13 @@ let
         sha512 = "YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==";
       };
     };
-    "sax-1.2.4" = {
+    "sax-1.3.0" = {
       name = "sax";
       packageName = "sax";
-      version = "1.2.4";
+      version = "1.3.0";
       src = fetchurl {
-        url = "https://registry.npmjs.org/sax/-/sax-1.2.4.tgz";
-        sha512 = "NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==";
+        url = "https://registry.npmjs.org/sax/-/sax-1.3.0.tgz";
+        sha512 = "0s+oAmw9zLl1V1cS9BtZN7JAd0cW5e0QH4W3LWEK6a4LaLEA2OTpGYWDY+6XasBLtz6wkm3u1xRw95mRuJ59WA==";
       };
     };
     "semver-6.3.1" = {
@@ -1430,7 +1430,7 @@ in
       sources."safe-regex-test-1.0.0"
       sources."safefs-4.2.0"
       sources."safer-buffer-2.1.2"
-      sources."sax-1.2.4"
+      sources."sax-1.3.0"
       sources."semver-6.3.1"
       sources."set-function-name-2.0.1"
       sources."side-channel-1.0.4"
