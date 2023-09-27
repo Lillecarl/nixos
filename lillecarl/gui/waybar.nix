@@ -107,8 +107,9 @@ in
         };
         "hyprland/language" = {
           format = " KB: {} ";
-          format-en = "🇺🇸";
-          format-se = "🇸🇪";
+          format-en = "EN";
+          format-sv = "SE";
+          format-eu = "EU";
           keyboard-name = keyboardName;
           on-click = "${hyprctl} switchxkblayout ${keyboardName} next";
         };
