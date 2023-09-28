@@ -11,6 +11,7 @@ in
       modules = [
         ../common
         ../common/fish.nix
+        ../common/openvpn.nix
         ../common/flatpak.nix
         ../common/greetd.nix
         ../common/hyprland.nix
