@@ -51,6 +51,7 @@
       "vim.enableNeovim" = true;
       "workbench.colorTheme" = "Catppuccin Mocha";
       "workbench.iconTheme" = "catppuccin-mocha";
+      "window.titleBarStyle" = "custom";
 
       # Executable path configurations
       "ansible.ansible.path" = "${pkgs.ansible}/bin/ansible";
