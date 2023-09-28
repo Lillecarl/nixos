@@ -12,6 +12,7 @@ in
     inputs.hyprland.overlays.default
     inputs.nixpkgs-wayland.overlay
     inputs.nur.overlay
+    inputs.nix-vscode-extensions.overlays.default
     pkgs-overlay
   ];
 

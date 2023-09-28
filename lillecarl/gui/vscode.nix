@@ -17,7 +17,7 @@
           (builtins.readFile ../../pkgs/vscodeExtensions.json)
         )
       ) ++
-    (with pkgs.vscode-extensions; [
+    (with pkgs.vscode-marketplace; [
       bbenoist.nix
       catppuccin.catppuccin-vsc
       catppuccin.catppuccin-vsc-icons
@@ -33,6 +33,12 @@
       ms-vsliveshare.vsliveshare
       redhat.vscode-yaml
       vscodevim.vim
+      davidhewitt.shebang-language-associator
+      joaompinto.vscode-graphviz
+      ms-vscode-remote.remote-ssh
+      ms-vscode-remote.remote-ssh-edit
+      ms-vscode.remote-explorer
+      redhat.ansible
     ]);
 
     userSettings = {
