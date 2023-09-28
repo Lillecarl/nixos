@@ -4,8 +4,6 @@
     pkgs.openvpn
   ];
 
-  # Seems to try running multi-user automatically, disable
-  systemd.services."openvpn-client@multi-user".enable = false;
   systemd.services."openvpn-client@" = {
     enable = true;
 
@@ -35,7 +33,6 @@
       ProtectHome=true;
       KillMode="process";
     };
-    wantedBy=["multi-user.target"];
   };
 
   # Create /etc/openvpn/client
