@@ -39,5 +39,9 @@
   };
 
   # Create /etc/openvpn/client
+  environment.etc."openvpn/client/README".text = ''
+    Rather than storing your configurations in the root here, create a folder with the
+    same name as the configuration file, makes it easier to store certificates without naming conflicts
+  '';
   environment.etc."openvpn/client/.keep".text = "";
 }
