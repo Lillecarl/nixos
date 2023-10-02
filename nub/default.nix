@@ -46,44 +46,6 @@
     implicitPolicyTarget = "allow"; # Allow everything
   };
 
-  services.salt = rec {
-    master = {
-      enable = true;
-
-      configuration = {
-        log_level = "debug";
-        mine_interval = 1;
-        file_roots = {
-          base = [ "/srv/salt/salt" ];
-        };
-        pillar_roots = {
-          base = [ "/srv/salt/pillar" ];
-        };
-        master_roots = {
-          base = [ "/srv/salt/salt-master" ];
-        };
-        ext_pillar = [
-          {
-            file_tree = {
-              root_dir = "/srv/salt/pillar/";
-              render_default = "jinja|yaml";
-              template = true;
-            };
-          }
-        ];
-      };
-    };
-    minion = {
-      enable = true;
-
-      configuration =
-        master.configuration
-        // {
-          master = "127.0.0.1";
-        };
-    };
-  };
-
   services.btrbk.instances."btrbk" = {
     onCalendar = "*:0/15";
     settings = {

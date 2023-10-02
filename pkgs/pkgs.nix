@@ -17,14 +17,6 @@ let
 
     exabgp = prev.callPackage ../pkgs/python3Packages/exabgp { };
 
-    pyzmq25 = prev.python3Packages.callPackage ../pkgs/python3Packages/pyzmq { };
-    looseversion = prev.python3Packages.callPackage ../pkgs/python3Packages/looseversion { };
-
-    pytest-salt-factories = prev.python3Packages.callPackage ../pkgs/python3Packages/pytest-salt-factories { };
-    pytest-shell-utilities = prev.python3Packages.callPackage ../pkgs/python3Packages/pytest-shell-utilities { };
-    pytest-skip-markers = prev.python3Packages.callPackage ../pkgs/python3Packages/pytest-skip-markers { };
-    pytest-tempdir = prev.python3Packages.callPackage ../pkgs/python3Packages/pytest-tempdir { };
-
     ifupdown2 = prev.python3Packages.callPackage ../pkgs/python3Packages/ifupdown2 { };
 
     from_ssv = prev.python3Packages.callPackage ../pkgs/python3Packages/from_ssv { };
@@ -60,9 +52,6 @@ prev.lib.filterAttrs
     # Filter out package sets if we're called from a flake.
     (n != "python3Packages" && n != "nodePackages"))
   {
-    # Stand-alone packages
-    salt-pepper = prev.callPackage ../pkgs/salt-pepper { };
-    splunk-otel-collector = prev.callPackage ../pkgs/splunk-otel-collector { };
     keychain-wrapper = prev.callPackage ../pkgs/keychain-wrapper { };
 
     xonsh-joined = prev.callPackage ../pkgs/xonsh-joined { };

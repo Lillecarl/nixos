@@ -58,8 +58,6 @@
     rage # Modern crypto written in Rust (Compatible with Age)
     rbw # Unofficial Bitwarden CLI client
     ripgrep # Modern rusty grep
-    salt # RCE as a service
-    salt-pepper # salt-api CLI tool
     scrcpy # Remote your android over adb
     tealdeer # tldr pages
     terragrunt # Some weird Terraform abstraction
