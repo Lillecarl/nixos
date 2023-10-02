@@ -16,19 +16,9 @@
   home.packages = with pkgs; [
     # Web browsers
     brave
-    # firefox # firefox is installed through a module
-
-    # Office
-    #libreoffice
+    pcmanfm
 
     dfeet # GUI browser for dbus
-
-    # Chat apps
-    slack # Slack chat app
-    element-desktop-wayland # Element Slack app
-    teams-for-linux # Open-Source Teams Electron App
-    discord # Gaming chat application
-    signal-desktop # Secure messenger
 
     # Media apps
     mpv # Media Player
