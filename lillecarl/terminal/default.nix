@@ -18,6 +18,7 @@
     ./starship.nix
     ./tealdeer.nix
     ./tmux.nix
+    ./xdg-user-dirs.nix
     ./xonsh.nix
     ./zsh.nix
   ];
