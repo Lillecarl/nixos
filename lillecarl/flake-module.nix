@@ -43,6 +43,7 @@ in
               monitor=DVI-D-2,1920x1080@143.996002,0x0,1.0
               monitor=DVI-D-2,transform,3
             '';
+            systemConfig = self.nixosConfigurations.shitbox.config;
           };
         });
         "lillecarl@nub" = mkHome "x86_64-linux" (guibase // {
@@ -53,6 +54,7 @@ in
               monitor=DP-2,3440x1440@60,0x0,1.0
               monitor=eDP-1,1920x1200@60,760x1440,1.0
             '';
+            systemConfig = self.nixosConfigurations.nub.config;
           };
         });
         lillecarl-term = mkHome "x86_64-linux" {
