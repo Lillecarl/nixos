@@ -120,9 +120,9 @@
         inherit inputs;
         specialArgs = {
           flakeloc =
-            if builtins.getEnv "FLAKELOC" == ""
-            then builtins.abort "env var FLAKELOC is not properly configured"
-            else builtins.getEnv "FLAKELOC";
+            if builtins.getEnv "FLAKE" == ""
+            then builtins.abort "env var FLAKE is not properly configured"
+            else builtins.getEnv "FLAKE";
         };
       }
       {
