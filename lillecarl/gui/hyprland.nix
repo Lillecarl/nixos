@@ -94,7 +94,7 @@ let
 in
 {
   home.packages = [
-    pkgs.rofi # Required for clipman picker
+    pkgs.rofi-wayland # Required for clipman picker
   ];
   gtk = {
     enable = true;
