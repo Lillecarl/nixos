@@ -50,7 +50,7 @@ prev.lib.filterAttrs
     ||
     # Flake is implicitly true here
     # Filter out package sets if we're called from a flake.
-    (n != "python3Packages" && n != "nodePackages"))
+    (n != "python3Packages" && n != "nodePackages" && n != "firefoxAddons"))
   {
     keychain-wrapper = prev.callPackage ../pkgs/keychain-wrapper { };
 
