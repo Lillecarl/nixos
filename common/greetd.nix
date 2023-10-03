@@ -17,6 +17,8 @@ let
     echo "thread apply all bt full" >> /tmp/gdbcommands
     chmod +x /tmp/gdbcommands
 
+    export WLR_NO_HARDWARE_CURSORS=1
+
     NOW=$(date -u +%Y-%m-%dT%H:%M:%S%Z)
 
     ${pkgs.gdb}/bin/gdb \

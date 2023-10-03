@@ -6,6 +6,7 @@
     ./hyprland.nix
     ./mako.nix
     ./qutebrowser.nix
+    ./sway.nix
     ./swaytools.nix
     ./vscode.nix
     ./waybar.nix
