@@ -3,6 +3,9 @@
   security.pam.services.greetd.enableGnomeKeyring = true;
   security.pam.services.swaylock.enableGnomeKeyring = true;
 
+  services.envfs.enable = true;
+  programs.nix-ld.enable = true;
+
   programs.firefox = {
     enable = true;
     nativeMessagingHosts.tridactyl = true;
