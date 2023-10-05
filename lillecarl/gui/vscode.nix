@@ -2,7 +2,7 @@
 , ...
 }:
 let
-  pythonWithAnsible = pkgs.python3.withPackages(ps: with ps; [
+  pythonWithAnsible = pkgs.python3.withPackages (ps: with ps; [
     ansible
   ]);
 
