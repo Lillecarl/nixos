@@ -1,7 +1,22 @@
-{ config
-, pkgs
+{ pkgs
 , ...
-}: {
+}:
+let
+  pythonWithAnsible = pkgs.python3.withPackages(ps: with ps; [
+    ansible
+  ]);
+
+  vscodeWithBin = pkgs.symlinkJoin {
+    name = "vscode-joined";
+    inherit (pkgs.vscode) pname version;
+
+    paths = [
+      pkgs.vscode
+      pythonWithAnsible
+    ];
+  };
+in
+{
   programs.vscode = {
     enable = true;
 
@@ -9,7 +24,7 @@
     enableUpdateCheck = false;
     mutableExtensionsDir = false;
 
-    package = pkgs.vscode;
+    package = vscodeWithBin;
 
     extensions = pkgs.vscode-utils.extensionsFromVscodeMarketplace
       (
@@ -19,7 +34,6 @@
       ) ++
     (with pkgs.vscode-marketplace; [
       bbenoist.nix
-      eamodio.gitlens
       editorconfig.editorconfig
       github.copilot
       hashicorp.terraform
@@ -40,6 +54,7 @@
     ]);
 
     userSettings = {
+      "password-store" = "gnome-libsecret";
       "editor.fontFamily" = "'Hack Nerd Font', 'monospace', monospace";
       "editor.inlineSuggest.enabled" = true;
       "editor.insertSpaces" = true;
@@ -57,6 +72,7 @@
 
       # Executable path configurations
       "ansible.ansible.path" = "${pkgs.ansible}/bin/ansible";
+      "ansible.python.interpreterPath" = pythonWithAnsible;
       "clangd.path" = "${pkgs.clang-tools}/bin/clangd";
       "pylsp.executable" = "${pkgs.python3.pkgs.python-lsp-server}/bin/pylsp";
       "terraform.languageServer.path" = "${pkgs.terraform-ls}/bin/terraform-ls";
