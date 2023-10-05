@@ -259,33 +259,5 @@
     setSendmail = true;
   };
 
-  networking.ifupdown2 = {
-    enable = false;
-
-    extraPackages = [
-      pkgs.bridge-utils
-      pkgs.dpkg
-      pkgs.ethtool
-      pkgs.iproute2
-      pkgs.kmod
-      pkgs.mstpd
-      pkgs.openvswitch
-      pkgs.ppp
-      pkgs.procps
-      pkgs.pstree
-      pkgs.service-wrapper
-      pkgs.systemd
-    ];
-
-    extraConfig = ''
-      auto ifbr0
-      iface ifbr0
-          bridge-pvid 1
-          bridge-vids 100 200
-          bridge-vlan-aware yes
-          address 10.255.255.1/24
-    '';
-  };
-
   system.stateVersion = "23.11";
 }

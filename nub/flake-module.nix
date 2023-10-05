@@ -21,7 +21,6 @@ in
         ../common/verycommon.nix
         ../common/xdg.nix
         ../common/xplatform.nix
-        ../modules/nixos/ifupdown2
         ./default.nix
         ./tlp.nix
         inputs.disko.nixosModules.disko

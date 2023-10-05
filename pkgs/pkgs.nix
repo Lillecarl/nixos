@@ -58,13 +58,6 @@ prev.lib.filterAttrs
     hyprland = hyprland-debug-joined;
     hyprland-carl = hyprland-debug-joined;
 
-    # Shut up, you're spamming my logs
-    #xdg-desktop-portal-hyprland = prev.xdg-desktop-portal-hyprland.overrideAttrs {
-    #  postInstall = ''
-    #    wrapProgram $out/libexec/xdg-desktop-portal-hyprland --prefix PATH ":" ${prev.lib.makeBinPath [prev.hyprland-share-picker]} --add-flags "-q"
-    #  '';
-    #};
-
     # Inject python3 packages
     python3Packages = python3Packages // prev.python3Packages;
     python3 = prev.python3.override {
