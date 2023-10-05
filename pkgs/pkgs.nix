@@ -17,8 +17,6 @@ let
 
     exabgp = prev.callPackage ../pkgs/python3Packages/exabgp { };
 
-    ifupdown2 = prev.python3Packages.callPackage ../pkgs/python3Packages/ifupdown2 { };
-
     from_ssv = prev.python3Packages.callPackage ../pkgs/python3Packages/from_ssv { };
     pyping = prev.python3Packages.callPackage ../pkgs/python3Packages/pyping { };
   };
@@ -56,7 +54,6 @@ prev.lib.filterAttrs
 
     xonsh-joined = prev.callPackage ../pkgs/xonsh-joined { };
     xonsh-wrapper = final.callPackage ../pkgs/xonsh-wrapper { };
-    ifupdown2 = python3Packages.ifupdown2;
 
     hyprland = hyprland-debug-joined;
     hyprland-carl = hyprland-debug-joined;
