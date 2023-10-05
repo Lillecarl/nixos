@@ -13,7 +13,6 @@
     kubectx # Kubernetes session helper
     kubernetes-helm # Kubernetes package manager
     kustomize # Kubernetes YAML configurations
-    octant # Kubernetes GUI
     rancher # Rancher CLI
     tealdeer # tldr manpages
     cheat # tldr alternative
