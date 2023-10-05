@@ -19,8 +19,6 @@
       ) ++
     (with pkgs.vscode-marketplace; [
       bbenoist.nix
-      catppuccin.catppuccin-vsc
-      catppuccin.catppuccin-vsc-icons
       eamodio.gitlens
       editorconfig.editorconfig
       github.copilot
@@ -55,8 +53,6 @@
       "update.mode" = "none";
       "workbench.startupEditor" = "none";
       "vim.enableNeovim" = true;
-      "workbench.colorTheme" = "Catppuccin Mocha";
-      "workbench.iconTheme" = "catppuccin-mocha";
       "window.titleBarStyle" = "custom";
 
       # Executable path configurations
