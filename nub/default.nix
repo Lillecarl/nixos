@@ -216,6 +216,7 @@
 
 
   environment.systemPackages = with pkgs; [
+    amdgpu_top
     gnome.gnome-keyring
     gnome.seahorse
     apple-cursor
