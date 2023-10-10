@@ -11,18 +11,19 @@ in
       modules = [
         ../common
         ../common/fish.nix
-        ../common/openvpn.nix
         ../common/flatpak.nix
         ../common/greetd.nix
         ../common/hyprland.nix
+        ../common/monitoring.nix
         ../common/nix.nix
+        ../common/openvpn.nix
         ../common/thinkpad.nix
         ../common/users.nix
         ../common/verycommon.nix
         ../common/xdg.nix
         ../common/xplatform.nix
         ./default.nix
-        ./tlp.nix
+        #./tlp.nix
         inputs.disko.nixosModules.disko
         inputs.dwarffs.nixosModules.dwarffs
         inputs.hyprland.nixosModules.default

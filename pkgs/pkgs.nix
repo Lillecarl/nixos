@@ -22,6 +22,10 @@ let
   };
   nodePackages = prev.callPackages ./node-packages { };
 
+  grafanaPlugins = {
+    frser-sqlite-datasource = prev.grafanaPlugins.callPackage ./grafanaPlugins/frser-sqlite-datasource { };
+  };
+
   hyprland-debug = (prev.hyprland.override {
     wrapRuntimeDeps = false;
     debug = true;
@@ -48,7 +52,7 @@ prev.lib.filterAttrs
     ||
     # Flake is implicitly true here
     # Filter out package sets if we're called from a flake.
-    (n != "python3Packages" && n != "nodePackages" && n != "firefoxAddons"))
+    (n != "python3Packages" && n != "nodePackages" && n != "firefoxAddons" && n != "grafanaPlugins"))
   {
     keychain-wrapper = prev.callPackage ../pkgs/keychain-wrapper { };
 
@@ -65,6 +69,8 @@ prev.lib.filterAttrs
     };
     # Inject node packages
     nodePackages = nodePackages // prev.nodePackages;
+    # Inject grafanaPlugins
+    grafanaPlugins = grafanaPlugins // prev.grafanaPlugins;
     # firefox addons
     firefoxAddons = prev.callPackage ./firefoxAddons { };
 
@@ -115,8 +121,13 @@ prev.lib.filterAttrs
   then python3Packages
   else { }
 )
-  // (
+// (
   if flake == true
   then nodePackages
+  else { }
+)
+// (
+  if flake == true
+  then grafanaPlugins
   else { }
 )
