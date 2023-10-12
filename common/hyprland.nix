@@ -1,6 +1,6 @@
 { pkgs, inputs, ... }:
 let
-  finalPackage = pkgs.hyprland-carl;
+  finalPackage = pkgs.hyprland;
   finalPortalPackage = pkgs.xdg-desktop-portal-hyprland.override {
     hyprland-share-picker = inputs.hyprland.xdph.packages.x86_64-linux.hyprland-share-picker.override {
       hyprland = finalPackage;

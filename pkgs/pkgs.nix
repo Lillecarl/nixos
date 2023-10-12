@@ -25,25 +25,6 @@ let
   grafanaPlugins = {
     frser-sqlite-datasource = prev.grafanaPlugins.callPackage ./grafanaPlugins/frser-sqlite-datasource { };
   };
-
-  hyprland-debug = (prev.hyprland.override {
-    wrapRuntimeDeps = false;
-    debug = true;
-    enableXWayland = true;
-  }).overrideAttrs {
-    enableDebugging = true;
-    dontStrip = true;
-    separateDebugInfo = false;
-  };
-
-  hyprland-debug-joined = prev.symlinkJoin {
-    name = "hyprland-debug-joined";
-    paths = [
-      hyprland-debug
-      prev.pciutils
-      prev.binutils
-    ];
-  };
 in
 prev.lib.filterAttrs
   (n: v:
@@ -58,9 +39,6 @@ prev.lib.filterAttrs
 
     xonsh-joined = prev.callPackage ../pkgs/xonsh-joined { };
     xonsh-wrapper = final.callPackage ../pkgs/xonsh-wrapper { };
-
-    hyprland = hyprland-debug-joined;
-    hyprland-carl = hyprland-debug-joined;
 
     # Inject python3 packages
     python3Packages = python3Packages // prev.python3Packages;
@@ -126,7 +104,7 @@ prev.lib.filterAttrs
   then nodePackages
   else { }
 )
-// (
+  // (
   if flake == true
   then grafanaPlugins
   else { }
