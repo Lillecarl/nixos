@@ -7,7 +7,6 @@ grafanaPlugin {
   meta = with lib; {
     description = "Connects Grafana to sqlite";
     license = licenses.asl20;
-    #maintainers = with maintainers; [ nukaduka ];
     platforms = platforms.unix;
   };
 }
