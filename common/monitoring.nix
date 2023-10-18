@@ -1,6 +1,13 @@
 { pkgs
 , ...
 }:
+let
+  plumpy = pkgs.python3.withPackages (ps: with ps; [
+    plumbum
+    psutil
+  ]);
+  pyscript = ../monitoring.py;
+in
 {
   services.grafana = {
     enable = true;
@@ -17,5 +24,21 @@
         serve_from_sub_path = true;
       };
     };
+  };
+
+  systemd.services.pymonitoring = {
+    wantedBy = [ "multi-user.target" ];
+
+    path = with pkgs; [
+      msr-tools
+      lm_sensors
+    ];
+
+    script = ''
+      ${pkgs.coreutils}/bin/touch /var/lib/grafana/data/monitoring.sqlite3
+      ${pkgs.coreutils}/bin/chown grafana:grafana /var/lib/grafana/data/monitoring.sqlite3
+
+      ${plumpy}/bin/python3 -u ${pyscript}
+    '';
   };
 }
