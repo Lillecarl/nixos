@@ -35,7 +35,10 @@ in
     ];
 
     script = ''
+      # Make sure database exists ahead of time
       ${pkgs.coreutils}/bin/touch /var/lib/grafana/data/monitoring.sqlite3
+      # Make sure database is readable by grafana (Monitoring system runs
+      # as root to gain access to MSR and such, so we can read and write either way)
       ${pkgs.coreutils}/bin/chown grafana:grafana /var/lib/grafana/data/monitoring.sqlite3
 
       ${plumpy}/bin/python3 -u ${pyscript}
