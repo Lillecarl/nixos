@@ -33,43 +33,21 @@ def get_energy_unit():
 
     return float(pow(1.0 / 2.0, float((data >> 8) & 0x1F)))
 
+def createtable(conn, tablename):
+    conn.execute(f"""CREATE TABLE IF NOT EXISTS
+                 {tablename}(
+                    time INTEGER PRIMARY KEY,
+                    value REAL
+                 )
+                 STRICT;""")
+
 def createtables(conn):
-    conn.execute("""CREATE TABLE IF NOT EXISTS
-                 cpu(
-                    time INTEGER PRIMARY KEY,
-                    value REAL
-                 )
-                 STRICT;""")
-    conn.execute("""CREATE TABLE IF NOT EXISTS
-                 cpu_power(
-                    time INTEGER PRIMARY KEY,
-                    value REAL
-                 )
-                 STRICT;""")
-    conn.execute("""CREATE TABLE IF NOT EXISTS
-                 fan(
-                    time INTEGER PRIMARY KEY,
-                    value REAL
-                 )
-                 STRICT;""")
-    conn.execute("""CREATE TABLE IF NOT EXISTS
-                 temp(
-                    time INTEGER PRIMARY KEY,
-                    value REAL
-                 )
-                 STRICT;""")
-    conn.execute("""CREATE TABLE IF NOT EXISTS
-                 power(
-                    time INTEGER PRIMARY KEY,
-                    value REAL
-                 )
-                 STRICT;""")
-    conn.execute("""CREATE TABLE IF NOT EXISTS
-                 batpct(
-                    time INTEGER PRIMARY KEY,
-                    value REAL
-                 )
-                 STRICT;""")
+    createtable(conn, "batpct")
+    createtable(conn, "cpu")
+    createtable(conn, "cpu_power")
+    createtable(conn, "fan")
+    createtable(conn, "power")
+    createtable(conn, "temp")
 
     conn.commit()
 
@@ -144,12 +122,12 @@ def main():
 
         print(f"dtime: {dtime}")
 
+        insertmetric(conn, "batpct", float(current_charge))
         insertmetric(conn, "cpu", cpu_pct)
         insertmetric(conn, "cpu_power", cpu_power)
         insertmetric(conn, "fan", float(fan_speed))
-        insertmetric(conn, "temp", float(cpu_temp))
         insertmetric(conn, "power", float(power_now))
-        insertmetric(conn, "batpct", float(current_charge))
+        insertmetric(conn, "temp", float(cpu_temp))
 
         conn.commit()
 
