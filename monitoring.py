@@ -33,16 +33,15 @@ def get_energy_unit():
 
     return float(pow(1.0 / 2.0, float((data >> 8) & 0x1F)))
 
-def main():
-    conn = create_connection("/var/lib/grafana/data/monitoring.sqlite3")
-
-    if not conn:
-        return
-
-    conn.execute('pragma journal_mode=wal')
-
+def createtables(conn):
     conn.execute("""CREATE TABLE IF NOT EXISTS
                  cpu(
+                    time INTEGER PRIMARY KEY,
+                    value REAL
+                 )
+                 STRICT;""")
+    conn.execute("""CREATE TABLE IF NOT EXISTS
+                 cpu_power(
                     time INTEGER PRIMARY KEY,
                     value REAL
                  )
@@ -65,8 +64,46 @@ def main():
                     value REAL
                  )
                  STRICT;""")
+    conn.execute("""CREATE TABLE IF NOT EXISTS
+                 batpct(
+                    time INTEGER PRIMARY KEY,
+                    value REAL
+                 )
+                 STRICT;""")
 
     conn.commit()
+
+def insertmetric(conn, table, value):
+    ctime: int = int(time.time())
+    conn.execute(f"""INSERT INTO
+                        {table}
+                        (
+                            time,
+                            value
+                        )
+                        VALUES
+                        (
+                            ?,
+                            ?
+                        )""",
+                        (
+                            ctime,
+                            value
+                        )
+                 )
+
+
+def main():
+    conn = create_connection("/var/lib/grafana/data/monitoring.sqlite3")
+
+    if not conn:
+        return
+
+    conn.execute('pragma journal_mode=wal')
+    conn.commit()
+
+    createtables(conn)
+
 
     batpath = local.path("/sys/class/power_supply/BAT0/")
 
@@ -83,7 +120,7 @@ def main():
 
         dtime = ntime - otime
 
-        watt = ((nwatt - owatt) / dtime) * energy_unit
+        cpu_power = ((nwatt - owatt) / dtime) * energy_unit
 
         data = json.loads(sensors())
 
@@ -93,6 +130,7 @@ def main():
         cpu_temp: float = float(data["thinkpad-isa-0000"]["CPU"]["temp1_input"])
         charging: bool = "Charging" in (batpath / "status").read()
         power_now: float = float((batpath / "power_now").read()) / 1000000
+        current_charge: float = float((batpath / "capacity").read().rstrip())
 
         if not charging:
             power_now = -power_now
@@ -101,75 +139,18 @@ def main():
         print(f"fan_speed: {fan_speed}")
         print(f"cpu_temp: {cpu_temp}")
         print(f"power_now: {power_now}")
-        print(f"watt: {watt}")
+        print(f"cpu_power: {cpu_power}")
+        print(f"current_charge: {current_charge}")
+
         print(f"dtime: {dtime}")
 
-        conn.execute("""INSERT INTO
-                            cpu
-                            (
-                                time,
-                                value
-                            )
-                            VALUES
-                            (
-                                ?,
-                                ?
-                            )""",
-                            (
-                                ctime,
-                                cpu_pct
-                            )
-                     )
+        insertmetric(conn, "cpu", cpu_pct)
+        insertmetric(conn, "cpu_power", cpu_power)
+        insertmetric(conn, "fan", float(fan_speed))
+        insertmetric(conn, "temp", float(cpu_temp))
+        insertmetric(conn, "power", float(power_now))
+        insertmetric(conn, "batpct", float(current_charge))
 
-        conn.execute("""INSERT INTO
-                            fan
-                            (
-                                time,
-                                value
-                            )
-                            VALUES
-                            (
-                                ?,
-                                ?
-                            )""",
-                            (
-                                ctime,
-                                float(fan_speed)
-                            )
-                     )
-
-        conn.execute("""INSERT INTO
-                            temp
-                            (
-                                time,
-                                value
-                            )
-                            VALUES
-                            (
-                                ?,
-                                ?
-                            )""",
-                            (
-                                ctime,
-                                float(cpu_temp)
-                            )
-                     )
-        conn.execute("""INSERT INTO
-                            power
-                            (
-                                time,
-                                value
-                            )
-                            VALUES
-                            (
-                                ?,
-                                ?
-                            )""",
-                            (
-                                ctime,
-                                float(power_now)
-                            )
-                     )
         conn.commit()
 
         # Set old values to new for next iteration
