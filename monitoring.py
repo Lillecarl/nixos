@@ -8,7 +8,6 @@ import json
 
 from plumbum import local
 
-sudo        = local["sudo"]
 sensors     = local["sensors"]["-j"]
 rdmsr       = local["rdmsr"]
 readwatt    = rdmsr["-p", "0", "0xC001029B", "-d"]
@@ -78,6 +77,9 @@ def main():
         return
 
     conn.execute('pragma journal_mode=wal')
+    conn.commit()
+
+    conn.execute("VACUUM")
     conn.commit()
 
     createtables(conn)
