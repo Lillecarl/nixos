@@ -7,6 +7,7 @@ let
     psutil
   ]);
   pyscript = ../monitoring.py;
+  monitordbpath = "/var/lib/grafana/data/monitoring.sqlite3";
 in
 {
   services.grafana = {
@@ -14,6 +15,21 @@ in
     declarativePlugins = with pkgs.grafanaPlugins; [
       frser-sqlite-datasource
     ];
+
+    provision = {
+      datasources.settings.datasources = [
+        {
+          name = "SQLite";
+          type = "frser-sqlite-datasource";
+          access = "proxy";
+          isDefault = true;
+          editable = false;
+          jsonData = {
+            path = monitordbpath;
+          };
+        }
+      ];
+    };
 
     settings = {
       server = {
@@ -30,16 +46,16 @@ in
     wantedBy = [ "multi-user.target" ];
 
     path = with pkgs; [
-      msr-tools
-      lm_sensors
+      msr-tools # Read Manufacturer Specific Registers
+      lm_sensors # Read systems sensors
     ];
 
     script = ''
       # Make sure database exists ahead of time
-      ${pkgs.coreutils}/bin/touch /var/lib/grafana/data/monitoring.sqlite3
+      ${pkgs.coreutils}/bin/touch ${monitordbpath}
       # Make sure database is readable by grafana (Monitoring system runs
       # as root to gain access to MSR and such, so we can read and write either way)
-      ${pkgs.coreutils}/bin/chown grafana:grafana /var/lib/grafana/data/monitoring.sqlite3
+      ${pkgs.coreutils}/bin/chown grafana:grafana ${monitordbpath}
 
       ${plumpy}/bin/python3 -u ${pyscript}
     '';
