@@ -37,7 +37,7 @@ let
         "\"${hyprctl}\""
         "\"${pkgs.wl-clipboard}/bin/wl-copy\""
       ]
-      (builtins.readFile ../../print.py));
+      (builtins.readFile ../../scripts/print.py));
 
   cursorSettings = {
     name = "macOS-BigSur";

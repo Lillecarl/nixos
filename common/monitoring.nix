@@ -6,7 +6,7 @@ let
     plumbum
     psutil
   ]);
-  pyscript = ../monitoring.py;
+  pyscript = ../scripts/monitoring.py;
   monitordbpath = "/var/lib/grafana/data/monitoring.sqlite3";
 in
 {
