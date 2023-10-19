@@ -42,10 +42,6 @@ in
 
     timeouts = [
       { timeout = 300; command = swaylock; }
-      # I can be very forgetful at times
-      { timeout = 1800; command = "${swaysleep}"; }
-      { timeout = 3600; command = "${swaysleep}"; }
-      { timeout = 7200; command = "${swaysleep}"; }
     ];
   };
 }
