@@ -33,6 +33,7 @@ in
         )
       ) ++
     (with pkgs.vscode-marketplace; [
+      pkgs.vscode-marketplace."4ops".terraform
       bbenoist.nix
       editorconfig.editorconfig
       github.copilot
