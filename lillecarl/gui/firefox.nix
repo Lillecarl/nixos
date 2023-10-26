@@ -51,11 +51,13 @@
         extensions = with pkgs.nur.repos.rycee.firefox-addons; [
           bitwarden
           canvasblocker
+          consent-o-matic
+          cookie-autodelete
           decentraleyes
           multi-account-containers
           onetab
-          pkgs.firefoxAddons.shortkeys
           pkgs.firefoxAddons.kagi-search-for-firefox
+          pkgs.firefoxAddons.shortkeys
           pkgs.firefoxAddons.zen-fox
           privacy-badger
           privacy-pass
