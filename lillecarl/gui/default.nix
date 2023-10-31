@@ -19,6 +19,9 @@
     brave
     pcmanfm
 
+    # Terminal
+    alacritty
+
     dfeet # GUI browser for dbus
 
     # Media apps
