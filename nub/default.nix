@@ -7,8 +7,10 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ./tlp.nix
+    #./tlp.nix
   ];
+
+  services.power-profiles-daemon.enable = true;
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
