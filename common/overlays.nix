@@ -1,4 +1,4 @@
-{ inputs, ...}:
+{ inputs, ... }:
 let
   pkgs-overlay = import ../pkgs/default.nix;
 in
