@@ -35,7 +35,13 @@ if hostname == "shitbox":
     xml = sudo[virsh["dumpxml", "win10"]]()
     local.path("shitbox/win10.xml").write(xml)
 block_until_internet("1.1.1.1")
-nh["os", "switch"] & FG  # type: ignore
+try:
+    nh["os", "switch"] & FG  # type: ignore
+except:
+    print("Failed to build nixos")
 print("Building home")
 block_until_internet("1.1.1.1")
-nh["home", "switch", "--", "--impure" ].run_fg()
+try:
+    nh["home", "switch", "--", "--impure" ].run_fg()
+except:
+    print("Failed to build home-manager")
