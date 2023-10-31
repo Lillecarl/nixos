@@ -52,7 +52,7 @@ prev.lib.filterAttrs
     # firefox addons
     firefoxAddons = prev.callPackage ./firefoxAddons { };
 
-    obs-studio = prev.obs-studio.overrideAttrs (finalAttrs: previousAttrs: rec {
+    obs-studio_beta = prev.obs-studio.overrideAttrs (finalAttrs: previousAttrs: rec {
       version = "30.0.0-beta2";
       src = prev.fetchFromGitHub {
         owner = "obsproject";
