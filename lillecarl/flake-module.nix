@@ -17,6 +17,7 @@ let
           } // customArgs.extraSpecialArgs;
         modules = [
           ./default.nix
+          ../common/overlays.nix
         ] ++ customArgs.modules;
       });
 in

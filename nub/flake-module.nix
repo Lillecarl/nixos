@@ -17,6 +17,7 @@ in
         ../common/monitoring.nix
         ../common/nix.nix
         ../common/openvpn.nix
+        ../common/overlays.nix
         ../common/thinkpad.nix
         ../common/users.nix
         ../common/verycommon.nix

@@ -7,6 +7,7 @@
     flake-utils.url = "github:numtide/flake-utils";
     nur.url = "github:nix-community/NUR";
     hyprland.url = "github:hyprwm/Hyprland";
+    waybar.url = "github:Alexays/Waybar";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     nix-vscode-extensions = {
