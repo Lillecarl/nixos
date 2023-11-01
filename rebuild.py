@@ -14,8 +14,6 @@ nh = local["nh"]
 
 hostname = socket.gethostname()
 
-exit_code = 0
-
 def check_connection(address):
     try:
         ping(address, "-c", "1", "-W", "1")
@@ -31,6 +29,10 @@ def block_until_internet(address):
     print("No internet, retrying (indefinitely)")
     sleep(1)
 
+if text := (local.cwd / "flake.nix").read():
+    if "?rev=" in text:
+        print("LOCKED FLAKE INPUTS")
+
 sudo[echo["Building nixos"]].run_fg()
 if hostname == "shitbox":
     print("Dumping Windows VM XML")
@@ -42,7 +44,7 @@ try:
     nh["os", "switch"] & FG  # type: ignore
 except:
     print("Failed to build nixos")
-    exit_code = 1
+    exit(1)
 
 print("Building home")
 block_until_internet("1.1.1.1")
@@ -50,6 +52,4 @@ try:
     nh["home", "switch", "--", "--impure" ].run_fg()
 except:
     print("Failed to build home-manager")
-    exit_code = 1
-
-exit(exit_code)
+    exit(1)
