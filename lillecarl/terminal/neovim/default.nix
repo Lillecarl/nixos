@@ -79,9 +79,9 @@
     '';
 
     extraLuaConfig = ''
-      require("init2")
+      --require("init2")
     '';
   };
 
-  home.file.".config/nvim/lua/init2.lua".source = config.lib.file.mkOutOfStoreSymlink "${flakeloc}/lillecarl/terminal/neovim/lua/init.lua";
+  #home.file.".config/nvim/lua/init2.lua".source = config.lib.file.mkOutOfStoreSymlink "${flakeloc}/lillecarl/terminal/neovim/lua/init.lua";
 }
