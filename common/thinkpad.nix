@@ -1,7 +1,4 @@
-{ inputs
-, pkgs
-, ...
-}:
+{ ... }:
 {
   systemd.services.thinkfan.enable = false;
 

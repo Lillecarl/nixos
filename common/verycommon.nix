@@ -3,15 +3,7 @@
 , programs-sqlite-db
 , ...
 }:
-let
-  pkgs-overlay = import ../pkgs;
-in
 {
-  nixpkgs.overlays = [
-    inputs.hyprland.overlays.default
-    pkgs-overlay
-  ];
-
   environment.systemPackages = with pkgs; [
     home-manager
     vim

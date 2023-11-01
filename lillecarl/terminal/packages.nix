@@ -9,6 +9,7 @@
     #inputs.mozilla-addons-to-nix.packages.x86_64-linux.default
     #inputs.system-manager.packages.x86_64-linux.system-manager
     (lowPrio kubectl) # Kubernetes management cli
+    vault # secrets mumbo jumbo
     gdb # GNU debugger
     ngrok # reverse proxy
     pass # GPG based password store
@@ -58,8 +59,6 @@
     rage # Modern crypto written in Rust (Compatible with Age)
     rbw # Unofficial Bitwarden CLI client
     ripgrep # Modern rusty grep
-    salt # RCE as a service
-    salt-pepper # salt-api CLI tool
     scrcpy # Remote your android over adb
     tealdeer # tldr pages
     terragrunt # Some weird Terraform abstraction
@@ -67,7 +66,6 @@
     tfswitch # Terraform version switcher
     tmate # terminal multiplexer with online sharing
     toilet # Ascii art text
-    xonsh-wrapper # xonsh shell
     yq # CLI YAML utility, useful for those that thing YAML is a bit shit
     zellij # discoverable terminal multiplexer written in rust
     zoxide # Rust implementation of z/autojump

@@ -37,7 +37,7 @@ let
         "\"${hyprctl}\""
         "\"${pkgs.wl-clipboard}/bin/wl-copy\""
       ]
-      (builtins.readFile ../../print.py));
+      (builtins.readFile ../../scripts/print.py));
 
   cursorSettings = {
     name = "macOS-BigSur";
@@ -88,13 +88,13 @@ let
     bind  =                   , Print   , exec, ${printScript} screen --edit --upload
     bind  = $mainMod          , Print   , exec, ${printScript} window --edit --upload
     bind  = $mainMod Shift_L  , Print   , exec, ${printScript} region --edit --upload
-    bind  = Ctrl_L Alt_L      , V       , exec, ${pkgs.clipman}/bin/clipman pick --tool=rofi
+    bind  = Ctrl_L Alt_L      , V       , exec, ${pkgs.cliphist}/bin/cliphist list | ${pkgs.wofi}/bin/wofi --dmenu | ${pkgs.cliphist}/bin/cliphist decode | ${pkgs.wl-clipboard}/bin/wl-copy
   '' +
   builtins.readFile "${inputs.catppuccin-hyprland}/themes/mocha.conf";
 in
 {
   home.packages = [
-    pkgs.rofi # Required for clipman picker
+    pkgs.rofi-wayland # Required for clipman picker
   ];
   gtk = {
     enable = true;
@@ -139,20 +139,31 @@ in
   services.gammastep.enable = false; # Screen temperature daemon. TODO: Enable and configure
   services.wlsunset.enable = false; # Screen temperature daemon. TODO: Enable and configure
 
-  services.clipman = {
-    enable = true;
-    package = pkgs.clipman-wrapped;
-    systemdTarget = "hyprland-session.target";
-  };
-
   wayland.windowManager.hyprland = {
     enable = true;
-    package = pkgs.hyprland-carl;
 
     systemdIntegration = true;
     disableAutoreload = true;
 
     xwayland.enable = true;
     inherit extraConfig;
+  };
+
+  systemd.user.services.cliphist = {
+    Unit = {
+      Description = "wayland clipboard manager";
+      PartOf = [ "graphical-session.target" ];
+      After = [ "graphical-session.target" ];
+    };
+
+    Service = {
+      ExecStart =
+        "${pkgs.wl-clipboard}/bin/wl-paste --watch ${pkgs.cliphist}/bin/cliphist store";
+      ExecReload = "${pkgs.coreutils}/bin/kill -SIGUSR2 $MAINPID";
+      Restart = "on-failure";
+      KillMode = "mixed";
+    };
+
+    Install = { WantedBy = [ "hyprland-session.target" ]; };
   };
 }

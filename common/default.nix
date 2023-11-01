@@ -3,6 +3,9 @@
   security.pam.services.greetd.enableGnomeKeyring = true;
   security.pam.services.swaylock.enableGnomeKeyring = true;
 
+  services.envfs.enable = true;
+  programs.nix-ld.enable = true;
+
   programs.firefox = {
     enable = true;
     nativeMessagingHosts.tridactyl = true;
@@ -216,7 +219,6 @@
   };
 
   environment.variables = {
-    EDITOR = "nvim";
     VISUAL = "nvim";
     ARM_THREEPOINTZERO_BETA_RESOURCES = "true";
   };
@@ -230,22 +232,6 @@
     enable = true;
     pinentryFlavor = "qt";
   };
-  # Enable xonsh
-  programs.xonsh.package = pkgs.xonsh-wrapper;
-  programs.xonsh.enable = true;
-  programs.xonsh.config = ''
-    # https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html#variables
-    if "XDG_CACHE_HOME" not in ''${...}:
-      $XDG_CACHE_HOME = $HOME/.cache
-    if "XDG_CONFIG_HOME" not in ''${...}:
-      $XDG_CONFIG_HOME = $HOME/.config
-    if "XDG_DATA_HOME" not in ''${...}:
-      $XDG_DATA_HOME = $HOME/.local/share
-    if "XDG_STATE_HOME" not in ''${...}:
-      $XDG_STATE_HOME = $HOME/.local/state
-
-    source-bash /etc/bashrc --suppress-skip-message
-  '';
   # Bash autocomplete
   programs.bash.enableCompletion = true;
 

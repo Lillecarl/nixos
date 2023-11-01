@@ -9,10 +9,11 @@
         ../common
         ../common/fish.nix
         ../common/flatpak.nix
-        ../common/users.nix
         ../common/greetd.nix
         ../common/hyprland.nix
         ../common/nix.nix
+        ../common/overlays.nix
+        ../common/users.nix
         ../common/verycommon.nix
         ../common/xdg.nix
         ./default.nix

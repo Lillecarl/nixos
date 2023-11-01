@@ -7,7 +7,7 @@
   systemd.services."openvpn-client@" = {
     enable = true;
 
-    description="OpenVPN tunnel for %I";
+    description = "OpenVPN tunnel for %I";
     after = [ "syslog.target" "network-online.target" ];
     wants = [ "network-online.target" ];
 
@@ -18,20 +18,20 @@
     ];
 
     serviceConfig = {
-      Type="notify";
-      PrivateTmp="true";
+      Type = "notify";
+      PrivateTmp = "true";
       # Differs from official OpenVPN in that CWD is /etc/openvpn/client/%i rather than /etc/openvpn/client
-      WorkingDirectory="/etc/openvpn/client/%i";
-      ExecStart="${pkgs.openvpn}/bin/openvpn --suppress-timestamps --nobind --config %i.conf";
-      CapabilityBoundingSet="CAP_IPC_LOCK CAP_NET_ADMIN CAP_NET_RAW CAP_SETGID CAP_SETUID CAP_SYS_CHROOT CAP_DAC_OVERRIDE";
-      LimitNPROC=10;
-      DeviceAllow=[
+      WorkingDirectory = "/etc/openvpn/client/%i";
+      ExecStart = "${pkgs.openvpn}/bin/openvpn --suppress-timestamps --nobind --config %i.conf";
+      CapabilityBoundingSet = "CAP_IPC_LOCK CAP_NET_ADMIN CAP_NET_RAW CAP_SETGID CAP_SETUID CAP_SYS_CHROOT CAP_DAC_OVERRIDE";
+      LimitNPROC = 10;
+      DeviceAllow = [
         "/dev/null rw"
         "/dev/net/tun rw"
       ];
-      ProtectSystem=true;
-      ProtectHome=true;
-      KillMode="process";
+      ProtectSystem = true;
+      ProtectHome = true;
+      KillMode = "process";
     };
   };
 

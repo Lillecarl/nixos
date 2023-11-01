@@ -1,21 +1,5 @@
-{ config
-, pkgs
-, lib
-, inputs
-, ...
-}:
-let
-  pkgs-overlay = import ../pkgs;
-in
+{ ... }:
 {
-  nixpkgs.overlays = [
-    inputs.hyprland.overlays.default
-    inputs.nixpkgs-wayland.overlay
-    inputs.nur.overlay
-    inputs.nix-vscode-extensions.overlays.default
-    pkgs-overlay
-  ];
-
   nixpkgs = {
     config.allowUnfree = true;
   };

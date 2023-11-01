@@ -11,7 +11,7 @@
     vimAlias = true;
     viAlias = true;
     vimdiffAlias = true;
-    #defaultEditor = true;
+    defaultEditor = true;
 
     plugins = with pkgs.vimPlugins; [
       coc-clangd
@@ -64,12 +64,24 @@
       set encoding=utf-8
       set ignorecase
       set smartcase
+
+      " " Copy to clipboard
+      vnoremap  <leader>y  "+y
+      nnoremap  <leader>Y  "+yg_
+      nnoremap  <leader>y  "+y
+      nnoremap  <leader>yy  "+yy
+
+      " " Paste from clipboard
+      nnoremap <leader>p "+p
+      nnoremap <leader>P "+P
+      vnoremap <leader>p "+p
+      vnoremap <leader>P "+P
     '';
 
     extraLuaConfig = ''
-      require("init2")
+      --require("init2")
     '';
   };
 
-  home.file.".config/nvim/lua/init2.lua".source = config.lib.file.mkOutOfStoreSymlink "${flakeloc}/lillecarl/terminal/neovim/lua/init.lua";
+  #home.file.".config/nvim/lua/init2.lua".source = config.lib.file.mkOutOfStoreSymlink "${flakeloc}/lillecarl/terminal/neovim/lua/init.lua";
 }

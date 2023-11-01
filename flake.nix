@@ -9,6 +9,10 @@
     hyprland.url = "github:hyprwm/Hyprland";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
+    waybar = {
+      url = "github:Alexays/Waybar";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nix-vscode-extensions = {
       url = "github:nix-community/nix-vscode-extensions";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -120,9 +124,9 @@
         inherit inputs;
         specialArgs = {
           flakeloc =
-            if builtins.getEnv "FLAKELOC" == ""
-            then builtins.abort "env var FLAKELOC is not properly configured"
-            else builtins.getEnv "FLAKELOC";
+            if builtins.getEnv "FLAKE" == ""
+            then builtins.abort "env var FLAKE is not properly configured"
+            else builtins.getEnv "FLAKE";
         };
       }
       {

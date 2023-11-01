@@ -7,8 +7,10 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ./tlp.nix
+    #./tlp.nix
   ];
+
+  services.power-profiles-daemon.enable = true;
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -31,7 +33,7 @@
       # Disable power/wakeup for ELAN touchpad that prevents suspending.
       SUBSYSTEM=="i2c", DRIVER=="i2c_hid_acpi", ATTR{name}=="ELAN*", ATTR{power/wakeup}="disabled"
       # Limit battery max charge to 86% (85 in reality)
-      ACTION=="add|change", SUBSYSTEM=="power_supply", ENV{POWER_SUPPLY_NAME}=="BAT0", ATTR{charge_control_start_threshold}="83", ATTR{charge_control_end_threshold}="86"
+      ACTION=="add", SUBSYSTEM=="power_supply", ENV{POWER_SUPPLY_NAME}=="BAT0", ATTR{charge_control_start_threshold}="83", ATTR{charge_control_end_threshold}="86"
       # Allow anyone to change mic led
       SUBSYSTEM=="leds", KERNEL=="platform::micmute", RUN{program}+="${pkgs.coreutils-full}/bin/chmod a+rw /sys/devices/platform/thinkpad_acpi/leds/platform::micmute/brightness"
       # Allow anyone to change screen backlight
@@ -44,44 +46,6 @@
 
     IPCAllowedUsers = [ "root" "lillecarl" ];
     implicitPolicyTarget = "allow"; # Allow everything
-  };
-
-  services.salt = rec {
-    master = {
-      enable = true;
-
-      configuration = {
-        log_level = "debug";
-        mine_interval = 1;
-        file_roots = {
-          base = [ "/srv/salt/salt" ];
-        };
-        pillar_roots = {
-          base = [ "/srv/salt/pillar" ];
-        };
-        master_roots = {
-          base = [ "/srv/salt/salt-master" ];
-        };
-        ext_pillar = [
-          {
-            file_tree = {
-              root_dir = "/srv/salt/pillar/";
-              render_default = "jinja|yaml";
-              template = true;
-            };
-          }
-        ];
-      };
-    };
-    minion = {
-      enable = true;
-
-      configuration =
-        master.configuration
-        // {
-          master = "127.0.0.1";
-        };
-    };
   };
 
   services.btrbk.instances."btrbk" = {
@@ -254,6 +218,7 @@
 
 
   environment.systemPackages = with pkgs; [
+    amdgpu_top
     gnome.gnome-keyring
     gnome.seahorse
     apple-cursor
@@ -295,34 +260,6 @@
   services.postfix = {
     enable = true;
     setSendmail = true;
-  };
-
-  networking.ifupdown2 = {
-    enable = false;
-
-    extraPackages = [
-      pkgs.bridge-utils
-      pkgs.dpkg
-      pkgs.ethtool
-      pkgs.iproute2
-      pkgs.kmod
-      pkgs.mstpd
-      pkgs.openvswitch
-      pkgs.ppp
-      pkgs.procps
-      pkgs.pstree
-      pkgs.service-wrapper
-      pkgs.systemd
-    ];
-
-    extraConfig = ''
-      auto ifbr0
-      iface ifbr0
-          bridge-pvid 1
-          bridge-vids 100 200
-          bridge-vlan-aware yes
-          address 10.255.255.1/24
-    '';
   };
 
   system.stateVersion = "23.11";

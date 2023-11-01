@@ -17,38 +17,13 @@ let
 
     exabgp = prev.callPackage ../pkgs/python3Packages/exabgp { };
 
-    pyzmq25 = prev.python3Packages.callPackage ../pkgs/python3Packages/pyzmq { };
-    looseversion = prev.python3Packages.callPackage ../pkgs/python3Packages/looseversion { };
-
-    pytest-salt-factories = prev.python3Packages.callPackage ../pkgs/python3Packages/pytest-salt-factories { };
-    pytest-shell-utilities = prev.python3Packages.callPackage ../pkgs/python3Packages/pytest-shell-utilities { };
-    pytest-skip-markers = prev.python3Packages.callPackage ../pkgs/python3Packages/pytest-skip-markers { };
-    pytest-tempdir = prev.python3Packages.callPackage ../pkgs/python3Packages/pytest-tempdir { };
-
-    ifupdown2 = prev.python3Packages.callPackage ../pkgs/python3Packages/ifupdown2 { };
-
     from_ssv = prev.python3Packages.callPackage ../pkgs/python3Packages/from_ssv { };
     pyping = prev.python3Packages.callPackage ../pkgs/python3Packages/pyping { };
   };
   nodePackages = prev.callPackages ./node-packages { };
 
-  hyprland-debug = (prev.hyprland.override {
-    wrapRuntimeDeps = false;
-    debug = true;
-    enableXWayland = true;
-  }).overrideAttrs {
-    enableDebugging = true;
-    dontStrip = true;
-    separateDebugInfo = false;
-  };
-
-  hyprland-debug-joined = prev.symlinkJoin {
-    name = "hyprland-debug-joined";
-    paths = [
-      hyprland-debug
-      prev.pciutils
-      prev.binutils
-    ];
+  grafanaPlugins = {
+    frser-sqlite-datasource = prev.grafanaPlugins.callPackage ./grafanaPlugins/frser-sqlite-datasource { };
   };
 in
 prev.lib.filterAttrs
@@ -58,26 +33,12 @@ prev.lib.filterAttrs
     ||
     # Flake is implicitly true here
     # Filter out package sets if we're called from a flake.
-    (n != "python3Packages" && n != "nodePackages"))
+    (n != "python3Packages" && n != "nodePackages" && n != "firefoxAddons" && n != "grafanaPlugins"))
   {
-    # Stand-alone packages
-    salt-pepper = prev.callPackage ../pkgs/salt-pepper { };
-    splunk-otel-collector = prev.callPackage ../pkgs/splunk-otel-collector { };
     keychain-wrapper = prev.callPackage ../pkgs/keychain-wrapper { };
 
     xonsh-joined = prev.callPackage ../pkgs/xonsh-joined { };
     xonsh-wrapper = final.callPackage ../pkgs/xonsh-wrapper { };
-    ifupdown2 = python3Packages.ifupdown2;
-
-    hyprland = hyprland-debug-joined;
-    hyprland-carl = hyprland-debug-joined;
-
-    # Shut up, you're spamming my logs
-    #xdg-desktop-portal-hyprland = prev.xdg-desktop-portal-hyprland.overrideAttrs {
-    #  postInstall = ''
-    #    wrapProgram $out/libexec/xdg-desktop-portal-hyprland --prefix PATH ":" ${prev.lib.makeBinPath [prev.hyprland-share-picker]} --add-flags "-q"
-    #  '';
-    #};
 
     # Inject python3 packages
     python3Packages = python3Packages // prev.python3Packages;
@@ -86,10 +47,12 @@ prev.lib.filterAttrs
     };
     # Inject node packages
     nodePackages = nodePackages // prev.nodePackages;
+    # Inject grafanaPlugins
+    grafanaPlugins = grafanaPlugins // prev.grafanaPlugins;
     # firefox addons
     firefoxAddons = prev.callPackage ./firefoxAddons { };
 
-    obs-studio = prev.obs-studio.overrideAttrs (finalAttrs: previousAttrs: rec {
+    obs-studio_beta = prev.obs-studio.overrideAttrs (finalAttrs: previousAttrs: rec {
       version = "30.0.0-beta2";
       src = prev.fetchFromGitHub {
         owner = "obsproject";
@@ -130,22 +93,19 @@ prev.lib.filterAttrs
       ${prev.coreutils-full}/bin/sleep 0.5
       echo $mute > /sys/class/leds/platform\:\:micmute/brightness
     '';
-
-    clipman-wrapped = prev.symlinkJoin {
-      name = "clipman-wrapped";
-      paths = [
-        prev.wl-clipboard
-        prev.clipman
-      ];
-    };
   }
 // (
   if flake == true
   then python3Packages
   else { }
 )
-  // (
+// (
   if flake == true
   then nodePackages
+  else { }
+)
+  // (
+  if flake == true
+  then grafanaPlugins
   else { }
 )
