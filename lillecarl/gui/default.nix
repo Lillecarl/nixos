@@ -1,7 +1,6 @@
 { pkgs, ... }: {
   imports = [
     ./avizo.nix
-    ./brave.nix
     ./firefox.nix
     ./hyprland.nix
     ./mako.nix
@@ -16,7 +15,6 @@
 
   home.packages = with pkgs; [
     # Web browsers
-    brave
     pcmanfm
 
     # Terminal
