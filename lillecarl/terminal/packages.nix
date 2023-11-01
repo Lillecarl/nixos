@@ -66,7 +66,6 @@
     tfswitch # Terraform version switcher
     tmate # terminal multiplexer with online sharing
     toilet # Ascii art text
-    xonsh-wrapper # xonsh shell
     yq # CLI YAML utility, useful for those that thing YAML is a bit shit
     zellij # discoverable terminal multiplexer written in rust
     zoxide # Rust implementation of z/autojump
