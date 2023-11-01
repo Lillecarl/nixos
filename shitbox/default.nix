@@ -78,14 +78,9 @@
     ksnip
     lshw
     bridge-utils
-    qtcreator
     units
-    heroku
     piper
-    syncthing
     nmap
-    obs-studio
-    gwenview
     okular
     virt-manager
     OVMFFull
@@ -96,8 +91,6 @@
     archiver
     libarchive
     discord
-    teamspeak_client
-    appimage-run # running appimages (shadow)
 
     # Hardware management
     smartmontools
