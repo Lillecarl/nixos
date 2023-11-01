@@ -14,7 +14,7 @@
   boot.initrd.availableKernelModules = [
     "vfio-pci"
   ];
-  boot.kernelPackages = with pkgs.linuxKernel.packages; linux_6_4;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
   #boot.kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_latest;
   boot.initrd.kernelModules = [ "vfio-pci" ];
   boot.extraModprobeConfig = ''
