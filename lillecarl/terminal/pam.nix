@@ -5,7 +5,6 @@
 }: {
   pam = {
     sessionVariables = rec {
-      EDITOR = "${pkgs.neovim}/bin/nvim";
       VISUAL = "${pkgs.neovim}/bin/nvim";
       PAGER = "${pkgs.moar}/bin/moar";
       # Git configuration (For sending over SSH)

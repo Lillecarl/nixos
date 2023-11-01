@@ -11,7 +11,7 @@
     vimAlias = true;
     viAlias = true;
     vimdiffAlias = true;
-    #defaultEditor = true;
+    defaultEditor = true;
 
     plugins = with pkgs.vimPlugins; [
       coc-clangd
