@@ -13,11 +13,10 @@
 
   boot.initrd.availableKernelModules = [
     "vfio-pci"
-    "amdgpu"
   ];
-  boot.kernelPackages = with pkgs.linuxKernel.packages; linux_lqx;
+  boot.kernelPackages = with pkgs.linuxKernel.packages; linux_6_4;
   #boot.kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_latest;
-  boot.initrd.kernelModules = [ "amdgpu" "vfio-pci" ];
+  boot.initrd.kernelModules = [ "vfio-pci" ];
   boot.extraModprobeConfig = ''
     options vfio-pci ids=10de:2487,10de:228b
     blacklist nouveau
@@ -27,7 +26,6 @@
   boot.kernelModules = [
     "drivetemp"
     "nct6775"
-    "amdgpu"
     "kvm-amd"
     "wl"
     "vfio_virqfd"
@@ -39,11 +37,6 @@
     "amd_iommu=on"
     "mitigations=off"
     "iommu=pt"
-    # Something something HAWAII maybe?
-    "radeon.si_support=0"
-    "radeon.cik_support=0"
-    "amdgpu.si_support=1"
-    "amdgpu.cik_support=1"
     "acpi_enforce_resources=lax"
     "delayacct"
   ];
