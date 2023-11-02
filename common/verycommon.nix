@@ -1,6 +1,7 @@
 { inputs
 , pkgs
 , programs-sqlite-db
+, flakeloc
 , ...
 }:
 {
@@ -29,7 +30,7 @@
     POWERSHELL_TELEMETRY_OPTOUT = "yes"; # No powershell telemetry
     NIXOS_OZONE_WL = "1"; # Use Wayland whenever we can
     PIP_DISABLE_PIP_VERSION_CHECK = "1"; # Disable pip version warnings
-    FLAKE = "/home/lillecarl/Code/nixos"; # for use with "nh"
+    FLAKE = flakeloc;
   };
 
   services.fstrim.enable = true;
