@@ -58,6 +58,12 @@ in
             systemConfig = self.nixosConfigurations.nub.config;
           };
         });
+        "lillecarl@wsl" = mkHome "x86_64-linux" {
+          extraSpecialArgs = { };
+          modules = [
+            ./terminal
+          ];
+        };
         lillecarl-term = mkHome "x86_64-linux" {
           extraSpecialArgs = { };
           modules = [

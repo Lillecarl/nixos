@@ -3,11 +3,16 @@
     # nixos branch, calling it nixpkgs because that's the default everyone uses.
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-lib.url = "github:NixOS/nixpkgs/nixos-unstable?dir=lib";
-    nix-community-lib.url = "github:nix-community/nixpkgs.lib/master";
+    nix-community-lib.url = "github:nix-community/nixpkgs.lib";
     flake-utils.url = "github:numtide/flake-utils";
     nur.url = "github:nix-community/NUR";
     hyprland.url = "github:hyprwm/Hyprland";
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    nixos-hardware.url = "github:NixOS/nixos-hardware";
+
+    nixos-wsl = {
+      url =  "github:nix-community/nixos-wsl";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     waybar = {
       url = "github:Alexays/Waybar";
@@ -132,6 +137,7 @@
       {
         imports = [
           inputs.flake-parts.flakeModules.easyOverlay
+          ./hosts/wsl/flake-module.nix
           ./lillecarl/flake-module.nix
           ./modules/flake-module.nix
           ./nixos-installer/flake-module.nix
