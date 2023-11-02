@@ -9,7 +9,10 @@ import socket
 ping = local["ping"]
 sudo = local["sudo"]
 echo = local["echo"]
-virsh = local["virsh"]
+try:
+    virsh = local["virsh"]
+except:
+    pass
 nh = local["nh"]
 
 hostname = socket.gethostname()
