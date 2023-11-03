@@ -1,0 +1,9 @@
+#! /usr/bin/env fish
+
+# Set DDC values twice because it's flaky shit
+for i in 1 2;
+  ddcutil -d 1 setvcp 0x60 0x0f
+  ddcutil -d 2 setvcp 0x60 0x0f
+  ddcutil -d 3 setvcp 0x60 0x0f
+  sleep 1
+end
