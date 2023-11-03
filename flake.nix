@@ -10,7 +10,7 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware";
 
     nixos-wsl = {
-      url =  "github:nix-community/nixos-wsl";
+      url = "github:nix-community/nixos-wsl";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

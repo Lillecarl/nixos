@@ -11,7 +11,7 @@
         ../../common/users.nix
         ./cachix.nix
         ./configuration.nix
-	inputs.nixos-wsl.nixosModules.wsl
+        inputs.nixos-wsl.nixosModules.wsl
       ];
       specialArgs = {
         inherit inputs;

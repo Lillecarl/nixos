@@ -1,5 +1,4 @@
-{ inputs
-, pkgs
+{ pkgs
 , programs-sqlite-db
 , flakeloc
 , ...
