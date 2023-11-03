@@ -10,6 +10,8 @@
     git
   ];
 
+  security.sudo.wheelNeedsPassword = true;
+
   programs.zsh.enable = true;
   programs.nix-ld.enable = true;
 

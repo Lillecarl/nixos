@@ -11,6 +11,7 @@
         ../../common/overlays.nix
         ../../common/verycommon.nix
         ../../common/users.nix
+        ../../common/nix.nix
         ./cachix.nix
         ./configuration.nix
         inputs.nixos-wsl.nixosModules.wsl
