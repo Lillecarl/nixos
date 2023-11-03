@@ -221,8 +221,8 @@
     amdgpu_top
     gnome.gnome-keyring
     gnome.seahorse
-    apple-cursor
     polkit-kde-agent
+    catppuccin-cursors.macchiatoPink
     sbctl # sb = secure boot
     config.boot.kernelPackages.zenpower # zenpower
     winbox # MikroTik winbox, until we're rid of this crap at work.

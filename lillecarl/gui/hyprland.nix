@@ -40,9 +40,9 @@ let
       (builtins.readFile ../../scripts/print.py));
 
   cursorSettings = {
-    name = "macOS-BigSur";
+    name = "Catppuccin-Macchiato-Pink";
     size = 24;
-    package = pkgs.apple-cursor;
+    package = pkgs.catppuccin-cursors.macchiatoPink;
   };
 
   wallpaper = "${inputs.nixos-artwork}/wallpapers/nix-wallpaper-watersplash.png";
