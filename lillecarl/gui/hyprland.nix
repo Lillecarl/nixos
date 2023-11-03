@@ -64,7 +64,8 @@ let
     ${monitorConfig}
 
     # Launch terminal
-    bind  = $mainMod          , Q       , exec, ${pkgs.wezterm}/bin/wezterm-gui
+    #bind  = $mainMod          , Q       , exec, ${pkgs.wezterm}/bin/wezterm-gui
+    bind  = $mainMod          , Q       , exec, ${pkgs.alacritty}/bin/alacritty
     # Awesome locker
     bind  = Ctrl_L Alt_L      , delete  , exec, ${pkgs.swaylock}/bin/swaylock
     # Media buttons
