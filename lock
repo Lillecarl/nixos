@@ -1,0 +1,5 @@
+#! /usr/bin/env fish
+
+swaylock &
+sleep 5
+hyprctl dispatch dpms off
