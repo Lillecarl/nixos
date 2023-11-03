@@ -9,10 +9,7 @@ import socket
 ping = local["ping"]
 sudo = local["sudo"]
 echo = local["echo"]
-try:
-    virsh = local["virsh"]
-except:
-    pass
+virsh = local.get("virsh", "echo")
 nh = local["nh"]
 
 hostname = socket.gethostname()
@@ -44,7 +41,7 @@ if hostname == "shitbox":
 block_until_internet("1.1.1.1")
 
 try:
-    nh["os", "switch"] & FG  # type: ignore
+    nh["os", "switch", "--", "--impure" ] & FG  # type: ignore
 except:
     print("Failed to build nixos")
     exit(1)

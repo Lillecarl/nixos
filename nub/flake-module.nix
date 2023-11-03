@@ -1,4 +1,5 @@
 { inputs
+, flakeloc
 , ...
 }:
 let
@@ -39,7 +40,7 @@ in
         )
       ];
       specialArgs = {
-        inherit inputs;
+        inherit inputs flakeloc;
         programs-sqlite-db = inputs.flake-programs-sqlite.packages.${system}.programs-sqlite;
       };
     };

@@ -1,5 +1,6 @@
 { inputs
 , lib
+, flakeloc
 , ...
 }: {
   flake = {
@@ -25,7 +26,7 @@
         inputs.nixos-hardware.nixosModules.common-pc-ssd
       ];
       specialArgs = {
-        inherit inputs;
+        inherit inputs flakeloc;
         programs-sqlite-db = inputs.flake-programs-sqlite.packages."x86_64-linux".programs-sqlite;
       };
     };
