@@ -15,17 +15,7 @@
 
   # XDG Base Directory Specification
   environment.sessionVariables = {
-    XDG_CACHE_HOME = "\${HOME}/.cache";
-    XDG_CONFIG_HOME = "\${HOME}/.config";
-    XDG_BIN_HOME = "\${HOME}/.local/bin";
-    XDG_DATA_HOME = "\${HOME}/.local/share";
-    XDG_STATE_HOME = "\${HOME}/.local/state";
     NODE_HOME = "\${HOME}/.local/node";
-
-    PATH = [
-      "\${XDG_BIN_HOME}"
-    ];
-
     POWERSHELL_TELEMETRY_OPTOUT = "yes"; # No powershell telemetry
     NIXOS_OZONE_WL = "1"; # Use Wayland whenever we can
     PIP_DISABLE_PIP_VERSION_CHECK = "1"; # Disable pip version warnings
