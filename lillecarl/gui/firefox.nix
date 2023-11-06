@@ -147,6 +147,7 @@
           "toolkit.telemetry.prompted" = 2; # we've been asked about telemetry
           "toolkit.telemetry.rejected" = true; # we rejected telemetry
           "toolkit.telemetry.unifiedIsOptIn" = false; # don't opt in
+          "ui.prefersReducedMotion" = true; # Reduce web animations
 
           # Meeting overlay thingie doesn't work well when tiling
           "privacy.webrtc.legacyGlobalIndicator" = false;
