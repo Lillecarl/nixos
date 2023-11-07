@@ -3,8 +3,13 @@
   security.pam.services.greetd.enableGnomeKeyring = true;
   security.pam.services.swaylock.enableGnomeKeyring = true;
 
-  services.envfs.enable = true;
-  programs.nix-ld.enable = true;
+  #services.envfs = {
+  #  enable = true;
+  #  #extraFallbackPathCommands = ''
+  #  #  ln -s ${pkgs.coreutils}/bin/env $out/env
+  #  #'';
+  #};
+  #programs.nix-ld.enable = true;
 
   programs.firefox = {
     enable = true;
