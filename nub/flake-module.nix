@@ -11,6 +11,7 @@ in
       system = system;
       modules = [
         ../common
+        ../common/btrfs.nix
         ../common/fish.nix
         ../common/flatpak.nix
         ../common/greetd.nix
