@@ -7,6 +7,8 @@
     ./hardware-configuration.nix
   ];
 
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
   disko.devices = import ./disko.nix { };
 
   # Networking, virbr0 is WAN iface
