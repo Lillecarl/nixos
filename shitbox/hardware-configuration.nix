@@ -14,7 +14,8 @@
   boot.initrd.availableKernelModules = [
     "vfio-pci"
   ];
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
+  #boot.kernelPackages = pkgs.linuxPackages_latest;
   #boot.kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_latest;
   boot.initrd.kernelModules = [ "vfio-pci" ];
   boot.extraModprobeConfig = ''
@@ -34,6 +35,7 @@
     "vfio"
   ];
   boot.kernelParams = [
+    "nohibernate"
     "amd_iommu=on"
     "mitigations=off"
     "iommu=pt"
@@ -42,6 +44,7 @@
   ];
 
   boot.extraModulePackages = with config.boot.kernelPackages; [
+    zfs
     v4l2loopback.out
     usbip
     zenpower
