@@ -1,5 +1,8 @@
 #! /usr/bin/env fish
 
+echo "Sleeping 3"
+sleep 3
+
 # Set DDC values twice because it's flaky shit
 for i in 1 2;
   ddcutil -d 1 setvcp 0x60 0x11
