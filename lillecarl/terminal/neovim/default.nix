@@ -59,6 +59,9 @@
     };
 
     extraConfig = ''
+      " is comments in this language
+      " <leader> = "\" (hold)
+
       set mouse=
       set number
       set encoding=utf-8
@@ -69,7 +72,7 @@
       vnoremap  <leader>y  "+y
       nnoremap  <leader>Y  "+yg_
       nnoremap  <leader>y  "+y
-      nnoremap  <leader>yy  "+yy
+      nnoremap  <leader>yy "+yy
 
       " " Paste from clipboard
       nnoremap <leader>p "+p
@@ -78,10 +81,11 @@
       vnoremap <leader>P "+P
     '';
 
-    extraLuaConfig = ''
-      --require("init2")
+    extraLuaConfig = ''${"\n"}
+      -- Configure coc
+      require('coc')
     '';
   };
 
-  #home.file.".config/nvim/lua/init2.lua".source = config.lib.file.mkOutOfStoreSymlink "${flakeloc}/lillecarl/terminal/neovim/lua/init.lua";
+  home.file.".config/nvim/lua/coc.lua".source = config.lib.file.mkOutOfStoreSymlink "${flakeloc}/lillecarl/terminal/neovim/lua/coc.lua";
 }
