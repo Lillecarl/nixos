@@ -101,6 +101,10 @@
       url = "github:NixOS/nixos-artwork";
       flake = false;
     };
+    catppuccin-alacritty = {
+      url = "github:catppuccin/alacritty";
+      flake = false;
+    };
     catppuccin-waybar = {
       url = "github:catppuccin/waybar";
       flake = false;

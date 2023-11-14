@@ -32,6 +32,22 @@
         "type": "github"
       }
     },
+    "catppuccin-alacritty": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1664239314,
+        "narHash": "sha256-w9XVtEe7TqzxxGUCDUR9BFkzLZjG8XrplXJ3lX6f+x0=",
+        "owner": "catppuccin",
+        "repo": "alacritty",
+        "rev": "3c808cbb4f9c87be43ba5241bc57373c793d2f17",
+        "type": "github"
+      },
+      "original": {
+        "owner": "catppuccin",
+        "repo": "alacritty",
+        "type": "github"
+      }
+    },
     "catppuccin-gitui": {
       "flake": false,
       "locked": {
@@ -1168,6 +1184,7 @@
     },
     "root": {
       "inputs": {
+        "catppuccin-alacritty": "catppuccin-alacritty",
         "catppuccin-gitui": "catppuccin-gitui",
         "catppuccin-hyprland": "catppuccin-hyprland",
         "catppuccin-starship": "catppuccin-starship",
