@@ -84,11 +84,8 @@
 
     extraLuaConfig = ''
       ${"\n"}-- Configure coc
-      require('coc')
+      require('coc_config')
       require('catppuccin_config')
     '';
   };
-
-  home.file.".config/nvim/lua/coc.lua".source = config.lib.file.mkOutOfStoreSymlink "${flakeloc}/lillecarl/terminal/neovim/lua/coc.lua";
-  home.file.".config/nvim/lua/catppuccin_config.lua".source = config.lib.file.mkOutOfStoreSymlink "${flakeloc}/lillecarl/terminal/neovim/lua/catppuccin.lua";
 }
