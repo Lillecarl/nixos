@@ -81,8 +81,8 @@
       vnoremap <leader>P "+P
     '';
 
-    extraLuaConfig = ''${"\n"}
-      -- Configure coc
+    extraLuaConfig = ''
+      ${"\n"}-- Configure coc
       require('coc')
     '';
   };
