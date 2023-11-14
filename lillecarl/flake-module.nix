@@ -50,6 +50,9 @@ in
           };
         });
         "lillecarl@nub" = mkHome "x86_64-linux" (guibase // {
+          modules = [
+            ./gui/batmon.nix
+          ];
           extraSpecialArgs = {
             keyboardName = "at-translated-set-2-keyboard";
             bluetooth = true;
