@@ -61,15 +61,16 @@ in
       "editor.insertSpaces" = true;
       "files.autoSave" = "onFocusChange";
       "files.autoSaveDelay" = 500;
+      "files.eol" = "\n";
       "files.insertFinalNewline" = true;
       "keyboard.dispatch" = "keyCode";
       "redhat.telemetry.enabled" = false;
       "telemetry.telemetryLevel" = "off";
       "terminal.integrated.fontFamily" = "'Hack Nerd Font', 'monospace', monospace";
       "update.mode" = "none";
-      "workbench.startupEditor" = "none";
       "vim.enableNeovim" = true;
       "window.titleBarStyle" = "custom";
+      "workbench.startupEditor" = "none";
 
       # Executable path configurations
       "ansible.ansible.path" = "${pkgs.ansible}/bin/ansible";
@@ -85,9 +86,10 @@ in
         "editor.insertSpaces" = true;
         "editor.tabSize" = 2;
       };
+
       "shebang.associations" = [
         {
-          "pattern" = "^#!py$";
+          "pattern" = "^#!py$"; # Required for saltstack python templates
           "language" = "python";
         }
       ];
