@@ -6,8 +6,6 @@
 {
   programs.starship.enableFishIntegration = true;
 
-  home.file.".config/fish/linked.conf".source = config.lib.file.mkOutOfStoreSymlink "${flakeloc}/lillecarl/terminal/fish/linked.conf";
-
   programs.fish = {
     enable = true;
 

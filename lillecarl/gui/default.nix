@@ -12,7 +12,6 @@
     ./waybar.nix
     ./wezterm.nix
   ];
-  home.file = { };
 
   home.packages = with pkgs; [
     # Web browsers

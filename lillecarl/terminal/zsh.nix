@@ -25,8 +25,4 @@
     '';
     dotDir = ".config/zsh";
   };
-
-  home.file = {
-    "${config.xdg.stateHome}/zsh/.keep".text = "";
-  };
 }

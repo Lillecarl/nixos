@@ -22,15 +22,16 @@ in
       target = "hyprland-session.target";
     };
 
-    style = ''
-      @import "${inputs.catppuccin-waybar}/themes/mocha.css";
-      * {
-        font-family: Hack Nerd Font Mono, FontAwesome, Roboto, Helvetica, Arial, sans-serif;
-      }
-      widget {
-        border: 1px;
-      }
-    ''; #+ builtins.readFile "${pkgs.waybar}/etc/xdg/waybar/style.css";
+    style = builtins.readFile "${inputs.catppuccin-waybar}/themes/mocha.css";
+    #style = ''
+    #  @import "${inputs.catppuccin-waybar}/themes/mocha.css";
+    #  * {
+    #    font-family: Hack Nerd Font Mono, FontAwesome, Roboto, Helvetica, Arial, sans-serif;
+    #  }
+    #  widget {
+    #    border: 1px;
+    #  }
+    #''; #+ builtins.readFile "${pkgs.waybar}/etc/xdg/waybar/style.css";
 
     settings = {
       mainBar = {
