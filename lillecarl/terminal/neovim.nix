@@ -17,12 +17,14 @@
       copilot-lua
       ctrlp
       fugitive
-      nerdtree
-      telescope-nvim
+      neodev-nvim
+      nvim-tree-lua
       nvim-treesitter.withAllGrammars
       surround
+      telescope-nvim
       vim-airline
       vim-tmux-navigator
+      which-key-nvim
     ];
 
     coc = {
