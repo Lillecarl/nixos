@@ -224,6 +224,7 @@
   };
 
   environment.variables = {
+    GIT_EDITOR = "nvim";
     VISUAL = "nvim";
     ARM_THREEPOINTZERO_BETA_RESOURCES = "true";
   };

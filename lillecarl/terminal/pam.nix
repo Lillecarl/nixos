@@ -1,12 +1,13 @@
-{ config
-, pkgs
-, inputs
+{ pkgs
 , ...
 }: {
+  home.packages = [
+    pkgs.moar
+  ];
+
   pam = {
     sessionVariables = rec {
-      VISUAL = "${pkgs.neovim}/bin/nvim";
-      PAGER = "${pkgs.moar}/bin/moar";
+      PAGER = "moar";
       # Git configuration (For sending over SSH)
       GIT_AUTHOR_NAME = "Carl Hjerpe";
       GIT_AUTHOR_EMAIL = "git@lillecarl.com";
