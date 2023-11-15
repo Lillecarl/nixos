@@ -9,9 +9,12 @@ from time import sleep, time
 from plumbum import local
 from psutil import cpu_percent
 
-sensors = local["sensors"]
+sensors = local["sensors"]["-j"]
+
+hwmon_root = local.path("/sys/bus/platform/drivers/thinkpad_hwmon/thinkpad_hwmon/hwmon/hwmon1")
+hwmon_path = hwmon_root / "pwm1"
+
 fanpath = local.path("/proc/acpi/ibm/fan")
-_lastwrite = time()
 
 def setwatchdog(sec: int):
     print(f"setting watchdog to {sec}")
@@ -28,8 +31,10 @@ def getlevel():
             match = matches.group(1)
             if match == "disengaged":
                 return 8
-            elif match == "auto":
+            elif match == "disabled":
                 return 0
+            elif match == "auto":
+                return -1
             else:
                 return int(match)
 
@@ -37,41 +42,38 @@ def getlevel():
 
 
 def setlevel(level: int, force: bool = False):
-    global _lastwrite
     curlevel = getlevel()
 
-    if level > 8:
-        level = 8
+    if level > 7:
+        level = 7
     elif level < 0:
         level = 0
 
-    # Always transition through level 1 before 0
     if curlevel > 1 and level == 0:
         level = 1
+
+    if level == 0 and getspeed() == 0 and not force:
+        return False
 
     if level == curlevel and not force:
         return False
 
-    if time() - _lastwrite < 5 and not force:
-        return False
-
-    print(f"setting fanlevel to {level}")
-
-    if level == 8:
-        fanpath.write("level full-speed")
-    else:
+    if level > 0:
+        print(f"setting fanlevel to {level}")
         fanpath.write(f"level {level}")
-
-    _lastwrite = time()
+    else:
+        u8level = int((255 / 7) * level)
+        print(f"setting pwmlevel to {u8level}")
+        hwmon_path.write(str(u8level))
 
     return True
 
 def gettemp():
-    sensordata: dict[str, dict] = json.loads(sensors["-j"]())
+    sensordata: dict[str, dict] = json.loads(sensors())
     return float(sensordata["thinkpad-isa-0000"]["CPU"]["temp1_input"])
 
 def getspeed():
-    sensordata: dict[str, dict] = json.loads(sensors["-j"]())
+    sensordata: dict[str, dict] = json.loads(sensors())
     return float(sensordata["thinkpad-isa-0000"]["fan1"]["fan1_input"])
 
 def setfan(cpu_avg: float):
@@ -80,13 +82,16 @@ def setfan(cpu_avg: float):
 
     print("cpu_avg: {}".format(cpu_avg))
 
+    # Reset watchdog, we're in auto and must set a level to
+    # get into manual mode
+    if getlevel() < 0 and getspeed() > 0:
+        setlevel(1)
+        return 1
+
     if temp < 55:
         return setlevel(0)
     elif temp > 55 and cpu_avg > 20:
-        if cpu_avg > 25:
-            return setlevel(level + 1)
-        else:
-            setlevel(level + 2)
+        return setlevel(level + 1)
     elif temp > 65:
         return setlevel(level + 1)
     elif cpu_avg < 3:
@@ -95,37 +100,12 @@ def setfan(cpu_avg: float):
         return setlevel(level - 1)
 
 def main():
-    setwatchdog(0)
+    setwatchdog(120)
     setlevel(0, True)
-    fan_counter: int = 0
-    fan_interval: int = 5
-
-    cpu_total: float = 0
 
     while True:
-        sleep(1)
-        cpu_pct = cpu_percent()
-        print("cpu_pct: {} fan_counter: {}".format(
-            cpu_pct,
-            fan_counter,
-            ))
-
-        fan_counter += 1
-        cpu_total = cpu_total + cpu_pct
-
-        if fan_counter >= 5:
-            cpu_avg: float = cpu_total / fan_interval
-            setfan(cpu_avg)
-            fan_counter = 0
-            cpu_total = 0
-
-def excepthook(type, value, tb):
-    setwatchdog(120)
-sys.excepthook = excepthook
-
-@atexit.register
-def on_exit():
-    setwatchdog(120)
+        sleep(5)
+        setfan(cpu_percent(5))
 
 if __name__ == "__main__":
     exit(main())
