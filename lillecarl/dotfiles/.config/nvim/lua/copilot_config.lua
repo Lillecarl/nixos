@@ -11,12 +11,12 @@ require('copilot').setup({
     },
     layout = {
       position = "bottom", -- | top | left | right
-      ratio = 0.4
+      ratio = 0.3
     },
   },
   suggestion = {
     enabled = true,
-    auto_trigger = false,
+    auto_trigger = true,
     debounce = 75,
     keymap = {
       accept = "<M-l>",
@@ -28,6 +28,16 @@ require('copilot').setup({
     },
   },
   filetypes = {
+    hcl = true,
+    terraform = true,
+    python = true,
+    lua = true,
+    go = true,
+    javascript = true,
+    typescript = true,
+    javascriptreact = true,
+    typescriptreact = true,
+    rust = true,
     yaml = false,
     markdown = false,
     help = false,

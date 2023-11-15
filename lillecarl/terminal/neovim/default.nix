@@ -84,8 +84,9 @@
 
     extraLuaConfig = ''
       ${"\n"}-- Configure coc
-      require('coc_config')
       require('catppuccin_config')
+      require('coc_config')
+      require('copilot_config')
       require('user_config')
     '';
   };
