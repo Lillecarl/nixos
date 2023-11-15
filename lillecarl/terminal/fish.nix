@@ -34,6 +34,7 @@
     interactiveShellInit = ''
       source ${config.home.homeDirectory}/.config/fish/*.conf
       ${pkgs.zoxide}/bin/zoxide init fish | source
+      ${pkgs.thefuck}/bin/thefuck --alias | source
     '';
 
     shellInit = ''
