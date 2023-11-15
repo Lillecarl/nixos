@@ -1,7 +1,4 @@
-{ self
-, config
-, pkgs
-, flakeloc
+{ pkgs
 , ...
 }:
 {
@@ -21,12 +18,10 @@
       ctrlp
       fugitive
       nerdtree
+      telescope-nvim
       nvim-treesitter.withAllGrammars
       surround
       vim-airline
-      vim-hcl
-      vim-nftables
-      vim-nix
       vim-tmux-navigator
     ];
 
@@ -87,6 +82,7 @@
       require('catppuccin_config')
       require('coc_config')
       require('copilot_config')
+      require('telescope_config')
       require('user_config')
     '';
   };
