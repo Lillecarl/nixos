@@ -37,11 +37,17 @@ in
       mainBar = {
         layer = "top";
         position = "top";
-        modules-left = [ "idle_inhibitor" "hyprland/workspaces" ];
-        modules-center = [ "hyprland/window" ];
+        modules-left = [
+          "idle_inhibitor"
+          "hyprland/workspaces"
+          "hyprland/language"
+          "hyprland/submap"
+        ];
+        modules-center = [
+          "hyprland/window"
+        ];
         modules-right = [
           "custom/weather"
-          "hyprland/language"
           "backlight"
           "battery"
           "pulseaudio"
@@ -113,6 +119,11 @@ in
           format-eu = "EU";
           keyboard-name = keyboardName;
           on-click = "${hyprctl} switchxkblayout ${keyboardName} next";
+        };
+        "hyprland/submap" = {
+          format = ", {}";
+          max-length = 10;
+          tooltip = false;
         };
       };
     };
