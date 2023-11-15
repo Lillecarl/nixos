@@ -86,6 +86,7 @@
       ${"\n"}-- Configure coc
       require('coc_config')
       require('catppuccin_config')
+      require('user_config')
     '';
   };
 }
