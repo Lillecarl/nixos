@@ -21,7 +21,7 @@
       ctrlp
       fugitive
       nerdtree
-      nvim-treesitter
+      nvim-treesitter.withAllGrammars
       surround
       vim-airline
       vim-hcl
