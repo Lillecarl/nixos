@@ -22,18 +22,18 @@ in
     enable = true;
 
     settings = lib.recursiveUpdate
-    (fromYAML "${inputs.catppuccin-alacritty}/catppuccin-mocha.yml")
-    {
-      window = {
-        decorations = "none";
-      };
+      (fromYAML "${inputs.catppuccin-alacritty}/catppuccin-mocha.yml")
+      {
+        window = {
+          decorations = "none";
+        };
 
-      font = {
-        normal.family = font;
-        bold.family = font;
-        italic.family = font;
-        bold_italic.family = font;
+        font = {
+          normal.family = font;
+          bold.family = font;
+          italic.family = font;
+          bold_italic.family = font;
+        };
       };
-    };
   };
 }

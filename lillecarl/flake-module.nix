@@ -50,7 +50,7 @@ in
           };
         });
         "lillecarl@nub" = mkHome "x86_64-linux" (guibase // {
-           modules = guibase.modules ++ [
+          modules = guibase.modules ++ [
             ./gui/batmon.nix
           ];
           extraSpecialArgs = {

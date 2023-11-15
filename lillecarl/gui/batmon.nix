@@ -1,6 +1,6 @@
 { pkgs, ... }:
 let
-  mkBinPath = builtins.map(path: "${path}/bin");
+  mkBinPath = builtins.map (path: "${path}/bin");
 in
 {
   systemd.user.services.batmon = {
