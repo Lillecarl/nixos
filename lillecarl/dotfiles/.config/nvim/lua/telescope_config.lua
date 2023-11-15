@@ -3,12 +3,12 @@ require('telescope').setup{
     -- Default configuration for telescope goes here:
     -- config_key = value,
     mappings = {
-      i = {
-        -- map actions.which_key to <C-h> (default: <C-/>)
-        -- actions.which_key shows the mappings for your picker,
-        -- e.g. git_{create, delete, ...}_branch for the git_branches picker
-        ["<C-h>"] = "which_key"
-      }
+      --i = {
+      --  -- map actions.which_key to <C-h> (default: <C-/>)
+      --  -- actions.which_key shows the mappings for your picker,
+      --  -- e.g. git_{create, delete, ...}_branch for the git_branches picker
+      --  ["<C-h>"] = "which_key"
+      --}
     }
   },
   pickers = {
@@ -30,8 +30,19 @@ require('telescope').setup{
 }
 
 --  Keybinds
-local builtin = require('telescope.builtin')
-vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
-vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
-vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
-vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
+local telescope_builtin = require('telescope.builtin')
+local wk = require("which-key")
+
+wk.register({
+  f = {
+    name = "Telescope",
+    f = { telescope_builtin.find_files, "Find File" },
+    g = { telescope_builtin.live_grep,  "Grep" },
+    b = { telescope_builtin.buffers,    "Buffers" },
+    h = { telescope_builtin.help_tags,  "Help" },
+  },
+},
+{
+  mode = "n",
+  prefix = "<leader>",
+})
