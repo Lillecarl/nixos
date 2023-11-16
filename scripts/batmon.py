@@ -3,45 +3,57 @@
 from plumbum import local
 from plumbum.path.local import LocalPath
 from time import time, sleep
+from dataclasses import dataclass
 
-import json
+notify_send = local["notify-send"]
 
-def main():
-    state = {
-        "lastNotify": time()
-    }
+@dataclass
+class State:
+    lastNotify: float
+    lastPct: int
 
-    notify_send = local["notify-send"]
+class Runner:
+    def __init__(self):
+        self.state = State(0, 0)
+        self.state.lastNotify = time()
+        self.state.lastPct = self.read_batpct()
 
-    while True:
-        batpct = int(local.path("/sys/class/power_supply/BAT0/capacity").read())
-        discharging = "Discharging" in local.path("/sys/class/power_supply/BAT0/status").read()
-        sleep(5)
+    def spin(self):
+        while True:
+            batpct = self.read_batpct()
+            discharging = self.is_discharging()
+            sleep(5)
 
-        if not discharging:
-            continue
+            if not discharging:
+                continue
 
-        if time() - state["lastNotify"] < 30:
-            continue
+            if time() - self.state.lastNotify < 30:
+                continue
 
-        if batpct < 20:
-            notify_send[
-                    "-t",
-                    "1000",
-                    "Low battery",
-                    f"Battery {batpct}"
-                    ]()
-        elif batpct < 10:
-            notify_send[
-                    "-t",
-                    "10000",
-                    "Low battery",
-                    f"Battery {batpct}"
-                    ]()
+            if batpct < 20:
+                self.notify(5, batpct)
+            elif batpct < 10:
+                self.notify(5, batpct)
 
-        state["lastNotify"] = time()
+            self.state.lastNotify = time()
+
+    def notify(self, seconds, percentage):
+        notify_send[
+                "-t",
+                f"{seconds * 1000}",
+                "Low battery",
+                f"Battery {percentage}"
+                ]()
+
+        self.state.lastNotify = time()
+
+    def read_batpct(self):
+        return int(local.path("/sys/class/power_supply/BAT0/capacity").read())
+
+    def is_discharging(self):
+        return "Discharging" in local.path("/sys/class/power_supply/BAT0/status").read()
 
 
 if __name__ == "__main__":
-    main()
+    exit(Runner().spin())
 
