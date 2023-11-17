@@ -1,6 +1,5 @@
 { ... }:
 {
-  #users.groups.keyd = { };
   services.keyd = {
     enable = true;
 
