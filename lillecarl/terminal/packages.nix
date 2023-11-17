@@ -8,6 +8,7 @@
     #httpie # A modern, user-friendly command-line HTTP client for the API era.
     #inputs.mozilla-addons-to-nix.packages.x86_64-linux.default
     #inputs.system-manager.packages.x86_64-linux.system-manager
+    terraform_1_5_5 # Terraform 1.5.5, last FOSS release
     keychain # ssh-agent utility
     (lowPrio kubectl) # Kubernetes management cli
     vault # secrets mumbo jumbo

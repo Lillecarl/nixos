@@ -78,6 +78,13 @@ prev.lib.filterAttrs
       ];
     });
 
+    terraform_1_5_5 = prev.mkTerraform {
+      version = "1.5.5";
+      hash = "sha256-SBS3a/CIUdyIUJvc+rANIs+oXCQgfZut8b0517QKq64=";
+      vendorHash = "sha256-lQgWNMBf+ioNxzAV7tnTQSIS840XdI9fg9duuwoK+U4=";
+      patches = [ "${prev.path}/pkgs/applications/networking/cluster/terraform/provider-path-0_15.patch" ];
+    };
+
     mictoggle = prev.writeShellScript "mictoggler" ''
       # Get default source
       default_source=$(${prev.pulseaudio}/bin/pactl get-default-source)
