@@ -23,4 +23,8 @@
     enable = true;
     theme = builtins.readFile "${inputs.catppuccin-gitui}/theme/mocha.ron";
   };
+
+  home.packages = [
+    pkgs.tig # TUI tool to see branches and commit log graph
+  ];
 }
