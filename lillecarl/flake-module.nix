@@ -57,7 +57,7 @@ in
             keyboardName = "at-translated-set-2-keyboard";
             bluetooth = true;
             monitorConfig = ''
-              monitor=DP-2,3440x1440@60,0x0,1.0
+              monitor=DP-1,3440x1440@60,0x0,1.0
               monitor=eDP-1,1920x1200@60,760x1440,1.0
             '';
             systemConfig = self.nixosConfigurations.nub.config;

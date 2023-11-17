@@ -91,6 +91,8 @@ in
 {
   home.packages = [
     pkgs.rofi-wayland # Required for clipman picker
+    pkgs.nwg-displays
+    pkgs.wlr-randr
   ];
   gtk = {
     enable = true;
