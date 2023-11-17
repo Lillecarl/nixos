@@ -14,7 +14,7 @@
     ];
 
     extraConfig = ''
-      source-file ~/.config/tmux/linked.conf"}
+      source-file ~/.config/tmux/linked.conf
     '';
   };
 }
