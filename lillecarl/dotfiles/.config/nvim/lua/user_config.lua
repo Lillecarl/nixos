@@ -32,3 +32,18 @@ nnoremap <C-t> :NERDTreeToggle<CR>
 nnoremap <C-f> :NERDTreeFind<CR>
 ]]
 --]]
+--
+vim.cmd [[
+:tnoremap <C-h> <C-\><C-N><C-w>h
+:tnoremap <C-j> <C-\><C-N><C-w>j
+:tnoremap <C-k> <C-\><C-N><C-w>k
+:tnoremap <C-l> <C-\><C-N><C-w>l
+
+vim.api.nvim_create_autocmd('TermOpen', {
+  once = true,
+  callback = function(args)
+    --local resp = args.data
+    --local r, g, b = resp:match("\x1b%]4;1;rgb:(%w+)/(%w+)/(%w+)")
+    vim.cmd('startinsert')
+  end,
+})
