@@ -100,6 +100,8 @@ prev.lib.filterAttrs
       ${prev.coreutils-full}/bin/sleep 0.5
       echo $mute > /sys/class/leds/platform\:\:micmute/brightness
     '';
+
+    awscli2 = prev.callPackage ./tmp/awscli2.nix { };
   }
 // (
   if flake == true
