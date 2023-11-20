@@ -33,7 +33,7 @@ class Runner:
             if batpct < 20:
                 self.notify(5, batpct)
             elif batpct < 10:
-                self.notify(5, batpct)
+                self.notify(15, batpct)
 
             self.state.lastNotify = time()
 
