@@ -20,6 +20,9 @@
     # Terminal
     alacritty
 
+    # gui neovim
+    neovide
+
     dfeet # GUI browser for dbus
 
     # Media apps
