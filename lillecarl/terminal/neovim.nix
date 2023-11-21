@@ -22,6 +22,8 @@
       nvim-tree-lua
       nvim-treesitter.withAllGrammars
       surround
+      tabby-nvim
+      tabmerge
       telescope-nvim
       vim-airline
       vim-tmux-navigator
