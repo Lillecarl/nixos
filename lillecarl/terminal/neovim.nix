@@ -18,6 +18,7 @@
       ctrlp
       fugitive
       neodev-nvim
+      neogit
       nvim-tree-lua
       nvim-treesitter.withAllGrammars
       surround
@@ -84,6 +85,7 @@
       require('catppuccin_config')
       require('coc_config')
       require('copilot_config')
+      require('neogit_config')
       require('telescope_config')
       require('user_config')
     '';
