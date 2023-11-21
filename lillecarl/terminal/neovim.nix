@@ -11,6 +11,7 @@
     defaultEditor = true;
 
     plugins = with pkgs.vimPlugins; [
+      # toggleterm-nvim # TODO: fix
       catppuccin-nvim
       coc-clangd
       coc-pyright
