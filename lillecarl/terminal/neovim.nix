@@ -11,7 +11,6 @@
     defaultEditor = true;
 
     plugins = with pkgs.vimPlugins; [
-      # toggleterm-nvim # TODO: fix
       catppuccin-nvim
       coc-clangd
       coc-pyright
@@ -26,6 +25,7 @@
       tabby-nvim
       tabmerge
       telescope-nvim
+      toggleterm-nvim
       vim-airline
       vim-tmux-navigator
       which-key-nvim
@@ -90,6 +90,7 @@
       require('copilot_config')
       require('neogit_config')
       require('telescope_config')
+      require('toggleterm_config')
       require('user_config')
     '';
   };
