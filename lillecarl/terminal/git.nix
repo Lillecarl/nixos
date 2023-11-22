@@ -44,5 +44,6 @@
 
   home.packages = [
     pkgs.tig # TUI tool to see branches and commit log graph
+    pkgs.glab # Gitlab CLI
   ];
 }
