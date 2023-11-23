@@ -18,7 +18,7 @@
       # $1 = which branch to merge into
       # $N = extra arguments
       # leading exclamation mark(!) makes git run shell commands
-      mergepush = builtins.replaceStrings ["\n"] [" "] ''
+      mergepush = builtins.replaceStrings [ "\n" ] [ " " ] ''
         !test $# -gt 0 || exit 1;
         git push
         ''${@:2}

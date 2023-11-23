@@ -147,6 +147,7 @@
           ./nixos-installer/flake-module.nix
           ./nub/flake-module.nix
           ./repoenv/flake-module.nix
+          ./installer-rpi/flake-module.nix
           ./shitbox/flake-module.nix
           ./system-manager/flake-module.nix
           ./terraform/flake-module.nix
