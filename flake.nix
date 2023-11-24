@@ -121,6 +121,10 @@
       url = "github:catppuccin/starship";
       flake = false;
     };
+    carapace = {
+      url = "github:rsteube/carapace-bin";
+      flake = false;
+    };
   };
 
   outputs =
