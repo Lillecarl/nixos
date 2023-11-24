@@ -9,8 +9,8 @@
     { pkgs
     , ...
     }:
-    {
-      devShells.default = pkgs.mkShell {
+    rec {
+      devShells.repoenv = pkgs.mkShell {
         packages = [
           pkgs.pokemonsay
           pkgs.msr-tools
@@ -21,11 +21,13 @@
             psutil
             requests
             textual
+            python-gitlab
           ]))
         ];
 
         shellHook = ''
         '';
       };
+      devShells.default = devShells.repoenv;
     };
 }
