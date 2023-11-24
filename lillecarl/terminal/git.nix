@@ -32,6 +32,10 @@
       ''; # The final hash prevents git from appending arguments to the command
     };
 
+    ignores = [
+      ".privrc"
+    ];
+
     extraConfig = {
       push.autoSetupRemote = true;
     };
