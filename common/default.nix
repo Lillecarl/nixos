@@ -64,15 +64,12 @@
     aws-nuke # Nuke AWS account completely
     age # Modern crypto written in Go
     rage # Modern crypto written in Rust (Compatible with Age)
-    chezmoi # dotfile manager
     pmutils # Suspend tools
     inotify-tools # CLI tools for inotify in Linux
     sshfs # Mount SFTP as filesystem
     rclone # rsync for clouds (+ loads of other cool things)
     gnumake # Make for packer for rhel template
     sipcalc # Subnet calculator
-    buildah # Build OCI images
-    bind # brings the dig command
     dogdns # dig without poop
     whois # whois command
     (lowPrio wireshark-cli) # Wireshark CLI
