@@ -11,5 +11,7 @@ devenv.local.nix
 # direnv
 .direnv
 
+tmp
+
 # nix build results
 result
