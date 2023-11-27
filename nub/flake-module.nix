@@ -10,6 +10,7 @@ in
     nixosConfigurations.nub = inputs.nixpkgs.lib.nixosSystem {
       system = system;
       modules = [
+        ../modules/nixos/keymapper.nix
         ../common
         ../common/btrfs.nix
         ../common/fish.nix

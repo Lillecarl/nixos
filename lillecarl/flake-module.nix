@@ -18,6 +18,7 @@ let
         modules = [
           ./default.nix
           ../common/overlays.nix
+          ../modules/hm/keymapper.nix
         ] ++ customArgs.modules;
       });
 in
