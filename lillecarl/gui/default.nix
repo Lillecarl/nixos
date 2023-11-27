@@ -13,6 +13,13 @@
     ./wezterm.nix
   ];
 
+  services.keymapper = {
+    enable = true;
+    extraConfig = ''
+      CapsLock >> Control{Escape}
+    '';
+  };
+
   home.packages = with pkgs; [
     # Web browsers
     pcmanfm

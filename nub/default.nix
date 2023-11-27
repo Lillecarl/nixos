@@ -10,6 +10,8 @@
     #./tlp.nix
   ];
 
+  services.keymapper.enable = true;
+
   services.power-profiles-daemon.enable = true;
 
   # Use the systemd-boot EFI boot loader.
