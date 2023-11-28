@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ self, pkgs, ... }:
 let
   mkBinPath = builtins.map (path: "${path}/bin");
 in
@@ -14,7 +14,7 @@ in
           plumbum
         ]))
       ];
-      ExecStart = ../../scripts/batmon.py;
+      ExecStart = "${self}/scripts/batmon.py";
     };
     Install = {
       WantedBy = [ "default.target" ];
