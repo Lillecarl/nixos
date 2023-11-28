@@ -27,7 +27,7 @@ in
     };
   };
 
-  config = {
+  config = lib.mkIf cfg.enable {
     systemd.user.services.keymapper = {
       Unit = {
         Description = "Keymapper";
@@ -43,8 +43,5 @@ in
     };
 
     xdg.configFile."keymapper/keymapper.conf".text = cfg.extraConfig;
-    #xdg.configFile."keymapper/keymapper.conf".text = ''
-    #  ${lib.concatStringsSep "\n" cfg.extraConfig}
-    #'';
   };
 }
