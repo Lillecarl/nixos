@@ -15,8 +15,13 @@
 
   services.keymapper = {
     enable = true;
+
     extraConfig = ''
       CapsLock >> Control{Escape}
+      Control{AltLeft{H}} >> ArrowLeft
+      Control{AltLeft{L}} >> ArrowRight
+      Control{AltLeft{K}} >> ArrowUp
+      Control{AltLeft{J}} >> ArrowDown
     '';
   };
 
