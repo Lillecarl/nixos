@@ -102,6 +102,8 @@ prev.lib.filterAttrs
     '';
 
     awscli2 = prev.callPackage ./tmp/awscli2.nix { };
+
+    keyd = prev.callPackage ./tmp/keyd.nix { };
   }
 // (
   if flake == true
