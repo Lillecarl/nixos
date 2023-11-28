@@ -81,6 +81,7 @@ in
       "vim.neovimPath" = "${pkgs.neovim}/bin/nvim";
       "vscode-kubernetes.helm-path" = "${pkgs.kubernetes-helm}/bin/helm";
       "vscode-kubernetes.kubectl-path" = "${pkgs.kubectl}/bin/kubectl";
+      "C_Cpp.intelliSenseEngine" = "disabled";
 
       "[tf]" = {
         "editor.insertSpaces" = true;
