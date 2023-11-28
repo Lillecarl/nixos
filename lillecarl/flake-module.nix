@@ -16,9 +16,10 @@ let
             inherit flakeloc;
           } // customArgs.extraSpecialArgs;
         modules = [
-          ./default.nix
           ../common/overlays.nix
           ../modules/hm/keymapper.nix
+          ./default.nix
+          ./terminal/keymapper.nix
         ] ++ customArgs.modules;
       });
 in
