@@ -1,4 +1,7 @@
-{ pkgs, ... }: {
+{ inputs
+, pkgs
+, ... }:
+{
   imports = [
     ./alacritty.nix
     ./avizo.nix
@@ -8,9 +11,11 @@
     ./qutebrowser.nix
     ./sway.nix
     ./swaytools.nix
+    ./theme.nix
     ./vscode.nix
     ./waybar.nix
     ./wezterm.nix
+    inputs.nix-colors.homeManagerModules.default
   ];
 
   home.packages = with pkgs; [

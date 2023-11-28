@@ -38,12 +38,6 @@ let
       ]
       (builtins.readFile ../../scripts/print.py));
 
-  cursorSettings = {
-    name = "Catppuccin-Macchiato-Pink";
-    size = 24;
-    package = pkgs.catppuccin-cursors.macchiatoPink;
-  };
-
   wallpaper = "${inputs.nixos-artwork}/wallpapers/nix-wallpaper-watersplash.png";
 
   extraConfig = ''
@@ -96,36 +90,6 @@ in
     pkgs.nwg-displays
     pkgs.wlr-randr
   ];
-  gtk = {
-    enable = true;
-
-    theme = {
-      name = "Catppuccin-Mocha-Compact-Pink-dark";
-      package = pkgs.catppuccin-gtk.override {
-        accents = [ "pink" ];
-        size = "compact";
-        tweaks = [ "rimless" ];
-        variant = "mocha";
-      };
-    };
-
-    iconTheme = {
-      name = "Adwaita";
-      package = pkgs.gnome.adwaita-icon-theme;
-    };
-
-    cursorTheme = cursorSettings;
-  };
-
-  qt = {
-    enable = true;
-    platformTheme = "gtk";
-  };
-
-  home.pointerCursor = cursorSettings // {
-    gtk.enable = true;
-    x11.enable = true;
-  };
 
   xdg.configFile."hypr/hyprlandd.conf".text = config.xdg.configFile."hypr/hyprland.conf".text;
 
