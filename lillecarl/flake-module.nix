@@ -38,7 +38,7 @@ in
       {
         "lillecarl@shitbox" = mkHome "x86_64-linux" (guibase // {
           extraSpecialArgs = {
-            keyboardName = "daskeyboard";
+            keyboardName = "keymapper";
             bluetooth = false;
             monitorConfig = ''
               monitor=DP-1,2560x1440@164.802002,1080x240,1.0

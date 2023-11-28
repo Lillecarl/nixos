@@ -17,6 +17,7 @@
         ../common/users.nix
         ../common/verycommon.nix
         ../common/xdg.nix
+        ../modules/nixos/keymapper.nix
         ./default.nix
         inputs.disko.nixosModules.disko
         inputs.hyprland.nixosModules.default
