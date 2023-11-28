@@ -1,9 +1,7 @@
-{ lib, ... }@allArgs:
+{ ... }@allArgs:
 {
   services.keymapper = {
-    enable = if lib.attrsets.hasAttrByPath ["systemConfig""services""keymapper""enable"] allArgs
-             then allArgs.systemConfig.services.keymapper.enable
-             else false;
+    enable = allArgs.systemConfig.services.keymapper.enable or false;
 
     extraConfig = ''
       # Virtual1 layer
