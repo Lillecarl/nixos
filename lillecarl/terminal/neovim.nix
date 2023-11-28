@@ -11,6 +11,7 @@
     defaultEditor = true;
 
     plugins = with pkgs.vimPlugins; [
+      camelcasemotion
       catppuccin-nvim
       coc-clangd
       coc-pyright
