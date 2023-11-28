@@ -1,7 +1,7 @@
-{ config
-, pkgs
+{ pkgs
 , ...
-}: {
+}:
+{
   imports = [
     # Import hardware configuration
     ./hardware-configuration.nix

@@ -6,10 +6,16 @@
     extraConfig = ''
       # Virtual1 layer
       [modifier="Virtual1"]
+      # Leave Virtual1 layer with Escape, CapsLock or Pause
       Escape >> Virtual1{Any}
       CapsLock >> Escape Virtual1{Any}
       Pause >> Virtual1{Any}
+
+      # Remap F12 to b for testing purposes
       F12 >> B
+      # Remap qwe to 123
+      #       asd    456
+      #       zxc    789
       Q >> 1
       W >> 2
       E >> 3
@@ -20,7 +26,7 @@
       X >> 8
       C >> 9
 
-
+      # "Default layer" (There aren't really any layers)
       [default]
       # ctrl + alt + hjkl = arrow keys
       Control{AltLeft{H}} >> ArrowLeft
