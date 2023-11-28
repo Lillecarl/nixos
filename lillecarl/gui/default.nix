@@ -17,11 +17,15 @@
     enable = true;
 
     extraConfig = ''
-      CapsLock >> Control{Escape}
+      # ctrl + alt + hjkl = arrow keys
       Control{AltLeft{H}} >> ArrowLeft
       Control{AltLeft{L}} >> ArrowRight
       Control{AltLeft{K}} >> ArrowUp
       Control{AltLeft{J}} >> ArrowDown
+      # If we're holding down caps we want ctrl
+      CapsLock{250ms} >> Control
+      # Otherwise map caps to esc
+      CapsLock >> Escape
     '';
   };
 
