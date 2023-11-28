@@ -55,7 +55,7 @@ in
             ./gui/batmon.nix
           ];
           extraSpecialArgs = {
-            keyboardName = "at-translated-set-2-keyboard";
+            keyboardName = "keymapper";
             bluetooth = true;
             monitorConfig = ''
               monitor=DP-1,3440x1440@60,0x0,1.0
