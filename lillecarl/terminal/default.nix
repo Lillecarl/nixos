@@ -9,6 +9,7 @@
     ./editorconfig.nix
     ./fish.nix
     ./git.nix
+    ./helix.nix
     ./gnome-keyring.nix
     ./gpg.nix
     ./keymapper.nix
