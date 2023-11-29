@@ -34,12 +34,6 @@ in
         inputs.lanzaboote.nixosModules.lanzaboote
         inputs.nixos-hardware.nixosModules.common-pc-laptop-acpi_call
         inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t14-amd-gen3
-        (
-          { config, ... }:
-          {
-            disko.devices = (import ./disko.nix { }).disko.devices;
-          }
-        )
       ];
       specialArgs = {
         inherit inputs flakeloc;

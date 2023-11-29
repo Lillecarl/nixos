@@ -7,12 +7,14 @@
 {
   imports = [
     ./hardware-configuration.nix
-    #./tlp.nix
   ];
 
   services.keymapper.enable = true;
-
   services.power-profiles-daemon.enable = true;
+
+  disko.devices = (import ./disko.nix {
+    disk = "nvme-eui.00a075013ca91384";
+  }).disko.devices;
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;

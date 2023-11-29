@@ -1,8 +1,8 @@
-{ disk ? "nvme0n1", ... }:
+{ disk, ... }:
 {
   disko.devices.disk = {
-    ${disk} = {
-      device = "/dev/${disk}";
+    "disk1" = {
+      device = "/dev/disk/by-id/${disk}";
       type = "disk";
       content = {
         type = "table";
