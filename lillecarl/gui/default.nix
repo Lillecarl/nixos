@@ -11,6 +11,7 @@
     ./mako.nix
     ./packages.nix
     ./qutebrowser.nix
+    ./rofi.nix
     ./sway.nix
     ./swaytools.nix
     ./theme.nix

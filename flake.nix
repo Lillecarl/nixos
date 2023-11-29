@@ -142,6 +142,10 @@
       inputs.pre-commit-hooks-nix.follows = "pre-commit-hooks-nix";
       inputs.rust-overlay.follows = "rust-overlay";
     };
+    carapace = {
+      url = "github:rsteube/carapace-bin";
+      flake = false;
+    };
 
     # Art
     nixos-artwork = {
@@ -168,8 +172,8 @@
       url = "github:catppuccin/starship";
       flake = false;
     };
-    carapace = {
-      url = "github:rsteube/carapace-bin";
+    catppuccin-rofi = {
+      url = "github:catppuccin/rofi";
       flake = false;
     };
   };
