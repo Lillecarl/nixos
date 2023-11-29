@@ -37,7 +37,7 @@ sudo[echo["Building nixos"]].run_fg()
 if hostname == "shitbox":
     print("Dumping Windows VM XML")
     xml = sudo[virsh["dumpxml", "win10"]]()
-    local.path("shitbox/win10.xml").write(xml)
+    local.path("hosts/shitbox/win10.xml").write(xml)
 block_until_internet("1.1.1.1")
 
 try:

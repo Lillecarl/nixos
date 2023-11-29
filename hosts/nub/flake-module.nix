@@ -10,22 +10,22 @@ in
     nixosConfigurations.nub = inputs.nixpkgs.lib.nixosSystem {
       system = system;
       modules = [
-        ../modules/nixos/keymapper.nix
-        ../common
-        ../common/btrfs.nix
-        ../common/fish.nix
-        ../common/flatpak.nix
-        ../common/greetd.nix
-        ../common/hyprland.nix
-        ../common/monitoring.nix
-        ../common/nix.nix
-        ../common/openvpn.nix
-        ../common/overlays.nix
-        ../common/thinkpad.nix
-        ../common/users.nix
-        ../common/verycommon.nix
-        ../common/xdg.nix
-        ../common/xplatform.nix
+        ../../modules/nixos/keymapper.nix
+        ../../common
+        ../../common/btrfs.nix
+        ../../common/fish.nix
+        ../../common/flatpak.nix
+        ../../common/greetd.nix
+        ../../common/hyprland.nix
+        ../../common/monitoring.nix
+        ../../common/nix.nix
+        ../../common/openvpn.nix
+        ../../common/overlays.nix
+        ../../common/thinkpad.nix
+        ../../common/users.nix
+        ../../common/verycommon.nix
+        ../../common/xdg.nix
+        ../../common/xplatform.nix
         ./default.nix
         #./tlp.nix
         inputs.disko.nixosModules.disko

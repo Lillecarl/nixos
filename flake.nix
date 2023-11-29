@@ -192,14 +192,14 @@
       {
         imports = [
           inputs.flake-parts.flakeModules.easyOverlay
+          ./hosts/nub/flake-module.nix
+          ./hosts/shitbox/flake-module.nix
           ./hosts/wsl/flake-module.nix
+          ./installer-rpi/flake-module.nix
           ./lillecarl/flake-module.nix
           ./modules/flake-module.nix
           ./nixos-installer/flake-module.nix
-          ./nub/flake-module.nix
           ./repoenv/flake-module.nix
-          ./installer-rpi/flake-module.nix
-          ./shitbox/flake-module.nix
           ./system-manager/flake-module.nix
           ./terraform/flake-module.nix
         ];
