@@ -178,22 +178,6 @@
         "type": "github"
       }
     },
-    "catppuccin-alacritty": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1664239314,
-        "narHash": "sha256-w9XVtEe7TqzxxGUCDUR9BFkzLZjG8XrplXJ3lX6f+x0=",
-        "owner": "catppuccin",
-        "repo": "alacritty",
-        "rev": "3c808cbb4f9c87be43ba5241bc57373c793d2f17",
-        "type": "github"
-      },
-      "original": {
-        "owner": "catppuccin",
-        "repo": "alacritty",
-        "type": "github"
-      }
-    },
     "catppuccin-gitui": {
       "flake": false,
       "locked": {
@@ -223,22 +207,6 @@
       "original": {
         "owner": "catppuccin",
         "repo": "starship",
-        "type": "github"
-      }
-    },
-    "catppuccin-waybar": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1678438606,
-        "narHash": "sha256-WLJMA2X20E5PCPg0ZPtSop0bfmu+pLImP9t8A8V4QK8=",
-        "owner": "catppuccin",
-        "repo": "waybar",
-        "rev": "f74ab1eecf2dcaf22569b396eed53b2b2fbe8aff",
-        "type": "github"
-      },
-      "original": {
-        "owner": "catppuccin",
-        "repo": "waybar",
         "type": "github"
       }
     },
@@ -446,11 +414,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1701226991,
-        "narHash": "sha256-anZwmUH/3Cocfg2evw7cvdP0mT8v3fRpsBHpt2i1Pv0=",
+        "lastModified": 1701256966,
+        "narHash": "sha256-1B5yz4eQwcoHDUE5QwpQm5X+3KdXFKAa1JRjagP8JU4=",
         "owner": "wamserma",
         "repo": "flake-programs-sqlite",
-        "rev": "f864739aaa1e6b4aafd277cec263483c5584a0f5",
+        "rev": "b2da1b93ad22223fcf63794a47e4ee6130fd52a6",
         "type": "github"
       },
       "original": {
@@ -872,11 +840,11 @@
     },
     "nixos-hardware": {
       "locked": {
-        "lastModified": 1701020860,
-        "narHash": "sha256-NwnRn04C8s+hH+KdVtGmVB1FFNIG7DtPJmQSCBDaET4=",
+        "lastModified": 1701250978,
+        "narHash": "sha256-ohu3cz4edjpGxs2qUTgbs0WrnewOX4crnUJNEB6Jox4=",
         "owner": "NixOS",
         "repo": "nixos-hardware",
-        "rev": "b006ec52fce23b1d57f6ab4a42d7400732e9a0a2",
+        "rev": "8772491ed75f150f02552c60694e1beff9f46013",
         "type": "github"
       },
       "original": {
@@ -1002,11 +970,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1701244657,
-        "narHash": "sha256-+Z4epNUEzEyV9qOjwmOr3mf1xwkZVjhTStdu4e8cpDw=",
+        "lastModified": 1701259777,
+        "narHash": "sha256-2o8+Au5cTPlAjPC+rOAf1HRZOTPjsphl81moSAXWvlE=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "49e373c95c84b8297a0d78d243b3bd1eaa51d82f",
+        "rev": "244dfb85d0cf98918728d93107cc189198e2ebcf",
         "type": "github"
       },
       "original": {
@@ -1046,10 +1014,8 @@
     "root": {
       "inputs": {
         "carapace": "carapace",
-        "catppuccin-alacritty": "catppuccin-alacritty",
         "catppuccin-gitui": "catppuccin-gitui",
         "catppuccin-starship": "catppuccin-starship",
-        "catppuccin-waybar": "catppuccin-waybar",
         "crane": "crane",
         "devshell": "devshell",
         "disko": "disko",
