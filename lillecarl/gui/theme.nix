@@ -2,24 +2,26 @@
 let
   cursorSettings = {
     name = "Catppuccin-Macchiato-Pink";
-    size = 24;
+    size = 30;
     package = pkgs.catppuccin-cursors.macchiatoPink;
   };
+  colorScheme = inputs.nix-colors.colorSchemes.catppuccin-mocha;
+  theme = (inputs.nix-colors.lib.contrib { inherit pkgs; }).gtkThemeFromScheme { scheme = colorScheme; };
 in
 {
-  colorScheme = inputs.nix-colors.colorSchemes.catppuccin-mocha;
+  inherit colorScheme;
+
+  home.sessionVariables = {
+    XCURSOR_SIZE = cursorSettings.size;
+    XCURSOR_THEME = cursorSettings.name;
+  };
 
   gtk = {
     enable = true;
 
     theme = {
-      name = "Catppuccin-Mocha-Compact-Pink-dark";
-      package = pkgs.catppuccin-gtk.override {
-        accents = [ "pink" ];
-        size = "compact";
-        tweaks = [ "rimless" ];
-        variant = "mocha";
-      };
+      name = theme.name;
+      package = theme;
     };
 
     iconTheme = {
