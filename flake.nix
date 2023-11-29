@@ -1,40 +1,76 @@
 {
   inputs = {
     # nixos branch, calling it nixpkgs because that's the default everyone uses.
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs-lib.url = "github:NixOS/nixpkgs/nixos-unstable?dir=lib";
+    gitignore.url = "github:hercules-ci/gitignore.nix";
     nix-community-lib.url = "github:nix-community/nixpkgs.lib";
-    flake-utils.url = "github:numtide/flake-utils";
-    nur.url = "github:nix-community/NUR";
-    hyprland.url = "github:hyprwm/Hyprland";
+    nix-systems.url = "github:nix-systems/default-linux";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
+    nixpkgs-lib.url = "github:NixOS/nixpkgs/nixos-unstable?dir=lib";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nur.url = "github:nix-community/NUR";
 
+    pre-commit-hooks-nix = {
+      url = "github:cachix/pre-commit-hooks.nix";
+      inputs.flake-utils.follows = "flake-utils";
+      inputs.gitignore.follows = "gitignore";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    flake-utils = {
+      url = "github:numtide/flake-utils";
+      inputs.systems.follows = "nix-systems";
+    };
+    crane = {
+      url = "github:ipetkov/crane";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    devshell = {
+      url = "github:numtide/devshell";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.systems.follows = "nix-systems";
+    };
+    rust-overlay = {
+      url = "github:oxalica/rust-overlay";
+      inputs.flake-utils.follows = "flake-utils";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    hyprland = {
+      url = "github:hyprwm/Hyprland";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.systems.follows = "nix-systems";
+    };
     nix-colors = {
       url = "github:Misterio77/nix-colors";
       inputs.nixpkgs-lib.follows = "nixpkgs";
     };
-
     nixos-wsl = {
       url = "github:nix-community/nixos-wsl";
+      inputs.flake-utils.follows = "flake-utils";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
     waybar = {
       url = "github:Alexays/Waybar";
+      inputs.devshell.follows = "devshell";
+      inputs.flake-utils.follows = "flake-utils";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-vscode-extensions = {
       url = "github:nix-community/nix-vscode-extensions";
+      inputs.flake-utils.follows = "flake-utils";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nh = {
       url = "github:viperML/nh";
+      inputs.flake-parts.follows = "flake-parts";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-eval-jobs = {
       url = "github:nix-community/nix-eval-jobs/main";
-      inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-parts.follows = "flake-parts";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     lib-aggregate = {
       url = "github:nix-community/lib-aggregate/master";
@@ -44,25 +80,20 @@
     # Use Nix as Terraform
     terranix = {
       url = "github:terranix/terranix";
-      inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     # Wayland packages for NixOS
     nixpkgs-wayland = {
       url = "github:nix-community/nixpkgs-wayland";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.nix-eval-jobs.follows = "nix-eval-jobs";
       inputs.lib-aggregate.follows = "lib-aggregate";
+      inputs.nix-eval-jobs.follows = "nix-eval-jobs";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     # Support splitting flake into subflakes
     flake-parts = {
       url = "github:hercules-ci/flake-parts";
       inputs.nixpkgs-lib.follows = "nixpkgs-lib";
-    };
-    # Supposed to moutn and download debug files on the fly
-    dwarffs = {
-      url = "github:edolstra/dwarffs";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
     # Manage home environment with Nix
     home-manager = {
@@ -83,22 +114,33 @@
     # Configure non-nixos systems with Nix modules
     system-manager = {
       url = "github:numtide/system-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.crane.follows = "crane";
+      inputs.devshell.follows = "devshell";
       inputs.flake-utils.follows = "flake-utils";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.pre-commit-hooks.follows = "pre-commit-hooks-nix";
+      inputs.rust-overlay.follows = "rust-overlay";
+      inputs.treefmt-nix.follows = "treefmt-nix";
     };
     mozilla-addons-to-nix = {
       url = "sourcehut:~rycee/mozilla-addons-to-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     nil = {
       url = "github:oxalica/nil";
-      inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.rust-overlay.follows = "rust-overlay";
     };
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v0.3.0";
+      inputs.crane.follows = "crane";
+      inputs.flake-parts.follows = "flake-parts";
+      inputs.flake-utils.follows = "flake-utils";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.pre-commit-hooks-nix.follows = "pre-commit-hooks-nix";
+      inputs.rust-overlay.follows = "rust-overlay";
     };
 
     # Art

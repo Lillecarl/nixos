@@ -1,7 +1,9 @@
 { pkgs, ... }:
 {
   home.packages = with pkgs; [
+    # Image viewer
     xfce.ristretto
+
     # Web browsers
     pcmanfm
 

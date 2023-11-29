@@ -8,7 +8,7 @@
         nix-lsp = {
           command = "${pkgs.nil}/bin/nil";
           config = {
-            languages = {};
+            languages = { };
           };
         };
       };
