@@ -1,6 +1,7 @@
 { inputs
 , pkgs
-, ... }:
+, ...
+}:
 {
   imports = [
     ./alacritty.nix

@@ -22,10 +22,11 @@ in
 
     systemdTarget = "hyprland-session.target";
 
-    events = if allArgs.systemConfig.networking.hostName == "nub" then [
-      { event = "before-sleep"; command = swaylock; }
-      { event = "lock"; command = swaylock; }
-    ] else [];
+    events =
+      if allArgs.systemConfig.networking.hostName == "nub" then [
+        { event = "before-sleep"; command = swaylock; }
+        { event = "lock"; command = swaylock; }
+      ] else [ ];
 
     timeouts = [
       { timeout = 300; command = swaylock; }

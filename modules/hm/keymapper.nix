@@ -1,7 +1,8 @@
 { config
 , lib
 , pkgs
-, ... }:
+, ...
+}:
 let
   cfg = config.services.keymapper;
 in

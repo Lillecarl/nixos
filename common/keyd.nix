@@ -3,7 +3,7 @@
   environment.systemPackages = [
     pkgs.keyd
   ];
-  users.groups.keyd = {};
+  users.groups.keyd = { };
   systemd.services.keyd = {
     serviceConfig = lib.mkForce {
       ExecStart = "${pkgs.keyd}/bin/keyd";
