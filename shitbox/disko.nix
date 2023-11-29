@@ -1,14 +1,11 @@
-{ ... }:
+{ disk1, disk2, ... }:
 let
-  disk1 = "sda";
-  disk2 = "sdb";
-
   samedisk =
     { disk
     , bootloc
     ,
     }: {
-      device = "/dev/${disk}";
+      device = "/dev/disk/by-id/${disk}";
       type = "disk";
       content = {
         type = "table";

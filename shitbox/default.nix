@@ -10,7 +10,10 @@
   services.keymapper.enable = true;
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
-  disko.devices = import ./disko.nix { };
+  disko.devices = import ./disko.nix {
+    disk1 = "ata-SAMSUNG_MZ7LM1T9HMJP-00005_S2TVNX0J404544";
+    disk2 = "ata-SAMSUNG_MZ7LM1T9HMJP-00005_S2TVNX0J404560";
+  };
 
   # Networking, virbr0 is WAN iface
   networking = {
