@@ -66,11 +66,11 @@ in
 {
   disk = {
     # 1GiB boot, rest mdraid
-    "${disk1}" = samedisk {
+    "disk1" = samedisk {
       disk = disk1;
       bootloc = "boot";
     };
-    "${disk2}" = samedisk {
+    "disk2" = samedisk {
       disk = disk2;
       bootloc = "boot2";
     };
