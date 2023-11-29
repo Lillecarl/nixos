@@ -5,24 +5,43 @@ let
     size = 30;
     package = pkgs.catppuccin-cursors.macchiatoPink;
   };
-  colorScheme = inputs.nix-colors.colorSchemes.catppuccin-mocha;
-  theme = (inputs.nix-colors.lib.contrib { inherit pkgs; }).gtkThemeFromScheme { scheme = colorScheme; };
+  #colorScheme = inputs.nix-colors.colorSchemes.catppuccin-mocha;
+  nerdFont = pkgs.nerdfonts.override { fonts = [ "Hack" ]; };
 in
 {
-  inherit colorScheme;
+  stylix = {
+    image = "${inputs.nixos-artwork}/wallpapers/nix-wallpaper-watersplash.png";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
+    polarity = "dark";
+    targets = {
+      # Disable swaylock target since we're using Gandalf
+      swaylock.enable = false;
+    };
+    fonts = {
+      serif = {
+        package = pkgs.dejavu_fonts;
+        name = "DejaVu Serif";
+      };
 
-  home.sessionVariables = {
-    XCURSOR_SIZE = cursorSettings.size;
-    XCURSOR_THEME = cursorSettings.name;
+      sansSerif = {
+        package = pkgs.dejavu_fonts;
+        name = "DejaVu Sans";
+      };
+
+      monospace = {
+        package = nerdFont;
+        name = "Hack Nerd Font";
+      };
+
+      emoji = {
+        package = pkgs.noto-fonts-emoji;
+        name = "Noto Color Emoji";
+      };
+    };
   };
 
   gtk = {
     enable = true;
-
-    theme = {
-      name = theme.name;
-      package = theme;
-    };
 
     iconTheme = {
       name = "Adwaita";
@@ -35,10 +54,5 @@ in
   qt = {
     enable = true;
     platformTheme = "gtk";
-  };
-
-  home.pointerCursor = cursorSettings // {
-    gtk.enable = true;
-    x11.enable = true;
   };
 }

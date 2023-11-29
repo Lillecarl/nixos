@@ -105,7 +105,6 @@ in
     enable = true;
 
     systemdIntegration = true;
-    disableAutoreload = true;
 
     xwayland.enable = true;
     inherit extraConfig;

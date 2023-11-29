@@ -47,7 +47,6 @@ in
       redhat.vscode-yaml
       vscodevim.vim
       davidhewitt.shebang-language-associator
-      joaompinto.vscode-graphviz
       ms-vscode-remote.remote-ssh
       ms-vscode-remote.remote-ssh-edit
       ms-vscode.remote-explorer

@@ -19,6 +19,7 @@
     ./waybar.nix
     ./wezterm.nix
     inputs.nix-colors.homeManagerModules.default
+    inputs.stylix.homeManagerModules.stylix
   ];
 
   programs.obs-studio = {

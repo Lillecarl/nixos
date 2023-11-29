@@ -31,7 +31,7 @@ in
           modules = [
             ./gui
             ./terminal
-            inputs.hyprland.homeManagerModules.default
+            #inputs.hyprland.homeManagerModules.default
           ];
         };
       in
