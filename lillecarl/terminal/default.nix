@@ -11,6 +11,7 @@
     ./git.nix
     ./gnome-keyring.nix
     ./gpg.nix
+    ./keymapper.nix
     ./neovim.nix
     ./nushell.nix
     ./packages.nix

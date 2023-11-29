@@ -19,7 +19,6 @@ let
           ../common/overlays.nix
           ../modules/hm/keymapper.nix
           ./default.nix
-          ./terminal/keymapper.nix
         ] ++ customArgs.modules;
       });
 in
