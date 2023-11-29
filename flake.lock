@@ -795,6 +795,26 @@
         "type": "github"
       }
     },
+    "nix-melt": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1701216885,
+        "narHash": "sha256-O3eB154BtGwYv2uQPCrekK0zEyx8KI6vvMLsQyzWct4=",
+        "owner": "nix-community",
+        "repo": "nix-melt",
+        "rev": "4ca0f9248bed9f9f85a89adf684ae487e8494967",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "nix-melt",
+        "type": "github"
+      }
+    },
     "nix-systems": {
       "locked": {
         "lastModified": 1689347949,
@@ -1046,6 +1066,7 @@
         "nil": "nil",
         "nix-community-lib": "nix-community-lib",
         "nix-eval-jobs": "nix-eval-jobs",
+        "nix-melt": "nix-melt",
         "nix-systems": "nix-systems",
         "nix-vscode-extensions": "nix-vscode-extensions",
         "nixos-artwork": "nixos-artwork",
