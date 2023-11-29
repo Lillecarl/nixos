@@ -47,10 +47,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.systems.follows = "nix-systems";
     };
-    nix-colors = {
-      url = "github:Misterio77/nix-colors";
-      inputs.nixpkgs-lib.follows = "nixpkgs";
-    };
     nixos-wsl = {
       url = "github:nix-community/nixos-wsl";
       inputs.flake-utils.follows = "flake-utils";

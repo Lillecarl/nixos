@@ -1,11 +1,5 @@
 { inputs, pkgs, ... }:
 let
-  cursorSettings = {
-    name = "Catppuccin-Macchiato-Pink";
-    size = 30;
-    package = pkgs.catppuccin-cursors.macchiatoPink;
-  };
-  #colorScheme = inputs.nix-colors.colorSchemes.catppuccin-mocha;
   nerdFont = pkgs.nerdfonts.override { fonts = [ "Hack" ]; };
 in
 {
@@ -47,8 +41,6 @@ in
       name = "Adwaita";
       package = pkgs.gnome.adwaita-icon-theme;
     };
-
-    cursorTheme = cursorSettings;
   };
 
   qt = {
