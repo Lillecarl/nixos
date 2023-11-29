@@ -210,38 +210,6 @@
         "type": "github"
       }
     },
-    "catppuccin-hyprland": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1683122293,
-        "narHash": "sha256-07B5QmQmsUKYf38oWU3+2C6KO4JvinuTwmW1Pfk8CT8=",
-        "owner": "catppuccin",
-        "repo": "hyprland",
-        "rev": "99a88fd21fac270bd999d4a26cf0f4a4222c58be",
-        "type": "github"
-      },
-      "original": {
-        "owner": "catppuccin",
-        "repo": "hyprland",
-        "type": "github"
-      }
-    },
-    "catppuccin-rofi": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1672491652,
-        "narHash": "sha256-DNorfyl3C4RBclF2KDgwvQQwixpTwSRu7fIvihPN8JY=",
-        "owner": "catppuccin",
-        "repo": "rofi",
-        "rev": "5350da41a11814f950c3354f090b90d4674a95ce",
-        "type": "github"
-      },
-      "original": {
-        "owner": "catppuccin",
-        "repo": "rofi",
-        "type": "github"
-      }
-    },
     "catppuccin-starship": {
       "flake": false,
       "locked": {
@@ -1060,8 +1028,6 @@
         "carapace": "carapace",
         "catppuccin-alacritty": "catppuccin-alacritty",
         "catppuccin-gitui": "catppuccin-gitui",
-        "catppuccin-hyprland": "catppuccin-hyprland",
-        "catppuccin-rofi": "catppuccin-rofi",
         "catppuccin-starship": "catppuccin-starship",
         "catppuccin-waybar": "catppuccin-waybar",
         "crane": "crane",

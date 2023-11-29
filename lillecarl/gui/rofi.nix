@@ -1,7 +1,4 @@
-{ inputs, pkgs, lib, ... }:
-let
-  catppuccin-theme = builtins.readFile "${inputs.catppuccin-rofi}/basic/.local/share/rofi/themes/catppuccin-mocha.rasi";
-in
+{ pkgs, ... }:
 {
   programs.rofi = {
     enable = true;
@@ -24,6 +21,4 @@ in
       sidebar-mode = true;
     };
   };
-
-  home.file.".local/share/rofi/themes/catppuccin-mocha.rasi".text = catppuccin-theme;
 }

@@ -165,16 +165,8 @@
       url = "github:catppuccin/gitui";
       flake = false;
     };
-    catppuccin-hyprland = {
-      url = "github:catppuccin/hyprland";
-      flake = false;
-    };
     catppuccin-starship = {
       url = "github:catppuccin/starship";
-      flake = false;
-    };
-    catppuccin-rofi = {
-      url = "github:catppuccin/rofi";
       flake = false;
     };
   };

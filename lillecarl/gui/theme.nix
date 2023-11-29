@@ -33,7 +33,7 @@ in
       };
 
       sizes = {
-        applications = 10;
+        applications = 12;
         terminal = 10;
       };
     };

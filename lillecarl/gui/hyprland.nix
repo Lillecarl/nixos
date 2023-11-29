@@ -81,8 +81,7 @@ let
     bind  = $mainMod          , Print   , exec, ${printScript} window --edit --upload
     bind  = $mainMod Shift_L  , Print   , exec, ${printScript} region --edit --upload
     bind  = Ctrl_L Alt_L      , V       , exec, ${pkgs.cliphist}/bin/cliphist list | ${pkgs.wofi}/bin/wofi --dmenu | ${pkgs.cliphist}/bin/cliphist decode | ${pkgs.wl-clipboard}/bin/wl-copy
-  '' +
-  builtins.readFile "${inputs.catppuccin-hyprland}/themes/mocha.conf";
+  '';
 in
 {
   home.packages = [
