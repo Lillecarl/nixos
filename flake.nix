@@ -69,7 +69,6 @@
     };
     nh = {
       url = "github:viperML/nh";
-      inputs.flake-parts.follows = "flake-parts";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-eval-jobs = {
