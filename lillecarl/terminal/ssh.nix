@@ -38,5 +38,9 @@ in
 
     serverAliveInterval = 10;
     serverAliveCountMax = 6;
+
+    extraConfig = ''
+      ConnectTimeout 5
+    '';
   };
 }
