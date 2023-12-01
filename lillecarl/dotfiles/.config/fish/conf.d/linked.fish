@@ -21,6 +21,8 @@ abbr -a ssc sudo systemctl
 abbr -a scu systemctl --user
 abbr -a jc journalctl -u
 abbr -a jcu journalctl --user-unit
+abbr -a jci journalinvocation -u
+abbr -a jcui journalinvocation --user-unit
 abbr -a ssha ssh -oForwardAgent=yes
 abbr -a sshr ssh-keygen -R
 abbr -a ls eza
