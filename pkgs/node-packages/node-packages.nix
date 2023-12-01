@@ -940,13 +940,13 @@ let
         sha512 = "NuAESUOUMrlIXOfHKzD6bpPu3tYt3xvjNdRIQ+FeT0lNb4K8WR70CaDxhuNguS2XG+GjkyMwOzsN5ZktImfhLA==";
       };
     };
-    "object.assign-4.1.4" = {
+    "object.assign-4.1.5" = {
       name = "object.assign";
       packageName = "object.assign";
-      version = "4.1.4";
+      version = "4.1.5";
       src = fetchurl {
-        url = "https://registry.npmjs.org/object.assign/-/object.assign-4.1.4.tgz";
-        sha512 = "1mxKf0e58bvyjSCtKYY4sRe9itRk3PJpquJOjeIkz885CczcI4IvJJDLPS72oowuSh+pBxUFROpX+TU++hxhZQ==";
+        url = "https://registry.npmjs.org/object.assign/-/object.assign-4.1.5.tgz";
+        sha512 = "byy+U7gp+FVwmyzKPYhW2h5l3crpmGsxl7X2s8y43IgxvG4g3QZ6CffDtsNQy1WsmZpQbO+ybo0AlW7TY6DcBQ==";
       };
     };
     "object.getownpropertydescriptors-2.1.7" = {
@@ -1428,7 +1428,7 @@ in
       sources."object-extended-0.0.7"
       sources."object-inspect-1.13.1"
       sources."object-keys-1.1.1"
-      sources."object.assign-4.1.4"
+      sources."object.assign-4.1.5"
       sources."object.getownpropertydescriptors-2.1.7"
       sources."once-1.4.0"
       sources."path-is-absolute-1.0.1"
