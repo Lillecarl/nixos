@@ -15,7 +15,7 @@
     '';
     settings = {
       auto-optimise-store = true;
-      trusted-users = [ "root" "lillecarl" ];
+      trusted-users = [ "root" "@wheel" ];
 
       trusted-public-keys = [
         "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
