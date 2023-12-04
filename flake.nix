@@ -58,8 +58,6 @@
     };
     waybar = {
       url = "github:Alexays/Waybar";
-      inputs.devshell.follows = "devshell";
-      inputs.flake-utils.follows = "flake-utils";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-vscode-extensions = {
