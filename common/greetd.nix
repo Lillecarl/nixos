@@ -1,5 +1,4 @@
-{ inputs
-, pkgs
+{ pkgs
 , ...
 }:
 {
@@ -8,7 +7,8 @@
 
     settings = {
       default_session = {
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --user-menu --asterisks --time --cmd ${pkgs.hyprland}/bin/Hyprland";
+        user = "lillecarl";
+        command = "${pkgs.hyprland}/bin/Hyprland; systemctl --user stop hyprland-session.target";
       };
     };
   };
