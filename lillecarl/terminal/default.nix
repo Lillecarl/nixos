@@ -31,6 +31,11 @@
 
   xdg.enable = true;
 
+  programs.man = {
+    enable = true;
+    generateCaches = false;
+  };
+
   programs.zellij = {
     enable = true;
 
