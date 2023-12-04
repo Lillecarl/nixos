@@ -68,3 +68,6 @@ vim.api.nvim_create_autocmd('TermOpen', {
     ]]
   end,
 })
+
+-- indent blanklines
+require("ibl").setup()

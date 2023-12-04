@@ -18,6 +18,7 @@
       copilot-lua
       ctrlp
       fugitive
+      indent-blankline-nvim
       neodev-nvim
       neogit
       nvim-tree-lua
