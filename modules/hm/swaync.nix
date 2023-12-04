@@ -32,6 +32,8 @@ with lib; {
 
     systemd.user.services.swaync = {
       Unit = {
+        X-SwitchMethod="reload";
+        X-ConfigHash = (builtins.hashString "md5" (builtins.toJSON cfg.settings));
         Description = "Sway notification center";
         Documentation = "man:swaync(5)";
         PartOf = [ "graphical-session.target" ];
@@ -45,7 +47,6 @@ with lib; {
           "${pkgs.swaynotificationcenter}/bin/swaync --reload-config"
           "${pkgs.swaynotificationcenter}/bin/swaync-client --reload-css"
         ];
-        X-RestartIfChanged = (builtins.hashString "md5" (builtins.toJSON cfg.settings));
       };
       Install = { WantedBy = [ cfg.systemdTarget ]; };
     };

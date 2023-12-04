@@ -31,13 +31,14 @@ in
   config = lib.mkIf cfg.enable {
     systemd.user.services.keymapper = {
       Unit = {
+        X-SwitchMethod="restart";
+        X-ConfigHash = (builtins.hashString "md5" cfg.extraConfig);
         Description = "Keymapper";
       };
       Service = {
         ExecStart = "${pkgs.keymapper}/bin/keymapper -v -c ${config.xdg.configHome + "/keymapper/keymapper.conf"}";
         Restart = "always";
         RestartSec = "5";
-        X-RestartIfChanged = (builtins.hashString "md5" cfg.extraConfig);
       };
       Install = {
         WantedBy = [ cfg.systemdTarget ];
