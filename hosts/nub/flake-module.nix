@@ -15,7 +15,6 @@ in
         ../../common/btrfs.nix
         ../../common/fish.nix
         ../../common/flatpak.nix
-        ../../common/greetd.nix
         ../../common/hyprland.nix
         ../../common/monitoring.nix
         ../../common/nix.nix
