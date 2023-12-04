@@ -10,6 +10,7 @@
         ../../common
         ../../common/fish.nix
         ../../common/flatpak.nix
+        ../../common/greetd.nix
         ../../common/hyprland.nix
         ../../common/nix.nix
         ../../common/overlays.nix
