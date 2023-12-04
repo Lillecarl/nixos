@@ -29,11 +29,6 @@ abbr -a ls eza
 abbr -a ll eza -lah
 abbr -a cat bat --paging=never
 
-# Initialize keychain
-eval $(keychain --eval -q)
-# Load my key
-keychain -q id_ed25519
-
 # bind ctrl+a to beginning of buffer
 bind \ca -M insert beginning-of-buffer
 # bind ctrl+e to end of buffer

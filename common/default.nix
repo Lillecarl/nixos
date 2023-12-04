@@ -141,7 +141,6 @@
     killall # Kill processes by name
     swtpm # needed to emulate TPM on QEMU
     gnupg # PGP implementation
-    keychain-wrapper # Easier key management
     ranger # file manager
     nnn # file manager
     fzf # fuzzy finder, pipe to this for nice search

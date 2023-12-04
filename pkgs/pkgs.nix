@@ -35,8 +35,6 @@ prev.lib.filterAttrs
     # Filter out package sets if we're called from a flake.
     (n != "python3Packages" && n != "nodePackages" && n != "firefoxAddons" && n != "grafanaPlugins"))
   {
-    keychain-wrapper = prev.callPackage ../pkgs/keychain-wrapper { };
-
     xonsh-joined = prev.callPackage ../pkgs/xonsh-joined { };
     xonsh-wrapper = final.callPackage ../pkgs/xonsh-wrapper { };
 
