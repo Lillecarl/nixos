@@ -11,12 +11,12 @@
   #};
   #programs.nix-ld.enable = true;
 
-  programs.firefox = {
-    enable = true;
-    nativeMessagingHosts.tridactyl = true;
-    nativeMessagingHosts.ff2mpv = true;
-    nativeMessagingHosts.fxCast = true;
-  };
+  #programs.firefox = {
+  #  enable = true;
+  #  nativeMessagingHosts.tridactyl = true;
+  #  nativeMessagingHosts.ff2mpv = true;
+  #  nativeMessagingHosts.fxCast = true;
+  #};
 
   environment.enableDebugInfo = true;
 
