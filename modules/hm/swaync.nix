@@ -41,10 +41,11 @@ with lib; {
         Type = "dbus";
         BusName = "org.freedesktop.Notifications";
         ExecStart = "${pkgs.swaynotificationcenter}/bin/swaync";
-        ExecReload = ''
-          ${pkgs.swaynotificationcenter}/bin/swaync --reload-config
-          ${pkgs.swaynotificationcenter}/bin/swaync-client --reload-css
-        '';
+        ExecReload = concatStringsSep " ; " [
+          "${pkgs.swaynotificationcenter}/bin/swaync --reload-config"
+          "${pkgs.swaynotificationcenter}/bin/swaync-client --reload-css"
+        ];
+        X-RestartIfChanged = (builtins.hashString "md5" (builtins.toJSON cfg.settings));
       };
       Install = { WantedBy = [ cfg.systemdTarget ]; };
     };
