@@ -99,8 +99,6 @@ prev.lib.filterAttrs
       echo $mute > /sys/class/leds/platform\:\:micmute/brightness
     '';
 
-    awscli2 = prev.callPackage ./tmp/awscli2.nix { };
-
     keyd = prev.callPackage ./tmp/keyd.nix { };
   }
 // (
