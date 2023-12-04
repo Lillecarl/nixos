@@ -41,6 +41,7 @@ in
 
     extraConfig = ''
       ConnectTimeout 5
+      StrictHostKeyChecking accept-new
     '';
   };
 }
