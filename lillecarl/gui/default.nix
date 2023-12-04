@@ -4,15 +4,16 @@
 }:
 {
   imports = [
+    ../../modules/hm/swaync.nix
     ./alacritty.nix
     ./avizo.nix
     ./firefox.nix
     ./hyprland.nix
-    ./mako.nix
     ./packages.nix
     ./qutebrowser.nix
     ./rofi.nix
     ./sway.nix
+    ./swaync.nix
     ./swaytools.nix
     ./theme.nix
     ./vscode.nix

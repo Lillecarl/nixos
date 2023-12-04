@@ -6,6 +6,11 @@ let
   swaylock = "${pkgs.swaylock}/bin/swaylock";
 in
 {
+  services.swaync = {
+    enable = true;
+    systemdTarget = "hyprland-session.target";
+  };
+
   programs.swaylock = {
     enable = true;
 
