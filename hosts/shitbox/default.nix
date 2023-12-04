@@ -7,7 +7,6 @@
     ./hardware-configuration.nix
   ];
 
-  services.keymapper.enable = true;
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   disko.devices = import ./disko.nix {

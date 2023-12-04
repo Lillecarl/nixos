@@ -3,6 +3,11 @@
   security.pam.services.greetd.enableGnomeKeyring = true;
   security.pam.services.swaylock.enableGnomeKeyring = true;
 
+  services.keymapper = {
+    enable = true;
+    extraArgs = [ "-v" ];
+  };
+
   #services.envfs = {
   #  enable = true;
   #  #extraFallbackPathCommands = ''

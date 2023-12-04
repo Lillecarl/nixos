@@ -10,6 +10,11 @@ in
   options = {
     services.keymapper = {
       enable = lib.mkEnableOption "keymapper";
+      extraArgs = lib.mkOption {
+        type = lib.types.listOf lib.types.str;
+        default = [];
+        description = "Extra arguments to pass to keymapperd";
+      };
     };
   };
 
@@ -17,10 +22,9 @@ in
     systemd.services.keymapper = {
       description = "Keymapper";
       wantedBy = [ "multi-user.target" ];
-      #after = [ "systemd-user-sessions.service" ];
       serviceConfig = {
         Type = "simple";
-        ExecStart = "${pkgs.keymapper}/bin/keymapperd -v";
+        ExecStart = "${pkgs.keymapper}/bin/keymapperd ${lib.concatStringsSep " " cfg.extraArgs}";
         Restart = "always";
         RestartSec = "5";
       };

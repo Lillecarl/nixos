@@ -9,7 +9,6 @@
     ./hardware-configuration.nix
   ];
 
-  services.keymapper.enable = true;
   services.power-profiles-daemon.enable = true;
 
   disko.devices = (import ./disko.nix {
