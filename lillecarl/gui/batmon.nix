@@ -14,7 +14,9 @@ in
           plumbum
         ]))
       ];
-      ExecStart = "${self}/scripts/batmon.py";
+      ExecStart = pkgs.writeScript
+      "batmon"
+      (builtins.readFile "${self}/scripts/batmon.py");
     };
     Install = {
       WantedBy = [ "default.target" ];
