@@ -32,7 +32,7 @@ with lib; {
 
     systemd.user.services.swaync = {
       Unit = {
-        X-SwitchMethod="reload";
+        X-SwitchMethod = "reload";
         X-ConfigHash = (builtins.hashString "md5" (builtins.toJSON cfg.settings));
         Description = "Sway notification center";
         Documentation = "man:swaync(5)";

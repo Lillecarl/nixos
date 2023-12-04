@@ -31,7 +31,7 @@ in
   config = lib.mkIf cfg.enable {
     systemd.user.services.keymapper = {
       Unit = {
-        X-SwitchMethod="restart";
+        X-SwitchMethod = "restart";
         X-ConfigHash = (builtins.hashString "md5" cfg.extraConfig);
         Description = "Keymapper";
       };
