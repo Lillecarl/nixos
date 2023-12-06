@@ -153,6 +153,8 @@
           "privacy.webrtc.legacyGlobalIndicator" = false;
           "privacy.webrtc.hideGlobalIndicator" = true;
           "browser.privatebrowsing.enable-new-indicator" = true;
+          # Font
+          "font.name.monospace.x-western" = "Hack Nerd Font";
         };
 
         userChrome = ''
