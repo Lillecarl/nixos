@@ -1,4 +1,4 @@
-{ ... }:
+{ lib, ... }:
 {
   systemd.services.thinkfan.enable = false;
 
@@ -14,4 +14,8 @@
       "-t 2"
     ];
   };
+
+  # Run tp-auto-kbbl after keymapper.service
+  systemd.services.tp-auto-kbbl.partOf = [ "keymapper.service" ];
+  systemd.services.tp-auto-kbbl.unitConfig.After = lib.mkForce [ "keymapper.service" ];
 }
