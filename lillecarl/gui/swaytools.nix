@@ -35,6 +35,7 @@ in
 
     timeouts = [
       { timeout = 300; command = swaylock; }
+      { timeout = 600; command = "${pkgs.hyprland}/bin/hyprctl dispatch dpms off"; }
     ];
   };
 }
