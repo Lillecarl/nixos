@@ -9,8 +9,8 @@
     { pkgs
     , ...
     }:
-    rec {
-      devShells.repoenv = pkgs.mkShell {
+    let
+      repoenv = pkgs.mkShell {
         packages = [
           pkgs.pokemonsay
           pkgs.msr-tools
@@ -29,6 +29,9 @@
         shellHook = ''
         '';
       };
-      devShells.default = devShells.repoenv;
+    in
+    {
+      devShells.default = repoenv;
+      devShells.repoenv = repoenv;
     };
 }
