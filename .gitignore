@@ -5,13 +5,14 @@ result
 .ignore
 
 # Devenv
-.devenv*
+/.devenv*
 devenv.local.nix
 
 # direnv
-.direnv
+/.direnv
 
 /tmp
+/.nix
 
 # nix build results
 result

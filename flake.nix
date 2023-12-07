@@ -1,6 +1,5 @@
 {
   inputs = {
-    # nixos branch, calling it nixpkgs because that's the default everyone uses.
     gitignore.url = "github:hercules-ci/gitignore.nix";
     nix-community-lib.url = "github:nix-community/nixpkgs.lib";
     nix-systems.url = "github:nix-systems/default-linux";
