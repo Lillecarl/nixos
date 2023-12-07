@@ -28,21 +28,24 @@
   services.mullvad-vpn.enable = true;
   programs.noisetorch.enable = true;
 
-  services.udev = let
-    coreutils = pkgs.coreutils-full;
-  in {
-    enable = true;
-    extraRules = ''
-      # Disable power/wakeup for ELAN touchpad that prevents suspending.
-      SUBSYSTEM=="i2c", DRIVER=="i2c_hid_acpi", ATTR{name}=="ELAN*", ATTR{power/wakeup}="disabled"
-      # Limit battery max charge to 86% (85 in reality)
-      ACTION=="add", SUBSYSTEM=="power_supply", ENV{POWER_SUPPLY_NAME}=="BAT0", ATTR{charge_control_start_threshold}="83", ATTR{charge_control_end_threshold}="86"
-      # Allow anyone to change mic led
-      SUBSYSTEM=="leds", KERNEL=="platform::micmute", RUN{program}+="${coreutils}/bin/chmod a+rw /sys/devices/platform/thinkpad_acpi/leds/platform::micmute/brightness"
-      # Allow anyone to change screen backlight
-      ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="amdgpu_bl0", RUN{program}+="${coreutils}/bin/chmod a+rw /sys/class/backlight/%k/brightness"
-    '';
-  };
+  services.udev =
+    let
+      coreutils = pkgs.coreutils-full;
+    in
+    {
+      enable = true;
+      extraRules = ''
+        # Disable power/wakeup for ELAN touchpad that prevents suspending.
+        SUBSYSTEM=="i2c", DRIVER=="i2c_hid_acpi", ATTR{name}=="ELAN*", ATTR{power/wakeup}="disabled"
+        # Limit battery max charge to 86% (85 in reality)
+        ACTION=="add", SUBSYSTEM=="power_supply", ENV{POWER_SUPPLY_NAME}=="BAT0", ATTR{charge_control_start_threshold}="83", ATTR{charge_control_end_threshold}="86"
+        # Allow anyone to change mic led
+        SUBSYSTEM=="leds", KERNEL=="platform::micmute", RUN{program}+="${coreutils}/bin/chmod a+rw /sys/devices/platform/thinkpad_acpi/leds/platform::micmute/brightness"
+        SUBSYSTEM=="leds", KERNEL=="platform::micmute", RUN{program}+="${pkgs.miconoff} 0"
+        # Allow anyone to change screen backlight
+        ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="amdgpu_bl0", RUN{program}+="${coreutils}/bin/chmod a+rw /sys/class/backlight/%k/brightness"
+      '';
+    };
 
   services.usbguard = {
     enable = true;
