@@ -10,19 +10,19 @@ let
     frser-sqlite-datasource = prev.grafanaPlugins.callPackage ./grafanaPlugins/frser-sqlite-datasource { };
   };
   mictoggle = prev.writeShellScript "mictoggle" ''
-    # Get default source
-    default_source=$(${prev.pulseaudio}/bin/pactl get-default-source)
     # Get mute status
-    source_mute=$(${prev.pulseaudio}/bin/pactl get-source-mute "$default_source")
+    source_mute=$(${prev.pulseaudio}/bin/pactl get-source-mute @DEFAULT_SOURCE@)
 
-    mute=1
-    if [[ "$source_mute" == *"yes"* ]]; then
-      mute=0
+    muted=1
+    mute=0
+    if [[ "$source_mute" == *"no"* ]]; then
+      muted=0
+      mute=1
     fi
     ${miconoff} $mute
   '';
 
-  miconoff = prev.writeShellScript "mictoggle" ''
+  miconoff = prev.writeShellScript "miconoff" ''
     export mute=$1
     ${prev.pulseaudio}/bin/pactl set-source-mute @DEFAULT_SOURCE@ $mute
     echo $mute > /sys/class/leds/platform\:\:micmute/brightness
