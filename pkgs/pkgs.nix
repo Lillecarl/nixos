@@ -100,6 +100,18 @@ prev.lib.filterAttrs
     '';
 
     keyd = prev.callPackage ./tmp/keyd.nix { };
+    keymapper = prev.keymapper.overrideAttrs (pattrs: {
+      src = prev.fetchFromGitHub {
+        owner = "houmain";
+        repo = "keymapper";
+        rev = "3.2.0";
+        sha256 = "sha256-yjB7tE/MamuG1waQ+A3sqiXmTSD4W0mtygzypwi2aQI=";
+      };
+
+      nativeBuildInputs = pattrs.nativeBuildInputs ++ [
+        prev.libxkbcommon
+      ];
+    });
   }
 // (
   if flake == true
