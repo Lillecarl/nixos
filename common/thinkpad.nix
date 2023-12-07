@@ -15,6 +15,10 @@
     ];
   };
 
+  services.udev.extraRules = ''
+    ACTION="add", SUBSYSTEM=="leds", KERNEL=="platform::micmute" ATTR{trigger}="audio-micmute"
+  '';
+
   # Run tp-auto-kbbl after keymapper.service
   systemd.services.tp-auto-kbbl.partOf = [ "keymapper.service" ];
   systemd.services.tp-auto-kbbl.unitConfig.After = lib.mkForce [ "keymapper.service" ];

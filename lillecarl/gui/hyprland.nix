@@ -126,4 +126,22 @@ in
 
     Install = { WantedBy = [ "hyprland-session.target" ]; };
   };
+
+  systemd.user.services.miclight = let
+    dep = "pipewire-pulse.service";
+  in
+  {
+    Unit = {
+      Description = "Mutes microphone and turns off light";
+      PartOf = [ dep ];
+      After = [ dep ];
+    };
+
+    Service = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.miconoff} 1";
+    };
+
+    Install = { WantedBy = [ dep ]; };
+  };
 }

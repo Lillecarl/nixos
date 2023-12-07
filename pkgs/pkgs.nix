@@ -9,6 +9,24 @@ let
   grafanaPlugins = {
     frser-sqlite-datasource = prev.grafanaPlugins.callPackage ./grafanaPlugins/frser-sqlite-datasource { };
   };
+  mictoggle = prev.writeShellScript "mictoggle" ''
+    # Get default source
+    default_source=$(${prev.pulseaudio}/bin/pactl get-default-source)
+    # Get mute status
+    source_mute=$(${prev.pulseaudio}/bin/pactl get-source-mute "$default_source")
+
+    mute=1
+    if [[ "$source_mute" == *"yes"* ]]; then
+      mute=0
+    fi
+    ${miconoff} $mute
+  '';
+
+  miconoff = prev.writeShellScript "mictoggle" ''
+    export mute=$1
+    ${prev.pulseaudio}/bin/pactl set-source-mute @DEFAULT_SOURCE@ $mute
+    echo $mute > /sys/class/leds/platform\:\:micmute/brightness
+  '';
 in
 prev.lib.filterAttrs
   (n: v:
@@ -19,6 +37,8 @@ prev.lib.filterAttrs
     # Filter out package sets if we're called from a flake.
     (n != "python3Packages" && n != "nodePackages" && n != "firefoxAddons" && n != "grafanaPlugins"))
   {
+    inherit miconoff mictoggle;
+
     # Inject python3 packages
     python3Packages = python3Packages // prev.python3Packages;
     python3 = prev.python3.override {
@@ -38,21 +58,6 @@ prev.lib.filterAttrs
       patches = [ "${prev.path}/pkgs/applications/networking/cluster/terraform/provider-path-0_15.patch" ];
     };
 
-    mictoggle = prev.writeShellScript "mictoggler" ''
-      # Get default source
-      default_source=$(${prev.pulseaudio}/bin/pactl get-default-source)
-      # Get mute status
-      source_mute=$(${prev.pulseaudio}/bin/pactl get-source-mute "$default_source")
-
-      mute=1
-      if [[ "$source_mute" == *"yes"* ]]; then
-        mute=0
-      fi
-
-      ${prev.pulseaudio}/bin/pactl set-source-mute @DEFAULT_SOURCE@ $mute
-      ${prev.coreutils-full}/bin/sleep 0.5
-      echo $mute > /sys/class/leds/platform\:\:micmute/brightness
-    '';
 
     keyd = prev.callPackage ./tmp/keyd.nix { };
     keymapper = prev.keymapper.overrideAttrs (pattrs: {
