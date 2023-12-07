@@ -28,6 +28,10 @@
 
       # "Default layer" (There aren't really any layers)
       [default]
+      Shift   >> Shift
+      Control >> Control
+      AltLeft >> AltLeft
+
       # ctrl + alt + hjkl = arrow keys
       Control{AltLeft{H}} >> ArrowLeft
       Control{AltLeft{L}} >> ArrowRight
