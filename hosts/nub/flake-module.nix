@@ -17,6 +17,7 @@ in
         ../../common/flatpak.nix
         ../../common/greetd.nix
         ../../common/hyprland.nix
+        ../../common/keymapper.nix
         ../../common/monitoring.nix
         ../../common/nix.nix
         ../../common/openvpn.nix

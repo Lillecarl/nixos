@@ -12,6 +12,7 @@
         ../../common/flatpak.nix
         ../../common/greetd.nix
         ../../common/hyprland.nix
+        ../../common/keymapper.nix
         ../../common/nix.nix
         ../../common/overlays.nix
         ../../common/users.nix
