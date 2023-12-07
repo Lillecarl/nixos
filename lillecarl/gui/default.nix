@@ -8,6 +8,7 @@
     ./alacritty.nix
     ./avizo.nix
     ./firefox.nix
+    ./foot.nix
     ./hyprland.nix
     ./packages.nix
     ./qutebrowser.nix
