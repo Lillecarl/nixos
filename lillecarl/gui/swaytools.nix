@@ -9,6 +9,11 @@ in
   services.swaync = {
     enable = true;
     systemdTarget = "hyprland-session.target";
+
+    settings = {
+      layer = "top";
+      hide-on-clear = true;
+    };
   };
 
   programs.swaylock = {
