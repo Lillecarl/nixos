@@ -93,10 +93,14 @@ in
 
   xdg.configFile."hypr/hyprlandd.conf".text = config.xdg.configFile."hypr/hyprland.conf".text;
   xdg.configFile."hypr/hyprland.conf".onChange = lib.mkForce ''
-    for instance in $(${pkgs.findutils}/bin/find /tmp/hypr/ -mindepth 1 -type d | ${pkgs.gnused}/bin/sed "s/\/tmp\/hypr\///"); do
-      HYPRLAND_INSTANCE_SIGNATURE=''${instance##*/} ${pkgs.hyprland}/bin/hyprctl reload config-only \
-        || true  # ignore dead instance(s)
-    done
+    ( # Execute in subshell so we don't poision environment with vars
+      # This var must be set for hyprctl to function, but the value doesn't matter.
+      export HYPRLAND_INSTANCE_SIGNATURE="bogus"
+      for i in $(${pkgs.hyprland}/bin/hyprctl instances -j | jq ".[].instance" -r); do
+        export HYPRLAND_INSTANCE_SIGNATURE=$i
+        ${pkgs.hyprland}/bin/hyprctl reload config-only
+      done
+    )
   '';
 
   home.file.".config/hypr/hyprpaper.conf".text = ''
