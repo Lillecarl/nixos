@@ -179,7 +179,6 @@
     # Productivity tools
     mongodb-compass # MongoDB GUI
     dbeaver # SQL database GUI
-    wezterm # Crossplatform terminal emulator, supports ligatures
     bitwarden # Password manger
     rofimoji # Emoji/Char picker for rofi
     filezilla # Free FTP/FTPS/SFTP software

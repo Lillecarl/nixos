@@ -5,6 +5,7 @@
 {
   imports = [
     ../../modules/hm/swaync.nix
+    ../../modules/hm/wezterm.nix
     ./alacritty.nix
     ./avizo.nix
     ./firefox.nix
