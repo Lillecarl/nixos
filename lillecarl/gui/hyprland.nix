@@ -1,5 +1,6 @@
 { inputs
 , config
+, lib
 , pkgs
 , keyboardName
 , bluetooth
@@ -91,6 +92,12 @@ in
   ];
 
   xdg.configFile."hypr/hyprlandd.conf".text = config.xdg.configFile."hypr/hyprland.conf".text;
+  xdg.configFile."hypr/hyprland.conf".onChange = lib.mkForce ''
+    for instance in $(${pkgs.findutils}/bin/find /tmp/hypr/ -mindepth 1 -type d | ${pkgs.gnused}/bin/sed "s/\/tmp\/hypr\///"); do
+      HYPRLAND_INSTANCE_SIGNATURE=''${instance##*/} ${pkgs.hyprland}/bin/hyprctl reload config-only \
+        || true  # ignore dead instance(s)
+    done
+  '';
 
   home.file.".config/hypr/hyprpaper.conf".text = ''
     preload = ${wallpaper}
