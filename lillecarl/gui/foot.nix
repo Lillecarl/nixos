@@ -6,8 +6,7 @@
     server.enable = false;
 
     settings = {
-      main = {
-      };
+      main = { };
     };
   };
 }

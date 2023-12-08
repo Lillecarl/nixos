@@ -97,8 +97,7 @@ in
       # This var must be set for hyprctl to function, but the value doesn't matter.
       export HYPRLAND_INSTANCE_SIGNATURE="bogus"
       for i in $(${pkgs.hyprland}/bin/hyprctl instances -j | jq ".[].instance" -r); do
-        export HYPRLAND_INSTANCE_SIGNATURE=$i
-        ${pkgs.hyprland}/bin/hyprctl reload config-only
+        HYPRLAND_INSTANCE_SIGNATURE=$i ${pkgs.hyprland}/bin/hyprctl reload config-only
       done
     )
   '';
@@ -137,21 +136,22 @@ in
     Install = { WantedBy = [ "hyprland-session.target" ]; };
   };
 
-  systemd.user.services.miclight = let
-    dep = "pipewire-pulse.service";
-  in
-  {
-    Unit = {
-      Description = "Mutes microphone and turns off light";
-      PartOf = [ dep ];
-      After = [ dep ];
-    };
+  systemd.user.services.miclight =
+    let
+      dep = "pipewire-pulse.service";
+    in
+    {
+      Unit = {
+        Description = "Mutes microphone and turns off light";
+        PartOf = [ dep ];
+        After = [ dep ];
+      };
 
-    Service = {
-      Type = "oneshot";
-      ExecStart = "${pkgs.miconoff} 1";
-    };
+      Service = {
+        Type = "oneshot";
+        ExecStart = "${pkgs.miconoff} 1";
+      };
 
-    Install = { WantedBy = [ dep ]; };
-  };
+      Install = { WantedBy = [ dep ]; };
+    };
 }
