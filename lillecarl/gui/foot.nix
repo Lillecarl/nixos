@@ -7,7 +7,6 @@
 
     settings = {
       main = {
-        font = "Hack Nerd Font:size=10";
       };
     };
   };
