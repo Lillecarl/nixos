@@ -21,7 +21,6 @@
         ../../modules/nixos/keymapper.nix
         ./default.nix
         inputs.disko.nixosModules.disko
-        inputs.hyprland.nixosModules.default
         inputs.nixos-hardware.nixosModules.common-gpu-intel
         inputs.nixos-hardware.nixosModules.common-cpu-amd
         inputs.nixos-hardware.nixosModules.common-pc

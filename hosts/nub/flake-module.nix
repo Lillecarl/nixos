@@ -30,7 +30,6 @@ in
         ./default.nix
         #./tlp.nix
         inputs.disko.nixosModules.disko
-        #inputs.hyprland.nixosModules.default
         inputs.lanzaboote.nixosModules.lanzaboote
         inputs.nixos-hardware.nixosModules.common-pc-laptop-acpi_call
         inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t14-amd-gen3
