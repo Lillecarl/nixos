@@ -22,8 +22,12 @@
             hide_mouse_cursor_when_typing = false,
             hide_tab_bar_if_only_one_tab = true,
             default_prog = { '${pkgs.fish}/bin/fish' },
+            term = "wezterm",
             enable_wayland = true,
-            keys = {
+            set_environment_variables = {
+              WSLENV = 'TERMINFO_DIRS',
+            },
+            keys = {--[[
               {
                 key = "h",
                 mods = "ALT",
@@ -43,7 +47,7 @@
                 key = "j",
                 mods = "ALT",
                 action = act.ActivatePaneDirection 'Down',
-              },
+              },--]]
             },
           }
     '';
