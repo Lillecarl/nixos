@@ -14,7 +14,6 @@
     ./packages.nix
     ./qutebrowser.nix
     ./rofi.nix
-    ./sway.nix
     ./swaync.nix
     ./swaytools.nix
     ./theme.nix
