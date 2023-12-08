@@ -11,8 +11,11 @@ in
     systemdTarget = "hyprland-session.target";
 
     settings = {
-      layer = "top";
+      layer = "overlay";
+      positionX = "right";
+      positiony = "center";
       hide-on-clear = true;
+      layer-shell = true;
     };
   };
 
