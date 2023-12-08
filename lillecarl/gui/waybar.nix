@@ -6,6 +6,9 @@
 }:
 let
   hyprctl = "${pkgs.hyprland}/bin/hyprctl";
+  sleep = "${pkgs.coreutils-full}/bin/sleep";
+  swaync = "${pkgs.swaynotificationcenter}/bin/swaync";
+  swaync-client = "${pkgs.swaynotificationcenter}/bin/swayncclient";
 in
 {
   home.packages = [

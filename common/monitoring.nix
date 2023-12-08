@@ -52,10 +52,10 @@ in
 
     script = ''
       # Make sure database exists ahead of time
-      ${pkgs.coreutils}/bin/touch ${monitordbpath}
+      ${pkgs.coreutils-full}/bin/touch ${monitordbpath}
       # Make sure database is readable by grafana (Monitoring system runs
       # as root to gain access to MSR and such, so we can read and write either way)
-      ${pkgs.coreutils}/bin/chown grafana:grafana ${monitordbpath}
+      ${pkgs.coreutils-full}/bin/chown grafana:grafana ${monitordbpath}
 
       ${plumpy}/bin/python3 -u ${pyscript}
     '';

@@ -6,7 +6,7 @@
   #services.envfs = {
   #  enable = true;
   #  #extraFallbackPathCommands = ''
-  #  #  ln -s ${pkgs.coreutils}/bin/env $out/env
+  #  #  ln -s ${pkgs.coreutils-full}/bin/env $out/env
   #  #'';
   #};
   #programs.nix-ld.enable = true;
