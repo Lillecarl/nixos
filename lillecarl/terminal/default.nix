@@ -9,14 +9,15 @@
     ./editorconfig.nix
     ./fish.nix
     ./git.nix
-    ./helix.nix
     ./gnome-keyring.nix
     ./gpg.nix
+    ./helix.nix
     ./keymapper.nix
     ./neovim.nix
     ./nushell.nix
     ./packages.nix
     ./pam.nix
+    ./readline.nix
     ./ssh.nix
     ./starship.nix
     ./tealdeer.nix
