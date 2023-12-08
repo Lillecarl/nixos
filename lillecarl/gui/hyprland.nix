@@ -60,7 +60,7 @@ let
 
     # Launch terminal
     #bind  = $mainMod          , Q       , exec, ${pkgs.wezterm}/bin/wezterm-gui
-    bind  = $mainMod          , Q       , exec, ${pkgs.alacritty}/bin/alacritty
+    bind  = $mainMod          , Q       , exec, ${pkgs.foot}/bin/footclient
     # Awesome locker
     bind  = Ctrl_L Alt_L      , delete  , exec, ${pkgs.swaylock}/bin/swaylock
     # Media buttons
@@ -103,7 +103,7 @@ in
   wayland.windowManager.hyprland = {
     enable = true;
 
-    systemdIntegration = true;
+    systemd.enable = false;
 
     xwayland.enable = true;
     inherit extraConfig;
