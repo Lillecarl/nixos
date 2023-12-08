@@ -132,9 +132,9 @@ in
             dnd-inhibited-none = "";
           };
           return-type = "json";
-          exec = "${pkgs.swaynotificationcenter}/bin/swaync-client -swb";
-          on-click = "${pkgs.swaynotificationcenter}/bin/swaync-client -t -sw";
-          on-click-right = "${pkgs.swaynotificationcenter}/bin/swaync-client -d -sw";
+          exec = "${swaync-client} -swb";
+          on-click = "${sleep} 0.1;${swaync-client} -t -sw";
+          on-click-right = "${sleep} 0.1;${swaync-client} -d -sw";
           escape = true;
         };
       };
