@@ -149,7 +149,6 @@
     nnn # file manager
     fzf # fuzzy finder, pipe to this for nice search
     unipicker # unicode char finder
-    bitwarden-cli # Password manager CLI
     thefuck # Command that corrects your previous command
     speedtest-cli # Speedtest from the commandline
     imagemagick # CLI for doing image stuff
@@ -183,7 +182,6 @@
     # Productivity tools
     mongodb-compass # MongoDB GUI
     dbeaver # SQL database GUI
-    bitwarden # Password manger
     rofimoji # Emoji/Char picker for rofi
     filezilla # Free FTP/FTPS/SFTP software
     freerdp # Remote Desktop Protocol client

@@ -1,5 +1,4 @@
-{ pkgs
-, lib
+{ lib
 , flakeloc
 , config
 , ...
@@ -15,27 +14,25 @@ let
   });
 in
 {
-  nixpkgs = {
-    config.allowUnfree = true;
-  };
-
-  xdg = {
-    enable = true;
-  };
+  nixpkgs.config.allowUnfree = true;
+  programs.home-manager.enable = true;
+  xdg.enable = true;
 
   # HM stuff
-  home.username = "lillecarl";
-  home.homeDirectory = "/home/lillecarl";
-  home.stateVersion = "22.05";
-  home.enableNixpkgsReleaseCheck = true;
-  news.display = "silent";
-  programs.home-manager.enable = true;
+  home = {
+    username = "lillecarl";
+    homeDirectory = "/home/lillecarl";
+    stateVersion = "22.05";
+    enableNixpkgsReleaseCheck = true;
+    display = "silent";
+    file = dotfile_outOfStoreLinked;
+  };
 
   # Use experimental sd-switch to determine which systemd user units
   # to restart, do it automatically.
-  systemd.user.startServices = "sd-switch";
-  # No user services require more than 10 sec to start.
-  systemd.user.servicesStartTimeoutMs = 10000;
-
-  home.file = dotfile_outOfStoreLinked;
+  systemd.user = {
+    startServices = "sd-switch";
+    # No user services require more than 10 sec to start.
+    servicesStartTimeoutMs = 10000;
+  };
 }
