@@ -24,9 +24,10 @@ in
     homeDirectory = "/home/lillecarl";
     stateVersion = "22.05";
     enableNixpkgsReleaseCheck = true;
-    display = "silent";
     file = dotfile_outOfStoreLinked;
   };
+  # Don't display HM news.
+  news.display = "silent";
 
   # Use experimental sd-switch to determine which systemd user units
   # to restart, do it automatically.

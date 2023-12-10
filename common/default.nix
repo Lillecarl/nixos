@@ -3,24 +3,11 @@
 , ...
 }:
 {
-  security.pam.services.login.enableGnomeKeyring = true;
-  security.pam.services.greetd.enableGnomeKeyring = true;
-  security.pam.services.swaylock.enableGnomeKeyring = true;
-
-  #services.envfs = {
-  #  enable = true;
-  #  #extraFallbackPathCommands = ''
-  #  #  ln -s ${pkgs.coreutils-full}/bin/env $out/env
-  #  #'';
-  #};
-  #programs.nix-ld.enable = true;
-
-  #programs.firefox = {
-  #  enable = true;
-  #  nativeMessagingHosts.tridactyl = true;
-  #  nativeMessagingHosts.ff2mpv = true;
-  #  nativeMessagingHosts.fxCast = true;
-  #};
+  security.pam.services = {
+    login.enableGnomeKeyring = true;
+    greetd.enableGnomeKeyring = true;
+    swaylock.enableGnomeKeyring = true;
+  };
 
   environment.enableDebugInfo = true;
 

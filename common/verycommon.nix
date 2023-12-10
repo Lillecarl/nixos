@@ -11,8 +11,11 @@
 
   security.sudo.wheelNeedsPassword = true;
 
-  programs.zsh.enable = true;
-  programs.nix-ld.enable = true;
+  programs = {
+    zsh.enable = true;
+    # Enable IO perf monitoring
+    iotop.enable = true;
+  };
 
   # XDG Base Directory Specification
   environment.sessionVariables = {
@@ -36,6 +39,4 @@
   # Set your time zone.
   time.timeZone = "Europe/Stockholm";
 
-  # Enable IO perf monitoring
-  programs.iotop.enable = true;
 }

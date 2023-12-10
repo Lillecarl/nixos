@@ -26,28 +26,32 @@
     ./zsh.nix
   ];
 
-  home.file.".local/bin/.keep".text = "";
+  home = {
+    file.".local/bin/.keep".text = "";
 
-  home.sessionVariables = config.pam.sessionVariables;
+    sessionVariables = config.pam.sessionVariables;
+  };
 
   xdg.enable = true;
 
-  programs.man = {
-    enable = true;
-    generateCaches = false;
-  };
+  programs = {
+    man = {
+      enable = true;
+      generateCaches = false;
+    };
 
-  programs.zellij = {
-    enable = true;
+    zellij = {
+      enable = true;
 
-    settings = { };
-  };
+      settings = { };
+    };
 
-  programs.rbw = {
-    enable = true;
-    settings = {
-      email = "bitwarden@lillecarl.com";
-      pinentry = "qt";
+    rbw = {
+      enable = true;
+      settings = {
+        email = "bitwarden@lillecarl.com";
+        pinentry = "qt";
+      };
     };
   };
 }
