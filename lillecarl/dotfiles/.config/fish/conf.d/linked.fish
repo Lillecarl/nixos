@@ -59,3 +59,11 @@ function set_lastpath -e fish_postexec;
     set -U LASTPATH $PWD;
   end;
 end;
+
+function wezvim;
+  wezterm cli get-text | nvim \
+    -c "set buftype=nofile" \
+    -c '$' \
+    -c '-3' \
+    -c 'delete 3'
+end;
