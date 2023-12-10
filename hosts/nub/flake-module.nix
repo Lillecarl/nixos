@@ -1,5 +1,6 @@
 { inputs
 , flakeloc
+, bp
 , ...
 }:
 let
@@ -33,10 +34,10 @@ in
         inputs.lanzaboote.nixosModules.lanzaboote
         inputs.nixos-hardware.nixosModules.common-pc-laptop-acpi_call
         inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t14-amd-gen3
+        inputs.flake-programs-sqlite.nixosModules.programs-sqlite
       ];
       specialArgs = {
-        inherit inputs flakeloc;
-        programs-sqlite-db = inputs.flake-programs-sqlite.packages.${system}.programs-sqlite;
+        inherit inputs flakeloc bp;
       };
     };
   };

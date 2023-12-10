@@ -1,4 +1,5 @@
 { pkgs
+, bp
 , ...
 }:
 {
@@ -8,7 +9,7 @@
     settings = {
       default_session = {
         user = "lillecarl";
-        command = "${pkgs.hyprland}/bin/Hyprland";
+        command = bp pkgs.hyprland;
       };
     };
   };

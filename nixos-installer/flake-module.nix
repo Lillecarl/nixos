@@ -1,5 +1,4 @@
 { inputs
-, lib
 , ...
 }: {
   flake = {
@@ -8,11 +7,8 @@
       modules = [
         ./default.nix
         "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-plasma5-new-kernel.nix"
+        inputs.flake-programs-sqlite.nixosModules.programs-sqlite
       ];
-      specialArgs = {
-        inherit inputs;
-        programs-sqlite-db = inputs.flake-programs-sqlite.packages."x86_64-linux".programs-sqlite;
-      };
     };
   };
 }

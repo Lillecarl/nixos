@@ -1,10 +1,8 @@
 { self
 , pkgs
+, bp
 , ...
 }@allArgs:
-let
-  swaylock = "${pkgs.swaylock}/bin/swaylock";
-in
 {
   services.swaync = {
     enable = true;
@@ -37,12 +35,12 @@ in
 
     events =
       if allArgs.systemConfig.networking.hostName == "nub" then [
-        { event = "before-sleep"; command = swaylock; }
-        { event = "lock"; command = swaylock; }
+        { event = "before-sleep"; command = bp pkgs.swaylock; }
+        { event = "lock"; command = bp pkgs.swaylock; }
       ] else [ ];
 
     timeouts = [
-      { timeout = 300; command = swaylock; }
+      { timeout = 300; command = bp pkgs.swaylock; }
       { timeout = 600; command = "${pkgs.hyprland}/bin/hyprctl dispatch dpms off"; }
     ];
   };

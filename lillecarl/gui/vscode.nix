@@ -1,4 +1,5 @@
 { pkgs
+, bp
 , ...
 }:
 let
@@ -54,7 +55,7 @@ in
     ]);
 
     userSettings = {
-      "password-store" = "gnome-libsecret";
+      "C_Cpp.intelliSenseEngine" = "disabled";
       "editor.fontFamily" = "'Hack Nerd Font', 'monospace', monospace";
       "editor.inlineSuggest.enabled" = true;
       "editor.insertSpaces" = true;
@@ -63,6 +64,7 @@ in
       "files.eol" = "\n";
       "files.insertFinalNewline" = true;
       "keyboard.dispatch" = "keyCode";
+      "password-store" = "gnome-libsecret";
       "redhat.telemetry.enabled" = false;
       "telemetry.telemetryLevel" = "off";
       "terminal.integrated.fontFamily" = "'Hack Nerd Font', 'monospace', monospace";
@@ -72,15 +74,14 @@ in
       "workbench.startupEditor" = "none";
 
       # Executable path configurations
-      "ansible.ansible.path" = "${pkgs.ansible}/bin/ansible";
+      "ansible.ansible.path" = bp pkgs.ansible;
       "ansible.python.interpreterPath" = pythonWithAnsible;
       "clangd.path" = "${pkgs.clang-tools}/bin/clangd";
-      "pylsp.executable" = "${pkgs.python3.pkgs.python-lsp-server}/bin/pylsp";
-      "terraform.languageServer.path" = "${pkgs.terraform-ls}/bin/terraform-ls";
-      "vim.neovimPath" = "${pkgs.neovim}/bin/nvim";
-      "vscode-kubernetes.helm-path" = "${pkgs.kubernetes-helm}/bin/helm";
-      "vscode-kubernetes.kubectl-path" = "${pkgs.kubectl}/bin/kubectl";
-      "C_Cpp.intelliSenseEngine" = "disabled";
+      "pylsp.executable" = bp pkgs.python3.pkgs.python-lsp-server;
+      "terraform.languageServer.path" = bp pkgs.terraform-ls;
+      "vim.neovimPath" = bp pkgs.neovim;
+      "vscode-kubernetes.helm-path" = bp pkgs.kubernetes-helm;
+      "vscode-kubernetes.kubectl-path" = bp pkgs.kubectl;
 
       "[tf]" = {
         "editor.insertSpaces" = true;

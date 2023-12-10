@@ -1,4 +1,5 @@
 { pkgs
+, bp
 , ...
 }:
 {
@@ -39,17 +40,17 @@
       settings = {
         languageserver = {
           nix = {
-            command = "${pkgs.nil}/bin/nil";
+            command = bp pkgs.nil;
             filetypes = [ "nix" ];
             rootPatterns = [ "flake.nix" ];
             settings = {
               nil = {
-                formatting = { command = [ "${pkgs.nixpkgs-fmt}/bin/nixpkgs-fmt" ]; };
+                formatting = { command = [ (bp pkgs.nixpkgs-fmt) ]; };
               };
             };
           };
           terraform = {
-            command = "${pkgs.terraform-lsp}/bin/terraform-lsp";
+            command = bp pkgs.terraform-lsp;
             filetypes = [ "terraform" ];
             initializationOptions = { };
           };

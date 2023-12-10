@@ -2,6 +2,7 @@
 , inputs
 , withSystem
 , flakeloc
+, bp
 , ...
 }:
 let
@@ -11,9 +12,7 @@ let
         pkgs = pkgs // { config.allowUnfree = true; };
         extraSpecialArgs =
           {
-            inherit self;
-            inherit inputs;
-            inherit flakeloc;
+            inherit self inputs flakeloc bp;
           } // customArgs.extraSpecialArgs;
         modules = [
           ../common/overlays.nix

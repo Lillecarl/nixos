@@ -1,11 +1,14 @@
-{ pkgs, ... }:
+{ pkgs
+, bp
+, ...
+}:
 {
   systemd.user.services.swaync = {
     Unit = {
       Description = "Sway notification center";
     };
     Service = {
-      ExecStart = "${pkgs.swaynotificationcenter}/bin/swaync";
+      ExecStart = bp pkgs.swaynotificationcenter;
     };
     Install = {
       WantedBy = [ "hyprland-session.target" ];

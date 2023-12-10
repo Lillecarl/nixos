@@ -1,11 +1,10 @@
-{ config
-, pkgs
-, lib
+{ pkgs
+, bp
 , ...
-}: rec
+}:
 {
   systemd.services = {
-    UpdateFlatpaks = rec {
+    UpdateFlatpaks = {
       after = [ "network-online.target" ];
       wants = [ "network-online.target" ];
       wantedBy = [ "multi-user.target" ];
@@ -17,7 +16,7 @@
         Type = "oneshot";
       };
 
-      script = "${pkgs.flatpak}/bin/flatpak --system update -y";
+      script = "${bp pkgs.flatpak} --system update -y";
     };
   };
 
@@ -28,6 +27,6 @@
       Type = "oneshot";
     };
 
-    script = "${pkgs.flatpak}/bin/flatpak --user update -y";
+    script = "${bp pkgs.flatpak} --user update -y";
   };
 }

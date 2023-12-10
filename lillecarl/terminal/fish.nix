@@ -1,6 +1,5 @@
 { pkgs
-, config
-, flakeloc
+, bp
 , ...
 }:
 {
@@ -32,8 +31,8 @@
       ];
 
     interactiveShellInit = ''
-      ${pkgs.zoxide}/bin/zoxide init fish | source
-      ${pkgs.thefuck}/bin/thefuck --alias | source
+      ${bp pkgs.zoxide} init fish | source
+      ${bp pkgs.thefuck} --alias | source
     '';
 
     shellInit = ''

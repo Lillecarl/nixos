@@ -1,7 +1,4 @@
-{ self
-, inputs
-, pkgs
-, withSystem
+{ inputs
 , ...
 }: {
   perSystem =

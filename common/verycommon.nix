@@ -1,5 +1,4 @@
 { pkgs
-, programs-sqlite-db
 , flakeloc
 , ...
 }:
@@ -37,8 +36,6 @@
   # Set your time zone.
   time.timeZone = "Europe/Stockholm";
 
-  # Make command not found suggest nix derivations
-  programs.command-not-found.dbPath = programs-sqlite-db;
   # Enable IO perf monitoring
   programs.iotop.enable = true;
 }

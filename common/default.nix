@@ -1,4 +1,8 @@
-{ pkgs, inputs, ... }: {
+{ pkgs
+, bp
+, ...
+}:
+{
   security.pam.services.login.enableGnomeKeyring = true;
   security.pam.services.greetd.enableGnomeKeyring = true;
   security.pam.services.swaylock.enableGnomeKeyring = true;
@@ -284,11 +288,11 @@
         users = [ "lillecarl" ];
         commands = [
           {
-            command = "${pkgs.htop}/bin/htop --readonly";
+            command = "${bp pkgs.htop} --readonly";
             options = [ "NOPASSWD" ];
           }
           {
-            command = "${pkgs.ddcutil}/bin/ddcutil";
+            command = "${bp pkgs.ddcutil}";
             options = [ "NOPASSWD" ];
           }
         ];

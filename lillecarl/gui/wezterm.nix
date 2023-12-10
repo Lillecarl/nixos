@@ -1,5 +1,6 @@
 { pkgs
 , inputs
+, bp
 , ...
 }: {
   programs.wezterm = {
@@ -21,7 +22,7 @@
             window_close_confirmation = 'NeverPrompt',
             hide_mouse_cursor_when_typing = false,
             hide_tab_bar_if_only_one_tab = true,
-            default_prog = { '${pkgs.fish}/bin/fish' },
+            default_prog = { '${bp pkgs.fish}' },
             term = "wezterm",
             enable_wayland = true,
             set_environment_variables = {

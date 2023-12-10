@@ -182,6 +182,7 @@
             if builtins.getEnv "FLAKE" == ""
             then builtins.abort "env var FLAKE is not properly configured"
             else builtins.getEnv "FLAKE";
+          bp = pkg: "${pkg.outPath}/bin/" + (pkg.meta.mainProgram or pkg.pname);
         };
       }
       {

@@ -1,4 +1,7 @@
-{ pkgs, ... }:
+{ pkgs
+, bp
+, ...
+}:
 {
   environment.systemPackages = [
     pkgs.openvpn
@@ -22,7 +25,7 @@
       PrivateTmp = "true";
       # Differs from official OpenVPN in that CWD is /etc/openvpn/client/%i rather than /etc/openvpn/client
       WorkingDirectory = "/etc/openvpn/client/%i";
-      ExecStart = "${pkgs.openvpn}/bin/openvpn --suppress-timestamps --nobind --config %i.conf";
+      ExecStart = "${bp pkgs.openvpn} --suppress-timestamps --nobind --config %i.conf";
       CapabilityBoundingSet = "CAP_IPC_LOCK CAP_NET_ADMIN CAP_NET_RAW CAP_SETGID CAP_SETUID CAP_SYS_CHROOT CAP_DAC_OVERRIDE";
       LimitNPROC = 10;
       DeviceAllow = [
