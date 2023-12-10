@@ -9,7 +9,7 @@ in
 {
   flake = {
     nixosConfigurations.nub = inputs.nixpkgs.lib.nixosSystem {
-      system = system;
+      inherit system;
       modules = [
         ../../modules/nixos/keymapper.nix
         ../../common

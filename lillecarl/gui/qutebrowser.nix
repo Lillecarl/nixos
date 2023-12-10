@@ -9,8 +9,7 @@
     enable = true;
 
     package = pkgs.qutebrowser.overrideAttrs (oldAttrs: {
-      propagatedBuildInputs = oldAttrs.propagatedBuildInputs ++ [
-      ];
+      inherit (oldAttrs) propagatedBuildInputs;
       nativeBuildInputs = oldAttrs.nativeBuildInputs ++ [
         pkgs.keyutils
       ];

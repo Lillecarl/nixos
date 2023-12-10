@@ -28,11 +28,9 @@ in
     package = vscodeWithBin;
 
     extensions = pkgs.vscode-utils.extensionsFromVscodeMarketplace
-      (
-        (builtins.fromJSON
+      (builtins.fromJSON
           (builtins.readFile ../../pkgs/vscodeExtensions.json)
-        )
-      ) ++
+        ) ++
     (with pkgs.vscode-marketplace; [
       pkgs.vscode-marketplace."4ops".terraform
       bbenoist.nix

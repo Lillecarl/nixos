@@ -24,7 +24,7 @@ in
     systemd.user.services.wezterm-mux-server = {
       Unit = {
         X-SwitchMethod = "restart";
-        X-ConfigHash = (builtins.hashString "md5" cfg.extraConfig);
+        X-ConfigHash = builtins.hashString "md5" cfg.extraConfig;
         Description = "WezTerm Multiplexer Server";
       };
       Service = {

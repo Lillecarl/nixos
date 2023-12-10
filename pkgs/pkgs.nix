@@ -30,8 +30,7 @@ let
 in
 prev.lib.filterAttrs
   (n: v:
-    flake
-    == false
+    !flake
     ||
     # Flake is implicitly true here
     # Filter out package sets if we're called from a flake.
@@ -74,17 +73,17 @@ prev.lib.filterAttrs
     });
   }
 // (
-  if flake == true
+  if flake
   then python3Packages
   else { }
 )
 // (
-  if flake == true
+  if flake
   then nodePackages
   else { }
 )
   // (
-  if flake == true
+  if flake
   then grafanaPlugins
   else { }
 )

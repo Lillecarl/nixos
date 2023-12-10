@@ -1,4 +1,4 @@
-{ ... }@allArgs:
+allArgs:
 {
   services.keymapper = {
     enable = allArgs.systemConfig.services.keymapper.enable or false;

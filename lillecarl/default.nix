@@ -11,7 +11,7 @@ let
   dot_prefixDeleted = builtins.map (x: builtins.replaceStrings [ dot_path ] [ "" ] x) dot_strings;
   dotfile_rootFiltered = builtins.filter (path: (builtins.match ".*\/.*" path) != null) dot_prefixDeleted;
   dotfile_outOfStoreLinked = lib.attrsets.genAttrs dotfile_rootFiltered (name: {
-    source = (config.lib.file.mkOutOfStoreSymlink (dot_path + name));
+    source = config.lib.file.mkOutOfStoreSymlink (dot_path + name);
   });
 in
 {

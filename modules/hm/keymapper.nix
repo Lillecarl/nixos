@@ -32,7 +32,7 @@ in
     systemd.user.services.keymapper = {
       Unit = {
         X-SwitchMethod = "restart";
-        X-ConfigHash = (builtins.hashString "md5" cfg.extraConfig);
+        X-ConfigHash = builtins.hashString "md5" cfg.extraConfig;
         Description = "Keymapper";
       };
       Service = {

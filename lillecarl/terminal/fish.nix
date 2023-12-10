@@ -12,7 +12,7 @@
       (builtins.map
         (
           plug: {
-            name = plug.name;
+            inherit (plug) name;
             src = pkgs.fetchFromGitHub plug.src;
           }
         )
@@ -24,11 +24,9 @@
       ) ++ (with pkgs.fishPlugins; [
         {
           name = "done";
-          src = done.src;
+          inherit (done) src;
         }
-      ]) ++
-      [
-      ];
+      ]);
 
     interactiveShellInit = ''
       ${bp pkgs.zoxide} init fish | source

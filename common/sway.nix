@@ -1,4 +1,4 @@
-{ ... }:
+_:
 {
   programs.sway.enable = true;
   programs.sway.package = null;
