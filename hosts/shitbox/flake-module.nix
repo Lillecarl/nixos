@@ -1,6 +1,9 @@
 { inputs
+, flakeloc
+, bp
 , ...
-}: {
+}:
+{
   flake = {
     nixosConfigurations.shitbox = inputs.nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
@@ -25,6 +28,9 @@
         inputs.nixos-hardware.nixosModules.common-pc-ssd
         inputs.flake-programs-sqlite.nixosModules.programs-sqlite
       ];
+      specialArgs = {
+        inherit inputs flakeloc bp;
+      };
     };
   };
 }
