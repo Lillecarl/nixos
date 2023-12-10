@@ -93,6 +93,7 @@ def main():
   updatevscode()
   updategit()
   os.chdir(gitroot)
+  nix("run", "nixpkgs#statix", "fix")
   nix("fmt")
 
 if __name__ == '__main__':
