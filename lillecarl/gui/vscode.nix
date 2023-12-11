@@ -6,16 +6,6 @@ let
   pythonWithAnsible = pkgs.python3.withPackages (ps: with ps; [
     ansible
   ]);
-
-  vscodeWithBin = pkgs.symlinkJoin {
-    name = "vscode-joined";
-    inherit (pkgs.vscode) pname version;
-
-    paths = [
-      pkgs.vscode
-      pythonWithAnsible
-    ];
-  };
 in
 {
   programs.vscode = {
@@ -24,8 +14,6 @@ in
     enableExtensionUpdateCheck = false;
     enableUpdateCheck = false;
     mutableExtensionsDir = false;
-
-    package = vscodeWithBin;
 
     extensions = pkgs.vscode-utils.extensionsFromVscodeMarketplace
       (builtins.fromJSON
