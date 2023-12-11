@@ -1,6 +1,8 @@
 { self
 , pkgs
+, lib
 , bp
+, systemConfig
 , ...
 }@allArgs:
 {
@@ -41,7 +43,7 @@
 
     timeouts = [
       { timeout = 300; command = bp pkgs.swaylock; }
-      { timeout = 600; command = "${pkgs.hyprland}/bin/hyprctl dispatch dpms off"; }
+      ((lib.mkIf (systemConfig.networking.hostName == "shitbox")) { timeout = 600; command = "${pkgs.hyprland}/bin/hyprctl dispatch dpms off"; })
     ];
   };
 }

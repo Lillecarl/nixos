@@ -29,7 +29,7 @@
   home = {
     file.".local/bin/.keep".text = "";
 
-    sessionVariables = config.pam.sessionVariables;
+    inherit (config.pam) sessionVariables;
   };
 
   xdg.enable = true;
