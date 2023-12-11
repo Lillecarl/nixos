@@ -1,9 +1,10 @@
-{ config
-, pkgs
-, inputs
-, ...
+{ lib,
+...
 }:
 let
+  setEnv = {
+    TERM = "xterm-256color";
+  };
   internalSSH = {
     user = "carl.hjerpe";
     forwardAgent = true;
@@ -32,8 +33,11 @@ in
 
     matchBlocks = {
       "10.0.0.0/8" = internalSSH;
-      "192.168.0.0/16" = internalSSH;
-      "172.16.0.0/12" = internalSSH;
+      "172.16.0.0/12" = lib.hm.dag.entryAfter ["10.0.0.0/8"] internalSSH;
+      "192.168.0.0/16" = lib.hm.dag.entryAfter ["172.16.0.0/12"] internalSSH;
+      "*" = lib.hm.dag.entryAfter ["192.168.0.0/16"] {
+        inherit setEnv;
+      };
     };
 
     serverAliveInterval = 10;
