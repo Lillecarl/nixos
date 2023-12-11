@@ -2,6 +2,9 @@ set -x fish_greeting ""
 set -x SHELL "fish"
 fish_vi_key_bindings
 
+# trigger dirent before prompt is rendered
+set -g direnv_fish_mode eval_on_arrow
+
 function git_root
   cd "$(git rev-parse --show-toplevel)"
 end
