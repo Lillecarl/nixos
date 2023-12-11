@@ -9,6 +9,7 @@
     #inputs.system-manager.packages.x86_64-linux.system-manager
     inputs.nix-melt.packages.${pkgs.system}.default
     terraform_1_5_5 # Terraform 1.5.5, last FOSS release
+    mimeo # Open files with the right program
     (lowPrio kubectl) # Kubernetes management cli
     vault # secrets mumbo jumbo
     gdb # GNU debugger
