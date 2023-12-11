@@ -53,5 +53,17 @@
         fi
       '';
     };
+    services.keymapper-restart = {
+      enable = true;
+      wantedBy = ["post-resume.target"];
+
+      path = [
+        config.systemd.package
+      ];
+
+      script = ''
+        systemctl restart keymapper
+      '';
+    };
   };
 }
