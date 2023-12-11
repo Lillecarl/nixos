@@ -1,5 +1,7 @@
 if vim.g.neovide then
-    -- Put anything you want to happen only in Neovide here
+  -- Put anything you want to happen only in Neovide here
+  vim.o.guifont = "Hack Nerd Font:h11"
+  vim.g.neovide_cursor_animate_in_insert_mode = false
 end
 
 -- Setup nvim-tree
