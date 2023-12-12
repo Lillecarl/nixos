@@ -292,8 +292,6 @@
   security.rtkit.enable = true;
   # Enable Flatpak
   services.flatpak.enable = true;
-  # xdg desktop intergration (required for flatpak)
-  xdg.portal.enable = true;
   # Enabled fwupd daemon, allows applications to update firmware
   services.fwupd.enable = true;
   # Enable the OpenSSH daemon.

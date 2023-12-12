@@ -22,7 +22,9 @@ in
 
   xdg.portal = {
     enable = true;
-    extraPortals = [ finalPortalPackage ];
+    configPackages = [ finalPortalPackage ];
+    xdgOpenUsePortal = true;
+    config.common.default = "*";
   };
 
   programs.nm-applet.enable = true;
