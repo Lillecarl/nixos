@@ -24,7 +24,7 @@
   systemd = {
     timers.keymapper-mon = {
       enable = true;
-      wantedBy = ["keymapper.service"];
+      wantedBy = [ "keymapper.service" ];
 
       timerConfig = {
         OnCalendar = "*-*-* *:*:00";
@@ -36,7 +36,7 @@
 
     services.keymapper-mon = {
       enable = true;
-      wantedBy = ["keymapper.service"];
+      wantedBy = [ "keymapper.service" ];
 
       path = [
         config.systemd.package
@@ -55,7 +55,7 @@
     };
     services.keymapper-restart = {
       enable = true;
-      wantedBy = ["post-resume.target"];
+      wantedBy = [ "post-resume.target" ];
 
       path = [
         config.systemd.package

@@ -1,5 +1,5 @@
-{ lib,
-...
+{ lib
+, ...
 }:
 let
   setEnv = {
@@ -33,9 +33,9 @@ in
 
     matchBlocks = {
       "10.0.0.0/8" = internalSSH;
-      "172.16.0.0/12" = lib.hm.dag.entryAfter ["10.0.0.0/8"] internalSSH;
-      "192.168.0.0/16" = lib.hm.dag.entryAfter ["172.16.0.0/12"] internalSSH;
-      "*" = lib.hm.dag.entryAfter ["192.168.0.0/16"] {
+      "172.16.0.0/12" = lib.hm.dag.entryAfter [ "10.0.0.0/8" ] internalSSH;
+      "192.168.0.0/16" = lib.hm.dag.entryAfter [ "172.16.0.0/12" ] internalSSH;
+      "*" = lib.hm.dag.entryAfter [ "192.168.0.0/16" ] {
         inherit setEnv;
       };
     };
