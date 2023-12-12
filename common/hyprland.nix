@@ -22,7 +22,7 @@ in
 
   xdg.portal = {
     enable = true;
-    configPackages = [ finalPortalPackage ];
+    extraPortals = [ finalPortalPackage ];
     xdgOpenUsePortal = true;
     config.common.default = "*";
   };
