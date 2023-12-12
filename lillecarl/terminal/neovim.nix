@@ -65,7 +65,7 @@
 
     extraConfig = ''
       " is comments in this language
-      " <leader> = "\" (hold)
+      " <leader> = "\<Space>" (hold)
 
       set mouse=
       set number
@@ -86,15 +86,14 @@
       vnoremap <leader>P "+P
     '';
 
-    extraLuaConfig = ''
-      ${"\n"}-- Configure coc
+    extraLuaConfig = ''${"\n"}
+      require('user_config')
       require('catppuccin_config')
       require('coc_config')
       require('copilot_config')
       require('neogit_config')
       require('telescope_config')
       require('toggleterm_config')
-      require('user_config')
     '';
   };
 }

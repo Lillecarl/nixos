@@ -1,3 +1,38 @@
+-- use space as leader key
+vim.g.mapleader = " "
+
+local wk = require('which-key')
+
+wk.register({
+  ["<tab>"] = {
+    name = "tab",
+    ["l"]   =       { "<cmd>tablast<cr>", "Last Tab" },
+    ["f"]   =       { "<cmd>tabfirst<cr>", "First Tab" },
+    ["]"]   =       { "<cmd>tabnext<cr>", "Next Tab" },
+    ["d"]   =       { "<cmd>tabclose<cr>", "Close Tab" },
+    ["["]   =       { "<cmd>tabprevious<cr>", "Previous Tab" },
+    ["<tab>"] = { "<cmd>tabnew<cr>", "New Tab" },
+  },
+},
+{
+  mode = "n",
+  prefix = "<leader>",
+})
+--[[
+wk.register({
+  f = {
+    name = "Telescope",
+    f = { telescope_builtin.find_files, "Find File" },
+    g = { telescope_builtin.live_grep,  "Grep" },
+    b = { telescope_builtin.buffers,    "Buffers" },
+    h = { telescope_builtin.help_tags,  "Help" },
+  },
+},
+{
+  mode = "n",
+  prefix = "<leader>",
+})
+--]]
 if vim.g.neovide then
   -- Put anything you want to happen only in Neovide here
   vim.o.guifont = "Hack Nerd Font:h11"
@@ -32,6 +67,7 @@ require("nvim-tree").setup({
 
 -- Setup nvim-tree bindings
 vim.keymap.set('n', '<C-t>', nvim_tree_api.tree.toggle, {})
+
 
 vim.cmd [[
 " Allow leaving terminal mode with <C-hjkl>
