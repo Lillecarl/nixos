@@ -68,6 +68,8 @@ require("nvim-tree").setup({
 -- Setup nvim-tree bindings
 vim.keymap.set('n', '<C-t>', nvim_tree_api.tree.toggle, {})
 
+require('showmaps')
+wk.register({["\\m"] = { "<cmd>ShowMaps<cr>", "Show Maps" }}, { })
 
 vim.cmd [[
 " Allow leaving terminal mode with <C-hjkl>
