@@ -3,14 +3,15 @@ vim.g.mapleader = " "
 
 local wk = require('which-key')
 
+-- Tabs
 wk.register({
   ["<tab>"] = {
     name = "tab",
-    ["l"]   =       { "<cmd>tablast<cr>", "Last Tab" },
-    ["f"]   =       { "<cmd>tabfirst<cr>", "First Tab" },
-    ["]"]   =       { "<cmd>tabnext<cr>", "Next Tab" },
-    ["d"]   =       { "<cmd>tabclose<cr>", "Close Tab" },
-    ["["]   =       { "<cmd>tabprevious<cr>", "Previous Tab" },
+    ["l"]     = { "<cmd>tablast<cr>", "Last Tab" },
+    ["f"]     = { "<cmd>tabfirst<cr>", "First Tab" },
+    ["]"]     = { "<cmd>tabnext<cr>", "Next Tab" },
+    ["d"]     = { "<cmd>tabclose<cr>", "Close Tab" },
+    ["["]     = { "<cmd>tabprevious<cr>", "Previous Tab" },
     ["<tab>"] = { "<cmd>tabnew<cr>", "New Tab" },
   },
 },
@@ -18,23 +19,42 @@ wk.register({
   mode = "n",
   prefix = "<leader>",
 })
---[[
+-- Clipboard
 wk.register({
-  f = {
-    name = "Telescope",
-    f = { telescope_builtin.find_files, "Find File" },
-    g = { telescope_builtin.live_grep,  "Grep" },
-    b = { telescope_builtin.buffers,    "Buffers" },
-    h = { telescope_builtin.help_tags,  "Help" },
+  ["y"] = {
+    name = "yank",
+    ["y"]     = { '"+y',    "Copy (cb)" },
+    ["p"]     = { '"+p',    "Paste (cb)" },
+    ["P"]     = { '"+P',    "Paste before (cb)" },
   },
+},
+{ mode = "v" })
+wk.register({
+    ["Y"]     = { '"+yg_',  "Copy" },
+    ["y"]     = { '"+y',    "Copy (cb)" },
+    ["p"]     = { '"+p',    "Paste (cb)" },
+    ["P"]     = { '"+P',    "Paste before (cb)" },
 },
 {
   mode = "n",
   prefix = "<leader>",
 })
---]]
+
+-- No mouse thanks
+vim.o.mouse = false
+-- Show line numbers relative to cursor
+vim.o.number = true
+vim.o.relativenumber = true
+-- utf-8 as default encoding
+encoding="utf-8"
+-- Ignore case when searching lower-case
+vim.o.ignorecase = true
+-- Respect case when searching mixed-case
+vim.o.smartcase = true
+-- Show a line down column 81 to indicate the 80 column limit
+vim.o.colorcolumn = 81
+
 if vim.g.neovide then
-  -- Put anything you want to happen only in Neovide here
   vim.o.guifont = "Hack Nerd Font:h11"
   vim.g.neovide_cursor_animate_in_insert_mode = false
 end
@@ -77,39 +97,15 @@ vim.cmd [[
 :tnoremap <C-j> <C-\><C-N><C-w>j
 :tnoremap <C-k> <C-\><C-N><C-w>k
 :tnoremap <C-l> <C-\><C-N><C-w>l
-" Show a line down column 81 to indicate the 80 column limit
-:set colorcolumn=81
-
-" List all custom mappings in a new buffer
-function! s:ShowMaps()
-  let old_reg = getreg("a")          " save the current content of register a
-  let old_reg_type = getregtype("a") " save the type of the register as well
-try
-  redir @a                           " redirect output to register a
-  " Get the list of all key mappings silently, satisfy "Press ENTER to continue"
-  silent map | call feedkeys("\<CR>")
-  redir END                          " end output redirection
-  vnew                               " new buffer in vertical window
-  put a                              " put content of register
-  " Sort on 4th character column which is the key(s)
-  %!sort -k1.4,1.4
-finally                              " Execute even if exception is raised
-  call setreg("a", old_reg, old_reg_type) " restore register a
-endtry
-endfunction
-com! ShowMaps call s:ShowMaps()      " Enable :ShowMaps to call the function
-
-nnoremap \m :ShowMaps<CR>            " Map keys to call the function
 ]]
 
 -- Disable line numbers and start insert mode when opening a terminal
 vim.api.nvim_create_autocmd('TermOpen', {
   once = true,
   callback = function(args)
-    vim.cmd [[
-    :set nonumber
-    startinsert
-    ]]
+    vim.o.number = false
+    vim.o.relativenumber = false
+    vim.cmd('startinsert')
   end,
 })
 
