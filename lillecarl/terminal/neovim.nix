@@ -11,17 +11,26 @@
     vimdiffAlias = true;
     defaultEditor = true;
 
+    extraPackages = [
+      pkgs.clang-tools # C, C++
+      pkgs.fd # For telescope
+      pkgs.lua-language-server #Lua
+      pkgs.nil # Nix
+      pkgs.ripgrep # For telescope
+      pkgs.terraform-lsp # Terraform
+    ];
+
     plugins = with pkgs.vimPlugins; [
       camelcasemotion
       catppuccin-nvim
-      coc-clangd
-      coc-pyright
+      cmp-nvim-lsp # LSP source for cmp
       copilot-lua
-      ctrlp
       fugitive
       indent-blankline-nvim
       neodev-nvim
       neogit
+      nvim-cmp
+      nvim-lspconfig
       nvim-tree-lua
       nvim-treesitter.withAllGrammars
       surround
@@ -30,12 +39,11 @@
       telescope-nvim
       toggleterm-nvim
       vim-airline
-      vim-tmux-navigator
       which-key-nvim
     ];
 
     coc = {
-      enable = true;
+      enable = false;
 
       settings = {
         languageserver = {
@@ -66,11 +74,12 @@
     extraLuaConfig = ''${"\n"}
       require('user_config')
       require('catppuccin_config')
-      require('coc_config')
       require('copilot_config')
       require('neogit_config')
       require('telescope_config')
       require('toggleterm_config')
+      require('lsp_config')
+      --require('coc_config')
     '';
   };
 }
