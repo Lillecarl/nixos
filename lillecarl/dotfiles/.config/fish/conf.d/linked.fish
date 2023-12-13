@@ -31,6 +31,7 @@ abbr -a sshr ssh-keygen -R
 abbr -a ls eza
 abbr -a ll eza -lah
 abbr -a cat bat --paging=never
+abbr -a :q exit
 
 # bind ctrl+a to beginning of buffer
 bind \ca -M insert beginning-of-buffer
