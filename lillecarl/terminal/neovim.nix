@@ -12,12 +12,13 @@
     defaultEditor = true;
 
     extraPackages = [
-      pkgs.clang-tools # C, C++
-      pkgs.fd # For telescope
-      pkgs.lua-language-server #Lua
-      pkgs.nil # Nix
-      pkgs.ripgrep # For telescope
-      pkgs.terraform-lsp # Terraform
+      pkgs.clang-tools # C, C++ lsp
+      pkgs.fd # for telescope
+      pkgs.lua-language-server # lua lsp
+      pkgs.nil # nix lsp
+      pkgs.ripgrep # for telescope
+      pkgs.terraform-lsp # terraform lsp
+      pkgs.pyright # python lsp
     ];
 
     plugins = with pkgs.vimPlugins; [

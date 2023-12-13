@@ -1,9 +1,7 @@
 #! /usr/bin/env python
 
-from pathlib import Path
 from time import sleep
 from plumbum import local, FG
-from os import environ
 import socket
 
 ping = local["ping"]

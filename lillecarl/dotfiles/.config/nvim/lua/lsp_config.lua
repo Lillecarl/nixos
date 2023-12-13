@@ -41,7 +41,12 @@ lsp.terraform_lsp.setup({
 lsp.nil_ls.setup({
   capabilities = cmp_lsp_cap,
 })
-lsp.lua_ls.setup({})
+lsp.lua_ls.setup({
+  capabilities = cmp_lsp_cap,
+})
+lsp.pyright.setup({
+  capabilities = cmp_lsp_cap,
+})
 
 wk.register({
   ["<space>e"] =  { vim.diagnostic.open_float,  "Open diagnostics" },
