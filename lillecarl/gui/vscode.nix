@@ -11,6 +11,8 @@ in
   programs.vscode = {
     enable = true;
 
+    package = pkgs.vscodium;
+
     enableExtensionUpdateCheck = false;
     enableUpdateCheck = false;
     mutableExtensionsDir = false;
@@ -34,9 +36,6 @@ in
       redhat.vscode-yaml
       vscodevim.vim
       davidhewitt.shebang-language-associator
-      ms-vscode-remote.remote-ssh
-      ms-vscode-remote.remote-ssh-edit
-      ms-vscode.remote-explorer
       redhat.ansible
     ]);
 
