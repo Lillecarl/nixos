@@ -5,6 +5,7 @@ local copilot_sug = require("copilot.suggestion")
 
 -- configure neodev early
 require("neodev").setup({})
+require('snippy').setup({})
 
 cmp.setup({
   sources = {
@@ -28,10 +29,16 @@ cmp.setup({
       end
     end),
   }),
+  snippet = {
+    expand = function(args)
+      require('snippy').expand_snippet(args.body)
+    end,
+  },
 })
 
 -- The nvim-cmp almost supports LSP's capabilities so You should advertise it to LSP servers..
 local cmp_lsp_cap = require('cmp_nvim_lsp').default_capabilities()
+cmp_lsp_cap.textDocument.completion.completionItem.snippetSupport = true
 
 lsp.terraform_lsp.setup({
   capabilities = cmp_lsp_cap,

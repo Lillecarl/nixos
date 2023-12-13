@@ -32,6 +32,7 @@
       neogit
       nvim-cmp
       nvim-lspconfig
+      nvim-snippy
       nvim-tree-lua
       nvim-treesitter.withAllGrammars
       surround
