@@ -18,5 +18,15 @@ return {
       mods = "CTRL|SHIFT",
       action = act.ActivateCopyMode,
     },
+    {
+      key = "v",
+      mods = "CTRL|SHIFT",
+      action = act.PasteFrom "Clipboard",
+    },
+    {
+      key = "c",
+      mods = "CTRL|SHIFT",
+      action = act.CopyTo "Clipboard",
+    },
   },
 }
