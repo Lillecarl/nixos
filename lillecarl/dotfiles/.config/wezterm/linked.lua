@@ -15,12 +15,7 @@ return {
   keys = {
     {
       key = "x",
-      mods = "ALT|SHIFT",
-      action = act.ActivateCopyMode,
-    },
-    {
-      key = "x",
-      mods = "ALT",
+      mods = "CTRL|SHIFT",
       action = act.ActivateCopyMode,
     },
   },
