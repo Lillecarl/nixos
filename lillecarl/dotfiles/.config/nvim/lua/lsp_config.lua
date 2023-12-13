@@ -18,6 +18,7 @@ cmp.setup({
     ['<M-k>']     = cmp.mapping(cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select })),
     ['<M-j>']     = cmp.mapping(cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select })),
     ['<tab>']     = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+    -- accept currently selected item or first item or copilot suggestion
     ['<M-l>']     = cmp.mapping(
     function(_)
       if cmp.visible() and cmp.get_active_entry() then
@@ -48,47 +49,6 @@ wk.register({
   ["]d"] =        { vim.diagnostic.goto_next,   "Next diagnostic" },
   ["<space>q"] =  { vim.diagnostic.setloclist,  "Set loclist" },
 },{ })
-
---[[
-wk.register({
-  ["<M-j>"] = {
-    function()
-      if cmp.visible() then
-        cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
-      end
-    end,  "Sel next cmp" },
-  ["<M-k>"] = {
-    function()
-      if cmp.visible() then
-        cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
-      end
-    end,  "Sel prev cmp" },
-  ["<M-l>"] = {
-    function()
-      if cmp.visible() then
-        cmp.mapping({
-          i = function(fallback)
-            if cmp.visible() and cmp.get_active_entry() then
-              cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
-            else
-              fallback()
-            end
-          end,
-          s = cmp.mapping.confirm({ select = true }),
-          c = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
-        })
-      elseif copilot_sug.is_visible() then
-        copilot_sug.accept_line()
-      end
-    end,  "Cmp complete" },
-  ["<M-x>"] = {
-    function()
-      if cmp.visible() then
-        cmp.mapping.abort()
-      end
-    end,  "Cmp abort" },
-},{ mode = "i", })
---]]
 
 -- Disable copilot suggestions when cmp is active
 cmp.event:on("menu_opened", function()
