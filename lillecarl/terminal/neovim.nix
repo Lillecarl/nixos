@@ -19,6 +19,7 @@
       pkgs.ripgrep # for telescope
       pkgs.terraform-lsp # terraform lsp
       pkgs.pyright # python lsp
+      pkgs.vscode-langservers-extracted # HTML/CSS/JSON/ESLint lsp
     ];
 
     plugins = with pkgs.vimPlugins; [

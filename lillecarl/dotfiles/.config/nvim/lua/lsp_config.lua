@@ -54,6 +54,9 @@ lsp.lua_ls.setup({
 lsp.pyright.setup({
   capabilities = cmp_lsp_cap,
 })
+lsp.html.setup({
+  capabilities = cmp_lsp_cap,
+})
 
 wk.register({
   ["<space>e"] =  { vim.diagnostic.open_float,  "Open diagnostics" },
