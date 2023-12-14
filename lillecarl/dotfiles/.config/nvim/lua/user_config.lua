@@ -21,8 +21,7 @@ wk.register({
 })
 -- Clipboard
 wk.register({
-  ["y"] = {
-    name = "yank",
+  ["<leader>"] = {
     ["y"]     = { '"+y',    "Copy (cb)" },
     ["p"]     = { '"+p',    "Paste (cb)" },
     ["P"]     = { '"+P',    "Paste before (cb)" },
