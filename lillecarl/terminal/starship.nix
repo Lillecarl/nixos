@@ -1,10 +1,8 @@
-{ config
-, pkgs
-, inputs
+{ inputs
 , ...
 }:
 let
-  icons = ''
+  icons = /* toml */ ''
     [aws]
     symbol = "  "
 
