@@ -1,4 +1,5 @@
 local wk = require('which-key')
+local toggleterm = require("toggleterm")
 
 require("toggleterm").setup({
 })
@@ -13,6 +14,20 @@ wk.register({
 },
 {
   mode = "t",
+})
+
+wk.register({
+  ["t"] = {
+    name = "terminal",
+    ["t"] = { [[<cmd>ToggleTerm<cr>]], "Toggle terminal" },
+    ["n"] = { [[<cmd>ToggleTerm direction=horizontal<cr>]], "New terminal (horizontal)" },
+    ["v"] = { [[<cmd>ToggleTerm direction=vertical<cr>]], "New terminal (vertical)" },
+    ["f"] = { [[<cmd>ToggleTerm direction=float<cr>]], "New terminal (float)" },
+  },
+},
+{
+  mode = "n",
+  prefix = "<leader>",
 })
 
 -- Disable line numbers and start insert mode when opening a terminal
