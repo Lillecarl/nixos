@@ -34,7 +34,7 @@
     in
     {
       enable = true;
-      extraRules = ''
+      extraRules = /* udev */ ''
         # Disable power/wakeup for ELAN touchpad that prevents suspending.
         SUBSYSTEM=="i2c", DRIVER=="i2c_hid_acpi", ATTR{name}=="ELAN*", ATTR{power/wakeup}="disabled"
         # Limit battery max charge to 86% (85 in reality)

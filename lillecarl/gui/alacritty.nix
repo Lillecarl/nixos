@@ -10,7 +10,7 @@ let
     preferLocalBuild = true;
     allowSubstitutes = false;
 
-    buildCommand = ''
+    buildCommand = /* bash */ ''
       cat $src | ${bp pkgs.yj} -i > $out
     '';
   }));

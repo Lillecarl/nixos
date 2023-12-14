@@ -28,7 +28,7 @@
         }
       ]);
 
-    interactiveShellInit = ''
+    interactiveShellInit = /* fish */ ''
       ${bp pkgs.zoxide} init fish | source
       ${bp pkgs.thefuck} --alias | source
     '';

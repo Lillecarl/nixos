@@ -1,6 +1,4 @@
-{ config
-, pkgs
-, inputs
+{ pkgs
 , ...
 }: {
   home.packages = [
@@ -157,7 +155,7 @@
           "font.name.monospace.x-western" = "Hack Nerd Font";
         };
 
-        userChrome = ''
+        userChrome = /* css */ ''
           /* Hide tab bar */
           #tabbrowser-tabs {
             visibility: collapse !important;

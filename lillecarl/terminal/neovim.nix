@@ -53,7 +53,7 @@
       which-key-nvim
     ];
 
-    extraLuaConfig = ''${"\n"}
+    extraLuaConfig = /* lua */ ''${"\n"}
       require('user_config')
       require('catppuccin_config')
       require('copilot_config')

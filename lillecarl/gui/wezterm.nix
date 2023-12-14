@@ -13,9 +13,8 @@
 
     #systemdTarget = "hyprland-session.target";
 
-    extraConfig = ''
+    extraConfig = /* lua */ ''
       -- Indent fixer
-
           local nix_config = wezterm.config_builder()
           nix_config = {
             default_prog = { '${bp pkgs.fish}' },

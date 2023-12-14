@@ -15,7 +15,7 @@
     ];
   };
 
-  services.udev.extraRules = ''
+  services.udev.extraRules = /* udev */ ''
     ACTION="add", SUBSYSTEM=="leds", KERNEL=="platform::micmute" ATTR{trigger}="audio-micmute"
   '';
 

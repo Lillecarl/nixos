@@ -1,6 +1,6 @@
 _:
 {
-  xdg.configFile."wlogout/layout.json".text = ''
+  xdg.configFile."wlogout/layout.json".text = /* json */ ''
     {
         "label" : "lock",
         "action" : "swaylock",

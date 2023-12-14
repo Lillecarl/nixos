@@ -12,7 +12,7 @@
     let
       coreutils = pkgs.coreutils-full;
     in
-    ''
+    /* udev */ ''
       # Link keymapper to named devices
       ACTION=="add", KERNEL=="event*", ATTRS{name}=="Keymapper", RUN+="${coreutils}/bin/ln -sf /dev/input/%k /dev/input/keymapper_kb"
       ACTION=="add", KERNEL=="mouse*", ATTRS{name}=="Keymapper", RUN+="${coreutils}/bin/ln -sf /dev/input/%k /dev/input/keymapper_mouse"
