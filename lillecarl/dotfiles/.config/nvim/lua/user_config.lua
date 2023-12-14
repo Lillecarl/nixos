@@ -45,7 +45,7 @@ vim.o.mouse = false
 vim.o.number = true
 vim.o.relativenumber = true
 -- utf-8 as default encoding
-encoding="utf-8"
+vim.o.encoding="utf-8"
 -- Ignore case when searching lower-case
 vim.o.ignorecase = true
 -- Respect case when searching mixed-case
