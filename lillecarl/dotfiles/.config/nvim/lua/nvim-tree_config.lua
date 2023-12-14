@@ -24,6 +24,7 @@ local function nvim_tree_attach(bufnr)
   nvim_tree_api.config.mappings.default_on_attach(bufnr)
 
   wk.register({
+    -- register ctrl+1 to toggle(close) nvim-tree
     ["<C-t>"] = { nvim_tree_api.tree.toggle, "Toggle nvim-tree" },
     ["?"] = { nvim_tree_api.tree.toggle_help, "Toggle nvim-tree help" },
   }, opts(bufnr))

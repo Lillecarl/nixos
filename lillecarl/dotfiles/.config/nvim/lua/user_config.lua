@@ -28,6 +28,7 @@ wk.register({
   },
 },
 { mode = "v" })
+
 wk.register({
     ["Y"]     = { '"+yg_',  "Copy" },
     ["y"]     = { '"+y',    "Copy (cb)" },
@@ -38,6 +39,8 @@ wk.register({
   mode = "n",
   prefix = "<leader>",
 })
+
+wk.register({["<M-c>"] = { '<cmd>bdelete<cr>', "Close buffer" }}, { mode = "n" })
 
 -- No mouse thanks
 vim.o.mouse = false
