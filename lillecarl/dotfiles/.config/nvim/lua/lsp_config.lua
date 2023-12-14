@@ -53,6 +53,13 @@ lsp.terraform_lsp.setup({
 })
 lsp.nil_ls.setup({
   capabilities = cmp_lsp_cap,
+  settings = {
+    ['nil'] = {
+      formatting = {
+        command = { "nixpkgs-fmt" },
+      },
+    },
+  }
 })
 lsp.lua_ls.setup({
   capabilities = cmp_lsp_cap,

@@ -11,14 +11,22 @@
     defaultEditor = true;
 
     extraPackages = [
-      pkgs.clang-tools # C, C++ lsp
+      # misc tools
       pkgs.fd # for telescope
-      pkgs.lua-language-server # lua lsp
-      pkgs.nil # nix lsp
       pkgs.ripgrep # for telescope
-      pkgs.terraform-lsp # terraform lsp
-      pkgs.pyright # python lsp
-      pkgs.vscode-langservers-extracted # HTML/CSS/JSON/ESLint lsp
+      pkgs.tree-sitter # silence tree-sitter warning
+    ] ++ [
+      # lsp servers
+      pkgs.clang-tools # C, C++
+      pkgs.lua-language-server # Lua
+      pkgs.nil # Nix
+      pkgs.terraform-lsp # Terraform
+      pkgs.pyright # Python
+      pkgs.vscode-langservers-extracted # HTML/CSS/JSON/ESLint
+    ] ++ [
+      # code formatters
+      pkgs.stylua
+      pkgs.nixpkgs-fmt # formatting for nil
     ];
 
     plugins = with pkgs.vimPlugins; [
@@ -26,6 +34,7 @@
       catppuccin-nvim
       cmp-nvim-lsp # LSP source for cmp
       copilot-lua
+      formatter-nvim
       fugitive
       indent-blankline-nvim
       neodev-nvim
@@ -52,6 +61,7 @@
       require('telescope_config')
       require('toggleterm_config')
       require('lsp_config')
+      require('formatter')
     '';
   };
 }
