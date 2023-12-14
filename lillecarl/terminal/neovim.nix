@@ -61,7 +61,7 @@
       require('telescope_config')
       require('toggleterm_config')
       require('lsp_config')
-      require('formatter')
+      require('formatter_config')
     '';
   };
 }
