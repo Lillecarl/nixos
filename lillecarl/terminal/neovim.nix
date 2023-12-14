@@ -2,6 +2,10 @@
 , ...
 }:
 {
+  home.packages = [
+    pkgs.tree-sitter # for TS troubleshooting
+  ];
+
   programs.neovim = {
     enable = true;
 
@@ -20,7 +24,7 @@
       pkgs.clang-tools # C, C++
       pkgs.lua-language-server # Lua
       pkgs.nil # Nix
-      pkgs.terraform-lsp # Terraform
+      pkgs.terraform-ls # Terraform
       pkgs.pyright # Python
       pkgs.vscode-langservers-extracted # HTML/CSS/JSON/ESLint
     ] ++ [
@@ -63,6 +67,7 @@
       require('lsp_config')
       require('nvim-tree_config')
       require('formatter_config')
+      require('treesitter_config')
     '';
   };
 }

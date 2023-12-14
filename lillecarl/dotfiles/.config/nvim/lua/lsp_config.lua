@@ -46,10 +46,9 @@ local cmp_lsp_cap = vim.tbl_deep_extend(
 );
 cmp_lsp_cap.textDocument.completion.completionItem.snippetSupport = true
 
-lsp.terraform_lsp.setup({
+lsp.terraformls.setup({
   capabilities = cmp_lsp_cap,
-  cmd = { "terraform-lsp" },
-  filetypes = { "terraform", "tf", "hcl" },
+  filetypes = { "terraform", "tf", "terraform-vars", "hcl" },
 })
 lsp.nil_ls.setup({
   capabilities = cmp_lsp_cap,
