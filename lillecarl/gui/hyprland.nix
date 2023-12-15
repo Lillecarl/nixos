@@ -65,27 +65,27 @@ let
     workspace = 2, on-created-empty:${bp firefox}
 
     # Launch terminal
-    bind  = $mainMod          , Q       , exec, ${config.programs.wezterm.package}/bin/wezterm-gui
+    bind  = $mainMod          , Q       , exec, ${bp kitty} -1
     # Awesome locker
-    bind  = Ctrl_L Alt_L      , delete  , exec, ${bp pkgs.swaylock}
+    bind  = Ctrl_L Alt_L      , delete  , exec, ${bp swaylock}
     # Media buttons
-    bindl =                   , code:121, exec, ${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle
-    bindl =                   , code:122, exec, ${pkgs.avizo}/bin/volumectl down
-    bindl =                   , code:123, exec, ${pkgs.avizo}/bin/volumectl up
-    bindl =                   , code:198, exec, ${pkgs.mictoggle}
+    bindl =                   , code:121, exec, ${pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle
+    bindl =                   , code:122, exec, ${avizo}/bin/volumectl down
+    bindl =                   , code:123, exec, ${avizo}/bin/volumectl up
+    bindl =                   , code:198, exec, ${mictoggle}
     # Increase and decrease screen backlight
-    bindl =                   , code:232, exec, ${pkgs.avizo}/bin/lightctl down
-    bindl =                   , code:233, exec, ${pkgs.avizo}/bin/lightctl up
+    bindl =                   , code:232, exec, ${avizo}/bin/lightctl down
+    bindl =                   , code:233, exec, ${avizo}/bin/lightctl up
     # drun app launcher
-    bind  = $mainMod          , R       , exec, ${bp pkgs.rofi-wayland} -show drun
+    bind  = $mainMod          , R       , exec, ${bp rofi-wayland} -show drun
     # search application window titles
-    bind  = $mainMod          , tab     , exec, ${bp pkgs.rofi-wayland} -show window
+    bind  = $mainMod          , tab     , exec, ${bp rofi-wayland} -show window
     # Switch keyboard layout
     bindl = $mainMod          , E       , exec, ${hyprctl} switchxkblayout ${keyboardName} next
     bind  =                   , Print   , exec, ${printScript} screen --edit --upload
     bind  = $mainMod          , Print   , exec, ${printScript} window --edit --upload
     bind  = $mainMod Shift_L  , Print   , exec, ${printScript} region --edit --upload
-    bind  = Ctrl_L Alt_L      , V       , exec, ${bp pkgs.cliphist} list | ${bp pkgs.wofi} --dmenu | ${bp pkgs.cliphist} decode | ${pkgs.wl-clipboard}/bin/wl-copy
+    bind  = Ctrl_L Alt_L      , V       , exec, ${bp cliphist} list | ${bp wofi} --dmenu | ${bp cliphist} decode | ${wl-clipboard}/bin/wl-copy
     '';
 in
 {
