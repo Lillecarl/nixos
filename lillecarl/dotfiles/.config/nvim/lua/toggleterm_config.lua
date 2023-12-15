@@ -1,16 +1,13 @@
 local wk = require('which-key')
 local toggleterm = require("toggleterm")
 
-require("toggleterm").setup({
+toggleterm.setup({
 })
 
 -- Allow leaving terminal mode with <C-\>
 wk.register({
-  --["<C-h>"] = { [[<C-\><C-N><C-w>h]], "Terminal Left" },
-  --["<C-j>"] = { [[<C-\><C-N><C-w>j]], "Terminal Down" },
-  --["<C-k>"] = { [[<C-\><C-N><C-w>k]], "Terminal Up" },
-  --["<C-l>"] = { [[<C-\><C-N><C-w>l]], "Terminal Right" },
   ["<C-\\>"] = { [[<C-\><C-N>]], "Terminal unfocus" },
+  ["<S-Esc>"] = { [[<C-\><C-N>]], "Terminal unfocus" },
 },
 {
   mode = "t",
