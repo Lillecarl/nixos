@@ -41,7 +41,7 @@ let
 
   wallpaper = "${inputs.nixos-artwork}/wallpapers/nix-wallpaper-watersplash.png";
 
-  extraConfig = ''
+  extraConfig = with pkgs; ''
     # Lock as soon as we're logged in
     exec-once = ${bp pkgs.swaylock}
     # Source from home-manager file that can be live edited through out of store symlinks.
@@ -60,9 +60,9 @@ let
     ${monitorConfig}
 
     # Always spawn alacritty in special workspace
-    workspace = special:magic, on-created-empty:${config.programs.wezterm.package}/bin/wezterm-gui, gapsout:75, gapsin:30
-    workspace = 1, on-created-empty:${config.programs.wezterm.package}/bin/wezterm-gui
-    workspace = 2, on-created-empty:${bp pkgs.firefox}
+    workspace = special:magic, on-created-empty:${bp kitty} -1, gapsout:75, gapsin:30
+    workspace = 1, on-created-empty:${bp kitty} -1
+    workspace = 2, on-created-empty:${bp firefox}
 
     # Launch terminal
     bind  = $mainMod          , Q       , exec, ${config.programs.wezterm.package}/bin/wezterm-gui
