@@ -86,7 +86,7 @@ let
     bind  = $mainMod          , Print   , exec, ${printScript} window --edit --upload
     bind  = $mainMod Shift_L  , Print   , exec, ${printScript} region --edit --upload
     bind  = Ctrl_L Alt_L      , V       , exec, ${bp cliphist} list | ${bp wofi} --dmenu | ${bp cliphist} decode | ${wl-clipboard}/bin/wl-copy
-    '';
+  '';
 in
 {
   home.packages = [
