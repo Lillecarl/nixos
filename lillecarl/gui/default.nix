@@ -11,6 +11,7 @@
     ./firefox.nix
     ./foot.nix
     ./hyprland.nix
+    ./kitty.nix
     ./packages.nix
     ./qutebrowser.nix
     ./rofi.nix
