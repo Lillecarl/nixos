@@ -1,6 +1,5 @@
 { inputs
 , config
-, lib
 , pkgs
 , keyboardName
 , bluetooth
@@ -60,6 +59,11 @@ let
     # Per machine configured home configuration
     ${monitorConfig}
 
+    # Always spawn alacritty in special workspace
+    workspace = special:magic, on-created-empty:${config.programs.wezterm.package}/bin/wezterm-gui, gapsout:75, gapsin:30
+    workspace = 1, on-created-empty:${config.programs.wezterm.package}/bin/wezterm-gui
+    workspace = 2, on-created-empty:${bp pkgs.firefox}
+
     # Launch terminal
     bind  = $mainMod          , Q       , exec, ${config.programs.wezterm.package}/bin/wezterm-gui
     # Awesome locker
@@ -82,12 +86,7 @@ let
     bind  = $mainMod          , Print   , exec, ${printScript} window --edit --upload
     bind  = $mainMod Shift_L  , Print   , exec, ${printScript} region --edit --upload
     bind  = Ctrl_L Alt_L      , V       , exec, ${bp pkgs.cliphist} list | ${bp pkgs.wofi} --dmenu | ${bp pkgs.cliphist} decode | ${pkgs.wl-clipboard}/bin/wl-copy
-
-    # Always spawn alacritty in special workspace
-    workspace = special:magic, on-created-empty:${bp pkgs.wezterm}, gapsout:75, gapsin:30
-    workspace = 1, on-created-empty:${bp pkgs.wezterm}
-    workspace = 2, on-created-empty:${bp pkgs.firefox}
-  '';
+    '';
 in
 {
   home.packages = [
