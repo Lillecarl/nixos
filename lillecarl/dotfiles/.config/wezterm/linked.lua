@@ -28,5 +28,20 @@ return {
       mods = "CTRL|SHIFT",
       action = act.CopyTo "Clipboard",
     },
+    {
+      key = "1",
+      mods = "ALT",
+      action = act.DecreaseFontSize,
+    },
+    {
+      key = "2",
+      mods = "ALT",
+      action = act.IncreaseFontSize,
+    },
+    {
+      key = "0",
+      mods = "ALT",
+      action = act.ResetFontSize,
+    },
   },
 }
