@@ -3,6 +3,10 @@
   programs.kitty = {
     enable = true;
 
+    extraConfig = ''
+      remote_kitty yes
+    '';
+
     keybindings = {
       "f1" = "launch --stdin-source=@last_cmd_output --type=overlay vim -c 'set ft=man buftype=nofile' -c '$'-";
       "ctrl+shift+g" = "show_last_command_output";
