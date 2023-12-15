@@ -29,6 +29,7 @@ in
         ../../common/xdg.nix
         ../../common/xplatform.nix
         ./default.nix
+        #./gitlab.nix
         #./tlp.nix
         inputs.disko.nixosModules.disko
         inputs.lanzaboote.nixosModules.lanzaboote
