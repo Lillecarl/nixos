@@ -1,2 +1,0 @@
-require('neogit').setup({
-})
