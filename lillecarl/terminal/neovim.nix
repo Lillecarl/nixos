@@ -1,4 +1,5 @@
 { pkgs
+, lib
 , ...
 }:
 {
@@ -60,7 +61,10 @@
       lazy-nvim
     ];
 
-    extraLuaConfig = /* lua */ ''
+    extraLuaConfig = let lazyPlugins = [
+      { name = "nvim-treesitter/nvim-treesitter"; dir = pkgs.vimPlugins.nvim-treesitter.withAllGrammars; }
+      { name = "folke/which-key"; dir = pkgs.vimPlugins.which-key-nvim; }
+    ]; in /* lua */ ''
       ${"\n"}--[[
       require('user_config')
       require('catppuccin_config')
@@ -72,7 +76,10 @@
       require('nvim-tree_config')
       require('formatter_config')
       require('treesitter_config')
-      require("config.lazy").setup('${pkgs.vimPlugins.LazyVim}')--]]
+      require("config.lazy").setup('${pkgs.vimPlugins.LazyVim}')
+      require("config.lazy").setup({
+      ${lib.concatMapStrings (x: "  { name = \"${x.name}\", dir = \"${x.dir}\" },\n") lazyPlugins}
+      })--]]
       require("config.lazy")
     '';
   };
