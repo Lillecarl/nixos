@@ -7,6 +7,8 @@
     pkgs.tree-sitter # for TS troubleshooting
   ];
 
+  stylix.targets.vim.enable = false;
+
   programs.neovim = {
     enable = true;
 
@@ -61,26 +63,30 @@
       lazy-nvim
     ];
 
-    extraLuaConfig = let lazyPlugins = [
-      { name = "nvim-treesitter/nvim-treesitter"; dir = pkgs.vimPlugins.nvim-treesitter.withAllGrammars; }
-      { name = "folke/which-key"; dir = pkgs.vimPlugins.which-key-nvim; }
-    ]; in /* lua */ ''
-      ${"\n"}--[[
-      require('user_config')
-      require('catppuccin_config')
-      require('copilot_config')
-      require('neogit_config')
-      require('telescope_config')
-      require('toggleterm_config')
-      require('lsp_config')
-      require('nvim-tree_config')
-      require('formatter_config')
-      require('treesitter_config')
-      require("config.lazy").setup('${pkgs.vimPlugins.LazyVim}')
-      require("config.lazy").setup({
-      ${lib.concatMapStrings (x: "  { name = \"${x.name}\", dir = \"${x.dir}\" },\n") lazyPlugins}
-      })--]]
-      require("config.lazy")
-    '';
+    extraLuaConfig =
+      let
+        lazyPlugins = [
+          { name = "nvim-treesitter/nvim-treesitter"; dir = pkgs.vimPlugins.nvim-treesitter.withAllGrammars; }
+          { name = "folke/which-key"; dir = pkgs.vimPlugins.which-key-nvim; }
+        ];
+      in
+        /* lua */ ''
+        ${"\n"}--[[
+        require('user_config')
+        require('catppuccin_config')
+        require('copilot_config')
+        require('neogit_config')
+        require('telescope_config')
+        require('toggleterm_config')
+        require('lsp_config')
+        require('nvim-tree_config')
+        require('formatter_config')
+        require('treesitter_config')
+        require("config.lazy").setup('${pkgs.vimPlugins.LazyVim}')
+        require("config.lazy").setup({
+        ${lib.concatMapStrings (x: "  { name = \"${x.name}\", dir = \"${x.dir}\" },\n") lazyPlugins}
+        })--]]
+        require("config.lazy")
+      '';
   };
 }
