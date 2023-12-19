@@ -11,7 +11,6 @@ in
     nixosConfigurations.nub = inputs.nixpkgs.lib.nixosSystem {
       inherit system;
       modules = [
-        ../../modules/nixos/keymapper.nix
         ../../common
         ../../common/btrfs.nix
         ../../common/fish.nix
@@ -23,19 +22,21 @@ in
         ../../common/nix.nix
         ../../common/openvpn.nix
         ../../common/overlays.nix
+        ../../common/plymouth.nix
+        ../../common/stylix.nix
         ../../common/thinkpad.nix
         ../../common/users.nix
         ../../common/verycommon.nix
         ../../common/xdg.nix
         ../../common/xplatform.nix
+        ../../modules/nixos/keymapper.nix
         ./default.nix
-        #./gitlab.nix
-        #./tlp.nix
         inputs.disko.nixosModules.disko
+        inputs.flake-programs-sqlite.nixosModules.programs-sqlite
         inputs.lanzaboote.nixosModules.lanzaboote
         inputs.nixos-hardware.nixosModules.common-pc-laptop-acpi_call
         inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t14-amd-gen3
-        inputs.flake-programs-sqlite.nixosModules.programs-sqlite
+        inputs.stylix.nixosModules.stylix
       ];
       specialArgs = {
         inherit inputs flakeloc bp;
