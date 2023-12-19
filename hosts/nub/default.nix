@@ -241,12 +241,9 @@
     zenmonitor # AMD CPU monitoring
   ];
 
-  systemd = {
-    # upower systemd service
-    services.upower.enable = true;
+  systemd.services.systemd-networkd-wait-online.enable = false;
+  services.upower.enable = true;
 
-    services.systemd-networkd-wait-online.enable = false;
-  };
   # TODO configure this to relay messages out on the internet too
   services.postfix = {
     enable = true;
