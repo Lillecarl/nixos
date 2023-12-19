@@ -66,8 +66,8 @@
     extraLuaConfig =
       let
         lazyPlugins = [
-          { name = "nvim-treesitter/nvim-treesitter"; dir = pkgs.vimPlugins.nvim-treesitter.withAllGrammars; }
-          { name = "folke/which-key"; dir = pkgs.vimPlugins.which-key-nvim; }
+          { name = "telescope.nvim"; dir = pkgs.vimPlugins.telescope-nvim; }
+          { name = "telescope-fzf-native.nvim"; dir = pkgs.vimPlugins.telescope-fzf-native-nvim; }
         ];
       in
         /* lua */ ''
@@ -83,10 +83,10 @@
         require('formatter_config')
         require('treesitter_config')
         require("config.lazy").setup('${pkgs.vimPlugins.LazyVim}')
+        require("config.lazy")--]]
         require("config.lazy").setup({
-        ${lib.concatMapStrings (x: "  { name = \"${x.name}\", dir = \"${x.dir}\" },\n") lazyPlugins}
-        })--]]
-        require("config.lazy")
+        ${lib.concatMapStrings (x: "  { name = \"${x.name}\", dir = \"${x.dir}\", lazy = false },\n") lazyPlugins}
+        })
       '';
   };
 }
