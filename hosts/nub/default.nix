@@ -7,8 +7,6 @@
     ./hardware-configuration.nix
   ];
 
-  services.power-profiles-daemon.enable = true;
-
   disko.devices = (import ./disko.nix {
     disk = "nvme-eui.00a075013ca91384";
   }).disko.devices;
@@ -30,7 +28,7 @@
 
   services.udev =
     let
-      coreutils = pkgs.coreutils-full;
+      coreutilsb = "${pkgs.coreutils-full}/bin";
     in
     {
       enable = true;
@@ -40,10 +38,10 @@
         # Limit battery max charge to 86% (85 in reality)
         ACTION=="add", SUBSYSTEM=="power_supply", ENV{POWER_SUPPLY_NAME}=="BAT0", ATTR{charge_control_start_threshold}="83", ATTR{charge_control_end_threshold}="86"
         # Allow anyone to change mic led
-        SUBSYSTEM=="leds", KERNEL=="platform::micmute", RUN{program}+="${coreutils}/bin/chmod a+rw /sys/devices/platform/thinkpad_acpi/leds/platform::micmute/brightness"
+        SUBSYSTEM=="leds", KERNEL=="platform::micmute", RUN{program}+="${coreutilsb}/chmod a+rw /sys/devices/platform/thinkpad_acpi/leds/platform::micmute/brightness"
         SUBSYSTEM=="leds", KERNEL=="platform::micmute", RUN{program}+="${pkgs.miconoff} 0"
         # Allow anyone to change screen backlight
-        ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="amdgpu_bl0", RUN{program}+="${coreutils}/bin/chmod a+rw /sys/class/backlight/%k/brightness"
+        ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="amdgpu_bl0", RUN{program}+="${coreutilsb}/chmod a+rw /sys/class/backlight/%k/brightness"
       '';
     };
 
@@ -203,8 +201,6 @@
 
   # CUPS for printing documents.
   services.printing.enable = false;
-  # Enable GlobalProtect VPN
-  services.globalprotect.enable = true;
 
   virtualisation = {
     libvirtd = {
@@ -224,33 +220,25 @@
 
 
   environment.systemPackages = with pkgs; [
-    amdgpu_top
-    gnome.gnome-keyring
-    gnome.seahorse
-    polkit-kde-agent
-    catppuccin-cursors.macchiatoPink
-    sbctl # sb = secure boot
-    config.boot.kernelPackages.zenpower # zenpower
-    winbox # MikroTik winbox, until we're rid of this crap at work.
-    #splunk-otel-collector # Temp testing
-    screen # Just for TTY
-    acme-dns # ACME-DNS server. For certifying things that are behind corp firewall.
-    usbguard # USB blocking solution
-    k3s # Kubernetes K3s
-    iptables # Give us the iptables CLI (should map to nftables)
-    zenmonitor # AMD CPU monitoring
-    virt-manager # Virtualisation manager
-    virt-manager-qt # Shitty version of virt-manager
-    distrobox # Run different distros on your machine
-    openstackclient # OpenStack CLI client
-    kde-gtk-config # KDE GTK Stuff (https://nixos.wiki/wiki/KDE)
-    globalprotect-openconnect # GlobalProtect VPN for NENT
-    qpaeq # Pulse Equalizer
-    gcc11 # GNU Compiler Collection
     # Kernel modules with userspace commands
+    amdgpu_top
     config.boot.kernelPackages.cpupower
     config.boot.kernelPackages.turbostat
     config.boot.kernelPackages.usbip
+    config.boot.kernelPackages.zenpower # zenpower
+    distrobox # Run different distros on your machine
+    gnome.gnome-keyring
+    gnome.seahorse
+    iptables # Give us the iptables CLI (should map to nftables)
+    k3s # Kubernetes K3s
+    polkit-kde-agent
+    qpaeq # Pulse Equalizer
+    sbctl # sb = secure boot
+    screen # Just for TTY
+    usbguard # USB blocking solution
+    virt-manager # Virtualisation manager
+    virt-manager-qt # Shitty version of virt-manager
+    zenmonitor # AMD CPU monitoring
   ];
 
   systemd = {
@@ -259,9 +247,6 @@
 
     services.systemd-networkd-wait-online.enable = false;
   };
-
-  # Enables upower daemon
-  services.upower.enable = true;
   # TODO configure this to relay messages out on the internet too
   services.postfix = {
     enable = true;
