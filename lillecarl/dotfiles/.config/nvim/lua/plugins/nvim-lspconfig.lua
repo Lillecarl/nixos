@@ -11,6 +11,7 @@ return {
         terraformls = {},
         lua_ls = {},
         nil_ls = {},
+        pyright = {},
       },
     },
   },
