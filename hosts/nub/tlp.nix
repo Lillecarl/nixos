@@ -29,11 +29,11 @@ _:
       RADEON_DPM_PERF_LEVEL_ON_AC = "auto";
       RADEON_DPM_PERF_LEVEL_ON_BAT = "auto";
 
-      RUNTIME_PM_ON_AC="auto";
-      RUNTIME_PM_ON_BAT="auto";
+      RUNTIME_PM_ON_AC = "auto";
+      RUNTIME_PM_ON_BAT = "auto";
 
-      WIFI_PWR_ON_AC="on";
-      WIFI_PWR_ON_BAT="on";
+      WIFI_PWR_ON_AC = "on";
+      WIFI_PWR_ON_BAT = "on";
 
       START_CHARGE_THRESH_BAT0 = 80;
       STOP_CHARGE_THRESH_BAT0 = 86;

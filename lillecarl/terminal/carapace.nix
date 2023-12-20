@@ -4,7 +4,7 @@
 }:
 {
   programs.carapace = {
-    enable = true;
+    enable = false;
 
     package = pkgs.callPackage "${pkgs.path}/pkgs/shells/carapace" {
       buildGoModule = args: pkgs.buildGoModule (args // {

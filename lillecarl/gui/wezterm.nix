@@ -4,7 +4,7 @@
 , ...
 }: {
   programs.wezterm = {
-    enable = true;
+    enable = false;
 
     package = pkgs.darwin.apple_sdk_11_0.callPackage ../../pkgs/tmp/wezterm.nix {
       inherit (pkgs.darwin.apple_sdk_11_0.frameworks) Cocoa CoreGraphics Foundation UserNotifications System;
