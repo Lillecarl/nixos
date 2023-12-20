@@ -23,7 +23,7 @@ in
   xdg.portal = {
     enable = true;
     extraPortals = [ finalPortalPackage ];
-    xdgOpenUsePortal = true;
+    #xdgOpenUsePortal = true;
     config.common.default = "*";
   };
 
