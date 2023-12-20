@@ -1,26 +1,15 @@
 { pkgs, ... }:
 {
   home.packages = with pkgs; [
-    # Image viewer
-    xfce.ristretto
-
-    # Web browsers
-    pcmanfm
-
-    # Terminal
-    alacritty
-
-    # gui neovim
-    neovide
-
+    ferdium # Web multiplexer
+    bitwarden # Password manager
+    xfce.ristretto # Image viewer
+    pcmanfm # File manager
+    neovide # Neovim GUI
     dfeet # GUI browser for dbus
-
-    # Media apps
-    mpv # Media Player
-    celluloid #  MPV GTK frontend wrapper
+    mpv # Video player
     vlc # VLC sucks in comparision to MPV
-
     wev # Like xev but for wayland, displays which keys you're pressing
-    dfeet # D-Bus explorer
+    gitg # Git GUI for viewing branches
   ];
 }
