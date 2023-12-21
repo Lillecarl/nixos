@@ -38,7 +38,7 @@ in
       server = {
         http_addr = "127.0.0.1";
         http_port = 3000;
-        domain = "localhost";
+        inherit domain;
         root_url = "https://${domain}/";
         serve_from_sub_path = true;
       };
@@ -70,6 +70,7 @@ in
 
   services.nginx.virtualHosts.${domain} = {
     locations."/" = {
+        recommendedProxySettings = true;
         proxyPass = "http://${toString config.services.grafana.settings.server.http_addr}:${toString config.services.grafana.settings.server.http_port}";
         proxyWebsockets = true;
     };
