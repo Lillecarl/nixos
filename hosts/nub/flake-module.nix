@@ -12,6 +12,7 @@ in
       inherit system;
       modules = [
         ../../common
+        ../../common/acme.nix
         ../../common/btrfs.nix
         ../../common/fish.nix
         ../../common/flatpak.nix
