@@ -1,4 +1,5 @@
 { pkgs
+, config
 , ...
 }:
 let
@@ -8,6 +9,8 @@ let
   ]);
   pyscript = ../scripts/monitoring.py;
   monitordbpath = "/var/lib/grafana/data/monitoring.sqlite3";
+  domain = "grafana.127.lillecarl.com";
+  certdir = config.security.acme.certs.grafana.directory;
 in
 {
   services.grafana = {
@@ -36,7 +39,7 @@ in
         http_addr = "127.0.0.1";
         http_port = 3000;
         domain = "localhost";
-        root_url = "http://localhost/grafana/";
+        root_url = "https://${domain}/";
         serve_from_sub_path = true;
       };
     };
@@ -59,5 +62,28 @@ in
 
       ${plumpy}/bin/python3 -u ${pyscript}
     '';
+  };
+
+  services.nginx = {
+    enable = true;
+  };
+
+  services.nginx.virtualHosts.${domain} = {
+    locations."/" = {
+        proxyPass = "http://${toString config.services.grafana.settings.server.http_addr}:${toString config.services.grafana.settings.server.http_port}";
+        proxyWebsockets = true;
+    };
+    forceSSL = true;
+    sslCertificate = "${certdir}/fullchain.pem";
+    sslCertificateKey = "${certdir}/key.pem";
+  };
+
+  security.acme.certs.grafana = {
+    inherit domain;
+    group = config.services.nginx.group;
+  };
+
+  networking.hosts = {
+    "127.0.0.1" = [domain];
   };
 }
