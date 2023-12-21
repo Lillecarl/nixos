@@ -32,6 +32,7 @@ in
         ../../common/xplatform.nix
         ../../modules/nixos/keymapper.nix
         ./default.nix
+        ./acme.nix
         inputs.disko.nixosModules.disko
         inputs.flake-programs-sqlite.nixosModules.programs-sqlite
         inputs.lanzaboote.nixosModules.lanzaboote
