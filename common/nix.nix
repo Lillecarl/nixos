@@ -12,6 +12,8 @@
     extraOptions = ''
       experimental-features = nix-command flakes repl-flake
       builders-use-substitutes = true
+      keep-outputs = true
+      keep-derivations = true
     '';
     settings = {
       auto-optimise-store = true;
