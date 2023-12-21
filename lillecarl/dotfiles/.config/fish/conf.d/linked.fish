@@ -32,6 +32,9 @@ abbr -a ls eza
 abbr -a ll eza -lah
 abbr -a cat bat --paging=never
 abbr -a :q exit
+abbr -a gpa git pull --all
+abbr -a gfa git fetch --all
+abbr -a gsu git submodule update --recursive
 
 # bind ctrl+a to beginning of buffer
 bind \ca -M insert beginning-of-buffer
