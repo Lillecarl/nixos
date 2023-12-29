@@ -6,6 +6,7 @@
   imports = [
     ../../modules/hm/swaync.nix
     ../../modules/hm/wezterm.nix
+    ./ags.nix
     ./alacritty.nix
     ./avizo.nix
     ./chromium.nix
@@ -22,6 +23,7 @@
     ./vscode.nix
     ./waybar.nix
     ./wezterm.nix
+    inputs.ags.homeManagerModules.default
     inputs.stylix.homeManagerModules.stylix
   ];
 

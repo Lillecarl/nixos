@@ -8,6 +8,10 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nur.url = "github:nix-community/NUR";
 
+    ags = {
+      url = "github:Aylur/ags";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nix-melt = {
       url = "github:nix-community/nix-melt";
       inputs.nixpkgs.follows = "nixpkgs";
