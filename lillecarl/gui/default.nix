@@ -8,6 +8,7 @@
     ../../modules/hm/wezterm.nix
     ./alacritty.nix
     ./avizo.nix
+    ./chromium.nix
     ./firefox.nix
     ./foot.nix
     ./hyprland.nix
