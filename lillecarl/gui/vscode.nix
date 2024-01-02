@@ -24,19 +24,20 @@ in
     (with pkgs.vscode-marketplace; [
       pkgs.vscode-marketplace."4ops".terraform
       bbenoist.nix
+      davidhewitt.shebang-language-associator
       editorconfig.editorconfig
       github.copilot
       hashicorp.terraform
       llvm-vs-code-extensions.vscode-clangd
+      mkhl.direnv
       ms-kubernetes-tools.vscode-kubernetes-tools
       ms-python.python
       ms-python.vscode-pylance
       ms-vscode.cpptools
       ms-vsliveshare.vsliveshare
+      redhat.ansible
       redhat.vscode-yaml
       vscodevim.vim
-      davidhewitt.shebang-language-associator
-      redhat.ansible
     ]);
 
     userSettings = {
