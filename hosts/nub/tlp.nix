@@ -38,7 +38,7 @@ _:
       START_CHARGE_THRESH_BAT0 = 80;
       STOP_CHARGE_THRESH_BAT0 = 86;
 
-      NMI_WATCHDOG=0;
+      NMI_WATCHDOG = 0;
 
       USB_EXCLUDE_PRINTER = 0;
     };

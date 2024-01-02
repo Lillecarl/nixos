@@ -70,9 +70,9 @@ in
 
   services.nginx.virtualHosts.${domain} = {
     locations."/" = {
-        recommendedProxySettings = true;
-        proxyPass = "http://${toString config.services.grafana.settings.server.http_addr}:${toString config.services.grafana.settings.server.http_port}";
-        proxyWebsockets = true;
+      recommendedProxySettings = true;
+      proxyPass = "http://${toString config.services.grafana.settings.server.http_addr}:${toString config.services.grafana.settings.server.http_port}";
+      proxyWebsockets = true;
     };
     forceSSL = true;
     sslCertificate = "${certdir}/fullchain.pem";
@@ -81,10 +81,10 @@ in
 
   security.acme.certs.grafana = {
     inherit domain;
-    group = config.services.nginx.group;
+    inherit (config.services.nginx) group;
   };
 
   networking.hosts = {
-    "127.0.0.1" = [domain];
+    "127.0.0.1" = [ domain ];
   };
 }
