@@ -105,3 +105,8 @@ wk.register({
   v = { name = "Visual mode" },
   y = { name = "Yank" },
 })
+
+
+-- autopairs
+-- https://github.com/windwp/nvim-autopairs
+require('nvim-autopairs').setup({})

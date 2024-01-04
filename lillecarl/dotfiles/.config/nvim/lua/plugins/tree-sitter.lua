@@ -17,6 +17,8 @@ require("nvim-treesitter.configs").setup({
     -- Instead of true it can also be a list of languages
     additional_vim_regex_highlighting = false,
   },
+  autopairs = { enable = true, },
+	indent = { enable = true, disable = { } },
 })
 
 -- Remove TS commands we don't need
