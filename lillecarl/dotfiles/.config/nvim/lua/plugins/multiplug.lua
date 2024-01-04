@@ -33,16 +33,14 @@ wk.register({
 require("neodev").setup({})
 
 -- nvim-tree, tree plugin
-
--- disable netrw at the very start of your init.lua
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
-
--- set termguicolors to enable highlight groups
-vim.opt.termguicolors = true
-
 -- https://github.com/nvim-tree/nvim-tree.lua
-require("nvim-tree").setup()
+require("nvim-tree").setup({
+  disable_netrw = true,
+  filters = {
+    dotfiles = false,
+    custom = {},
+  },
+})
 wk.register({ t = { "<cmd>NvimTreeToggle<cr>", "Toggle NvimTree" } }, { prefix = "<leader>" })
 
 -- indent blanklines
