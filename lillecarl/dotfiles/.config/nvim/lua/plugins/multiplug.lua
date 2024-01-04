@@ -102,3 +102,8 @@ require("conform").setup({
     },
   },
 })
+
+wk.register({
+  v = { name = "Visual mode" },
+  y = { name = "Yank" },
+})
