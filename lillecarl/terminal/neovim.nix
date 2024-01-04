@@ -1,5 +1,4 @@
 { pkgs
-, lib
 , ...
 }:
 {
@@ -33,60 +32,48 @@
       pkgs.vscode-langservers-extracted # HTML/CSS/JSON/ESLint
     ] ++ [
       # code formatters
-      pkgs.stylua
+      pkgs.isort # sort python imports
+      pkgs.black # python formatter
+      pkgs.stylua # lua formatter
+      pkgs.nodePackages.prettier # web formatter
       pkgs.nixpkgs-fmt # formatting for nil
+      pkgs.terraform # terraform formatter
+      pkgs.terragrunt # terraform formatter
     ];
 
     plugins = with pkgs.vimPlugins; [
       #camelcasemotion
-      #catppuccin-nvim
-      #cmp-nvim-lsp # LSP source for cmp
-      #copilot-lua
-      #formatter-nvim
-      #fugitive
-      #indent-blankline-nvim
-      #neodev-nvim
       #neogit
-      #nvim-cmp
-      #nvim-lspconfig
       #nvim-snippy
-      #nvim-tree-lua
-      #nvim-treesitter.withAllGrammars
       #surround
       #tabby-nvim
       #tabmerge
-      #telescope-nvim
       #toggleterm-nvim
       #vim-airline
-      #which-key-nvim
-      #LazyVim
-      lazy-nvim
+      catppuccin-nvim
+      cmp-git # git source for cmp
+      cmp-nvim-lsp # LSP source for cmp
+      conform-nvim
+      copilot-lua
+      fugitive
+      indent-blankline-nvim
+      neodev-nvim
+      noice-nvim
+      nui-nvim
+      nvim-cmp
+      nvim-lspconfig
+      nvim-notify
+      nvim-tree-lua
+      nvim-treesitter.withAllGrammars
+      telescope-nvim
+      trouble-nvim
+      which-key-nvim
     ];
 
     extraLuaConfig =
-      let
-        lazyPlugins = [
-          { name = "telescope.nvim"; dir = pkgs.vimPlugins.telescope-nvim; }
-          { name = "telescope-fzf-native.nvim"; dir = pkgs.vimPlugins.telescope-fzf-native-nvim; }
-        ];
-      in
-        /* lua */ ''
-        ${"\n"}--[[
-        require('user_config')
-        require('catppuccin_config')
-        require('copilot_config')
-        require('neogit_config')
-        require('telescope_config')
-        require('toggleterm_config')
-        require('lsp_config')
-        require('nvim-tree_config')
-        require('formatter_config')
-        require('treesitter_config')
-        require("config.lazy").setup('${pkgs.vimPlugins.LazyVim}')
-        require("config.lazy")--]]
-        require("config.lazy").setup({
-        ${lib.concatMapStrings (x: "  { name = \"${x.name}\", dir = \"${x.dir}\", lazy = false },\n") lazyPlugins}
-        })
-      '';
+      /* lua */ ''
+      ${"\n"}
+      require('init').setup({})
+    '';
   };
 }
