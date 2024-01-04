@@ -8,18 +8,17 @@
 
     languages = {
       language-server = {
-        nix-lsp = {
+        nix = {
           command = bp pkgs.nil;
-          config = {
-            languages = { };
+          config.nil = {
+            formatting.command = [ "${pkgs.nixpkgs-fmt}/bin/nixpkgs-fmt" ];
+            nix.flake.autoEvalInputs = true;
           };
         };
       };
 
       language = [
-        {
-          name = "nix";
-        }
+        { name = "nix"; language-servers = [ "nix" ]; }
       ];
     };
   };
