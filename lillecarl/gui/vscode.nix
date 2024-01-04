@@ -58,6 +58,7 @@ in
       "vim.enableNeovim" = true;
       "window.titleBarStyle" = "custom";
       "workbench.startupEditor" = "none";
+      "git.openRepositoryInParentFolders" = "never";
 
       # Executable path configurations
       "ansible.ansible.path" = bp pkgs.ansible;
