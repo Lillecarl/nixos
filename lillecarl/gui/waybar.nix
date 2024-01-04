@@ -37,7 +37,6 @@ in
           "hyprland/window"
         ];
         modules-right = [
-          "custom/weather"
           "backlight"
           "battery"
           "pulseaudio"
@@ -96,12 +95,6 @@ in
         tray = {
           icon-size = 24;
           spacing = 5;
-        };
-        "custom/weather" = {
-          exec = "${pkgs.curl}/bin/curl -L \"wttr.in/Stockholm?format=%f+%p\"";
-          format = "{}";
-          interval = 3600;
-          #signal = 1;
         };
         "hyprland/language" = {
           format = " KB: {} ";
