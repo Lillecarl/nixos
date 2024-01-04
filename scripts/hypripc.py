@@ -1,6 +1,7 @@
 #! /usr/bin/env python3
-import socket
+
 import os
+import socket
 
 instance_path = f"/tmp/hypr/{os.getenv('HYPRLAND_INSTANCE_SIGNATURE')}"
 print(instance_path)
@@ -13,6 +14,7 @@ socket2.connect(socket2_path)
 
 windows = {}
 
+
 def handleLine(line):
     if line.startswith("openwindow"):
         line.replace("openwindow>>", "")
@@ -21,7 +23,10 @@ def handleLine(line):
     elif line.startswith("activewindow"):
         line.replace("activewindow>>", "")
         args = line.split(",")
-while True:
-    line = socket.SocketIO(socket2, 'r').readline().decode('utf-8')
-    print(line)
-    handleLine(line)
+
+
+if __name__ == "__main__":
+    while True:
+        line = socket.SocketIO(socket2, "r").readline().decode("utf-8")
+        print(line)
+        handleLine(line)
