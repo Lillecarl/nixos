@@ -35,6 +35,8 @@ abbr -a :q exit
 abbr -a gpa git pull --all
 abbr -a gfa git fetch --all
 abbr -a gsu git submodule update --recursive
+abbr -a nos nh os switch -- --impure
+abbr -a nhs nh home switch -- --impure
 
 # bind ctrl+a to beginning of buffer
 bind \ca -M insert beginning-of-buffer
