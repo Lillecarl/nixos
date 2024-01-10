@@ -17,7 +17,7 @@ in
     ];
 
     script = ''
-      ${fanpy}/bin/python3 -u ${self}/scripts/fancontrol2.py
+      exec ${fanpy}/bin/python3 -u ${self}/scripts/fancontrol2.py
     '';
   };
 
