@@ -232,7 +232,7 @@
   # Local network autodiscovery services
   # required for chromecasting to work
   services.avahi = {
-    nssmdns = true;
+    nssmdns4 = true;
     enable = true;
     ipv4 = true;
     ipv6 = true;

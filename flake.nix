@@ -42,7 +42,6 @@
     devshell = {
       url = "github:numtide/devshell";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.systems.follows = "nix-systems";
     };
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
