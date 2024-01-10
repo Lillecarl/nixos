@@ -1,4 +1,5 @@
 { inputs
+, self
 , flakeloc
 , bp
 , ...
@@ -33,6 +34,7 @@ in
         ../../modules/nixos/keymapper.nix
         ./default.nix
         ./acme.nix
+        ./fancontrol.nix
         inputs.disko.nixosModules.disko
         inputs.flake-programs-sqlite.nixosModules.programs-sqlite
         inputs.lanzaboote.nixosModules.lanzaboote
@@ -41,7 +43,7 @@ in
         inputs.stylix.nixosModules.stylix
       ];
       specialArgs = {
-        inherit inputs flakeloc bp;
+        inherit inputs flakeloc bp self;
       };
     };
   };
