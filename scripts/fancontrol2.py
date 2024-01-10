@@ -24,33 +24,17 @@ def getlevel():
         matches = re.match(regex, line)
         if matches:
             match = matches.group(1)
-            if match == "disengaged":
-                return 8
-            elif match == "disabled":
-                return 0
-            elif match == "auto":
-                return -1
-            else:
-                return int(match)
+            return match
 
-    return 0
+    return "unknown"
 
 
-def setlevel(level: int):
+def setlevel(level: str):
     curlevel = getlevel()
-
-    if level > 7:
-        level = 7
-    elif level < 0:
-        level = 0
 
     if level != curlevel:
         print(f"setting fanlevel to {level}")
     fanpath.write(f"level {level}")
-
-
-def setauto():
-    fanpath.write(f"level auto")
 
 
 def gettemp():
@@ -58,28 +42,33 @@ def gettemp():
     return float(sensordata["thinkpad-isa-0000"]["CPU"]["temp1_input"])
 
 
-def getspeed():
-    sensordata: dict[str, dict] = json.loads(sensors())
-    return float(sensordata["thinkpad-isa-0000"]["fan1"]["fan1_input"])
-
-
-def setfan(cpu_avg: float):
-    temp = gettemp()
-
+def setfan(cpu_avg: float, temp: float):
+    curtemp = gettemp()
     print("cpu_avg: {}".format(cpu_avg))
+    print("temp_avg: {}".format(temp))
+
+    if curtemp > 70:
+        setlevel("auto")
+        return
 
     if temp < 60:
-        setlevel(0)
+        setlevel("0")
     else:
-        setauto()
+        setlevel("auto")
 
 
 def main():
     interval: int = 5
+    temps = []
 
     while True:
+        temps.append(gettemp())
+        if len(temps) > interval:
+            temps.pop(0)
+
+        # Keep setting watchdog to not go into auto mode
         setwatchdog(interval + 1)
-        setfan(cpu_percent(interval))
+        setfan(cpu_percent(interval), sum(temps) / len(temps))
         sleep(interval)
 
 
