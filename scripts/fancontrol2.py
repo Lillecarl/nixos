@@ -2,7 +2,7 @@
 
 import json
 import re
-from time import sleep, time
+from time import time
 
 from plumbum import local
 from psutil import cpu_percent
@@ -11,12 +11,20 @@ sensors = local["sensors"]["-j"]
 fanpath = local.path("/proc/acpi/ibm/fan")
 
 config = {
-    "interval": 5,  # How often we probe the system
-    "change_wait": 30,  # How long to wait between changes from auto to off or vice versa
+    # How often we probe the system
+    "interval": 5,
+    # How long to wait between changes from auto to off or vice versa
+    "change_wait": 30,
+    # The temperature at which we turn off the fan
+    "low_temp": 60,
+    # The temperature at which we turn on the fan regardless of average
+    "high_temp": 70,
+    # The cpu usage at which we turn on the fan, averaged over interval * 2 seconds
+    "high_cpu": 25,
 }
 
 
-def setwatchdog(sec: int = 120):
+def setwatchdog(sec: int):
     sec = min(sec, 120)  # Max watchdog time is 120 seconds
     fanpath.write(f"watchdog {sec}")
 
@@ -44,7 +52,7 @@ def gettemp():
 
 
 def setonoff(enable: bool):
-    setwatchdog(config["interval"] * 2)
+    setwatchdog(config["interval"] + 1)
     command = "enable" if enable else "disable"
 
     ret = False
@@ -78,15 +86,15 @@ def setfan(cpu_avg: float, temp_avg: float, last_change: float):
     print(f"cpu_avg: {cpu_avg}")
     print(f"temp_avg: {temp_avg}")
 
-    if cur_temp > 70:
+    if cur_temp > config["high_temp"]:
         return enable()
-    elif cpu_avg > 50:
+    elif cpu_avg > config["high_cpu"]:
         return enable()
 
     if time() - last_change < config["change_wait"]:
         return setonoff(isenabled())
 
-    if temp_avg < 60:
+    if temp_avg < config["low_temp"]:
         return disable()
 
     return enable()
@@ -97,6 +105,7 @@ def main():
 
     temps = []
     last_change = time() - config["change_wait"]
+    last_cpu = cpu_percent(1)
 
     while True:
         temps.append(gettemp())
@@ -104,13 +113,14 @@ def main():
             temps.pop(0)
 
         temp_avg = sum(temps) / len(temps)
-        cpu_avg = cpu_percent(config["interval"])
+        # cpu_percent also sleeps for the fetching interval
+        cpu_avg = (cpu_percent(config["interval"]) + last_cpu) / 2
 
         # Don't spam between off and auto
         if setfan(cpu_avg, temp_avg, last_change):
             last_change = time()
-        # Sleep because there's thermal mass in the system
-        sleep(config["interval"])
+
+        last_cpu = cpu_avg
 
 
 if __name__ == "__main__":
