@@ -39,6 +39,8 @@ in
 
     cursor = {
       size = 32;
+      package = pkgs.catppuccin-cursors.mochaDark;
+      name = "Catppuccin-Mocha-Dark-Cursors";
     };
   };
 }
