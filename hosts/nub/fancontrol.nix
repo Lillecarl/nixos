@@ -3,10 +3,10 @@
 , ...
 }:
 let
-  fanpy = (pkgs.python3.withPackages (ps: with ps; [
+  fanpy = pkgs.python3.withPackages (ps: with ps; [
     psutil # CPU usage
     plumbum # Shell commands
-  ]));
+  ]);
 in
 {
   systemd.services.fancontrol = {

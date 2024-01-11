@@ -12,5 +12,6 @@
     wev # Like xev but for wayland, displays which keys you're pressing
     gitg # Git GUI for viewing branches
     signal-desktop # Signal messenger, useful to copy-paste stuff to your phone
+    kleopatra # GUI for GPG
   ];
 }
