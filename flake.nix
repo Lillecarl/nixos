@@ -170,6 +170,10 @@
       url = "github:catppuccin/starship";
       flake = false;
     };
+    catppuccin-qt5ct = {
+      url = "github:catppuccin/qt5ct";
+      flake = false;
+    };
   };
 
   outputs =
