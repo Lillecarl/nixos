@@ -57,6 +57,7 @@
       copilot-lua
       fugitive
       indent-blankline-nvim
+      luasnip
       neodev-nvim
       noice-nvim
       nui-nvim
