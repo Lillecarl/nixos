@@ -26,6 +26,11 @@
   services.mullvad-vpn.enable = true;
   programs.noisetorch.enable = true;
 
+
+  security.tpm2 = {
+    enable = true;
+  };
+
   services.udev =
     let
       coreutilsb = "${pkgs.coreutils-full}/bin";
