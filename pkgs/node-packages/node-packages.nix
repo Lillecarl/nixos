@@ -1012,13 +1012,13 @@ let
         sha512 = "6XbUAseYE2KtOuGueyeobCySj9L4+66Tn6KQMOPQJrAJEowYKW/YR/MGJZl7FdydUdaFu4LYyDZjxf4/Nmo23Q==";
       };
     };
-    "safe-regex-test-1.0.1" = {
+    "safe-regex-test-1.0.2" = {
       name = "safe-regex-test";
       packageName = "safe-regex-test";
-      version = "1.0.1";
+      version = "1.0.2";
       src = fetchurl {
-        url = "https://registry.npmjs.org/safe-regex-test/-/safe-regex-test-1.0.1.tgz";
-        sha512 = "Y5NejJTTliTyY4H7sipGqY+RX5P87i3F7c4Rcepy72nq+mNLhIsD0W4c7kEmduMDQCSqtPsXPlSTsFhh2LQv+g==";
+        url = "https://registry.npmjs.org/safe-regex-test/-/safe-regex-test-1.0.2.tgz";
+        sha512 = "83S9w6eFq12BBIJYvjMux6/dkirb8+4zJRA9cxNBVb7Wq5fJBW+Xze48WqR8pxua7bDuAaaAxtVVd4Idjp1dBQ==";
       };
     };
     "safefs-4.2.0" = {
@@ -1436,7 +1436,7 @@ in
       sources."regexp.prototype.flags-1.5.1"
       sources."requirefresh-2.3.0"
       sources."safe-array-concat-1.0.1"
-      sources."safe-regex-test-1.0.1"
+      sources."safe-regex-test-1.0.2"
       sources."safefs-4.2.0"
       sources."safer-buffer-2.1.2"
       sources."sax-1.3.0"
