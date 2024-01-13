@@ -1,9 +1,8 @@
 { config
-, pkgs
-, inputs
 , ...
 }: {
   imports = [
+    ./atuin.nix
     ./carapace.nix
     ./direnv.nix
     ./editorconfig.nix
