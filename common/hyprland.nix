@@ -21,10 +21,7 @@ in
   security.polkit.enable = true;
 
   xdg.portal = {
-    enable = true;
     extraPortals = [ finalPortalPackage ];
-    #xdgOpenUsePortal = true;
-    config.common.default = "*";
   };
 
   programs.nm-applet.enable = true;
