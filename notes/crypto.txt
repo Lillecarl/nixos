@@ -1,0 +1,6 @@
+# Test passphrase and see which keyslot is used
+sudo cryptsetup --verbose open --test-passphrase /dev/nvme0n1p3
+# Dump LUKS information
+sudo cryptsetup luksDump /dev/nvme0n1p3
+# Add key to LUKS
+sudo cryptsetup luksAddKey /dev/nvme0n1p3 /root/luks_key --pbkdf-force-iterations=4 --pbkdf-parallel=1  --pbkdf-memory=32
