@@ -9,7 +9,7 @@
     settings = {
       default_session = {
         user = "lillecarl";
-        command = bp pkgs.hyprland;
+        command = ''${bp pkgs.fish} -l -c "exec ${bp pkgs.hyprland}"'';
       };
     };
   };
