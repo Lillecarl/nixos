@@ -83,12 +83,15 @@
               };
               "/var" = { };
               "/srv" = { };
-              "/tmp" = { };
+              "/tmp" = {
+                mountOptions = [ "compress=zstd:1" "noatime" ];
+                mountpoint = "/nix";
+              };
             };
           };
         };
         swap = {
-          size = "14G";
+          size = "32G";
           content = {
             type = "swap";
           };

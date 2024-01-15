@@ -12,7 +12,11 @@
   environment.enableDebugInfo = true;
 
   hardware.uinput.enable = true;
-  boot.tmp.useTmpfs = true;
+  boot.tmp = {
+    #useTmpfs = true;
+    #tmpfsSize = "100%";
+    cleanOnBoot = true;
+  };
 
   # Select internationalisation properties.
   i18n = rec {
