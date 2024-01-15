@@ -10,7 +10,6 @@
       modules = [
         ../../common
         ../../common/fish.nix
-        ../../common/flatpak.nix
         ../../common/greetd.nix
         ../../common/hyprland.nix
         ../../common/keymapper.nix

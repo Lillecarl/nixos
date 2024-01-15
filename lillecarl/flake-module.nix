@@ -31,6 +31,7 @@ in
             ./gui
             ./terminal
             #inputs.hyprland.homeManagerModules.default
+            inputs.nix-flatpak.homeManagerModules.nix-flatpak
           ];
         };
       in

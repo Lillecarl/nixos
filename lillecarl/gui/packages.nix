@@ -14,4 +14,13 @@
     signal-desktop # Signal messenger, useful to copy-paste stuff to your phone
     kleopatra # GUI for GPG
   ];
+
+  services.flatpak = {
+    enable = true;
+    packages = [
+      "com.spotify.Client"
+      "im.riot.Riot"
+    ];
+    update.auto.enable = true;
+  };
 }
