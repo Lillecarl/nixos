@@ -5,6 +5,7 @@ _:
 
     extraConfig = ''
       remote_kitty yes
+      confirm_os_window_close 0
     '';
 
     keybindings = {
