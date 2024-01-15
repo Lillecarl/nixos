@@ -43,7 +43,7 @@
     style=Fusion
 
     [Fonts]
-    fixed="Sans Serif,9,-1,5,50,0,0,0,0,0"
+    fixed="Hack Nerd Font,9,-1,5,50,0,0,0,0,0"
     general="Sans Serif,9,-1,5,50,0,0,0,0,0"
 
     [Interface]
