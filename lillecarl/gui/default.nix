@@ -33,7 +33,6 @@
     plugins = with pkgs.obs-studio-plugins; [
       input-overlay
       looking-glass-obs
-      obs-backgroundremoval
       obs-gstreamer
       obs-vaapi
       obs-vkcapture
