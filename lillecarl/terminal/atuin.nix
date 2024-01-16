@@ -12,6 +12,7 @@ _:
       inline_height = 25;
       show_preview = true;
       invert = true;
+      filter_mode_shell_up_key_binding = "session";
       stats = {
         common_subcommands = [
           "cargo"
