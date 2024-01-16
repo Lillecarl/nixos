@@ -69,7 +69,7 @@ function set_lastpath -e fish_postexec
     end
 end
 
-function sshloop
+function sshloop1
     set -l user $argv[1]
     set -l host $argv[2]
     while true
@@ -80,5 +80,15 @@ function sshloop
         if [ $(math $(date +%s) - $time) -gt 60 ]
             break
         end
+    end
+end
+
+function sshloop2
+    set -l user $argv[1]
+    set -l host $argv[2]
+    while true
+        sleep 1
+        ssh-keygen -R $host >/dev/null 2>&1
+        ssh $user@$host
     end
 end
