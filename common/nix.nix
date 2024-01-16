@@ -26,7 +26,6 @@
         "nixpkgs-wayland.cachix.org-1:3lwxaILxMRkVhehr5StQprHdEo4IrE8sRho9R9HOLYA="
         "rycee.cachix.org-1:TiiXyeSk0iRlzlys4c7HiXLkP3idRf20oQ/roEUAh/A="
         "viperml.cachix.org-1:qZhKBMTfmcLL+OG6fj/hzsMEedgKvZVFRRAhq7j8Vh8="
-        "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
       ];
       substituters = [
         "https://cache.nixos.org"
@@ -35,7 +34,6 @@
         "https://nixpkgs-wayland.cachix.org"
         "https://rycee.cachix.org"
         "https://viperml.cachix.org"
-        "https://hyprland.cachix.org"
       ];
     };
     registry = lib.mapAttrs (_: value: { flake = value; }) inputs;

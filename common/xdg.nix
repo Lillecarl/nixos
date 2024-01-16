@@ -1,5 +1,4 @@
 { pkgs
-, lib
 , ...
 }:
 {
@@ -12,7 +11,7 @@
       enable = true;
       wlr.enable = false;
 
-      extraPortals = lib.mkForce [
+      extraPortals = [
         pkgs.gnome.gnome-keyring
         pkgs.xdg-desktop-portal-gtk
       ];

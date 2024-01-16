@@ -49,11 +49,6 @@
       inputs.flake-utils.follows = "flake-utils";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    hyprland = {
-      url = "github:hyprwm/Hyprland";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.systems.follows = "nix-systems";
-    };
     nixos-wsl = {
       url = "github:nix-community/nixos-wsl";
       inputs.flake-utils.follows = "flake-utils";
