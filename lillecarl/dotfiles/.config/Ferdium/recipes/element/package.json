@@ -1,0 +1,17 @@
+{
+  "id": "element",
+  "name": "Element",
+  "version": "1.4.0",
+  "license": "MIT",
+  "aliases": [
+    "Riot.im",
+    "Matrix"
+  ],
+  "config": {
+    "serviceURL": "https://app.element.io/",
+    "hasCustomUrl": true,
+    "message": "Element's default URL is https://app.element.io/",
+    "hasNotificationSound": true,
+    "hasIndirectMessages": true
+  }
+}
