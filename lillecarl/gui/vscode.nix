@@ -45,6 +45,7 @@ in
       "editor.fontFamily" = "'Hack Nerd Font', 'monospace', monospace";
       "editor.inlineSuggest.enabled" = true;
       "editor.insertSpaces" = true;
+      "editor.formatOnSave" = true;
       "files.autoSave" = "onFocusChange";
       "files.autoSaveDelay" = 500;
       "files.eol" = "\n";
