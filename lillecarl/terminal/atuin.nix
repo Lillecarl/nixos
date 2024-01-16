@@ -12,6 +12,22 @@ _:
       inline_height = 25;
       show_preview = true;
       invert = true;
+      stats = {
+        common_subcommands = [
+          "cargo"
+          "go"
+          "git"
+          "npm"
+          "yarn"
+          "pnpm"
+          "kubectl"
+          "systemctl"
+          "journalctl"
+        ];
+        common_prefix = [
+          "sudo"
+        ];
+      };
     };
   };
 }
