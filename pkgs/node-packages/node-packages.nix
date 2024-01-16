@@ -1003,13 +1003,13 @@ let
         sha512 = "oskKAg0pSlPnJAkFMrcqrHeCGzYunl4Hkl+N/NW3nnFWDHRg97yb475HtF5ax8LP9i8QvVkenVIhjNb+h+P7nA==";
       };
     };
-    "safe-array-concat-1.0.1" = {
+    "safe-array-concat-1.1.0" = {
       name = "safe-array-concat";
       packageName = "safe-array-concat";
-      version = "1.0.1";
+      version = "1.1.0";
       src = fetchurl {
-        url = "https://registry.npmjs.org/safe-array-concat/-/safe-array-concat-1.0.1.tgz";
-        sha512 = "6XbUAseYE2KtOuGueyeobCySj9L4+66Tn6KQMOPQJrAJEowYKW/YR/MGJZl7FdydUdaFu4LYyDZjxf4/Nmo23Q==";
+        url = "https://registry.npmjs.org/safe-array-concat/-/safe-array-concat-1.1.0.tgz";
+        sha512 = "ZdQ0Jeb9Ofti4hbt5lX3T2JcAamT9hfzYU1MNB+z/jaEbB6wfFfPIR/zEORmZqobkCCJhSjodobH6WHNmJ97dg==";
       };
     };
     "safe-regex-test-1.0.2" = {
@@ -1435,7 +1435,7 @@ in
       sources."printj-1.1.2"
       sources."regexp.prototype.flags-1.5.1"
       sources."requirefresh-2.3.0"
-      sources."safe-array-concat-1.0.1"
+      sources."safe-array-concat-1.1.0"
       sources."safe-regex-test-1.0.2"
       sources."safefs-4.2.0"
       sources."safer-buffer-2.1.2"
