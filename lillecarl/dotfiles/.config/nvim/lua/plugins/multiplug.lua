@@ -21,7 +21,16 @@ require("copilot").setup({
 })
 
 -- telescope
-require("telescope").setup({})
+require("telescope").setup({
+  defaults = {
+    vimgrep_arguments = {
+      "rg",
+      "--vimgrep",
+      "--hidden",
+      "--follow",
+    },
+  },
+})
 
 local ts_builtin = require("telescope.builtin")
 
