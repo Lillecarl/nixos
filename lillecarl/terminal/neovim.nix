@@ -67,6 +67,7 @@
       nvim-notify
       nvim-tree-lua
       nvim-treesitter.withAllGrammars
+      nvim-web-devicons
       telescope-nvim
       trouble-nvim
       which-key-nvim
