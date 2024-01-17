@@ -60,6 +60,7 @@
       gitsigns-nvim
       indent-blankline-nvim
       luasnip
+      neoconf-nvim
       neodev-nvim
       noice-nvim
       nui-nvim
