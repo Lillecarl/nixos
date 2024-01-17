@@ -15,6 +15,41 @@ function M.setup(_)
   -- case insesitive search when searching with only lowercase letters
   vim.opt.ignorecase = true
   vim.opt.smartcase = true
+
+  if not vim.g.vscode then
+    local wk = require("which-key")
+    wk.register({
+      u = { "<cmd>wincmd h<cr>", "Go to the left window" },
+    }, { prefix = "<ESC>" })
+    -- <M-t> is alt+t
+    -- <C-t> is ctrl+t
+    -- <T-t> is meta+t
+    wk.register({
+      ["<M-t>"] = { "<cmd>NvimTreeToggle<cr>", "Toggle nvim-tree" },
+      ["<C-t>"] = { "<cmd>NvimTreeToggle<cr>", "Toggle nvim-tree" },
+      ["<T-t>"] = { "<cmd>NvimTreeToggle<cr>", "Toggle nvim-tree" },
+      ["<M-g>"] = {
+        function()
+          print("message")
+          vim.notify("OFF", vim.log.levels.OFF, { title = "OFF" })
+          vim.notify("ERROR", vim.log.levels.ERROR, { title = "ERROR" })
+          vim.notify("WARN", vim.log.levels.WARN, { title = "WARN" })
+          vim.notify("INFO", vim.log.levels.INFO, { title = "INFO" })
+          vim.notify("DEBUG", vim.log.levels.DEBUG, { title = "DEBUG" })
+          vim.notify("TRACE", vim.log.levels.TRACE, { title = "TRACE" })
+        end,
+        "Run test function",
+      },
+      ["<C-h>"] = { "<cmd>wincmd h<cr>", "Go to the left window" },
+      ["<C-j>"] = { "<cmd>wincmd j<cr>", "Go to the down window" },
+      ["<C-k>"] = { "<cmd>wincmd k<cr>", "Go to the up window" },
+      ["<C-l>"] = { "<cmd>wincmd l<cr>", "Go to the right window" },
+      ["<M-h>"] = { "<cmd>wincmd h<cr>", "Go to the left window" },
+      ["<M-j>"] = { "<cmd>wincmd j<cr>", "Go to the down window" },
+      ["<M-k>"] = { "<cmd>wincmd k<cr>", "Go to the up window" },
+      ["<M-l>"] = { "<cmd>wincmd l<cr>", "Go to the right window" },
+    })
+  end
 end
 
 return M
