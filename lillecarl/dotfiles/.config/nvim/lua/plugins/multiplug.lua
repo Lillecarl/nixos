@@ -3,7 +3,14 @@ local wk = require("which-key")
 wk.register({ w = { "<cmd>WhichKey<cr>", "Toggle WhichKey" } }, { prefix = "<leader>" })
 
 -- catppuccin theme
-require("catppuccin").setup({})
+require("catppuccin").setup({
+  integrations = {
+    cmp = true,
+    gitsigns = true,
+    nvimtree = true,
+    treesitter = true,
+  },
+})
 vim.cmd.colorscheme("catppuccin")
 
 -- copilot
