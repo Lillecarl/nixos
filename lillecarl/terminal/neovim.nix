@@ -77,10 +77,6 @@
       which-key-nvim
     ];
 
-    extraLuaConfig =
-      /* lua */ ''
-      ${"\n"}
-      require('init').setup({})
-    '';
+    extraLuaConfig = /* lua */ "require('init').setup({})";
   };
 }
