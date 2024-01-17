@@ -1,10 +1,8 @@
 local M = {}
 
-function M.setup(_) -- paths
-  require("config")
-  if not vim.g.vscode then
-    require("plugins")
-  end
+function M.setup(config)
+  require("config").setup(config)
+  require("plugins").setup(config)
 end
 
 return M
