@@ -37,7 +37,7 @@ in
       ms-vsliveshare.vsliveshare
       redhat.ansible
       redhat.vscode-yaml
-      vscodevim.vim
+      asvetliakov.vscode-neovim
     ]);
 
     userSettings = {
@@ -51,13 +51,24 @@ in
       "files.insertFinalNewline" = true;
       "keyboard.dispatch" = "keyCode";
       "password-store" = "gnome-libsecret";
-      "redhat.telemetry.enabled" = false;
-      "telemetry.telemetryLevel" = "off";
-      "update.mode" = "none";
-      "vim.enableNeovim" = true;
       "window.titleBarStyle" = "custom";
       "workbench.startupEditor" = "none";
       "git.openRepositoryInParentFolders" = "never";
+
+      # updates and telemetry
+      "redhat.telemetry.enabled" = false;
+      "telemetry.telemetryLevel" = "off";
+      "update.mode" = "none";
+
+      # direnv
+      "direnv.restart.automatic" = true;
+      "direnv.path.executable" = bp pkgs.direnv;
+
+      # vim
+      "vscode-neovim.neovimExecutablePaths.linux" = bp pkgs.neovim;
+      "extensions.experimental.affinity" = {
+        "asvetliakov.vscode-neovim" = 1;
+      };
 
       # Executable path configurations
       "ansible.ansible.path" = bp pkgs.ansible;
@@ -65,7 +76,6 @@ in
       "clangd.path" = "${pkgs.clang-tools}/bin/clangd";
       "pylsp.executable" = bp pkgs.python3.pkgs.python-lsp-server;
       "terraform.languageServer.path" = bp pkgs.terraform-ls;
-      "vim.neovimPath" = bp pkgs.neovim;
       "vscode-kubernetes.helm-path" = bp pkgs.kubernetes-helm;
       "vscode-kubernetes.kubectl-path" = bp pkgs.kubectl;
 
