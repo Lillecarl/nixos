@@ -22,6 +22,7 @@
       pkgs.ripgrep # for telescope
       pkgs.tree-sitter # silence tree-sitter warning
       pkgs.fzf # fuzzy finder
+      pkgs.git # git
     ] ++ [
       # lsp servers
       pkgs.clang-tools # C, C++
@@ -56,6 +57,7 @@
       conform-nvim
       copilot-lua
       fugitive
+      gitsigns-nvim
       indent-blankline-nvim
       luasnip
       neodev-nvim

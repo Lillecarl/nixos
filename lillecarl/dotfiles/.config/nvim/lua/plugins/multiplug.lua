@@ -122,7 +122,10 @@ wk.register({
   y = { name = "Yank" },
 })
 
-
 -- autopairs
 -- https://github.com/windwp/nvim-autopairs
-require('nvim-autopairs').setup({})
+require("nvim-autopairs").setup({})
+
+-- gitsigns
+-- https://github.com/lewis6991/gitsigns.nvim
+require("gitsigns").setup({})
