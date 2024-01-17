@@ -42,7 +42,6 @@ in
 
     userSettings = {
       "C_Cpp.intelliSenseEngine" = "disabled";
-      "editor.fontFamily" = "'Hack Nerd Font', 'monospace', monospace";
       "editor.inlineSuggest.enabled" = true;
       "editor.insertSpaces" = true;
       "editor.formatOnSave" = true;
@@ -54,7 +53,6 @@ in
       "password-store" = "gnome-libsecret";
       "redhat.telemetry.enabled" = false;
       "telemetry.telemetryLevel" = "off";
-      "terminal.integrated.fontFamily" = "'Hack Nerd Font', 'monospace', monospace";
       "update.mode" = "none";
       "vim.enableNeovim" = true;
       "window.titleBarStyle" = "custom";
