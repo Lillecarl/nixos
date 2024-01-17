@@ -129,3 +129,7 @@ require("nvim-autopairs").setup({})
 -- gitsigns
 -- https://github.com/lewis6991/gitsigns.nvim
 require("gitsigns").setup({})
+
+-- overseer
+-- https://github.com/stevearc/overseer.nvim
+require("overseer").setup({})

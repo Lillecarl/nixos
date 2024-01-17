@@ -71,6 +71,7 @@
       nvim-tree-lua
       nvim-treesitter.withAllGrammars
       nvim-web-devicons
+      overseer-nvim
       telescope-nvim
       trouble-nvim
       which-key-nvim
