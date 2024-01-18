@@ -22,12 +22,16 @@ require("neodev").setup({})
 
 -- nvim-tree, tree plugin
 -- https://github.com/nvim-tree/nvim-tree.lua
+local treeapi = require("nvim-tree.api")
 require("nvim-tree").setup({
   disable_netrw = true,
   filters = {
     dotfiles = false,
     custom = {},
   },
+  on_attach = function(bufnr)
+    treeapi.config.mappings.default_on_attach(bufnr)
+  end,
 })
 wk.register({ t = { "<cmd>NvimTreeToggle<cr>", "Toggle NvimTree" } }, { prefix = "<leader>" })
 
