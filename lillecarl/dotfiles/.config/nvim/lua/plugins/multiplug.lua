@@ -13,37 +13,6 @@ require("catppuccin").setup({
 })
 vim.cmd.colorscheme("catppuccin")
 
--- copilot
-require("copilot").setup({
-  suggestion = {
-    auto_trigger = true,
-  },
-})
-
--- telescope
-require("telescope").setup({
-  defaults = {
-    vimgrep_arguments = {
-      "rg",
-      "--vimgrep",
-      "--hidden",
-      "--follow",
-    },
-  },
-})
-
-local ts_builtin = require("telescope.builtin")
-
-wk.register({
-  f = {
-    name = "Find",
-    f = { ts_builtin.find_files, "Find Files" },
-    g = { ts_builtin.live_grep, "Live Grep" },
-    b = { ts_builtin.buffers, "Buffers" },
-    h = { ts_builtin.help_tags, "Help Tags" },
-  },
-}, { prefix = "<leader>" })
-
 -- neodev
 -- https://github.com/folke/neodev.nvim
 require("neodev").setup({})
