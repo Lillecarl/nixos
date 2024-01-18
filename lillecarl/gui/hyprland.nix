@@ -62,7 +62,7 @@ let
     # Always spawn alacritty in special workspace
     workspace = special:magic, on-created-empty:${bp kitty} -1, gapsout:75, gapsin:30
     workspace = 1, on-created-empty:${bp kitty} -1
-    workspace = 2, on-created-empty:${bp firefox}
+    workspace = 2, on-created-empty:${bp config.programs.firefox.package}
 
     # Launch terminal
     bind  = $mainMod          , Q       , exec, ${bp kitty} -1
