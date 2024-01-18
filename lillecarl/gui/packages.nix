@@ -13,6 +13,7 @@
     gitg # Git GUI for viewing branches
     signal-desktop # Signal messenger, useful to copy-paste stuff to your phone
     kleopatra # GUI for GPG
+    google-chrome # Only use this when websites are stupid
   ];
 
   services.flatpak = {
