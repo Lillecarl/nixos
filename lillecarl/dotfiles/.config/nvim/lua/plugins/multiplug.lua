@@ -1,6 +1,9 @@
 -- which-key
 local wk = require("which-key")
-wk.register({ w = { "<cmd>WhichKey<cr>", "Toggle WhichKey" } }, { prefix = "<leader>" })
+wk.register({
+  i = { "<cmd>WhichKey '' i<cr>", "Show WhichKey insert bindings" },
+  n = { "<cmd>WhichKey '' n<cr>", "Show WhichKey insert bindings" },
+}, { prefix = "<leader>w" })
 
 -- catppuccin theme
 require("catppuccin").setup({
