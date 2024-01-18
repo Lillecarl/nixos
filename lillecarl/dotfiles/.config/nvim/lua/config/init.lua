@@ -15,6 +15,8 @@ function M.setup(_)
   -- case insesitive search when searching with only lowercase letters
   vim.opt.ignorecase = true
   vim.opt.smartcase = true
+  -- show line numbers
+  vim.opt.number = true
 
   if not vim.g.vscode then
     local wk = require("which-key")
