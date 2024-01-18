@@ -4,13 +4,9 @@ bind J tabnext
 bind --mode=browser K tabprev
 bind --mode=browser J tabnext
 
-set editorcmd neovide "gvim sucks
+js console.log("tridactylrc: our binds")
 
-unbind gt
-unbind gT
-unbind g^
-unbind d
-unbind gf
+set editorcmd neovide
 
 set searchurls.kagi https://www.kagi.com/search?q=%s
 setnull searchurls.google
@@ -34,17 +30,16 @@ setnull searchurls.mdn
 setnull searchurls.gentoo_wiki
 setnull searchurls.qwant
 
+js console.log("tridactylrc: search")
+
 " General Settings
-set update.lastchecktime 1705567399065
-set update.nag true
+set update.nag false
 set update.nagwait 7
-set update.lastnaggedversion 1.24.0
-set update.checkintervalsecs 86400
 set configversion 2.0
 
+js console.log("tridactylrc: update config")
+
 " Binds
-bind ;x hint -F e => { const pos = tri.dom.getAbsoluteCentre(e); tri.excmds.exclaim_quiet("xdotool mousemove --sync " + window.devicePixelRatio * pos.x + " " + window.devicePixelRatio * pos.y + "; xdotool click 1")}
-bind ;X hint -F e => { const pos = tri.dom.getAbsoluteCentre(e); tri.excmds.exclaim_quiet("xdotool mousemove --sync " + window.devicePixelRatio * pos.x + " " + window.devicePixelRatio * pos.y + "; xdotool keydown ctrl+shift; xdotool click 1; xdotool keyup ctrl+shift")}
 bind <A-p> pin
 bind <A-m> mute toggle
 bind <F1> help
@@ -146,8 +141,6 @@ bind ;O hint -W fillcmdline_notrail open
 bind ;W hint -W fillcmdline_notrail winopen
 bind ;T hint -W fillcmdline_notrail tabopen
 bind ;z hint -z
-bind ;m composite hint -Jpipe img src | open images.google.com/searchbyimage?image_url=
-bind ;M composite hint -Jpipe img src | tabopen images.google.com/searchbyimage?image_url=
 bind ;gi hint -qi
 bind ;gI hint -qI
 bind ;gk hint -qk
@@ -184,15 +177,34 @@ bind zz zoom 1
 bind zI zoom 3
 bind zO zoom 0.3
 bind . repeat
-bind <AS-ArrowUp><AS-ArrowUp><AS-ArrowDown><AS-ArrowDown><AS-ArrowLeft><AS-ArrowRight><AS-ArrowLeft><AS-ArrowRight>ba open https://www.youtube.com/watch?v=M3iOROuTuMA
 bind m gobble 1 markadd
 bind ` gobble 1 markjump
-bind gno tabopen https://easyretro.io/publicboard/p49cqjx2jkVF2YpcMsJmoll2a5g2/3bddab65-1c5d-46ea-adc5-0df10082004c
-bind goo open https://easyretro.io/publicboard/p49cqjx2jkVF2YpcMsJmoll2a5g2/3bddab65-1c5d-46ea-adc5-0df10082004c
-bind gwo winopen https://easyretro.io/publicboard/p49cqjx2jkVF2YpcMsJmoll2a5g2/3bddab65-1c5d-46ea-adc5-0df10082004c
 bind yq text2qr --timeout 5
 bind ;d hint -W tabopen --discard
 bind ;gd hint -qW tabopen --discard
 
+js console.log("tridactylrc: binds")
+
+unbind ;m
+unbind ;M
+unbind ;x
+unbind ;X
+unbind <AS-ArrowUp><AS-ArrowUp><AS-ArrowDown><AS-ArrowDown><AS-ArrowLeft><AS-ArrowRight><AS-ArrowLeft><AS-ArrowRight>ba
+unbind gno
+unbind goo
+unbind gwo
+unbind gt
+unbind gT
+unbind g^
+unbind d
+unbind gf
+unbind --mode=visual s
+unbind --mode=visual g
+
+js console.log("tridactylrc: unbinds")
+
+
 " For syntax highlighting see https://github.com/tridactyl/vim-tridactyl
 " vim: set filetype=tridactyl
+
+js console.log("tridactylrc: end")
