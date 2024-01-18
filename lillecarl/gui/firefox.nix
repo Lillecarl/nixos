@@ -22,9 +22,7 @@ in
   home.file."${mozillaConfigPath}/native-messaging-hosts".source = "${nativeMessagingHostsJoined}/lib/mozilla/native-messaging-hosts";
 
   home.packages = [
-    pkgs.vim-full # Required for tridactyl nativemessaging host thingy
-    pkgs.neovide
-    #pkgs.fx_cast_bridge
+    pkgs.neovide # Allow editing input boxes with Neovide
   ];
 
   stylix.targets.firefox.profileNames = [ "lillecarl" ];
@@ -89,9 +87,9 @@ in
           ublock-origin
         ] ++ [
           # Native messaging hosts
-          tridactyl
           ff2mpv
           gsconnect
+          tridactyl
         ]);
 
         settings = {
