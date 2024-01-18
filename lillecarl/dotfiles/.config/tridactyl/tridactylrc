@@ -1,11 +1,17 @@
-" General Settings
-set update.lastchecktime 1705567399065
-set update.nag true
-set update.nagwait 7
-set update.lastnaggedversion 1.24.0
-set update.checkintervalsecs 86400
-set configversion 2.0
-set editorcmd gvim
+" Carl
+bind K tabprev
+bind J tabnext
+bind --mode=browser K tabprev
+bind --mode=browser J tabnext
+
+set editorcmd neovide "gvim sucks
+
+unbind gt
+unbind gT
+unbind g^
+unbind d
+unbind gf
+
 set searchurls.kagi https://www.kagi.com/search?q=%s
 setnull searchurls.google
 setnull searchurls.googlelucky
@@ -28,8 +34,15 @@ setnull searchurls.mdn
 setnull searchurls.gentoo_wiki
 setnull searchurls.qwant
 
+" General Settings
+set update.lastchecktime 1705567399065
+set update.nag true
+set update.nagwait 7
+set update.lastnaggedversion 1.24.0
+set update.checkintervalsecs 86400
+set configversion 2.0
+
 " Binds
-unbind d
 bind ;x hint -F e => { const pos = tri.dom.getAbsoluteCentre(e); tri.excmds.exclaim_quiet("xdotool mousemove --sync " + window.devicePixelRatio * pos.x + " " + window.devicePixelRatio * pos.y + "; xdotool click 1")}
 bind ;X hint -F e => { const pos = tri.dom.getAbsoluteCentre(e); tri.excmds.exclaim_quiet("xdotool mousemove --sync " + window.devicePixelRatio * pos.x + " " + window.devicePixelRatio * pos.y + "; xdotool keydown ctrl+shift; xdotool click 1; xdotool keyup ctrl+shift")}
 bind <A-p> pin
@@ -90,18 +103,12 @@ bind gi focusinput -l
 bind g? rot13
 bind g! jumble
 bind g; changelistjump -1
-bind J tabprev
-bind K tabnext
-bind gt tabnext_gt
-bind gT tabprev
-bind g^ tabfirst
 bind g0 tabfirst
 bind g$ tablast
 bind ga tabaudio
 bind gr reader
 bind gu urlparent
 bind gU urlroot
-bind gf viewsource
 bind : fillcmdline_notrail
 bind s fillcmdline open search
 bind S fillcmdline tabopen search
@@ -110,7 +117,7 @@ bind B fillcmdline taball
 bind b fillcmdline tab
 bind ZZ qall
 bind f hint
-bind F hint -b
+bind F hint -t
 bind gF hint -qb
 bind ;i hint -i
 bind ;b hint -b
