@@ -1,22 +1,37 @@
 { pkgs
 , ...
-}: {
+}:
+let
+  inherit (pkgs.stdenv.hostPlatform) isDarwin;
+  mozillaConfigPath = if isDarwin then "Library/Application Support/Mozilla" else ".mozilla";
+
+  # List of FF native messaging hosts to install
+  nativeMessagingHosts = [
+    pkgs.ff2mpv
+    pkgs.gnomeExtensions.gsconnect
+    pkgs.tridactyl-native
+  ];
+  # Join all the native messaging hosts into a single path
+  nativeMessagingHostsJoined = pkgs.symlinkJoin {
+    name = "home_ff_nmhs";
+    paths = [ nativeMessagingHosts ];
+  };
+in
+{
+  # Link native messaging hosts into FF config dir
+  home.file."${mozillaConfigPath}/native-messaging-hosts".source = "${nativeMessagingHostsJoined}/lib/mozilla/native-messaging-hosts";
+
   home.packages = [
     pkgs.vim-full # Required for tridactyl nativemessaging host thingy
     pkgs.neovide
     #pkgs.fx_cast_bridge
   ];
 
+  stylix.targets.firefox.profileNames = [ "lillecarl" ];
+
   programs.firefox = {
     enable = true;
-    package = (pkgs.firefox-wayland.override (old: {
-      nativeMessagingHosts = old.nativeMessagingHosts or [ ] ++ [
-        pkgs.tridactyl-native
-        pkgs.gnomeExtensions.gsconnect
-        pkgs.ff2mpv
-        pkgs.fx_cast_bridge
-      ];
-    }));
+    package = pkgs.firefox-wayland;
 
     profiles = {
       lillecarl = {
@@ -55,7 +70,8 @@
           };
         };
 
-        extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+        extensions = with pkgs.nur.repos.rycee.firefox-addons; ([
+          # Normal extensions
           bitwarden
           canvasblocker
           consent-o-matic
@@ -65,15 +81,18 @@
           onetab
           pkgs.firefoxAddons.kagi-search-for-firefox
           pkgs.firefoxAddons.shortkeys
-          pkgs.firefoxAddons.zen-fox
           privacy-badger
           privacy-pass
           sponsorblock
           temporary-containers
           tree-style-tab
-          tridactyl
           ublock-origin
-        ];
+        ] ++ [
+          # Native messaging hosts
+          tridactyl
+          ff2mpv
+          gsconnect
+        ]);
 
         settings = {
           # A lot of settings are taken from here: https://github.com/yokoffing/Betterfox/blob/main/user.js
