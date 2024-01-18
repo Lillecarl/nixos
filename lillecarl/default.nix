@@ -8,8 +8,7 @@ let
   dot_paths = lib.filesystem.listFilesRecursive (builtins.toPath dot_path);
   dot_strings = builtins.map (x: builtins.toString x) dot_paths;
   dot_prefixDeleted = builtins.map (x: builtins.replaceStrings [ dot_path ] [ "" ] x) dot_strings;
-  dotfile_rootFiltered = builtins.filter (path: (builtins.match ".*\/.*" path) != null) dot_prefixDeleted;
-  dotfile_outOfStoreLinked = lib.attrsets.genAttrs dotfile_rootFiltered (name: {
+  dotfile_outOfStoreLinked = lib.attrsets.genAttrs dot_prefixDeleted (name: {
     source = config.lib.file.mkOutOfStoreSymlink (dot_path + name);
   });
 in
