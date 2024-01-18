@@ -40,16 +40,16 @@ function M.setup(_)
         end,
         "Run test function",
       },
-      ["<C-h>"] = { "<cmd>wincmd h<cr>", "Go to the left window" },
-      ["<C-j>"] = { "<cmd>wincmd j<cr>", "Go to the down window" },
-      ["<C-k>"] = { "<cmd>wincmd k<cr>", "Go to the up window" },
-      ["<C-l>"] = { "<cmd>wincmd l<cr>", "Go to the right window" },
       ["<M-h>"] = { "<cmd>wincmd h<cr>", "Go to the left window" },
       ["<M-j>"] = { "<cmd>wincmd j<cr>", "Go to the down window" },
       ["<M-k>"] = { "<cmd>wincmd k<cr>", "Go to the up window" },
       ["<M-l>"] = { "<cmd>wincmd l<cr>", "Go to the right window" },
+      ["<M-c>"] = { "<cmd>bdelete<cr>", "Close buffer" },
+      ["<M-x>"] = { "<cmd>xall<cr>", "Save all and exit" },
     })
   end
+
+  vim.api.nvim_create_user_command("Die", "xall", {})
 end
 
 return M
