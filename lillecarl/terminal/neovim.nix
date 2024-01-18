@@ -22,7 +22,7 @@
       pkgs.ripgrep # for telescope
       pkgs.tree-sitter # silence tree-sitter warning
       pkgs.fzf # fuzzy finder
-      pkgs.git # git
+      pkgs.git # Gitsigns, Fugitive
     ] ++ [
       # lsp servers
       pkgs.clang-tools # C, C++

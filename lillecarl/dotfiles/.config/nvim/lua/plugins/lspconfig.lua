@@ -46,7 +46,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
         ["a"] = { vim.lsp.buf.code_action, "Code action" },
         ["f"] = {
           function()
-            vim.lsp.buf.format({ async = true })
+            require("conform").format()
           end,
           "Format",
         },
