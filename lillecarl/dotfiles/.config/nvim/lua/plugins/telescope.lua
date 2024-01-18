@@ -8,79 +8,66 @@ local tsm = require("telescope.mappings")
 
 local mappings = {
   i = {
-    ["<C-n>"] = actions.move_selection_next,
-    --["<C-j>"] = { actions.move_selection_next, desc = "TS: Move Sel Next" },
-    ["<C-p>"] = actions.move_selection_previous,
-    ["<C-k>"] = actions.move_selection_previous,
+    ["<C-j>"] = { tsa.move_selection_next, "TS: Move sel next" },
+    ["<C-n>"] = { tsa.move_selection_next, "TS: Move sel next" },
+    ["<C-p>"] = { tsa.move_selection_previous, "TS: Move sel prev" },
+    ["<C-k>"] = { tsa.move_selection_previous, "TS: Move sel prev" },
 
-    ["<C-c>"] = actions.close,
+    ["<C-c>"] = { tsa.close, "TS: Close" },
 
-    ["<Down>"] = actions.move_selection_next,
-    ["<Up>"] = actions.move_selection_previous,
+    ["<Down>"] = { tsa.move_selection_next, "TS: Move sel next" },
+    ["<Up>"] = { tsa.move_selection_previous, "TS: Move sel prev" },
 
-    ["<CR>"] = actions.select_default,
-    ["<C-x>"] = actions.select_horizontal,
-    ["<C-v>"] = actions.select_vertical,
-    ["<C-t>"] = actions.select_tab,
+    ["<CR>"] = { tsa.select_default, "TS: Select" },
+    ["<C-x>"] = { tsa.select_horizontal, "TS: Sel horizontal" },
+    ["<C-v>"] = { tsa.select_vertical, "TS: Sel vertical" },
+    ["<C-t>"] = { tsa.select_tab, "TS Sel tab" },
 
-    ["<C-u>"] = actions.preview_scrolling_up,
-    ["<C-d>"] = actions.preview_scrolling_down,
-    ["<C-f>"] = actions.preview_scrolling_left,
-    --["<C-k>"] = actions.preview_scrolling_right,
+    ["<PageUp>"] = { tsa.results_scrolling_up, "TS: Res scroll up" },
+    ["<PageDown>"] = { tsa.results_scrolling_down, "TS: Res scroll down" },
+    ["<M-f>"] = { tsa.results_scrolling_left, "TS: Res scroll left" },
+    ["<M-k>"] = { tsa.results_scrolling_right, "TS: Res scroll right" },
 
-    ["<PageUp>"] = actions.results_scrolling_up,
-    ["<PageDown>"] = actions.results_scrolling_down,
-    ["<M-f>"] = actions.results_scrolling_left,
-    ["<M-k>"] = actions.results_scrolling_right,
-
-    ["<Tab>"] = actions.toggle_selection + actions.move_selection_worse,
-    ["<S-Tab>"] = actions.toggle_selection + actions.move_selection_better,
-    ["<C-q>"] = actions.send_to_qflist + actions.open_qflist,
-    ["<M-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
-    ["<C-l>"] = actions.complete_tag,
-    ["<C-/>"] = actions.which_key,
-    ["<C-_>"] = actions.which_key, -- keys from pressing <C-/>
-    ["<C-w>"] = { "<c-s-w>", type = "command" },
-
-    -- disable c-j because we dont want to allow new lines #2123
-    --["<C-j>"] = actions.nop,
+    ["<Tab>"] = { tsa.toggle_selection + tsa.move_selection_worse, "TS: Toggle sel worse" },
+    ["<S-Tab>"] = { tsa.toggle_selection + tsa.move_selection_better, "TS: Toggle sel better" },
+    ["<C-q>"] = { tsa.send_to_qflist + tsa.open_qflist, "TS: Send to qflist" },
+    ["<M-q>"] = { tsa.send_selected_to_qflist + tsa.open_qflist, "TS: Send sel to qflist" },
+    ["<C-l>"] = { tsa.complete_tag, "TS: Complete tag" },
+    ["<C-/>"] = { tsa.which_key, "TS: WhichKey" },
+    ["<C-_>"] = { tsa.which_key, "TS: WhichKey" },
   },
-
   n = {
-    ["<esc>"] = actions.close,
-    ["<CR>"] = actions.select_default,
-    ["<C-x>"] = actions.select_horizontal,
-    ["<C-v>"] = actions.select_vertical,
-    ["<C-t>"] = actions.select_tab,
+    ["<esc>"] = { actions.close, "TS: Close" },
+    ["<CR>"] = { actions.select_default, "TS: Select" },
+    ["<C-x>"] = { actions.select_horizontal, "TS: Sel horizontal" },
+    ["<C-v>"] = { actions.select_vertical, "TS: Sel vertical" },
+    ["<C-t>"] = { actions.select_tab, "TS Sel tab" },
 
-    ["<Tab>"] = actions.toggle_selection + actions.move_selection_worse,
-    ["<S-Tab>"] = actions.toggle_selection + actions.move_selection_better,
-    ["<C-q>"] = actions.send_to_qflist + actions.open_qflist,
-    ["<M-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
+    ["<Tab>"] = { actions.toggle_selection + actions.move_selection_worse, "TS: Toggle sel worse" },
+    ["<S-Tab>"] = { actions.toggle_selection + actions.move_selection_better, "TS: Toggle sel better" },
+    ["<C-q>"] = { actions.send_to_qflist + actions.open_qflist, "TS: Send to qflist" },
+    ["<M-q>"] = { actions.send_selected_to_qflist + actions.open_qflist, "TS: Send sel to qflist" },
 
-    -- TODO: This would be weird if we switch the ordering.
-    ["j"] = actions.move_selection_next,
-    ["k"] = actions.move_selection_previous,
-    ["H"] = actions.move_to_top,
-    ["M"] = actions.move_to_middle,
-    ["L"] = actions.move_to_bottom,
+    ["j"] = { actions.move_selection_next, "TS: Move sel next" },
+    ["k"] = { actions.move_selection_previous, "TS: Move sel prev" },
+    ["M"] = { actions.move_to_middle, "TS: Move to middle" },
 
-    ["<Down>"] = actions.move_selection_next,
-    ["<Up>"] = actions.move_selection_previous,
-    ["gg"] = actions.move_to_top,
-    ["G"] = actions.move_to_bottom,
+    ["<Down>"] = { actions.move_selection_next, "TS: Move sel next" },
+    ["<Up>"] = { actions.move_selection_previous, "TS: Move sel prev" },
+    ["gg"] = { actions.move_to_top, "TS: Move to top" },
+    ["G"] = { actions.move_to_bottom, "TS: Move to bottom" },
 
-    ["<C-u>"] = actions.preview_scrolling_up,
-    ["<C-d>"] = actions.preview_scrolling_down,
-    ["<C-f>"] = actions.preview_scrolling_left,
-    ["<C-k>"] = actions.preview_scrolling_right,
+    ["<C-u>"] = { actions.preview_scrolling_up, "TS: Preview scroll up" },
+    ["<C-d>"] = { actions.preview_scrolling_down, "TS: Preview scroll down" },
+    ["<C-f>"] = { actions.preview_scrolling_left, "TS: Preview scroll left" },
+    ["<C-k>"] = { actions.preview_scrolling_right, "TS: Preview scroll right" },
 
-    ["<PageUp>"] = actions.results_scrolling_up,
-    ["<PageDown>"] = actions.results_scrolling_down,
-    ["<M-f>"] = actions.results_scrolling_left,
-    ["<M-k>"] = actions.results_scrolling_right,
+    ["<PageUp>"] = { actions.results_scrolling_up, "TS: Res scroll up" },
+    ["<PageDown>"] = { actions.results_scrolling_down, "TS: Res scroll down" },
+    ["<M-f>"] = { actions.results_scrolling_left, "TS: Res scrollt left" },
+    ["<M-k>"] = { actions.results_scrolling_right, "TS: Res scrollt right" },
 
-    ["?"] = actions.which_key,
+    ["?"] = { actions.which_key, "TS: WhichKey" },
   },
 }
 
@@ -92,101 +79,34 @@ ts.setup({
       "--hidden",
       "--follow",
     },
-    default_mappings = mappings,
+    default_mappings = {},
   },
 })
 
----diagnostic disable-next-line: unused-local
-local apply = tsm.apply_keymap
-tsm.apply_keymap = function(prompt_bufnr, attach_mappings, buffer_keymap)
-  apply(prompt_bufnr, attach_mappings, buffer_keymap)
-
-  local opts = {
-    buffer = prompt_bufnr,
-    mode = "i",
-    noremap = true,
-    silent = true,
-  }
-
-  local imaps = {
-    ["<C-j>"] = { tsa.move_selection_next, "TS: Select Next" },
-  }
-  print(vim.inspect(imaps))
-  for k, v in pairs(imaps) do
-    imaps[k] = {
-      function()
-        return v[1](prompt_bufnr)
-      end,
-      v[2],
+tsm.apply_keymap = function(prompt_bufnr, _, _)
+  for k1, _ in pairs(mappings) do
+    local opts = {
+      buffer = prompt_bufnr,
+      mode = k1,
+      noremap = true,
+      silent = true,
     }
+
+    for k2, v2 in pairs(mappings[k1]) do
+      mappings[k1][k2] = {
+        function()
+          if type(v2[1]) == "function" then
+            return v2[1]
+          else
+            ---@diagnostic disable-next-line: redundant-parameter
+            return v2[1](prompt_bufnr)
+          end
+        end,
+        v2[2],
+      }
+    end
+    wk.register(mappings[k1], opts)
   end
-  print(vim.inspect(imaps))
-  wk.register(imaps, opts)
-
-  wk.register({
-    --["<C-j>"] = { tsa.move_selection_next(prompt_bufnr), "TS: Select Next" },
-    --[[["<C-j>"] = { tsa.move_selection_next[1], "TS: Select Next" },
-    ["<C-p>"] = { tsa.move_selection_previous[1] },
-    ["<C-k>"] = { tsa.move_selection_previous[1] },
-
-    ["<C-c>"] = { tsa.close },
-
-    ["<Down>"] = { tsa.move_selection_next },
-    ["<Up>"] = { tsa.move_selection_previous },
-
-    ["<CR>"] = { tsa.select_default },
-    ["<C-x>"] = { tsa.select_horizontal },
-    ["<C-v>"] = { tsa.select_vertical },
-    ["<C-t>"] = { tsa.select_tab },
-
-    --["<C-u>"] = { tsa.preview_scrolling_up },
-    --["<C-d>"] = { tsa.preview_scrolling_down },
-    --["<C-f>"] = { tsa.preview_scrolling_left },
-    --["<C-k>"] = { tsa.preview_scrolling_right },
-
-    ["<PageUp>"] = { tsa.results_scrolling_up },
-    ["<PageDown>"] = { tsa.results_scrolling_down },
-    ["<M-f>"] = { tsa.results_scrolling_left },
-    ["<M-k>"] = { tsa.results_scrolling_right },
-    ["<Tab>"] = { tsa.results_scrolling_right },
-
-    --["<Tab>"] = {
-    --  function()
-    --    tsa.toggle_selection()
-    --    tsa.move_selection_worse()
-    --  end,
-    --},
-    --["<S-Tab>"] = {
-    --  function()
-    --    tsa.toggle_selection()
-    --    tsa.move_selection_better()
-    --  end,
-    --},
-    --["<C-q>"] = {
-    --  function()
-    --    tsa.send_to_qflist()
-    --    tsa.open_qflist()
-    --  end,
-    --},
-    --["<M-q>"] = {
-    --  function()
-    --    tsa.send_selected_to_qflist()
-    --    tsa.open_qflist()
-    --  end,
-    --},
-    ["<C-l>"] = { tsa.complete_tag },
-    ["<C-/>"] = { tsa.which_key },
-    ["<C-_>"] = { tsa.which_key }, -- keys from pressing <C-/>
-    --["<C-w>"] = { "<c-s-w>", type = "command" },
-
-    -- disable c-j because we dont want to allow new lines #2123
-    --["<C-j>"] = { tsa.nop },--]]
-  }, {
-    buffer = prompt_bufnr,
-    mode = "i",
-    noremap = true,
-    silent = true,
-  })
 end
 
 wk.register({
