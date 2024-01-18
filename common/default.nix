@@ -186,10 +186,6 @@
     gimp # Photoshop alternative
     webcamoid # Webcam application
 
-    # Web browsers
-    firefox # The browser I'd love to use
-    google-chrome # Only use this when websites are stupid
-
     # Games
     superTuxKart # Kart game with Tux
   ];
