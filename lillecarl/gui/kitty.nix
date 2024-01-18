@@ -13,9 +13,9 @@ _:
         vimcmd = "vim -c 'set ft=man buftype=nofile' -c '$'-";
       in
       {
-        "f1" = "launch --stdin-source=@last_cmd_output --type=overlay ${vimcmd}";
-        "f2" = "launch --stdin-source=@screen --type=overlay ${vimcmd}";
-        "f3" = "launch --stdin-source=@screen_scrollback --type=overlay ${vimcmd}";
+        "alt+f1" = "launch --stdin-source=@last_cmd_output --type=overlay ${vimcmd}";
+        "alt+f2" = "launch --stdin-source=@screen --type=overlay ${vimcmd}";
+        "alt+f3" = "launch --stdin-source=@screen_scrollback --type=overlay ${vimcmd}";
         "ctrl+shift+g" = "show_last_command_output";
         "ctrl+shift+," = "no_op";
         "ctrl+shift+." = "no_op";
