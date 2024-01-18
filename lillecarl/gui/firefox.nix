@@ -3,11 +3,20 @@
 }: {
   home.packages = [
     pkgs.vim-full # Required for tridactyl nativemessaging host thingy
+    pkgs.neovide
+    #pkgs.fx_cast_bridge
   ];
 
   programs.firefox = {
     enable = true;
-    package = pkgs.firefox-wayland;
+    package = (pkgs.firefox-wayland.override (old: {
+      nativeMessagingHosts = old.nativeMessagingHosts or [ ] ++ [
+        pkgs.tridactyl-native
+        pkgs.gnomeExtensions.gsconnect
+        pkgs.ff2mpv
+        pkgs.fx_cast_bridge
+      ];
+    }));
 
     profiles = {
       lillecarl = {
