@@ -104,7 +104,9 @@ require("nvim-autopairs").setup({})
 
 -- gitsigns
 -- https://github.com/lewis6991/gitsigns.nvim
-require("gitsigns").setup({})
+require("gitsigns").setup({
+  current_line_blame = true,
+})
 
 -- overseer
 -- https://github.com/stevearc/overseer.nvim
