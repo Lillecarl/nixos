@@ -1,6 +1,6 @@
 local M = {}
 
-function M.setup(_)
+function M.setup(config)
   -- Space is leader
   vim.g.mapleader = " "
   -- Something from LazyVim
@@ -17,6 +17,13 @@ function M.setup(_)
   vim.opt.smartcase = true
   -- show line numbers
   vim.opt.number = true
+
+  local font = config["ui"]["font"]
+  if vim.g.neovide then
+    vim.opt.guifont = font["name"] .. ":h" .. font["size"]
+    vim.g.neovide_fullscreen = false
+    vim.g.neovide_remember_window_size = false
+  end
 
   if not vim.g.vscode then
     local wk = require("which-key")
