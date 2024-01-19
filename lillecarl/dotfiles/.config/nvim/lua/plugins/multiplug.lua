@@ -68,35 +68,10 @@ require("noice").setup({
 -- https://github.com/folke/trouble.nvim
 require("trouble").setup({})
 
--- conform, formatting
--- https://github.com/stevearc/conform.nvim
-require("conform").setup({
-  formatters_by_ft = {
-    lua = { "stylua" },
-    python = { "isort", "black" },
-    javascript = { "prettier" },
-    nix = { "nixpkgs_fmt" },
-    terraform = { "terraform_fmt" },
-    hcl = { "hclfmt" },
-  },
-  format_on_save = {
-    -- These options will be passed to conform.format()
-    timeout_ms = 500,
-    lsp_fallback = true,
-  },
-  formatters = {
-    hclfmt = {
-      command = "terragrunt",
-      args = { "hclfmt", "--terragrunt-hclfmt-file", "$FILENAME" },
-      stdin = false,
-    },
-  },
-})
-
-wk.register({
-  v = { name = "Visual mode" },
-  y = { name = "Yank" },
-})
+--wk.register({
+--  v = { name = "Visual mode" },
+--  y = { name = "Yank" },
+--})
 
 -- autopairs
 -- https://github.com/windwp/nvim-autopairs

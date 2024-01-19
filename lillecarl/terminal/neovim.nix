@@ -1,6 +1,12 @@
 { pkgs
+, lib
+, bp
+, config
 , ...
 }:
+let
+  fonts = config.stylix.fonts;
+in
 {
   home.packages = [
     pkgs.tree-sitter # for TS troubleshooting
@@ -23,23 +29,6 @@
       pkgs.tree-sitter # silence tree-sitter warning
       pkgs.fzf # fuzzy finder
       pkgs.git # Gitsigns, Fugitive
-    ] ++ [
-      # lsp servers
-      pkgs.clang-tools # C, C++
-      pkgs.lua-language-server # Lua
-      pkgs.nil # Nix
-      pkgs.terraform-ls # Terraform
-      pkgs.pyright # Python
-      pkgs.vscode-langservers-extracted # HTML/CSS/JSON/ESLint
-    ] ++ [
-      # code formatters
-      pkgs.isort # sort python imports
-      pkgs.black # python formatter
-      pkgs.stylua # lua formatter
-      pkgs.nodePackages.prettier # web formatter
-      pkgs.nixpkgs-fmt # formatting for nil
-      pkgs.terraform # terraform formatter
-      pkgs.terragrunt # terraform formatter
     ];
 
     plugins = with pkgs.vimPlugins; [
@@ -77,6 +66,86 @@
       which-key-nvim
     ];
 
-    extraLuaConfig = /* lua */ "require('init').setup({})";
+    extraLuaConfig =
+      let
+        nodeLatest = pkgs.nodePackages_latest;
+        config = {
+          lsp = {
+            paths =
+              let
+                bashls = "${nodeLatest.pyright}/bin";
+                dockerls = "${nodeLatest.dockerfile-language-server-nodejs}/bin";
+                pyright = "${nodeLatest.pyright}/bin";
+                tsserver = "${nodeLatest.typescript-language-server}/bin";
+                vimls = "${nodeLatest.vim-language-server}/bin";
+                vscode-ls = "${nodeLatest.vscode-langservers-extracted}/bin";
+                yamlls = "${nodeLatest.yaml-language-server}/bin";
+              in
+              {
+                # TODO: PowerShell
+                ansiblels = bp pkgs.ansible-language-server;
+                bashls = "${bashls}/bash-language-server";
+                clangd = "${pkgs.clang-tools}/bin/clangd";
+                cmake = bp pkgs.cmake-language-server;
+                cssls = "${vscode-ls}/vscode-css-language-server";
+                dockerls = "${dockerls}/docker-langserver";
+                dotls = bp pkgs.dot-language-server;
+                eslint = "${vscode-ls}/vscode-eslint-language-server";
+                gopls = bp pkgs.gopls;
+                html = "${vscode-ls}/vscode-html-language-server";
+                jsonls = "${vscode-ls}/vscode-json-language-server";
+                lua_ls = bp pkgs.lua-language-server;
+                marksman = bp pkgs.marksman;
+                nil_ls = bp pkgs.nil;
+                nixd = bp pkgs.nixd;
+                nushell = bp pkgs.nushell;
+                omnisharp = bp pkgs.omnisharp-roslyn;
+                perlls = bp pkgs.perlPackages.PerlLanguageServer; # broken
+                postgres_lsp = bp pkgs.postgres-lsp;
+                psalm = bp pkgs.phpPackages.psalm;
+                pyright = "${pyright}/typescript-language-server";
+                ruby_ls = bp pkgs.ruby-lsp;
+                rust_analyzer = bp pkgs.rust-analyzer;
+                terraformls = pkgs.terraform-ls;
+                tsserver = "${tsserver}/typescript-language-server";
+                vimls = "${vimls}/vimls-language-server";
+                yamlls = "${yamlls}/yaml-language-server";
+                zls = bp pkgs.zls;
+              };
+          };
+          fmt = {
+            paths = {
+              black = bp pkgs.black;
+              clang_format = "${pkgs.clang-tools}/bin/clang-format";
+              isort = bp pkgs.isort;
+              nixpkgs_fmt = bp pkgs.nixpkgs-fmt;
+              fixjson = "${nodeLatest.fixjson}/bin/fixjson";
+              packer_fmt = bp pkgs.packer;
+              prettier = "${nodeLatest.prettier}/bin/prettier";
+              rustfmt = bp pkgs.rustfmt;
+              shellcheck = bp pkgs.shellcheck;
+              stylua = bp pkgs.stylua;
+              terraform_fmt = bp pkgs.terraform;
+              terragrunt_fmt = bp pkgs.terragrunt;
+              yamlfmt = "${pkgs.clang-tools}/bin/yamlfmt";
+            };
+          };
+          tools = {
+            paths = {
+              ripgrep = bp pkgs.ripgrep;
+            };
+          };
+          ui = {
+            # For Neovide
+            font = {
+              name = fonts.monospace.name;
+              size = fonts.sizes.terminal;
+            };
+          };
+        };
+        luaConfig = lib.generators.toLua { } config;
+      in
+        /* lua */
+      "require('init').setup(${luaConfig})";
   };
 }
