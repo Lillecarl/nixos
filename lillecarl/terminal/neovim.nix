@@ -5,7 +5,7 @@
 , ...
 }:
 let
-  fonts = config.stylix.fonts;
+  inherit (config.stylix) fonts;
 in
 {
   home.packages = [
@@ -138,7 +138,7 @@ in
           ui = {
             # For Neovide
             font = {
-              name = fonts.monospace.name;
+              inherit (fonts.monospace) name;
               size = fonts.sizes.terminal;
             };
           };
