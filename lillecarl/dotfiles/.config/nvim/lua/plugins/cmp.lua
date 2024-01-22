@@ -69,11 +69,3 @@ cmp.setup.filetype("gitcommit", {
     { name = "buffer" },
   }),
 })
-
--- Set up lspconfig.
-local capabilities = require("cmp_nvim_lsp").default_capabilities()
--- Set these for all enabled LSP configs
-require("lspconfig")["lua_ls"].setup({ capabilities = capabilities })
-require("lspconfig")["nil_ls"].setup({ capabilities = capabilities })
-require("lspconfig")["pyright"].setup({ capabilities = capabilities })
-require("lspconfig")["terraformls"].setup({ capabilities = capabilities })
