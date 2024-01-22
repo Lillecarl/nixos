@@ -76,25 +76,35 @@ function M.setup(config)
 
   ts.setup({
     defaults = {
+      --default_mappings = {},
       vimgrep_arguments = {
         config["tools"]["paths"]["ripgrep"],
         "--vimgrep",
-        "--hidden",
         "--follow",
-      },
-      find_command = {
-        config["tools"]["paths"]["ripgrep"],
-        "--files",
         "--hidden",
-        "--follow",
-        "--color",
-        "never",
+        "--ignore",
+        "--color=never",
+        "--no-heading",
+        "--with-filename",
+        "--line-number",
+        "--column",
+        "--smart-case",
       },
-      default_mappings = {},
+    },
+    pickers = {
+      find_files = {
+        find_command = {
+          config["tools"]["paths"]["ripgrep"],
+          "--follow",
+          "--hidden",
+          "--ignore",
+          "--files",
+        },
+      },
     },
   })
 
-  tsm.apply_keymap = function(prompt_bufnr, _, _)
+  tsm.apply_keymapp = function(prompt_bufnr, _, _)
     for k1, _ in pairs(mappings) do
       local opts = {
         buffer = prompt_bufnr,
