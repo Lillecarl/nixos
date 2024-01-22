@@ -24,7 +24,6 @@ function M.setup(config)
   for key, value in pairs(nixFormatters) do
     local status, result = pcall(require, "conform.formatters." .. key)
     if not status then
-      print("Failed to load formatter: " .. key)
       result = require("conform").formatters[key]
     end
     require("conform").formatters[key] = vim.tbl_deep_extend("force", result or {}, value)
