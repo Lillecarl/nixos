@@ -16,11 +16,11 @@ end
 alias ggrt get_git_root
 
 if set -q LASTPATH
-   and not set -q TMUX
-   and not set -q VSCODE_INJECTION
-  begin
-    cd $LASTPATH
-  end
+    and not set -q TMUX
+    and not set -q VSCODE_INJECTION
+    begin
+        cd $LASTPATH
+    end
 end
 
 abbr -a sc sudo systemctl
