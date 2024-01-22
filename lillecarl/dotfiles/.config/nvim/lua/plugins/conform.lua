@@ -2,9 +2,8 @@ local M = {}
 
 function M.setup(config)
   local conform = require("conform")
-  local formatters = conform.formatters
   local formatters_by_ft = conform.formatters_by_ft
-  local paths = config["fmt"]["paths"]
+  local nixFormatters = config["fmt"]
 
   conform.setup({
     format_on_save = {
@@ -16,49 +15,37 @@ function M.setup(config)
     notify_on_error = true,
   })
 
-  formatters_by_ft.python = { "isort", "black" }
-  formatters.black = { command = paths["black"] }
-  formatters.isort = { command = paths["isort"] }
-
-  formatters_by_ft.lua = { "stylua" }
-  formatters.stylua = { command = paths["stylua"] }
-
-  formatters_by_ft.javascript = { "prettier" }
-  formatters.prettier = { command = paths["prettier"] }
-
-  formatters_by_ft.nix = { "nixpkgs_fmt" }
-  formatters.nixpkgs_fmt = { command = paths["nixpkgs_fmt"] }
-
-  formatters_by_ft.terraform = { "terraform_fmt" }
-  formatters.terraform_fmt = { command = paths["terraform_fmt"] }
-
-  formatters_by_ft.hcl = { "terragrunt_fmt" }
-  formatters_by_ft.terragrunt = { "terragrunt_fmt" }
-  formatters.terragrunt_fmt = {
-    command = paths["terragrunt_fmt"],
+  require("conform").formatters.terragrunt_fmt = {
+    command = "", -- Populated by Nix
     args = { "hclfmt", "--terragrunt-hclfmt-file", "$FILENAME" },
     stdin = false,
   }
 
+  for key, value in pairs(nixFormatters) do
+    local status, result = pcall(require, "conform.formatters." .. key)
+    if not status then
+      print("Failed to load formatter: " .. key)
+      result = require("conform").formatters[key]
+    end
+    require("conform").formatters[key] = vim.tbl_deep_extend("force", result or {}, value)
+  end
+
+  formatters_by_ft.python = { "isort", "black" }
+  formatters_by_ft.lua = { "stylua" }
+  formatters_by_ft.javascript = { "prettierd" }
+  formatters_by_ft.nix = { "nixpkgs_fmt" }
+  formatters_by_ft.terraform = { "terraform_fmt" }
+  formatters_by_ft.hcl = { "terragrunt_fmt" }
+  formatters_by_ft.terragrunt = { "terragrunt_fmt" }
   formatters_by_ft.json = { "fixjson" }
-  formatters.fixjson = { command = paths["fixjson"] }
-
   formatters_by_ft.rust = { "rustfmt" }
-  formatters.rustfmt = { command = paths["rustfmt"] }
-
   formatters_by_ft.bash = { "shellcheck" }
-  formatters.shellcheck = { command = paths["shellcheck"] }
-
   formatters_by_ft.yaml = { "yamlfmt" }
-  formatters.yamlfmt = { command = paths["yamlfmt"] }
-
   formatters_by_ft.packer = { "packer_fmt" }
-  formatters.packer_fmt = { command = paths["packer_fmt"] }
-
-  formatters.clang_format = { command = paths["clang_format"] }
+  formatters_by_ft.fish = { "fish_indent" }
 
   -- Not yet sure why this is required
-  require("conform").formatters = formatters
+  --require("conform").formatters = formatters
   require("conform").formatters_by_ft = formatters_by_ft
 end
 

@@ -70,68 +70,69 @@ in
       let
         nodeLatest = pkgs.nodePackages_latest;
         config = {
-          lsp = {
-            paths =
-              let
-                bashls = "${nodeLatest.bash-language-server}/bin";
-                dockerls = "${nodeLatest.dockerfile-language-server-nodejs}/bin";
-                pyright = "${nodeLatest.pyright}/bin";
-                tsserver = "${nodeLatest.typescript-language-server}/bin";
-                vimls = "${nodeLatest.vim-language-server}/bin";
-                vscode-ls = "${nodeLatest.vscode-langservers-extracted}/bin";
-                yamlls = "${nodeLatest.yaml-language-server}/bin";
+          lsp =
+            let
+              bashls = "${nodeLatest.bash-language-server}/bin";
+              dockerls = "${nodeLatest.dockerfile-language-server-nodejs}/bin";
+              pyright = "${nodeLatest.pyright}/bin";
+              tsserver = "${nodeLatest.typescript-language-server}/bin";
+              vimls = "${nodeLatest.vim-language-server}/bin";
+              vscode-ls = "${nodeLatest.vscode-langservers-extracted}/bin";
+              yamlls = "${nodeLatest.yaml-language-server}/bin";
 
-                mkLsp = path: { cmd = [ path ]; };
-              in
-              {
-                # TODO: PowerShell
-                ansiblels = mkLsp (bp pkgs.ansible-language-server);
-                bashls = mkLsp "${bashls}/bash-language-server";
-                clangd = mkLsp "${pkgs.clang-tools}/bin/clangd";
-                cmake = mkLsp (bp pkgs.cmake-language-server);
-                cssls = mkLsp "${vscode-ls}/vscode-css-language-server";
-                dockerls = mkLsp "${dockerls}/docker-langserver";
-                dotls = mkLsp (bp pkgs.dot-language-server);
-                eslint = mkLsp "${vscode-ls}/vscode-eslint-language-server";
-                gopls = mkLsp (bp pkgs.gopls);
-                html = mkLsp "${vscode-ls}/vscode-html-language-server";
-                jsonls = mkLsp "${vscode-ls}/vscode-json-language-server";
-                lua_ls = mkLsp (bp pkgs.lua-language-server);
-                marksman = mkLsp (bp pkgs.marksman);
-                nil_ls = mkLsp (bp pkgs.nil);
-                nixd = mkLsp (bp pkgs.nixd);
-                nushell = mkLsp (bp pkgs.nushell);
-                omnisharp = mkLsp (bp pkgs.omnisharp-roslyn);
-                perlls = mkLsp (bp pkgs.perlPackages.PerlLanguageServer); # broken
-                postgres_lsp = mkLsp (bp pkgs.postgres-lsp);
-                psalm = mkLsp (bp pkgs.phpPackages.psalm);
-                pyright = mkLsp "${pyright}/pyright-langserver";
-                ruby_ls = mkLsp (bp pkgs.ruby-lsp);
-                rust_analyzer = mkLsp (bp pkgs.rust-analyzer);
-                terraformls = mkLsp (bp pkgs.terraform-ls);
-                tsserver = mkLsp "${tsserver}/typescript-language-server";
-                vimls = mkLsp "${vimls}/vimls-language-server";
-                yamlls = mkLsp "${yamlls}/yaml-language-server";
-                zls = mkLsp (bp pkgs.zls);
-              };
-          };
-          fmt = {
-            paths = {
+              mkLsp = path: { cmd = [ path ]; };
+            in
+            builtins.mapAttrs (key: val: mkLsp val) {
+              # TODO: PowerShell
+              ansiblels = bp pkgs.ansible-language-server;
+              bashls = "${bashls}/bash-language-server";
+              clangd = "${pkgs.clang-tools}/bin/clangd";
+              cmake = bp pkgs.cmake-language-server;
+              cssls = "${vscode-ls}/vscode-css-language-server";
+              dockerls = "${dockerls}/docker-langserver";
+              dotls = bp pkgs.dot-language-server;
+              eslint = "${vscode-ls}/vscode-eslint-language-server";
+              gopls = bp pkgs.gopls;
+              html = "${vscode-ls}/vscode-html-language-server";
+              jsonls = "${vscode-ls}/vscode-json-language-server";
+              lua_ls = bp pkgs.lua-language-server;
+              marksman = bp pkgs.marksman;
+              nil_ls = bp pkgs.nil;
+              nixd = bp pkgs.nixd;
+              nushell = bp pkgs.nushell;
+              omnisharp = bp pkgs.omnisharp-roslyn;
+              perlls = bp pkgs.perlPackages.PerlLanguageServer; # broken
+              postgres_lsp = bp pkgs.postgres-lsp;
+              psalm = bp pkgs.phpPackages.psalm;
+              pyright = "${pyright}/pyright-langserver";
+              ruby_ls = bp pkgs.ruby-lsp;
+              rust_analyzer = bp pkgs.rust-analyzer;
+              terraformls = bp pkgs.terraform-ls;
+              tsserver = "${tsserver}/typescript-language-server";
+              vimls = "${vimls}/vimls-language-server";
+              yamlls = "${yamlls}/yaml-language-server";
+              zls = bp pkgs.zls;
+            };
+          fmt =
+            let
+              mkConform = path: { command = path; };
+            in
+            builtins.mapAttrs (key: val: mkConform val) {
               black = bp pkgs.black;
               clang_format = "${pkgs.clang-tools}/bin/clang-format";
               isort = bp pkgs.isort;
               nixpkgs_fmt = bp pkgs.nixpkgs-fmt;
               fixjson = "${nodeLatest.fixjson}/bin/fixjson";
               packer_fmt = bp pkgs.packer;
-              prettier = "${nodeLatest.prettier}/bin/prettier";
+              prettierd = bp pkgs.prettierd;
               rustfmt = bp pkgs.rustfmt;
               shellcheck = bp pkgs.shellcheck;
               stylua = bp pkgs.stylua;
               terraform_fmt = bp pkgs.terraform;
               terragrunt_fmt = bp pkgs.terragrunt;
-              yamlfmt = "${pkgs.clang-tools}/bin/yamlfmt";
+              yamlfmt = bp pkgs.yamlfmt;
+              fish_indent = "${pkgs.fish}/bin/fish_indent";
             };
-          };
           tools = {
             paths = {
               ripgrep = bp pkgs.ripgrep;
