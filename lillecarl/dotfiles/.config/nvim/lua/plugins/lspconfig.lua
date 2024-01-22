@@ -10,34 +10,19 @@ function M.setup(config)
 
   local paths = config["lsp"]["paths"]
 
-  lspconfig.ansiblels.setup({ cmd = { paths["ansiblels"], "--stdio" } })
-  lspconfig.bashls.setup({ cmd = { paths["bashls"], "start" } })
-  lspconfig.clangd.setup({ cmd = { paths["clangd"] } })
-  lspconfig.cmake.setup({ cmd = { paths["cmake"] } })
-  lspconfig.cssls.setup({ cmd = { paths["cssls"], "--stdio" } })
-  lspconfig.dockerls.setup({ cmd = { paths["dockerls"], "--stdio" } })
-  lspconfig.dotls.setup({ cmd = { paths["dotls"], "--stdio" } })
-  lspconfig.eslint.setup({ cmd = { paths["eslint"], "--stdio" } })
-  lspconfig.gopls.setup({ cmd = { paths["eslint"], "--stdio" } })
-  lspconfig.html.setup({ cmd = { paths["html"], "--stdio" } })
-  lspconfig.jsonls.setup({ cmd = { paths["jsonls"], "--stdio" } })
-  lspconfig.lua_ls.setup({ cmd = { paths["lua_ls"] }, capabilities = capabilities })
-  lspconfig.marksman.setup({ cmd = { paths["marksman"] } })
-  lspconfig.nil_ls.setup({ cmd = { paths["nil_ls"] } })
-  --lspconfig.nixd.setup({ cmd = { paths["nixd"] } })
-  lspconfig.nushell.setup({ cmd = { paths["nushell"], "--lsp" } })
-  lspconfig.omnisharp.setup({ cmd = { paths["omnisharp"] } })
-  lspconfig.perlls.setup({ cmd = { paths["perlls"] } })
-  lspconfig.postgres_lsp.setup({ cmd = { paths["postgres_lsp"] } })
-  lspconfig.psalm.setup({ cmd = { paths["psalm"], "--language-server" } })
-  lspconfig.pyright.setup({ cmd = { paths["pyright"], "--stdio" } })
-  lspconfig.ruby_ls.setup({ cmd = { paths["ruby_ls"] } })
-  lspconfig.rust_analyzer.setup({ cmd = { paths["rust_analyzer"] } })
-  lspconfig.terraformls.setup({ cmd = { paths["terraformls"] } })
-  lspconfig.tsserver.setup({ cmd = { paths["tsserver"], "--stdio" } })
-  lspconfig.vimls.setup({ cmd = { paths["vimls"], "--stdio" } })
-  lspconfig.yamlls.setup({ cmd = { paths["yamlls"], "--stdio" } })
-  lspconfig.zls.setup({ cmd = { paths["zls"] } })
+  for lspName, nixConf in pairs(paths) do
+    -- Get default config
+    local defConf = lspconfig[lspName]["document_config"]["default_config"]
+
+    --
+    nixConf["cmd"] = vim.tbl_deep_extend("force", defConf["cmd"] or {}, nixConf["cmd"] or {})
+    nixConf["capabilities"] = capabilities
+
+    -- Merge our config with the default config
+    local finalConfig = vim.tbl_deep_extend("force", defConf, nixConf)
+
+    lspconfig[lspName].setup(finalConfig)
+  end
 
   vim.api.nvim_create_autocmd("LspAttach", {
     group = vim.api.nvim_create_augroup("UserLspConfig", {}),
