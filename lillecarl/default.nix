@@ -1,6 +1,7 @@
 { lib
 , flakeloc
 , config
+, systemConfig
 , ...
 }:
 let
@@ -21,7 +22,7 @@ in
   home = {
     username = "lillecarl";
     homeDirectory = "/home/lillecarl";
-    stateVersion = "22.05";
+    stateVersion = systemConfig.system.stateVersion;
     enableNixpkgsReleaseCheck = true;
     file = dotfile_outOfStoreLinked;
   };
