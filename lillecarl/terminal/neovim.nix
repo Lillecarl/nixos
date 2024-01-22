@@ -73,7 +73,7 @@ in
           lsp = {
             paths =
               let
-                bashls = "${nodeLatest.pyright}/bin";
+                bashls = "${nodeLatest.bash-language-server}/bin";
                 dockerls = "${nodeLatest.dockerfile-language-server-nodejs}/bin";
                 pyright = "${nodeLatest.pyright}/bin";
                 tsserver = "${nodeLatest.typescript-language-server}/bin";
@@ -103,7 +103,7 @@ in
                 perlls = bp pkgs.perlPackages.PerlLanguageServer; # broken
                 postgres_lsp = bp pkgs.postgres-lsp;
                 psalm = bp pkgs.phpPackages.psalm;
-                pyright = "${pyright}/typescript-language-server";
+                pyright = "${pyright}/pyright-langserver";
                 ruby_ls = bp pkgs.ruby-lsp;
                 rust_analyzer = bp pkgs.rust-analyzer;
                 terraformls = pkgs.terraform-ls;
