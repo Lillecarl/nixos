@@ -7,8 +7,8 @@ function M.setup(config)
     require("plugins.telescope").setup(config)
     require("plugins.copilot")
     require("plugins.tree-sitter")
-    require("plugins.lspconfig").setup(config)
     require("plugins.cmp")
+    require("plugins.lspconfig").setup(config)
   end
 end
 

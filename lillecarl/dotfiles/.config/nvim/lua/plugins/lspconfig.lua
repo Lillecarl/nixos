@@ -6,6 +6,7 @@ function M.setup(config)
 
   -- Setup language servers.
   local lspconfig = require("lspconfig")
+  local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
   local paths = config["lsp"]["paths"]
 
@@ -20,7 +21,7 @@ function M.setup(config)
   lspconfig.gopls.setup({ cmd = { paths["eslint"], "--stdio" } })
   lspconfig.html.setup({ cmd = { paths["html"], "--stdio" } })
   lspconfig.jsonls.setup({ cmd = { paths["jsonls"], "--stdio" } })
-  lspconfig.lua_ls.setup({ cmd = { paths["lua_ls"] } })
+  lspconfig.lua_ls.setup({ cmd = { paths["lua_ls"] }, capabilities = capabilities })
   lspconfig.marksman.setup({ cmd = { paths["marksman"] } })
   lspconfig.nil_ls.setup({ cmd = { paths["nil_ls"] } })
   --lspconfig.nixd.setup({ cmd = { paths["nixd"] } })
