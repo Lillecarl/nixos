@@ -43,6 +43,7 @@ function M.setup(config)
   formatters_by_ft.yaml = { "yamlfmt" }
   formatters_by_ft.packer = { "packer_fmt" }
   formatters_by_ft.fish = { "fish_indent" }
+  formatters_by_ft.go = { "gofmt", "goimports", "golines" }
 
   -- Not yet sure why this is required
   --require("conform").formatters = formatters

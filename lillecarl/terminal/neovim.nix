@@ -29,6 +29,7 @@ in
       pkgs.tree-sitter # silence tree-sitter warning
       pkgs.fzf # fuzzy finder
       pkgs.git # Gitsigns, Fugitive
+      pkgs.go # Required for gopls
     ];
 
     plugins = with pkgs.vimPlugins; [
@@ -132,6 +133,9 @@ in
               terragrunt_fmt = bp pkgs.terragrunt;
               yamlfmt = bp pkgs.yamlfmt;
               fish_indent = "${pkgs.fish}/bin/fish_indent";
+              gofmt = "${pkgs.go}/bin/gofmt";
+              goimports = "${pkgs.gotools}/bin/goimports";
+              golines = "${pkgs.golines}/bin/golines";
             };
           tools = {
             paths = {
