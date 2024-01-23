@@ -59,6 +59,35 @@ function M.setup(config)
   end
 
   vim.api.nvim_create_user_command("Die", "xall", {})
+
+  local augrp = vim.api.nvim_create_augroup("RealBufferBind", {})
+  local realBufferBind = function(ev)
+    print(vim.inspect(ev))
+    if ev.event == "FileType" then
+      local blocked_filetypes = {
+        "TelescopePrompt",
+        "TelescopeResults",
+        "WhichKey",
+        "notify",
+        "noice",
+        "nofile",
+      }
+
+      for _, i in ipairs(blocked_filetypes) do
+        if vim.bo.filetype == i then
+          return
+        end
+      end
+    end
+
+    -- Create a user autocmd group that runs when we enter a real buffer
+    -- Useful for configuring binds without disturbing extensions
+    vim.api.nvim_exec_autocmds("User", { group = augrp })
+  end
+
+  vim.api.nvim_create_autocmd({ "FileType", "VimEnter", "BufAdd" }, {
+    callback = realBufferBind,
+  })
 end
 
 return M

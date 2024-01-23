@@ -1,4 +1,11 @@
 -- which-key
+require("which-key").setup({
+  triggers_nowait = {
+    "<leader>",
+    "<Space>",
+    "<M-Space>",
+  },
+})
 local wk = require("which-key")
 wk.register({
   i = { "<cmd>WhichKey '' i<cr>", "Show WhichKey insert bindings" },
@@ -16,9 +23,7 @@ require("catppuccin").setup({
 })
 vim.cmd.colorscheme("catppuccin")
 
-
-require("neoconf").setup({
-})
+require("neoconf").setup({})
 -- neodev
 -- https://github.com/folke/neodev.nvim
 require("neodev").setup({
@@ -28,7 +33,7 @@ require("neodev").setup({
     runtime = true,
     types = true,
     plugins = true,
-  }
+  },
 })
 
 -- nvim-tree, tree plugin
@@ -67,12 +72,30 @@ require("noice").setup({
   },
   -- you can enable a preset for easier configuration
   presets = {
-    bottom_search = true,         -- use a classic bottom cmdline for search
-    command_palette = true,       -- position the cmdline and popupmenu together
+    bottom_search = true, -- use a classic bottom cmdline for search
+    command_palette = true, -- position the cmdline and popupmenu together
     long_message_to_split = true, -- long messages will be sent to a split
-    inc_rename = false,           -- enables an input dialog for inc-rename.nvim
-    lsp_doc_border = false,       -- add a border to hover docs and signature help
+    inc_rename = false, -- enables an input dialog for inc-rename.nvim
+    lsp_doc_border = false, -- add a border to hover docs and signature help
   },
+})
+
+local bindToBuffer = function(ev)
+  local leader = {
+    m = {
+      name = "Messages",
+      m = { "<cmd>Noice<cr>", "Show messages" },
+      d = { "<cmd>NoiceDismiss<cr>", "Dismiss messages" },
+    },
+  }
+
+  wk.register(leader, { prefix = "<leader>", buffer = ev.buf })
+  wk.register(leader, { prefix = "<M-space>", buffer = ev.buf, mode = "i" })
+end
+
+vim.api.nvim_create_autocmd({ "User" }, {
+  group = "RealBufferBind",
+  callback = bindToBuffer,
 })
 
 -- trouble

@@ -174,24 +174,7 @@ function M.setup(config)
     end
   end
 
-  local bindBufMaps = function(ev)
-    if ev.event == "FileType" then
-      local blocked_filetypes = {
-        "TelescopePrompt",
-        "TelescopeResults",
-        "WhichKey",
-        "notify",
-        "noice",
-        "nofile",
-      }
-
-      for _, i in ipairs(blocked_filetypes) do
-        if vim.bo.filetype == i then
-          return
-        end
-      end
-    end
-
+  local bindToBuffer = function(ev)
     local leader = {
       f = {
         name = "Find",
@@ -201,18 +184,16 @@ function M.setup(config)
         h = { tsb.help_tags, "Help Tags" },
         t = { "<cmd>Telescope<cr>", "Pickers" },
       },
-      m = {
-        name = "Messages",
-        m = { "<cmd>Noice<cr>", "Show messages" },
-        d = { "<cmd>NoiceDismiss<cr>", "Dismiss messages" },
-      },
     }
 
     wk.register(leader, { prefix = "<leader>", buffer = ev.buf })
-
-    --wk.register(leader, { prefix = "<C-space>", buffer = ev.buf, mode = "i" })
     wk.register(leader, { prefix = "<M-space>", buffer = ev.buf, mode = "i" })
   end
+
+  vim.api.nvim_create_autocmd({ "User" }, {
+    group = "RealBufferBind",
+    callback = bindToBuffer,
+  })
 
   vim.g.log = function(data)
     local file, err = io.open("/home/lillecarl/.local/share/nvim/disk", "a")
@@ -221,10 +202,6 @@ function M.setup(config)
       file:flush()
     end
   end
-
-  vim.api.nvim_create_autocmd({ "FileType", "VimEnter", "BufAdd" }, {
-    callback = bindBufMaps,
-  })
 end
 
 return M
