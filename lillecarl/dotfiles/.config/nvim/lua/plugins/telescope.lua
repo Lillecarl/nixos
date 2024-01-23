@@ -196,7 +196,7 @@ function M.setup(config)
   })
 
   vim.g.log = function(data)
-    local file, err = io.open("/home/lillecarl/.local/share/nvim/disk", "a")
+    local file, _ = io.open("/home/lillecarl/.local/share/nvim/disk", "a")
     if file then
       file:write(vim.inspect(data) .. "\n")
       file:flush()

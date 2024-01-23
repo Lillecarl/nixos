@@ -62,7 +62,6 @@ function M.setup(config)
 
   local augrp = vim.api.nvim_create_augroup("RealBufferBind", {})
   local realBufferBind = function(ev)
-    print(vim.inspect(ev))
     if ev.event == "FileType" then
       local blocked_filetypes = {
         "TelescopePrompt",
