@@ -8,8 +8,12 @@ require("which-key").setup({
 })
 local wk = require("which-key")
 wk.register({
+  c = { "<cmd>WhichKey '' c<cr>", "Show WhichKey command-line bindings" },
   i = { "<cmd>WhichKey '' i<cr>", "Show WhichKey insert bindings" },
-  n = { "<cmd>WhichKey '' n<cr>", "Show WhichKey insert bindings" },
+  n = { "<cmd>WhichKey '' n<cr>", "Show WhichKey normal bindings" },
+  o = { "<cmd>WhichKey '' o<cr>", "Show WhichKey operator bindings" },
+  t = { "<cmd>WhichKey '' t<cr>", "Show WhichKey terminal bindings" },
+  x = { "<cmd>WhichKey '' x<cr>", "Show WhichKey visual bindings" },
 }, { prefix = "<leader>w" })
 
 -- catppuccin theme
