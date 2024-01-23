@@ -5,7 +5,6 @@ function M.setup(config)
 
   local ts = require("telescope")
   local tsa = require("telescope.actions")
-  local actions = tsa
   local tsb = require("telescope.builtin")
   local tsm = require("telescope.mappings")
 
@@ -36,47 +35,78 @@ function M.setup(config)
       ["<C-q>"] = { tsa.send_to_qflist + tsa.open_qflist, "TS: Send to qflist" },
       ["<M-q>"] = { tsa.send_selected_to_qflist + tsa.open_qflist, "TS: Send sel to qflist" },
       ["<C-l>"] = { tsa.complete_tag, "TS: Complete tag" },
-      ["<C-/>"] = { tsa.which_key, "TS: WhichKey" },
-      ["<C-_>"] = { tsa.which_key, "TS: WhichKey" },
+
+      -- Unbind Telescope mappings that are unremovable
+      ["<C-_>"] = { false, "TS: Which-Key" },
+      ["<C-/>"] = { false, "TS: Which-Key" },
+
+      ["<C-D>"] = { false, "TS: Preview scroll down" },
+      ["<C-U>"] = { false, "TS: Preview scroll up" },
+      ["<C-F>"] = { false, "TS: Preview scroll left" },
     },
     n = {
-      ["<esc>"] = { actions.close, "TS: Close" },
-      ["<CR>"] = { actions.select_default, "TS: Select" },
-      ["<C-x>"] = { actions.select_horizontal, "TS: Sel horizontal" },
-      ["<C-v>"] = { actions.select_vertical, "TS: Sel vertical" },
-      ["<C-t>"] = { actions.select_tab, "TS Sel tab" },
+      ["<esc>"] = { tsa.close, "TS: Close" },
+      ["<CR>"] = { tsa.select_default, "TS: Select" },
+      ["<C-x>"] = { tsa.select_horizontal, "TS: Sel horizontal" },
+      ["<C-v>"] = { tsa.select_vertical, "TS: Sel vertical" },
+      ["<C-t>"] = { tsa.select_tab, "TS Sel tab" },
 
-      ["<Tab>"] = { actions.toggle_selection + actions.move_selection_worse, "TS: Toggle sel worse" },
-      ["<S-Tab>"] = { actions.toggle_selection + actions.move_selection_better, "TS: Toggle sel better" },
-      ["<C-q>"] = { actions.send_to_qflist + actions.open_qflist, "TS: Send to qflist" },
-      ["<M-q>"] = { actions.send_selected_to_qflist + actions.open_qflist, "TS: Send sel to qflist" },
+      ["<Tab>"] = { tsa.toggle_selection + tsa.move_selection_worse, "TS: Toggle sel worse" },
+      ["<S-Tab>"] = { tsa.toggle_selection + tsa.move_selection_better, "TS: Toggle sel better" },
+      ["<C-q>"] = { tsa.send_to_qflist + tsa.open_qflist, "TS: Send to qflist" },
+      ["<M-q>"] = { tsa.send_selected_to_qflist + tsa.open_qflist, "TS: Send sel to qflist" },
 
-      ["j"] = { actions.move_selection_next, "TS: Move sel next" },
-      ["k"] = { actions.move_selection_previous, "TS: Move sel prev" },
-      ["M"] = { actions.move_to_middle, "TS: Move to middle" },
+      ["j"] = { tsa.move_selection_next, "TS: Move sel next" },
+      ["k"] = { tsa.move_selection_previous, "TS: Move sel prev" },
+      ["M"] = { tsa.move_to_middle, "TS: Move to middle" },
 
-      ["<Down>"] = { actions.move_selection_next, "TS: Move sel next" },
-      ["<Up>"] = { actions.move_selection_previous, "TS: Move sel prev" },
-      ["gg"] = { actions.move_to_top, "TS: Move to top" },
-      ["G"] = { actions.move_to_bottom, "TS: Move to bottom" },
+      ["<Down>"] = { tsa.move_selection_next, "TS: Move sel next" },
+      ["<Up>"] = { tsa.move_selection_previous, "TS: Move sel prev" },
+      ["gg"] = { tsa.move_to_top, "TS: Move to top" },
+      ["G"] = { tsa.move_to_bottom, "TS: Move to bottom" },
 
-      ["<C-u>"] = { actions.preview_scrolling_up, "TS: Preview scroll up" },
-      ["<C-d>"] = { actions.preview_scrolling_down, "TS: Preview scroll down" },
-      ["<C-f>"] = { actions.preview_scrolling_left, "TS: Preview scroll left" },
-      ["<C-k>"] = { actions.preview_scrolling_right, "TS: Preview scroll right" },
+      ["<C-u>"] = { tsa.preview_scrolling_up, "TS: Preview scroll up" },
+      ["<C-d>"] = { tsa.preview_scrolling_down, "TS: Preview scroll down" },
+      ["<C-f>"] = { tsa.preview_scrolling_left, "TS: Preview scroll left" },
+      ["<C-k>"] = { tsa.preview_scrolling_right, "TS: Preview scroll right" },
 
-      ["<PageUp>"] = { actions.results_scrolling_up, "TS: Res scroll up" },
-      ["<PageDown>"] = { actions.results_scrolling_down, "TS: Res scroll down" },
-      ["<M-f>"] = { actions.results_scrolling_left, "TS: Res scrollt left" },
-      ["<M-k>"] = { actions.results_scrolling_right, "TS: Res scrollt right" },
+      ["<PageUp>"] = { tsa.results_scrolling_up, "TS: Res scroll up" },
+      ["<PageDown>"] = { tsa.results_scrolling_down, "TS: Res scroll down" },
+      ["<M-f>"] = { tsa.results_scrolling_left, "TS: Res scrollt left" },
+      ["<M-k>"] = { tsa.results_scrolling_right, "TS: Res scrollt right" },
 
-      ["?"] = { actions.which_key, "TS: WhichKey" },
+      ["?"] = { tsa.which_key, "TS: WhichKey" },
     },
   }
 
+  local ts_mappings = { ["i"] = {}, ["n"] = {} }
+
+  for mode, mode_mappings in pairs(mappings) do
+    for key, mapping in pairs(mode_mappings) do
+      ts_mappings[mode][key] = mapping[1]
+    end
+  end
+
+  local wk_mappings = { ["i"] = {}, ["n"] = {} }
+  local un_mappings = { ["i"] = {}, ["n"] = {} }
+
+  for mode, mode_mappings in pairs(mappings) do
+    for key, mapping in pairs(mode_mappings) do
+      if mapping[1] == false then
+        un_mappings[mode][key] = "which_key_ignore"
+      else
+        wk_mappings[mode][key] = mapping[2]
+      end
+    end
+  end
+
   ts.setup({
+    mappings = ts_mappings,
+    default_mappings = ts_mappings,
     defaults = {
-      --default_mappings = {},
+      mappings = ts_mappings,
+      default_mappings = ts_mappings,
+
       vimgrep_arguments = {
         config["tools"]["paths"]["ripgrep"],
         "--vimgrep",
@@ -104,42 +134,97 @@ function M.setup(config)
     },
   })
 
-  tsm.apply_keymapp = function(prompt_bufnr, _, _)
-    for k1, _ in pairs(mappings) do
-      local opts = {
-        buffer = prompt_bufnr,
-        mode = k1,
-        noremap = true,
-        silent = true,
-      }
+  -- Overwrite apply_keymap to register mapping descriptions with which-key
+  local apply_keymap_orig = tsm.apply_keymap
+  tsm.apply_keymap = function(prompt_bufnr, attach_mappings, buffer_keymap)
+    local wk_mappings_buf = {}
 
-      for k2, v2 in pairs(mappings[k1]) do
-        mappings[k1][k2] = {
-          function()
-            if type(v2[1]) == "function" then
-              return v2[1]
-            else
-              ---@diagnostic disable-next-line: redundant-parameter
-              return v2[1](prompt_bufnr)
-            end
-          end,
-          v2[2],
-        }
+    -- Trying to map with Which-Key only
+    if false == "wk_test" then
+      wk_mappings_buf = vim.deepcopy(mappings)
+
+      for mode, mode_mappings in pairs(wk_mappings_buf) do
+        for key, mapping in pairs(mode_mappings) do
+          wk_mappings_buf[mode][key] = {
+            function()
+              local key_func = mapping[1]
+              return key_func(prompt_bufnr)
+            end,
+            mapping[2],
+          }
+        end
       end
-      wk.register(mappings[k1], opts)
+
+      print(vim.inspect(wk_mappings_buf["i"]["<C-j>"]))
+
+      for mode, mode_mappings in pairs(wk_mappings_buf) do
+        wk.register(mode_mappings, { buffer = prompt_bufnr, mode = mode })
+      end
+    end
+
+    -- Mapping keys with Telescope, setting descriptions with Which-Key
+    if true then
+      apply_keymap_orig(prompt_bufnr, attach_mappings, buffer_keymap)
+
+      wk_mappings_buf = wk_mappings
+
+      for mode, mode_mappings in pairs(wk_mappings_buf) do
+        wk.register(mode_mappings, { buffer = prompt_bufnr, mode = mode })
+      end
     end
   end
 
-  wk.register({
-    f = {
-      name = "Find",
-      f = { tsb.find_files, "Find Files" },
-      g = { tsb.live_grep, "Live Grep" },
-      b = { tsb.buffers, "Buffers" },
-      h = { tsb.help_tags, "Help Tags" },
-      t = { "<cmd>Telescope<cr>", "Pickers" },
-    },
-  }, { prefix = "<leader>" })
+  local bindBufMaps = function(ev)
+    if ev.event == "FileType" then
+      local blocked_filetypes = {
+        "TelescopePrompt",
+        "TelescopeResults",
+        "WhichKey",
+        "notify",
+        "noice",
+        "nofile",
+      }
+
+      for _, i in ipairs(blocked_filetypes) do
+        if vim.bo.filetype == i then
+          return
+        end
+      end
+    end
+
+    local leader = {
+      f = {
+        name = "Find",
+        f = { tsb.find_files, "Find Files" },
+        g = { tsb.live_grep, "Live Grep" },
+        b = { tsb.buffers, "Buffers" },
+        h = { tsb.help_tags, "Help Tags" },
+        t = { "<cmd>Telescope<cr>", "Pickers" },
+      },
+      m = {
+        name = "Messages",
+        m = { "<cmd>Noice<cr>", "Show messages" },
+        d = { "<cmd>NoiceDismiss<cr>", "Dismiss messages" },
+      },
+    }
+
+    wk.register(leader, { prefix = "<leader>", buffer = ev.buf })
+
+    --wk.register(leader, { prefix = "<C-space>", buffer = ev.buf, mode = "i" })
+    wk.register(leader, { prefix = "<M-space>", buffer = ev.buf, mode = "i" })
+  end
+
+  vim.g.log = function(data)
+    local file, err = io.open("/home/lillecarl/.local/share/nvim/disk", "a")
+    if file then
+      file:write(vim.inspect(data) .. "\n")
+      file:flush()
+    end
+  end
+
+  vim.api.nvim_create_autocmd({ "FileType", "VimEnter", "BufAdd" }, {
+    callback = bindBufMaps,
+  })
 end
 
 return M
