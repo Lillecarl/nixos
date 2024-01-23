@@ -56,9 +56,13 @@ function M.setup(config)
               "List workspace folders",
             },
           },
-          ["D"] = { vim.lsp.buf.type_definition, "Go to type definition" },
+          ["x"] = { vim.lsp.buf.definition, "Go to type definition" },
+          ["d"] = { vim.lsp.buf.type_definition, "Go to type definition" },
           ["r"] = { vim.lsp.buf.rename, "Rename" },
-          ["a"] = { vim.lsp.buf.code_action, "Code action" },
+          ["a"] = { vim.lsp.buf.code_action, "Action" },
+          ["h"] = { vim.lsp.buf.hover, "Hover" },
+          ["i"] = { vim.lsp.buf.implementation, "Implementation" },
+          ["m"] = { vim.lsp.buf.references, "Find references" },
           ["f"] = {
             function()
               require("conform").format()
