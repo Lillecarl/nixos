@@ -1,26 +1,7 @@
 { pkgs
 , ...
 }:
-let
-  inherit (pkgs.stdenv.hostPlatform) isDarwin;
-  mozillaConfigPath = if isDarwin then "Library/Application Support/Mozilla" else ".mozilla";
-
-  # List of FF native messaging hosts to install
-  nativeMessagingHosts = [
-    pkgs.ff2mpv
-    pkgs.gnomeExtensions.gsconnect
-    pkgs.tridactyl-native
-  ];
-  # Join all the native messaging hosts into a single path
-  nativeMessagingHostsJoined = pkgs.symlinkJoin {
-    name = "home_ff_nmhs";
-    paths = [ nativeMessagingHosts ];
-  };
-in
 {
-  # Link native messaging hosts into FF config dir
-  home.file."${mozillaConfigPath}/native-messaging-hosts".source = "${nativeMessagingHostsJoined}/lib/mozilla/native-messaging-hosts";
-
   home.packages = [
     pkgs.neovide # Allow editing input boxes with Neovide
   ];
@@ -30,6 +11,12 @@ in
   programs.firefox = {
     enable = true;
     package = pkgs.firefox-wayland;
+
+    nativeMessagingHosts = [
+      pkgs.ff2mpv
+      pkgs.gnomeExtensions.gsconnect
+      pkgs.tridactyl-native
+    ];
 
     profiles = {
       lillecarl = {
