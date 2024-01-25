@@ -27,7 +27,10 @@ require("catppuccin").setup({
 })
 vim.cmd.colorscheme("catppuccin")
 
+-- neoconf
+-- https://github.com/folke/neoconf.nvim
 require("neoconf").setup({})
+
 -- neodev
 -- https://github.com/folke/neodev.nvim
 require("neodev").setup({

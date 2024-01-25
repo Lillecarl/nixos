@@ -22,7 +22,7 @@ in
   home = {
     username = "lillecarl";
     homeDirectory = "/home/lillecarl";
-    stateVersion = systemConfig.system.stateVersion;
+    inherit (systemConfig.system) stateVersion;
     enableNixpkgsReleaseCheck = true;
     file = dotfile_outOfStoreLinked;
   };

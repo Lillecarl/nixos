@@ -83,7 +83,7 @@ in
 
               mkLsp = path: { cmd = [ path ]; };
             in
-            builtins.mapAttrs (key: val: mkLsp val) {
+            builtins.mapAttrs (key: mkLsp) {
               # TODO: PowerShell
               ansiblels = bp pkgs.ansible-language-server;
               bashls = "${bashls}/bash-language-server";
@@ -118,7 +118,7 @@ in
             let
               mkConform = path: { command = path; };
             in
-            builtins.mapAttrs (key: val: mkConform val) {
+            builtins.mapAttrs (key: mkConform) {
               black = bp pkgs.black;
               clang_format = "${pkgs.clang-tools}/bin/clang-format";
               isort = bp pkgs.isort;
@@ -136,6 +136,7 @@ in
               gofmt = "${pkgs.go}/bin/gofmt";
               goimports = "${pkgs.gotools}/bin/goimports";
               golines = "${pkgs.golines}/bin/golines";
+              taplo = bp pkgs.taplo;
             };
           tools = {
             paths = {
