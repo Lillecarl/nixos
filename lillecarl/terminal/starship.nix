@@ -1,151 +1,34 @@
 { inputs
+, lib
+, pkgs
 , ...
 }:
 let
-  icons = /* toml */ ''
-    [aws]
-    symbol = "  "
+  catppuccinFlavour = "mocha";
 
-    [buf]
-    symbol = " "
+  presets = [
+    "nerd-font-symbols"
+  ];
+  presetFiles = (builtins.map
+    (
+      name: pkgs.runCommandLocal "starship_${name}" { } ''
+        ${pkgs.starship}/bin/starship preset ${name} > $out
+      ''
+    )
+    presets)
+  ++
+  [
+    "${inputs.catppuccin-starship}/palettes/${catppuccinFlavour}.toml"
+  ];
 
-    [c]
-    symbol = " "
+  presetListAttrs = builtins.map
+    (
+      config: builtins.fromTOML (builtins.readFile config)
+    )
+    presetFiles;
 
-    [conda]
-    symbol = " "
-
-    [dart]
-    symbol = " "
-
-    [directory]
-    read_only = " "
-
-    [docker_context]
-    symbol = " "
-
-    [elixir]
-    symbol = " "
-
-    [elm]
-    symbol = " "
-
-    [fossil_branch]
-    symbol = " "
-
-    [git_branch]
-    symbol = " "
-
-    [golang]
-    symbol = " "
-
-    [guix_shell]
-    symbol = " "
-
-    [haskell]
-    symbol = " "
-
-    [haxe]
-    symbol = "⌘ "
-
-    [hg_branch]
-    symbol = " "
-
-    [java]
-    symbol = " "
-
-    [julia]
-    symbol = " "
-
-    [lua]
-    symbol = " "
-
-    [meson]
-    symbol = "喝 "
-
-    [nim]
-    symbol = " "
-
-    [nix_shell]
-    symbol = " "
-
-    [nodejs]
-    symbol = " "
-
-    [os.symbols]
-    Alpine = " "
-    Amazon = " "
-    Android = " "
-    Arch = " "
-    CentOS = " "
-    Debian = " "
-    DragonFly = " "
-    Emscripten = " "
-    EndeavourOS = " "
-    Fedora = " "
-    FreeBSD = " "
-    Garuda = "﯑ "
-    Gentoo = " "
-    HardenedBSD = "ﲊ "
-    Illumos = " "
-    Linux = " "
-    Macos = " "
-    Manjaro = " "
-    Mariner = " "
-    MidnightBSD = " "
-    Mint = " "
-    NetBSD = " "
-    NixOS = " "
-    OpenBSD = " "
-    openSUSE = " "
-    OracleLinux = " "
-    Pop = " "
-    Raspbian = " "
-    Redhat = " "
-    RedHatEnterprise = " "
-    Redox = " "
-    Solus = "ﴱ "
-    SUSE = " "
-    Ubuntu = " "
-    Unknown = " "
-    Windows = " "
-
-    [package]
-    symbol = " "
-
-    [pijul_channel]
-    symbol = "🪺 "
-
-    [python]
-    symbol = " "
-
-    [rlang]
-    symbol = "ﳒ "
-
-    [ruby]
-    symbol = " "
-
-    [rust]
-    symbol = " "
-
-    [scala]
-    symbol = " "
-
-    [spack]
-    symbol = "🅢 "
-  '';
-  flavour = "mocha";
-in
-{
-  programs.starship = {
-    enable = true;
-    enableNushellIntegration = true;
-    enableZshIntegration = true;
-    enableBashIntegration = true;
-    enableFishIntegration = true;
-    enableIonIntegration = true;
-
-    settings = builtins.fromTOML icons // {
+  presetsCfg = lib.mkMerge (presetListAttrs ++ [
+    {
       # We don't use terraform workspaces so don't consume the space
       terraform = {
         disabled = true;
@@ -185,7 +68,21 @@ in
         style = "fg:green";
       };
 
-      palette = "catppuccin_${flavour}";
-    } // builtins.fromTOML (builtins.readFile "${inputs.catppuccin-starship}/palettes/${flavour}.toml");
+      palette = "catppuccin_${catppuccinFlavour}";
+    }
+  ]);
+in
+{
+  home.file."debug".text = builtins.toJSON presetsCfg;
+
+  programs.starship = {
+    enable = true;
+    enableNushellIntegration = true;
+    enableZshIntegration = true;
+    enableBashIntegration = true;
+    enableFishIntegration = true;
+    enableIonIntegration = true;
+
+    settings = presetsCfg;
   };
 }
