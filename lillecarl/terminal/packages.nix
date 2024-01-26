@@ -58,7 +58,6 @@
     packer # Tool to create images and stuff from Hashicorp
     procs # A modern replacement for ps written in Rust.
     rage # Modern crypto written in Rust (Compatible with Age)
-    rbw # Unofficial Bitwarden CLI client
     ripgrep # Modern rusty grep
     scrcpy # Remote your android over adb
     tealdeer # tldr pages
