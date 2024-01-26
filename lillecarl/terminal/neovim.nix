@@ -109,6 +109,7 @@ in
               ruby_ls = bp pkgs.ruby-lsp;
               rust_analyzer = bp pkgs.rust-analyzer;
               terraformls = bp pkgs.terraform-ls;
+              tflint = bp pkgs.tflint;
               tsserver = "${tsserver}/typescript-language-server";
               vimls = "${vimls}/vimls-language-server";
               yamlls = "${yamlls}/yaml-language-server";
