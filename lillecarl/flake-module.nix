@@ -47,6 +47,7 @@ in
               monitor=DP-3,transform,1
             '';
             systemConfig = self.nixosConfigurations.shitbox.config;
+            nixosConfig = self.nixosConfigurations.shitbox.config;
           };
         });
         "lillecarl@nub" = mkHome "x86_64-linux" (guibase // {
@@ -65,6 +66,7 @@ in
               monitor=eDP-1,1920x1200@60,760x1440,1.0
             '';
             systemConfig = self.nixosConfigurations.nub.config;
+            nixosConfig = self.nixosConfigurations.nub.config;
           };
         });
         "lillecarl@wsl" = mkHome "x86_64-linux" {
