@@ -122,22 +122,22 @@ in
             builtins.mapAttrs (key: mkConform) {
               black = bp pkgs.black;
               clang_format = "${pkgs.clang-tools}/bin/clang-format";
+              fish_indent = "${pkgs.fish}/bin/fish_indent";
+              fixjson = "${nodeLatest.fixjson}/bin/fixjson";
+              gofmt = "${pkgs.go}/bin/gofmt";
+              goimports = "${pkgs.gotools}/bin/goimports";
+              golines = "${pkgs.golines}/bin/golines";
               isort = bp pkgs.isort;
               nixpkgs_fmt = bp pkgs.nixpkgs-fmt;
-              fixjson = "${nodeLatest.fixjson}/bin/fixjson";
               packer_fmt = bp pkgs.packer;
               prettierd = bp pkgs.prettierd;
               rustfmt = bp pkgs.rustfmt;
               shellcheck = bp pkgs.shellcheck;
               stylua = bp pkgs.stylua;
+              taplo = bp pkgs.taplo;
               terraform_fmt = bp pkgs.terraform;
               terragrunt_fmt = bp pkgs.terragrunt;
               yamlfmt = bp pkgs.yamlfmt;
-              fish_indent = "${pkgs.fish}/bin/fish_indent";
-              gofmt = "${pkgs.go}/bin/gofmt";
-              goimports = "${pkgs.gotools}/bin/goimports";
-              golines = "${pkgs.golines}/bin/golines";
-              taplo = bp pkgs.taplo;
             };
           tools = {
             paths = {
