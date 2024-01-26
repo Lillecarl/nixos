@@ -11,6 +11,8 @@ let
   writePython3 = import ../../lib/writePython3.nix { inherit pkgs; };
   hyprctl = "${pkgs.hyprland}/bin/hyprctl";
 
+  lockScript = config.home.file."swayLockScript".source;
+
   printScript = writePython3 "hyprprint"
     {
       libraries = [
@@ -43,7 +45,7 @@ let
 
   extraConfig = with pkgs; ''
     # Lock as soon as we're logged in
-    exec-once = ${bp pkgs.swaylock}
+    exec-once = ${lockScript}
     # Source from home-manager file that can be live edited through out of store symlinks.
     source = ${config.xdg.configHome}/hypr/linked.conf
 
@@ -67,7 +69,7 @@ let
     # Launch terminal
     bind  = $mainMod          , Q       , exec, ${bp kitty} -1
     # Awesome locker
-    bind  = Ctrl_L Alt_L      , delete  , exec, ${bp swaylock}
+    bind  = Ctrl_L Alt_L      , delete  , exec, ${lockScript}
     # Media buttons
     bindl =                   , code:121, exec, ${pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle
     bindl =                   , code:122, exec, ${avizo}/bin/volumectl down

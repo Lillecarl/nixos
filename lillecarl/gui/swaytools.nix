@@ -2,10 +2,23 @@
 , pkgs
 , lib
 , bp
+, config
 , systemConfig
 , ...
 }@allArgs:
+let
+  lockScript = bp (pkgs.writeShellScriptBin "swayLockScript" ''
+    ${bp config.programs.rbw.package} lock
+    ${bp pkgs.swaylock}
+    ${bp config.programs.rbw.package} unlock
+  '');
+in
 {
+  home.file."swayLockScript" = {
+    target = ".local/bin/swayLockScript";
+    source = lockScript;
+  };
+
   services.swaync = {
     enable = true;
     systemdTarget = "hyprland-session.target";
@@ -35,15 +48,14 @@
 
     systemdTarget = "hyprland-session.target";
 
-    events =
-      if allArgs.systemConfig.networking.hostName == "nub" then [
-        { event = "before-sleep"; command = bp pkgs.swaylock; }
-        { event = "lock"; command = bp pkgs.swaylock; }
-      ] else [ ];
+    events = [
+      { event = "before-sleep"; command = lockScript; }
+      { event = "lock"; command = lockScript; }
+    ];
 
     timeouts = [
-      { timeout = 300; command = bp pkgs.swaylock; }
-      ((lib.mkIf (systemConfig.networking.hostName == "shitbox")) { timeout = 600; command = "${pkgs.hyprland}/bin/hyprctl dispatch dpms off"; })
+      { timeout = 300; command = lockScript; }
+      { timeout = 600; command = "${pkgs.hyprland}/bin/hyprctl dispatch dpms off"; }
     ];
   };
 }
