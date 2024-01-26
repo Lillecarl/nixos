@@ -8,6 +8,9 @@ let
 
   presets = [
     "nerd-font-symbols"
+    "no-runtime-versions"
+    #"no-empty-icons"
+    #"bracketed-segments"
   ];
   presetFiles = (builtins.map
     (
@@ -64,7 +67,7 @@ let
 
       # Display which shell we're in
       env_var.STARSHIP_SHELL = {
-        format = "🐚 [$env_value]($style) ";
+        format = " 🐚 [$env_value]($style) ";
         style = "fg:green";
       };
 
