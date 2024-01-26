@@ -50,6 +50,8 @@
       settings = {
         email = "bitwarden@lillecarl.com";
         pinentry = "qt";
+        sync_interval = 300;
+        lock_timeout = 3600 * 24;
       };
     };
   };
