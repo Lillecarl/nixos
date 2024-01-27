@@ -8,9 +8,7 @@ let
 
   presets = [
     "nerd-font-symbols"
-    "no-runtime-versions"
-    #"no-empty-icons"
-    #"bracketed-segments"
+    "bracketed-segments"
   ];
   presetFiles = (builtins.map
     (
@@ -37,20 +35,9 @@ let
         disabled = true;
       };
 
-      # Directory config, truncation_length is subpath count not char count
-      # don't truncate to git repo (not sure how i feel about this one yet)
-      directory = {
-        truncate_to_repo = false;
-        truncation_length = 10;
-      };
-
       # Show exit codes
       status = {
         disabled = false;
-      };
-
-      username = {
-        format = "[$user]($style) on";
       };
 
       time = {
@@ -67,8 +54,9 @@ let
 
       # Display which shell we're in
       env_var.STARSHIP_SHELL = {
-        format = " 🐚 [$env_value]($style) ";
+        format = "\\[[$symbol($env_value)]($style)\\]";
         style = "fg:green";
+        symbol = "🐚";
       };
 
       palette = "catppuccin_${catppuccinFlavour}";
