@@ -34,11 +34,16 @@ function M.setup(config)
     end,
   })
 
+  local function smart_dd()
+    if vim.api.nvim_get_current_line():match("^%s*$") then
+      return '"_dd'
+    else
+      return "dd"
+    end
+  end
+
   if not vim.g.vscode then
     local wk = require("which-key")
-    wk.register({
-      u = { "<cmd>wincmd h<cr>", "Go to the left window" },
-    }, { prefix = "<ESC>" })
     -- <M-t> is alt+t
     -- <C-t> is ctrl+t
     -- <T-t> is meta+t
@@ -64,6 +69,7 @@ function M.setup(config)
       ["<M-l>"] = { "<cmd>wincmd l<cr>", "Go to the right window" },
       ["<M-c>"] = { "<cmd>bdelete<cr>", "Close buffer" },
       ["<M-x>"] = { "<cmd>xall<cr>", "Save all and exit" },
+      ["<C-c>"] = { "<cmd>qall!<cr>", "Close all and exit" },
     })
   end
 

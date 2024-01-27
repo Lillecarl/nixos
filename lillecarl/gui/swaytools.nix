@@ -1,11 +1,9 @@
 { self
 , pkgs
-, lib
 , bp
 , config
-, systemConfig
 , ...
-}@allArgs:
+}:
 let
   lockScript = bp (pkgs.writeShellScriptBin "swayLockScript" ''
     ${bp config.programs.rbw.package} lock
