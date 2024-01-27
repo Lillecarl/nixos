@@ -16,7 +16,7 @@
   };
 
   services.udev.extraRules = /* udev */ ''
-    ACTION="add", SUBSYSTEM=="leds", KERNEL=="platform::micmute" ATTR{trigger}="audio-micmute"
+    #ACTION="add", SUBSYSTEM=="leds", KERNEL=="platform::micmute" ATTR{trigger}="audio-micmute"
   '';
 
   # Run tp-auto-kbbl after keymapper.service

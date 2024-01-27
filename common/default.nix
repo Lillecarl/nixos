@@ -308,4 +308,5 @@
     socketActivation = true;
     systemWide = false;
   };
+  services.udev.packages = [ pkgs.mixxx ];
 }
