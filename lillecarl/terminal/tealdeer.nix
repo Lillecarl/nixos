@@ -1,6 +1,4 @@
-{ config
-, pkgs
-, inputs
+{ lib
 , ...
 }: {
   programs.tealdeer = {
@@ -18,4 +16,6 @@
       };
     };
   };
+  # Don't update tealdeer cache on activation
+  home.activation.tealdeerCache = lib.mkForce "echo Disabled";
 }
