@@ -64,8 +64,6 @@ let
   ]);
 in
 {
-  home.file."debug".text = builtins.toJSON presetsCfg;
-
   programs.starship = {
     enable = true;
     enableNushellIntegration = true;
