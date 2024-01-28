@@ -50,7 +50,6 @@
     kubernetes # Kubernetes packages
     kubernetes-helm # Kubernetes package manager
     kubevirt # virtctl tool for kubevirt
-    moar # Better pager
     node2nix # Generate nix packages from NPM packages
     nodePackages.pajv # JSON Schema Validator for multiple formats
     openvpn # VPN software

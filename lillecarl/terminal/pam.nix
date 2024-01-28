@@ -1,13 +1,20 @@
 { pkgs
+, bp
 , ...
-}: {
-  home.packages = [
-    pkgs.moar
-  ];
-
+}:
+let
+  pager = bp pkgs.nvimpager;
+in
+{
   pam = {
     sessionVariables = rec {
-      PAGER = "moar";
+      # Pager configuration
+      PAGER = pager;
+      SYSTEMD_PAGER = pager;
+      MAN_PAGER = pager;
+      GIT_PAGER = pager;
+      SYSTEMD_PAGERSECURE = "true";
+      SYSTEMD_COLORS = "true";
       # Git configuration (For sending over SSH)
       GIT_AUTHOR_NAME = "Carl Hjerpe";
       GIT_AUTHOR_EMAIL = "git@lillecarl.com";

@@ -10,6 +10,7 @@ in
 {
   home.packages = [
     pkgs.tree-sitter # for TS troubleshooting
+    pkgs.nvimpager # Use Neovim as pager
   ];
 
   stylix.targets.vim.enable = false;
