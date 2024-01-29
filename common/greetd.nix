@@ -1,7 +1,20 @@
 { pkgs
+, lib
 , bp
 , ...
 }:
+let
+  commands = lib.concatStringsSep ";" [
+    # Since we're using fish to launch hyprland, unset gate variables
+    "set -e __HM_SESS_VARS_SOURCED"
+    "set -e __NIXOS_SET_ENVIRONMENT_DONE"
+    "set -e __fish_home_manager_config_sourced"
+    "set -e __fish_nixos_general_config_sourced"
+    "set -e __fish_nixos_interactive_config_sourced"
+    "set -e __fish_nixos_login_config_sourced"
+    "exec ${bp pkgs.hyprland}"
+  ];
+in
 {
   services.greetd = {
     enable = true;
@@ -9,7 +22,7 @@
     settings = {
       default_session = {
         user = "lillecarl";
-        command = ''${bp pkgs.fish} -l -c "exec ${bp pkgs.hyprland}"'';
+        command = "${bp pkgs.fish} -l -c '${commands}'";
       };
     };
   };
