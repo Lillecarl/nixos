@@ -19,11 +19,17 @@ let
     inherit system;
     modules = [
       "${inputs.nixpkgs}/nixos/modules/profiles/minimal.nix"
-      inputs.nixos-hardware.nixosModules.raspberry-pi-4
       inputs.disko.nixosModules.disko
-      #inputs.flake-programs-sqlite.nixosModules.programs-sqlite
+      inputs.flake-programs-sqlite.nixosModules.programs-sqlite
+      inputs.nixos-hardware.nixosModules.raspberry-pi-4
+      inputs.stylix.nixosModules.stylix
       ./default.nix
       ./base.nix
+      "${self}/common/fish.nix"
+      "${self}/common/users.nix"
+      "${self}/common/verycommon.nix"
+      "${self}/common/stylix.nix"
+      "${self}/common/nix.nix"
     ];
     specialArgs = {
       inherit inputs flakeloc bp self;

@@ -15,8 +15,10 @@ let
             inherit self inputs flakeloc bp;
           } // customArgs.extraSpecialArgs;
         modules = [
-          ../common/overlays.nix
-          ../modules/hm/keymapper.nix
+          inputs.stylix.homeManagerModules.stylix
+          "${self}/common/overlays.nix"
+          "${self}/common/stylix.nix"
+          "${self}/modules/hm/keymapper.nix"
           ./default.nix
         ] ++ customArgs.modules;
       });
@@ -71,6 +73,15 @@ in
         });
         "lillecarl@wsl" = mkHome "x86_64-linux" {
           extraSpecialArgs = { };
+          modules = [
+            ./terminal
+          ];
+        };
+        "lillecarl@pi" = mkHome "aarch64-linux" {
+          extraSpecialArgs = {
+            systemConfig = self.nixosConfigurations.pi.config;
+            nixosConfig = self.nixosConfigurations.pi.config;
+          };
           modules = [
             ./terminal
           ];

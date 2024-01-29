@@ -2,7 +2,11 @@
 , lib
 , flakeloc
 , ...
-}: {
+}:
+let
+  system = "aarch64-linux";
+in
+{
   flake = {
     nixosConfigurations.wsl = inputs.nixpkgs.lib.nixosSystem {
       system = "aarch64-linux";

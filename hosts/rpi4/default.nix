@@ -3,6 +3,8 @@
 , ...
 }:
 {
+  programs.command-not-found.enable = true;
+
   environment.systemPackages = with pkgs; [ vim git ];
   services.openssh.enable = true;
   networking.hostName = "pi";
