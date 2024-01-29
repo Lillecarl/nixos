@@ -693,26 +693,6 @@
         "type": "sourcehut"
       }
     },
-    "nh": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1705251288,
-        "narHash": "sha256-TwCR7tZvrjsvz6SmgjWYOne7Qz7J2jn4Cr4Er0Yj+LA=",
-        "owner": "viperML",
-        "repo": "nh",
-        "rev": "36eba281576afe0f67e5aafb4e7a414f256dba31",
-        "type": "github"
-      },
-      "original": {
-        "owner": "viperML",
-        "repo": "nh",
-        "type": "github"
-      }
-    },
     "nil": {
       "inputs": {
         "flake-utils": [
@@ -1126,7 +1106,6 @@
         "lanzaboote": "lanzaboote",
         "lib-aggregate": "lib-aggregate",
         "mozilla-addons-to-nix": "mozilla-addons-to-nix",
-        "nh": "nh",
         "nil": "nil",
         "nix-community-lib": "nix-community-lib",
         "nix-eval-jobs": "nix-eval-jobs",

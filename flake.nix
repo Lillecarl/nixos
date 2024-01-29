@@ -63,10 +63,6 @@
       inputs.flake-utils.follows = "flake-utils";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nh = {
-      url = "github:viperML/nh";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     nix-eval-jobs = {
       url = "github:nix-community/nix-eval-jobs/main";
       inputs.flake-parts.follows = "flake-parts";
