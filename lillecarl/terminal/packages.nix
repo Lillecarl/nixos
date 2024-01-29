@@ -7,7 +7,7 @@
     #httpie # A modern, user-friendly command-line HTTP client for the API era.
     #inputs.mozilla-addons-to-nix.packages.x86_64-linux.default
     #inputs.system-manager.packages.x86_64-linux.system-manager
-    inputs.nix-melt.packages.${pkgs.system}.default
+    nix-melt # nix flake viewer
     terraform_1_5_5 # Terraform 1.5.5, last FOSS release
     mimeo # Open files with the right program
     (lowPrio kubectl) # Kubernetes management cli
