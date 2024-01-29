@@ -4,6 +4,8 @@
   programs.tealdeer = {
     enable = true;
 
+    #updateOnActivation = true;
+
     settings = {
       display = {
         compact = false;
