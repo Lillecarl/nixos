@@ -194,6 +194,7 @@
           ./hosts/nub/flake-module.nix
           ./hosts/shitbox/flake-module.nix
           ./hosts/wsl/flake-module.nix
+          ./hosts/rpi4/flake-module.nix
           ./installer-rpi/flake-module.nix
           ./lillecarl/flake-module.nix
           ./modules/flake-module.nix

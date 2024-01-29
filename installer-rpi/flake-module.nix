@@ -11,6 +11,6 @@
         inputs.flake-programs-sqlite.nixosModules.programs-sqlite
       ];
     };
-    images.rpi4 = nixosConfigurations.installer-rpi4.config.system.build.sdImage;
+    #images.rpi4 = nixosConfigurations.installer-rpi4.config.system.build.sdImage;
   };
 }

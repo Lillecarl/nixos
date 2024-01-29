@@ -7,6 +7,9 @@
     ./hardware-configuration.nix
   ];
 
+  # Build rpi images
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
   disko.devices = (import ./disko.nix {
     disk = "nvme-eui.00a075013ca91384";
   }).disko.devices;
