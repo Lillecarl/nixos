@@ -1,8 +1,5 @@
 { inputs, pkgs, ... }:
 {
-  imports = [
-    ../../common/stylix.nix
-  ];
   stylix = {
     targets = {
       # Disable swaylock target since we're using Gandalf splash screen

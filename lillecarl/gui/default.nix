@@ -24,7 +24,6 @@
     ./waybar.nix
     ./wezterm.nix
     inputs.ags.homeManagerModules.default
-    inputs.stylix.homeManagerModules.stylix
   ];
 
   programs.obs-studio = {

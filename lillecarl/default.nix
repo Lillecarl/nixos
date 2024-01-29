@@ -1,7 +1,7 @@
 { lib
 , flakeloc
 , config
-, systemConfig
+, nixosConfig
 , ...
 }:
 let
@@ -22,7 +22,7 @@ in
   home = {
     username = "lillecarl";
     homeDirectory = "/home/lillecarl";
-    inherit (systemConfig.system) stateVersion;
+    stateVersion = nixosConfig.system.stateVersion or "24.05";
     enableNixpkgsReleaseCheck = true;
     file = dotfile_outOfStoreLinked;
   };

@@ -1,7 +1,7 @@
 allArgs:
 {
   services.keymapper = {
-    enable = allArgs.systemConfig.services.keymapper.enable or false;
+    enable = allArgs.nixosConfig.services.keymapper.enable or false;
 
     extraConfig = ''
       # Virtual1 layer

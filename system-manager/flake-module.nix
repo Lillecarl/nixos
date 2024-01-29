@@ -4,7 +4,7 @@
 , ...
 }: {
   flake = {
-    systemConfigs.default = inputs.system-manager.lib.makeSystemConfig {
+    nixosConfigs.default = inputs.system-manager.lib.makeSystemConfig {
       modules = [
         ./default.nix
       ];

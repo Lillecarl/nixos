@@ -48,7 +48,6 @@ in
               monitor=DP-3,1920x1080@143.996002,3640x0,1.0
               monitor=DP-3,transform,1
             '';
-            systemConfig = self.nixosConfigurations.shitbox.config;
             nixosConfig = self.nixosConfigurations.shitbox.config;
           };
         });
@@ -67,7 +66,6 @@ in
               # Laptop integrated display
               monitor=eDP-1,1920x1200@60,760x1440,1.0
             '';
-            systemConfig = self.nixosConfigurations.nub.config;
             nixosConfig = self.nixosConfigurations.nub.config;
           };
         });
@@ -79,7 +77,6 @@ in
         };
         "lillecarl@pi" = mkHome "aarch64-linux" {
           extraSpecialArgs = {
-            systemConfig = self.nixosConfigurations.pi.config;
             nixosConfig = self.nixosConfigurations.pi.config;
           };
           modules = [
