@@ -73,6 +73,7 @@ prev.lib.filterAttrs
     });
 
     typos-lsp = prev.callPackage ./typos-lsp.nix { };
+    one-small-step-for-vimkind = prev.callPackage ./one-small-step-for-vimkind.nix { };
   }
 // (
   if flake

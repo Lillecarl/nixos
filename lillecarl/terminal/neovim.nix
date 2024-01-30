@@ -59,6 +59,9 @@ in
       nui-nvim
       nvim-autopairs
       nvim-cmp
+      nvim-dap
+      nvim-dap-ui
+      nvim-dap-python
       nvim-lspconfig
       nvim-notify
       nvim-tree-lua
@@ -68,6 +71,7 @@ in
       telescope-nvim
       trouble-nvim
       which-key-nvim
+      pkgs.one-small-step-for-vimkind
     ];
 
     extraLuaConfig =
