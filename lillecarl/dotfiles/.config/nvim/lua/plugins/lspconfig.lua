@@ -6,7 +6,9 @@ function M.setup(config)
 
   -- Setup language servers.
   local lspconfig = require("lspconfig")
-  local capabilities = require("cmp_nvim_lsp").default_capabilities()
+  local capabilities = require("cmp_nvim_lsp").default_capabilities({
+    dynamicRegistration = true,
+  })
 
   local paths = config["lsp"]
 
