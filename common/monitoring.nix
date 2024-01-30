@@ -13,35 +13,52 @@ let
   certdir = config.security.acme.certs.grafana.directory;
 in
 {
-  services.grafana = {
-    enable = true;
-    declarativePlugins = with pkgs.grafanaPlugins; [
-      frser-sqlite-datasource
-    ];
-
-    provision = {
-      datasources.settings.datasources = [
-        {
-          name = "SQLite";
-          type = "frser-sqlite-datasource";
-          access = "proxy";
-          isDefault = true;
-          editable = false;
-          jsonData = {
-            path = monitordbpath;
-          };
-        }
+  services = {
+    grafana = {
+      enable = true;
+      declarativePlugins = with pkgs.grafanaPlugins; [
+        frser-sqlite-datasource
       ];
+
+      provision = {
+        datasources.settings.datasources = [
+          {
+            name = "SQLite";
+            type = "frser-sqlite-datasource";
+            access = "proxy";
+            isDefault = true;
+            editable = false;
+            jsonData = {
+              path = monitordbpath;
+            };
+          }
+        ];
+      };
+
+      settings = {
+        server = {
+          http_addr = "127.0.0.1";
+          http_port = 3000;
+          inherit domain;
+          root_url = "https://${domain}/";
+          serve_from_sub_path = true;
+        };
+      };
     };
 
-    settings = {
-      server = {
-        http_addr = "127.0.0.1";
-        http_port = 3000;
-        inherit domain;
-        root_url = "https://${domain}/";
-        serve_from_sub_path = true;
+    nginx = {
+      enable = true;
+    };
+
+    nginx.virtualHosts.${domain} = {
+      locations."/" = {
+        recommendedProxySettings = true;
+        proxyPass = "http://${toString config.services.grafana.settings.server.http_addr}:${toString config.services.grafana.settings.server.http_port}";
+        proxyWebsockets = true;
       };
+      forceSSL = true;
+      sslCertificate = "${certdir}/fullchain.pem";
+      sslCertificateKey = "${certdir}/key.pem";
     };
   };
 
@@ -64,20 +81,6 @@ in
     '';
   };
 
-  services.nginx = {
-    enable = true;
-  };
-
-  services.nginx.virtualHosts.${domain} = {
-    locations."/" = {
-      recommendedProxySettings = true;
-      proxyPass = "http://${toString config.services.grafana.settings.server.http_addr}:${toString config.services.grafana.settings.server.http_port}";
-      proxyWebsockets = true;
-    };
-    forceSSL = true;
-    sslCertificate = "${certdir}/fullchain.pem";
-    sslCertificateKey = "${certdir}/key.pem";
-  };
 
   security.acme.certs.grafana = {
     inherit domain;
