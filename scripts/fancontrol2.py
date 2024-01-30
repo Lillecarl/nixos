@@ -43,7 +43,7 @@ def isenabled():
             elif "disabled" in match:
                 return False
 
-    return False  # type saftey
+    return False  # type safety
 
 
 def gettemp():

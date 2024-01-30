@@ -1,8 +1,9 @@
 #! /usr/bin/env python
 
-from time import sleep
-from plumbum import local, FG
 import socket
+from time import sleep
+
+from plumbum import FG, local
 
 ping = local["ping"]
 sudo = local["sudo"]
@@ -11,6 +12,7 @@ virsh = local.get("virsh", "echo")
 nh = local["nh"]
 
 hostname = socket.gethostname()
+
 
 def check_connection(address):
     try:
@@ -21,11 +23,13 @@ def check_connection(address):
 
     return False
 
+
 # Nix might try to rebuild the world if we don't have internet
 def block_until_internet(address):
-  while not check_connection(address):
-    print("No internet, retrying (indefinitely)")
-    sleep(1)
+    while not check_connection(address):
+        print("No internet, retrying (indefinitely)")
+        sleep(1)
+
 
 if text := (local.cwd / "flake.nix").read():
     if "?rev=" in text:
@@ -39,7 +43,7 @@ if hostname == "shitbox":
 block_until_internet("1.1.1.1")
 
 try:
-    nh["os", "switch", "--", "--impure" ] & FG  # type: ignore
+    nh["os", "switch", "--", "--impure"] & FG  # type: ignore
 except:
     print("Failed to build nixos")
     exit(1)
@@ -47,7 +51,7 @@ except:
 print("Building home")
 block_until_internet("1.1.1.1")
 try:
-    nh["home", "switch", "--", "--impure" ].run_fg()
+    nh["home", "switch", "--", "--impure"].run_fg()
 except:
     print("Failed to build home-manager")
     exit(1)
