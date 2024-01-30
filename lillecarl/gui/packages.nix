@@ -19,13 +19,4 @@
     tor-browser-bundle-bin # Tor browser
     libreoffice # Office suite
   ];
-
-  services.flatpak = {
-    enable = true;
-    packages = [
-      "com.spotify.Client"
-      "im.riot.Riot"
-    ];
-    update.auto.enable = true;
-  };
 }
