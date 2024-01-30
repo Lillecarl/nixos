@@ -18,6 +18,25 @@ function M.setup(config)
   -- show line numbers
   vim.opt.number = true
 
+  local function fulldate()
+    return os.date("%y-%m-%d %H:%M:%S")
+  end
+  local function clock()
+    return os.date("%H:%M:%S")
+  end
+
+  vim.g.log = function(data)
+    local file, err = io.open(vim.fn.expand("$XDG_DATA_HOME/nvim/disk"), "a")
+    if file then
+      file:write(clock() .. " " .. vim.inspect(data) .. "\n")
+      file:flush()
+    elseif err then
+      vim.notify("Unable to open custom log\n" .. err, vim.log.levels.ERROR, { title = "Log error" })
+    end
+  end
+
+  vim.g.log("Initiialised logger " .. fulldate())
+
   local font = config["ui"]["font"]
   if vim.g.neovide then
     vim.opt.guifont = font["name"] .. ":h" .. font["size"]
