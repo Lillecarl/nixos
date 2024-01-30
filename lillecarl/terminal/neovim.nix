@@ -173,7 +173,7 @@ in
               stylua = bp pkgs.stylua;
               taplo = bp pkgs.taplo;
               terraform_fmt = bp pkgs.terraform;
-              terragrunt_fmt = bp pkgs.terragrunt;
+              terragrunt_hclfmt = bp pkgs.terragrunt;
               yamlfmt = bp pkgs.yamlfmt;
               yamlfix = bp pkgs.yamlfix;
             };

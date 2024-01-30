@@ -15,12 +15,6 @@ function M.setup(config)
     notify_on_error = true,
   })
 
-  require("conform").formatters.terragrunt_fmt = {
-    command = "", -- Populated by Nix
-    args = { "hclfmt", "--terragrunt-hclfmt-file", "$FILENAME" },
-    stdin = false,
-  }
-
   for key, value in pairs(nixFormatters) do
     local status, result = pcall(require, "conform.formatters." .. key)
     if not status then
