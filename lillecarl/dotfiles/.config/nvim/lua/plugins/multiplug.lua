@@ -34,21 +34,32 @@ require("neoconf").setup({})
 -- neodev
 -- https://github.com/folke/neodev.nvim
 require("neodev").setup({
-  pathStrict = false,
+  -- This must be off, else all hell breaks loose
+  pathStrict = true,
   library = {
     enabled = true,
     runtime = true,
     types = true,
-    plugins = {
-      "nvim-dap-ui",
-      "which-key",
-    },
+    plugins = true,
   },
+  override = function(root_dir, library)
+    -- if we can find $FLAKE within root_dir that means
+    -- we're working with neovim configuration/plugins.
+    -- enable library plugins for this case.
+    if root_dir:find(os.getenv("FLAKE")) then
+      library.enabled = true
+      library.plugins = true
+    end
+    -- neoconf works too, as long as the file is in the root_dir
+  end,
+  -- Not sure, but it works when it's off.
+  legacy = false,
 })
 
 -- nvim-tree, tree plugin
 -- https://github.com/nvim-tree/nvim-tree.lua
 local treeapi = require("nvim-tree.api")
+
 require("nvim-tree").setup({
   disable_netrw = true,
   filters = {
