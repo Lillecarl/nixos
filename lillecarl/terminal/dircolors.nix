@@ -1,0 +1,6 @@
+{ ... }:
+{
+  programs.dircolors = {
+    enable = true;
+  };
+}
