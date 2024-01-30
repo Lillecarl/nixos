@@ -1,6 +1,8 @@
 _:
 {
-  programs.sway.enable = true;
-  programs.sway.package = null;
-  programs.light.enable = true;
+  programs = {
+    sway.enable = true;
+    sway.package = null;
+    light.enable = true;
+  };
 }

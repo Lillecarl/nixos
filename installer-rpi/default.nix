@@ -3,9 +3,11 @@
 , ...
 }:
 {
-  nixpkgs.config.allowUnsupportedSystem = true;
-  nixpkgs.hostPlatform.system = "armv7l-linux";
-  nixpkgs.buildPlatform.system = "x86_64-linux";
+  nixpkgs = {
+    config.allowUnsupportedSystem = true;
+    hostPlatform.system = "armv7l-linux";
+    buildPlatform.system = "x86_64-linux";
+  };
 
   hardware = {
     raspberry-pi."4".apply-overlays-dtmerge.enable = true;

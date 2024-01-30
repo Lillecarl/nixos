@@ -112,12 +112,14 @@ in
                 {
                   cmd = [ "${ansibleLspFarm}/bin/ansible-language-server" "--stdio" ];
                   settings = {
-                    ansible.ansible.path = "${ansibleLspFarm}/bin/ansible";
-                    ansible.python.interpreterPath = "${ansibleLspFarm}/bin/python3";
-                    ansible.validation.lint.path = "${ansibleLspFarm}/bin/ansible-lint";
-                    #ansible.ansible.path = "ansible";
-                    #ansible.python.interpreterPath = "python3";
-                    #ansible.validation.lint.path = "ansible-lint";
+                    ansible = {
+                      ansible.path = "${ansibleLspFarm}/bin/ansible";
+                      python.interpreterPath = "${ansibleLspFarm}/bin/python3";
+                      validation.lint.path = "${ansibleLspFarm}/bin/ansible-lint";
+                      #ansible.path = "ansible";
+                      #python.interpreterPath = "python3";
+                      #validation.lint.path = "ansible-lint";
+                    };
                   };
                   nodefault = true;
                 };

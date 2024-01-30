@@ -6,7 +6,7 @@
 }:
 let
   dot_path = "${flakeloc}/lillecarl/dotfiles/";
-  dot_paths = lib.filesystem.listFilesRecursive (builtins.toPath dot_path);
+  dot_paths = lib.filesystem.listFilesRecursive dot_path;
   dot_strings = builtins.map (x: builtins.toString x) dot_paths;
   dot_prefixDeleted = builtins.map (x: builtins.replaceStrings [ dot_path ] [ "" ] x) dot_strings;
   dotfile_outOfStoreLinked = lib.attrsets.genAttrs dot_prefixDeleted (name: {

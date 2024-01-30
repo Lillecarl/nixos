@@ -7,110 +7,165 @@
     ./hardware-configuration.nix
   ];
 
-  # Build rpi images
-  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
-
   disko.devices = (import ./disko.nix {
     disk = "nvme-eui.00a075013ca91384";
   }).disko.devices;
 
-  # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernelParams = [ ];
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-  boot.kernel.sysctl = {
-    "vm.max_map_count" = 1048576;
-    "vm.laptop_mode" = 5;
-    "vm.dirty_writeback_centisecs" = 1500;
-  };
-
-  security.polkit.enable = true;
-  services.mullvad-vpn.enable = true;
   programs.noisetorch.enable = true;
 
-
-  security.tpm2 = {
-    enable = true;
-  };
-
-  services.udev =
-    let
-      coreutilsb = "${pkgs.coreutils-full}/bin";
-    in
-    {
+  security = {
+    polkit.enable = true;
+    tpm2 = {
       enable = true;
-      extraRules = /* udev */ ''
-        # Disable power/wakeup for ELAN touchpad that prevents suspending.
-        SUBSYSTEM=="i2c", DRIVER=="i2c_hid_acpi", ATTR{name}=="ELAN*", ATTR{power/wakeup}="disabled"
-        # Limit battery max charge to 86% (85 in reality)
-        ACTION=="add", SUBSYSTEM=="power_supply", ENV{POWER_SUPPLY_NAME}=="BAT0", ATTR{charge_control_start_threshold}="83", ATTR{charge_control_end_threshold}="86"
-        # Allow anyone to change mic led
-        SUBSYSTEM=="leds", KERNEL=="platform::micmute", RUN{program}+="${coreutilsb}/chmod a+rw /sys/devices/platform/thinkpad_acpi/leds/platform::micmute/brightness"
-        SUBSYSTEM=="leds", KERNEL=="platform::micmute", RUN{program}+="${pkgs.miconoff} 0"
-        # Allow anyone to change screen backlight
-        ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="amdgpu_bl0", RUN{program}+="${coreutilsb}/chmod a+rw /sys/class/backlight/%k/brightness"
-      '';
     };
-
-  services.usbguard = {
-    enable = true;
-
-    IPCAllowedUsers = [ "root" "lillecarl" ];
-    implicitPolicyTarget = "allow"; # Allow everything
   };
 
-  services.btrbk.instances."btrbk" = {
-    onCalendar = "*:0/15";
-    settings = {
-      snapshot_preserve_min = "2d";
-      volume."/" = {
-        #subvolume = "/home";
-        snapshot_dir = ".snapshots";
+  systemd = {
+    # Disable stuff that never works
+    targets.hibernate.enable = false;
+    targets.hybrid-sleep.enable = false;
+
+    network = {
+      enable = true;
+
+      wait-online = {
+        enable = false;
+        timeout = 5;
+        anyInterface = true;
+      };
+
+      netdevs = {
+        lilbr = {
+          netdevConfig = {
+            Kind = "bridge";
+            Name = "lilbr";
+            MTUBytes = "1500";
+            MACAddress = "44:38:39:36:EA:D5";
+          };
+        };
+      };
+      networks = {
+        lilbr = {
+          address = [ "10.255.255.1/24" ];
+          networkConfig = {
+            LLDP = true;
+            EmitLLDP = true;
+            MulticastDNS = true;
+          };
+          dhcpServerConfig = {
+            ServerAddress = "10.255.255.1/24";
+            PoolOffset = 50;
+            EmitDNS = true;
+            DNS = "10.255.255.1";
+          };
+          linkConfig = {
+            ActivationPolicy = "always-up";
+          };
+        };
       };
     };
   };
 
-  services.acpid = {
-    enable = true;
+  services = {
+    # BT mgmt
+    blueman.enable = true;
+    # DBUS for power management
+    upower.enable = true;
+    # TODO configure this to relay messages out on the internet too
+    postfix = {
+      enable = true;
+      setSendmail = true;
+    };
+    mullvad-vpn.enable = true;
+    udev =
+      let
+        coreutilsb = "${pkgs.coreutils-full}/bin";
+      in
+      {
+        enable = true;
+        extraRules = /* udev */ ''
+          # Disable power/wakeup for ELAN touchpad that prevents suspending.
+          SUBSYSTEM=="i2c", DRIVER=="i2c_hid_acpi", ATTR{name}=="ELAN*", ATTR{power/wakeup}="disabled"
+          # Limit battery max charge to 86% (85 in reality)
+          ACTION=="add", SUBSYSTEM=="power_supply", ENV{POWER_SUPPLY_NAME}=="BAT0", ATTR{charge_control_start_threshold}="83", ATTR{charge_control_end_threshold}="86"
+          # Allow anyone to change mic led
+          SUBSYSTEM=="leds", KERNEL=="platform::micmute", RUN{program}+="${coreutilsb}/chmod a+rw /sys/devices/platform/thinkpad_acpi/leds/platform::micmute/brightness"
+          SUBSYSTEM=="leds", KERNEL=="platform::micmute", RUN{program}+="${pkgs.miconoff} 0"
+          # Allow anyone to change screen backlight
+          ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="amdgpu_bl0", RUN{program}+="${coreutilsb}/chmod a+rw /sys/class/backlight/%k/brightness"
+        '';
+      };
+
+    usbguard = {
+      enable = true;
+
+      IPCAllowedUsers = [ "root" "lillecarl" ];
+      implicitPolicyTarget = "allow"; # Allow everything
+    };
+
+    btrbk.instances."btrbk" = {
+      onCalendar = "*:0/15";
+      settings = {
+        snapshot_preserve_min = "2d";
+        volume."/" = {
+          #subvolume = "/home";
+          snapshot_dir = ".snapshots";
+        };
+      };
+    };
+
+    acpid = {
+      enable = true;
+    };
+
+    gnome.gnome-keyring.enable = true;
+
+    # Enable systemd-resolved, takes care of splitting DNS across interfaces n stuff
+    resolved = {
+      enable = true;
+
+      fallbackDns = [
+        "1.1.1.1"
+        "1.0.0.1"
+        "2606:4700:4700::1111"
+        "2606:4700:4700::1001"
+      ];
+    };
   };
 
-  systemd.targets.hibernate.enable = false;
-  systemd.targets.hybrid-sleep.enable = false;
+  boot = {
+    # Build rpi images
+    binfmt.emulatedSystems = [ "aarch64-linux" ];
+    # Use the systemd-boot EFI boot loader.
+    loader.systemd-boot.enable = true;
+    loader.efi.canTouchEfiVariables = true;
+    kernelParams = [ ];
+    kernelPackages = pkgs.linuxPackages_latest;
+    kernel.sysctl = {
+      "vm.max_map_count" = 1048576;
+      "vm.laptop_mode" = 5;
+      "vm.dirty_writeback_centisecs" = 1500;
+    };
+    # Make some extra kernel modules available to NixOS
 
-  # Make some extra kernel modules available to NixOS
-  boot.extraModulePackages = with config.boot.kernelPackages; [
-    v4l2loopback.out
-    usbip
-    zenpower
-    turbostat
-    cpupower
-  ];
-  boot.blacklistedKernelModules = [
-    "acpi_cpufreq"
-    "ip_tables"
-    "iptable_nat"
-    "iptable_filter"
-    "ip_set"
-  ];
+    # Activate kernel modules (choose from built-ins and extra ones)
+    kernelModules = [
+      # Virtual Camera
+      "v4l2loopback"
+      # Virtual Microphone, built-in
+      #"snd-aloop"
+      "tp_smapi"
+      "k10temp" # This shouldn't be here
+    ];
 
-  # Activate kernel modules (choose from built-ins and extra ones)
-  boot.kernelModules = [
-    # Virtual Camera
-    "v4l2loopback"
-    # Virtual Microphone, built-in
-    #"snd-aloop"
-    "tp_smapi"
-    "k10temp"
-  ];
-
-  # Set initial kernel module settings
-  boot.extraModprobeConfig = ''
-    # exclusive_caps: Skype, Zoom, Teams etc. will only show device when actually streaming
-    # card_label: Name of virtual camera, how it'll show up in Skype, Zoom, Teams
-    # https://github.com/umlaeute/v4l2loopback
-    options v4l2loopback exclusive_caps=1 card_label="Virtual Camera"
-  '';
+    # Set initial kernel module settings
+    extraModprobeConfig = ''
+      # exclusive_caps: Skype, Zoom, Teams etc. will only show device when actually streaming
+      # card_label: Name of virtual camera, how it'll show up in Skype, Zoom, Teams
+      # https://github.com/umlaeute/v4l2loopback
+      options v4l2loopback exclusive_caps=1 card_label="Virtual Camera"
+    '';
+  };
 
   hardware = {
     bluetooth = {
@@ -127,7 +182,6 @@
     enableRedistributableFirmware = true;
   };
 
-  services.blueman.enable = true;
 
   powerManagement = {
     enable = true;
@@ -135,7 +189,6 @@
     cpuFreqGovernor = "schedutil";
   };
 
-  services.gnome.gnome-keyring.enable = true;
   programs.seahorse.enable = true;
 
   nixpkgs = {
@@ -155,56 +208,6 @@
     useDHCP = false; # deprecated, should be false
 
     hosts = { };
-  };
-  # Enable systemd-resolved, takes care of splitting DNS across interfaces n stuff
-  services.resolved = {
-    enable = true;
-
-    fallbackDns = [
-      "1.1.1.1"
-      "1.0.0.1"
-      "2606:4700:4700::1111"
-      "2606:4700:4700::1001"
-    ];
-  };
-  systemd.network = {
-    enable = true;
-
-    wait-online = {
-      enable = false;
-      timeout = 5;
-      anyInterface = true;
-    };
-
-    netdevs = {
-      lilbr = {
-        netdevConfig = {
-          Kind = "bridge";
-          Name = "lilbr";
-          MTUBytes = "1500";
-          MACAddress = "44:38:39:36:EA:D5";
-        };
-      };
-    };
-    networks = {
-      lilbr = {
-        address = [ "10.255.255.1/24" ];
-        networkConfig = {
-          LLDP = true;
-          EmitLLDP = true;
-          MulticastDNS = true;
-        };
-        dhcpServerConfig = {
-          ServerAddress = "10.255.255.1/24";
-          PoolOffset = 50;
-          EmitDNS = true;
-          DNS = "10.255.255.1";
-        };
-        linkConfig = {
-          ActivationPolicy = "always-up";
-        };
-      };
-    };
   };
 
   # CUPS for printing documents.
@@ -248,14 +251,6 @@
     zenmonitor # AMD CPU monitoring
   ];
 
-  systemd.services.systemd-networkd-wait-online.enable = false;
-  services.upower.enable = true;
-
-  # TODO configure this to relay messages out on the internet too
-  services.postfix = {
-    enable = true;
-    setSendmail = true;
-  };
 
   system.stateVersion = "24.05";
 }

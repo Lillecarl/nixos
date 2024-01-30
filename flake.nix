@@ -20,9 +20,11 @@
     };
     pre-commit-hooks-nix = {
       url = "github:cachix/pre-commit-hooks.nix";
-      inputs.flake-utils.follows = "flake-utils";
-      inputs.gitignore.follows = "gitignore";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        flake-utils.follows = "flake-utils";
+        gitignore.follows = "gitignore";
+        nixpkgs.follows = "nixpkgs";
+      };
     };
     flake-utils = {
       url = "github:numtide/flake-utils";
@@ -78,9 +80,11 @@
     # Wayland packages for NixOS
     nixpkgs-wayland = {
       url = "github:nix-community/nixpkgs-wayland";
-      inputs.lib-aggregate.follows = "lib-aggregate";
-      inputs.nix-eval-jobs.follows = "nix-eval-jobs";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        lib-aggregate.follows = "lib-aggregate";
+        nix-eval-jobs.follows = "nix-eval-jobs";
+        nixpkgs.follows = "nixpkgs";
+      };
     };
     # Support splitting flake into subflakes
     flake-parts = {
@@ -106,33 +110,41 @@
     # Configure non-nixos systems with Nix modules
     system-manager = {
       url = "github:numtide/system-manager";
-      inputs.crane.follows = "crane";
-      inputs.devshell.follows = "devshell";
-      inputs.flake-utils.follows = "flake-utils";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.pre-commit-hooks.follows = "pre-commit-hooks-nix";
-      inputs.rust-overlay.follows = "rust-overlay";
-      inputs.treefmt-nix.follows = "treefmt-nix";
+      inputs = {
+        crane.follows = "crane";
+        devshell.follows = "devshell";
+        flake-utils.follows = "flake-utils";
+        nixpkgs.follows = "nixpkgs";
+        pre-commit-hooks.follows = "pre-commit-hooks-nix";
+        rust-overlay.follows = "rust-overlay";
+        treefmt-nix.follows = "treefmt-nix";
+      };
     };
     mozilla-addons-to-nix = {
       url = "sourcehut:~rycee/mozilla-addons-to-nix";
-      inputs.flake-utils.follows = "flake-utils";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        flake-utils.follows = "flake-utils";
+        nixpkgs.follows = "nixpkgs";
+      };
     };
     nil = {
       url = "github:oxalica/nil";
-      inputs.flake-utils.follows = "flake-utils";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.rust-overlay.follows = "rust-overlay";
+      inputs = {
+        flake-utils.follows = "flake-utils";
+        nixpkgs.follows = "nixpkgs";
+        rust-overlay.follows = "rust-overlay";
+      };
     };
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v0.3.0";
-      inputs.crane.follows = "crane";
-      inputs.flake-parts.follows = "flake-parts";
-      inputs.flake-utils.follows = "flake-utils";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.pre-commit-hooks-nix.follows = "pre-commit-hooks-nix";
-      inputs.rust-overlay.follows = "rust-overlay";
+      inputs = {
+        crane.follows = "crane";
+        flake-parts.follows = "flake-parts";
+        flake-utils.follows = "flake-utils";
+        nixpkgs.follows = "nixpkgs";
+        pre-commit-hooks-nix.follows = "pre-commit-hooks-nix";
+        rust-overlay.follows = "rust-overlay";
+      };
     };
     carapace = {
       url = "github:rsteube/carapace-bin";

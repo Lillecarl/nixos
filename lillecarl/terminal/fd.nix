@@ -1,4 +1,4 @@
-{ ... }:
+_:
 {
   xdg.configFile."fd/ignore".text = ''
     .git
