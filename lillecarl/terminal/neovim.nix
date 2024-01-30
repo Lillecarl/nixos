@@ -1,4 +1,5 @@
 { pkgs
+, self
 , lib
 , bp
 , config
@@ -42,9 +43,10 @@ in
       #tabmerge
       #toggleterm-nvim
       #vim-airline
+      SchemaStore-nvim
       catppuccin-nvim
-      cmp-git # git source for cmp
-      cmp-nvim-lsp # LSP source for cmp
+      cmp-git
+      cmp-nvim-lsp
       conform-nvim
       copilot-lua
       fugitive
@@ -82,39 +84,66 @@ in
               vscode-ls = "${nodeLatest.vscode-langservers-extracted}/bin";
               yamlls = "${nodeLatest.yaml-language-server}/bin";
 
-              mkLsp = path: { cmd = [ path ]; };
             in
-            builtins.mapAttrs (key: mkLsp) {
+            {
               # TODO: PowerShell
-              ansiblels = bp pkgs.ansible-language-server;
-              bashls = "${bashls}/bash-language-server";
-              clangd = "${pkgs.clang-tools}/bin/clangd";
-              cmake = bp pkgs.cmake-language-server;
-              cssls = "${vscode-ls}/vscode-css-language-server";
-              dockerls = "${dockerls}/docker-langserver";
-              dotls = bp pkgs.dot-language-server;
-              eslint = "${vscode-ls}/vscode-eslint-language-server";
-              gopls = bp pkgs.gopls;
-              html = "${vscode-ls}/vscode-html-language-server";
-              jsonls = "${vscode-ls}/vscode-json-language-server";
-              lua_ls = bp pkgs.lua-language-server;
-              marksman = bp pkgs.marksman;
-              nil_ls = bp pkgs.nil;
-              nixd = bp pkgs.nixd;
-              nushell = bp pkgs.nushell;
-              omnisharp = bp pkgs.omnisharp-roslyn;
-              perlls = bp pkgs.perlPackages.PerlLanguageServer; # broken
-              postgres_lsp = bp pkgs.postgres-lsp;
-              psalm = bp pkgs.phpPackages.psalm;
-              pyright = "${pyright}/pyright-langserver";
-              ruby_ls = bp pkgs.ruby-lsp;
-              rust_analyzer = bp pkgs.rust-analyzer;
-              terraformls = bp pkgs.terraform-ls;
-              tflint = bp pkgs.tflint;
-              tsserver = "${tsserver}/typescript-language-server";
-              vimls = "${vimls}/vimls-language-server";
-              yamlls = "${yamlls}/yaml-language-server";
-              zls = bp pkgs.zls;
+              ansiblels =
+                let
+                  ansibleLS = pkgs.callPackage "${self}/pkgs/tmp/ansible-language-server.nix" { };
+                  ansibleLspFarm = pkgs.symlinkJoin {
+                    name = "ansiPy";
+                    paths = [
+                      (pkgs.python3.withPackages (ps: [
+                        ps.ansible
+                      ]))
+                      pkgs.ansible
+                      pkgs.ansible-lint
+                      #pkgs.ansible-language-server
+                      ansibleLS
+                    ];
+                  };
+                in
+                {
+                  cmd = [ "${ansibleLspFarm}/bin/ansible-language-server" "--stdio" ];
+                  settings = {
+                    ansible.ansible.path = "${ansibleLspFarm}/bin/ansible";
+                    ansible.python.interpreterPath = "${ansibleLspFarm}/bin/python3";
+                    ansible.validation.lint.path = "${ansibleLspFarm}/bin/ansible-lint";
+                    #ansible.ansible.path = "ansible";
+                    #ansible.python.interpreterPath = "python3";
+                    #ansible.validation.lint.path = "ansible-lint";
+                  };
+                  nodefault = true;
+                };
+              #nixd = { cmd = [ (bp pkgs.nixd) ]; };
+              bashls = { cmd = [ ("${bashls}/bash-language-server") ]; };
+              clangd = { cmd = [ ("${pkgs.clang-tools}/bin/clangd") ]; };
+              cmake = { cmd = [ (bp pkgs.cmake-language-server) ]; };
+              cssls = { cmd = [ ("${vscode-ls}/vscode-css-language-server") ]; };
+              dockerls = { cmd = [ "${dockerls}/docker-langserver" ]; };
+              dotls = { cmd = [ (bp pkgs.dot-language-server) ]; };
+              eslint = { cmd = [ ("${vscode-ls}/vscode-eslint-language-server") ]; };
+              gopls = { cmd = [ (bp pkgs.gopls) ]; };
+              html = { cmd = [ ("${vscode-ls}/vscode-html-language-server") ]; };
+              jsonls = { cmd = [ ("${vscode-ls}/vscode-json-language-server") ]; };
+              lua_ls = { cmd = [ (bp pkgs.lua-language-server) ]; };
+              marksman = { cmd = [ (bp pkgs.marksman) ]; };
+              nil_ls = { cmd = [ (bp pkgs.nil) ]; };
+              nushell = { cmd = [ (bp pkgs.nushell) ]; };
+              omnisharp = { cmd = [ (bp pkgs.omnisharp-roslyn) ]; };
+              perlls = { cmd = [ (bp pkgs.perlPackages.PerlLanguageServer) ]; }; # broken
+              postgres_lsp = { cmd = [ (bp pkgs.postgres-lsp) ]; };
+              psalm = { cmd = [ (bp pkgs.phpPackages.psalm) ]; };
+              pyright = { cmd = [ ("${pyright}/pyright-langserver") ]; };
+              ruby_ls = { cmd = [ (bp pkgs.ruby-lsp) ]; };
+              rust_analyzer = { cmd = [ (bp pkgs.rust-analyzer) ]; };
+              terraformls = { cmd = [ (bp pkgs.terraform-ls) ]; };
+              tflint = { cmd = [ (bp pkgs.tflint) ]; };
+              tsserver = { cmd = [ ("${tsserver}/typescript-language-server") ]; };
+              typos_lsp = { cmd = [ ("${pkgs.typos-lsp}/bin/typos-lsp") ]; };
+              vimls = { cmd = [ ("${vimls}/vimls-language-server") ]; };
+              yamlls = { cmd = [ ("${yamlls}/yaml-language-server") ]; };
+              zls = { cmd = [ (bp pkgs.zls) ]; };
             };
           fmt =
             let
@@ -139,6 +168,7 @@ in
               terraform_fmt = bp pkgs.terraform;
               terragrunt_fmt = bp pkgs.terragrunt;
               yamlfmt = bp pkgs.yamlfmt;
+              yamlfix = bp pkgs.yamlfix;
             };
           tools = {
             paths = {

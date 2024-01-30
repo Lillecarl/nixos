@@ -71,6 +71,8 @@ prev.lib.filterAttrs
         prev.libxkbcommon
       ];
     });
+
+    typos-lsp = prev.callPackage ./typos-lsp.nix { };
   }
 // (
   if flake

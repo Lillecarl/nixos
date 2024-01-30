@@ -14,14 +14,24 @@ function M.setup(config)
     -- Get default config
     local defConf = lspconfig[lspName]["document_config"]["default_config"]
 
-    --
-    nixConf["cmd"] = vim.tbl_deep_extend("force", defConf["cmd"] or {}, nixConf["cmd"] or {})
     nixConf["capabilities"] = capabilities
 
-    -- Merge our config with the default config
-    local finalConfig = vim.tbl_deep_extend("force", defConf, nixConf)
+    local finalConfig = {}
+    if not (nixConf["nodefault"] or false) then
+      -- Merge default config with nix config
+      nixConf["cmd"] = vim.tbl_deep_extend("force", defConf["cmd"] or {}, nixConf["cmd"] or {})
+      finalConfig = vim.tbl_deep_extend("force", defConf, nixConf)
+      finalConfig = nixConf
+    else
+      -- Use nix config
+      finalConfig = nixConf
+    end
 
     lspconfig[lspName].setup(finalConfig)
+
+    if lspName == "ansiblels" then
+      vim.g.log(lspconfig[lspName]["manager"]["config"]["settings"])
+    end
   end
 
   vim.api.nvim_create_autocmd("LspAttach", {
