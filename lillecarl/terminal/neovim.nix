@@ -122,16 +122,17 @@ in
                   nodefault = true;
                 };
               #nixd = { cmd = [ (bp pkgs.nixd) ]; };
-              bashls = { cmd = [ ("${bashls}/bash-language-server") ]; };
-              clangd = { cmd = [ ("${pkgs.clang-tools}/bin/clangd") ]; };
+              #statix = { cmd = [ (bp pkgs.statix) ]; };
+              bashls = { cmd = [ "${bashls}/bash-language-server" ]; };
+              clangd = { cmd = [ "${pkgs.clang-tools}/bin/clangd" ]; };
               cmake = { cmd = [ (bp pkgs.cmake-language-server) ]; };
-              cssls = { cmd = [ ("${vscode-ls}/vscode-css-language-server") ]; };
+              cssls = { cmd = [ "${vscode-ls}/vscode-css-language-server" ]; };
               dockerls = { cmd = [ "${dockerls}/docker-langserver" ]; };
               dotls = { cmd = [ (bp pkgs.dot-language-server) ]; };
-              eslint = { cmd = [ ("${vscode-ls}/vscode-eslint-language-server") ]; };
+              eslint = { cmd = [ "${vscode-ls}/vscode-eslint-language-server" ]; };
               gopls = { cmd = [ (bp pkgs.gopls) ]; };
-              html = { cmd = [ ("${vscode-ls}/vscode-html-language-server") ]; };
-              jsonls = { cmd = [ ("${vscode-ls}/vscode-json-language-server") ]; };
+              html = { cmd = [ "${vscode-ls}/vscode-html-language-server" ]; };
+              jsonls = { cmd = [ "${vscode-ls}/vscode-json-language-server" ]; };
               lua_ls = { cmd = [ (bp pkgs.lua-language-server) ]; };
               marksman = { cmd = [ (bp pkgs.marksman) ]; };
               nil_ls = { cmd = [ (bp pkgs.nil) ]; };
@@ -140,15 +141,15 @@ in
               perlls = { cmd = [ (bp pkgs.perlPackages.PerlLanguageServer) ]; }; # broken
               postgres_lsp = { cmd = [ (bp pkgs.postgres-lsp) ]; };
               psalm = { cmd = [ (bp pkgs.phpPackages.psalm) ]; };
-              pyright = { cmd = [ ("${pyright}/pyright-langserver") ]; };
+              pyright = { cmd = [ "${pyright}/pyright-langserver" ]; };
               ruby_ls = { cmd = [ (bp pkgs.ruby-lsp) ]; };
               rust_analyzer = { cmd = [ (bp pkgs.rust-analyzer) ]; };
               terraformls = { cmd = [ (bp pkgs.terraform-ls) ]; };
               tflint = { cmd = [ (bp pkgs.tflint) ]; };
-              tsserver = { cmd = [ ("${tsserver}/typescript-language-server") ]; };
-              typos_lsp = { cmd = [ ("${pkgs.typos-lsp}/bin/typos-lsp") ]; };
-              vimls = { cmd = [ ("${vimls}/vimls-language-server") ]; };
-              yamlls = { cmd = [ ("${yamlls}/yaml-language-server") ]; };
+              tsserver = { cmd = [ "${tsserver}/typescript-language-server" ]; };
+              typos_lsp = { cmd = [ "${pkgs.typos-lsp}/bin/typos-lsp" ]; };
+              vimls = { cmd = [ "${vimls}/vimls-language-server" ]; };
+              yamlls = { cmd = [ "${yamlls}/yaml-language-server" ]; };
               zls = { cmd = [ (bp pkgs.zls) ]; };
             };
           fmt =
