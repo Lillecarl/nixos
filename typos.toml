@@ -1,2 +1,7 @@
+[default]
+extend-ignore-re = ['''(`|"|')ssh-.*(`|\"|')''']
+
 [default.extend-words]
 "ags" = "ags"
+"noice" = "noice"
+"crypted" = "crypted"

@@ -78,8 +78,8 @@
     helix #  Modern modal editor, written in Rust
     ripgrep # Modern rusty grep
     lsof # Check who uses file
-    ripgrep # Rust grep implmenetation, not POSIX compliant
-    wget # Fetch things quicly with HTTP
+    ripgrep # Rust grep implementation, not POSIX compliant
+    wget # Fetch things quickly with HTTP
     gnufdisk # CLI partition management (MBR)
     gptfdisk # CLI partition management (GPT)
     efitools # Tools for managing EFI, variables and such
@@ -100,8 +100,8 @@
     nix-prefetch-github # fetch nix package from github
     comma # Run stuff without installing it
     lorri # nix-shell alternative
-    pijul # Patch based git alternative (Similiar to darcs but written in rust)
-    gitFull # Git and all beloning standard packages
+    pijul # Patch based git alternative (Similar to darcs but written in rust)
+    gitFull # Git and all belonging standard packages
     lazygit # Git TUI, golang
     gitui # Git TUI, rust
     overcommit # Git hooks manager
@@ -181,8 +181,8 @@
 
     # Misc
     scrcpy # Print-screen tool
-    winePackages.wayland # Win32 API compability layer for Linux
-    wine64Packages.wayland # Win32 API compability layer for Linux
+    winePackages.wayland # Win32 API compatibility layer for Linux
+    wine64Packages.wayland # Win32 API compatibility layer for Linux
     gimp # Photoshop alternative
     webcamoid # Webcam application
 
