@@ -177,6 +177,9 @@ in
               yamlfmt = bp pkgs.yamlfmt;
               yamlfix = bp pkgs.yamlfix;
             };
+          repl = {
+            lua = { command = [ (bp pkgs.lua) ]; };
+          };
           tools = {
             paths = {
               ripgrep = bp pkgs.ripgrep;

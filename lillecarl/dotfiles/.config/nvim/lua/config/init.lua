@@ -12,7 +12,7 @@ function M.setup(config)
   vim.g.loaded_netrwPlugin = 1
   -- no idea, from nvim-tree config example
   vim.opt.termguicolors = true
-  -- case insesitive search when searching with only lowercase letters
+  -- case insensitive search when searching with only lowercase letters
   vim.opt.ignorecase = true
   vim.opt.smartcase = true
   -- show line numbers

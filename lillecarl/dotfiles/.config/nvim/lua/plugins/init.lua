@@ -3,6 +3,7 @@ local M = {}
 function M.setup(config)
   if not vim.g.vscode then
     require("plugins.multiplug")
+    require("plugins.iron").setup(config)
     require("plugins.conform").setup(config)
     require("plugins.telescope").setup(config)
     require("plugins.copilot")
