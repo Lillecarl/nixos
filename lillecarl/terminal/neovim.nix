@@ -157,6 +157,7 @@ in
             in
             builtins.mapAttrs (key: mkConform) {
               clang_format = "${pkgs.clang-tools}/bin/clang-format";
+              deno_fmt = bp pkgs.deno;
               fish_indent = "${pkgs.fish}/bin/fish_indent";
               fixjson = "${nodeLatest.fixjson}/bin/fixjson";
               gofmt = "${pkgs.go}/bin/gofmt";
