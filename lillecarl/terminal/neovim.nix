@@ -52,6 +52,7 @@ in
       fugitive
       gitsigns-nvim
       indent-blankline-nvim
+      iron-nvim
       luasnip
       neoconf-nvim
       neodev-nvim
@@ -71,6 +72,7 @@ in
       telescope-nvim
       trouble-nvim
       which-key-nvim
+    ] ++ [
       pkgs.one-small-step-for-vimkind
     ];
 
@@ -154,17 +156,17 @@ in
               mkConform = path: { command = path; };
             in
             builtins.mapAttrs (key: mkConform) {
-              black = bp pkgs.black;
               clang_format = "${pkgs.clang-tools}/bin/clang-format";
               fish_indent = "${pkgs.fish}/bin/fish_indent";
               fixjson = "${nodeLatest.fixjson}/bin/fixjson";
               gofmt = "${pkgs.go}/bin/gofmt";
               goimports = "${pkgs.gotools}/bin/goimports";
               golines = "${pkgs.golines}/bin/golines";
-              isort = bp pkgs.isort;
               nixpkgs_fmt = bp pkgs.nixpkgs-fmt;
               packer_fmt = bp pkgs.packer;
               prettierd = bp pkgs.prettierd;
+              ruff_fix = bp pkgs.ruff;
+              ruff_format = bp pkgs.ruff;
               rustfmt = bp pkgs.rustfmt;
               shellcheck = bp pkgs.shellcheck;
               stylua = bp pkgs.stylua;
