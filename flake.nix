@@ -127,14 +127,6 @@
         nixpkgs.follows = "nixpkgs";
       };
     };
-    nil = {
-      url = "github:oxalica/nil";
-      inputs = {
-        flake-utils.follows = "flake-utils";
-        nixpkgs.follows = "nixpkgs";
-        rust-overlay.follows = "rust-overlay";
-      };
-    };
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v0.3.0";
       inputs = {
@@ -157,7 +149,7 @@
       submodules = true;
     };
 
-    # Art
+    # Art / themeing
     nixos-artwork = {
       url = "github:NixOS/nixos-artwork";
       flake = false;
