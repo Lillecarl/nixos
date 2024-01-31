@@ -77,6 +77,7 @@ function M.setup(config)
           ["m"] = { vim.lsp.buf.references, "Find references" },
           ["f"] = {
             function()
+              vim.notify("Formatting with conform", vim.log.levels.INFO, { title = "Formatting" })
               require("conform").format()
             end,
             "Format",
