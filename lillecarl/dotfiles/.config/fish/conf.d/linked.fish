@@ -43,8 +43,10 @@ abbr -a nhs nh home switch -- --impure
 
 # bind ctrl+a to beginning of buffer
 bind \ca -M insert beginning-of-buffer
+bind \ca -M visual beginning-of-buffer
 # bind ctrl+e to end of buffer
 bind \ce -M insert end-of-buffer
+bind \ce -M visual end-of-buffer
 # bind alt+l to complete whatever fish is suggesting
 bind -M insert \el forward-char
 
