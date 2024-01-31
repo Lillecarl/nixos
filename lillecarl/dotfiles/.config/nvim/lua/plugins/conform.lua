@@ -6,11 +6,7 @@ function M.setup(config)
   local nixFormatters = config["fmt"]
 
   conform.setup({
-    format_on_save = {
-      -- These options will be passed to conform.format()
-      timeout_ms = 500,
-      lsp_fallback = true,
-    },
+    lsp_fallback = true,
     log_level = vim.log.levels.DEBUG,
     notify_on_error = true,
   })
