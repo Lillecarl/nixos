@@ -4,7 +4,7 @@
   programs.tealdeer = {
     enable = true;
 
-    #updateOnActivation = true;
+    updateOnActivation = false;
 
     settings = {
       display = {
@@ -18,6 +18,4 @@
       };
     };
   };
-  # Don't update tealdeer cache on activation
-  home.activation.tealdeerCache = lib.mkForce "echo Disabled";
 }
