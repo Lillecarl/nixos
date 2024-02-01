@@ -71,5 +71,6 @@
     statix # Nix linter
     unzip
     zip
+    bubblewrap # flatpak without flatpak
   ];
 }
