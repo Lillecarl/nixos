@@ -29,7 +29,6 @@ in
         ../../common/users.nix
         ../../common/verycommon.nix
         ../../common/xdg.nix
-        ../../common/xplatform.nix
         ../../modules/nixos/keymapper.nix
         ./default.nix
         ./acme.nix
