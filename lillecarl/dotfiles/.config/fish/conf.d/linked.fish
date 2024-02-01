@@ -37,6 +37,7 @@ abbr -a cat bat --paging=never
 abbr -a :q exit
 abbr -a gpa git pull --all --recurse-submodules
 abbr -a gfa git fetch --all --recurse-submodules
+abbr -a grm git rebase origin/main
 abbr -a gsu git submodule update --recursive
 abbr -a nos nh os switch -- --impure
 abbr -a nhs nh home switch -- --impure
