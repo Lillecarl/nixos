@@ -24,14 +24,60 @@ in
     vimdiffAlias = true;
     defaultEditor = true;
 
-    extraPackages = [
+    extraPackages = with pkgs; [
+      # lsp
+      clang-tools
+      cmake-language-server
+      dot-language-server
+      gopls
+      lua-language-server
+      marksman
+      nil
+      # fmt
+      deno # deno fmt
+      fish # fish_indent
+      nixd
+      nodePackages_latest.bash-language-server
+      nodePackages_latest.dockerfile-language-server-nodejs
+      nodePackages_latest.fixjson
+      nodePackages_latest.pyright
+      nodePackages_latest.typescript-language-server
+      nodePackages_latest.vim-language-server
+      nodePackages_latest.vscode-langservers-extracted # HTML, CSS, ESLint, JSON
+      nodePackages_latest.yaml-language-server
+      nushell
+      omnisharp-roslyn
+      perlPackages.PerlLanguageServer
+      phpPackages.psalm
+      postgres-lsp
+      ruby-lsp
+      rust-analyzer
+      statix
+      terraform-ls
+      tflint
+      typos-lsp
+      zls
+      go # gofmt
+      gotools # goimports, golines
+      nixpkgs-fmt
+      packer # packer fmt
+      prettierd
+      ruff
+      rustfmt
+      shellcheck
+      stylua
+      taplo
+      terraform # terraform fmt
+      terragrunt # terragrunt hclfmt
+      yamlfmt
+      yamlfix
       # misc tools
       pkgs.fd # for telescope
       pkgs.ripgrep # for telescope
       pkgs.tree-sitter # silence tree-sitter warning
       pkgs.fzf # fuzzy finder
       pkgs.git # Gitsigns, Fugitive
-      pkgs.go # Required for gopls
+      nodejs_21 # For copilot
     ];
 
     plugins = with pkgs.vimPlugins; [
