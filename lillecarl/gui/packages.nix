@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 {
   home.packages = with pkgs; [
     ferdium # Web multiplexer
@@ -18,5 +18,5 @@
     webcord-vencord # Discord client
     tor-browser-bundle-bin # Tor browser
     libreoffice # Office suite
-  ];
+  ] ++ (if config.programs.rbw.enable then [ pkgs.rofi-rbw-wayland ] else [ ]);
 }
