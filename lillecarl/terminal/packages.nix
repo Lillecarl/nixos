@@ -69,5 +69,7 @@
     zellij # discoverable terminal multiplexer written in rust
     zoxide # Rust implementation of z/autojump
     statix # Nix linter
+    unzip
+    zip
   ];
 }
