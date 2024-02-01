@@ -64,8 +64,8 @@
           decentraleyes
           multi-account-containers
           onetab
-          pkgs.firefoxAddons.kagi-search-for-firefox
           pkgs.firefoxAddons.shortkeys
+          kagi-search
           privacy-badger
           privacy-pass
           sponsorblock
