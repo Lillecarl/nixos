@@ -34,7 +34,7 @@ prev.lib.filterAttrs
     ||
     # Flake is implicitly true here
     # Filter out package sets if we're called from a flake.
-    (n != "python3Packages" && n != "nodePackages" && n != "firefoxAddons" && n != "grafanaPlugins"))
+    (n != "python3Packages" && n != "nodePackages" && n != "grafanaPlugins"))
   {
     inherit miconoff mictoggle;
 
@@ -47,8 +47,6 @@ prev.lib.filterAttrs
     nodePackages = nodePackages // prev.nodePackages;
     # Inject grafanaPlugins
     grafanaPlugins = grafanaPlugins // prev.grafanaPlugins;
-    # firefox addons
-    firefoxAddons = prev.callPackage ./firefoxAddons { };
 
     terraform_1_5_5 = prev.mkTerraform {
       version = "1.5.5";
