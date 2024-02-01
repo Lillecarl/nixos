@@ -21,7 +21,10 @@
 
     kernelModules = [ "kvm-amd" ];
     extraModulePackages = [ ];
-    extraModprobeConfig = "options kvm_amd nested=1";
+    extraModprobeConfig = ''
+      options kvm_amd nested=1
+      options thinkpad_acpi experimental=1 fan_control=1
+    '';
     kernelParams = [
       "amd_pstate=guided"
       "iommu=soft"
