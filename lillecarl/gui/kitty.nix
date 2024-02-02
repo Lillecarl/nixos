@@ -43,6 +43,8 @@ _:
         "ctrl+shift+alt+t" = "no_op";
         "ctrl+shift+b" = "no_op";
         "ctrl+shift+delete" = "no_op";
+        "ctrl+shift+k" = "no_op";
+        "ctrl+shift+e" = "no_op";
         "ctrl+shift+enter" = "no_op";
         "ctrl+shift+equal" = "no_op";
         "ctrl+shift+escape" = "no_op";
