@@ -72,11 +72,12 @@ in
       yamlfmt
       yamlfix
       # misc tools
-      pkgs.fd # for telescope
-      pkgs.ripgrep # for telescope
-      pkgs.tree-sitter # silence tree-sitter warning
-      pkgs.fzf # fuzzy finder
-      pkgs.git # Gitsigns, Fugitive
+      fd # for telescope
+      ripgrep # for telescope
+      tree-sitter # silence tree-sitter warning
+      fzf # fuzzy finder
+      git # Gitsigns, Fugitive
+      cargo # for rust-analyzer
       nodejs_21 # For copilot
     ];
 
