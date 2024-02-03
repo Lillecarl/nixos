@@ -72,5 +72,6 @@
     unzip
     zip
     bubblewrap # flatpak without flatpak
+    virtualenv # python environments
   ];
 }
