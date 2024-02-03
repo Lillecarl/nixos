@@ -1,7 +1,6 @@
 { stdenv
 , rustPlatform
 , lib
-, fetchFromGitHub
 , ncurses
 , perl
 , pkg-config
@@ -34,14 +33,6 @@
 rustPlatform.buildRustPackage rec {
   pname = "wezterm";
   version = inputs.wezterm.shortRev;
-
-  #src = fetchFromGitHub {
-  #  owner = "wez";
-  #  repo = pname;
-  #  rev = version;
-  #  fetchSubmodules = true;
-  #  hash = "sha256-sj3S1fWC6j9Q/Yc+4IpLbKC3lttUWFk65ROyCdQt+Zc=";
-  #};
 
   src = inputs.wezterm;
 

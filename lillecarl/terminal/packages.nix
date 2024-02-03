@@ -1,5 +1,4 @@
 { pkgs
-, inputs
 , ...
 }: {
   home.packages = with pkgs; [
@@ -73,5 +72,6 @@
     zip
     bubblewrap # flatpak without flatpak
     virtualenv # python environments
+    nil # Nix language server, also CLI tool for diagnostics
   ];
 }

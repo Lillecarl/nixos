@@ -1,6 +1,6 @@
-{ lib, rustPlatform, fetchFromGitHub }:
+{ lib, rustPlatform }:
 
-rustPlatform.buildRustPackage rec {
+rustPlatform.buildRustPackage {
   pname = "typos-vscode";
   version = "0.1.11";
 

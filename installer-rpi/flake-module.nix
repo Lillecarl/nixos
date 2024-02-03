@@ -1,7 +1,7 @@
 { inputs
 , ...
 }: {
-  flake = rec {
+  flake = {
     nixosConfigurations.installer-rpi4 = inputs.nixpkgs.lib.nixosSystem {
       system = "aarch64-linux";
       modules = [

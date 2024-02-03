@@ -1,5 +1,4 @@
 { inputs
-, lib
 , flakeloc
 , ...
 }:
@@ -9,7 +8,7 @@ in
 {
   flake = {
     nixosConfigurations.wsl = inputs.nixpkgs.lib.nixosSystem {
-      system = "aarch64-linux";
+      inherit system;
       modules = [
         ../../common/fish.nix
         ../../common/overlays.nix

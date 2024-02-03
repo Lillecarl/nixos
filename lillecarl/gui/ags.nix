@@ -1,6 +1,4 @@
-{ pkgs
-, ...
-}:
+_:
 {
   programs.ags = {
     enable = true;

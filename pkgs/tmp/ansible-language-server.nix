@@ -1,6 +1,5 @@
 { lib
 , buildNpmPackage
-, fetchFromGitHub
 , nix-update-script
 }:
 

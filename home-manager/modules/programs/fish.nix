@@ -187,38 +187,43 @@ let
     };
   };
 
-  abbrsStr = concatStringsSep "\n" (mapAttrsToList (name: def:
-    let
-      mods = with def;
-        cli.toGNUCommandLineShell {
-          mkOption = k: v:
-            if v == null then
-              [ ]
-            else if k == "set-cursor" then
-              [ "--${k}=${lib.generators.mkValueStringDefault { } v}" ]
-            else [
-              "--${k}"
-              (lib.generators.mkValueStringDefault { } v)
-            ];
-        } {
-          inherit position regex function;
-          set-cursor = setCursor;
-        };
-      modifiers = if isAttrs def then mods else "";
-      expansion = if isAttrs def then def.expansion else def;
-    in "abbr --add ${modifiers} -- ${name}"
-    + optionalString (expansion != null) " ${escapeShellArg expansion}")
+  abbrsStr = concatStringsSep "\n" (mapAttrsToList
+    (name: def:
+      let
+        mods = with def;
+          cli.toGNUCommandLineShell
+            {
+              mkOption = k: v:
+                if v == null then
+                  [ ]
+                else if k == "set-cursor" then
+                  [ "--${k}=${lib.generators.mkValueStringDefault { } v}" ]
+                else [
+                  "--${k}"
+                  (lib.generators.mkValueStringDefault { } v)
+                ];
+            }
+            {
+              inherit position regex function;
+              set-cursor = setCursor;
+            };
+        modifiers = if isAttrs def then mods else "";
+        expansion = if isAttrs def then def.expansion else def;
+      in
+      "abbr --add ${modifiers} -- ${name}"
+      + optionalString (expansion != null) " ${escapeShellArg expansion}")
     cfg.shellAbbrs);
 
   aliasesStr = concatStringsSep "\n"
     (mapAttrsToList (k: v: "alias ${k} ${escapeShellArg v}") cfg.shellAliases);
 
   fishIndent = name: text:
-    pkgs.runCommand name {
-      nativeBuildInputs = [ cfg.package ];
-      inherit text;
-      passAsFile = [ "text" ];
-    } "env HOME=$(mktemp -d) fish_indent < $textPath > $out";
+    pkgs.runCommand name
+      {
+        nativeBuildInputs = [ cfg.package ];
+        inherit text;
+        passAsFile = [ "text" ];
+      } "env HOME=$(mktemp -d) fish_indent < $textPath > $out";
 
   translatedSessionVariables =
     pkgs.runCommandLocal "hm-session-vars.fish" { } ''
@@ -229,7 +234,8 @@ let
       echo "setup_hm_session_vars") > $out
     '';
 
-in {
+in
+{
   imports = [
     (mkRemovedOptionModule [ "programs" "fish" "promptInit" ] ''
       Prompt is now configured through the
@@ -386,54 +392,66 @@ in {
       # Support completion for `man` by building a cache for `apropos`.
       programs.man.generateCaches = mkDefault true;
 
-      xdg.dataFile."fish/home-manager_generated_completions".source = let
-        # paths later in the list will overwrite those already linked
-        destructiveSymlinkJoin = args_@{ name, paths, preferLocalBuild ? true
-          , allowSubstitutes ? false, postBuild ? "", ... }:
-          let
-            args = removeAttrs args_ [ "name" "postBuild" ] // {
-              # pass the defaults
-              inherit preferLocalBuild allowSubstitutes;
-            };
-          in pkgs.runCommand name args ''
-            mkdir -p $out
-            for i in $paths; do
-              if [ -z "$(find $i -prune -empty)" ]; then
-                cp -srf $i/* $out
-              fi
-            done
-            ${postBuild}
-          '';
+      xdg.dataFile."fish/home-manager_generated_completions".source =
+        let
+          # paths later in the list will overwrite those already linked
+          destructiveSymlinkJoin =
+            args_@{ name
+            , paths
+            , preferLocalBuild ? true
+            , allowSubstitutes ? false
+            , postBuild ? ""
+            , ...
+            }:
+            let
+              args = removeAttrs args_ [ "name" "postBuild" ] // {
+                # pass the defaults
+                inherit preferLocalBuild allowSubstitutes;
+              };
+            in
+            pkgs.runCommand name args ''
+              mkdir -p $out
+              for i in $paths; do
+                if [ -z "$(find $i -prune -empty)" ]; then
+                  cp -srf $i/* $out
+                fi
+              done
+              ${postBuild}
+            '';
 
-        generateCompletions = let
-          getName = attrs:
-            attrs.name or "${attrs.pname or "«pname-missing»"}-${
+          generateCompletions =
+            let
+              getName = attrs:
+                attrs.name or "${attrs.pname or "«pname-missing»"}-${
               attrs.version or "«version-missing»"
             }";
-        in package:
-        pkgs.runCommand "${getName package}-fish-completions" {
-          srcs = [ package ] ++ filter (p: p != null)
-            (builtins.map (outName: package.${outName} or null)
-              config.home.extraOutputsToInstall);
-          nativeBuildInputs = [ pkgs.python3 ];
-          buildInputs = [ cfg.package ];
-          preferLocalBuild = true;
-        } ''
-          mkdir -p $out
-          for src in $srcs; do
-            if [ -d $src/share/man ]; then
-              find -L $src/share/man -type f \
-                | xargs python ${cfg.package}/share/fish/tools/create_manpage_completions.py --directory $out \
-                > /dev/null
-            fi
-          done
-        '';
-      in destructiveSymlinkJoin {
-        name = "${config.home.username}-fish-completions";
-        paths =
-          let cmp = (a: b: (a.meta.priority or 0) > (b.meta.priority or 0));
-          in map generateCompletions (sort cmp config.home.packages);
-      };
+            in
+            package:
+            pkgs.runCommand "${getName package}-fish-completions"
+              {
+                srcs = [ package ] ++ filter (p: p != null)
+                  (builtins.map (outName: package.${outName} or null)
+                    config.home.extraOutputsToInstall);
+                nativeBuildInputs = [ pkgs.python3 ];
+                buildInputs = [ cfg.package ];
+                preferLocalBuild = true;
+              } ''
+              mkdir -p $out
+              for src in $srcs; do
+                if [ -d $src/share/man ]; then
+                  find -L $src/share/man -type f \
+                    | xargs python ${cfg.package}/share/fish/tools/create_manpage_completions.py --directory $out \
+                    > /dev/null
+                fi
+              done
+            '';
+        in
+        destructiveSymlinkJoin {
+          name = "${config.home.username}-fish-completions";
+          paths =
+            let cmp = a: b: (a.meta.priority or 0) > (b.meta.priority or 0);
+            in map generateCompletions (sort cmp config.home.packages);
+        };
 
       programs.fish.interactiveShellInit = ''
         # add completions generated by Home Manager to $fish_complete_path
@@ -483,70 +501,76 @@ in {
       '';
     }
     {
-      xdg.configFile = mapAttrs' (name: def: {
-        name = "fish/functions/${name}.fish";
-        value = {
-          source = let
-            modifierStr = n: v: optional (v != null) ''--${n}="${toString v}"'';
-            modifierStrs = n: v: optional (v != null) "--${n}=${toString v}";
-            modifierBool = n: v: optional (v != null && v) "--${n}";
+      xdg.configFile = mapAttrs'
+        (name: def: {
+          name = "fish/functions/${name}.fish";
+          value = {
+            source =
+              let
+                modifierStr = n: v: optional (v != null) ''--${n}="${toString v}"'';
+                modifierStrs = n: v: optional (v != null) "--${n}=${toString v}";
+                modifierBool = n: v: optional (v != null && v) "--${n}";
 
-            mods = with def;
-              modifierStr "description" description ++ modifierStr "wraps" wraps
-              ++ modifierStr "on-event" onEvent
-              ++ modifierStr "on-variable" onVariable
-              ++ modifierStr "on-job-exit" onJobExit
-              ++ modifierStr "on-process-exit" onProcessExit
-              ++ modifierStr "on-signal" onSignal
-              ++ modifierBool "no-scope-shadowing" noScopeShadowing
-              ++ modifierStr "inherit-variable" inheritVariable
-              ++ modifierStrs "argument-names" argumentNames;
+                mods = with def;
+                  modifierStr "description" description ++ modifierStr "wraps" wraps
+                  ++ modifierStr "on-event" onEvent
+                  ++ modifierStr "on-variable" onVariable
+                  ++ modifierStr "on-job-exit" onJobExit
+                  ++ modifierStr "on-process-exit" onProcessExit
+                  ++ modifierStr "on-signal" onSignal
+                  ++ modifierBool "no-scope-shadowing" noScopeShadowing
+                  ++ modifierStr "inherit-variable" inheritVariable
+                  ++ modifierStrs "argument-names" argumentNames;
 
-            modifiers = if isAttrs def then " ${toString mods}" else "";
-            body = if isAttrs def then def.body else def;
-          in fishIndent "${name}.fish" ''
-            function ${name}${modifiers}
-              ${lib.strings.removeSuffix "\n" body}
-            end
-          '';
-        };
-      }) cfg.functions;
+                modifiers = if isAttrs def then " ${toString mods}" else "";
+                body = if isAttrs def then def.body else def;
+              in
+              fishIndent "${name}.fish" ''
+                function ${name}${modifiers}
+                  ${lib.strings.removeSuffix "\n" body}
+                end
+              '';
+          };
+        })
+        cfg.functions;
     }
 
     # Each plugin gets a corresponding conf.d/plugin-NAME.fish file to load
     # in the paths and any initialization scripts.
     (mkIf (length cfg.plugins > 0) {
-      xdg.configFile = mkMerge ((map (plugin: {
-        "fish/conf.d/plugin-${plugin.name}.fish".source =
-          fishIndent "${plugin.name}.fish" ''
-            # Plugin ${plugin.name}
-            set -l plugin_dir ${plugin.src}
+      xdg.configFile = mkMerge (map
+        (plugin: {
+          "fish/conf.d/plugin-${plugin.name}.fish".source =
+            fishIndent "${plugin.name}.fish" ''
+              # Plugin ${plugin.name}
+              set -l plugin_dir ${plugin.src}
 
-            # Set paths to import plugin components
-            if test -d $plugin_dir/functions
-              set fish_function_path $fish_function_path[1] $plugin_dir/functions $fish_function_path[2..-1]
-            end
-
-            if test -d $plugin_dir/completions
-              set fish_complete_path $fish_complete_path[1] $plugin_dir/completions $fish_complete_path[2..-1]
-            end
-
-            # Source initialization code if it exists.
-            if test -d $plugin_dir/conf.d
-              for f in $plugin_dir/conf.d/*.fish
-                source $f
+              # Set paths to import plugin components
+              if test -d $plugin_dir/functions
+                set fish_function_path $fish_function_path[1] $plugin_dir/functions $fish_function_path[2..-1]
               end
-            end
 
-            if test -f $plugin_dir/key_bindings.fish
-              source $plugin_dir/key_bindings.fish
-            end
+              if test -d $plugin_dir/completions
+                set fish_complete_path $fish_complete_path[1] $plugin_dir/completions $fish_complete_path[2..-1]
+              end
 
-            if test -f $plugin_dir/init.fish
-              source $plugin_dir/init.fish
-            end
-          '';
-      }) cfg.plugins));
+              # Source initialization code if it exists.
+              if test -d $plugin_dir/conf.d
+                for f in $plugin_dir/conf.d/*.fish
+                  source $f
+                end
+              end
+
+              if test -f $plugin_dir/key_bindings.fish
+                source $plugin_dir/key_bindings.fish
+              end
+
+              if test -f $plugin_dir/init.fish
+                source $plugin_dir/init.fish
+              end
+            '';
+        })
+        cfg.plugins);
     })
   ]);
 }

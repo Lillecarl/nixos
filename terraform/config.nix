@@ -1,8 +1,4 @@
-{ config
-, lib
-, pkgs
-, ...
-}:
+_:
 let
   instanceType = "g6-nanode-1";
 in

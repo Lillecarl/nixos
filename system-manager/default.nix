@@ -1,8 +1,4 @@
-{ config
-, lib
-, pkgs
-, ...
-}: {
+_: {
   config = {
     nixpkgs.hostPlatform = "x86_64-linux";
 

@@ -1,4 +1,4 @@
-{ pkgs, config, lib, ... }:
+{ pkgs, lib, ... }:
 {
   # This causes an overlay which causes a lot of rebuilding
   environment.noXlibs = lib.mkForce false;

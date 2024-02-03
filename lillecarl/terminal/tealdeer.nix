@@ -1,6 +1,4 @@
-{ lib
-, ...
-}: {
+_: {
   programs.tealdeer = {
     enable = true;
 

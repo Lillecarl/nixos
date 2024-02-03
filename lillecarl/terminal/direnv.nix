@@ -1,6 +1,4 @@
-{ pkgs
-, ...
-}:
+_:
 {
   programs.direnv = {
     enable = true;

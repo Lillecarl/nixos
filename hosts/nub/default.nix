@@ -210,7 +210,7 @@
     config.allowUnfree = true;
   };
 
-  networking = rec {
+  networking = {
     hostName = "nub"; # System hostname
     domain = "helicon.ai"; # System domain
     nftables.enable = true; # Enable nftables

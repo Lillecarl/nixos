@@ -1,9 +1,4 @@
-{ self
-, inputs
-, withSystem
-, flakeloc
-, ...
-}:
+_:
 {
   perSystem =
     { pkgs
