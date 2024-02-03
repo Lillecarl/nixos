@@ -14,12 +14,14 @@ let
           {
             inherit self inputs flakeloc bp;
           } // customArgs.extraSpecialArgs;
+
         modules = [
           inputs.stylix.homeManagerModules.stylix
           "${self}/common/overlays.nix"
           "${self}/common/stylix.nix"
           "${self}/modules/hm/keymapper.nix"
           ./default.nix
+          ./moduleOverrides.nix
         ] ++ customArgs.modules;
       });
 in
