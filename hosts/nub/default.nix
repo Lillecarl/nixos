@@ -69,6 +69,20 @@
   services = {
     # BT mgmt
     blueman.enable = true;
+    logind =
+      let
+        watdo = "suspend";
+      in
+      {
+        hibernateKey = watdo;
+        hibernateKeyLongPress = watdo;
+        powerKey = watdo;
+        powerKeyLongPress = watdo;
+        suspendKey = watdo;
+        suspendKeyLongPress = watdo;
+        rebootKey = watdo;
+        rebootKeyLongPress = watdo;
+      };
     # DBUS for power management
     upower.enable = true;
     # TODO configure this to relay messages out on the internet too
