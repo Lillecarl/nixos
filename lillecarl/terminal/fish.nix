@@ -1,4 +1,5 @@
 { pkgs
+, config
 , bp
 , ...
 }:
@@ -34,6 +35,9 @@
     '';
 
     shellInit = ''
+    '';
+    shellInitLast = ''
+      source ${config.xdg.configHome}/fish/conf.d.after/*.fish
     '';
   };
 }
