@@ -11,6 +11,7 @@ _:
           pkgs.msr-tools
           (pkgs.python3.withPackages (ps: with ps; [
             PyGithub
+            deepmerge
             evdev
             levenshtein
             plumbum
