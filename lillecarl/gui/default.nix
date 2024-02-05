@@ -7,7 +7,6 @@
     ../../modules/hm/swaync.nix
     ../../modules/hm/wezterm.nix
     ./ags.nix
-    ./alacritty.nix
     ./avizo.nix
     ./chromium.nix
     ./firefox.nix

@@ -73,6 +73,7 @@ in
                     '';
                     keyboardName = "keymapper";
                   };
+                  alacritty.enable = true;
                 };
                 thinkpad = {
                   enable = true;

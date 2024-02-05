@@ -2,11 +2,9 @@
 , lib
 , ...
 }:
-let
-  asdf = "";
-in
 {
   imports = [
+    ./alacritty.nix
     ./keymapper.nix
     ./swaync.nix
     ./wezterm.nix
