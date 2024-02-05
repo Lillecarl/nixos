@@ -1,10 +1,10 @@
 { inputs, self, ... }:
 let
   overrideModules = [
-    {
-      path = "modules/programs/fish.nix";
-      sha256 = "cb8ee07361d4b14f80c48568e5d009eb21706264f54b8f6de2b333fb6ce30213";
-    }
+    #{
+    #  path = "modules/programs/fish.nix";
+    #  sha256 = "cb8ee07361d4b14f80c48568e5d009eb21706264f54b8f6de2b333fb6ce30213";
+    #}
   ];
   overrideModules_warnings = builtins.filter (mod: mod.sha256 != mod.modsha256) (builtins.map (mod: mod // { modsha256 = builtins.hashFile "sha256" "${inputs.home-manager}/${mod.path}"; }) overrideModules);
 in
