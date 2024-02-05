@@ -2,10 +2,13 @@
 
 import json
 import re
+import sys
 from time import time
 
 from plumbum import local
 from psutil import cpu_percent
+
+print("Starting fancontrol2")
 
 sensors = local["sensors"]["-j"]
 fanpath = local.path("/proc/acpi/ibm/fan")
@@ -19,7 +22,8 @@ config = {
     "low_temp": 60,
     # The temperature at which we turn on the fan regardless of average
     "high_temp": 70,
-    # The cpu usage at which we turn on the fan, averaged over interval * 2 seconds
+    # The cpu usage at which we turn on the fan,
+    # averaged over interval * 2 seconds
     "high_cpu": 25,
 }
 
@@ -108,6 +112,8 @@ def main():
     last_cpu = cpu_percent(1)
 
     while True:
+        sys.stdout.flush()
+        sys.stderr.flush()
         temps.append(gettemp())
         if len(temps) > config["change_wait"] / config["interval"]:
             temps.pop(0)
