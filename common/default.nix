@@ -44,14 +44,7 @@
       cookiecutter # Simple project template engine
       distrobuilder # Build other distros
       asciinema # Terminal session recorder
-      mongodb-tools # MongoDB tools like dumping etc.
-      starship # Shell prompt
-      bat # Cat clone with syntax highlight and git integration
-      tealdeer # Like, TL;DR manpages
       wireguard-tools # Wireguard tools
-      aws-nuke # Nuke AWS account completely
-      age # Modern crypto written in Go
-      rage # Modern crypto written in Rust (Compatible with Age)
       pmutils # Suspend tools
       inotify-tools # CLI tools for inotify in Linux
       sshfs # Mount SFTP as filesystem
