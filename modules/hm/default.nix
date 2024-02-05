@@ -5,7 +5,10 @@
 {
   imports = [
     ./alacritty.nix
+    ./avizo.nix
+    ./batmon.nix
     ./keymapper.nix
+    ./firefox.nix
     ./swaync.nix
     ./wezterm.nix
     ./hyprland.nix

@@ -55,7 +55,6 @@ in
         });
         "lillecarl@nub" = mkHome "x86_64-linux" (guibase // {
           modules = guibase.modules ++ [
-            ./gui/batmon.nix
             "${self}/modules/hm"
             {
               carl = {
