@@ -4,10 +4,7 @@ _:
     enable = true;
 
     settings = {
-      CPU_SCALING_GOVERNOR_ON_AC = "schedutil";
-      CPU_SCALING_GOVERNOR_ON_BAT = "schedutil";
-
-      CPU_ENERGY_PERF_POLICY_ON_AC = "balance_performance";
+      CPU_ENERGY_PERF_POLICY_ON_AC = "balance_power";
       CPU_ENERGY_PERF_POLICY_ON_BAT = "balance_power";
 
       PLATFORM_PROFILE_ON_AC = "balanced";
@@ -16,7 +13,9 @@ _:
       CPU_SCALING_MIN_FREQ_ON_AC = 400000;
       CPU_SCALING_MAX_FREQ_ON_AC = 4768000;
       CPU_SCALING_MIN_FREQ_ON_BAT = 400000;
-      CPU_SCALING_MAX_FREQ_ON_BAT = 2700000;
+      CPU_SCALING_MAX_FREQ_ON_BAT = 2701000;
+      CPU_SCALING_GOVERNOR_ON_AC = "schedutil";
+      CPU_SCALING_GOVERNOR_ON_BAT = "schedutil";
 
       CPU_BOOST_ON_AC = 1;
       CPU_BOOST_ON_BAT = 0;

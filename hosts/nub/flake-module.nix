@@ -30,9 +30,10 @@ in
         ../../common/verycommon.nix
         ../../common/xdg.nix
         ../../modules/nixos/keymapper.nix
-        ./default.nix
         ./acme.nix
+        ./default.nix
         ./fancontrol.nix
+        ./tlp.nix
         inputs.disko.nixosModules.disko
         inputs.flake-programs-sqlite.nixosModules.programs-sqlite
         inputs.lanzaboote.nixosModules.lanzaboote

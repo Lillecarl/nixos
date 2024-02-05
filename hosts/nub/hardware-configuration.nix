@@ -25,7 +25,6 @@
       options thinkpad_acpi experimental=1 fan_control=1
     '';
     kernelParams = [
-      "amd_pstate=guided"
       "iommu=soft"
       # Exposes all the available tunables to userspace as r/w rather than r/o.
       # https://community.frame.work/t/tracking-ppd-v-tlp-for-amd-ryzen-7040/39423/29
