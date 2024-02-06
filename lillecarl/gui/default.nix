@@ -7,7 +7,6 @@
     ../../modules/hm/swaync.nix
     ../../modules/hm/wezterm.nix
     ./packages.nix
-    ./qutebrowser.nix
     inputs.ags.homeManagerModules.default
   ];
   carl = {

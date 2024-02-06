@@ -10,6 +10,7 @@ _:
     ./hyprland.nix
     ./kitty.nix
     ./mako.nix
+    ./qutebrowser.nix
     ./rofi.nix
     ./swaync.nix
     ./swaytools.nix
