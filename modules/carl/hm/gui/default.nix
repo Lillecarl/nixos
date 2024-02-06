@@ -10,6 +10,7 @@ _:
     ./kitty.nix
     ./swaync.nix
     ./swaytools.nix
+    ./rofi.nix
     ./vscode.nix
     ./waybar.nix
     ./wezterm.nix

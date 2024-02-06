@@ -9,7 +9,6 @@
     ./ags.nix
     ./packages.nix
     ./qutebrowser.nix
-    ./rofi.nix
     ./theme.nix
     inputs.ags.homeManagerModules.default
   ];
