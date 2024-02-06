@@ -5,7 +5,7 @@
 }:
 {
   imports = [
-    "${self}/hm"
+    "${self}/modules/hm"
   ];
   carl = {
     gui = {
@@ -30,18 +30,5 @@
       enable = true;
     };
     bluetooth.enable = true;
-  };
-
-  programs.obs-studio = {
-    enable = true;
-
-    plugins = with pkgs.obs-studio-plugins; [
-      input-overlay
-      looking-glass-obs
-      obs-gstreamer
-      obs-vaapi
-      obs-vkcapture
-      wlrobs
-    ];
   };
 }

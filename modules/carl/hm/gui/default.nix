@@ -12,6 +12,7 @@
     ./hyprland.nix
     ./kitty.nix
     ./mako.nix
+    ./obs.nix
     ./packages.nix
     ./qutebrowser.nix
     ./rofi.nix
