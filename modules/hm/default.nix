@@ -4,15 +4,10 @@
 }:
 {
   imports = [
-    ./alacritty.nix
-    ./avizo.nix
-    ./batmon.nix
+    ../carl
     ./keymapper.nix
-    ./firefox.nix
     ./swaync.nix
     ./wezterm.nix
-    ./hyprland.nix
-    ./thinkpad.nix
   ];
   options.carl = with lib; {
     gui = {

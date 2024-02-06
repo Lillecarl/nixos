@@ -60,7 +60,7 @@ in
             "\"${hyprctl}\""
             "\"${pkgs.wl-clipboard}/bin/wl-copy\""
           ]
-          (builtins.readFile ../../scripts/print.py));
+          (builtins.readFile "${self}/scripts/print.py"));
 
       wallpaper = "${inputs.nixos-artwork}/wallpapers/nix-wallpaper-watersplash.png";
 
