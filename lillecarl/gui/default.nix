@@ -6,7 +6,6 @@
   imports = [
     ../../modules/hm/swaync.nix
     ../../modules/hm/wezterm.nix
-    ./ags.nix
     ./packages.nix
     ./qutebrowser.nix
     inputs.ags.homeManagerModules.default

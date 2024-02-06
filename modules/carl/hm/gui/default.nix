@@ -1,6 +1,7 @@
 _:
 {
   imports = [
+    ./ags.nix
     ./alacritty.nix
     ./avizo.nix
     ./chromium.nix
