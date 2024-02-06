@@ -5,6 +5,7 @@ _:
     ./avizo.nix
     ./chromium.nix
     ./firefox.nix
+    ./foot.nix
     ./hyprland.nix
     ./kitty.nix
     ./swaync.nix
