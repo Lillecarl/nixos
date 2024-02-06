@@ -12,6 +12,7 @@ _:
     ./rofi.nix
     ./swaync.nix
     ./swaytools.nix
+    ./theme.nix
     ./vscode.nix
     ./waybar.nix
     ./wezterm.nix

@@ -9,7 +9,6 @@
     ./ags.nix
     ./packages.nix
     ./qutebrowser.nix
-    ./theme.nix
     inputs.ags.homeManagerModules.default
   ];
   carl = {
