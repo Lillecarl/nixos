@@ -8,7 +8,6 @@
     ../../modules/hm/wezterm.nix
     ./ags.nix
     ./foot.nix
-    ./kitty.nix
     ./packages.nix
     ./qutebrowser.nix
     ./rofi.nix

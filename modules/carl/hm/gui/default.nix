@@ -4,8 +4,9 @@ _:
     ./alacritty.nix
     ./avizo.nix
     ./chromium.nix
-    ./swaync.nix
     ./firefox.nix
     ./hyprland.nix
+    ./kitty.nix
+    ./swaync.nix
   ];
 }
