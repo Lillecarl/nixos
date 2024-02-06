@@ -9,5 +9,7 @@ _:
     ./kitty.nix
     ./swaync.nix
     ./vscode.nix
+    ./waybar.nix
+    ./wezterm.nix
   ];
 }

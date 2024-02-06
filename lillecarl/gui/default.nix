@@ -13,7 +13,6 @@
     ./rofi.nix
     ./swaytools.nix
     ./theme.nix
-    ./waybar.nix
     inputs.ags.homeManagerModules.default
   ];
 
