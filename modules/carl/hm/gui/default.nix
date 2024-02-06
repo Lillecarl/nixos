@@ -1,4 +1,6 @@
-_:
+{ inputs
+, ...
+}:
 {
   imports = [
     ./ags.nix
@@ -10,6 +12,7 @@ _:
     ./hyprland.nix
     ./kitty.nix
     ./mako.nix
+    ./packages.nix
     ./qutebrowser.nix
     ./rofi.nix
     ./swaync.nix
@@ -19,5 +22,6 @@ _:
     ./waybar.nix
     ./wezterm.nix
     ./wlogout.nix
+    inputs.ags.homeManagerModules.default
   ];
 }

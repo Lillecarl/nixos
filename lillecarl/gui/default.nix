@@ -1,13 +1,11 @@
 { inputs
 , pkgs
+, self
 , ...
 }:
 {
   imports = [
-    ../../modules/hm/swaync.nix
-    ../../modules/hm/wezterm.nix
-    ./packages.nix
-    inputs.ags.homeManagerModules.default
+    "${self}/hm"
   ];
   carl = {
     gui = {
