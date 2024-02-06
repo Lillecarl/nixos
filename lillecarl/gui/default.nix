@@ -7,7 +7,6 @@
     ../../modules/hm/swaync.nix
     ../../modules/hm/wezterm.nix
     ./ags.nix
-    ./chromium.nix
     ./foot.nix
     ./hyprland.nix
     ./kitty.nix
