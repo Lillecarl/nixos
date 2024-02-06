@@ -17,5 +17,6 @@ _:
     ./vscode.nix
     ./waybar.nix
     ./wezterm.nix
+    ./wlogout.nix
   ];
 }
