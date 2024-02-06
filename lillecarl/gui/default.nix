@@ -8,9 +8,7 @@
     ../../modules/hm/wezterm.nix
     ./ags.nix
     ./foot.nix
-    ./hyprland.nix
     ./kitty.nix
-    ./mpv.nix
     ./packages.nix
     ./qutebrowser.nix
     ./rofi.nix
