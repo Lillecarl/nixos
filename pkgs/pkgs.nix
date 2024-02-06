@@ -3,6 +3,19 @@ let
   # python3 packages
   python3Packages = {
     pyping = prev.python3Packages.callPackage ../pkgs/python3Packages/pyping { };
+    pynvim =
+      if
+        prev.python3Packages.pynvim.version prev.lib.versionAtLeast "0.5.0" then
+        prev.python3Packages.pynvim else
+        prev.python3Packages.pynvim.overrideAttrs (oldAttrs: {
+          src = prev.fetchFromGitHub {
+            owner = "neovim";
+            repo = "pynvim";
+            rev = "v0.5.0";
+            sha256 = "";
+          };
+        });
+
   };
   nodePackages = prev.callPackages ./node-packages { };
 
@@ -72,6 +85,7 @@ prev.lib.filterAttrs
 
     typos-lsp = prev.callPackage ./typos-lsp.nix { };
     one-small-step-for-vimkind = prev.callPackage ./one-small-step-for-vimkind.nix { };
+    copilotchat-nvim = prev.callPackage ./copilotchat-nvim.nix { };
   }
 // (
   if flake

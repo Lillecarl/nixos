@@ -10,6 +10,7 @@ function M.setup(config)
     require("plugins.tree-sitter")
     require("plugins.cmp")
     require("plugins.lspconfig").setup(config)
+    require("plugins.copilotchat").setup(config)
   end
 end
 
