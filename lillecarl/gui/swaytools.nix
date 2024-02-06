@@ -17,18 +17,6 @@ in
     source = lockScript;
   };
 
-  services.swaync = {
-    enable = true;
-    systemdTarget = "hyprland-session.target";
-
-    settings = {
-      layer = "overlay";
-      positionX = "right";
-      positiony = "center";
-      hide-on-clear = true;
-      layer-shell = true;
-    };
-  };
 
   programs.swaylock = {
     enable = true;

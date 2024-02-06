@@ -12,7 +12,6 @@
     ./packages.nix
     ./qutebrowser.nix
     ./rofi.nix
-    ./swaync.nix
     ./swaytools.nix
     ./theme.nix
     ./vscode.nix
