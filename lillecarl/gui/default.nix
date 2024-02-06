@@ -14,7 +14,6 @@
     ./swaytools.nix
     ./theme.nix
     ./waybar.nix
-    ./wezterm.nix
     inputs.ags.homeManagerModules.default
   ];
 

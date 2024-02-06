@@ -1,8 +1,20 @@
-{ pkgs
+{ config
 , inputs
-, bp
+, lib
+, pkgs
 , ...
-}: {
+}:
+let
+  cfg = config.carl.gui.wezterm;
+in
+{
+  options.carl.gui.wezterm = with lib; {
+    enable = lib.mkOption {
+      type = types.bool;
+      default = config.carl.gui.enable;
+    };
+  };
+  config = lib.mkIf cfg.enable {
   programs.wezterm = {
     enable = false;
 
@@ -17,7 +29,7 @@
       -- Indent fixer
           local nix_config = wezterm.config_builder()
           nix_config = {
-            default_prog = { '${bp pkgs.fish}' },
+            default_prog = { '${lib.getExe pkgs.fish}' },
           }
           for key, value in pairs(require('linked')) do
             nix_config[key] = value
@@ -25,5 +37,6 @@
 
           return nix_config
     '';
+  };
   };
 }
