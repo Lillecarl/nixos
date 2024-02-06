@@ -29,8 +29,8 @@ in
   };
   config =
     let
-      writePython3 = import ("${self}/lib/writePython3.nix") { inherit pkgs; };
-      hyprctl = ("${pkgs.hyprland}/bin/hyprctl");
+      writePython3 = import "${self}/lib/writePython3.nix" { inherit pkgs; };
+      hyprctl = "${pkgs.hyprland}/bin/hyprctl";
 
       lockScript = config.home.file."swayLockScript".source;
 

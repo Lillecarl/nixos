@@ -15,7 +15,7 @@ in
   config = lib.mkIf cfg.enable {
     services.swaync = {
       enable = true;
-      systemdTarget = config.carl.gui.systemdTarget;
+      inherit (config.carl.gui) systemdTarget;
 
       settings = {
         layer = "overlay";

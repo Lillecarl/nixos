@@ -23,7 +23,7 @@ in
         inherit inputs;
       };
 
-      systemdTarget = config.carl.gui.systemdTarget;
+      inherit (config.carl.gui) systemdTarget;
 
       extraConfig = /* lua */ ''
         -- Indent fixer
