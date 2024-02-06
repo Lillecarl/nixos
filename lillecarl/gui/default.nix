@@ -11,7 +11,6 @@
     ./packages.nix
     ./qutebrowser.nix
     ./rofi.nix
-    ./swaytools.nix
     ./theme.nix
     inputs.ags.homeManagerModules.default
   ];
