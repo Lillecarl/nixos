@@ -8,5 +8,6 @@ _:
     ./hyprland.nix
     ./kitty.nix
     ./swaync.nix
+    ./vscode.nix
   ];
 }

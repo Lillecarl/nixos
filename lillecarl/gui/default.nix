@@ -13,7 +13,6 @@
     ./rofi.nix
     ./swaytools.nix
     ./theme.nix
-    ./vscode.nix
     ./waybar.nix
     ./wezterm.nix
     inputs.ags.homeManagerModules.default
