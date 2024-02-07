@@ -1,6 +1,9 @@
 # Defined via `source`
 function _atuin_search
-    set pre_height (kitty @ kitten get_cursor.py | jq '.cursor.height')
+    set is_kitty (test $TERM == "xterm-kitty")
+    if $is_kitty
+        set pre_height (kitty @ kitten get_cursor.py | jq '.cursor.height')
+    end
 
     set -l ATUIN_H "$(ATUIN_SHELL_FISH=t ATUIN_LOG=error atuin search $argv -i -- (commandline -b) 3>&1 1>&2 2>&3)"
 
@@ -16,10 +19,12 @@ function _atuin_search
         end
     end
 
-    set post_height (kitty @ kitten get_cursor.py | jq '.cursor.height')
-    set drop (math $post_height - $pre_height)
+    if $is_kitty
+        set post_height (kitty @ kitten get_cursor.py | jq '.cursor.height')
+        set drop (math $post_height - $pre_height)
+    end
 
-    if test $drop -gt 0
+    if test $drop -gt 0 && $is_kitty
         # This scrolls the commandline to the bottom after an atuin search
         printf %b '\e[$'$drop'+T' $drop
         printf %b '\e[$'$drop'B' $drop
