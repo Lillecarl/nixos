@@ -13,6 +13,9 @@ in
     nixosConfigurations.nixos = inputs.nixpkgs.lib.nixosSystem {
       inherit system;
       modules = [
+        ./disko.nix
+        inputs.disko.nixosModules.disko
+        "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
         {
           imports = [ "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix" ];
           nix = {
