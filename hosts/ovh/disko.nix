@@ -12,15 +12,8 @@ let
         format = "gpt";
         partitions = [
           {
-            name = "boot";
-            start = "0";
-            end = "1MiB";
-            bootable = true;
-            flags = [ "bios_grub" ];
-          }
-          {
             name = "ESP";
-            start = "1MiB";
+            start = "0MiB";
             end = "1GiB";
             bootable = true;
             fs-type = "fat32";
