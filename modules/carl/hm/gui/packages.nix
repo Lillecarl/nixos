@@ -30,6 +30,7 @@ in
       webcord-vencord # Discord client
       tor-browser-bundle-bin # Tor browser
       libreoffice # Office suite
+      adoptopenjdk-icedtea-web # Java Web Start
     ] ++ (
       if config.programs.rbw.enable then [
         pkgs.rofi-rbw-wayland
