@@ -23,12 +23,12 @@ let
     pname = "${pname}-lua";
     inherit src version meta;
   };
-  python = (python3.withPackages (ps: with ps; [
+  python = python3.withPackages (ps: with ps; [
     python-dotenv
     requests
     prompt-toolkit
     tiktoken
-  ]));
+  ]);
 in
 buildEnv {
   name = pname;
