@@ -6,27 +6,45 @@
   };
 
   disko.devices = import ./disko.nix {
-    disk1 = "nvme-INTEL_SSDPE2MX450G7_CVPF72160068450RGN";
-    disk2 = "nvme-INTEL_SSDPE2MX450G7_BTPF80720AN6450RGN";
-  }; 
+    disk1 = "/dev/vda";
+    disk2 = "/dev/vdb";
+  };
 
-  boot.loader = {
-    efi = {
-      canTouchEfiVariables = true;
-      efiSysMountPoint = "/boot/efi"; # ← use the same mount point here.
+  boot = {
+    loader = {
+      efi = {
+        canTouchEfiVariables = true;
+        efiSysMountPoint = "/boot/efi"; # ← use the same mount point here.
+      };
+      grub = {
+        enable = true;
+        device = "/dev/sda";
+        efiSupport = true;
+        copyKernels = true;
+        mirroredBoots = [
+          {
+            devices = [ "/dev/sdb" ];
+            path = "/boot2";
+            efiSysMountPoint = "/boot2/efi";
+          }
+        ];
+      };
     };
-    grub = {
-      enable = true;
-      device = "/dev/sda";
-      efiSupport = true;
-      copyKernels = true;
-      mirroredBoots = [
-        {
-          devices = [ "/dev/sdb" ];
-          path = "/boot2";
-          efiSysMountPoint = "/boot2/efi";
-        }
-      ];
+    initrd = {
+      network = {
+        enable = true;
+        udhcpc.enable = true;
+        ssh = {
+          enable = true;
+          authorizedKeys = [
+            "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAHZ3pA0vIXiKQuwfM1ks8TipeOxfDT9fgo4xMi9iiWr lillecarl@lillecarl.com"
+          ];
+          hostKeys = [
+            ./ssh_host_ed25519_key
+            ./ssh_host_rsa_key
+          ];
+        };
+      };
     };
   };
 
