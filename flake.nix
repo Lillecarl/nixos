@@ -186,6 +186,7 @@
           inputs.flake-parts.flakeModules.easyOverlay
           ./hosts/nub/flake-module.nix
           ./hosts/nixos/flake-module.nix
+          ./hosts/ovh/flake-module.nix
           ./hosts/shitbox/flake-module.nix
           ./hosts/wsl/flake-module.nix
           ./hosts/rpi4/flake-module.nix
