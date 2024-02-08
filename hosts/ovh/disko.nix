@@ -52,7 +52,7 @@
       };
     };
   };
-  lvm_vg = {
+  disko.devices.lvm_vg = {
     pool = {
       type = "lvm_vg";
       lvs = {
