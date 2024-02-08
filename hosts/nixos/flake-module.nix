@@ -16,6 +16,7 @@ in
         ./disko.nix
         ./configuration.nix
         ./hardware-configuration.nix
+        "${self}/common/default.nix"
         "${self}/common/users.nix"
         "${self}/common/verycommon.nix"
         "${self}/common/nix.nix"
