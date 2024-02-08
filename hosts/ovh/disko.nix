@@ -10,10 +10,14 @@ let
       content = {
         type = "table";
         format = "gpt";
-        partitions = [
-          {
+        partitions = {
+          mbr = {
+            size = "1Mib";
+            type = "EF02"; # for grub MBR
+          };
+          efi = {
             name = "ESP";
-            start = "0MiB";
+            start = "1MiB";
             end = "1GiB";
             bootable = true;
             fs-type = "fat32";
@@ -25,8 +29,8 @@ let
                 "sync"
               ];
             };
-          }
-          {
+          };
+          boot = {
             name = "boot";
             start = "1GiB";
             end = "2GiB";
@@ -41,18 +45,16 @@ let
                 "sync"
               ];
             };
-          }
-          {
-            name = "root";
+          };
+          mdadm = {
             start = "2GiB";
             end = "100%";
-            part-type = "primary";
             content = {
               type = "mdraid";
-              name = "root";
+              name = "raid1";
             };
-          }
-        ];
+          };
+        };
       };
     };
 in
@@ -69,27 +71,16 @@ in
     };
   };
   mdadm = {
-    root = {
+    raid1 = {
       type = "mdadm";
       level = 1;
       content = {
-        type = "table";
-        format = "gpt";
-        partitions = [
-          {
-            name = "primary";
-            start = "1MiB";
-            end = "100%";
-            content = {
-              type = "luks";
-              name = "crypted";
-              content = {
-                type = "lvm_pv";
-                vg = "pool";
-              };
-            };
-          }
-        ];
+        type = "luks";
+        name = "crypted";
+        content = {
+          type = "lvm_pv";
+          vg = "pool";
+        };
       };
     };
   };
