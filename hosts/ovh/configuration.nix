@@ -2,7 +2,7 @@
 {
   networking = {
     hostName = "ovh"; # System hostname
-    usedDHCP = true;
+    useDHCP = true;
   };
 
   disko.devices = import ./disko.nix {
