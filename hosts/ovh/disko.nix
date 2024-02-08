@@ -2,7 +2,7 @@
 {
   disko.devices.disk = lib.genAttrs [ "a" "b" ] (name: {
     type = "disk";
-    device = "/dev/sd${name}";
+    device = "/dev/vd${name}";
     content = {
       type = "gpt";
       partitions = {
