@@ -17,7 +17,7 @@ let
           ESP = {
             start = "1M";
             end = "1GiB";
-            type = "fat32";
+            type = "FAT32";
             content = {
               type = "filesystem";
               format = "vfat";
