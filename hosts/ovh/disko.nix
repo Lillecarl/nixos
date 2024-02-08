@@ -17,7 +17,6 @@ let
           ESP = {
             start = "1M";
             end = "1GiB";
-            bootable = true;
             fs-type = "fat32";
             content = {
               type = "filesystem";
@@ -31,7 +30,6 @@ let
           boot = {
             start = "1G";
             end = "2G";
-            bootable = false;
             fs-type = "ext4";
             content = {
               type = "filesystem";
