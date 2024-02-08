@@ -5,11 +5,11 @@
     useDHCP = true;
   };
 
-  disko.devices = import ./disko.nix {
+  disko = (import ./disko.nix {
     disk1 = "/dev/vda";
     disk2 = "/dev/vdb";
     inherit lib;
-  };
+  }).disko;
 
   boot = {
     loader = {
