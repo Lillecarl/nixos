@@ -8,16 +8,14 @@ let
       device = "${disk}";
       type = "disk";
       content = {
-        type = "table";
-        format = "gpt";
+        type = "gpt";
         partitions = {
           mbr = {
-            size = "1Mib";
+            size = "1M";
             type = "EF02"; # for grub MBR
           };
-          efi = {
-            name = "ESP";
-            start = "1MiB";
+          ESP = {
+            start = "1M";
             end = "1GiB";
             bootable = true;
             fs-type = "fat32";
@@ -31,9 +29,8 @@ let
             };
           };
           boot = {
-            name = "boot";
-            start = "1GiB";
-            end = "2GiB";
+            start = "1G";
+            end = "2G";
             bootable = false;
             fs-type = "ext4";
             content = {
@@ -47,7 +44,7 @@ let
             };
           };
           mdadm = {
-            start = "2GiB";
+            start = "2G";
             end = "100%";
             content = {
               type = "mdraid";
