@@ -8,6 +8,7 @@
   disko.devices = import ./disko.nix {
     disk1 = "/dev/vda";
     disk2 = "/dev/vdb";
+    inherit lib;
   };
 
   boot = {
