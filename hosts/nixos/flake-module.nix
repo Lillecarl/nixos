@@ -14,30 +14,12 @@ in
       inherit system;
       modules = [
         ./disko.nix
+        ./configuration.nix
+        ./hardware-configuration.nix
+        "${self}/common/users.nix"
+        "${self}/common/verycommon.nix"
+        "${self}/common/nix.nix"
         inputs.disko.nixosModules.disko
-        "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
-        {
-          imports = [ "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix" ];
-          nix = {
-            extraOptions = ''
-              experimental-features = nix-command flakes repl-flake
-              builders-use-substitutes = true
-              keep-outputs = true
-              keep-derivations = true
-            '';
-            settings = {
-              auto-optimise-store = true;
-              trusted-users = [ "root" "@wheel" ];
-
-              trusted-public-keys = [
-                "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-              ];
-              substituters = [
-                "https://cache.nixos.org"
-              ];
-            };
-          };
-        }
       ];
       specialArgs = {
         inherit inputs flakeloc bp self;
