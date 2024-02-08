@@ -5,7 +5,7 @@ let
     , bootloc
     ,
     }: {
-      device = "/dev/disk/by-id/${disk}";
+      device = "${disk}";
       type = "disk";
       content = {
         type = "table";
