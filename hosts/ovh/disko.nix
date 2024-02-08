@@ -1,69 +1,44 @@
-{ disk1, disk2, ... }:
-let
-  samedisk =
-    { disk
-    , bootloc
-    ,
-    }: {
-      device = "${disk}";
-      type = "disk";
-      content = {
-        type = "gpt";
-        partitions = {
-          mbr = {
-            size = "1M";
-            type = "EF02"; # for grub MBR
+{ lib, disk1, disk2, ... }:
+{
+  disko.devices.disk = lib.genAttrs [ "a" "b" ] (name: {
+    type = "disk";
+    device = "/dev/sd${name}";
+    content = {
+      type = "gpt";
+      partitions = {
+        boot = {
+          size = "1M";
+          type = "EF02"; # for grub MBR
+        };
+        ESP = {
+          size = "1G";
+          type = "EF00";
+          content = {
+            type = "mdraid";
+            name = "boot";
           };
-          ESP = {
-            start = "1M";
-            end = "1GiB";
-            content = {
-              type = "filesystem";
-              format = "vfat";
-              mountpoint = "/${bootloc}/efi";
-              mountOptions = [
-                "sync"
-              ];
-            };
-          };
-          boot = {
-            start = "1G";
-            end = "2G";
-            content = {
-              type = "filesystem";
-              format = "ext4";
-              mountpoint = "/${bootloc}";
-              mountOptions = [
-                "defaults"
-                "sync"
-              ];
-            };
-          };
-          mdadm = {
-            start = "2G";
-            end = "100%";
-            content = {
-              type = "mdraid";
-              name = "raid1";
-            };
+        };
+        mdadm = {
+          size = "100%";
+          content = {
+            type = "mdraid";
+            name = "raid1";
           };
         };
       };
     };
-in
-{
-  disk = {
-    # 1GiB boot, rest mdraid
-    "disk1" = samedisk {
-      disk = disk1;
-      bootloc = "boot";
+  });
+  disko.devices.mdadm = {
+    boot = {
+      type = "mdadm";
+      level = 1;
+      metadata = "1.0";
+      content = {
+        type = "filesystem";
+        format = "vfat";
+        mountpoint = "/boot";
+      };
     };
-    "disk2" = samedisk {
-      disk = disk2;
-      bootloc = "boot2";
-    };
-  };
-  mdadm = {
     raid1 = {
       type = "mdadm";
       level = 1;
