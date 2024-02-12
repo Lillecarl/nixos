@@ -26,8 +26,8 @@ function nix-rebuild --argument target gogo
             # Get all old cheaty symlinks
             set oldlinks (readlink -f $profile/home-files/.local/linkstate)
         case '*'
-            nix-rebuild os
-            nix-rebuild home
+            nix-rebuild os || return $status
+            nix-rebuild home || return $status
             return
     end
 
@@ -41,6 +41,11 @@ function nix-rebuild --argument target gogo
             build \
             $fullflake \
             $common_args &| nom --json
+
+        if test $status != 0
+            echo "Failed to build $fullflake"
+            return 1
+        end
     end
 
     nvd diff $profile $result
@@ -54,19 +59,19 @@ function nix-rebuild --argument target gogo
     switch $switch
         case y
             # Link the new profile
-            if test $target = os
-                sudo nix-env -p $profile --set $result
-            else
-                nix-env -p $profile --set $result
-            end
-            if test $status != 0
-                echo "Failed to set profile"
-                return 1
-            end
+            #if test $target = os
+            #    sudo nix-env -p $profile --set $result
+            #else
+            #    nix-env -p $profile --set $result
+            #end
+            #if test $status != 0
+            #    echo "Failed to set profile"
+            #    return 1
+            #end
             # Run activation script
             switch $target
                 case os
-                    echo "Activating $profile/bin/switch-to-configuration switch"
+                    echo "Activating $result/bin/switch-to-configuration switch"
                     sudo -E systemd-run \
                         -E LOCALE_ARCHIVE \
                         -E NIXOS_INSTALL_BOOTLOADER \
@@ -78,9 +83,10 @@ function nix-rebuild --argument target gogo
                         --service-type=exec \
                         --unit=nixos-switch \
                         --wait \
-                        $profile/bin/switch-to-configuration switch
+                        $result/bin/switch-to-configuration switch
                 case home
-                    echo "Activating package $profile/activate"
+                    echo "Activating package $result/activate"
+
                     # systemd-run \
                     #     -E LOCALE_ARCHIVE \
                     #     -E NIXOS_INSTALL_BOOTLOADER \
@@ -94,16 +100,17 @@ function nix-rebuild --argument target gogo
                     #     --wait \
                     #     --user \
                     #     $profile/activate
-                    $profile/activate
+            #
+                    $result/activate
                     if test $status != 0
                         echo "Failed to activate profile"
                         return 1
                     end
                     ln -f -s $HOME/.editorconfig /tmp/.editorconfig
-                    echo $FLAKE/tmp/linker.py $oldlinks $result/home-files/.local/linkstate
-                    $FLAKE/tmp/linker.py $oldlinks $profile/home-files/.local/linkstate
+                    #echo $FLAKE/tmp/linker.py $oldlinks $result/home-files/.local/linkstate
+                    #$FLAKE/tmp/linker.py $oldlinks $profile/home-files/.local/linkstate
             end
-        # If we don't accept we store the result and hash for instant apply later
+            # If we don't accept we store the result and hash for instant apply later
         case '*'
             switch $target
                 case os
