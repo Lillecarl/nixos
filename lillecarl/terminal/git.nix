@@ -37,8 +37,11 @@
     ];
 
     extraConfig = {
-      push.autoSetupRemote = true;
+      branch.sort = "-committerdate";
+      column.ui = "auto";
       pull.rebase = true;
+      push.autoSetupRemote = true;
+      rerere.enable = true;
       trim.bases = "master,main,develop";
     };
   };
