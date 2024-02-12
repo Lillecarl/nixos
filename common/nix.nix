@@ -8,7 +8,7 @@
   nixpkgs.config.allowUnfree = true;
 
   nix = {
-    package = pkgs.nixVersions.stable;
+    package = pkgs.nixVersions.unstable;
     extraOptions = ''
       experimental-features = nix-command flakes repl-flake
       builders-use-substitutes = true
