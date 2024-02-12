@@ -66,6 +66,9 @@ require("nvim-tree").setup({
     dotfiles = false,
     custom = {},
   },
+  update_focused_file = {
+    enable = true,
+  },
   on_attach = function(bufnr)
     treeapi.config.mappings.default_on_attach(bufnr)
   end,
