@@ -85,7 +85,7 @@
               "/srv" = { };
               "/tmp" = {
                 mountOptions = [ "compress=zstd:1" "noatime" ];
-                mountpoint = "/nix";
+                mountpoint = "/tmp";
               };
             };
           };
