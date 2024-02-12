@@ -56,6 +56,9 @@ in
         "lillecarl@nub" = mkHome "x86_64-linux" (guibase // {
           modules = guibase.modules ++ [
             "${self}/modules/hm"
+            {
+              carl.gui.qutebrowser.enable = false;
+            }
           ];
           extraSpecialArgs = {
             keyboardName = "keymapper";
