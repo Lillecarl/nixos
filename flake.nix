@@ -148,6 +148,10 @@
       type = "git";
       submodules = true;
     };
+    fenix = {
+      url = "github:nix-community/fenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # Art / themeing
     nixos-artwork = {
@@ -212,7 +216,14 @@
           in
           {
             formatter = pkgs.nixpkgs-fmt;
-            packages = own_pkgs;
+            packages = own_pkgs // {
+              gitbutler = pkgs.callPackage ./pkgs/gitbutler {
+                rustPlatform = pkgs.makeRustPlatform {
+                  rustc = inputs.fenix.packages.${system}.default.toolchain;
+                  cargo = inputs.fenix.packages.${system}.default.toolchain;
+                };
+              };
+            };
             legacyPackages = pkgs_overlaid;
           };
       };

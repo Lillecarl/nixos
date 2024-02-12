@@ -324,6 +324,27 @@
         "type": "github"
       }
     },
+    "fenix": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "rust-analyzer-src": "rust-analyzer-src"
+      },
+      "locked": {
+        "lastModified": 1706941198,
+        "narHash": "sha256-t6/qloMYdknVJ9a3QzjylQIZnQfgefJ5kMim50B7dwA=",
+        "owner": "nix-community",
+        "repo": "fenix",
+        "rev": "28dbd8b43ea328ee708f7da538c63e03d5ed93c8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "fenix",
+        "type": "github"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -1069,6 +1090,7 @@
         "crane": "crane",
         "devshell": "devshell",
         "disko": "disko",
+        "fenix": "fenix",
         "flake-parts": "flake-parts",
         "flake-programs-sqlite": "flake-programs-sqlite",
         "flake-utils": "flake-utils_2",
@@ -1097,6 +1119,23 @@
         "treefmt-nix": "treefmt-nix_2",
         "waybar": "waybar",
         "wezterm": "wezterm"
+      }
+    },
+    "rust-analyzer-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1706735270,
+        "narHash": "sha256-IJk+UitcJsxzMQWm9pa1ZbJBriQ4ginXOlPyVq+Cu40=",
+        "owner": "rust-lang",
+        "repo": "rust-analyzer",
+        "rev": "42cb1a2bd79af321b0cc503d2960b73f34e2f92b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rust-lang",
+        "ref": "nightly",
+        "repo": "rust-analyzer",
+        "type": "github"
       }
     },
     "rust-overlay": {
