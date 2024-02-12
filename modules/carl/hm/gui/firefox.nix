@@ -1,5 +1,6 @@
 { config
 , lib
+, self
 , pkgs
 , ...
 }:
@@ -22,7 +23,11 @@ in
 
     programs.firefox = lib.mkIf cfg.enable {
       enable = true;
-      package = pkgs.firefox-wayland;
+      package = (pkgs.wrapFirefox pkgs.firefox-unwrapped {
+        omniPatches = [
+          "${self}/pkgs/ff.patch"
+        ];
+      });
 
       nativeMessagingHosts = [
         pkgs.ff2mpv

@@ -86,6 +86,7 @@ prev.lib.filterAttrs
     typos-lsp = prev.callPackage ./typos-lsp.nix { };
     one-small-step-for-vimkind = prev.callPackage ./one-small-step-for-vimkind.nix { };
     copilotchat-nvim = prev.callPackage ./copilotchat-nvim.nix { };
+    wrapFirefox = prev.callPackage ./wrapFirefox.nix { };
   }
 // (
   if flake
