@@ -73,5 +73,7 @@
     bubblewrap # flatpak without flatpak
     virtualenv # python environments
     nil # Nix language server, also CLI tool for diagnostics
+    nvd # Nix closure diff
+    nix-output-monitor # Nix output monitor
   ];
 }
