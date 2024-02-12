@@ -39,6 +39,7 @@
     extraConfig = {
       push.autoSetupRemote = true;
       pull.rebase = true;
+      trim.bases = "master,main,develop";
     };
   };
 
