@@ -71,7 +71,15 @@ function nix-rebuild --argument target gogo
             # Run activation script
             switch $target
                 case os
-                    echo "Activating $result/bin/switch-to-configuration switch"
+                    # NixOS activation doesn't link the profile
+                    echo "Linking $result to $profile"
+                    sudo nix-env -p $profile --set $result
+                    if test $status != 0
+                        echo "Failed to set profile"
+                        return 1
+                    end
+
+                    echo "Activating $profile/bin/switch-to-configuration switch"
                     sudo -E systemd-run \
                         -E LOCALE_ARCHIVE \
                         -E NIXOS_INSTALL_BOOTLOADER \
@@ -83,24 +91,16 @@ function nix-rebuild --argument target gogo
                         --service-type=exec \
                         --unit=nixos-switch \
                         --wait \
-                        $result/bin/switch-to-configuration switch
-                case home
-                    echo "Activating package $result/activate"
+                        $profile/bin/switch-to-configuration switch
 
-                    # systemd-run \
-                    #     -E LOCALE_ARCHIVE \
-                    #     -E NIXOS_INSTALL_BOOTLOADER \
-                    #     --collect \
-                    #     --no-ask-password \
-                    #     --pty \
-                    #     --quiet \
-                    #     --same-dir \
-                    #     --service-type=exec \
-                    #     --unit=hm-switch \
-                    #     --wait \
-                    #     --user \
-                    #     $profile/activate
-            #
+                    if test $status != 0
+                        echo "Failed to activate profile"
+                        echo "Please note that you'll still boot into this generation"
+                        return 1
+                    end
+                case home
+                    # home-manager links the profile itself.
+                    echo "Activating package $result/activate"
                     $result/activate
                     if test $status != 0
                         echo "Failed to activate profile"
