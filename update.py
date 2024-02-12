@@ -27,7 +27,7 @@ gitroot = git("rev-parse", "--show-toplevel").strip()
 def updatenix():
     print("Updating flake inputs")
     # Update nix flake lockfile
-    nix["flake", "lock", "--recreate-lock-file", gitroot].run_fg()
+    nix["flake", "update", "--flake", gitroot].run_fg()
 
 
 def updatenode():
