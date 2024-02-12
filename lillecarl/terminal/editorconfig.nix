@@ -15,6 +15,9 @@ _:
       "*.py" = {
         indent_size = 4;
       };
+      "*.fish" = {
+        indent_size = 4;
+      };
     };
   };
 }
