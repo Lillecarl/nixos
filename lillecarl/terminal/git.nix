@@ -39,9 +39,12 @@
     extraConfig = {
       branch.sort = "-committerdate";
       column.ui = "auto";
+      core.fsmonitor = true;
+      core.untrackedcache = true;
       pull.rebase = true;
       push.autoSetupRemote = true;
       rerere.enable = true;
+      tag.sort = "version:refname";
       trim.bases = "master,main,develop";
     };
   };
