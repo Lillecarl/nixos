@@ -11,4 +11,8 @@ function hmmove --wraps=cat
     mkdir -p (dirname $newpath)
     # Move the old path to the new path
     mv $oldpath $newpath
+    # Link the new path to the old path if it's a file
+    if test -f $newpath
+        ln -s $newpath $oldpath
+    end
 end
