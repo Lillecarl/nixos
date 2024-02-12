@@ -23,15 +23,14 @@ in
 
     programs.firefox = lib.mkIf cfg.enable {
       enable = true;
-      package = (pkgs.wrapFirefox pkgs.firefox-unwrapped {
+      package = pkgs.wrapFirefox pkgs.firefox-unwrapped {
         omniPatches = [
           "${self}/pkgs/ff.patch"
         ];
-      });
+      };
 
       nativeMessagingHosts = [
         pkgs.ff2mpv
-        pkgs.gnomeExtensions.gsconnect
         pkgs.tridactyl-native
       ];
 
@@ -91,7 +90,6 @@ in
           ] ++ [
             # Native messaging hosts
             ff2mpv
-            gsconnect
             tridactyl
           ]);
 
