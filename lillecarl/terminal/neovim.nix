@@ -84,7 +84,6 @@ in
       terraform # terraform fmt
       terragrunt # terragrunt hclfmt
       yamlfmt
-      yamlfix
       # misc tools
       fd # for telescope
       ripgrep # for telescope
@@ -241,7 +240,6 @@ in
               terraform_fmt = bp pkgs.terraform;
               terragrunt_hclfmt = bp pkgs.terragrunt;
               yamlfmt = bp pkgs.yamlfmt;
-              yamlfix = bp pkgs.yamlfix;
             };
           repl = {
             lua = { command = [ (bp pkgs.lua) ]; };
