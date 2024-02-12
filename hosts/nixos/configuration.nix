@@ -6,10 +6,13 @@
 
 {
   imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix ./users.nix ./nix.nix
+    [
+      # Include the results of the hardware scan.
+      ./hardware-configuration.nix
+      ./users.nix
+      ./nix.nix
     ];
-programs.fish.enable = true;
+  programs.fish.enable = true;
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -38,7 +41,7 @@ programs.fish.enable = true;
   # services.xserver.enable = true;
 
 
-  
+
 
   # Configure keymap in X11
   # services.xserver.xkb.layout = "us";

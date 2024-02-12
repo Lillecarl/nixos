@@ -8,7 +8,7 @@
   disko.devices = import ./disko.nix {
     disk1 = "nvme-INTEL_SSDPE2MX450G7_CVPF72160068450RGN";
     disk2 = "nvme-INTEL_SSDPE2MX450G7_BTPF80720AN6450RGN";
-  }; 
+  };
 
   boot.loader = {
     efi = {
