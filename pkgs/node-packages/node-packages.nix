@@ -319,13 +319,13 @@ let
         sha512 = "O659hy1gcHef7JnwtqdQlrj2c5DAEgtxm8pgFXofW7eUE1L4FjsSLlziovWcrOJAOFlEPaOJshY+0hBWCG/AnA==";
       };
     };
-    "define-data-property-1.1.3" = {
+    "define-data-property-1.1.4" = {
       name = "define-data-property";
       packageName = "define-data-property";
-      version = "1.1.3";
+      version = "1.1.4";
       src = fetchurl {
-        url = "https://registry.npmjs.org/define-data-property/-/define-data-property-1.1.3.tgz";
-        sha512 = "h3GBouC+RPtNX2N0hHVLo2ZwPYurq8mLmXpOLTsw71gr7lHt5VaI4vVkDUNOfiWmm48JEXe3VM7PmLX45AMmmg==";
+        url = "https://registry.npmjs.org/define-data-property/-/define-data-property-1.1.4.tgz";
+        sha512 = "rBMvIzlpA8v6E+SJZoo++HAYqsLrkg7MSfIinMPFhmkorw7X+dOXVJQs+QT69zGkzMyfDnIMN2Wid1+NbL3T+A==";
       };
     };
     "define-properties-1.2.1" = {
@@ -364,13 +364,13 @@ let
         sha512 = "e64Qj9+4aZzjzzFpZC7p5kmm/ccCrbLhAJplhsDXQFs87XTsXwOpH4s1Io2s90Tau/8r2j9f4l/thhDevRjzxw==";
       };
     };
-    "es-abstract-1.22.3" = {
+    "es-abstract-1.22.4" = {
       name = "es-abstract";
       packageName = "es-abstract";
-      version = "1.22.3";
+      version = "1.22.4";
       src = fetchurl {
-        url = "https://registry.npmjs.org/es-abstract/-/es-abstract-1.22.3.tgz";
-        sha512 = "eiiY8HQeYfYH2Con2berK+To6GrK2RxbPawDkGq4UiCQQfZHb6wX9qQqkbpPqaxQFcl8d9QzZqo0tGE0VcrdwA==";
+        url = "https://registry.npmjs.org/es-abstract/-/es-abstract-1.22.4.tgz";
+        sha512 = "vZYJlk2u6qHYxBOTjAeg7qUxHdNfih64Uu2J8QqWgXZ2cri0ZpJAkzDUK/q593+mvKwlxyaxr6F1Q+3LKoQRgg==";
       };
     };
     "es-array-method-boxes-properly-1.0.0" = {
@@ -1378,12 +1378,12 @@ in
       sources."deasync-0.1.29"
       sources."deasync-promise-1.0.1"
       sources."declare.js-0.0.8"
-      sources."define-data-property-1.1.3"
+      sources."define-data-property-1.1.4"
       sources."define-properties-1.2.1"
       sources."eachr-3.3.0"
       sources."editions-2.3.1"
       sources."errlop-2.2.0"
-      sources."es-abstract-1.22.3"
+      sources."es-abstract-1.22.4"
       sources."es-array-method-boxes-properly-1.0.0"
       sources."es-define-property-1.0.0"
       sources."es-errors-1.3.0"
