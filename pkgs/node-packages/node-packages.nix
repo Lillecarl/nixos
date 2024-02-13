@@ -130,13 +130,13 @@ let
         sha512 = "iCuPHDFgrHX7H2vEI/5xpz07zSHB00TpugqhmYtVmMO6518mCuRMoOYFldEBl0g187ufozdaHgWKcYFb61qGiA==";
       };
     };
-    "call-bind-1.0.6" = {
+    "call-bind-1.0.7" = {
       name = "call-bind";
       packageName = "call-bind";
-      version = "1.0.6";
+      version = "1.0.7";
       src = fetchurl {
-        url = "https://registry.npmjs.org/call-bind/-/call-bind-1.0.6.tgz";
-        sha512 = "Mj50FLHtlsoVfRfnHaZvyrooHcrlceNZdL/QBvJJVd9Ta55qCQK0gs4ss2oZDeV9zFCs6ewzYgVE5yfVmfFpVg==";
+        url = "https://registry.npmjs.org/call-bind/-/call-bind-1.0.7.tgz";
+        sha512 = "GHTSNSYICQ7scH7sZ+M2rFopRoLh8t2bLSW6BbgrtLsahOIB5iyAVJf9GjWK3cYTDaMj4XdBpM1cA6pIS0Kv2w==";
       };
     };
     "cfb-0.11.1" = {
@@ -380,6 +380,15 @@ let
       src = fetchurl {
         url = "https://registry.npmjs.org/es-array-method-boxes-properly/-/es-array-method-boxes-properly-1.0.0.tgz";
         sha512 = "wd6JXUmyHmt8T5a2xreUwKcGPq6f1f+WwIJkijUqiGcJz1qqnZgP6XIK+QyIWU5lT7imeNxUll48bziG+TSYcA==";
+      };
+    };
+    "es-define-property-1.0.0" = {
+      name = "es-define-property";
+      packageName = "es-define-property";
+      version = "1.0.0";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/es-define-property/-/es-define-property-1.0.0.tgz";
+        sha512 = "jxayLKShrEqqzJ0eumQbVhTYQM27CfT1T35+gCgDFoL82JLsXqTJ76zv6A0YLOgEnLUMvLzsDsGIrl8NFpT2gQ==";
       };
     };
     "es-errors-1.3.0" = {
@@ -634,13 +643,13 @@ let
         sha512 = "tSvCKtBr9lkF0Ex0aQiP9N+OpV4zi2r/Nee5VkRDbaqv35RLYMzbwQfFSZZH0kR+Rd6302UJZ2p/bJCEoR3VoQ==";
       };
     };
-    "has-property-descriptors-1.0.1" = {
+    "has-property-descriptors-1.0.2" = {
       name = "has-property-descriptors";
       packageName = "has-property-descriptors";
-      version = "1.0.1";
+      version = "1.0.2";
       src = fetchurl {
-        url = "https://registry.npmjs.org/has-property-descriptors/-/has-property-descriptors-1.0.1.tgz";
-        sha512 = "VsX8eaIewvas0xnvinAe9bw4WfIeODpGYikiWYLH+dma0Jw6KHYqWiWfhQlgOVK8D6PvjubK5Uc4P0iIhIcNVg==";
+        url = "https://registry.npmjs.org/has-property-descriptors/-/has-property-descriptors-1.0.2.tgz";
+        sha512 = "55JNKuIW+vq4Ke1BjOTjM2YctQIvCT7GFzHwmfZPGo5wnrgkid0YQtnAleFSqumZm4az3n2BS+erby5ipJdgrg==";
       };
     };
     "has-proto-1.0.1" = {
@@ -1353,7 +1362,7 @@ in
       sources."balanced-match-1.0.2"
       sources."bindings-1.5.0"
       sources."brace-expansion-1.1.11"
-      sources."call-bind-1.0.6"
+      sources."call-bind-1.0.7"
       sources."cfb-0.11.1"
       sources."co-4.6.0"
       sources."codepage-1.15.0"
@@ -1376,6 +1385,7 @@ in
       sources."errlop-2.2.0"
       sources."es-abstract-1.22.3"
       sources."es-array-method-boxes-properly-1.0.0"
+      sources."es-define-property-1.0.0"
       sources."es-errors-1.3.0"
       sources."es-set-tostringtag-2.0.2"
       sources."es-to-primitive-1.2.1"
@@ -1403,7 +1413,7 @@ in
       sources."gopd-1.0.1"
       sources."graceful-fs-4.2.11"
       sources."has-bigints-1.0.2"
-      sources."has-property-descriptors-1.0.1"
+      sources."has-property-descriptors-1.0.2"
       sources."has-proto-1.0.1"
       sources."has-symbols-1.0.3"
       sources."has-tostringtag-1.0.2"
