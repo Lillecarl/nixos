@@ -6,6 +6,11 @@ function xvpn --argument unit_name action
         case stop
             sudo systemctl stop $unit_name
             echo "Stopped $unit_name"
+        case restart
+            sudo systemctl stop $unit_name
+            echo "Stopped $unit_name"
+            sudo systemctl start $unit_name
+            echo "Started $unit_name"
         case '*'
             if test (sudo systemctl is-active $unit_name) = active
                 sudo systemctl stop $unit_name
