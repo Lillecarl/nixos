@@ -38,9 +38,12 @@ in
         ];
       };
     };
-    initrd = {
-      availableKernelModules = [ "ahci" "xhci_pci" "virtio_pci" "virtio_scsi" "sr_mod" "virtio_blk" ];
-      kernelModules = [ "dm-snapshot" ];
+    initrd = let
+      mods = [ "dm-snapshot" "ahci" "xhci_pci" "virtio_pci" "virtio_scsi" "sr_mod" "virtio_blk" "virtio_net" ];
+    in
+    {
+      availableKernelModules = mods;
+      kernelModules = mods;
 
       network = {
         enable = true;
@@ -55,6 +58,9 @@ in
             ./ssh_host_rsa_key
           ];
         };
+        postCommands = ''
+          echo 'cryptsetup-askpass' >> /root/.profile
+        '';
       };
     };
   };
