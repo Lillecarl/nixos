@@ -58,6 +58,7 @@ in
             ./ssh_host_rsa_key
           ];
         };
+        # Automatically run cryptsetup-askpass on login
         postCommands = ''
           echo 'cryptsetup-askpass' >> /root/.profile
         '';
