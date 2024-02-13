@@ -7,12 +7,17 @@
 {
   imports =
     [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix ./users.nix ./nix.nix
+      ./hardware-configuration.nix
     ];
 programs.fish.enable = true;
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.swraid.enable = true;
+  environment.systemPackages = [
+    pkgs.mdadm
+  ];
 
   # networking.hostName = "nixos"; # Define your hostname.
   # Pick only one of the below networking options.
@@ -38,7 +43,7 @@ programs.fish.enable = true;
   # services.xserver.enable = true;
 
 
-  
+
 
   # Configure keymap in X11
   # services.xserver.xkb.layout = "us";
@@ -82,7 +87,7 @@ programs.fish.enable = true;
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
+  services.openssh.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
@@ -114,4 +119,6 @@ programs.fish.enable = true;
   system.stateVersion = "23.11"; # Did you read the comment?
 
 }
+
+
 

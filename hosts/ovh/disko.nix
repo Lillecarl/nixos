@@ -1,21 +1,36 @@
-{ lib, disk1, disk2, ... }:
-{
-  disko.devices.disk = lib.genAttrs [ "a" "b" ] (name: {
+{ lib, disk1 ? "vda", disk2 ? "vdb", ... }:
+let
+  disk = (name: {
     type = "disk";
-    device = "/dev/vd${name}";
+    device = "/dev/${name}";
     content = {
       type = "gpt";
       partitions = {
-        boot = {
+        BOOT = {
           size = "1M";
           type = "EF02"; # for grub MBR
         };
         ESP = {
-          size = "1G";
+          size = "512M";
           type = "EF00";
           content = {
-            type = "mdraid";
-            name = "boot";
+            type = "filesystem";
+            format = "vfat";
+            mountpoint = if name == "vda" then "/boot/efi" else "/boot2/efi";
+            mountOptions = [
+              "sync"
+            ];
+          };
+        };
+        boot = {
+          size = "512M";
+          content = {
+            type = "filesystem";
+            format = "ext4";
+            mountpoint = if name == "vda" then "/boot" else "/boot2";
+            mountOptions = [
+              "sync"
+            ];
           };
         };
         mdadm = {
@@ -28,17 +43,11 @@
       };
     };
   });
+in
+{
+  disko.devices.disk.${disk1} = disk disk1;
+  disko.devices.disk.${disk2} = disk disk2;
   disko.devices.mdadm = {
-    boot = {
-      type = "mdadm";
-      level = 1;
-      metadata = "1.0";
-      content = {
-        type = "filesystem";
-        format = "vfat";
-        mountpoint = "/boot";
-      };
-    };
     raid1 = {
       type = "mdadm";
       level = 1;
@@ -57,7 +66,7 @@
       type = "lvm_vg";
       lvs = {
         nixos = {
-          size = "250G";
+          size = "14G";
           content = {
             type = "btrfs";
             extraArgs = [ "-f" ];
@@ -95,7 +104,7 @@
           };
         };
         swap = {
-          size = "32G";
+          size = "2G";
           content = {
             type = "swap";
           };

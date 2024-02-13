@@ -1,30 +1,37 @@
 { lib, pkgs, config, modulesPath, ... }:
+let
+  disk1 = "vda";
+  disk2 = "vdb";
+in
 {
+  services.openssh.enable = true;
   networking = {
     hostName = "ovh"; # System hostname
     useDHCP = true;
   };
 
   disko = (import ./disko.nix {
-    disk1 = "/dev/vda";
-    disk2 = "/dev/vdb";
+    inherit disk1 disk2;
     inherit lib;
   }).disko;
 
   boot = {
+    #kernelModules = [ "kvm-amd" ];
+    swraid.enable = true;
     loader = {
       efi = {
         canTouchEfiVariables = true;
-        efiSysMountPoint = "/boot/efi"; # ← use the same mount point here.
+        efiSysMountPoint = "/boot/efi";
       };
+      systemd-boot.enable = false;
       grub = {
         enable = true;
-        device = "/dev/sda";
+        device = "/dev/${disk1}";
         efiSupport = true;
         copyKernels = true;
         mirroredBoots = [
           {
-            devices = [ "/dev/sdb" ];
+            devices = [ "/dev/${disk2}" ];
             path = "/boot2";
             efiSysMountPoint = "/boot2/efi";
           }
@@ -32,6 +39,9 @@
       };
     };
     initrd = {
+      availableKernelModules = [ "ahci" "xhci_pci" "virtio_pci" "virtio_scsi" "sr_mod" "virtio_blk" ];
+      kernelModules = [ "dm-snapshot" ];
+
       network = {
         enable = true;
         udhcpc.enable = true;
@@ -49,7 +59,7 @@
     };
   };
 
-  system.stateVersion = "23.05";
+  system.stateVersion = "24.05";
 }
 #total 0
 #drwxr-xr-x 2 root root 200 Dec  4 03:16 .

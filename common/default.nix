@@ -231,7 +231,7 @@
     # enable tailscale daemon
     tailscale.enable = true;
     # Enable Flatpak
-    flatpak.enable = true;
+    #flatpak.enable = true;
     # Enabled fwupd daemon, allows applications to update firmware
     fwupd.enable = true;
     # Enable the OpenSSH daemon.

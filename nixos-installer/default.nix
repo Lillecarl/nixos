@@ -12,6 +12,7 @@
     pkgs.ripgrep
     pkgs.gitui
     pkgs.htop
+    pkgs.mdadm
   ];
 
   nix = {
