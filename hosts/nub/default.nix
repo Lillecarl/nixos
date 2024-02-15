@@ -97,6 +97,9 @@
       in
       {
         enable = true;
+        packages = [
+          pkgs.ddcutil
+        ];
         extraRules = /* udev */ ''
           # Disable power/wakeup for ELAN touchpad that prevents suspending.
           SUBSYSTEM=="i2c", DRIVER=="i2c_hid_acpi", ATTR{name}=="ELAN*", ATTR{power/wakeup}="disabled"
