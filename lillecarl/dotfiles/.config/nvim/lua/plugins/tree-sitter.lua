@@ -1,4 +1,10 @@
 require("nvim-treesitter.configs").setup({
+  ensure_installed = {},
+  sync_install = false,
+  ignore_install = {},
+  auto_install = false,
+  modules = {},
+
   highlight = {
     enable = true,
 
@@ -19,6 +25,17 @@ require("nvim-treesitter.configs").setup({
   },
   autopairs = { enable = true },
   indent = { enable = true, disable = {} },
+  playground = {
+    enable = true,
+    disable = {},
+    updatetime = 25,
+    persist_queries = false,
+  },
+  query_linter = {
+    enable = true,
+    use_virtual_text = true,
+    lint_events = {"BufWrite", "CursorHold"},
+  },
 })
 
 -- Remove TS commands we don't need
