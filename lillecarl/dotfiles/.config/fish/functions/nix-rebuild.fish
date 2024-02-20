@@ -1,4 +1,10 @@
-function nix-rebuild --argument target gogo
+function nix-rebuild --argument target --argument install
+    if not set -q target
+        set -f target "both"
+    end
+    if not set -q install
+        set -f install "y"
+    end
     # Where to store build output
     set result "$(mktemp -d -t nix-rebuild_XXXX)/result"
     # Common arguments for nix build
@@ -26,8 +32,8 @@ function nix-rebuild --argument target gogo
             # Get all old cheaty symlinks
             set oldlinks (readlink -f $profile/home-files/.local/linkstate)
         case '*'
-            nix-rebuild os || return $status
-            nix-rebuild home || return $status
+            nix-rebuild os $gogo || return $status
+            nix-rebuild home $gogo || return $status
             return
     end
 
@@ -50,7 +56,7 @@ function nix-rebuild --argument target gogo
 
     nvd diff $profile $result
 
-    if not set -q gogo
+    if test $install != "y"
         read -P "Do you want to continue? [y/N] " -n 1 switch
     else
         set switch y
