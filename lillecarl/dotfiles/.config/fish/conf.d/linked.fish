@@ -83,7 +83,7 @@ function sshloop1
         sleep 1
         set -l time (date +%s)
         ssh-keygen -R $host >/dev/null 2>&1
-        ssh $user@$host
+        kitten ssh $user@$host
         if [ $(math $(date +%s) - $time) -gt 60 ]
             break
         end
@@ -96,6 +96,6 @@ function sshloop2
     while true
         sleep 1
         ssh-keygen -R $host >/dev/null 2>&1
-        ssh $user@$host
+        kitten ssh $user@$host
     end
 end
