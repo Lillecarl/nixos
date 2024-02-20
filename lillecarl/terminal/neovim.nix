@@ -123,14 +123,15 @@ in
       nvim-autopairs
       nvim-cmp
       nvim-dap
-      nvim-dap-ui
       nvim-dap-python
+      nvim-dap-ui
       nvim-lspconfig
       nvim-notify
       nvim-tree-lua
       nvim-treesitter.withAllGrammars
       nvim-web-devicons
       overseer-nvim
+      playground
       telescope-nvim
       trouble-nvim
       which-key-nvim
