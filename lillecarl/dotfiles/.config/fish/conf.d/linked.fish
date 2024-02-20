@@ -22,7 +22,6 @@ abbr -a jci journalinvocation -u
 abbr -a jcui journalinvocation --user-unit
 abbr -a ssha ssh -oForwardAgent=yes
 abbr -a sshr ssh-keygen -R
-abbr -a ll eza -lah
 abbr -a cat bat --paging=never
 abbr -a :q exit
 abbr -a gpa git pull --all --recurse-submodules
