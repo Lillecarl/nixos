@@ -46,7 +46,6 @@ bind -M insert \el forward-char
 bind -M insert \e\[101\;6u edit_command_buffer
 bind -M visual \e\[101\;6u edit_command_buffer
 # bind /
-bind -M insert / _atuin_search
 bind -M visual / _atuin_search
 # bind ctrl+shift+d to scroll down
 bind -M insert \e\[100\;6u scrolldown
