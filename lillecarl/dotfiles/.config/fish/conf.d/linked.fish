@@ -13,6 +13,8 @@ if set -q LASTPATH
     end
 end
 
+alias cat="bat --paging=never"
+
 abbr -a sc sudo systemctl
 abbr -a ssc sudo systemctl
 abbr -a scu systemctl --user
@@ -22,7 +24,6 @@ abbr -a jci journalinvocation -u
 abbr -a jcui journalinvocation --user-unit
 abbr -a ssha ssh -oForwardAgent=yes
 abbr -a sshr ssh-keygen -R
-abbr -a cat bat --paging=never
 abbr -a :q exit
 abbr -a gpa git pull --all --recurse-submodules
 abbr -a gfa git fetch --all --recurse-submodules
@@ -30,6 +31,8 @@ abbr -a grm git rebase origin/main
 abbr -a gsu git submodule update --recursive
 abbr -a nos nh os switch -- --impure
 abbr -a nhs nh home switch -- --impure
+abbr -a nro nix-rebuild os
+abbr -a nrh nix-rebuild home
 
 # bind ctrl+a to beginning of buffer
 bind -M insert \ca beginning-of-buffer
