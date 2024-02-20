@@ -8,7 +8,13 @@ from plumbum import local
 lnsf = local["ln"]["-s", "-f"]
 unlink = local["unlink"]
 ln = local["ln"]["-s", "-f"]
-readlink = local["readlink"]["-f"]
+
+
+def readlink(args):
+    try:
+        return local["readlink"]["-f"](args)
+    except Exception:
+        return ""
 
 
 def main():
@@ -25,21 +31,16 @@ def main():
         newlinks = json.loads(local.path(p2).read())
     except Exception:
         print("No previous links found")
-    tolink = []
+
+    tolink = newlinks
     tounlink = []
 
     # We'll handle multiple json files appended for previous generations
     for i in prevgens:
-        prevlinks.extend(json.loads(local.path(i).read()))
-
-    for newlink in newlinks:
-        found = False
-        for oldlink in prevlinks:
-            if oldlink["dst"] == newlink["dst"]:
-                found = True
-                break
-        if not found:
-            tolink.append(newlink)
+        try:
+            prevlinks.extend(json.loads(local.path(i).read()))
+        except Exception:
+            print(f"Unable to read previous link state {i}")
 
     for oldlink in prevlinks:
         found = False
@@ -58,11 +59,14 @@ def main():
             pass
 
     for link in newlinks:
+        dst = link["dst"]
         if readlink(link["dst"]) == readlink(link["src"]):
             continue  # Link already exists
         else:
             if verbose or True:
                 print("Linking {} to {}".format(link["src"], link["dst"]))
+            dst_parent = local.path(dst).dirname
+            dst_parent.mkdir(mode=0o700)
             ln(["-s", "-f", link["src"], link["dst"]])
 
     if verbose:
