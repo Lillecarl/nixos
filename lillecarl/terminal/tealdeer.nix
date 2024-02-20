@@ -2,8 +2,6 @@ _: {
   programs.tealdeer = {
     enable = true;
 
-    updateOnActivation = false;
-
     settings = {
       display = {
         compact = false;
