@@ -14,6 +14,8 @@ if set -q LASTPATH
 end
 
 alias cat="bat --paging=never"
+alias grt="cd (git root)"
+alias tg=terragrunt
 
 abbr -a sc sudo systemctl
 abbr -a ssc sudo systemctl
