@@ -40,6 +40,7 @@ in
       in
       {
         "lillecarl@shitbox" = mkHome "x86_64-linux" (guibase // {
+          modules = [ ./gui/shitbox.nix ] ++ guibase.modules;
           extraSpecialArgs = {
             keyboardName = "keymapper";
             bluetooth = false;
@@ -56,9 +57,7 @@ in
         "lillecarl@nub" = mkHome "x86_64-linux" (guibase // {
           modules = guibase.modules ++ [
             "${self}/modules/hm"
-            {
-              carl.gui.qutebrowser.enable = false;
-            }
+            "./gui/nub.nix"
           ];
           extraSpecialArgs = {
             keyboardName = "keymapper";
