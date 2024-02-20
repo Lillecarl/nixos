@@ -2,7 +2,7 @@ set -x fish_greeting ""
 set -x SHELL fish
 fish_vi_key_bindings
 
-# trigger dirent before prompt is rendered
+# trigger direnv before prompt is rendered
 set -g direnv_fish_mode eval_on_arrow
 
 if set -q LASTPATH
@@ -49,26 +49,6 @@ bind -M visual / _atuin_search
 # bind ctrl+shift+d to scroll down
 bind -M insert \e\[100\;6u scrolldown
 bind -M visual \e\[100\;6u scrolldown
-
-# function that is called on fish_preexec event (before executing something)
-function reload_awscreds -e fish_preexec
-    # If we don't have aws credential expiration or direnv we do nothing
-    if not set -q AWS_CREDENTIAL_EXPIRATION || not set -q DIRENV_FILE
-        return
-    end
-
-    # Get current date in the same weird format AWS uses
-    set CURDATE $(date -u +%Y-%m-%dT%H:%M:%SZ)
-    # Convert our date to unixtime
-    set CURSEC $(date '+%s' -d $CURDATE)
-    # Convert AWS date to unixtime
-    set AWSSEC $(date '+%s' -d $AWS_CREDENTIAL_EXPIRATION)
-
-    # If we have less than 30 minutes left of credentials, reload with direnv
-    if [ $(math $AWSSEC - $CURSEC) -le 1800 ]
-        direnv reload
-    end
-end
 
 function set_lastpath -e fish_postexec
     if not set -q TMUX
