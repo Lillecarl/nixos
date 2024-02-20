@@ -92,7 +92,7 @@ in
       git # Gitsigns, Fugitive
       cargo # for rust-analyzer
       nodejs_21 # For copilot
-      #pkgs.copilotchat-nvim # python3 with copilotchat
+      pkgs.copilotchat-nvim # python3 with copilotchat
     ];
 
     plugins = with pkgs.vimPlugins; [
@@ -156,9 +156,10 @@ in
             in
             {
               # TODO: PowerShell
+              # Ansible looks a bit complicated, but we build a Python with Ansible
+              # and we farm them together with the Ansible CLI tools.
               ansiblels =
                 let
-                  ansibleLS = pkgs.callPackage "${self}/pkgs/tmp/ansible-language-server.nix" { };
                   ansibleLspFarm = pkgs.symlinkJoin {
                     name = "ansiPy";
                     paths = [
@@ -167,8 +168,7 @@ in
                       ]))
                       pkgs.ansible
                       pkgs.ansible-lint
-                      #pkgs.ansible-language-server
-                      ansibleLS
+                      pkgs.ansible-language-server
                     ];
                   };
                 in
@@ -179,9 +179,6 @@ in
                       ansible.path = "${ansibleLspFarm}/bin/ansible";
                       python.interpreterPath = "${ansibleLspFarm}/bin/python3";
                       validation.lint.path = "${ansibleLspFarm}/bin/ansible-lint";
-                      #ansible.path = "ansible";
-                      #python.interpreterPath = "python3";
-                      #validation.lint.path = "ansible-lint";
                     };
                   };
                   nodefault = true;
