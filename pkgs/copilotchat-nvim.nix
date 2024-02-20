@@ -7,13 +7,12 @@
 let
   pname = "copilotchat-nvim";
   version = "1.0.0";
-  #src = fetchFromGitHub {
-  #  owner = "CopilotC-Nvim";
-  #  repo = "CopilotChat.nvim";
-  #  rev = "96b8ebfff439cbb00f44331578c88019da45f543";
-  #  sha256 = "sha256-fyxizla1Sz5UX07HaIlletKSMkPcBiFyxQkI4766dus=";
-  #};
-  src = /home/lillecarl/Code/carl/CopilotChat.nvim;
+  src = fetchFromGitHub {
+    owner = "CopilotC-Nvim";
+    repo = "CopilotChat.nvim";
+    rev = "847a35457106e9d6ec7a9675b25cf8f90f8e84cc";
+    sha256 = "sha256-i/ME8djXqPH2lTtxhf+rmUiVBP06CLKAp+ReJ4v27Os=";
+  };
   meta = {
     description = "Chat with GitHub Copilot in Neovim ";
     homepage = "https://github.com/CopilotC-Nvim/CopilotChat.nvim/";
