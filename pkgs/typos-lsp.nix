@@ -1,25 +1,27 @@
-{ lib, rustPlatform }:
-
-rustPlatform.buildRustPackage {
+{ lib, fetchFromGitHub, rustPlatform }:
+let
   pname = "typos-vscode";
-  version = "0.1.11";
+  version = "0.1.12";
 
-  #src = fetchFromGitHub {
-  #  owner = "valebes";
-  #  repo = pname;
-  #  rev = "v${version}";
-  #  sha256 = "sha256-z+WGi1Jl+YkdAc4Nu818vi+OXg54GfAM6PbWYkgptpo=";
-  #};
+  src = fetchFromGitHub {
+    owner = "tekumara";
+    repo = pname;
+    rev = "v${version}";
+    sha256 = "sha256-LzemgHVCuLkLaJyyrJhIsOOn+OnYuiJsMSxITNz6R8g=";
+  };
+in
+rustPlatform.buildRustPackage {
+  inherit pname version src;
 
-  src = /home/lillecarl/Code/carl/typos-vscode;
-
-  cargoHash = "sha256-oMJUChloU/mJxZG2ujVJZ1CmZOygk7vu5MmyBctoD3s=";
+  cargoLock = {
+    lockFile = "${src}/Cargo.lock";
+  };
 
   meta = with lib; {
     description = "Typo language server";
-    homepage = "https://github.com/valebes/rsClock";
+    homepage = "https://github.com/tekumara/typos-vscode";
     license = licenses.mit;
-    maintainers = with maintainers; [ valebes ];
+    #maintainers = with maintainers; [ ];
   };
 }
 
