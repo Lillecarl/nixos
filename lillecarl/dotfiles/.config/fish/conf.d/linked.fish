@@ -5,16 +5,6 @@ fish_vi_key_bindings
 # trigger dirent before prompt is rendered
 set -g direnv_fish_mode eval_on_arrow
 
-function git_root
-    cd "$(git rev-parse --show-toplevel)"
-end
-alias grt git_root
-
-function get_git_root
-    git rev-parse --show-toplevel
-end
-alias ggrt get_git_root
-
 if set -q LASTPATH
     and not set -q TMUX
     and not set -q VSCODE_INJECTION
