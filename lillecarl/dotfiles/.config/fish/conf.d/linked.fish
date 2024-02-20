@@ -33,19 +33,19 @@ abbr -a nos nh os switch -- --impure
 abbr -a nhs nh home switch -- --impure
 
 # bind ctrl+a to beginning of buffer
-bind \ca -M insert beginning-of-buffer
-bind \ca -M visual beginning-of-buffer
+bind -M insert \ca beginning-of-buffer
+bind -M visual \ca beginning-of-buffer
 # bind ctrl+e to end of buffer
-bind \ce -M insert end-of-buffer
-bind \ce -M visual end-of-buffer
+bind -M insert \ce end-of-buffer
+bind -M visual \ce end-of-buffer
 # bind alt+l to complete whatever fish is suggesting
 bind -M insert \el forward-char
 # bind ctrl+shift+e to edit command buffer
 bind -M insert \e\[101\;6u edit_command_buffer
 bind -M visual \e\[101\;6u edit_command_buffer
 # bind /
-bind -m insert / _atuin_search
-bind -m visual / _atuin_search
+bind -M insert / _atuin_search
+bind -M visual / _atuin_search
 
 # function that is called on fish_preexec event (before executing something)
 function reload_awscreds -e fish_preexec
