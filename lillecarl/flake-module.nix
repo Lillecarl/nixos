@@ -44,7 +44,6 @@ in
             ./gui/shitbox.nix
           ];
           extraSpecialArgs = {
-            keyboardName = "keymapper";
             bluetooth = false;
             monitorConfig = ''
               monitor=DP-1,2560x1440@164.802002,1080x240,1.0
@@ -62,7 +61,6 @@ in
             ./gui/nub.nix
           ];
           extraSpecialArgs = {
-            keyboardName = "keymapper";
             bluetooth = true;
             monitorConfig = ''
               # Work external display

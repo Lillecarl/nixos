@@ -1,12 +1,12 @@
 { pkgs
 , config
 , lib
-, keyboardName
 , bluetooth
 , ...
 }:
 let
   cfg = config.carl.gui.waybar;
+  hyprCfg = config.carl.gui.hyprland;
   hyprctl = "${pkgs.hyprland}/bin/hyprctl";
   sleep = "${pkgs.coreutils-full}/bin/sleep";
   swaync-client = "${pkgs.swaynotificationcenter}/bin/swayncclient";
@@ -111,8 +111,8 @@ in
             format-en = "EN";
             format-sv = "SE";
             format-eu = "EU";
-            keyboard-name = keyboardName;
-            on-click = "${hyprctl} switchxkblayout ${keyboardName} next";
+            keyboard-name = hyprCfg.keyboardName;
+            on-click = "${hyprctl} switchxkblayout ${hyprCfg.keyboardName} next";
           };
           "hyprland/submap" = {
             format = ", {}";
