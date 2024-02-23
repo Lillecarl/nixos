@@ -31,6 +31,15 @@ in
       tor-browser-bundle-bin # Tor browser
       libreoffice # Office suite
       adoptopenjdk-icedtea-web # Java Web Start
+      kdiff3 # Well know diffing tool
+      ark # Archiving tool
+      gparted # GUI partition manager
+      dbeaver # SQL database GUI
+      filezilla # Free FTP/FTPS/SFTP software
+      qbittorrent # OpenSource Qt Bittorrent client
+      okular # PDF viewer
+      gimp # Photoshop alternative
+      webcamoid # Webcam application
     ] ++ (
       if config.programs.rbw.enable then [
         pkgs.rofi-rbw-wayland

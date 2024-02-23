@@ -41,7 +41,6 @@
       nmap # Network scanner
       execline # Tools for dbus n stuff
       handlr # xdg-open alternative
-      cookiecutter # Simple project template engine
       distrobuilder # Build other distros
       asciinema # Terminal session recorder
       wireguard-tools # Wireguard tools
@@ -61,10 +60,7 @@
       vim # Modal CLI text editor
       neovim # Modal CLI text editor, modern version of Vim
       amp # Modal CLI text editor, modern, rust
-      helix #  Modern modal editor, written in Rust
-      ripgrep # Modern rusty grep
       lsof # Check who uses file
-      ripgrep # Rust grep implementation, not POSIX compliant
       wget # Fetch things quickly with HTTP
       gnufdisk # CLI partition management (MBR)
       gptfdisk # CLI partition management (GPT)
@@ -143,37 +139,14 @@
       pstree # Show process tree as a tree
       gist # Tool to post files to gist.github.com straight away
 
-      # Programming tools
-      kdiff3 # Well know diffing tool
-
       # System tools
-      putty # TTY tool for uncool people
-      ark # Archiving tool
-      gparted # GUI partition manager
-      wireshark # Defactor network traffic sniffing tool
-      nix-bash-completions # Nix completions in bash
-      bash-completion # Bash cli autocomplete
       hardinfo # Hardware information
       debootstrap # Bootstrap Debian based (deb package manager) Linux distros
-
-      # Productivity tools
-      mongodb-compass # MongoDB GUI
-      dbeaver # SQL database GUI
-      rofimoji # Emoji/Char picker for rofi
-      filezilla # Free FTP/FTPS/SFTP software
-      freerdp # Remote Desktop Protocol client
-      qbittorrent # OpenSource Qt Bittorrent client
-      okular # PDF viewer
 
       # Misc
       scrcpy # Print-screen tool
       winePackages.wayland # Win32 API compatibility layer for Linux
       wine64Packages.wayland # Win32 API compatibility layer for Linux
-      gimp # Photoshop alternative
-      webcamoid # Webcam application
-
-      # Games
-      superTuxKart # Kart game with Tux
     ];
   };
 
