@@ -10,7 +10,7 @@
   carl = {
     gui = {
       hyprland = {
-        keyboardName = "keymapper";
+        keyboardName = "pykbd";
         monitorConfig = ''
           # Work external display
           monitor=desc:Dell Inc. DELL U3421WE HQDH753,3440x1440@60,0x0,1.0

@@ -13,7 +13,6 @@
     ./gnome-keyring.nix
     ./gpg.nix
     ./helix.nix
-    ./keymapper.nix
     ./lsd.nix
     ./neovim.nix
     ./nushell.nix

@@ -18,7 +18,6 @@ in
         ../../common/fish.nix
         ../../common/greetd.nix
         ../../common/hyprland.nix
-        ../../common/keymapper.nix
         ../../common/monitoring.nix
         ../../common/nix.nix
         ../../common/openvpn.nix
@@ -29,7 +28,6 @@ in
         ../../common/users.nix
         ../../common/verycommon.nix
         ../../common/xdg.nix
-        ../../modules/nixos/keymapper.nix
         ./acme.nix
         ./default.nix
         ./fancontrol.nix

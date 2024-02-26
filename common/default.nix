@@ -3,6 +3,10 @@
 , ...
 }:
 {
+  imports = [
+    ./remapper.nix
+  ];
+
   hardware.uinput.enable = true;
 
   boot.tmp = {

@@ -5,7 +5,6 @@
 {
   imports = [
     ../carl
-    ./keymapper.nix
     ./swaync.nix
     ./wezterm.nix
   ];

@@ -12,13 +12,11 @@
         ../../common/fish.nix
         ../../common/greetd.nix
         ../../common/hyprland.nix
-        ../../common/keymapper.nix
         ../../common/nix.nix
         ../../common/overlays.nix
         ../../common/users.nix
         ../../common/verycommon.nix
         ../../common/xdg.nix
-        ../../modules/nixos/keymapper.nix
         ./default.nix
         inputs.disko.nixosModules.disko
         inputs.nixos-hardware.nixosModules.common-gpu-intel

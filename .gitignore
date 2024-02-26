@@ -16,3 +16,5 @@ devenv.local.nix
 
 # nix build results
 result
+
+**/__pycache__
