@@ -1,30 +1,26 @@
-function nix-rebuild --argument target --argument install
-    if not set -q target
-        set -f target "both"
-    end
-    if not set -q install
-        set -f install "y"
-    end
+function nix-rebuild
+    argparse --min-args=1 -- $argv
+    set target $argv[1]
+    set install (echo $argv[2] || echo "n")
     # Where to store build output
-    set result "$(mktemp -d -t nix-rebuild_XXXX)/result"
-    # Common arguments for nix build
-    #set common_args --impure --out-link $result --verbose --log-format internal-json
-    set common_args --out-link $result --verbose --log-format internal-json
+    set result ""
     # Hash of all files in the repo
     set repohash (fd --hidden -t file --search-path $FLAKE -x sha1sum | sort | sha1sum)
 
     switch $target
         case os
-            set fullflake "$FLAKE#nixosConfigurations.\"$hostname\".config.system.build.toplevel"
-            set profile /nix/var/nix/profiles/system
-            set NIXOS_INSTALL_BOOTLOADER 1
+            set -f result "$(mktemp -d -t nix-rebuild-os_XXXX)/result"
+            set -f fullflake "$FLAKE#nixosConfigurations.\"$hostname\".config.system.build.toplevel"
+            set -f profile /nix/var/nix/profiles/system
+            set -f NIXOS_INSTALL_BOOTLOADER 1
             if test "$repohash" = "$_oshash"
                 set nobuild
                 set result $_ospath
             end
         case home
-            set fullflake "$FLAKE#homeConfigurations.\"$USER@$hostname\".activationPackage"
-            set profile $HOME/.local/state/nix/profiles/home-manager
+            set -f result "$(mktemp -d -t nix-rebuild-home_XXXX)/result"
+            set -f fullflake "$FLAKE#homeConfigurations.\"$USER@$hostname\".activationPackage"
+            set -f profile $HOME/.local/state/nix/profiles/home-manager
             if test "$repohash" = "$_homehash"
                 set nobuild
                 set result $_homepath
@@ -32,8 +28,8 @@ function nix-rebuild --argument target --argument install
             # Get all old cheaty symlinks
             set oldlinks (readlink -f $profile/home-files/.local/linkstate)
         case '*'
-            nix-rebuild os $gogo || return $status
-            nix-rebuild home $gogo || return $status
+            nix-rebuild os $gogo
+            nix-rebuild home $gogo
             return
     end
 
@@ -43,10 +39,20 @@ function nix-rebuild --argument target --argument install
     else
         echo "Building $fullflake"
         echo "Into $result"
+        nom \
+            build \
+            $fullflake \
+            --out-link $result
+
+        # Build again impurely to get the trace log output
+        # https://github.com/maralorn/nix-output-monitor/issues/128
+        # https://github.com/maralorn/nix-output-monitor/issues/92
+        # https://github.com/maralorn/nix-output-monitor/issues/128
         nix \
             build \
             $fullflake \
-            $common_args &| nom --json
+            --no-link \
+            --impure
 
         if test $status != 0
             echo "Failed to build $fullflake"
@@ -56,7 +62,7 @@ function nix-rebuild --argument target --argument install
 
     nvd diff $profile $result
 
-    if test $install != "y"
+    if set -q test && test $install != y
         read -P "Do you want to continue? [y/N] " -n 1 switch
     else
         set switch y
@@ -64,28 +70,9 @@ function nix-rebuild --argument target --argument install
 
     switch $switch
         case y
-            # Link the new profile
-            #if test $target = os
-            #    sudo nix-env -p $profile --set $result
-            #else
-            #    nix-env -p $profile --set $result
-            #end
-            #if test $status != 0
-            #    echo "Failed to set profile"
-            #    return 1
-            #end
-            # Run activation script
             switch $target
                 case os
-                    # NixOS activation doesn't link the profile
-                    echo "Linking $result to $profile"
-                    sudo nix-env -p $profile --set $result
-                    if test $status != 0
-                        echo "Failed to set profile"
-                        return 1
-                    end
-
-                    echo "Activating $profile/bin/switch-to-configuration switch"
+                    echo "Activating $result/bin/switch-to-configuration switch"
                     sudo -E systemd-run \
                         -E LOCALE_ARCHIVE \
                         -E NIXOS_INSTALL_BOOTLOADER \
@@ -100,10 +87,21 @@ function nix-rebuild --argument target --argument install
                         $profile/bin/switch-to-configuration switch
 
                     if test $status != 0
-                        echo "Failed to activate profile"
-                        echo "Please note that you'll still boot into this generation"
+                        echo "Failed to activate NixOS profile"
+                        echo "Install anyways? [y/N]"
+                        if test $(read) != y
+                            return 1
+                        end
+                    end
+
+                    # NixOS activation doesn't link the profile
+                    echo "Linking $result to $profile"
+                    sudo nix-env -p $profile --set $result
+                    if test $status != 0
+                        echo "Failed to set profile"
                         return 1
                     end
+
                 case home
                     # home-manager links the profile itself.
                     echo "Activating package $result/activate"
@@ -127,4 +125,6 @@ function nix-rebuild --argument target --argument install
                     set -U _homepath $result
             end
     end
+
+    false && rm -rf $result
 end
