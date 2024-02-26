@@ -24,18 +24,11 @@ in
     vimdiffAlias = true;
     defaultEditor = true;
 
-    extraPython3Packages = with pkgs.python3.pkgs; [
+    extraPython3Packages = ps: with ps; [
       python-dotenv
       requests
       prompt-toolkit
       tiktoken
-      #(pynvim.overrideAttrs (old: {
-      #  src = pkgs.python3.pkgs.fetchPypi {
-      #    pname = old.pname;
-      #    version = "0.5.0";
-      #    sha256 = "sha256-6AoR9vXRlMake+pBNbkLVfrKJNo1RNp89KX3uo+wkhU=";
-      #  };
-      #}))
     ];
 
     extraPackages = with pkgs; [

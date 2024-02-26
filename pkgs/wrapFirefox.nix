@@ -467,7 +467,7 @@ let
           cd $omniTmp
 
           for patch in $omniPatches; do
-            ${lib.getExe patch} -p1 < $patch
+            ${patch}/bin/patch -p1 < $patch
           done
 
           ${lib.getExe zip} -qr ../omni.ja .

@@ -8,9 +8,9 @@
 let
   cfg = config.carl.gui.swaytools;
   lockScript = bp (pkgs.writeShellScriptBin "swayLockScript" ''
-    ${lib.getExe config.programs.rbw.package} lock
+    ${config.programs.rbw.package}/bin/rbw lock
     ${lib.getExe pkgs.swaylock}
-    ${lib.getExe config.programs.rbw.package} unlock
+    ${config.programs.rbw.package}/bin/rbw unlock
   '');
 in
 {
