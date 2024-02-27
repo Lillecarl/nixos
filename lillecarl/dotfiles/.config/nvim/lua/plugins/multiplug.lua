@@ -27,6 +27,10 @@ require("catppuccin").setup({
 })
 vim.cmd.colorscheme("catppuccin")
 
+-- leap
+-- https://github.com/ggandor/leap.nvim
+require('leap').create_default_mappings()
+
 -- neoconf
 -- https://github.com/folke/neoconf.nvim
 require("neoconf").setup({})

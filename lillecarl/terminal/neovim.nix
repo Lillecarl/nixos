@@ -108,6 +108,7 @@ in
       gitsigns-nvim
       indent-blankline-nvim
       iron-nvim
+      leap-nvim
       luasnip
       neoconf-nvim
       neodev-nvim
@@ -125,6 +126,7 @@ in
       nvim-web-devicons
       overseer-nvim
       playground
+      repeat
       telescope-nvim
       trouble-nvim
       which-key-nvim
