@@ -3,6 +3,7 @@ let
   # python3 packages
   python3Packages = {
     pyping = prev.python3Packages.callPackage ../pkgs/python3Packages/pyping { };
+    hyprpy = prev.python3Packages.callPackage ../pkgs/python3Packages/hyprpy { };
     pynvim =
       if
         prev.python3Packages.pynvim.version prev.lib.versionAtLeast "0.5.0" then

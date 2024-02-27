@@ -177,6 +177,11 @@
     , flake-parts
     , ...
     } @ inputs:
+    let
+      pkgs = import inputs.nixpkgs {
+
+      };
+    in
     flake-parts.lib.mkFlake
       {
         inherit inputs;
@@ -223,6 +228,7 @@
                   cargo = inputs.fenix.packages.${system}.default.toolchain;
                 };
               };
+              hyprpy = pkgs.python3Packages.callPackage ./pkgs/python3Packages/hyprpy { };
             };
             legacyPackages = pkgs_overlaid;
           };
