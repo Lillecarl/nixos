@@ -16,7 +16,7 @@
             start = "1MiB";
             type = "EF00";
             end = "1GiB";
-            label = "EFI";
+            label = "ESP";
             content = {
               type = "filesystem";
               format = "vfat";
