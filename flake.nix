@@ -178,9 +178,7 @@
     , ...
     } @ inputs:
     let
-      pkgs = import inputs.nixpkgs {
-
-      };
+      pkgs = import inputs.nixpkgs { };
     in
     flake-parts.lib.mkFlake
       {
