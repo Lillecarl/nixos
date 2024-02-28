@@ -5,22 +5,17 @@
       device = "/dev/disk/by-id/${disk}";
       type = "disk";
       content = {
-        type = "table";
-        format = "gpt";
-        partitions = [
-          {
-            name = "MBR";
+        type = "gpt";
+        partitions = {
+          boot = {
+            type = "EF02";
             start = "0";
             end = "1MiB";
-            bootable = true;
-            flags = [ "bios_grub" ];
-          }
-          {
-            name = "ESP";
+          };
+          esp = {
             start = "1MiB";
+            type = "EF00";
             end = "1GiB";
-            bootable = true;
-            fs-type = "fat32";
             content = {
               type = "filesystem";
               format = "vfat";
@@ -30,12 +25,10 @@
                 "sync"
               ];
             };
-          }
-          {
-            name = "root";
+          };
+          root = {
             start = "1GiB";
             end = "100%";
-            part-type = "primary";
             content = {
               type = "luks";
               name = "crypted";
@@ -45,8 +38,8 @@
                 vg = "pool";
               };
             };
-          }
-        ];
+          };
+        };
       };
     };
   };
