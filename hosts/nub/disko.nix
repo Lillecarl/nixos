@@ -16,6 +16,7 @@
             start = "1MiB";
             type = "EF00";
             end = "1GiB";
+            label = "EFI";
             content = {
               type = "filesystem";
               format = "vfat";
@@ -29,6 +30,7 @@
           root = {
             start = "1GiB";
             end = "100%";
+            label = "root";
             content = {
               type = "luks";
               name = "crypted";
