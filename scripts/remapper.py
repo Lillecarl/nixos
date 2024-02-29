@@ -432,6 +432,29 @@ async def main():
 
                             continue
 
+                    # Map CTRL + SHIFT + hjkl to arrow keys
+                    elif (key_active(Keys.LEFTCTRL) and key_active(Keys.LEFTSHIFT)):
+                        hit: bool = False
+                        if event.code == Keys.H:
+                            event.code = Keys.LEFT
+                            hit = True
+                        elif event.code == Keys.J:
+                            event.code = Keys.DOWN
+                            hit = True
+                        elif event.code == Keys.K:
+                            event.code = Keys.UP
+                            hit = True
+                        elif event.code == Keys.L:
+                            event.code = Keys.RIGHT
+                            hit = True
+
+                        if hit:
+                            ui.write(Event.KEY, Keys.LEFTCTRL, Action.UP)
+                            ui.write(Event.KEY, Keys.LEFTSHIFT, Action.UP)
+                            ui.write_event(event)
+                            ui.syn()
+                            continue
+
                 # Numpad layer, map zxcasdqwe to 123456789
                 elif layer == Layer.NUMPAD:
                     key = Keys(event.code)
