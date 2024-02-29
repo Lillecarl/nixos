@@ -1,6 +1,5 @@
 { pkgs
 , lib
-, config
 , self
 , ...
 }:
@@ -22,6 +21,7 @@ in
       ExecStart = wrapper;
       Restart = "always";
       RestartSec = "5";
+      Nice="-10";
     };
   };
 }
