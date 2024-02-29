@@ -413,23 +413,24 @@ async def main():
                         continue
 
                     # Map ALT (left or right) + åäö ( ['; ) to åäö
-                    elif (key_active(Keys.RIGHTALT) or key_active(Keys.LEFTALT)) and event.value == Action.DOWN:
-                        if event.code == Keys.LEFTBRACE or event.code == Keys.APOSTROPHE or event.code == Keys.SEMICOLON:
+                    elif (key_active(Keys.RIGHTALT) or key_active(Keys.LEFTALT)):
+                        hit: bool = False
+                        if event.code == Keys.LEFTBRACE:
+                            event.code = Keys.W
+                            hit = True
+                        elif event.code == Keys.APOSTROPHE:
+                            event.code = Keys.A
+                            hit = True
+                        elif event.code == Keys.SEMICOLON:
+                            event.code = Keys.O
+                            hit = True
+
+                        if hit:
                             ui.write(Event.KEY, Keys.LEFTALT, Action.UP)
                             ui.write(Event.KEY, Keys.RIGHTALT, Action.DOWN)
-                            if event.code == Keys.LEFTBRACE:
-                                ui.write(Event.KEY, Keys.W, Action.DOWN)
-                                ui.write(Event.KEY, Keys.W, Action.UP)
-                            elif event.code == Keys.APOSTROPHE:
-                                ui.write(Event.KEY, Keys.A, Action.DOWN)
-                                ui.write(Event.KEY, Keys.A, Action.UP)
-                            elif event.code == Keys.SEMICOLON:
-                                ui.write(Event.KEY, Keys.O, Action.DOWN)
-                                ui.write(Event.KEY, Keys.O, Action.UP)
-
+                            ui.write_event(event)
                             ui.write(Event.KEY, Keys.RIGHTALT, Action.UP)
                             ui.syn()
-
                             continue
 
                     # Map CTRL + SHIFT + hjkl to arrow keys
