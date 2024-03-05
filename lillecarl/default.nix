@@ -23,8 +23,11 @@ in
 {
   nixpkgs.config.allowUnfree = true;
   programs.home-manager.enable = true;
-  xdg.enable = true;
 
+  xdg = {
+    enable = true;
+    userDirs.createDirectories = true;
+  };
 
   # HM stuff
   home = {
