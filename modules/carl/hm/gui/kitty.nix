@@ -76,7 +76,7 @@ in
           "ctrl+shift+f9" = "no_op";
           "ctrl+shift+left" = "no_op";
           "ctrl+shift+minus" = "no_op";
-          "ctrl+shift+n" = "no_op";
+          "ctrl+shift+n" = "launch --copy-env --type=os-window";
           "ctrl+shift+o" = "no_op";
           "ctrl+shift+q" = "no_op";
           "ctrl+shift+r" = "no_op";
