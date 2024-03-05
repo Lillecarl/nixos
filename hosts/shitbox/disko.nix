@@ -8,22 +8,18 @@ let
       device = "/dev/disk/by-id/${disk}";
       type = "disk";
       content = {
-        type = "table";
-        format = "gpt";
-        partitions = [
-          {
-            name = "boot";
+        type = "gpt";
+        partitions = {
+          mbr = {
             start = "0";
             end = "1MiB";
-            bootable = true;
-            flags = [ "bios_grub" ];
-          }
-          {
-            name = "ESP";
+            type = "EF02";
+          };
+          ESP = {
+            label = "ESP";
             start = "1MiB";
             end = "1GiB";
-            bootable = true;
-            fs-type = "fat32";
+            type = "EF00";
             content = {
               type = "filesystem";
               format = "vfat";
@@ -32,13 +28,11 @@ let
                 "sync"
               ];
             };
-          }
-          {
-            name = "boot";
+          };
+          boot = {
+            label = "boot";
             start = "1GiB";
             end = "2GiB";
-            bootable = false;
-            fs-type = "ext4";
             content = {
               type = "filesystem";
               format = "ext4";
@@ -48,18 +42,17 @@ let
                 "sync"
               ];
             };
-          }
-          {
-            name = "root";
+          };
+          root = {
+            label = "root";
             start = "2GiB";
             end = "100%";
-            part-type = "primary";
             content = {
               type = "mdraid";
               name = "root";
             };
-          }
-        ];
+          };
+        };
       };
     };
 in
@@ -80,11 +73,9 @@ in
       type = "mdadm";
       level = 1;
       content = {
-        type = "table";
-        format = "gpt";
-        partitions = [
-          {
-            name = "primary";
+        type = "gpt";
+        partitions = {
+          primary = {
             start = "1MiB";
             end = "100%";
             content = {
@@ -95,8 +86,8 @@ in
                 vg = "pool";
               };
             };
-          }
-        ];
+          };
+        };
       };
     };
   };
