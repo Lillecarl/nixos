@@ -364,13 +364,13 @@ let
         sha512 = "e64Qj9+4aZzjzzFpZC7p5kmm/ccCrbLhAJplhsDXQFs87XTsXwOpH4s1Io2s90Tau/8r2j9f4l/thhDevRjzxw==";
       };
     };
-    "es-abstract-1.22.4" = {
+    "es-abstract-1.22.5" = {
       name = "es-abstract";
       packageName = "es-abstract";
-      version = "1.22.4";
+      version = "1.22.5";
       src = fetchurl {
-        url = "https://registry.npmjs.org/es-abstract/-/es-abstract-1.22.4.tgz";
-        sha512 = "vZYJlk2u6qHYxBOTjAeg7qUxHdNfih64Uu2J8QqWgXZ2cri0ZpJAkzDUK/q593+mvKwlxyaxr6F1Q+3LKoQRgg==";
+        url = "https://registry.npmjs.org/es-abstract/-/es-abstract-1.22.5.tgz";
+        sha512 = "oW69R+4q2wG+Hc3KZePPZxOiisRIqfKBVo/HLx94QcJeWGU/8sZhCvc829rd1kS366vlJbzBfXf9yWwf0+Ko7w==";
       };
     };
     "es-array-method-boxes-properly-1.0.0" = {
@@ -1102,13 +1102,13 @@ let
         sha512 = "7PGFlmtwsEADb0WYyvCMa1t+yke6daIG4Wirafur5kcf+MhUnPms1UeR0CKQdTZD81yESwMHbtn+TR+dMviakQ==";
       };
     };
-    "side-channel-1.0.5" = {
+    "side-channel-1.0.6" = {
       name = "side-channel";
       packageName = "side-channel";
-      version = "1.0.5";
+      version = "1.0.6";
       src = fetchurl {
-        url = "https://registry.npmjs.org/side-channel/-/side-channel-1.0.5.tgz";
-        sha512 = "QcgiIWV4WV7qWExbN5llt6frQB/lBven9pqliLXfGPB+K9ZYXxDozp0wLkHS24kWCm+6YXH/f0HhnObZnZOBnQ==";
+        url = "https://registry.npmjs.org/side-channel/-/side-channel-1.0.6.tgz";
+        sha512 = "fDW/EZ6Q9RiO8eFG8Hj+7u/oW+XrPTIChwCOM2+th2A6OblDtYYIpve9m+KvI9Z4C9qSEXlaGR6bTEYHReuglA==";
       };
     };
     "sprintf-js-1.0.3" = {
@@ -1392,7 +1392,7 @@ in
       sources."eachr-3.3.0"
       sources."editions-2.3.1"
       sources."errlop-2.2.0"
-      sources."es-abstract-1.22.4"
+      sources."es-abstract-1.22.5"
       sources."es-array-method-boxes-properly-1.0.0"
       sources."es-define-property-1.0.0"
       sources."es-errors-1.3.0"
@@ -1473,7 +1473,7 @@ in
       sources."semver-6.3.1"
       sources."set-function-length-1.2.1"
       sources."set-function-name-2.0.2"
-      sources."side-channel-1.0.5"
+      sources."side-channel-1.0.6"
       sources."sprintf-js-1.0.3"
       sources."ssf-0.8.2"
       sources."string-extended-0.0.8"
