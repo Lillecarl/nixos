@@ -6,6 +6,7 @@ import asyncio
 import os
 import sys
 from enum import IntEnum, Enum, auto
+from pathlib import Path
 
 
 class Layer(Enum):
@@ -324,6 +325,10 @@ async def main():
     ui = evdev.UInput.from_device(selected_device, name="pykbd")
     print(ui.capabilities(verbose=True).keys())
     print(ui.phys)
+    print(ui.device)
+
+    Path("/dev/input/pykbd").unlink(missing_ok=True)
+    Path("/dev/input/pykbd").symlink_to(ui.device.path, False)
 
     caps_esc_threshold = 0.5
 
