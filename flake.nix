@@ -227,6 +227,7 @@
                 };
               };
               hyprpy = pkgs.python3Packages.callPackage ./pkgs/python3Packages/hyprpy { };
+              pkgtest = pkgs.python3Packages.callPackage ./pkgs/python3Packages/pybintest { };
             };
             legacyPackages = pkgs_overlaid;
           };

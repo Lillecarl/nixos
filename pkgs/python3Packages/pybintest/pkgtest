@@ -1,0 +1,11 @@
+#! /usr/bin/env python3
+
+from plumbum import local
+
+
+def main():
+    print(local["ls"]())
+
+
+if __name__ == "__main__":
+    main()
