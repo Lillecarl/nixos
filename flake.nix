@@ -8,6 +8,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nur.url = "github:nix-community/NUR";
     nix-flatpak.url = "github:gmodena/nix-flatpak";
+    niri.url = "github:sodiboo/niri-flake";
 
     ags = {
       url = "github:Aylur/ags";

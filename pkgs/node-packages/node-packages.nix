@@ -283,6 +283,33 @@ let
         sha512 = "jRFi8UDGo6j+odZiEpjazZaWqEal3w/basFjQHQEwVtZJGDpxbH1MeYluwCS8Xq5wmLJooDlMgvVarmWfGM44g==";
       };
     };
+    "data-view-buffer-1.0.1" = {
+      name = "data-view-buffer";
+      packageName = "data-view-buffer";
+      version = "1.0.1";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/data-view-buffer/-/data-view-buffer-1.0.1.tgz";
+        sha512 = "0lht7OugA5x3iJLOWFhWK/5ehONdprk0ISXqVFn/NFrDu+cuc8iADFrGQz5BnRK7LLU3JmkbXSxaqX+/mXYtUA==";
+      };
+    };
+    "data-view-byte-length-1.0.1" = {
+      name = "data-view-byte-length";
+      packageName = "data-view-byte-length";
+      version = "1.0.1";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/data-view-byte-length/-/data-view-byte-length-1.0.1.tgz";
+        sha512 = "4J7wRJD3ABAzr8wP+OcIcqq2dlUKp4DVflx++hs5h5ZKydWMI6/D/fAot+yh6g2tHh8fLFTvNOaVN357NvSrOQ==";
+      };
+    };
+    "data-view-byte-offset-1.0.0" = {
+      name = "data-view-byte-offset";
+      packageName = "data-view-byte-offset";
+      version = "1.0.0";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/data-view-byte-offset/-/data-view-byte-offset-1.0.0.tgz";
+        sha512 = "t/Ygsytq+R995EJ5PZlD4Cu56sWa8InXySaViRzw9apusqsOO2bQP+SbYzAhR0pFKoB+43lYy8rWban9JSuXnA==";
+      };
+    };
     "date-extended-0.0.6" = {
       name = "date-extended";
       packageName = "date-extended";
@@ -364,13 +391,13 @@ let
         sha512 = "e64Qj9+4aZzjzzFpZC7p5kmm/ccCrbLhAJplhsDXQFs87XTsXwOpH4s1Io2s90Tau/8r2j9f4l/thhDevRjzxw==";
       };
     };
-    "es-abstract-1.22.5" = {
+    "es-abstract-1.23.0" = {
       name = "es-abstract";
       packageName = "es-abstract";
-      version = "1.22.5";
+      version = "1.23.0";
       src = fetchurl {
-        url = "https://registry.npmjs.org/es-abstract/-/es-abstract-1.22.5.tgz";
-        sha512 = "oW69R+4q2wG+Hc3KZePPZxOiisRIqfKBVo/HLx94QcJeWGU/8sZhCvc829rd1kS366vlJbzBfXf9yWwf0+Ko7w==";
+        url = "https://registry.npmjs.org/es-abstract/-/es-abstract-1.23.0.tgz";
+        sha512 = "vmuE7Uoevk2xkwu5Gwa7RfJk/ebVV6xRv7KuZNbUglmJHhWPMbLL20ztreVpBbdxBZijETx3Aml3NssX4SFMvQ==";
       };
     };
     "es-array-method-boxes-properly-1.0.0" = {
@@ -679,13 +706,13 @@ let
         sha512 = "NqADB8VjPFLM2V0VvHUewwwsw0ZWBaIdgo+ieHtK3hasLz4qeCRjYcqfB6AQrBggRKppKF8L52/VqdVsO47Dlw==";
       };
     };
-    "hasown-2.0.1" = {
+    "hasown-2.0.2" = {
       name = "hasown";
       packageName = "hasown";
-      version = "2.0.1";
+      version = "2.0.2";
       src = fetchurl {
-        url = "https://registry.npmjs.org/hasown/-/hasown-2.0.1.tgz";
-        sha512 = "1/th4MHjnwncwXsIW6QMzlvYL9kG5e/CpVvLRZe4XPa8TOUNbCELqmvhDmnkNsAjwaG4+I8gJJL0JBvTTLO9qA==";
+        url = "https://registry.npmjs.org/hasown/-/hasown-2.0.2.tgz";
+        sha512 = "0hJU9SCPvmMzIBdZFqNPXWa6dqh7WdH0cII9y+CyS8rG3nL48Bclra9HmKhVVUHyPWNH5Y7xDwAB7bfgSjkUMQ==";
       };
     };
     "hjson-2.4.3" = {
@@ -767,6 +794,15 @@ let
       src = fetchurl {
         url = "https://registry.npmjs.org/is-callable/-/is-callable-1.2.7.tgz";
         sha512 = "1BC0BVFhS/p0qtw6enp8e+8OD0UrK0oFLztSjNzhcKA3WDuJxxAPXzPuPtKkjEY9UUoEWlX/8fgKeu2S8i9JTA==";
+      };
+    };
+    "is-data-view-1.0.1" = {
+      name = "is-data-view";
+      packageName = "is-data-view";
+      version = "1.0.1";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/is-data-view/-/is-data-view-1.0.1.tgz";
+        sha512 = "AHkaJrsUVW6wq6JS8y3JnM/GJF/9cf+k20+iDzlSaJrinEo5+7vRiteOSwBhHRiAyQATN1AmY4hwzxJKPmYf+w==";
       };
     };
     "is-date-object-1.0.5" = {
@@ -1030,13 +1066,13 @@ let
         sha512 = "oskKAg0pSlPnJAkFMrcqrHeCGzYunl4Hkl+N/NW3nnFWDHRg97yb475HtF5ax8LP9i8QvVkenVIhjNb+h+P7nA==";
       };
     };
-    "safe-array-concat-1.1.0" = {
+    "safe-array-concat-1.1.2" = {
       name = "safe-array-concat";
       packageName = "safe-array-concat";
-      version = "1.1.0";
+      version = "1.1.2";
       src = fetchurl {
-        url = "https://registry.npmjs.org/safe-array-concat/-/safe-array-concat-1.1.0.tgz";
-        sha512 = "ZdQ0Jeb9Ofti4hbt5lX3T2JcAamT9hfzYU1MNB+z/jaEbB6wfFfPIR/zEORmZqobkCCJhSjodobH6WHNmJ97dg==";
+        url = "https://registry.npmjs.org/safe-array-concat/-/safe-array-concat-1.1.2.tgz";
+        sha512 = "vj6RsCsWBCf19jIeHEfkRMw8DPiBb+DMXklQ/1SGDHOMlHdPUkZXFQ2YdplS23zESTijAcurb1aSgJA3AgMu1Q==";
       };
     };
     "safe-regex-test-1.0.3" = {
@@ -1084,13 +1120,13 @@ let
         sha512 = "BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA==";
       };
     };
-    "set-function-length-1.2.1" = {
+    "set-function-length-1.2.2" = {
       name = "set-function-length";
       packageName = "set-function-length";
-      version = "1.2.1";
+      version = "1.2.2";
       src = fetchurl {
-        url = "https://registry.npmjs.org/set-function-length/-/set-function-length-1.2.1.tgz";
-        sha512 = "j4t6ccc+VsKwYHso+kElc5neZpjtq9EnRICFZtWyBsLojhmeF/ZBd/elqm22WJh/BziDe/SBiOeAt0m2mfLD0g==";
+        url = "https://registry.npmjs.org/set-function-length/-/set-function-length-1.2.2.tgz";
+        sha512 = "pgRc4hJ4/sNjWCSS9AmnS40x3bNMDTknHgL5UaMBTMyJnU90EgWh1Rz+MC9eFu4BuN/UwZjKQuY/1v3rM7HMfg==";
       };
     };
     "set-function-name-2.0.2" = {
@@ -1291,13 +1327,13 @@ let
         sha512 = "bwZdv0AKLpplFY2KZRX6TvyuN7ojjr7lwkg6ml0roIy9YeuSr7JS372qlNW18UQYzgYK9ziGcerWqZOmEn9VNg==";
       };
     };
-    "which-typed-array-1.1.14" = {
+    "which-typed-array-1.1.15" = {
       name = "which-typed-array";
       packageName = "which-typed-array";
-      version = "1.1.14";
+      version = "1.1.15";
       src = fetchurl {
-        url = "https://registry.npmjs.org/which-typed-array/-/which-typed-array-1.1.14.tgz";
-        sha512 = "VnXFiIW8yNn9kIHN88xvZ4yOWchftKDsRJ8fEPacX/wl1lOvBrhsJ/OeJCXq7B0AaijRuqgzSKalJoPk+D8MPg==";
+        url = "https://registry.npmjs.org/which-typed-array/-/which-typed-array-1.1.15.tgz";
+        sha512 = "oV0jmFtUky6CXfkqehVvBP/LSWJ2sy4vWMioiENyJLePrBO/yKyV9OyJySfAKosh+RYkIl5zJCNZ8/4JncrpdA==";
       };
     };
     "wrappy-1.0.2" = {
@@ -1383,6 +1419,9 @@ in
       sources."cson-4.1.0"
       sources."cson-parser-1.3.5"
       sources."dashdash-1.14.1"
+      sources."data-view-buffer-1.0.1"
+      sources."data-view-byte-length-1.0.1"
+      sources."data-view-byte-offset-1.0.0"
       sources."date-extended-0.0.6"
       sources."deasync-0.1.29"
       sources."deasync-promise-1.0.1"
@@ -1392,7 +1431,7 @@ in
       sources."eachr-3.3.0"
       sources."editions-2.3.1"
       sources."errlop-2.2.0"
-      sources."es-abstract-1.22.5"
+      sources."es-abstract-1.23.0"
       sources."es-array-method-boxes-properly-1.0.0"
       sources."es-define-property-1.0.0"
       sources."es-errors-1.3.0"
@@ -1426,7 +1465,7 @@ in
       sources."has-proto-1.0.3"
       sources."has-symbols-1.0.3"
       sources."has-tostringtag-1.0.2"
-      sources."hasown-2.0.1"
+      sources."hasown-2.0.2"
       sources."hjson-2.4.3"
       sources."inflight-1.0.6"
       sources."inherits-2.0.4"
@@ -1436,6 +1475,7 @@ in
       sources."is-bigint-1.0.4"
       sources."is-boolean-object-1.1.2"
       sources."is-callable-1.2.7"
+      sources."is-data-view-1.0.1"
       sources."is-date-object-1.0.5"
       sources."is-extended-0.0.10"
       sources."is-negative-zero-2.0.3"
@@ -1465,13 +1505,13 @@ in
       sources."printj-1.1.2"
       sources."regexp.prototype.flags-1.5.2"
       sources."requirefresh-2.3.0"
-      sources."safe-array-concat-1.1.0"
+      sources."safe-array-concat-1.1.2"
       sources."safe-regex-test-1.0.3"
       sources."safefs-4.2.0"
       sources."safer-buffer-2.1.2"
       sources."sax-1.3.0"
       sources."semver-6.3.1"
-      sources."set-function-length-1.2.1"
+      sources."set-function-length-1.2.2"
       sources."set-function-name-2.0.2"
       sources."side-channel-1.0.6"
       sources."sprintf-js-1.0.3"
@@ -1493,7 +1533,7 @@ in
       sources."util.promisify-1.1.2"
       sources."voc-1.2.0"
       sources."which-boxed-primitive-1.0.2"
-      sources."which-typed-array-1.1.14"
+      sources."which-typed-array-1.1.15"
       sources."wrappy-1.0.2"
       sources."xlsjs-0.7.6"
       (sources."xlsx-0.11.19" // {
