@@ -6,7 +6,7 @@ import asyncio
 import os
 import sys
 import functools
-from enum import IntEnum, Enum, auto
+from enum import IntEnum, auto
 from collections import defaultdict
 from pathlib import Path
 
@@ -15,7 +15,7 @@ os.environ.keys
 print = functools.partial(print, flush=("SYSTEMD_EXEC_PID" in os.environ.keys()))
 
 
-class Layer(Enum):
+class Layer(IntEnum):
     @staticmethod
     def _generate_next_value_(name, start, count, last_values):
         return 2 ** (count + 1)
@@ -31,11 +31,16 @@ class Action(IntEnum):
 
 
 class State(IntEnum):
-    DOWNTIME = 1
-    HOLDTIME = 2
-    UPTIME = 3
-    VALUE = 4
-    HOLDCOUNT = 5
+    @staticmethod
+    def _generate_next_value_(name, start, count, last_values):
+        return count + 1
+
+    DOWNTIME = auto()
+    HOLDTIME = auto()
+    UPTIME = auto()
+    VALUE = auto()
+    HOLDCOUNT = auto()
+    REPEAT = auto()
 
 
 class Event(IntEnum):
@@ -374,6 +379,7 @@ async def main():
                 State.HOLDTIME: time.time(),
                 State.UPTIME: time.time(),
                 State.HOLDCOUNT: 0,
+                State.REPEAT: None,
             }
 
         key_state = keys_state[event.code]
@@ -394,19 +400,27 @@ async def main():
     def can_up(etype, code, value):
         if value != Action.UP:
             return True
-        return (
-            etype == Event.KEY
-            and value == Action.UP
-            and out_key_active(code)
-        )
+        return etype == Event.KEY and value == Action.UP and out_key_active(code)
+
+    def write_event_repeat(event: evdev.InputEvent):
+        if write_event(event):
+            set_repeat(event.type, event.code, event.value)
 
     def write_event(event: evdev.InputEvent):
         if not can_up(event.type, event.code, event.value):
-            return
+            return False
         udev.write_event(event)
+        return True
+
+    def write_repeat(etype, code, value):
+        if write(etype, code, value):
+            set_repeat(etype, code, value)
 
     def write(etype, code, value):
+        if not can_up(etype, code, value):
+            return False
         udev.write(etype, code, value)
+        return True
 
     def press(code):
         write(Event.KEY, code, Action.DOWN)
@@ -418,15 +432,22 @@ async def main():
         press(code)
         release(code)
 
+    def set_repeat(etype, code, value):
+        key_state[State.REPEAT] = (etype, code, value)
+
     while len(idev.active_keys()) > 0:
         print("There are currently active keys, please release them before continuing")
-        print(f"Input active keys: {idev.active_keys(verbose=True)}")
+        print(f"Active input keys: {idev.active_keys(verbose=True)}")
         time.sleep(1)
+
+    idev.repeat = (250, 33)
+    print("Repeat settings: {}\n".format(idev.repeat))
 
     # Grab the device to prevent other processes from reading it
     with idev.grab_context():
         event: evdev.InputEvent
         async for event in idev.async_read_loop():
+            start_time = time.time()
             udev.syn()
             if event.type == Event.KEY:
                 if in_key_active(Keys.ESC) and in_key_active(Keys.END):
@@ -440,12 +461,24 @@ async def main():
 
                 key_state = update_key_state(event)
 
-                if debug and (
-                    event.value != Action.HOLD or key_state[State.HOLDCOUNT] == 1
-                ):
+                # if debug and (
+                #    event.value != Action.HOLD or key_state[State.HOLDCOUNT] == 1
+                # ):
+                if debug:
                     print(evdev.categorize(event))
                     print(f"Input active keys: {idev.active_keys(verbose=True)}")
                     print(f"Output active keys: {odev.active_keys(verbose=True)}")
+
+                if event.value == Action.HOLD and key_state[State.REPEAT] is not None:
+                    event.type = key_state[State.REPEAT][0]
+                    event.code = key_state[State.REPEAT][1]
+                    event.value = key_state[State.REPEAT][2]
+                    print(f"Repeat hit: {event}")
+                    write_event(event)
+                    continue
+
+                if event.value == Action.UP:
+                    key_state[State.REPEAT] = None
 
                 if True:  # add layers when we feel like it
                     # Send CTRL if CAPSLOCK is pressed
@@ -475,37 +508,41 @@ async def main():
 
                     # Allow scrolling with capslock + hjkl
                     elif in_key_active(Keys.CAPSLOCK):
-                        # If we're not holding down input ctrl, release the output ctrl
-                        if not in_key_active(Keys.LEFTCTRL):
-                            release(Keys.LEFTCTRL)
-                        if not in_key_active(Keys.RIGHTCTRL):
-                            release(Keys.RIGHTCTRL)
+                        scroll_event = (None, None)
 
                         if event.code == Keys.H:
-                            write(Event.REL, Rel.SCROLLX, -1)
+                            scroll_event = (Rel.SCROLLX, -1)
                         elif event.code == Keys.J:
-                            write(Event.REL, Rel.SCROLLY, -1)
+                            scroll_event = (Rel.SCROLLY, -1)
                         elif event.code == Keys.K:
-                            write(Event.REL, Rel.SCROLLY, 1)
+                            scroll_event = (Rel.SCROLLY, 1)
                         elif event.code == Keys.L:
-                            write(Event.REL, Rel.SCROLLX, 1)
+                            scroll_event = (Rel.SCROLLX, 1)
+
+                        if scroll_event != (None, None):
+                            # If we're not holding down input ctrl, release the output ctrl
+                            if not in_key_active(Keys.LEFTCTRL):
+                                release(Keys.LEFTCTRL)
+                            if not in_key_active(Keys.RIGHTCTRL):
+                                release(Keys.RIGHTCTRL)
+
+                            write_repeat(Event.REL, scroll_event[0], scroll_event[1])
 
                         continue
 
                     # Map ALT (left or right) + åäö ( ['; ) to åäö
                     elif in_key_active(Keys.RIGHTALT) or in_key_active(Keys.LEFTALT):
-                        hit: bool = False
-                        if event.code == Keys.LEFTBRACE:
-                            event.code = Keys.W
-                            hit = True
-                        elif event.code == Keys.APOSTROPHE:
-                            event.code = Keys.A
-                            hit = True
-                        elif event.code == Keys.SEMICOLON:
-                            event.code = Keys.O
-                            hit = True
+                        code = None
 
-                        if hit:
+                        if event.code == Keys.LEFTBRACE:
+                            code = Keys.W
+                        elif event.code == Keys.APOSTROPHE:
+                            code = Keys.A
+                        elif event.code == Keys.SEMICOLON:
+                            code = Keys.O
+
+                        if code is not None:
+                            event.code = code
                             release(Keys.LEFTALT)
                             press(Keys.RIGHTALT)
                             write_event(event)
@@ -514,28 +551,32 @@ async def main():
 
                     # Map CTRL + SHIFT + hjkl to arrow keys
                     elif in_key_active(Keys.LEFTCTRL) and in_key_active(Keys.LEFTSHIFT):
-                        hit: bool = False
-                        if event.code == Keys.H:
-                            event.code = Keys.LEFT
-                            hit = True
-                        elif event.code == Keys.J:
-                            event.code = Keys.DOWN
-                            hit = True
-                        elif event.code == Keys.K:
-                            event.code = Keys.UP
-                            hit = True
-                        elif event.code == Keys.L:
-                            event.code = Keys.RIGHT
-                            hit = True
+                        code = None
 
-                        if hit:
+                        if event.code == Keys.H:
+                            code = Keys.LEFT
+                        elif event.code == Keys.J:
+                            code = Keys.DOWN
+                        elif event.code == Keys.K:
+                            code = Keys.UP
+                        elif event.code == Keys.L:
+                            code = Keys.RIGHT
+
+                        if code is not None:
+                            event.code = code
                             release(Keys.LEFTCTRL)
                             release(Keys.LEFTSHIFT)
-                            write_event(event)
+                            write_event_repeat(event)
                             continue
+
+            # Repeat optimization, if we end up here we can assume repeating the key will yield the same result.
+            if event.value == Action.HOLD:
+                set_repeat(event.type, event.code, event.value)
 
             # Pass any events we haven't handled to the virtual device
             write_event(event)
+            if debug:
+                print(f"Time to process event: {time.time() - start_time}")
 
 
 if __name__ == "__main__":
