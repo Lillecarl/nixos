@@ -18,7 +18,7 @@ in
       xfce.ristretto # Image viewer
       pcmanfm # File manager
       neovide # Neovim GUI
-      dfeet # GUI browser for dbus
+      d-spy # GUI browser for dbus
       mpv # Video player
       vlc # VLC sucks in comparison to MPV
       wev # Like xev but for wayland, displays which keys you're pressing
