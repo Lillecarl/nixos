@@ -5,8 +5,14 @@ import time
 import asyncio
 import os
 import sys
+import functools
 from enum import IntEnum, Enum, auto
+from collections import defaultdict
 from pathlib import Path
+
+os.environ.keys
+
+print = functools.partial(print, flush=("SYSTEMD_EXEC_PID" in os.environ.keys()))
 
 
 class Layer(Enum):
@@ -16,6 +22,7 @@ class Layer(Enum):
 
     NORMAL = auto()
     NUMPAD = auto()
+
 
 class Action(IntEnum):
     DOWN = 1
@@ -32,10 +39,16 @@ class State(IntEnum):
 
 
 class Event(IntEnum):
-    SYN = 0
-    KEY = 1
+    SYN = 0  # Synchronize event(s)
+    KEY = 1  # Keyboard or button event(s)
+    REL = 2  # Mouse or other relative event(s)
     MSC = 4
     LED = 17
+
+
+class Rel(IntEnum):
+    SCROLLX = 6
+    SCROLLY = 8
 
 
 class Keys(IntEnum):
@@ -308,34 +321,50 @@ async def main():
     except IndexError:
         pass
 
-    selected_device: evdev.InputDevice | None = None
+    idev: evdev.InputDevice | None = None
 
     devices = [evdev.InputDevice(path) for path in evdev.list_devices()]
 
     for device in devices:
         if device.name == device_name:
             print(device.path, device.name, device.phys)
-            selected_device = device
+            idev = device
             break
 
-    if selected_device is None:
+    if idev is None:
         print("No device found")
         return
 
-    ui = evdev.UInput.from_device(selected_device, name="pykbd")
-    print(ui.capabilities(verbose=True).keys())
-    print(ui.phys)
-    print(ui.device)
+    # Copy all capabilities from the original device
+    all_capabilities = defaultdict(set)
+    for ev_type, ev_codes in idev.capabilities().items():
+        all_capabilities[ev_type].update(ev_codes)
+
+    # Add scroll capailities
+    all_capabilities[Event.REL].add(Rel.SCROLLX)
+    all_capabilities[Event.REL].add(Rel.SCROLLY)
+
+    del all_capabilities[Event.SYN]
+
+    udev = evdev.UInput(events=all_capabilities, name="pykbd")
+    odev = evdev.InputDevice(udev.device.path)  # type: ignore
+
+    print(udev.capabilities(verbose=True).keys())
+    print(udev.phys)
+    print(udev.device)
 
     Path("/dev/input/pykbd").unlink(missing_ok=True)
-    Path("/dev/input/pykbd").symlink_to(ui.device.path, False)
+    Path("/dev/input/pykbd").symlink_to(udev.device.path, False)  # type: ignore
 
     caps_esc_threshold = 0.5
 
     keys_state = {}
 
-    def key_active(key: Keys) -> bool:
-        return any(e == key for e in selected_device.active_keys())
+    def in_key_active(key: Keys) -> bool:
+        return any(e == key for e in idev.active_keys())
+
+    def out_key_active(key: Keys) -> bool:
+        return any(e == key for e in odev.active_keys())
 
     def update_key_state(event: evdev.InputEvent):
         if keys_state.get(event.code) is None:
@@ -362,16 +391,52 @@ async def main():
         keys_state[event.code] = key_state
         return key_state
 
-    layer: Layer = Layer.NORMAL
+    def can_up(etype, code, value):
+        if value != Action.UP:
+            return True
+        return (
+            etype == Event.KEY
+            and value == Action.UP
+            and out_key_active(code)
+        )
+
+    def write_event(event: evdev.InputEvent):
+        if not can_up(event.type, event.code, event.value):
+            return
+        udev.write_event(event)
+
+    def write(etype, code, value):
+        udev.write(etype, code, value)
+
+    def press(code):
+        write(Event.KEY, code, Action.DOWN)
+
+    def release(code):
+        write(Event.KEY, code, Action.UP)
+
+    def bounce(code):
+        press(code)
+        release(code)
+
+    while len(idev.active_keys()) > 0:
+        print("There are currently active keys, please release them before continuing")
+        print(f"Input active keys: {idev.active_keys(verbose=True)}")
+        time.sleep(1)
 
     # Grab the device to prevent other processes from reading it
-    with selected_device.grab_context():
+    with idev.grab_context():
         event: evdev.InputEvent
-        async for event in selected_device.async_read_loop():
+        async for event in idev.async_read_loop():
+            udev.syn()
             if event.type == Event.KEY:
-                if key_active(Keys.ESC) and key_active(Keys.END):
+                if in_key_active(Keys.ESC) and in_key_active(Keys.END):
                     # ESC + END to exit, will ungrab since we're in a context manager
                     return
+
+                if in_key_active(Keys.ESC) and in_key_active(Keys.INSERT):
+                    print(f"Input active keys: {idev.active_keys(verbose=True)}")
+                    print(f"Output active keys: {odev.active_keys(verbose=True)}")
+                    continue
 
                 key_state = update_key_state(event)
 
@@ -379,29 +444,22 @@ async def main():
                     event.value != Action.HOLD or key_state[State.HOLDCOUNT] == 1
                 ):
                     print(evdev.categorize(event))
-                    print(selected_device.active_keys(verbose=True))
+                    print(f"Input active keys: {idev.active_keys(verbose=True)}")
+                    print(f"Output active keys: {odev.active_keys(verbose=True)}")
 
-
-                if key_active(Keys.ESC) and key_active(Keys.N):
-                    if layer == Layer.NORMAL:
-                        layer = Layer.NUMPAD
-                    elif layer == Layer.NUMPAD:
-                        layer = Layer.NORMAL
-                    print(f"Layer: {layer.name}")
-
-                if layer == Layer.NORMAL:
+                if True:  # add layers when we feel like it
                     # Send CTRL if CAPSLOCK is pressed
                     # Send ESC if CAPSLOCK is released within caps_esc_threshold
                     if event.code == Keys.CAPSLOCK:
                         event.code = Keys.LEFTCTRL
-                        ui.write_event(event)
-                        ui.syn()
+                        write_event(event)
 
                         if event.value == Action.UP:
-                            if time.time() - key_state[State.DOWNTIME] < caps_esc_threshold:
-                                ui.write(Event.KEY, Keys.ESC, Action.DOWN)
-                                ui.write(Event.KEY, Keys.ESC, Action.UP)
-                                ui.syn()
+                            if (
+                                time.time() - key_state[State.DOWNTIME]
+                                < caps_esc_threshold
+                            ):
+                                bounce(Keys.ESC)
 
                         continue
 
@@ -409,16 +467,33 @@ async def main():
                     elif (
                         event.code == Keys.ESC
                         and event.value == Action.DOWN
-                        and key_active(Keys.CAPSLOCK)
+                        and in_key_active(Keys.CAPSLOCK)
                     ):
-                        ui.write(Event.KEY, Keys.CAPSLOCK, Action.DOWN)
-                        ui.write(Event.KEY, Keys.CAPSLOCK, Action.UP)
-                        ui.syn()
+                        bounce(Keys.CAPSLOCK)
+
+                        continue
+
+                    # Allow scrolling with capslock + hjkl
+                    elif in_key_active(Keys.CAPSLOCK):
+                        # If we're not holding down input ctrl, release the output ctrl
+                        if not in_key_active(Keys.LEFTCTRL):
+                            release(Keys.LEFTCTRL)
+                        if not in_key_active(Keys.RIGHTCTRL):
+                            release(Keys.RIGHTCTRL)
+
+                        if event.code == Keys.H:
+                            write(Event.REL, Rel.SCROLLX, -1)
+                        elif event.code == Keys.J:
+                            write(Event.REL, Rel.SCROLLY, -1)
+                        elif event.code == Keys.K:
+                            write(Event.REL, Rel.SCROLLY, 1)
+                        elif event.code == Keys.L:
+                            write(Event.REL, Rel.SCROLLX, 1)
 
                         continue
 
                     # Map ALT (left or right) + åäö ( ['; ) to åäö
-                    elif (key_active(Keys.RIGHTALT) or key_active(Keys.LEFTALT)):
+                    elif in_key_active(Keys.RIGHTALT) or in_key_active(Keys.LEFTALT):
                         hit: bool = False
                         if event.code == Keys.LEFTBRACE:
                             event.code = Keys.W
@@ -431,15 +506,14 @@ async def main():
                             hit = True
 
                         if hit:
-                            ui.write(Event.KEY, Keys.LEFTALT, Action.UP)
-                            ui.write(Event.KEY, Keys.RIGHTALT, Action.DOWN)
-                            ui.write_event(event)
-                            ui.write(Event.KEY, Keys.RIGHTALT, Action.UP)
-                            ui.syn()
+                            release(Keys.LEFTALT)
+                            press(Keys.RIGHTALT)
+                            write_event(event)
+                            release(Keys.RIGHTALT)
                             continue
 
                     # Map CTRL + SHIFT + hjkl to arrow keys
-                    elif (key_active(Keys.LEFTCTRL) and key_active(Keys.LEFTSHIFT)):
+                    elif in_key_active(Keys.LEFTCTRL) and in_key_active(Keys.LEFTSHIFT):
                         hit: bool = False
                         if event.code == Keys.H:
                             event.code = Keys.LEFT
@@ -455,48 +529,13 @@ async def main():
                             hit = True
 
                         if hit:
-                            ui.write(Event.KEY, Keys.LEFTCTRL, Action.UP)
-                            ui.write(Event.KEY, Keys.LEFTSHIFT, Action.UP)
-                            ui.write_event(event)
-                            ui.syn()
+                            release(Keys.LEFTCTRL)
+                            release(Keys.LEFTSHIFT)
+                            write_event(event)
                             continue
 
-                # Numpad layer, map zxcasdqwe to 123456789
-                elif layer == Layer.NUMPAD:
-                    key = Keys(event.code)
-                    if key == Keys.ESC and event.value == Action.DOWN:
-                        layer = Layer.NORMAL
-                        print(f"Layer: {layer.name}")
-                        continue
-                    if key == Keys.Q:
-                        event.code = Keys.KP7
-                    elif key == Keys.W:
-                        event.code = Keys.KP8
-                    elif key == Keys.E:
-                        event.code = Keys.KP9
-                    elif key == Keys.A:
-                        event.code = Keys.KP4
-                    elif key == Keys.S:
-                        event.code = Keys.KP5
-                    elif key == Keys.D:
-                        event.code = Keys.KP6
-                    elif key == Keys.Z:
-                        event.code = Keys.KP1
-                    elif key == Keys.X:
-                        event.code = Keys.KP2
-                    elif key == Keys.C:
-                        event.code = Keys.KP3
-                    elif key == Keys.GRAVE:
-                        event.code = Keys.NUMLOCK
-
-                    ui.write_event(event)
-                    ui.syn()
-                    continue
-
-
             # Pass any events we haven't handled to the virtual device
-            ui.write_event(event)
-            ui.syn()
+            write_event(event)
 
 
 if __name__ == "__main__":
