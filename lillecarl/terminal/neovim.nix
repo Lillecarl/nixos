@@ -43,7 +43,6 @@ in
       # fmt
       deno # deno fmt
       fish # fish_indent
-      nixd
       nodePackages_latest.bash-language-server
       nodePackages_latest.dockerfile-language-server-nodejs
       nodePackages_latest.fixjson
@@ -178,7 +177,6 @@ in
                   };
                   nodefault = true;
                 };
-              #nixd = { cmd = [ (bp pkgs.nixd) ]; };
               #statix = { cmd = [ (bp pkgs.statix) ]; };
               bashls = { cmd = [ "${bashls}/bash-language-server" ]; };
               clangd = { cmd = [ "${pkgs.clang-tools}/bin/clangd" ]; };
