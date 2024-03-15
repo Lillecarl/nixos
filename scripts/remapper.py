@@ -10,8 +10,6 @@ from enum import IntEnum, auto
 from collections import defaultdict
 from pathlib import Path
 
-os.environ.keys
-
 print = functools.partial(print, flush=("SYSTEMD_EXEC_PID" in os.environ.keys()))
 
 
@@ -40,7 +38,6 @@ class State(IntEnum):
     UPTIME = auto()
     VALUE = auto()
     HOLDCOUNT = auto()
-    REPEAT = auto()
 
 
 class Event(IntEnum):
@@ -52,6 +49,8 @@ class Event(IntEnum):
 
 
 class Rel(IntEnum):
+    MOUSEX = 0
+    MOUSEY = 1
     SCROLLX = 6
     SCROLLY = 8
 
@@ -346,6 +345,8 @@ async def main():
         all_capabilities[ev_type].update(ev_codes)
 
     # Add scroll capailities
+    all_capabilities[Event.REL].add(Rel.MOUSEX)
+    all_capabilities[Event.REL].add(Rel.MOUSEY)
     all_capabilities[Event.REL].add(Rel.SCROLLX)
     all_capabilities[Event.REL].add(Rel.SCROLLY)
 
@@ -379,7 +380,6 @@ async def main():
                 State.HOLDTIME: time.time(),
                 State.UPTIME: time.time(),
                 State.HOLDCOUNT: 0,
-                State.REPEAT: None,
             }
 
         key_state = keys_state[event.code]
@@ -402,24 +402,19 @@ async def main():
             return True
         return etype == Event.KEY and value == Action.UP and out_key_active(code)
 
-    def write_event_repeat(event: evdev.InputEvent):
-        if write_event(event):
-            set_repeat(event.type, event.code, event.value)
-
     def write_event(event: evdev.InputEvent):
         if not can_up(event.type, event.code, event.value):
             return False
         udev.write_event(event)
+        print(f"Outputting: {evdev.categorize(event)}")
         return True
-
-    def write_repeat(etype, code, value):
-        if write(etype, code, value):
-            set_repeat(etype, code, value)
 
     def write(etype, code, value):
         if not can_up(etype, code, value):
             return False
         udev.write(etype, code, value)
+        event = evdev.InputEvent(0, 0, etype, code, value)
+        print(f"Outputting: {evdev.categorize(event)}")
         return True
 
     def press(code):
@@ -431,9 +426,6 @@ async def main():
     def bounce(code):
         press(code)
         release(code)
-
-    def set_repeat(etype, code, value):
-        key_state[State.REPEAT] = (etype, code, value)
 
     while len(idev.active_keys()) > 0:
         print("There are currently active keys, please release them before continuing")
@@ -452,6 +444,9 @@ async def main():
             if event.type == Event.KEY:
                 if in_key_active(Keys.ESC) and in_key_active(Keys.END):
                     # ESC + END to exit, will ungrab since we're in a context manager
+                    for id in odev.active_keys():
+                        release(id)
+
                     return
 
                 if in_key_active(Keys.ESC) and in_key_active(Keys.INSERT):
@@ -468,17 +463,6 @@ async def main():
                     print(evdev.categorize(event))
                     print(f"Input active keys: {idev.active_keys(verbose=True)}")
                     print(f"Output active keys: {odev.active_keys(verbose=True)}")
-
-                if event.value == Action.HOLD and key_state[State.REPEAT] is not None:
-                    event.type = key_state[State.REPEAT][0]
-                    event.code = key_state[State.REPEAT][1]
-                    event.value = key_state[State.REPEAT][2]
-                    print(f"Repeat hit: {event}")
-                    write_event(event)
-                    continue
-
-                if event.value == Action.UP:
-                    key_state[State.REPEAT] = None
 
                 if True:  # add layers when we feel like it
                     # Send CTRL if CAPSLOCK is pressed
@@ -508,27 +492,34 @@ async def main():
 
                     # Allow scrolling with capslock + hjkl
                     elif in_key_active(Keys.CAPSLOCK):
-                        scroll_event = (None, None)
+                        x = Rel.SCROLLX
+                        y = Rel.SCROLLY
+
+                        if in_key_active(Keys.SPACE):
+                            x = Rel.MOUSEX
+                            y = Rel.MOUSEY
+
+                        mouse_event = (None, None)
 
                         if event.code == Keys.H:
-                            scroll_event = (Rel.SCROLLX, -1)
+                            mouse_event = (x, -1)
                         elif event.code == Keys.J:
-                            scroll_event = (Rel.SCROLLY, -1)
+                            mouse_event = (y, -1)
                         elif event.code == Keys.K:
-                            scroll_event = (Rel.SCROLLY, 1)
+                            mouse_event = (y, 1)
                         elif event.code == Keys.L:
-                            scroll_event = (Rel.SCROLLX, 1)
+                            mouse_event = (x, 1)
 
-                        if scroll_event != (None, None):
+                        if mouse_event != (None, None):
                             # If we're not holding down input ctrl, release the output ctrl
                             if not in_key_active(Keys.LEFTCTRL):
                                 release(Keys.LEFTCTRL)
                             if not in_key_active(Keys.RIGHTCTRL):
                                 release(Keys.RIGHTCTRL)
-
-                            write_repeat(Event.REL, scroll_event[0], scroll_event[1])
-
-                        continue
+                            write(Event.REL, mouse_event[0], mouse_event[1])
+                            continue
+                        if event.code == Keys.SPACE:
+                            continue
 
                     # Map ALT (left or right) + åäö ( ['; ) to åäö
                     elif in_key_active(Keys.RIGHTALT) or in_key_active(Keys.LEFTALT):
@@ -566,17 +557,29 @@ async def main():
                             event.code = code
                             release(Keys.LEFTCTRL)
                             release(Keys.LEFTSHIFT)
-                            write_event_repeat(event)
+                            write_event(event)
                             continue
 
-            # Repeat optimization, if we end up here we can assume repeating the key will yield the same result.
-            if event.value == Action.HOLD:
-                set_repeat(event.type, event.code, event.value)
+                if len(idev.active_keys()) == 0 and len(odev.active_keys()) > 0:
+                    for id in odev.active_keys():
+                        if id != event.code:
+                            print(
+                                f"Releasing {id} because input is empty, you probably have a stateful bug"
+                            )
+                            print(evdev.categorize(event))
+                            print(
+                                f"Input active keys: {idev.active_keys(verbose=True)}"
+                            )
+                            print(
+                                f"Output active keys: {odev.active_keys(verbose=True)}"
+                            )
+                            release(id)
+
+                if debug:
+                    print(f"Time to process event: {time.time() - start_time}")
 
             # Pass any events we haven't handled to the virtual device
             write_event(event)
-            if debug:
-                print(f"Time to process event: {time.time() - start_time}")
 
 
 if __name__ == "__main__":
