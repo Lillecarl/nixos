@@ -494,24 +494,34 @@ async def main():
                     elif in_key_active(Keys.CAPSLOCK):
                         x = Rel.SCROLLX
                         y = Rel.SCROLLY
+                        distance = 1
 
                         if in_key_active(Keys.SPACE):
                             x = Rel.MOUSEX
                             y = Rel.MOUSEY
+                            distance = key_state[State.HOLDCOUNT]
+
+                        def nabs(val: int):
+                            return -abs(val)
 
                         mouse_event = (None, None)
 
                         if event.code == Keys.H:
-                            mouse_event = (x, -1)
+                            mouse_event = (x, nabs(distance))
                         elif event.code == Keys.J:
-                            mouse_event = (y, -1)
+                            if in_key_active(Keys.SPACE):
+                                distance = abs(distance)
+                            mouse_event = (y, distance)
                         elif event.code == Keys.K:
-                            mouse_event = (y, 1)
+                            if in_key_active(Keys.SPACE):
+                                distance = nabs(distance)
+                            mouse_event = (y, distance)
                         elif event.code == Keys.L:
-                            mouse_event = (x, 1)
+                            mouse_event = (x, abs(distance))
 
                         if mouse_event != (None, None):
                             # If we're not holding down input ctrl, release the output ctrl
+                            # else we'll be zooming in web browsers and such.
                             if not in_key_active(Keys.LEFTCTRL):
                                 release(Keys.LEFTCTRL)
                             if not in_key_active(Keys.RIGHTCTRL):
