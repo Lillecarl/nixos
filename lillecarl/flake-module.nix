@@ -35,6 +35,7 @@ in
             ./gui
             ./terminal
             inputs.nix-flatpak.homeManagerModules.nix-flatpak
+            inputs.niri.homeModules.niri
           ];
         };
       in
