@@ -8,6 +8,7 @@ in
     #inputs.nixpkgs-wayland.overlay
     inputs.nur.overlay
     #inputs.waybar.overlays.default
+    inputs.niri.overlays.niri
     pkgs-overlay
   ];
 }
