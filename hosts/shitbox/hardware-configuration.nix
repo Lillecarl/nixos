@@ -51,12 +51,12 @@
       };
       grub = {
         enable = true;
-        device = "/dev/sda";
+        device = config.disko.devices.disk.disk1.device;
         efiSupport = true;
         copyKernels = true;
         mirroredBoots = [
           {
-            devices = [ "/dev/sdb" ];
+            devices = [ config.disko.devices.disk.disk2.device ];
             path = "/boot2";
             efiSysMountPoint = "/boot2/efi";
           }
