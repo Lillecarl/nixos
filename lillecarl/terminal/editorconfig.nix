@@ -18,6 +18,9 @@ _:
       "*.fish" = {
         indent_size = 4;
       };
+      "*.rs" = {
+        indent_size = 4;
+      };
     };
   };
 }
