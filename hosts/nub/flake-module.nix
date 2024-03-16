@@ -38,6 +38,10 @@ in
         inputs.nixos-hardware.nixosModules.common-pc-laptop-acpi_call
         inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t14-amd-gen3
         inputs.stylix.nixosModules.stylix
+        inputs.niri.nixosModules.niri
+        {
+          programs.niri.enable = true;
+        }
       ];
       specialArgs = {
         inherit inputs flakeloc bp self;
