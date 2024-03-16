@@ -169,7 +169,6 @@
     # gnupg settings
     gnupg.agent = {
       enable = true;
-      pinentryFlavor = "qt";
     };
     # Bash autocomplete
     bash.enableCompletion = true;
