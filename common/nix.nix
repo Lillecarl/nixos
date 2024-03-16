@@ -14,6 +14,7 @@
       builders-use-substitutes = true
       keep-outputs = true
       keep-derivations = true
+      allow-import-from-derivation = true
     '';
     settings = {
       auto-optimise-store = true;
@@ -26,6 +27,7 @@
         "nixpkgs-wayland.cachix.org-1:3lwxaILxMRkVhehr5StQprHdEo4IrE8sRho9R9HOLYA="
         "rycee.cachix.org-1:TiiXyeSk0iRlzlys4c7HiXLkP3idRf20oQ/roEUAh/A="
         "viperml.cachix.org-1:qZhKBMTfmcLL+OG6fj/hzsMEedgKvZVFRRAhq7j8Vh8="
+        "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="
       ];
       substituters = [
         "https://cache.nixos.org"
@@ -34,6 +36,7 @@
         "https://nixpkgs-wayland.cachix.org"
         "https://rycee.cachix.org"
         "https://viperml.cachix.org"
+        "https://niri.cachix.org"
       ];
     };
     registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
