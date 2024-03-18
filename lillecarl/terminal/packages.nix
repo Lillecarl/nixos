@@ -78,5 +78,6 @@
     ddcutil # change display settings
     carapace # cross-shell completion engine
     lego # CLI ACME client
+    socat # Socket tool
   ];
 }
