@@ -402,22 +402,18 @@ async def main():
             return True
         return etype == Event.KEY and value == Action.UP and out_key_active(code)
 
-    def write_event(event: evdev.InputEvent):
+    def write_event(event: evdev.InputEvent, syn: bool = True):
         if not can_up(event.type, event.code, event.value):
             return False
         udev.write_event(event)
+        if syn:
+            udev.syn()
         if debug:
             print(f"Outputting: {evdev.categorize(event)}")
         return True
 
     def write(etype, code, value):
-        if not can_up(etype, code, value):
-            return False
-        udev.write(etype, code, value)
-        if debug:
-            event = evdev.InputEvent(0, 0, etype, code, value)
-            print(f"Outputting: {evdev.categorize(event)}")
-        return True
+        return write_event(evdev.InputEvent(0, 0, etype, code, value))
 
     def press(code):
         write(Event.KEY, code, Action.DOWN)
@@ -442,7 +438,6 @@ async def main():
         event: evdev.InputEvent
         async for event in idev.async_read_loop():
             start_time = time.time()
-            udev.syn()
             if event.type == Event.KEY:
                 if in_key_active(Keys.ESC) and in_key_active(Keys.END):
                     # ESC + END to exit, will ungrab since we're in a context manager
