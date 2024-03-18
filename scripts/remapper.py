@@ -492,32 +492,31 @@ async def main():
 
                     # Allow scrolling with capslock + hjkl
                     elif in_key_active(Keys.CAPSLOCK):
-                        x = Rel.SCROLLX
-                        y = Rel.SCROLLY
                         distance = 1
-
-                        if in_key_active(Keys.SPACE):
-                            x = Rel.MOUSEX
-                            y = Rel.MOUSEY
-                            distance = key_state[State.HOLDCOUNT]
-
-                        def nabs(val: int):
-                            return -abs(val)
-
                         mouse_event = (None, None)
 
-                        if event.code == Keys.H:
-                            mouse_event = (x, nabs(distance))
-                        elif event.code == Keys.J:
-                            if in_key_active(Keys.SPACE):
-                                distance = abs(distance)
-                            mouse_event = (y, distance)
-                        elif event.code == Keys.K:
-                            if in_key_active(Keys.SPACE):
-                                distance = nabs(distance)
-                            mouse_event = (y, distance)
-                        elif event.code == Keys.L:
-                            mouse_event = (x, abs(distance))
+                        if in_key_active(Keys.SPACE):
+                            distance = key_state[State.HOLDCOUNT]
+
+
+                        if not in_key_active(Keys.SPACE):
+                            if event.code == Keys.H:
+                                mouse_event = (Rel.SCROLLX, -distance)
+                            elif event.code == Keys.J:
+                                mouse_event = (Rel.SCROLLY, -distance)
+                            elif event.code == Keys.K:
+                                mouse_event = (Rel.SCROLLY, distance)
+                            elif event.code == Keys.L:
+                                mouse_event = (Rel.SCROLLX, distance)
+                        else:
+                            if event.code == Keys.H:
+                                mouse_event = (Rel.MOUSEX, -distance)
+                            elif event.code == Keys.J:
+                                mouse_event = (Rel.MOUSEY, distance)
+                            elif event.code == Keys.K:
+                                mouse_event = (Rel.MOUSEY, -distance)
+                            elif event.code == Keys.L:
+                                mouse_event = (Rel.MOUSEX, distance)
 
                         if mouse_event != (None, None):
                             # If we're not holding down input ctrl, release the output ctrl
