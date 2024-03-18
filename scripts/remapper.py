@@ -314,11 +314,11 @@ class Keys(IntEnum):
 
 
 async def main():
-    debug: bool = os.getenv("INPUT_DEBUG", "false").lower() != "false"
+    debug: bool = os.getenv("INPUT_DEBUG", "false") in ["true", "yes", "1"]
+    device_name: str = os.getenv("INPUT_NAME", "")
 
     print(f"Debug: {'true' if debug else 'false'}")
-
-    device_name = "AT Translated Set 2 keyboard"
+    print(f"Keyboard name: {device_name} (Case sensitive)")
 
     try:
         device_name = sys.argv[1]
@@ -499,7 +499,6 @@ async def main():
 
                         if in_key_active(Keys.SPACE):
                             distance = key_state[State.HOLDCOUNT]
-
 
                         if not in_key_active(Keys.SPACE):
                             if event.code == Keys.H:

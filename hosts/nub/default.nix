@@ -7,6 +7,13 @@
     ./hardware-configuration.nix
   ];
 
+  carl = {
+    remapper = {
+      enable = true;
+      keyboardName = "AT Translated Set 2 keyboard";
+    };
+  };
+
   disko.devices = (import ./disko.nix {
     disk = "nvme-eui.00a075013ca91384";
   }).disko.devices;

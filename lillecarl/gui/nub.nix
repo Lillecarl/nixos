@@ -1,6 +1,4 @@
-{ inputs
-, pkgs
-, self
+{ self
 , ...
 }:
 {
