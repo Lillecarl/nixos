@@ -406,15 +406,17 @@ async def main():
         if not can_up(event.type, event.code, event.value):
             return False
         udev.write_event(event)
-        print(f"Outputting: {evdev.categorize(event)}")
+        if debug:
+            print(f"Outputting: {evdev.categorize(event)}")
         return True
 
     def write(etype, code, value):
         if not can_up(etype, code, value):
             return False
         udev.write(etype, code, value)
-        event = evdev.InputEvent(0, 0, etype, code, value)
-        print(f"Outputting: {evdev.categorize(event)}")
+        if debug:
+            event = evdev.InputEvent(0, 0, etype, code, value)
+            print(f"Outputting: {evdev.categorize(event)}")
         return True
 
     def press(code):
