@@ -442,6 +442,37 @@ async def main():
     idev.repeat = (250, 33)
     print("Repeat settings: {}\n".format(idev.repeat))
 
+    class RemapperProtocol(asyncio.Protocol):
+        transport: asyncio.Transport
+
+        def __init__(self, config):
+            self.config = config
+
+        def write_data(self, data: str):
+            self.transport.write(data.encode())
+
+        def connection_made(self, transport):
+            self.transport = transport # type: ignore
+            print("Connection established")
+            self.write_data("YOYO")
+
+        def data_received(self, data):
+            message = data.decode()
+            print(f"Received message: {message}")
+            self.config["windowName"] = message
+            self.write_data(message)
+            print("Echoed back")
+
+        def connection_lost(self, exc):
+            print(f"Connection lost")
+
+    wminfo = {
+        "windowName": "unset"
+    }
+
+    loop = asyncio.get_event_loop()
+    await loop.create_unix_server(lambda: RemapperProtocol(wminfo), path="/tmp/pykbd.sock")
+
     # Grab the device to prevent other processes from reading it
     with idev.grab_context():
         event: evdev.InputEvent
@@ -464,6 +495,7 @@ async def main():
                     print(evdev.categorize(event))
                     print(f"Input active keys: {idev.active_keys(verbose=True)}")
                     print(f"Output active keys: {odev.active_keys(verbose=True)}")
+                    print(f"Active window name: {wminfo['windowName']}")
 
                 if True:  # add layers when we feel like it
                     # Send CTRL if CAPSLOCK is pressed
