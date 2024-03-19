@@ -51,7 +51,7 @@
       };
       grub = {
         enable = true;
-        device = config.disko.devices.disk.disk1.device;
+        inherit (config.disko.devices.disk.disk1) device;
         efiSupport = true;
         copyKernels = true;
         mirroredBoots = [
