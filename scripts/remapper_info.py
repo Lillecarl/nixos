@@ -2,11 +2,11 @@
 
 import asyncio
 import os
-
+import json
 
 class MiddleMan:
-    send = None
-    recv = None
+    send = asyncio.Transport
+    recv = asyncio.Transport
 
 
 class Hyprland(asyncio.Protocol):
@@ -25,11 +25,24 @@ class Hyprland(asyncio.Protocol):
 
     def data_received(self, data):
         message = data.decode()
-        data1 = message.split(">>")
-        func = data1[0]
-        data = data1[1]
-        if func == "activewindow":
-            self.mm.send.write_data(data)
+        messages = message.splitlines()
+        for message in messages:
+            data1 = message.split(">>")
+            func = data1[0]
+            if func != "activewindow":
+                continue
+
+            windata = data1[1]
+            wininfo = windata.split(",")
+
+            info = {
+                "windowClass": wininfo[0],
+                "windowTitle": wininfo[1],
+            }
+            if func == "activewindow":
+                data_out = json.dumps(info)
+                print(data_out)
+                self.mm.send.write_data(data_out)
 
     def connection_lost(self, exc):
         print("Connection lost")
@@ -64,7 +77,7 @@ async def main():
     await loop.create_unix_connection(
         lambda: Remapper(middleman), path="/tmp/pykbd.sock"
     )
-    hypr = await loop.create_unix_connection(
+    await loop.create_unix_connection(
         lambda: Hyprland(middleman),
         path=f"/tmp/hypr/{os.environ['HYPRLAND_INSTANCE_SIGNATURE']}/.socket2.sock",
     )

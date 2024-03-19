@@ -3,6 +3,7 @@
 import asyncio
 import evdev
 import grp
+import json
 import os
 import sys
 import time
@@ -446,7 +447,7 @@ async def main():
         transport: asyncio.Transport
 
         def __init__(self, config):
-            self.config = config
+            self.wminfo = config
 
         def write_data(self, data: str):
             self.transport.write(data.encode())
@@ -459,15 +460,19 @@ async def main():
         def data_received(self, data):
             message = data.decode()
             print(f"Received message: {message}")
-            self.config["windowName"] = message
+            # Can't set self.wminfo directly, it's a reference to the original dict
+            for k,v in json.loads(message).items():
+                self.wminfo[k] = v
             self.write_data(message)
             print("Echoed back")
 
         def connection_lost(self, exc):
             print(f"Connection lost")
+            exit(-1)
 
     wminfo = {
-        "windowName": "unset"
+        "windowClass": "unset",
+        "windowTitle": "unset",
     }
 
     sockpath = "/tmp/pykbd.sock"
@@ -498,7 +503,7 @@ async def main():
                     print(evdev.categorize(event))
                     print(f"Input active keys: {idev.active_keys(verbose=True)}")
                     print(f"Output active keys: {odev.active_keys(verbose=True)}")
-                    print(f"Active window name: {wminfo['windowName']}")
+                    print(f"Active window name: {wminfo['windowTitle']}")
 
                 if True:  # add layers when we feel like it
                     # Send CTRL if CAPSLOCK is pressed
