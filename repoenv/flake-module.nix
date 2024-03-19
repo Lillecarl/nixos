@@ -19,7 +19,10 @@ _:
             python-gitlab
             requests
             textual
+            pywlroots
+            pywayland
           ]))
+          pkgs.python3.pkgs.pywayland
         ];
 
         shellHook = ''
