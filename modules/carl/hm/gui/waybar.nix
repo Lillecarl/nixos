@@ -26,7 +26,7 @@ in
     programs.waybar = {
       enable = true;
 
-      package = pkgs.waybar;
+      package = pkgs.waybar.override { wireplumberSupport = false; };
 
       systemd = {
         enable = true;
