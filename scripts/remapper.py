@@ -1,14 +1,14 @@
 #! /usr/bin/env python3
 
-import evdev
-import time
 import asyncio
+import evdev
+import grp
 import os
 import sys
-import functools
+import time
+from collections import defaultdict
 from datetime import datetime
 from enum import IntEnum, auto
-from collections import defaultdict
 from pathlib import Path
 
 pyprint = print
@@ -470,8 +470,11 @@ async def main():
         "windowName": "unset"
     }
 
+    sockpath = "/tmp/pykbd.sock"
     loop = asyncio.get_event_loop()
-    await loop.create_unix_server(lambda: RemapperProtocol(wminfo), path="/tmp/pykbd.sock")
+    await loop.create_unix_server(lambda: RemapperProtocol(wminfo), path=sockpath)
+    os.chown(sockpath, 1, grp.getgrnam("uinput").gr_gid)
+    os.chmod(sockpath, 0o660)
 
     # Grab the device to prevent other processes from reading it
     with idev.grab_context():
