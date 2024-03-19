@@ -4,19 +4,6 @@ let
   python3Packages = {
     pyping = prev.python3Packages.callPackage ../pkgs/python3Packages/pyping { };
     hyprpy = prev.python3Packages.callPackage ../pkgs/python3Packages/hyprpy { };
-    pynvim =
-      if
-        prev.python3Packages.pynvim.version prev.lib.versionAtLeast "0.5.0" then
-        prev.python3Packages.pynvim else
-        prev.python3Packages.pynvim.overrideAttrs (oldAttrs: {
-          src = prev.fetchFromGitHub {
-            owner = "neovim";
-            repo = "pynvim";
-            rev = "v0.5.0";
-            sha256 = "";
-          };
-        });
-
   };
   nodePackages = prev.callPackages ./node-packages { };
 
