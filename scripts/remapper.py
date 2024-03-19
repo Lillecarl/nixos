@@ -455,11 +455,6 @@ async def main():
 
                     return
 
-                if in_key_active(Keys.ESC) and in_key_active(Keys.INSERT):
-                    print(f"Input active keys: {idev.active_keys(verbose=True)}")
-                    print(f"Output active keys: {odev.active_keys(verbose=True)}")
-                    continue
-
                 key_state = update_key_state(event)
 
                 # if debug and (
