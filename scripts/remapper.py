@@ -6,12 +6,21 @@ import asyncio
 import os
 import sys
 import functools
+from datetime import datetime
 from enum import IntEnum, auto
 from collections import defaultdict
 from pathlib import Path
 
-print = functools.partial(print, flush=("SYSTEMD_EXEC_PID" in os.environ.keys()))
+pyprint = print
 
+def dtime():
+    return datetime.now().strftime("%H:%M:%S.%f")
+
+def print(*args, **kwargs):
+    if "SYSTEMD_EXEC_PID" in os.environ.keys():
+        pyprint(*args, **kwargs, flush=True)
+    else:
+        pyprint(dtime(), *args, **kwargs)
 
 class Layer(IntEnum):
     @staticmethod
