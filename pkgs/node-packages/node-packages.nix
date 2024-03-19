@@ -391,13 +391,13 @@ let
         sha512 = "e64Qj9+4aZzjzzFpZC7p5kmm/ccCrbLhAJplhsDXQFs87XTsXwOpH4s1Io2s90Tau/8r2j9f4l/thhDevRjzxw==";
       };
     };
-    "es-abstract-1.23.0" = {
+    "es-abstract-1.23.2" = {
       name = "es-abstract";
       packageName = "es-abstract";
-      version = "1.23.0";
+      version = "1.23.2";
       src = fetchurl {
-        url = "https://registry.npmjs.org/es-abstract/-/es-abstract-1.23.0.tgz";
-        sha512 = "vmuE7Uoevk2xkwu5Gwa7RfJk/ebVV6xRv7KuZNbUglmJHhWPMbLL20ztreVpBbdxBZijETx3Aml3NssX4SFMvQ==";
+        url = "https://registry.npmjs.org/es-abstract/-/es-abstract-1.23.2.tgz";
+        sha512 = "60s3Xv2T2p1ICykc7c+DNDPLDMm9t4QxCOUU0K9JxiLjM3C1zB9YVdN7tjxrFd4+AkZ8CdX1ovUga4P2+1e+/w==";
       };
     };
     "es-array-method-boxes-properly-1.0.0" = {
@@ -425,6 +425,15 @@ let
       src = fetchurl {
         url = "https://registry.npmjs.org/es-errors/-/es-errors-1.3.0.tgz";
         sha512 = "Zf5H2Kxt2xjTvbJvP2ZWLEICxA6j+hAmMzIlypy4xcBg1vKVnx89Wy0GbS+kf5cwCVFFzdCFh2XSCFNULS6csw==";
+      };
+    };
+    "es-object-atoms-1.0.0" = {
+      name = "es-object-atoms";
+      packageName = "es-object-atoms";
+      version = "1.0.0";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/es-object-atoms/-/es-object-atoms-1.0.0.tgz";
+        sha512 = "MZ4iQ6JwHOBQjahnjwaC1ZtIBH+2ohjamzAO3oaHcXYup7qxjF2fixyH+Q71voWHeOkI2q/TnJao/KfXYIZWbw==";
       };
     };
     "es-set-tostringtag-2.0.3" = {
@@ -1183,22 +1192,22 @@ let
         sha512 = "CK46p3AxBvBhJbBi6WrF9bCcaWH20E4NwlLSzpooG2nXWvcP2gy2YR8VN6fSwZyrbcvL4S4zoNKbR0QG52X4rw==";
       };
     };
-    "string.prototype.trim-1.2.8" = {
+    "string.prototype.trim-1.2.9" = {
       name = "string.prototype.trim";
       packageName = "string.prototype.trim";
-      version = "1.2.8";
+      version = "1.2.9";
       src = fetchurl {
-        url = "https://registry.npmjs.org/string.prototype.trim/-/string.prototype.trim-1.2.8.tgz";
-        sha512 = "lfjY4HcixfQXOfaqCvcBuOIapyaroTXhbkfJN3gcB1OtyupngWK4sEET9Knd0cXd28kTUqu/kHoV4HKSJdnjiQ==";
+        url = "https://registry.npmjs.org/string.prototype.trim/-/string.prototype.trim-1.2.9.tgz";
+        sha512 = "klHuCNxiMZ8MlsOihJhJEBJAiMVqU3Z2nEXWfWnIqjN0gEFS9J9+IxKozWWtQGcgoa1WUZzLjKPTr4ZHNFTFxw==";
       };
     };
-    "string.prototype.trimend-1.0.7" = {
+    "string.prototype.trimend-1.0.8" = {
       name = "string.prototype.trimend";
       packageName = "string.prototype.trimend";
-      version = "1.0.7";
+      version = "1.0.8";
       src = fetchurl {
-        url = "https://registry.npmjs.org/string.prototype.trimend/-/string.prototype.trimend-1.0.7.tgz";
-        sha512 = "Ni79DqeB72ZFq1uH/L6zJ+DKZTkOtPIHovb3YZHQViE+HDouuU4mBrLOLDn5Dde3RF8qw5qVETEjhu9locMLvA==";
+        url = "https://registry.npmjs.org/string.prototype.trimend/-/string.prototype.trimend-1.0.8.tgz";
+        sha512 = "p73uL5VCHCO2BZZ6krwwQE3kCzM7NKmis8S//xEC6fQonchbum4eP6kR4DLEjQFO3Wnj3Fuo8NM0kOSjVdHjZQ==";
       };
     };
     "string.prototype.trimstart-1.0.7" = {
@@ -1431,10 +1440,11 @@ in
       sources."eachr-3.3.0"
       sources."editions-2.3.1"
       sources."errlop-2.2.0"
-      sources."es-abstract-1.23.0"
+      sources."es-abstract-1.23.2"
       sources."es-array-method-boxes-properly-1.0.0"
       sources."es-define-property-1.0.0"
       sources."es-errors-1.3.0"
+      sources."es-object-atoms-1.0.0"
       sources."es-set-tostringtag-2.0.3"
       sources."es-to-primitive-1.2.1"
       sources."esprima-4.0.1"
@@ -1517,8 +1527,8 @@ in
       sources."sprintf-js-1.0.3"
       sources."ssf-0.8.2"
       sources."string-extended-0.0.8"
-      sources."string.prototype.trim-1.2.8"
-      sources."string.prototype.trimend-1.0.7"
+      sources."string.prototype.trim-1.2.9"
+      sources."string.prototype.trimend-1.0.8"
       sources."string.prototype.trimstart-1.0.7"
       sources."strip-json-comments-2.0.1"
       sources."toml-j0.4-1.1.1"
