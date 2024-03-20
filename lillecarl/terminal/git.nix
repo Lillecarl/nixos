@@ -42,6 +42,7 @@
       core.fsmonitor = true;
       core.untrackedcache = true;
       pull.rebase = true;
+      rebase.autoStash = true;
       push.autoSetupRemote = true;
       rerere.enable = true;
       tag.sort = "version:refname";
