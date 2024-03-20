@@ -19,20 +19,26 @@ alias grt="cd (git root)"
 alias tg=terragrunt
 alias pager=$PAGER
 
+abbr -a :q exit
+
 abbr -a sc sudo systemctl
 abbr -a ssc sudo systemctl
 abbr -a scu systemctl --user
+
 abbr -a jc journalctl -u
 abbr -a jcu journalctl --user-unit
 abbr -a jci journalinvocation -u
 abbr -a jcui journalinvocation --user-unit
+
 abbr -a ssha ssh -oForwardAgent=yes
 abbr -a sshr ssh-keygen -R
-abbr -a :q exit
+
 abbr -a gpa git pull --all --recurse-submodules
 abbr -a gfa git fetch --all --recurse-submodules
 abbr -a grm git rebase origin/main
 abbr -a gsu git submodule update --recursive
+abbr -a gsgp "git switch main && git pull"
+
 abbr -a nos nh os switch -- --impure
 abbr -a nhs nh home switch -- --impure
 abbr -a nro nix-rebuild os
