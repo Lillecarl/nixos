@@ -1,39 +1,19 @@
 { vimUtils
 , fetchFromGitHub
-, python3
-, buildEnv
 , lib
 }:
-let
+vimUtils.buildVimPlugin {
   pname = "copilotchat-nvim";
-  version = "1.0.0";
+  version = "2.0.0";
   src = fetchFromGitHub {
     owner = "CopilotC-Nvim";
     repo = "CopilotChat.nvim";
-    rev = "847a35457106e9d6ec7a9675b25cf8f90f8e84cc";
-    sha256 = "sha256-i/ME8djXqPH2lTtxhf+rmUiVBP06CLKAp+ReJ4v27Os=";
+    rev = "4811cdd91b35345358da89f0eedd1f2b92c8bf04";
+    sha256 = "sha256-YRfe53MfqmRkgM2YgdYjps1FvhcDeqiSwuPe7YMIM7k=";
   };
   meta = {
     description = "Chat with GitHub Copilot in Neovim ";
     homepage = "https://github.com/CopilotC-Nvim/CopilotChat.nvim/";
     license = lib.licenses.gpl3;
   };
-  lua = vimUtils.buildVimPlugin {
-    pname = "${pname}-lua";
-    inherit src version meta;
-  };
-  python = python3.withPackages (ps: with ps; [
-    python-dotenv
-    requests
-    prompt-toolkit
-    tiktoken
-  ]);
-in
-buildEnv {
-  name = pname;
-
-  paths = [
-    lua
-    python
-  ];
 }
