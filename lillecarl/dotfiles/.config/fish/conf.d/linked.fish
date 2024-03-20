@@ -1,5 +1,6 @@
 set -x fish_greeting ""
 set -x SHELL fish
+set -x DIRENV_LOG_FORMAT ""
 fish_vi_key_bindings
 
 # trigger direnv before prompt is rendered
