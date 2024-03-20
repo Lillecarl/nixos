@@ -52,6 +52,10 @@ let
         disabled = false;
       };
 
+      direnv = {
+        disabled = false;
+      };
+
       # Display which shell we're in
       env_var.STARSHIP_SHELL = {
         format = "\\[[$symbol($env_value)]($style)\\]";
