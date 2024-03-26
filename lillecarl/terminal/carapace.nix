@@ -5,7 +5,7 @@
 }:
 {
   programs.carapace = {
-    enable = false;
+    enable = true;
 
     package = pkgs.callPackage "${pkgs.path}/pkgs/shells/carapace" {
       buildGoModule = args: pkgs.buildGoModule (args // {
@@ -16,6 +16,10 @@
     };
 
     enableFishIntegration = true;
+
+    enabledCompleters = [
+      "vault"
+    ];
   };
   home.packages = [
     config.programs.carapace.package
