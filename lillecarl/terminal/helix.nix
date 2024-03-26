@@ -1,5 +1,5 @@
 { pkgs
-, bp
+, lib
 , ...
 }:
 {
@@ -9,7 +9,7 @@
     languages = {
       language-server = {
         nix = {
-          command = bp pkgs.nil;
+          command = lib.getExe pkgs.nil;
           config.nil = {
             formatting.command = [ "${pkgs.nixpkgs-fmt}/bin/nixpkgs-fmt" ];
             nix.flake.autoEvalInputs = true;

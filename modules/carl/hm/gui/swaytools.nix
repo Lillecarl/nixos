@@ -1,5 +1,4 @@
-{ bp
-, config
+{ config
 , lib
 , pkgs
 , self
@@ -7,7 +6,7 @@
 }:
 let
   cfg = config.carl.gui.swaytools;
-  lockScript = bp (pkgs.writeShellScriptBin "swayLockScript" ''
+  lockScript = lib.getExe (pkgs.writeShellScriptBin "swayLockScript" ''
     ${config.programs.rbw.package}/bin/rbw lock
     ${lib.getExe pkgs.swaylock}
     ${config.programs.rbw.package}/bin/rbw unlock

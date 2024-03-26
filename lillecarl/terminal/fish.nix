@@ -1,6 +1,6 @@
 { pkgs
 , config
-, bp
+, lib
 , ...
 }:
 {
@@ -30,8 +30,8 @@
       ]);
 
     interactiveShellInit = /* fish */ ''
-      ${bp pkgs.zoxide} init fish | source
-      ${bp pkgs.thefuck} --alias | source
+      ${lib.getExe pkgs.zoxide} init fish | source
+      ${pkgs.thefuck}/bin/fuck --alias | source
     '';
 
     shellInit = ''

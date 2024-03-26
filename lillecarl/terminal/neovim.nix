@@ -1,7 +1,5 @@
 { pkgs
-, self
 , lib
-, bp
 , config
 , ...
 }:
@@ -53,7 +51,6 @@ in
       nodePackages_latest.yaml-language-server
       nushell
       omnisharp-roslyn
-      perlPackages.PerlLanguageServer
       phpPackages.psalm
       postgres-lsp
       ruby-lsp
@@ -177,35 +174,34 @@ in
                   };
                   nodefault = true;
                 };
-              #statix = { cmd = [ (bp pkgs.statix) ]; };
+              #statix = { cmd = [ (lib.getExe pkgs.statix) ]; };
               bashls = { cmd = [ "${bashls}/bash-language-server" ]; };
               clangd = { cmd = [ "${pkgs.clang-tools}/bin/clangd" ]; };
-              cmake = { cmd = [ (bp pkgs.cmake-language-server) ]; };
+              cmake = { cmd = [ (lib.getExe pkgs.cmake-language-server) ]; };
               cssls = { cmd = [ "${vscode-ls}/vscode-css-language-server" ]; };
               dockerls = { cmd = [ "${dockerls}/docker-langserver" ]; };
-              dotls = { cmd = [ (bp pkgs.dot-language-server) ]; };
+              dotls = { cmd = [ (lib.getExe pkgs.dot-language-server) ]; };
               eslint = { cmd = [ "${vscode-ls}/vscode-eslint-language-server" ]; };
-              gopls = { cmd = [ (bp pkgs.gopls) ]; };
+              gopls = { cmd = [ (lib.getExe pkgs.gopls) ]; };
               html = { cmd = [ "${vscode-ls}/vscode-html-language-server" ]; };
               jsonls = { cmd = [ "${vscode-ls}/vscode-json-language-server" ]; };
-              lua_ls = { cmd = [ (bp pkgs.lua-language-server) ]; };
-              marksman = { cmd = [ (bp pkgs.marksman) ]; };
-              nil_ls = { cmd = [ (bp pkgs.nil) ]; };
-              nushell = { cmd = [ (bp pkgs.nushell) ]; };
-              omnisharp = { cmd = [ (bp pkgs.omnisharp-roslyn) ]; };
-              perlls = { cmd = [ (bp pkgs.perlPackages.PerlLanguageServer) ]; }; # broken
-              postgres_lsp = { cmd = [ (bp pkgs.postgres-lsp) ]; };
-              psalm = { cmd = [ (bp pkgs.phpPackages.psalm) ]; };
+              lua_ls = { cmd = [ (lib.getExe pkgs.lua-language-server) ]; };
+              marksman = { cmd = [ (lib.getExe pkgs.marksman) ]; };
+              nil_ls = { cmd = [ (lib.getExe pkgs.nil) ]; };
+              nushell = { cmd = [ (lib.getExe pkgs.nushell) ]; };
+              omnisharp = { cmd = [ (lib.getExe pkgs.omnisharp-roslyn) ]; };
+              postgres_lsp = { cmd = [ (lib.getExe pkgs.postgres-lsp) ]; };
+              psalm = { cmd = [ (lib.getExe pkgs.phpPackages.psalm) ]; };
               pyright = { cmd = [ "${pyright}/pyright-langserver" ]; };
-              ruby_ls = { cmd = [ (bp pkgs.ruby-lsp) ]; };
-              rust_analyzer = { cmd = [ (bp pkgs.rust-analyzer) ]; };
-              terraformls = { cmd = [ (bp pkgs.terraform-ls) ]; };
-              tflint = { cmd = [ (bp pkgs.tflint) ]; };
+              ruby_ls = { cmd = [ (lib.getExe pkgs.ruby-lsp) ]; };
+              rust_analyzer = { cmd = [ (lib.getExe pkgs.rust-analyzer) ]; };
+              terraformls = { cmd = [ (lib.getExe pkgs.terraform-ls) ]; };
+              tflint = { cmd = [ (lib.getExe pkgs.tflint) ]; };
               tsserver = { cmd = [ "${tsserver}/typescript-language-server" ]; };
               typos_lsp = { cmd = [ "${pkgs.typos-lsp}/bin/typos-lsp" ]; };
               vimls = { cmd = [ "${vimls}/vimls-language-server" ]; };
               yamlls = { cmd = [ "${yamlls}/yaml-language-server" ]; };
-              zls = { cmd = [ (bp pkgs.zls) ]; };
+              zls = { cmd = [ (lib.getExe pkgs.zls) ]; };
             };
           fmt =
             let
@@ -213,31 +209,31 @@ in
             in
             builtins.mapAttrs (key: mkConform) {
               clang_format = "${pkgs.clang-tools}/bin/clang-format";
-              deno_fmt = bp pkgs.deno;
+              deno_fmt = lib.getExe pkgs.deno;
               fish_indent = "${pkgs.fish}/bin/fish_indent";
               fixjson = "${nodeLatest.fixjson}/bin/fixjson";
               gofmt = "${pkgs.go}/bin/gofmt";
               goimports = "${pkgs.gotools}/bin/goimports";
               golines = "${pkgs.golines}/bin/golines";
-              nixpkgs_fmt = bp pkgs.nixpkgs-fmt;
-              packer_fmt = bp pkgs.packer;
-              prettierd = bp pkgs.prettierd;
-              ruff_fix = bp pkgs.ruff;
-              ruff_format = bp pkgs.ruff;
-              rustfmt = bp pkgs.rustfmt;
-              shellcheck = bp pkgs.shellcheck;
-              stylua = bp pkgs.stylua;
-              taplo = bp pkgs.taplo;
-              terraform_fmt = bp pkgs.terraform;
-              terragrunt_hclfmt = bp pkgs.terragrunt;
-              yamlfmt = bp pkgs.yamlfmt;
+              nixpkgs_fmt = lib.getExe pkgs.nixpkgs-fmt;
+              packer_fmt = "${pkgs.packer}/bin/packer";
+              prettierd = lib.getExe pkgs.prettierd;
+              ruff_fix = lib.getExe pkgs.ruff;
+              ruff_format = lib.getExe pkgs.ruff;
+              rustfmt = lib.getExe pkgs.rustfmt;
+              shellcheck = lib.getExe pkgs.shellcheck;
+              stylua = lib.getExe pkgs.stylua;
+              taplo = lib.getExe pkgs.taplo;
+              terraform_fmt = lib.getExe pkgs.terraform;
+              terragrunt_hclfmt = lib.getExe pkgs.terragrunt;
+              yamlfmt = lib.getExe pkgs.yamlfmt;
             };
           repl = {
-            lua = { command = [ (bp pkgs.lua) ]; };
+            lua = { command = [ "${pkgs.lua}/bin/lua" ]; };
           };
           tools = {
             paths = {
-              ripgrep = bp pkgs.ripgrep;
+              ripgrep = lib.getExe pkgs.ripgrep;
               copilotchatPython = "${pkgs.copilotchat-nvim}/bin/python3";
             };
           };

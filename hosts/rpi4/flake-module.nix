@@ -1,7 +1,6 @@
 { inputs
 , self
 , flakeloc
-, bp
 , ...
 }:
 let
@@ -32,7 +31,7 @@ let
       "${self}/common/nix.nix"
     ];
     specialArgs = {
-      inherit inputs flakeloc bp self;
+      inherit inputs flakeloc self;
     };
   };
 in

@@ -1,6 +1,5 @@
 { pkgs
 , lib
-, bp
 , ...
 }:
 let
@@ -12,7 +11,7 @@ let
     "set -e __fish_nixos_general_config_sourced"
     "set -e __fish_nixos_interactive_config_sourced"
     "set -e __fish_nixos_login_config_sourced"
-    "exec ${bp pkgs.hyprland}"
+    "exec ${lib.getExe pkgs.hyprland}"
   ];
 in
 {
@@ -22,7 +21,7 @@ in
     settings = {
       default_session = {
         user = "lillecarl";
-        command = "${bp pkgs.fish} -l -c '${commands}'";
+        command = "${lib.getExe pkgs.fish} -l -c '${commands}'";
       };
     };
   };

@@ -1,9 +1,9 @@
 { pkgs
-, bp
+, lib
 , ...
 }:
 let
-  pager = bp pkgs.nvimpager;
+  pager = lib.getExe pkgs.nvimpager;
 in
 {
   pam = {

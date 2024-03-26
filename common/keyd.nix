@@ -1,6 +1,5 @@
 { pkgs
 , lib
-, bp
 , ...
 }:
 {
@@ -10,7 +9,7 @@
   users.groups.keyd = { };
   systemd.services.keyd = {
     serviceConfig = lib.mkForce {
-      ExecStart = bp pkgs.keyd;
+      ExecStart = lib.getExe pkgs.keyd;
       Restart = "always";
     };
   };

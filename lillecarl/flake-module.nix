@@ -2,7 +2,6 @@
 , inputs
 , withSystem
 , flakeloc
-, bp
 , ...
 }:
 let
@@ -12,7 +11,7 @@ let
         pkgs = pkgs // { config.allowUnfree = true; };
         extraSpecialArgs =
           {
-            inherit self inputs flakeloc bp;
+            inherit self inputs flakeloc mpkgs;
           } // customArgs.extraSpecialArgs;
 
         modules = [

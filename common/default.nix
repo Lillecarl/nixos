@@ -1,5 +1,5 @@
 { pkgs
-, bp
+, lib
 , ...
 }:
 {
@@ -52,7 +52,7 @@
       inotify-tools # CLI tools for inotify in Linux
       sshfs # Mount SFTP as filesystem
       rclone # rsync for clouds (+ loads of other cool things)
-      gnumake # Make for packer for rhel template
+      gnumake # make
       sipcalc # Subnet calculator
       dogdns # dig without poop
       whois # whois command
@@ -255,11 +255,11 @@
           users = [ "lillecarl" ];
           commands = [
             {
-              command = "${bp pkgs.htop} --readonly";
+              command = "${lib.getExe pkgs.htop} --readonly";
               options = [ "NOPASSWD" ];
             }
             {
-              command = "${bp pkgs.ddcutil}";
+              command = "${lib.getExe pkgs.ddcutil}";
               options = [ "NOPASSWD" ];
             }
           ];

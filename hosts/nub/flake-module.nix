@@ -1,7 +1,6 @@
 { inputs
 , self
 , flakeloc
-, bp
 , ...
 }:
 let
@@ -44,7 +43,7 @@ in
         }
       ];
       specialArgs = {
-        inherit inputs flakeloc bp self;
+        inherit inputs flakeloc self;
       };
     };
   };

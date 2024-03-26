@@ -182,7 +182,6 @@
         inherit inputs;
         specialArgs = {
           flakeloc = import ./.flakepath;
-          bp = pkg: "${pkg.outPath}/bin/" + (pkg.meta.mainProgram or pkg.pname);
         };
       }
       {

@@ -1,7 +1,6 @@
 { inputs
 , flakeloc
 , self
-, bp
 , ...
 }:
 {
@@ -27,7 +26,7 @@
         inputs.flake-programs-sqlite.nixosModules.programs-sqlite
       ];
       specialArgs = {
-        inherit inputs self flakeloc bp;
+        inherit inputs self flakeloc;
       };
     };
   };
