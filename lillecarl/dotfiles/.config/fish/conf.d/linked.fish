@@ -6,10 +6,12 @@ fish_vi_key_bindings
 # trigger direnv before prompt is rendered
 set -g direnv_fish_mode eval_on_arrow
 
+# cd into LASTPATH if we're not: in tmux, in vscode, or in a login shell
 if set -q LASTPATH
     and not set -q TMUX
     and not set -q VSCODE_INJECTION
-    begin
+    and not status --is-login;
+    and begin
         cd $LASTPATH
     end
 end
