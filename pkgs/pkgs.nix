@@ -28,6 +28,12 @@ let
     ${prev.pulseaudio}/bin/pactl set-source-mute @DEFAULT_SOURCE@ $mute
     echo $mute > /sys/class/leds/platform\:\:micmute/brightness
   '';
+  terraform_1_5_5 = prev.mkTerraform {
+    version = "1.5.5";
+    hash = "sha256-SBS3a/CIUdyIUJvc+rANIs+oXCQgfZut8b0517QKq64=";
+    vendorHash = "sha256-lQgWNMBf+ioNxzAV7tnTQSIS840XdI9fg9duuwoK+U4=";
+    patches = [ "${prev.path}/pkgs/applications/networking/cluster/terraform/provider-path-0_15.patch" ];
+  };
 in
 prev.lib.filterAttrs
   (n: v:
@@ -49,13 +55,8 @@ prev.lib.filterAttrs
     # Inject grafanaPlugins
     grafanaPlugins = grafanaPlugins // prev.grafanaPlugins;
 
-    terraform_1_5_5 = prev.mkTerraform {
-      version = "1.5.5";
-      hash = "sha256-SBS3a/CIUdyIUJvc+rANIs+oXCQgfZut8b0517QKq64=";
-      vendorHash = "sha256-lQgWNMBf+ioNxzAV7tnTQSIS840XdI9fg9duuwoK+U4=";
-      patches = [ "${prev.path}/pkgs/applications/networking/cluster/terraform/provider-path-0_15.patch" ];
-    };
-
+    inherit terraform_1_5_5;
+    terraform = terraform_1_5_5;
 
     keyd = prev.callPackage ./tmp/keyd.nix { };
     keymapper = prev.keymapper.overrideAttrs (pattrs: {
