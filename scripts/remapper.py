@@ -497,10 +497,9 @@ async def main():
 
                 key_state = update_key_state(event)
 
-                # if debug and (
-                #    event.value != Action.HOLD or key_state[State.HOLDCOUNT] == 1
-                # ):
-                if debug:
+                if debug and (
+                   event.value != Action.HOLD or key_state[State.HOLDCOUNT] == 1
+                ):
                     print(evdev.categorize(event))
                     print(f"Input active keys: {idev.active_keys(verbose=True)}")
                     print(f"Output active keys: {odev.active_keys(verbose=True)}")
