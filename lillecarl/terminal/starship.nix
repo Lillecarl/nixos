@@ -54,6 +54,13 @@ let
 
       direnv = {
         disabled = false;
+        format = "\\[[$symbol$allowed/$loaded]($style)\\]";
+        symbol = "  ";
+        allowed_msg = "";
+        loaded_msg = "";
+        unloaded_msg = "";
+        not_allowed_msg = "";
+        denied_msg = "";
       };
 
       # Display which shell we're in
