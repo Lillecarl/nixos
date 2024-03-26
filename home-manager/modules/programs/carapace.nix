@@ -53,8 +53,14 @@ in
       '';
       availableCompleters = splitString "\n" (builtins.readFile carapaceListFile);
       enabledCompleters = lists.intersectLists availableCompleters cfg.enabledCompleters;
+      invalidCompleters = lists.subtractLists availableCompleters cfg.enabledCompleters;
     in
     mkIf cfg.enable {
+      warnings = mkIf (builtins.length invalidCompleters > 0) [
+        ''
+          The following carapace completers are specified but not available: ${builtins.toString invalidCompleters}
+        ''
+      ];
       home.packages = [ cfg.package ];
 
       programs = {
