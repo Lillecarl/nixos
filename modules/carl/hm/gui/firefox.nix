@@ -25,7 +25,10 @@ in
       enable = true;
       package = pkgs.wrapFirefox pkgs.firefox-unwrapped {
         omniPatches = [
-          "${self}/pkgs/ff.patch"
+          (pkgs.fetchpatch {
+            url = "file://${self}/pkgs/ff.patch";
+            sha256 = "sha256-9GcctuRKfaFLOlOln3Gf/vwEyPy3eHQjJty61tFIBxs=";
+          })
         ];
       };
 
