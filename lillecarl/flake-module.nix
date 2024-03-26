@@ -6,9 +6,9 @@
 }:
 let
   mkHome = system: customArgs:
-    withSystem system ({ pkgs, ... }:
+    withSystem system ({ pkgs, mpkgs, spkgs, ... }:
       inputs.home-manager.lib.homeManagerConfiguration {
-        pkgs = pkgs // { config.allowUnfree = true; };
+        inherit pkgs;
         extraSpecialArgs =
           {
             inherit self inputs flakeloc mpkgs;

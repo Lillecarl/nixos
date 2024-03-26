@@ -6,6 +6,8 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     nixpkgs-lib.url = "github:NixOS/nixpkgs/nixos-unstable?dir=lib";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-master.url = "github:NixOS/nixpkgs/master";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-23.11";
     nur.url = "github:nix-community/NUR";
     nix-flatpak.url = "github:gmodena/nix-flatpak";
     niri.url = "github:sodiboo/niri-flake";
@@ -174,9 +176,6 @@
     , flake-parts
     , ...
     } @ inputs:
-    let
-      pkgs = import inputs.nixpkgs { };
-    in
     flake-parts.lib.mkFlake
       {
         inherit inputs;
@@ -205,14 +204,26 @@
           { config
           , system
           , pkgs
+          , mpkgs
+          , spkgs
           , inputs'
           , ...
           }:
           let
+            pkgs_settings = {
+              inherit system;
+              config.allowUnfree = true;
+            };
             pkgs_overlaid = pkgs.extend (import ./pkgs);
             own_pkgs = import ./pkgs/pkgs.nix pkgs_overlaid pkgs_overlaid true;
           in
           {
+            _module.args = {
+              pkgs = import inputs.nixpkgs pkgs_settings;
+              mpkgs = import inputs.nixpkgs-master pkgs_settings;
+              spkgs = import inputs.nixpkgs-stable pkgs_settings;
+            };
+
             formatter = pkgs.nixpkgs-fmt;
             packages = own_pkgs // {
               gitbutler = pkgs.callPackage ./pkgs/gitbutler {

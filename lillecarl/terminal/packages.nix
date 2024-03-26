@@ -1,8 +1,8 @@
 { pkgs
+, mpkgs
 , ...
 }: {
   home.packages = with pkgs; [
-    #awscli2 # AWS CLI tooling
     #httpie # A modern, user-friendly command-line HTTP client for the API era.
     #inputs.mozilla-addons-to-nix.packages.x86_64-linux.default
     #inputs.system-manager.packages.x86_64-linux.system-manager
@@ -10,14 +10,14 @@
     terraform_1_5_5 # Terraform 1.5.5, last FOSS release
     mimeo # Open files with the right program
     (lowPrio kubectl) # Kubernetes management cli
-    vault # secrets mumbo jumbo
+    mpkgs.vault # secrets mumbo jumbo
     gdb # GNU debugger
     ngrok # reverse proxy
     pass # GPG based password store
     age # Modern crypto written in Go
     ansible-lint # Ansible linting software
     aws-vault # AWS Vault CLI (Used for MFA auth?)
-    awscli2 # AWS cli tool
+    mpkgs.awscli2 # AWS cli tool
     bat # Better cat
     broot # A new way to see and navigate directory trees
     choose # A human-friendly and fast alternative to cut and (sometimes) awk
