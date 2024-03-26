@@ -122,13 +122,9 @@
       killall # Kill processes by name
       swtpm # needed to emulate TPM on QEMU
       gnupg # PGP implementation
-      ranger # file manager
       nnn # file manager
       fzf # fuzzy finder, pipe to this for nice search
       unipicker # unicode char finder
-      thefuck # Command that corrects your previous command
-      speedtest-cli # Speedtest from the commandline
-      imagemagick # CLI for doing image stuff
       waypipe # Wayland forwarding (Like X11 forwarding, but for Wayland)
       libinput # Libinput CLI tooling
       brightnessctl # Control brightness of things
