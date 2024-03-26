@@ -76,7 +76,6 @@
     nvd # Nix closure diff
     nix-output-monitor # Nix output monitor
     ddcutil # change display settings
-    carapace # cross-shell completion engine
     lego # CLI ACME client
     socat # Socket tool
   ];

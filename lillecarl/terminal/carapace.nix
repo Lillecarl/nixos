@@ -1,5 +1,6 @@
 { pkgs
 , inputs
+, config
 , ...
 }:
 {
@@ -10,10 +11,13 @@
       buildGoModule = args: pkgs.buildGoModule (args // {
         version = inputs.carapace.shortRev;
         src = inputs.carapace;
-        vendorHash = "sha256-3LTdGA3yb9uzwrHWvxXoDbijiafyIqQYJhljEgUmLcI=";
+        vendorHash = "sha256-XAdTLfMnOAcOiRYZGrom2Q+qp+epfg6Y9Jv0V0T12/8=";
       });
     };
 
     enableFishIntegration = true;
   };
+  home.packages = [
+    config.programs.carapace.package
+  ];
 }
