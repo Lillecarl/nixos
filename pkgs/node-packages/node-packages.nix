@@ -67,13 +67,13 @@ let
         sha512 = "Fe4Ti2YgM1onQgrcCD8dUhFuZgHQxzqylSl1C5IDJVVVqY5D07h8RghIXL9sZ6COZ0e+oTL5IusTv5eXABJ9Kw==";
       };
     };
-    "array.prototype.reduce-1.0.6" = {
+    "array.prototype.reduce-1.0.7" = {
       name = "array.prototype.reduce";
       packageName = "array.prototype.reduce";
-      version = "1.0.6";
+      version = "1.0.7";
       src = fetchurl {
-        url = "https://registry.npmjs.org/array.prototype.reduce/-/array.prototype.reduce-1.0.6.tgz";
-        sha512 = "UW+Mz8LG/sPSU8jRDCjVr6J/ZKAGpHfwrZ6kWTG5qCxIEiXdVshqGnu5vEZA8S1y6X4aCSbQZ0/EEsfvEvBiSg==";
+        url = "https://registry.npmjs.org/array.prototype.reduce/-/array.prototype.reduce-1.0.7.tgz";
+        sha512 = "mzmiUCVwtiD4lgxYP8g7IYy8El8p2CSMePvIbTS7gchKir/L1fgJrk0yDKmAX6mnRQFKNADYIk8nNlTris5H1Q==";
       };
     };
     "arraybuffer.prototype.slice-1.0.3" = {
@@ -1012,13 +1012,13 @@ let
         sha512 = "byy+U7gp+FVwmyzKPYhW2h5l3crpmGsxl7X2s8y43IgxvG4g3QZ6CffDtsNQy1WsmZpQbO+ybo0AlW7TY6DcBQ==";
       };
     };
-    "object.getownpropertydescriptors-2.1.7" = {
+    "object.getownpropertydescriptors-2.1.8" = {
       name = "object.getownpropertydescriptors";
       packageName = "object.getownpropertydescriptors";
-      version = "2.1.7";
+      version = "2.1.8";
       src = fetchurl {
-        url = "https://registry.npmjs.org/object.getownpropertydescriptors/-/object.getownpropertydescriptors-2.1.7.tgz";
-        sha512 = "PrJz0C2xJ58FNn11XV2lr4Jt5Gzl94qpy9Lu0JlfEj14z88sqbSBJCBEzdlNUCzY2gburhbrwOZ5BHCmuNUy0g==";
+        url = "https://registry.npmjs.org/object.getownpropertydescriptors/-/object.getownpropertydescriptors-2.1.8.tgz";
+        sha512 = "qkHIGe4q0lSYMv0XI4SsBTJz3WaURhLvd0lKSgtVuOsJ2krg4SgMw3PIRQFMp07yi++UR3se2mkcLqsBNpBb/A==";
       };
     };
     "once-1.4.0" = {
@@ -1210,13 +1210,13 @@ let
         sha512 = "p73uL5VCHCO2BZZ6krwwQE3kCzM7NKmis8S//xEC6fQonchbum4eP6kR4DLEjQFO3Wnj3Fuo8NM0kOSjVdHjZQ==";
       };
     };
-    "string.prototype.trimstart-1.0.7" = {
+    "string.prototype.trimstart-1.0.8" = {
       name = "string.prototype.trimstart";
       packageName = "string.prototype.trimstart";
-      version = "1.0.7";
+      version = "1.0.8";
       src = fetchurl {
-        url = "https://registry.npmjs.org/string.prototype.trimstart/-/string.prototype.trimstart-1.0.7.tgz";
-        sha512 = "NGhtDFu3jCEm7B4Fy0DpLewdJQOZcQ0rGbwQ/+stjnrp2i+rlKeCvos9hOIeCmqwratM47OBxY7uFZzjxHXmrg==";
+        url = "https://registry.npmjs.org/string.prototype.trimstart/-/string.prototype.trimstart-1.0.8.tgz";
+        sha512 = "UXSH262CSZY1tfu3G3Secr6uGLCFVPMhIqHjlgCUtCCcgihYc/xKs9djMTMUOb2j1mVSeU8EU6NWc/iQKU6Gfg==";
       };
     };
     "strip-json-comments-2.0.1" = {
@@ -1282,13 +1282,13 @@ let
         sha512 = "Ous0vodHa56FviZucS2E63zkgtgrACj7omjwd/8lTEMEPFFyjfixMZ1ZXenpgCFBBt4EC1J2XsyVS2gkG0eTFA==";
       };
     };
-    "typed-array-length-1.0.5" = {
+    "typed-array-length-1.0.6" = {
       name = "typed-array-length";
       packageName = "typed-array-length";
-      version = "1.0.5";
+      version = "1.0.6";
       src = fetchurl {
-        url = "https://registry.npmjs.org/typed-array-length/-/typed-array-length-1.0.5.tgz";
-        sha512 = "yMi0PlwuznKHxKmcpoOdeLwxBoVPkqZxd7q2FgMkmD3bNwvF5VW0+UlUQ1k1vmktTu4Yu13Q0RIxEP8+B+wloA==";
+        url = "https://registry.npmjs.org/typed-array-length/-/typed-array-length-1.0.6.tgz";
+        sha512 = "/OxDN6OtAk5KBpGb28T+HZc2M+ADtvRxXrKKbUwtsLgdoxgX13hyy7ek6bFRl5+aBs2yZzB0c4CnQfAtVypW/g==";
       };
     };
     "typescript-2.9.2" = {
@@ -1409,7 +1409,7 @@ in
       sources."arguments-extended-0.0.3"
       sources."array-buffer-byte-length-1.0.1"
       sources."array-extended-0.0.11"
-      sources."array.prototype.reduce-1.0.6"
+      sources."array.prototype.reduce-1.0.7"
       sources."arraybuffer.prototype.slice-1.0.3"
       sources."assert-plus-1.0.0"
       sources."available-typed-arrays-1.0.7"
@@ -1508,7 +1508,7 @@ in
       sources."object-inspect-1.13.1"
       sources."object-keys-1.1.1"
       sources."object.assign-4.1.5"
-      sources."object.getownpropertydescriptors-2.1.7"
+      sources."object.getownpropertydescriptors-2.1.8"
       sources."once-1.4.0"
       sources."path-is-absolute-1.0.1"
       sources."possible-typed-array-names-1.0.0"
@@ -1529,7 +1529,7 @@ in
       sources."string-extended-0.0.8"
       sources."string.prototype.trim-1.2.9"
       sources."string.prototype.trimend-1.0.8"
-      sources."string.prototype.trimstart-1.0.7"
+      sources."string.prototype.trimstart-1.0.8"
       sources."strip-json-comments-2.0.1"
       sources."toml-j0.4-1.1.1"
       sources."tomlify-j0.4-2.2.1"
@@ -1537,7 +1537,7 @@ in
       sources."typed-array-buffer-1.0.2"
       sources."typed-array-byte-length-1.0.1"
       sources."typed-array-byte-offset-1.0.2"
-      sources."typed-array-length-1.0.5"
+      sources."typed-array-length-1.0.6"
       sources."typescript-2.9.2"
       sources."unbox-primitive-1.0.2"
       sources."util.promisify-1.1.2"
