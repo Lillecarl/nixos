@@ -65,8 +65,6 @@ in
       wallpaper = "${inputs.nixos-artwork}/wallpapers/nix-wallpaper-watersplash.png";
 
       extraConfig = with pkgs; ''
-        # Lock as soon as we're logged in
-        exec-once = ${lockScript}
         # Source from home-manager file that can be live edited through out of store symlinks.
         source = ${config.xdg.configHome}/hypr/linked.conf
 
