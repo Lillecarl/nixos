@@ -3,7 +3,7 @@
 }:
 {
   imports = [
-    ./ags.nix
+    #./ags.nix
     ./alacritty.nix
     ./avizo.nix
     ./chromium.nix
