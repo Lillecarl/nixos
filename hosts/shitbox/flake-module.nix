@@ -13,16 +13,22 @@
         ../../common/hyprland.nix
         ../../common/nix.nix
         ../../common/overlays.nix
+        ../../common/stylix.nix
         ../../common/users.nix
         ../../common/verycommon.nix
         ../../common/xdg.nix
         ./default.nix
         inputs.disko.nixosModules.disko
-        inputs.nixos-hardware.nixosModules.common-gpu-intel
+        inputs.flake-programs-sqlite.nixosModules.programs-sqlite
+        inputs.niri.nixosModules.niri
         inputs.nixos-hardware.nixosModules.common-cpu-amd
+        inputs.nixos-hardware.nixosModules.common-gpu-intel
         inputs.nixos-hardware.nixosModules.common-pc
         inputs.nixos-hardware.nixosModules.common-pc-ssd
-        inputs.flake-programs-sqlite.nixosModules.programs-sqlite
+        inputs.stylix.nixosModules.stylix
+        {
+          programs.niri.enable = true;
+        }
       ];
       specialArgs = {
         inherit inputs self flakeloc;

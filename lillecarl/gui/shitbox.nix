@@ -27,4 +27,5 @@
     };
     bluetooth.enable = false;
   };
+  programs.niri.config = null;
 }
