@@ -10,7 +10,6 @@
       modules = [
         ../../common
         ../../common/fish.nix
-        ../../common/greetd.nix
         ../../common/hyprland.nix
         ../../common/nix.nix
         ../../common/overlays.nix

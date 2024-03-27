@@ -248,7 +248,6 @@
       in
       {
         login = service;
-        greetd = service;
         swaylock = service;
         passwd = service;
       };

@@ -15,7 +15,6 @@ in
         ../../common/acme.nix
         ../../common/btrfs.nix
         ../../common/fish.nix
-        ../../common/greetd.nix
         ../../common/hyprland.nix
         ../../common/monitoring.nix
         ../../common/nix.nix
