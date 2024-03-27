@@ -173,6 +173,7 @@
     # gnupg settings
     gnupg.agent = {
       enable = true;
+      pinentryPackage = pkgs.pinentry-qt;
     };
     # Bash autocomplete
     bash.enableCompletion = true;
