@@ -21,7 +21,6 @@
     ./theme.nix
     ./vscode.nix
     ./waybar.nix
-    ./wezterm.nix
     ./wlogout.nix
     inputs.ags.homeManagerModules.default
   ];

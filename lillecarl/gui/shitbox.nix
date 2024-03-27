@@ -21,7 +21,6 @@
       };
       foot.enable = false;
       mako.enable = false;
-      wezterm.enable = false;
     };
     thinkpad = {
       enable = false;

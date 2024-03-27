@@ -141,12 +141,6 @@
       url = "github:rsteube/carapace-bin";
       flake = false;
     };
-    wezterm = {
-      url = "https://github.com/wez/wezterm.git";
-      flake = false;
-      type = "git";
-      submodules = true;
-    };
     fenix = {
       url = "github:nix-community/fenix";
       inputs.nixpkgs.follows = "nixpkgs";

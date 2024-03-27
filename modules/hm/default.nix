@@ -6,7 +6,6 @@
   imports = [
     ../carl
     ./swaync.nix
-    ./wezterm.nix
   ];
   options.carl = with lib; {
     gui = {

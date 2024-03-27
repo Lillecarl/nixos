@@ -1533,8 +1533,7 @@
         "stylix": "stylix",
         "system-manager": "system-manager",
         "terranix": "terranix",
-        "treefmt-nix": "treefmt-nix_2",
-        "wezterm": "wezterm"
+        "treefmt-nix": "treefmt-nix_2"
       }
     },
     "rust-analyzer-src": {
@@ -1789,24 +1788,6 @@
         "owner": "numtide",
         "repo": "treefmt-nix",
         "type": "github"
-      }
-    },
-    "wezterm": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1711384507,
-        "narHash": "sha256-AVWoD3XWKIaHxwh0sNI9Sd/wt1BDxUyis5hxYylvZwQ=",
-        "ref": "refs/heads/main",
-        "rev": "e5ac32f297cf3dd8f6ea280c130103f3cac4dddb",
-        "revCount": 7868,
-        "submodules": true,
-        "type": "git",
-        "url": "https://github.com/wez/wezterm.git"
-      },
-      "original": {
-        "submodules": true,
-        "type": "git",
-        "url": "https://github.com/wez/wezterm.git"
       }
     }
   },
