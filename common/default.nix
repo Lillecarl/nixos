@@ -5,6 +5,7 @@
 {
   imports = [
     ./remapper.nix
+    ./polkit.nix
   ];
 
   hardware.uinput.enable = true;
