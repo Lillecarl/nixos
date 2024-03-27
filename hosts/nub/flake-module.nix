@@ -21,7 +21,6 @@ in
         ../../common/nix.nix
         ../../common/openvpn.nix
         ../../common/overlays.nix
-        ../../common/plymouth.nix
         ../../common/stylix.nix
         ../../common/thinkpad.nix
         ../../common/users.nix
