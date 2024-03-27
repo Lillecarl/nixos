@@ -228,11 +228,22 @@
     # rtkit for pipewire? (Recommended on NixOS wiki)
     rtkit.enable = true;
     # Pluggable Authentication Modules (PAM)
-    pam.services = {
-      login.enableGnomeKeyring = true;
-      greetd.enableGnomeKeyring = true;
-      swaylock.enableGnomeKeyring = true;
-    };
+    pam.services =
+      let
+        service = {
+          enableGnomeKeyring = true;
+          failDelay = {
+            enable = true;
+            delay = 100000; # 100 ms
+          };
+        };
+      in
+      {
+        login = service;
+        greetd = service;
+        swaylock = service;
+        passwd = service;
+      };
     pam.loginLimits = [
       {
         # This fixes "ip vrf exec"
