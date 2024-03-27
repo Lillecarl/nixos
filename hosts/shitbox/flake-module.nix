@@ -26,9 +26,12 @@
         inputs.nixos-hardware.nixosModules.common-pc
         inputs.nixos-hardware.nixosModules.common-pc-ssd
         inputs.stylix.nixosModules.stylix
-        {
-          programs.niri.enable = true;
-        }
+        ({ pkgs, ... }: {
+          programs.niri = {
+            enable = true;
+            package = pkgs.niri-unstable;
+          };
+        })
       ];
       specialArgs = {
         inherit inputs self flakeloc;
