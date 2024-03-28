@@ -2,18 +2,23 @@
 , fetchFromGitHub
 , lib
 }:
-vimUtils.buildVimPlugin {
-  pname = "copilotchat-nvim";
-  version = "2.0.0";
-  src = fetchFromGitHub {
-    owner = "CopilotC-Nvim";
-    repo = "CopilotChat.nvim";
-    rev = "4811cdd91b35345358da89f0eedd1f2b92c8bf04";
-    sha256 = "sha256-YRfe53MfqmRkgM2YgdYjps1FvhcDeqiSwuPe7YMIM7k=";
+let
+  self = vimUtils.buildVimPlugin {
+    pname = "copilotchat-nvim";
+    version = "2.4.0";
+
+    src = fetchFromGitHub {
+      owner = "CopilotC-Nvim";
+      repo = "CopilotChat.nvim";
+      rev = "v${self.version}";
+      sha256 = "sha256-X2UvtIgcD5O0gNW89droUZ/4j4P1DiY2NIJaSKXl74Y=";
+    };
+
+    meta = {
+      description = "Chat with GitHub Copilot in Neovim";
+      homepage = "https://github.com/CopilotC-Nvim/CopilotChat.nvim/";
+      license = lib.licenses.gpl3;
+    };
   };
-  meta = {
-    description = "Chat with GitHub Copilot in Neovim ";
-    homepage = "https://github.com/CopilotC-Nvim/CopilotChat.nvim/";
-    license = lib.licenses.gpl3;
-  };
-}
+in
+self
