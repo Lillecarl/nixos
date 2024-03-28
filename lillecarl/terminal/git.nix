@@ -41,9 +41,11 @@
       column.ui = "auto";
       core.fsmonitor = true;
       core.untrackedcache = true;
-      pull.rebase = true;
-      rebase.autoStash = true;
+      core.ignorecase = false;
+      fetch.recurseSubmodules = true;
+      pull.ff = "only";
       push.autoSetupRemote = true;
+      rebase.autoStash = true;
       rerere.enable = true;
       tag.sort = "version:refname";
       trim.bases = "master,main,develop";
