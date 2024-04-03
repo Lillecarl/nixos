@@ -11,8 +11,23 @@ from collections import defaultdict
 from datetime import datetime
 from enum import IntEnum, auto
 from pathlib import Path
+from plumbum import local
+from sh import ddcutil # type: ignore
 
 pyprint = print
+
+async def ddcutil_getvcp():
+    for line in (await ddcutil("--model=XWU-CBA", "getvcp", "0x60", "--brief", _async=True)).splitlines():
+        if line.startswith("VCP"):
+            return line
+
+async def ddcutil_hdmi():
+    print("Setting input to HDMI")
+    print(await ddcutil("--model=XWU-CBA", "setvcp", "0x60", "0x11", _async=True))
+
+async def ddcutil_dp():
+    print("Setting input to DP")
+    print(await ddcutil("--model=XWU-CBA", "setvcp", "0x60", "0x0f", _async=True))
 
 def dtime():
     return datetime.now().strftime("%H:%M:%S.%f")
@@ -326,6 +341,7 @@ class Keys(IntEnum):
 async def main():
     debug: bool = os.getenv("INPUT_DEBUG", "false") in ["true", "yes", "1"]
     device_name: str = os.getenv("INPUT_NAME", "")
+    hostname: str = os.getenv("hostname", "")
 
     print(f"Debug: {'true' if debug else 'false'}")
     print(f"Keyboard name: {device_name} (Case sensitive)")
@@ -384,11 +400,12 @@ async def main():
 
     def update_key_state(event: evdev.InputEvent):
         if keys_state.get(event.code) is None:
+            itime = time.time() - 60
             keys_state[event.code] = {
                 State.VALUE: event.value,
-                State.DOWNTIME: time.time(),
-                State.HOLDTIME: time.time(),
-                State.UPTIME: time.time(),
+                State.DOWNTIME: itime,
+                State.HOLDTIME: itime,
+                State.UPTIME: itime,
                 State.HOLDCOUNT: 0,
             }
 
@@ -528,6 +545,19 @@ async def main():
                         and in_key_active(Keys.CAPSLOCK)
                     ):
                         bounce(Keys.CAPSLOCK)
+
+                        continue
+
+                    elif event.code == Keys.SCROLLLOCK and event.value == Action.DOWN and time.time() - key_state[State.UPTIME] < 0.5:
+                        async def ddc_switch():
+                            ddcutil_current = str(await ddcutil_getvcp())
+                            print(f"vcp: {ddcutil_current}")
+                            if "VCP 60 SNC x00" in ddcutil_current:
+                                await ddcutil_dp()
+                            elif "VCP 60 SNC x0f" in ddcutil_current:
+                                await ddcutil_hdmi()
+
+                        asyncio.create_task(ddc_switch())
 
                         continue
 

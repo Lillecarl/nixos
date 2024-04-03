@@ -17,10 +17,11 @@ _:
             plumbum
             psutil
             python-gitlab
-            requests
-            textual
-            pywlroots
             pywayland
+            pywlroots
+            requests
+            sh
+            textual
           ]))
           pkgs.python3.pkgs.pywayland
         ];

@@ -32,6 +32,9 @@ in
         "INPUT_DEBUG" = if cfg.remapper.debug then "true" else "false";
         "INPUT_NAME" = cfg.remapper.keyboardName;
       };
+      path = [
+        pkgs.ddcutil
+      ];
       serviceConfig = {
         Type = "simple";
         ExecStart = wrapper;
