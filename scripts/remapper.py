@@ -11,7 +11,6 @@ from collections import defaultdict
 from datetime import datetime
 from enum import IntEnum, auto
 from pathlib import Path
-from plumbum import local
 from sh import ddcutil # type: ignore
 
 pyprint = print

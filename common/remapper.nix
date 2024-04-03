@@ -5,7 +5,10 @@
 , ...
 }:
 let
-  python = pkgs.python3.withPackages (ps: with ps; [ evdev ]);
+  python = pkgs.python3.withPackages (ps: with ps; [
+    evdev
+    sh
+  ]);
   script = pkgs.writeScript "remapperd_wrapped" (
     builtins.readFile "${self}/scripts/remapper.py"
   );
