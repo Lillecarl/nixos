@@ -76,6 +76,21 @@ prev.lib.filterAttrs
     one-small-step-for-vimkind = prev.callPackage ./one-small-step-for-vimkind.nix { };
     copilotchat-nvim = prev.callPackage ./copilotchat-nvim.nix { };
     wrapFirefox = prev.callPackage ./wrapFirefox.nix { };
+    nix-output-monitor =
+      if (builtins.compareVersions
+        "2.1.2"
+        prev.nix-output-monitor.drvAttrs.version >= 0)
+      then
+        prev.nix-output-monitor.overrideAttrs
+          (pattrs: {
+            src = prev.fetchFromGitHub {
+              owner = "maralorn";
+              repo = "nix-output-monitor";
+              rev = "5cc29ee7cc056bff2aac639e89d3389b77d52f7a";
+              sha256 = "sha256-IDife7x1BKyxcQlCocVICUXXO+YIJzqj1Lgss8oWCUU=";
+            };
+          })
+      else prev.nix-output-monitor;
   }
 // (
   if flake
@@ -92,3 +107,4 @@ prev.lib.filterAttrs
   then grafanaPlugins
   else { }
 )
+
