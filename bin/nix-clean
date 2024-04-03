@@ -1,4 +1,13 @@
 #! /usr/bin/env bash
 
-home-manager expire-generations "-$1 days"
-sudo nix-collect-garbage --delete-older-than $1d
+# cd into home-manager profile directory
+pushd ~/.local/state/nix/profiles || exit
+# clear all old profiles
+for profile in $(fd ".*-link" -t l --changed-before "$1d" .); do
+  echo "Removing HM profile $profile"
+  unlink "$profile"
+done
+# go back to the previous directory
+popd || exit
+# clean the nix store of everything without gcroots
+sudo nix-collect-garbage --delete-older-than "$1d"
