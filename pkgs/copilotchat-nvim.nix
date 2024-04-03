@@ -5,13 +5,13 @@
 let
   self = vimUtils.buildVimPlugin {
     pname = "copilotchat-nvim";
-    version = "2.4.0";
+    version = "2.4.2";
 
     src = fetchFromGitHub {
       owner = "CopilotC-Nvim";
       repo = "CopilotChat.nvim";
       rev = "v${self.version}";
-      sha256 = "sha256-X2UvtIgcD5O0gNW89droUZ/4j4P1DiY2NIJaSKXl74Y=";
+      sha256 = "sha256-Nuy5OzzxuW81+exUhbkW1g4kEvBtJB2xolrThOoPl9k=";
     };
 
     meta = {
