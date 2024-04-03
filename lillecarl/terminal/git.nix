@@ -40,8 +40,8 @@
       branch.sort = "-committerdate";
       column.ui = "auto";
       core.fsmonitor = true;
-      core.untrackedcache = true;
       core.ignorecase = false;
+      core.untrackedcache = true;
       fetch.recurseSubmodules = true;
       pull.ff = "only";
       push.autoSetupRemote = true;
