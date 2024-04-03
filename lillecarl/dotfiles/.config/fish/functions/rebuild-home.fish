@@ -7,19 +7,12 @@ function rebuild-home
 
     echo "Building $fullflake"
     echo "Into $result"
-    nix \
+    nom \
         build \
         $fullflake \
-        --out-link $result \
-        --log-format internal-json -v &| tee $buildlog &| nom --json || begin
+        --out-link $result || begin
         echo "Failed to build $fullflake"
         return 1
-    end
-
-    for line in (cat $buildlog | rg "trace:.*")
-        set jmsg (echo $line | sed "s/@nix //")
-        set tmsg (echo $jmsg | jq -r ".msg")
-        echo -e $tmsg
     end
 
     nvd diff $profile $result
