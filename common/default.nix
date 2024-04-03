@@ -1,13 +1,11 @@
 { pkgs
 , lib
-, inputs
 , ...
 }:
 {
   imports = [
     ./remapper.nix
     ./polkit.nix
-    "${inputs.nixpkgs-master}/nixos/modules/programs/goldwarden.nix"
   ];
 
   programs.goldwarden = {
