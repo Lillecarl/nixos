@@ -94,7 +94,6 @@
     piper
     nmap
     okular
-    virt-manager
     OVMFFull
     numactl
     looking-glass-client
