@@ -129,6 +129,9 @@ in
     ] ++ [
       pkgs.one-small-step-for-vimkind
     ];
+    extraLuaPackages = ps: with ps; [
+      nvim-nio
+    ];
 
     extraLuaConfig =
       let
