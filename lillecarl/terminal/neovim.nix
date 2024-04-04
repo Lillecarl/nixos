@@ -131,6 +131,7 @@ in
     ];
     extraLuaPackages = ps: with ps; [
       nvim-nio
+      tiktoken_core
     ];
 
     extraLuaConfig =
