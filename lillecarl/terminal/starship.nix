@@ -52,20 +52,21 @@ let
       status = {
         disabled = false;
       };
+      # Don't show time
       time = {
         disabled = false;
       };
-
+      # Don't show k8s context, we manage them with direnv
       kubernetes = {
         disabled = false;
       };
-
       # Show sudo wizard when we've got cached sudo (security alert/risk/awareness)
       sudo = lib.mkForce {
         disabled = false;
         symbol = "🧙";
         format = "\\[[as$symbol]($style)\\]";
       };
+      # Yay for direnv
       direnv = {
         disabled = false;
         format = "\\[[$symbol$allowed/$loaded]($style)\\]";
@@ -76,14 +77,13 @@ let
         not_allowed_msg = "";
         denied_msg = "";
       };
-
       # Display which shell we're in
       env_var.STARSHIP_SHELL = {
         format = "\\[[$symbol($env_value)]($style)\\]";
         style = "fg:green";
         symbol = "🐚";
       };
-
+      # Color them, to match the rest of our system
       palette = "catppuccin_${catppuccinFlavour}";
     }
   ]);
