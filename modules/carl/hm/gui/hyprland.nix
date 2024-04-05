@@ -62,8 +62,6 @@ in
           ]
           (builtins.readFile "${self}/scripts/print.py"));
 
-      wallpaper = "${inputs.nixos-artwork}/wallpapers/nix-wallpaper-watersplash.png";
-
       extraConfig = with pkgs; ''
         # Source from home-manager file that can be live edited through out of store symlinks.
         source = ${config.xdg.configHome}/hypr/linked.conf
@@ -119,10 +117,6 @@ in
       ];
 
       xdg.configFile."hypr/hyprlandd.conf".text = config.xdg.configFile."hypr/hyprland.conf".text;
-      home.file.".config/hypr/hyprpaper.conf".text = ''
-        preload = ${wallpaper}
-        wallpaper = ,${wallpaper}
-      '';
 
       services.gammastep.enable = false; # Screen temperature daemon. TODO: Enable and configure
       services.wlsunset.enable = false; # Screen temperature daemon. TODO: Enable and configure

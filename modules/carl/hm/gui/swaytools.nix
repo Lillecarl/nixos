@@ -2,6 +2,7 @@
 , lib
 , pkgs
 , self
+, inputs
 , ...
 }:
 let
@@ -11,6 +12,7 @@ let
     ${lib.getExe pkgs.swaylock}
     ${config.programs.rbw.package}/bin/rbw unlock
   '');
+  systemdTarget = "hyprland-session.target";
 in
 {
   options.carl.gui.swaytools = with lib; {
@@ -39,7 +41,7 @@ in
     services.swayidle = {
       enable = true;
 
-      systemdTarget = "hyprland-session.target";
+      inherit systemdTarget;
 
       events = [
         { event = "before-sleep"; command = lockScript; }
@@ -50,6 +52,18 @@ in
         { timeout = 300; command = lockScript; }
         { timeout = 600; command = "${pkgs.hyprland}/bin/hyprctl dispatch dpms off"; }
       ];
+    };
+
+    systemd.user.services.swaybg = {
+      Unit = {
+        Description = "Sway background image daemon";
+        PartOf = [ systemdTarget ];
+      };
+
+      Service = {
+        ExecStart = "${lib.getExe pkgs.swaybg} --image ${inputs.nixos-artwork}/wallpapers/nix-wallpaper-watersplash.png";
+      };
+      Install = { WantedBy = [ systemdTarget ]; };
     };
   };
 }
