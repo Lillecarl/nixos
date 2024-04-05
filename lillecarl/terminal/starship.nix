@@ -30,11 +30,20 @@ let
 
   presetsCfg = lib.mkMerge (presetListAttrs ++ [
     {
+      # Don't waste space between prompts
+      add_newline = false;
+      # username@hostname
+      username = lib.mkForce {
+        format = "\\[[$user]($style)";
+      };
+      hostname = lib.mkForce {
+        ssh_symbol = "@";
+        format = "[$ssh_symbol$hostname]($style)\\] in ";
+      };
       # We don't use terraform workspaces so don't consume the space
       terraform = {
         disabled = true;
       };
-
       # Show exit codes
       status = {
         disabled = false;
