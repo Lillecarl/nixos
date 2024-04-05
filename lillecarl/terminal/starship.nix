@@ -44,11 +44,14 @@ let
       terraform = {
         disabled = true;
       };
+      # Don't need IP of remote hosts since they're very unlikely to run starship
+      localip = {
+        disabled = true;
+      };
       # Show exit codes
       status = {
         disabled = false;
       };
-
       time = {
         disabled = false;
       };
