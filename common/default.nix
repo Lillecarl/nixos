@@ -151,8 +151,7 @@
 
       # Misc
       scrcpy # Print-screen tool
-      winePackages.wayland # Win32 API compatibility layer for Linux
-      wine64Packages.wayland # Win32 API compatibility layer for Linux
+      wineWowPackages.waylandFull # Win32 API compatibility layer for Linux
     ];
   };
 
