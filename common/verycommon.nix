@@ -5,9 +5,11 @@
 {
   environment.systemPackages = with pkgs; [
     home-manager
-    vim
-    git
   ];
+
+  programs.git = {
+    enable = true;
+  };
 
   security.sudo.wheelNeedsPassword = true;
 
