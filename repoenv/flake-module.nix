@@ -13,6 +13,7 @@ _:
             PyGithub
             deepmerge
             evdev
+            fuse
             jinja2
             levenshtein
             plumbum
