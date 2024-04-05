@@ -1,0 +1,12 @@
+#! /usr/bin/env bash
+
+
+booted_system_link=$(readlink -f /run/booted-system)
+
+while read -r system; do
+  link=$(readlink -f "$system")
+  if test "$link" = "$booted_system_link"; then
+    echo "Booted system: $(basename "$system")"
+    exit 0
+  fi
+done < <(find /nix/var/nix/profiles -mindepth 1 -maxdepth 1 -type l)
