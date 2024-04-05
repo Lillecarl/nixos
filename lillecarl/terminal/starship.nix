@@ -60,10 +60,12 @@ let
         disabled = false;
       };
 
-      sudo = {
+      # Show sudo wizard when we've got cached sudo (security alert/risk/awareness)
+      sudo = lib.mkForce {
         disabled = false;
+        symbol = "🧙";
+        format = "\\[[as$symbol]($style)\\]";
       };
-
       direnv = {
         disabled = false;
         format = "\\[[$symbol$allowed/$loaded]($style)\\]";
