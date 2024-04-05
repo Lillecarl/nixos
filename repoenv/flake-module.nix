@@ -13,6 +13,7 @@ _:
             PyGithub
             deepmerge
             evdev
+            jinja2
             levenshtein
             plumbum
             psutil
