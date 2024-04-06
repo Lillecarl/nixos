@@ -33,6 +33,7 @@
       "iommu=pt"
       "acpi_enforce_resources=lax"
       "delayacct"
+      "hugepages=8192"
     ];
 
     extraModulePackages = with config.boot.kernelPackages; [
@@ -66,6 +67,8 @@
 
     kernel.sysctl = {
       "vm.swappiness" = 1;
+      "vm.hugetlb_shm_group" = 0;
+      "kernel.shmmax" = 17179869184;
     };
   };
 
