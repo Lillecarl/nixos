@@ -1,7 +1,7 @@
 { pkgs
 , config
 , lib
-, bluetooth
+, nixosConfig ? null
 , ...
 }:
 let
@@ -10,6 +10,7 @@ let
   hyprctl = "${pkgs.hyprland}/bin/hyprctl";
   sleep = "${pkgs.coreutils-full}/bin/sleep";
   swaync-client = "${pkgs.swaynotificationcenter}/bin/swayncclient";
+  bluetooth = nixosConfig.hardware.bluetooth.enable or false;
 in
 {
   options.carl.gui.waybar = with lib; {
