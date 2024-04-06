@@ -497,6 +497,8 @@ async def main():
     os.chown(sockpath, 1, grp.getgrnam("uinput").gr_gid)
     os.chmod(sockpath, 0o660)
 
+    gaming_mode = False
+
     # Grab the device to prevent other processes from reading it
     with idev.grab_context():
         event: evdev.InputEvent
@@ -521,7 +523,32 @@ async def main():
                     print(f"Output active keys: {odev.active_keys(verbose=True)}")
                     print(f"Active window name: {wminfo['windowTitle']}")
 
-                if True:  # add layers when we feel like it
+                # Double click scroll lock to switch display input. While holding left meta, toggle gaming mode
+                if event.code == Keys.SCROLLLOCK and event.value == Action.DOWN and time.time() - key_state[State.UPTIME] < 0.5:
+                        async def ddc_switch():
+                            ddcutil_current = str(await ddcutil_getvcp())
+                            print(f"vcp: {ddcutil_current}")
+                            if "VCP 60 SNC x00" in ddcutil_current:
+                                await ddcutil_dp()
+                            elif "VCP 60 SNC x0f" in ddcutil_current:
+                                await ddcutil_hdmi()
+
+                        if in_key_active(Keys.LEFTMETA):
+                            gaming_mode = not gaming_mode
+                            print(f"Gaming mode: {'on' if gaming_mode else 'off'}")
+                        elif in_key_active(Keys.N1):
+                            pass # Switch input of left BENQ display
+                        elif in_key_active(Keys.N2):
+                            pass # Switch input of right BENQ display
+                        else:
+                            asyncio.create_task(ddc_switch())
+
+                        continue
+
+                if gaming_mode:
+                    write_event(event)
+                    continue
+                else:
                     # Send CTRL if CAPSLOCK is pressed
                     # Send ESC if CAPSLOCK is released within caps_esc_threshold
                     if event.code == Keys.CAPSLOCK:
@@ -544,19 +571,6 @@ async def main():
                         and in_key_active(Keys.CAPSLOCK)
                     ):
                         bounce(Keys.CAPSLOCK)
-
-                        continue
-
-                    elif event.code == Keys.SCROLLLOCK and event.value == Action.DOWN and time.time() - key_state[State.UPTIME] < 0.5:
-                        async def ddc_switch():
-                            ddcutil_current = str(await ddcutil_getvcp())
-                            print(f"vcp: {ddcutil_current}")
-                            if "VCP 60 SNC x00" in ddcutil_current:
-                                await ddcutil_dp()
-                            elif "VCP 60 SNC x0f" in ddcutil_current:
-                                await ddcutil_hdmi()
-
-                        asyncio.create_task(ddc_switch())
 
                         continue
 
