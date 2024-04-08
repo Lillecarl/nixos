@@ -11,6 +11,7 @@
     ./fd.nix
     ./fish.nix
     ./git.nix
+    ./glab.nix
     ./gnome-keyring.nix
     ./gpg.nix
     ./helix.nix
