@@ -37,7 +37,9 @@
     shellInit = ''
     '';
     shellInitLast = ''
-      source ${config.xdg.configHome}/fish/conf.d.after/*.fish
+      for line in $(find ${config.xdg.configHome}/fish/conf.d.after/*.fish)
+          source $line || echo "Sourcing $line failed"
+      end
     '';
   };
 }
