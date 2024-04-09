@@ -183,6 +183,36 @@ in
             "browser.privatebrowsing.enable-new-indicator" = true;
             # Font
             "font.name.monospace.x-western" = "Hack Nerd Font";
+
+            # Smooth scrolling
+            "general.smoothScroll.scrollbars.durationMaxMS" = 600;
+            "general.smoothScroll.mouseWheel.durationMaxMS" = 275;
+            "general.smoothScroll.other.durationMaxMS" = 150;
+            "general.smoothScroll.pages.durationMaxMS" = 150;
+            "general.smoothScroll.lines.durationMaxMS" = 150;
+            "general.smoothScroll.pixels.durationMaxMS" = 150;
+            "toolkit.scrollbox.horizontalScrollDistance" = 6;
+            "toolkit.scrollbox.verticalScrollDistance" = 6;
+            "layers.async-pan-zoom.enabled" = true;
+            "mousewheel.min_line_scroll_amount" = 12;
+            "mousewheel.acceleration.factor" = 10;
+            "mousewheel.acceleration.start" = 0;
+            "mousewheel.default.delta_multiplier_x" = 100;
+            "mousewheel.default.delta_multiplier_y" = 100;
+            "mousewheel.default.delta_multiplier_z" = 100;
+            "mousewheel.system_scroll_override_on_root_content.enabled" = false;
+            "mousewheel.transaction.timeout" = 2000;
+            "general.smoothScroll.scrollbars.durationMinMS" = 0;
+            "general.smoothScroll.mouseWheel.durationMinMS" = 0;
+            "general.smoothScroll.other.durationMinMS" = 0;
+            "general.smoothScroll.pages.durationMinMS" = 0;
+            "general.smoothScroll.lines.durationMinMS" = 0;
+            "general.smoothScroll.pixels.durationMinMS" = 0;
+            "general.smoothScroll.currentVelocityWeighting" = 0;
+            "general.smoothScroll.stopDecelerationWeighting" = 0.2;
+            "general.smoothScroll.durationToIntervalRatio" = 2000;
+            "general.smoothScroll.msdPhysics.enabled" = false;
+            "general.smoothScroll.mouseWheel.migrationPercent" = 100;
           };
 
           userChrome = /* css */ ''
