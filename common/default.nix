@@ -93,7 +93,6 @@
       comma # Run stuff without installing it
       lorri # nix-shell alternative
       pijul # Patch based git alternative (Similar to darcs but written in rust)
-      gitFull # Git and all belonging standard packages
       lazygit # Git TUI, golang
       gitui # Git TUI, rust
       overcommit # Git hooks manager
