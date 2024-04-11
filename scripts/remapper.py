@@ -11,31 +11,42 @@ from collections import defaultdict
 from datetime import datetime
 from enum import IntEnum, auto
 from pathlib import Path
-from sh import ddcutil # type: ignore
+from sh import ddcutil, virsh  # type: ignore
+import sh
 
 pyprint = print
 
+headset_xml_path = os.environ.get("HEADSET_XML_PATH") or "./resources/logitech-g933.xml"
+gaming_mode: bool = False
+
 async def ddcutil_getvcp():
-    for line in (await ddcutil("--model=XWU-CBA", "getvcp", "0x60", "--brief", _async=True)).splitlines():
+    for line in (
+        await ddcutil("--model=XWU-CBA", "getvcp", "0x60", "--brief", _async=True)
+    ).splitlines():
         if line.startswith("VCP"):
             return line
+
 
 async def ddcutil_hdmi():
     print("Setting input to HDMI")
     print(await ddcutil("--model=XWU-CBA", "setvcp", "0x60", "0x11", _async=True))
 
+
 async def ddcutil_dp():
     print("Setting input to DP")
     print(await ddcutil("--model=XWU-CBA", "setvcp", "0x60", "0x0f", _async=True))
 
+
 def dtime():
     return datetime.now().strftime("%H:%M:%S.%f")
+
 
 def print(*args, **kwargs):
     if "SYSTEMD_EXEC_PID" in os.environ.keys():
         pyprint(*args, **kwargs, flush=True)
     else:
         pyprint(dtime(), *args, **kwargs)
+
 
 class Layer(IntEnum):
     @staticmethod
@@ -412,12 +423,12 @@ async def main():
 
         key_state[State.VALUE] = event.value
         if event.value == Action.DOWN:
-            key_state[State.DOWNTIME] = time.time()
+            key_state[State.DOWNTIME] = event.timestamp()
         elif event.value == Action.HOLD:
-            key_state[State.HOLDTIME] = time.time()
+            key_state[State.HOLDTIME] = event.timestamp()
             key_state[State.HOLDCOUNT] += 1
         elif event.value == Action.UP:
-            key_state[State.UPTIME] = time.time()
+            key_state[State.UPTIME] = event.timestamp()
             key_state[State.HOLDCOUNT] = 0
 
         keys_state[event.code] = key_state
@@ -469,7 +480,7 @@ async def main():
             self.transport.write(data.encode())
 
         def connection_made(self, transport):
-            self.transport = transport # type: ignore
+            self.transport = transport  # type: ignore
             print("Connection established")
             self.write_data("YOYO")
 
@@ -477,13 +488,13 @@ async def main():
             message = data.decode()
             print(f"Received message: {message}")
             # Can't set self.wminfo directly, it's a reference to the original dict
-            for k,v in json.loads(message).items():
+            for k, v in json.loads(message).items():
                 self.wminfo[k] = v
             self.write_data(message)
             print("Echoed back")
 
         def connection_lost(self, exc):
-            print(f"Connection lost")
+            print("Connection lost")
             exit(-1)
 
     wminfo = {
@@ -491,40 +502,64 @@ async def main():
         "windowTitle": "unset",
     }
 
+
     sockpath = "/tmp/pykbd.sock"
     loop = asyncio.get_event_loop()
     await loop.create_unix_server(lambda: RemapperProtocol(wminfo), path=sockpath)
     os.chown(sockpath, 1, grp.getgrnam("uinput").gr_gid)
     os.chmod(sockpath, 0o660)
 
-    gaming_mode = False
+    # Check if we've forgot to release any keys when events are coming back in on our virtual device
+    async def handle_output_events():
+        async for event in odev.async_read_loop():
+            if len(idev.active_keys()) == 0 and len(odev.active_keys()) > 0:
+                for id in odev.active_keys():
+                    uptime = keys_state[id][State.UPTIME]
 
-    # Grab the device to prevent other processes from reading it
-    with idev.grab_context():
-        event: evdev.InputEvent
-        async for event in idev.async_read_loop():
-            start_time = time.time()
-            udev.syn()
-            if event.type == Event.KEY:
-                if in_key_active(Keys.ESC) and in_key_active(Keys.END):
-                    # ESC + END to exit, will ungrab since we're in a context manager
-                    for id in odev.active_keys():
+                    if id != event.code:
+                        print(
+                            f"Releasing {id} because input is empty, you probably have a stateful bug"
+                        )
+                        print(evdev.categorize(event))
+                        print(f"event.timestamp: {event.timestamp()}, uptime: {uptime}")
+                        print(f"Input active keys: {idev.active_keys(verbose=True)}")
+                        print(f"Output active keys: {odev.active_keys(verbose=True)}")
                         release(id)
 
-                    return
+    async def handle_input_events():
+        global gaming_mode
 
-                key_state = update_key_state(event)
+        # Grab the device to prevent other processes from reading it
+        with idev.grab_context():
+            event: evdev.InputEvent
+            async for event in idev.async_read_loop():
+                start_time = time.time()
+                udev.syn()
+                if event.type == Event.KEY:
+                    if in_key_active(Keys.ESC) and in_key_active(Keys.END):
+                        # ESC + END to exit, will ungrab since we're in a context manager
+                        for id in odev.active_keys():
+                            release(id)
 
-                if debug and (
-                   event.value != Action.HOLD or key_state[State.HOLDCOUNT] == 1
-                ):
-                    print(evdev.categorize(event))
-                    print(f"Input active keys: {idev.active_keys(verbose=True)}")
-                    print(f"Output active keys: {odev.active_keys(verbose=True)}")
-                    print(f"Active window name: {wminfo['windowTitle']}")
+                        return
 
-                # Double click scroll lock to switch display input. While holding left meta, toggle gaming mode
-                if event.code == Keys.SCROLLLOCK and event.value == Action.DOWN and time.time() - key_state[State.UPTIME] < 0.5:
+                    key_state = update_key_state(event)
+
+                    if debug and (
+                        event.value != Action.HOLD or key_state[State.HOLDCOUNT] == 1
+                    ):
+                        print(evdev.categorize(event))
+                        print(f"Input active keys: {idev.active_keys(verbose=True)}")
+                        print(f"Output active keys: {odev.active_keys(verbose=True)}")
+                        print(f"Active window name: {wminfo['windowTitle']}")
+
+                    # Double click scroll lock to switch display input. While holding left meta, toggle gaming mode
+                    if (
+                        event.code == Keys.SCROLLLOCK
+                        and event.value == Action.DOWN
+                        and time.time() - key_state[State.UPTIME] < 0.5
+                    ):
+
                         async def ddc_switch():
                             ddcutil_current = str(await ddcutil_getvcp())
                             print(f"vcp: {ddcutil_current}")
@@ -537,141 +572,155 @@ async def main():
                             gaming_mode = not gaming_mode
                             print(f"Gaming mode: {'on' if gaming_mode else 'off'}")
                         elif in_key_active(Keys.N1):
-                            pass # Switch input of left BENQ display
+                            pass  # Switch input of left BENQ display
                         elif in_key_active(Keys.N2):
-                            pass # Switch input of right BENQ display
+                            pass  # Switch input of right BENQ display
+                        elif in_key_active(Keys.LEFTALT):
+                            try:
+                                virsh(
+                                    "detach-device",
+                                    "win11-3",
+                                    headset_xml_path,
+                                    "--live",
+                                )
+                            except sh.ErrorReturnCode as e:
+                                print("Failed to detach headset")
+                                print(e.stderr)
+                            try:
+                                virsh(
+                                    "attach-device",
+                                    "win11-3",
+                                    headset_xml_path,
+                                    "--live",
+                                )
+                            except sh.ErrorReturnCode as e:
+                                print("Failed to attach headset")
+                                print(e.stderr)
                         else:
                             asyncio.create_task(ddc_switch())
 
                         continue
 
-                if gaming_mode:
-                    write_event(event)
-                    continue
-                else:
-                    # Send CTRL if CAPSLOCK is pressed
-                    # Send ESC if CAPSLOCK is released within caps_esc_threshold
-                    if event.code == Keys.CAPSLOCK:
-                        event.code = Keys.LEFTCTRL
+                    if gaming_mode:
                         write_event(event)
-
-                        if event.value == Action.UP:
-                            if (
-                                time.time() - key_state[State.DOWNTIME]
-                                < caps_esc_threshold
-                            ):
-                                bounce(Keys.ESC)
-
                         continue
+                    else:
+                        # Send CTRL if CAPSLOCK is pressed
+                        # Send ESC if CAPSLOCK is released within caps_esc_threshold
+                        if event.code == Keys.CAPSLOCK:
+                            event.code = Keys.LEFTCTRL
+                            write_event(event)
 
-                    # Send capslock if CAPS + ESC is pressed
-                    elif (
-                        event.code == Keys.ESC
-                        and event.value == Action.DOWN
-                        and in_key_active(Keys.CAPSLOCK)
-                    ):
-                        bounce(Keys.CAPSLOCK)
+                            if event.value == Action.UP:
+                                if (
+                                    time.time() - key_state[State.DOWNTIME]
+                                    < caps_esc_threshold
+                                ):
+                                    bounce(Keys.ESC)
 
-                        continue
+                            continue
 
-                    # Allow scrolling with capslock + hjkl
-                    elif in_key_active(Keys.CAPSLOCK):
-                        distance = 1
-                        mouse_event = (None, None)
+                        # Send capslock if CAPS + ESC is pressed
+                        elif (
+                            event.code == Keys.ESC
+                            and event.value == Action.DOWN
+                            and in_key_active(Keys.CAPSLOCK)
+                        ):
+                            bounce(Keys.CAPSLOCK)
 
-                        if in_key_active(Keys.SPACE):
-                            distance = key_state[State.HOLDCOUNT]
+                            continue
 
-                        if not in_key_active(Keys.SPACE):
+                        # Allow scrolling with capslock + hjkl
+                        elif in_key_active(Keys.CAPSLOCK):
+                            distance = 1
+                            mouse_event = (None, None)
+
+                            if in_key_active(Keys.SPACE):
+                                distance = key_state[State.HOLDCOUNT]
+
+                            if not in_key_active(Keys.SPACE):
+                                if event.code == Keys.H:
+                                    mouse_event = (Rel.SCROLLX, -distance)
+                                elif event.code == Keys.J:
+                                    mouse_event = (Rel.SCROLLY, -distance)
+                                elif event.code == Keys.K:
+                                    mouse_event = (Rel.SCROLLY, distance)
+                                elif event.code == Keys.L:
+                                    mouse_event = (Rel.SCROLLX, distance)
+                            else:
+                                if event.code == Keys.H:
+                                    mouse_event = (Rel.MOUSEX, -distance)
+                                elif event.code == Keys.J:
+                                    mouse_event = (Rel.MOUSEY, distance)
+                                elif event.code == Keys.K:
+                                    mouse_event = (Rel.MOUSEY, -distance)
+                                elif event.code == Keys.L:
+                                    mouse_event = (Rel.MOUSEX, distance)
+
+                            if mouse_event != (None, None):
+                                # If we're not holding down input ctrl, release the output ctrl
+                                # else we'll be zooming in web browsers and such.
+                                if not in_key_active(Keys.LEFTCTRL):
+                                    release(Keys.LEFTCTRL)
+                                if not in_key_active(Keys.RIGHTCTRL):
+                                    release(Keys.RIGHTCTRL)
+                                write(Event.REL, mouse_event[0], mouse_event[1])
+                                continue
+                            if event.code == Keys.SPACE:
+                                continue
+
+                        # Map ALT (left or right) + åäö ( ['; ) to åäö
+                        elif in_key_active(Keys.RIGHTALT) or in_key_active(
+                            Keys.LEFTALT
+                        ):
+                            code = None
+
+                            if event.code == Keys.LEFTBRACE:
+                                code = Keys.W
+                            elif event.code == Keys.APOSTROPHE:
+                                code = Keys.A
+                            elif event.code == Keys.SEMICOLON:
+                                code = Keys.O
+
+                            if code is not None:
+                                event.code = code
+                                release(Keys.LEFTALT)
+                                press(Keys.RIGHTALT)
+                                write_event(event)
+                                release(Keys.RIGHTALT)
+                                continue
+
+                        # Map CTRL + SHIFT + hjkl to arrow keys
+                        elif in_key_active(Keys.LEFTCTRL) and in_key_active(
+                            Keys.LEFTSHIFT
+                        ):
+                            code = None
+
                             if event.code == Keys.H:
-                                mouse_event = (Rel.SCROLLX, -distance)
+                                code = Keys.LEFT
                             elif event.code == Keys.J:
-                                mouse_event = (Rel.SCROLLY, -distance)
+                                code = Keys.DOWN
                             elif event.code == Keys.K:
-                                mouse_event = (Rel.SCROLLY, distance)
+                                code = Keys.UP
                             elif event.code == Keys.L:
-                                mouse_event = (Rel.SCROLLX, distance)
-                        else:
-                            if event.code == Keys.H:
-                                mouse_event = (Rel.MOUSEX, -distance)
-                            elif event.code == Keys.J:
-                                mouse_event = (Rel.MOUSEY, distance)
-                            elif event.code == Keys.K:
-                                mouse_event = (Rel.MOUSEY, -distance)
-                            elif event.code == Keys.L:
-                                mouse_event = (Rel.MOUSEX, distance)
+                                code = Keys.RIGHT
 
-                        if mouse_event != (None, None):
-                            # If we're not holding down input ctrl, release the output ctrl
-                            # else we'll be zooming in web browsers and such.
-                            if not in_key_active(Keys.LEFTCTRL):
+                            if code is not None:
+                                event.code = code
                                 release(Keys.LEFTCTRL)
-                            if not in_key_active(Keys.RIGHTCTRL):
-                                release(Keys.RIGHTCTRL)
-                            write(Event.REL, mouse_event[0], mouse_event[1])
-                            continue
-                        if event.code == Keys.SPACE:
-                            continue
+                                release(Keys.LEFTSHIFT)
+                                write_event(event)
+                                continue
 
-                    # Map ALT (left or right) + åäö ( ['; ) to åäö
-                    elif in_key_active(Keys.RIGHTALT) or in_key_active(Keys.LEFTALT):
-                        code = None
+                    if debug:
+                        print(f"Time to process event: {time.time() - start_time}")
 
-                        if event.code == Keys.LEFTBRACE:
-                            code = Keys.W
-                        elif event.code == Keys.APOSTROPHE:
-                            code = Keys.A
-                        elif event.code == Keys.SEMICOLON:
-                            code = Keys.O
+                # Pass any events we haven't handled to the virtual device
+                write_event(event)
 
-                        if code is not None:
-                            event.code = code
-                            release(Keys.LEFTALT)
-                            press(Keys.RIGHTALT)
-                            write_event(event)
-                            release(Keys.RIGHTALT)
-                            continue
-
-                    # Map CTRL + SHIFT + hjkl to arrow keys
-                    elif in_key_active(Keys.LEFTCTRL) and in_key_active(Keys.LEFTSHIFT):
-                        code = None
-
-                        if event.code == Keys.H:
-                            code = Keys.LEFT
-                        elif event.code == Keys.J:
-                            code = Keys.DOWN
-                        elif event.code == Keys.K:
-                            code = Keys.UP
-                        elif event.code == Keys.L:
-                            code = Keys.RIGHT
-
-                        if code is not None:
-                            event.code = code
-                            release(Keys.LEFTCTRL)
-                            release(Keys.LEFTSHIFT)
-                            write_event(event)
-                            continue
-
-                if len(idev.active_keys()) == 0 and len(odev.active_keys()) > 0:
-                    for id in odev.active_keys():
-                        if id != event.code:
-                            print(
-                                f"Releasing {id} because input is empty, you probably have a stateful bug"
-                            )
-                            print(evdev.categorize(event))
-                            print(
-                                f"Input active keys: {idev.active_keys(verbose=True)}"
-                            )
-                            print(
-                                f"Output active keys: {odev.active_keys(verbose=True)}"
-                            )
-                            release(id)
-
-                if debug:
-                    print(f"Time to process event: {time.time() - start_time}")
-
-            # Pass any events we haven't handled to the virtual device
-            write_event(event)
+    # Handle output events in a separate task
+    asyncio.create_task(handle_output_events())
+    await handle_input_events()
 
 
 if __name__ == "__main__":

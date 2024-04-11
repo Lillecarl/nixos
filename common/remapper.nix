@@ -34,9 +34,11 @@ in
       environment = {
         "INPUT_DEBUG" = if cfg.remapper.debug then "true" else "false";
         "INPUT_NAME" = cfg.remapper.keyboardName;
+        "HEADSET_XML_PATH" = ../resources/logitech-g933.xml;
       };
       path = [
         pkgs.ddcutil
+        pkgs.libvirt
       ];
       serviceConfig = {
         Type = "simple";
