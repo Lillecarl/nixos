@@ -43,6 +43,7 @@
       core.ignorecase = false;
       core.untrackedcache = true;
       fetch.recurseSubmodules = true;
+      init.defaultBranch = "main";
       pull.ff = "only";
       push.autoSetupRemote = true;
       rebase.autoStash = true;
