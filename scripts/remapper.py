@@ -574,26 +574,27 @@ async def main():
                         elif in_key_active(Keys.LEFTCTRL):
                             press(Keys.RIGHTSHIFT)
                         elif in_key_active(Keys.LEFTALT):
+                            vm = "win11-3"
                             try:
                                 virsh(
                                     "detach-device",
-                                    "win11-3",
+                                    vm,
                                     headset_xml_path,
                                     "--live",
                                 )
                             except sh.ErrorReturnCode as e:
-                                print("Failed to detach headset")
-                                print(e.stderr)
+                                print(f"Failed to detach {headset_xml_path} to {vm}")
+                                print(e.stderr.decode())
                             try:
                                 virsh(
                                     "attach-device",
-                                    "win11-3",
+                                    vm,
                                     headset_xml_path,
                                     "--live",
                                 )
                             except sh.ErrorReturnCode as e:
-                                print("Failed to attach headset")
-                                print(e.stderr)
+                                print(f"Failed to attach {headset_xml_path} to {vm}")
+                                print(e.stderr.decode())
                         else:
                             asyncio.create_task(ddc_switch())
 
