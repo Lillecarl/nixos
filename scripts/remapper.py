@@ -19,6 +19,7 @@ pyprint = print
 headset_xml_path = os.environ.get("HEADSET_XML_PATH") or "./resources/logitech-g933.xml"
 gaming_mode: bool = False
 
+
 async def ddcutil_getvcp():
     for line in (
         await ddcutil("--model=XWU-CBA", "getvcp", "0x60", "--brief", _async=True)
@@ -502,7 +503,6 @@ async def main():
         "windowTitle": "unset",
     }
 
-
     sockpath = "/tmp/pykbd.sock"
     loop = asyncio.get_event_loop()
     await loop.create_unix_server(lambda: RemapperProtocol(wminfo), path=sockpath)
@@ -516,9 +516,7 @@ async def main():
             out_active_keys = odev.active_keys()
             if len(in_active_keys) == 0 and len(out_active_keys) > 0:
                 for id in out_active_keys:
-                    print(
-                        f"Releasing key {id} because input is empty"
-                    )
+                    print(f"Releasing key {id} because input is empty")
                     print(f"Output active keys: {odev.active_keys(verbose=True)}")
                     release(id)
 
@@ -576,22 +574,30 @@ async def main():
                         elif in_key_active(Keys.LEFTALT):
                             vm = "win11-3"
                             try:
-                                virsh(
+                                await virsh(
                                     "detach-device",
                                     vm,
                                     headset_xml_path,
                                     "--live",
+                                    _async=True,
                                 )
+
+                                print(f"Detached {headset_xml_path} from {vm}")
+                                print("Waiting 5 seconds before attaching")
+                                await asyncio.sleep(5)
                             except sh.ErrorReturnCode as e:
                                 print(f"Failed to detach {headset_xml_path} to {vm}")
                                 print(e.stderr.decode())
+
                             try:
-                                virsh(
+                                await virsh(
                                     "attach-device",
                                     vm,
                                     headset_xml_path,
                                     "--live",
+                                    _async=True,
                                 )
+                                print(f"Attached {headset_xml_path} to {vm}")
                             except sh.ErrorReturnCode as e:
                                 print(f"Failed to attach {headset_xml_path} to {vm}")
                                 print(e.stderr.decode())
