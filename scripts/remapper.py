@@ -571,6 +571,8 @@ async def main():
                             pass  # Switch input of left BENQ display
                         elif in_key_active(Keys.N2):
                             pass  # Switch input of right BENQ display
+                        elif in_key_active(Keys.LEFTCTRL):
+                            press(Keys.RIGHTSHIFT)
                         elif in_key_active(Keys.LEFTALT):
                             try:
                                 virsh(
