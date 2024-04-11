@@ -41,10 +41,9 @@ abbr -a grm git rebase origin/main
 abbr -a gsu git submodule update --recursive
 abbr -a gsgp "git switch main && git pull"
 
-abbr -a nos nh os switch -- --impure
-abbr -a nhs nh home switch -- --impure
-abbr -a nro nix-rebuild os
-abbr -a nrh nix-rebuild home
+abbr -a rb rebuild-both
+abbr -a ro rebuild-os
+abbr -a rh rebuild-home
 
 # bind ctrl+a to beginning of buffer
 bind -M insert \ca beginning-of-buffer
