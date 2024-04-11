@@ -511,20 +511,16 @@ async def main():
 
     # Check if we've forgot to release any keys when events are coming back in on our virtual device
     async def handle_output_events():
-        async for event in odev.async_read_loop():
-            if len(idev.active_keys()) == 0 and len(odev.active_keys()) > 0:
-                for id in odev.active_keys():
-                    uptime = keys_state[id][State.UPTIME]
-
-                    if id != event.code:
-                        print(
-                            f"Releasing {id} because input is empty, you probably have a stateful bug"
-                        )
-                        print(evdev.categorize(event))
-                        print(f"event.timestamp: {event.timestamp()}, uptime: {uptime}")
-                        print(f"Input active keys: {idev.active_keys(verbose=True)}")
-                        print(f"Output active keys: {odev.active_keys(verbose=True)}")
-                        release(id)
+        async for _ in odev.async_read_loop():
+            in_active_keys = idev.active_keys()
+            out_active_keys = odev.active_keys()
+            if len(in_active_keys) == 0 and len(out_active_keys) > 0:
+                for id in out_active_keys:
+                    print(
+                        f"Releasing key {id} because input is empty"
+                    )
+                    print(f"Output active keys: {odev.active_keys(verbose=True)}")
+                    release(id)
 
     async def handle_input_events():
         global gaming_mode
