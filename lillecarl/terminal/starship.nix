@@ -32,6 +32,9 @@ let
     {
       # Don't waste space between prompts
       add_newline = false;
+
+      # Color them, to match the rest of our system
+      palette = "catppuccin_${catppuccinFlavour}";
       # username@hostname
       username = lib.mkForce {
         format = "\\[[$user]($style)";
@@ -83,8 +86,6 @@ let
         style = "fg:green";
         symbol = "🐚";
       };
-      # Color them, to match the rest of our system
-      palette = "catppuccin_${catppuccinFlavour}";
     }
   ]);
 in
