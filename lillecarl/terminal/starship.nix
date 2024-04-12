@@ -124,10 +124,11 @@ let
       username = lib.mkForce {
         format = "\\[[$user]($style)";
       };
-      hostname = lib.mkForce {
-        ssh_symbol = "@";
-        format = "[$ssh_symbol$hostname]($style)\\] in ";
-      };
+      hostname = lib.mkForce
+        {
+          ssh_symbol = "@";
+          format = "[$ssh_symbol$hostname]($style)\\] in ";
+        };
       # We don't use terraform workspaces so don't consume the space
       terraform = {
         disabled = true;
@@ -148,12 +149,19 @@ let
       kubernetes = {
         disabled = true;
       };
-      # Show sudo wizard when we've got cached sudo (security alert/risk/awareness)
-      sudo = lib.mkForce {
+      # Show how deep we're shelled
+      shlvl = {
         disabled = false;
-        symbol = "🧙";
-        format = "\\[[as$symbol]($style)\\]";
+        format = "[$symbol\\(($shlvl)\\)]($style)\\]";
+        symbol = "";
       };
+      # Show sudo wizard when we've got cached sudo (security alert/risk/awareness)
+      sudo = lib.mkForce
+        {
+          disabled = false;
+          symbol = "🧙";
+          format = "\\[[as$symbol]($style)\\]";
+        };
       # Yay for direnv
       direnv = {
         disabled = false;
