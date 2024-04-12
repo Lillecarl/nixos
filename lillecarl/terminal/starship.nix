@@ -175,7 +175,7 @@ let
       };
       # Display which shell we're in
       env_var.STARSHIP_SHELL = {
-        format = "\\[[$symbol($env_value)]($style)\\]";
+        format = "\\[[$symbol($env_value)]($style)";
         style = "fg:green";
         symbol = "🐚";
       };
