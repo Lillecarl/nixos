@@ -146,7 +146,7 @@ let
       };
       # Don't show k8s context, we manage them with direnv
       kubernetes = {
-        disabled = false;
+        disabled = true;
       };
       # Show sudo wizard when we've got cached sudo (security alert/risk/awareness)
       sudo = lib.mkForce {
