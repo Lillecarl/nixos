@@ -10,8 +10,12 @@
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-23.11";
     nur.url = "github:nix-community/NUR";
     nix-flatpak.url = "github:gmodena/nix-flatpak";
-    niri.url = "github:sodiboo/niri-flake";
+    #niri.url = "github:sodiboo/niri-flake";
 
+    niri = {
+      url = "/home/lillecarl/Code/carl/niri-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     ags = {
       url = "github:Aylur/ags";
       inputs.nixpkgs.follows = "nixpkgs";
