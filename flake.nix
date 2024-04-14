@@ -211,6 +211,7 @@
             pkgs_settings = {
               inherit system;
               config.allowUnfree = true;
+              overlays = [ (import ./lib) ];
             };
             pkgs_overlaid = pkgs.extend (import ./pkgs);
             own_pkgs = import ./pkgs/pkgs.nix pkgs_overlaid pkgs_overlaid true;
