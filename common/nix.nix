@@ -9,6 +9,7 @@
 
   nix = {
     package = pkgs.nixVersions.unstable;
+    channel.enable = false;
     extraOptions = ''
       experimental-features = nix-command flakes repl-flake
       builders-use-substitutes = true
