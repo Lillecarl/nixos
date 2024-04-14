@@ -952,20 +952,21 @@
         "niri-unstable": "niri-unstable",
         "nixpkgs": [
           "nixpkgs"
-        ]
+        ],
+        "nixpkgs-stable": "nixpkgs-stable_2"
       },
       "locked": {
-        "lastModified": 1713057815,
-        "narHash": "sha256-mvYF96pEqj3gxJlVvD6Fcxt62pHrbh9XNUx9SpmiyV4=",
-        "ref": "refs/heads/conditional_path_sessionpackages",
-        "rev": "d3c4d1d5b46f6fcb82b426d299a5d2c0fa1ecb4e",
-        "revCount": 332,
-        "type": "git",
-        "url": "file:///home/lillecarl/Code/carl/niri-flake"
+        "lastModified": 1713133443,
+        "narHash": "sha256-BYWLCkM8kpo6k+Tq2V4AtZ7K9DKBrdwp3WE9MiNtqIM=",
+        "owner": "sodiboo",
+        "repo": "niri-flake",
+        "rev": "84ef3e364c68c44e8f09ae981799fd2ef3885fec",
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "file:///home/lillecarl/Code/carl/niri-flake"
+        "owner": "sodiboo",
+        "repo": "niri-flake",
+        "type": "github"
       }
     },
     "niri-stable": {
@@ -1288,6 +1289,22 @@
     },
     "nixpkgs-stable_3": {
       "locked": {
+        "lastModified": 1713013257,
+        "narHash": "sha256-ZEfGB3YCBVggvk0BQIqVY7J8XF/9jxQ68fCca6nib+8=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "90055d5e616bd943795d38808c94dbf0dd35abe8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-23.11",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs-stable_4": {
+      "locked": {
         "lastModified": 1710695816,
         "narHash": "sha256-3Eh7fhEID17pv9ZxrPwCLfqXnYP006RKzSs0JptsN84=",
         "owner": "NixOS",
@@ -1430,7 +1447,7 @@
         "nixpkgs": [
           "nixpkgs"
         ],
-        "nixpkgs-stable": "nixpkgs-stable_3"
+        "nixpkgs-stable": "nixpkgs-stable_4"
       },
       "locked": {
         "lastModified": 1712897695,
@@ -1511,7 +1528,7 @@
         "nixpkgs": "nixpkgs_4",
         "nixpkgs-lib": "nixpkgs-lib_2",
         "nixpkgs-master": "nixpkgs-master",
-        "nixpkgs-stable": "nixpkgs-stable_2",
+        "nixpkgs-stable": "nixpkgs-stable_3",
         "nixpkgs-wayland": "nixpkgs-wayland",
         "nur": "nur",
         "pre-commit-hooks-nix": "pre-commit-hooks-nix",

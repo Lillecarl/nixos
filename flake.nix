@@ -13,7 +13,7 @@
     #niri.url = "github:sodiboo/niri-flake";
 
     niri = {
-      url = "/home/lillecarl/Code/carl/niri-flake";
+      url = "github:sodiboo/niri-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     ags = {
