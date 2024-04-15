@@ -37,6 +37,11 @@
   hardware.opengl.enable = true;
   hardware.opengl.driSupport32Bit = true;
 
+  services.iperf3 = {
+    enable = true;
+    openFirewall = true;
+  };
+
   services = {
     ratbagd = {
       enable = true;
