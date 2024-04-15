@@ -11,7 +11,7 @@ function rebuild-os
     nom \
         build \
         $fullflake \
-        --out-link $result || begin
+        --out-link $result --show-trace || begin
         echo "Failed to build $fullflake"
         return 1
     end
