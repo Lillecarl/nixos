@@ -22,7 +22,7 @@ in
     enable = true;
     openFirewall = true;
 
-    extraPackages = (ps: with ps; [
+    extraPackages = ps: with ps; [
       gtts
       aiohue
       radios
@@ -35,7 +35,7 @@ in
       colorlog
       librouteros
       aiowebostv
-    ]);
+    ];
 
     config = {
       default_config = { };
