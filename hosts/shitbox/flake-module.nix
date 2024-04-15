@@ -9,6 +9,7 @@
       system = "x86_64-linux";
       modules = [
         ../../common
+        ../../common/acme.nix
         ../../common/fish.nix
         ../../common/hyprland.nix
         ../../common/nix.nix

@@ -3,7 +3,8 @@
 }:
 {
   imports = [
-    # Import hardware configuration
+    ./acme.nix
+    ./home-assistant.nix
     ./hardware-configuration.nix
   ];
 
