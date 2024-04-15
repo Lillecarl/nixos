@@ -7,7 +7,7 @@ in
 {
   inherit flake pkgs lib nixosConfigurations;
   inherit (flake.nixosConfigurations) nub;
-  shitbox = flake.nixosConfigurations.nub;
+  inherit (flake.nixosConfigurations) shitbox;
   nub_home = flake.homeConfigurations."lillecarl@nub";
   shitbox_home = flake.homeConfigurations."lillecarl@shitbox";
 }
