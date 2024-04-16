@@ -9,7 +9,6 @@
       modules = [
         inputs.disko.nixosModules.disko
         ../../common/fish.nix
-        ../../common/overlays.nix
         ../../common/verycommon.nix
         ../../common/users.nix
         ../../common/nix.nix

@@ -11,7 +11,6 @@ in
       inherit system;
       modules = [
         ../../common/fish.nix
-        ../../common/overlays.nix
         ../../common/verycommon.nix
         ../../common/users.nix
         ../../common/nix.nix

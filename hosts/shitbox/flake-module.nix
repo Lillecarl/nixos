@@ -13,7 +13,6 @@
         ../../common/fish.nix
         ../../common/hyprland.nix
         ../../common/nix.nix
-        ../../common/overlays.nix
         ../../common/stylix.nix
         ../../common/users.nix
         ../../common/verycommon.nix

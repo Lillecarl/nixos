@@ -19,7 +19,6 @@ in
         ../../common/monitoring.nix
         ../../common/nix.nix
         ../../common/openvpn.nix
-        ../../common/overlays.nix
         ../../common/stylix.nix
         ../../common/thinkpad.nix
         ../../common/users.nix

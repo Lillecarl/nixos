@@ -17,7 +17,6 @@ let
         modules = [
           inputs.agenix.homeManagerModules.default
           inputs.stylix.homeManagerModules.stylix
-          "${self}/common/overlays.nix"
           "${self}/common/stylix.nix"
           "${self}/modules/hm"
           ./default.nix
