@@ -1,0 +1,43 @@
+#! /usr/bin/env fish
+
+function flake-update
+    set -g UPDATE_DIR (mktemp -d -t flake-update-XXXX) || return 1
+    cd $UPDATE_DIR || return 1
+    git clone git@github.com:Lillecarl/nixos.git || return 1
+    cd nixos || return 1
+    direnv allow || return 1
+
+    ./update.py || begin
+        echo "Failed to update flake"
+        return 1
+    end
+
+    echo Building
+    set broken
+    for host in nub shitbox
+        echo "Building $host"
+        nix build --no-link ".#nixosConfigurations.\"$host\".config.system.build.toplevel" || set broken "$broken $host"
+        echo "Building lillecarl@$host"
+        nix build --no-link ".#homeConfigurations.\"lillecarl@$host\".activationPackage" || set broken "$broken lillecarl@$host"
+    end
+
+    if test -n "$broken"
+        echo "Failed to build: $broken"
+        return 1
+    end
+
+    echo Gitting
+    git add . || return 1
+    git restore --staged .flakepath || return 1
+    git commit -m 'Maintenance
+
+Update flake inputs
+Run nix fmt
+Run statix
+' || return 1
+
+    git push || return 1
+end
+
+flake-update || echo "Failed to update flake"
+test -n "$NO_CLEAN" && rm -rf "$UPDATE_DIR"
