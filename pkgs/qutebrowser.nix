@@ -1,16 +1,24 @@
-{ stdenv, lib, fetchurl, fetchzip, python3
-, wrapQtAppsHook, glib-networking
-, asciidoc, docbook_xml_dtd_45, docbook_xsl, libxml2
+{ stdenv
+, lib
+, fetchurl
+, fetchzip
+, python3
+, wrapQtAppsHook
+, glib-networking
+, asciidoc
+, docbook_xml_dtd_45
+, docbook_xsl
+, libxml2
 , libxslt
-, withPdfReader      ? true
-, pipewireSupport    ? stdenv.isLinux
+, withPdfReader ? true
+, pipewireSupport ? stdenv.isLinux
 , pipewire
 , qtwayland
 , qtbase
 , qtwebengine
 , enableWideVine ? false
 , widevine-cdm
-# can cause issues on some graphics chips
+  # can cause issues on some graphics chips
 , enableVulkan ? false
 , vulkan-loader
 , buildApplication ? true
@@ -18,14 +26,15 @@
 
 let
   isQt6 = lib.versions.major qtbase.version == "6";
-  pdfjs = let
-    version = "4.0.269";
-  in
-  fetchzip {
-    url = "https://github.com/mozilla/pdf.js/releases/download/v${version}/pdfjs-${version}-dist.zip";
-    hash = "sha256-8gwJUxygcdvERDni/k6WIx3tzk7yb+qHZ4NsfkP0VDo=";
-    stripRoot = false;
-  };
+  pdfjs =
+    let
+      version = "4.0.269";
+    in
+    fetchzip {
+      url = "https://github.com/mozilla/pdf.js/releases/download/v${version}/pdfjs-${version}-dist.zip";
+      hash = "sha256-8gwJUxygcdvERDni/k6WIx3tzk7yb+qHZ4NsfkP0VDo=";
+      stripRoot = false;
+    };
 
   version = "3.1.0";
   builder = attrs: if buildApplication then python3.pkgs.buildPythonApplication attrs else python3.pkgs.buildPythonPackage attrs;
@@ -48,16 +57,25 @@ builder {
   ];
 
   nativeBuildInputs = [
-    wrapQtAppsHook asciidoc
-    docbook_xml_dtd_45 docbook_xsl libxml2 libxslt
+    wrapQtAppsHook
+    asciidoc
+    docbook_xml_dtd_45
+    docbook_xsl
+    libxml2
+    libxslt
     python3.pkgs.pygments
   ];
 
   propagatedBuildInputs = with python3.pkgs; ([
-    pyyaml (if isQt6 then pyqt6-webengine else pyqtwebengine) jinja2 pygments
+    pyyaml
+    (if isQt6 then pyqt6-webengine else pyqtwebengine)
+    jinja2
+    pygments
     # scripts and userscripts libs
-    tldextract beautifulsoup4
-    readability-lxml pykeepass
+    tldextract
+    beautifulsoup4
+    readability-lxml
+    pykeepass
     stem
     pynacl
     # extensive ad blocking
@@ -103,33 +121,34 @@ builder {
     done
   '';
 
-  preFixup = let
-    libPath = lib.makeLibraryPath [ pipewire ];
-  in
+  preFixup =
+    let
+      libPath = lib.makeLibraryPath [ pipewire ];
+    in
     ''
-    makeWrapperArgs+=(
-      # Force the app to use QT_PLUGIN_PATH values from wrapper
-      --unset QT_PLUGIN_PATH
-      "''${qtWrapperArgs[@]}"
-      # avoid persistant warning on starup
-      --set QT_STYLE_OVERRIDE Fusion
-      ${lib.optionalString pipewireSupport ''--prefix LD_LIBRARY_PATH : ${libPath}''}
-      ${lib.optionalString (enableVulkan) ''
-        --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [vulkan-loader]}
-        --set-default QSG_RHI_BACKEND vulkan
-      ''}
-      ${lib.optionalString enableWideVine ''--add-flags "--qt-flag widevine-path=${widevine-cdm}/share/google/chrome/WidevineCdm/_platform_specific/linux_x64/libwidevinecdm.so"''}
-      --set QTWEBENGINE_RESOURCES_PATH "${qtwebengine}/resources"
-    )
-  '';
+      makeWrapperArgs+=(
+        # Force the app to use QT_PLUGIN_PATH values from wrapper
+        --unset QT_PLUGIN_PATH
+        "''${qtWrapperArgs[@]}"
+        # avoid persistant warning on starup
+        --set QT_STYLE_OVERRIDE Fusion
+        ${lib.optionalString pipewireSupport ''--prefix LD_LIBRARY_PATH : ${libPath}''}
+        ${lib.optionalString enableVulkan ''
+          --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [vulkan-loader]}
+          --set-default QSG_RHI_BACKEND vulkan
+        ''}
+        ${lib.optionalString enableWideVine ''--add-flags "--qt-flag widevine-path=${widevine-cdm}/share/google/chrome/WidevineCdm/_platform_specific/linux_x64/libwidevinecdm.so"''}
+        --set QTWEBENGINE_RESOURCES_PATH "${qtwebengine}/resources"
+      )
+    '';
 
   meta = with lib; {
-    homepage    = "https://github.com/qutebrowser/qutebrowser";
-    changelog   = "https://github.com/qutebrowser/qutebrowser/blob/v${version}/doc/changelog.asciidoc";
+    homepage = "https://github.com/qutebrowser/qutebrowser";
+    changelog = "https://github.com/qutebrowser/qutebrowser/blob/v${version}/doc/changelog.asciidoc";
     description = "Keyboard-focused browser with a minimal GUI";
-    license     = licenses.gpl3Plus;
+    license = licenses.gpl3Plus;
     mainProgram = "qutebrowser";
-    platforms   = if enableWideVine then [ "x86_64-linux" ] else qtwebengine.meta.platforms;
+    platforms = if enableWideVine then [ "x86_64-linux" ] else qtwebengine.meta.platforms;
     maintainers = with maintainers; [ jagajaga rnhmjoj ebzzry dotlambda nrdxp ];
   };
 }
