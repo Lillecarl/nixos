@@ -1,5 +1,5 @@
 let
-  lillecarl = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAHZ3pA0vIXiKQuwfM1ks8TipeOxfDT9fgo4xMi9iiWr lillecarl@lillecarl.com";
+  lillecarl = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPwiL9rEa5vSKnD3yXn+GLuJY0NwWq6CYTYM759TK+80 lillecarl@agenix";
   users = [ lillecarl ];
 
   nub = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID6+IWwqGjVoXHcNR5Z5H2r7RYDQ0BzvPbl/RXeDnidv root@nub";
