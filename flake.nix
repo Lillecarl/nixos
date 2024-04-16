@@ -224,7 +224,13 @@
             pkgs_settings = {
               inherit system;
               config.allowUnfree = true;
-              overlays = [ (import ./lib) ];
+              overlays = [
+                (import ./lib)
+                (import ./pkgs)
+                inputs.niri.overlays.niri
+                inputs.nix-vscode-extensions.overlays.default
+                inputs.nur.overlay
+              ];
             };
             pkgs_overlaid = pkgs.extend (import ./pkgs);
             own_pkgs = import ./pkgs/pkgs.nix pkgs_overlaid pkgs_overlaid true;
