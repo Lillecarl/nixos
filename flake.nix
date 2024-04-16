@@ -232,8 +232,9 @@
                 inputs.nur.overlay
               ];
             };
-            pkgs_overlaid = pkgs.extend (import ./pkgs);
-            own_pkgs = import ./pkgs/pkgs.nix pkgs_overlaid pkgs_overlaid true;
+
+            legacyPackages = pkgs.extend (import ./pkgs);
+            packages = import ./pkgs/pkgs.nix legacyPackages legacyPackages true;
           in
           {
             _module.args = {
@@ -253,7 +254,7 @@
               hyprpy = pkgs.python3Packages.callPackage ./pkgs/python3Packages/hyprpy { };
               pkgtest = pkgs.python3Packages.callPackage ./pkgs/python3Packages/pybintest { };
             };
-            legacyPackages = pkgs_overlaid;
+            inherit legacyPackages packages;
           };
       };
 }
