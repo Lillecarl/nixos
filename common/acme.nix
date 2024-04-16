@@ -1,4 +1,4 @@
-_:
+{ config, ... }:
 {
   security.acme = {
     acceptTerms = true;
@@ -7,7 +7,7 @@ _:
       email = "le@lillecarl.com";
       dnsProvider = "cloudflare";
       dnsResolver = "1.1.1.1:53";
-      environmentFile = "/var/hemlisar/cloudflare.env";
+      environmentFile = config.age.secrets.cloudflare.path;
     };
   };
 }
