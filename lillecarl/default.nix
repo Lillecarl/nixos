@@ -21,7 +21,6 @@ let
     dot_prefixDeleted;
 in
 {
-  nixpkgs.config.allowUnfree = true;
   programs.home-manager.enable = true;
 
   xdg = {

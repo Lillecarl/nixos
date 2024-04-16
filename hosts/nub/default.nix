@@ -219,11 +219,6 @@
 
   programs.seahorse.enable = true;
 
-  nixpkgs = {
-    # Allow proprietary software to be installed
-    config.allowUnfree = true;
-  };
-
   networking = {
     hostName = "nub"; # System hostname
     domain = "helicon.ai"; # System domain

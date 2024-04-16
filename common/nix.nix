@@ -5,8 +5,6 @@
 , ...
 }:
 {
-  nixpkgs.config.allowUnfree = true;
-
   nix = {
     package = pkgs.nixVersions.unstable;
     channel.enable = false;
