@@ -1,12 +1,17 @@
 { inputs
 , flakeloc
 , self
+, pkgs
 , ...
 }:
+let
+  system = "x86_64-linux";
+in
 {
   flake = {
     nixosConfigurations.shitbox = inputs.nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
+      inherit system;
+      pkgs = pkgs.${system};
       modules = [
         ../../common
         ../../common/acme.nix
