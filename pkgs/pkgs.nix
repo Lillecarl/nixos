@@ -68,18 +68,7 @@ prev.lib.filterAttrs
     inherit terraform_1_5_5;
     terraform = terraform_1_5_5;
 
-    keymapper = prev.keymapper.overrideAttrs (pattrs: {
-      src = prev.fetchFromGitHub {
-        owner = "houmain";
-        repo = "keymapper";
-        rev = "3.2.0";
-        sha256 = "sha256-yjB7tE/MamuG1waQ+A3sqiXmTSD4W0mtygzypwi2aQI=";
-      };
 
-      nativeBuildInputs = pattrs.nativeBuildInputs ++ [
-        prev.libxkbcommon
-      ];
-    });
 
     typos-lsp = prev.callPackage ./typos-lsp.nix { };
     one-small-step-for-vimkind = prev.callPackage ./one-small-step-for-vimkind.nix { };

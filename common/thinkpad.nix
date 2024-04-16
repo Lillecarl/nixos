@@ -1,7 +1,6 @@
 { lib, ... }:
 {
   systemd = {
-    # Run tp-auto-kbbl after keymapper.service
     services.tp-auto-kbbl.partOf = [ "remapper.service" ];
     services.tp-auto-kbbl.unitConfig.After = lib.mkForce [ "remapper.service" ];
   };
