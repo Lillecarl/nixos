@@ -187,14 +187,49 @@
     , flake-parts
     , ...
     } @ inputs:
+    let
+      # limits perSystem
+      systems = [
+        "x86_64-linux"
+        "x86_64-darwin"
+      ];
+      # Same settings for all nixpkgs instances
+      pkgsSettings = system: {
+        inherit system;
+        config.allowUnfree = true;
+        overlays = [
+          (import ./lib)
+          (import ./pkgs)
+          inputs.niri.overlays.niri
+          inputs.nix-vscode-extensions.overlays.default
+          inputs.nur.overlay
+        ];
+      };
+      # nixpkgs generator
+      pkgsGenerator = instance: builtins.listToAttrs (builtins.map
+        (system: {
+          name = system;
+          value = import inputs.${instance} (pkgsSettings system);
+        })
+        systems);
+
+      unstablePkgs = pkgsGenerator "nixpkgs";
+      masterPkgs = pkgsGenerator "nixpkgs-master";
+      stablePkgs = pkgsGenerator "nixpkgs-stable";
+    in
     flake-parts.lib.mkFlake
       {
         inherit inputs;
+        # Passed to flake-parts modules
         specialArgs = {
           flakeloc = import ./.flakepath;
+          pkgs = unstablePkgs;
+          mpkgs = masterPkgs;
+          spkgs = stablePkgs;
         };
       }
       {
+        inherit systems;
         imports = [
           inputs.flake-parts.flakeModules.easyOverlay
           ./hosts/nub/flake-module.nix
@@ -207,7 +242,6 @@
           ./repoenv/flake-module.nix
           ./system-manager/flake-module.nix
         ];
-        systems = [ "x86_64-linux" "x86_64-darwin" ];
         flake = { };
         perSystem =
           { config
@@ -219,26 +253,16 @@
           , ...
           }:
           let
-            pkgs_settings = {
-              inherit system;
-              config.allowUnfree = true;
-              overlays = [
-                (import ./lib)
-                (import ./pkgs)
-                inputs.niri.overlays.niri
-                inputs.nix-vscode-extensions.overlays.default
-                inputs.nur.overlay
-              ];
-            };
+            pkgs_settings_i = pkgsSettings system;
 
             legacyPackages = pkgs.extend (import ./pkgs);
             packages = import ./pkgs/pkgs.nix legacyPackages legacyPackages true;
           in
           {
             _module.args = {
-              pkgs = import inputs.nixpkgs pkgs_settings;
-              mpkgs = import inputs.nixpkgs-master pkgs_settings;
-              spkgs = import inputs.nixpkgs-stable pkgs_settings;
+              pkgs = unstablePkgs.${system};
+              mpkgs = masterPkgs.${system};
+              spkgs = stablePkgs.${system};
             };
 
             formatter = pkgs.nixpkgs-fmt;
