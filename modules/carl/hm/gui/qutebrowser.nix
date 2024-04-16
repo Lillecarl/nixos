@@ -22,6 +22,9 @@ in
       searchEngines = {
         DEFAULT = "https://kagi.com/search?q={}";
       };
+      extraConfig = /* python */ ''
+        config.source('linked.py')
+      '';
     };
   };
 }
