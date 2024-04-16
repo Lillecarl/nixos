@@ -1,6 +1,7 @@
 { inputs
 , self
 , flakeloc
+, pkgs
 , ...
 }:
 let
@@ -10,6 +11,7 @@ in
   flake = {
     nixosConfigurations.nub = inputs.nixpkgs.lib.nixosSystem {
       inherit system;
+      pkgs = pkgs.${system};
       modules = [
         ../../common
         ../../common/acme.nix
