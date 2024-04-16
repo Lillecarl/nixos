@@ -244,16 +244,6 @@
             };
 
             formatter = pkgs.nixpkgs-fmt;
-            packages = own_pkgs // {
-              gitbutler = pkgs.callPackage ./pkgs/gitbutler {
-                rustPlatform = pkgs.makeRustPlatform {
-                  rustc = inputs.fenix.packages.${system}.default.toolchain;
-                  cargo = inputs.fenix.packages.${system}.default.toolchain;
-                };
-              };
-              hyprpy = pkgs.python3Packages.callPackage ./pkgs/python3Packages/hyprpy { };
-              pkgtest = pkgs.python3Packages.callPackage ./pkgs/python3Packages/pybintest { };
-            };
             inherit legacyPackages packages;
           };
       };
