@@ -4,6 +4,7 @@
 }:
 {
   imports = [
+    ./secrets.nix
     ./remapper.nix
     ./polkit.nix
   ];

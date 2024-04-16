@@ -19,6 +19,7 @@
         ../../common/verycommon.nix
         ../../common/xdg.nix
         ./default.nix
+        inputs.agenix.nixosModules.default
         inputs.disko.nixosModules.disko
         inputs.flake-programs-sqlite.nixosModules.programs-sqlite
         inputs.niri.nixosModules.niri

@@ -29,6 +29,7 @@ in
         ./default.nix
         ./fancontrol.nix
         ./tlp.nix
+        inputs.agenix.nixosModules.default
         inputs.disko.nixosModules.disko
         inputs.flake-programs-sqlite.nixosModules.programs-sqlite
         inputs.lanzaboote.nixosModules.lanzaboote
