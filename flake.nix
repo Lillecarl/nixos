@@ -253,8 +253,6 @@
           , ...
           }:
           let
-            pkgs_settings_i = pkgsSettings system;
-
             legacyPackages = pkgs.extend (import ./pkgs);
             packages = import ./pkgs/pkgs.nix legacyPackages legacyPackages true;
           in
