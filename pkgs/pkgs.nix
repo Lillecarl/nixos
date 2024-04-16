@@ -4,6 +4,7 @@ let
   python3Packages = {
     pyping = prev.python3Packages.callPackage ../pkgs/python3Packages/pyping { };
     hyprpy = prev.python3Packages.callPackage ../pkgs/python3Packages/hyprpy { };
+    qutebrowser = qutebrowser false;
   };
   nodePackages = prev.callPackages ./node-packages { };
 
@@ -34,6 +35,13 @@ let
     vendorHash = "sha256-lQgWNMBf+ioNxzAV7tnTQSIS840XdI9fg9duuwoK+U4=";
     patches = [ "${prev.path}/pkgs/applications/networking/cluster/terraform/provider-path-0_15.patch" ];
   };
+
+  qutebrowser = buildApplication: (prev.callPackage ./qutebrowser.nix {
+    inherit (prev.__splicedPackages.qt6Packages) qtbase qtwebengine wrapQtAppsHook qtwayland;
+    inherit buildApplication;
+  }).overridePythonAttrs (oldAttrs: {
+    patches = [ "${prev.path}/pkgs/applications/networking/browsers/qutebrowser/fix-restart.patch" ];
+  });
 in
 prev.lib.filterAttrs
   (n: v:
@@ -44,6 +52,8 @@ prev.lib.filterAttrs
     (n != "python3Packages" && n != "nodePackages" && n != "grafanaPlugins"))
   {
     inherit miconoff mictoggle;
+
+    qutebrowser = qutebrowser true;
 
     # Inject python3 packages
     python3Packages = python3Packages // prev.python3Packages;
