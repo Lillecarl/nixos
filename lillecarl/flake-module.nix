@@ -11,7 +11,7 @@ let
         inherit pkgs;
         extraSpecialArgs =
           {
-            inherit self inputs flakeloc mpkgs;
+            inherit self inputs flakeloc mpkgs spkgs;
           } // customArgs.extraSpecialArgs;
 
         modules = [
