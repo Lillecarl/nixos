@@ -80,5 +80,6 @@
     ddcutil # change display settings
     lego # CLI ACME client
     socat # Socket tool
+    iperf3 # Speedtest!
   ];
 }
