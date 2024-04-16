@@ -19,6 +19,9 @@ in
     ];
     programs.qutebrowser = {
       enable = true;
+      searchEngines = {
+        DEFAULT = "https://kagi.com/search?q={}";
+      };
     };
   };
 }
