@@ -68,7 +68,6 @@ prev.lib.filterAttrs
     inherit terraform_1_5_5;
     terraform = terraform_1_5_5;
 
-    keyd = prev.callPackage ./tmp/keyd.nix { };
     keymapper = prev.keymapper.overrideAttrs (pattrs: {
       src = prev.fetchFromGitHub {
         owner = "houmain";
@@ -117,4 +116,3 @@ prev.lib.filterAttrs
   then grafanaPlugins
   else { }
 )
-
