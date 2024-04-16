@@ -24,8 +24,8 @@ _:
             requests
             sh
             textual
+            qutebrowser
           ]))
-          pkgs.python3.pkgs.pywayland
         ];
 
         shellHook = ''
