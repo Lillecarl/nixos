@@ -205,18 +205,10 @@
           inputs.nur.overlay
         ];
       };
-      # nixpkgs generator
-      pkgsGenerator = instance: builtins.listToAttrs (builtins.map
-        (system: {
-          name = system;
-          value = import inputs.${instance} (pkgsSettings system);
-        })
-        systems);
+
+      pkgsGenerator = input: system: import input (pkgsSettings system);
 
       flakeloc = import ./.flakepath;
-      unstablePkgs = pkgsGenerator "nixpkgs";
-      masterPkgs = pkgsGenerator "nixpkgs-master";
-      stablePkgs = pkgsGenerator "nixpkgs-stable";
       slib = import ./lib inputs.nixpkgs.lib;
     in
     flake-parts.lib.mkFlake
@@ -225,9 +217,6 @@
         # Passed to flake-parts modules
         specialArgs = {
           inherit flakeloc;
-          pkgs = unstablePkgs;
-          mpkgs = masterPkgs;
-          spkgs = stablePkgs;
           inherit slib;
         };
       }
@@ -251,9 +240,9 @@
           {
             _module.args = {
               inherit flakeloc;
-              pkgs = unstablePkgs.${system};
-              mpkgs = masterPkgs.${system};
-              spkgs = stablePkgs.${system};
+              pkgs = pkgsGenerator inputs.nixpkgs system;
+              mpkgs = pkgsGenerator inputs.nixpkgs-master system;
+              spkgs = pkgsGenerator inputs.nixpkgs-stable system;
             };
 
             formatter = pkgs.nixpkgs-fmt;
