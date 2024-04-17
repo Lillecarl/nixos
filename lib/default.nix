@@ -18,5 +18,14 @@ rec {
     in
     userFiltered;
 
+  raimport = { source, regadd ? ".*", regdel ? "" }:
+    let
+      modulePaths = lib.filesystem.listFilesRecursive source;
+      nixFiltered = lib.filter (path: bs.match ".*\.nix" (builtins.toString path) != null) modulePaths;
+      addFiltered = lib.filter (path: bs.match regadd (builtins.toString path) != null) nixFiltered;
+      delFiltered = lib.filter (path: bs.match regdel (builtins.toString path) == null) addFiltered;
+    in
+    delFiltered;
+
   rimport = rimport1;
 }
