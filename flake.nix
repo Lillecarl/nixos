@@ -213,6 +213,7 @@
         })
         systems);
 
+      flakeloc = import ./.flakepath;
       unstablePkgs = pkgsGenerator "nixpkgs";
       masterPkgs = pkgsGenerator "nixpkgs-master";
       stablePkgs = pkgsGenerator "nixpkgs-stable";
@@ -223,7 +224,7 @@
         inherit inputs;
         # Passed to flake-parts modules
         specialArgs = {
-          flakeloc = import ./.flakepath;
+          inherit flakeloc;
           pkgs = unstablePkgs;
           mpkgs = masterPkgs;
           spkgs = stablePkgs;
@@ -232,7 +233,7 @@
       }
       {
         inherit systems;
-        imports = slib.rimport ./. "^.*flake-module.*\.nix$";
+        imports = slib.raimport { source = ./.; regadd = "^.*flake-module.*\.nix$"; };
         flake = { };
         perSystem =
           { config
@@ -249,6 +250,7 @@
           in
           {
             _module.args = {
+              inherit flakeloc;
               pkgs = unstablePkgs.${system};
               mpkgs = masterPkgs.${system};
               spkgs = stablePkgs.${system};
