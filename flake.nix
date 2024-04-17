@@ -198,7 +198,7 @@
         inherit system;
         config.allowUnfree = true;
         overlays = [
-          (import ./lib)
+          (import ./lib/overlay.nix)
           (import ./pkgs)
           inputs.niri.overlays.niri
           inputs.nix-vscode-extensions.overlays.default
@@ -216,6 +216,7 @@
       unstablePkgs = pkgsGenerator "nixpkgs";
       masterPkgs = pkgsGenerator "nixpkgs-master";
       stablePkgs = pkgsGenerator "nixpkgs-stable";
+      lib = import ./lib inputs.nixpkgs.lib;
     in
     flake-parts.lib.mkFlake
       {
@@ -230,18 +231,7 @@
       }
       {
         inherit systems;
-        imports = [
-          inputs.flake-parts.flakeModules.easyOverlay
-          ./hosts/nub/flake-module.nix
-          ./hosts/nixos/flake-module.nix
-          ./hosts/shitbox/flake-module.nix
-          ./hosts/rpi4/flake-module.nix
-          ./lillecarl/flake-module.nix
-          ./modules/flake-module.nix
-          ./nixos-installer/flake-module.nix
-          ./repoenv/flake-module.nix
-          ./system-manager/flake-module.nix
-        ];
+        imports = lib.rimport ./. "^.*flake-module.nix$";
         flake = { };
         perSystem =
           { config
