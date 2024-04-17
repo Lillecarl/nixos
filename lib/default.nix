@@ -27,4 +27,14 @@ in
       # Filter out files that don't match the regex
       (files: lib.filter (path: lib.any (re: bs.match re path != null) regexList) files)
     ];
+
+  strimport = source: regexes:
+    lib.pipe source [
+      (source: bs.path {
+        path = source;
+        recursive = true;
+        filter = (path: type: bs.trace "${path} ${type}" (bs.match "^.*flake-module.nix$" "${path}" != null));
+      })
+      (path: lib.filesystem.listFilesRecursive path)
+    ];
 }
