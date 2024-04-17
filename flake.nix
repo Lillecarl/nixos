@@ -216,7 +216,7 @@
       unstablePkgs = pkgsGenerator "nixpkgs";
       masterPkgs = pkgsGenerator "nixpkgs-master";
       stablePkgs = pkgsGenerator "nixpkgs-stable";
-      lib = import ./lib inputs.nixpkgs.lib;
+      slib = import ./lib inputs.nixpkgs.lib;
     in
     flake-parts.lib.mkFlake
       {
@@ -227,11 +227,12 @@
           pkgs = unstablePkgs;
           mpkgs = masterPkgs;
           spkgs = stablePkgs;
+          inherit slib;
         };
       }
       {
         inherit systems;
-        imports = lib.rimport ./. "^.*flake-module.nix$";
+        imports = slib.rimport ./. "^.*flake-module.*\.nix$";
         flake = { };
         perSystem =
           { config
