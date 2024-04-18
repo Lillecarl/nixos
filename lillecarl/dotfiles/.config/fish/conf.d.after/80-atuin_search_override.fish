@@ -4,6 +4,7 @@ function is_kitty
 end
 
 function _atuin_search
+    echo "Atuin search" >&3
     if is_kitty -ne 0
         set pre_height (kitty @ kitten get_cursor.py | jq '.cursor.height')
     end
@@ -29,6 +30,7 @@ function _atuin_search
 
     if is_kitty && test $drop -gt 0
         # This scrolls the commandline to the bottom after an atuin search
+        echo "Dropping $drop" >&3
         echo -en '\e['$drop'+T'
         echo -en '\e['$drop'B'
     end
