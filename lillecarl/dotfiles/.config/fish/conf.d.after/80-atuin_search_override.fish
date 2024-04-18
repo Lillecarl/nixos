@@ -29,8 +29,8 @@ function _atuin_search
 
     if is_kitty && test $drop -gt 0
         # This scrolls the commandline to the bottom after an atuin search
-        printf %b '\e[$'$drop'+T'
-        printf %b '\e[$'$drop'B'
+        echo -en '\e['$drop'+T'
+        echo -en '\e['$drop'B'
     end
     commandline -f repaint
 end
