@@ -209,6 +209,7 @@
       pkgsGenerator = input: system: import input (pkgsSettings system);
 
       flakeloc = import ./.flakepath;
+      flakepath = ./.;
       slib = import ./lib inputs.nixpkgs.lib;
     in
     flake-parts.lib.mkFlake
@@ -216,8 +217,7 @@
         inherit inputs;
         # Passed to flake-parts modules
         specialArgs = {
-          inherit flakeloc;
-          inherit slib;
+          inherit flakeloc flakepath slib;
         };
       }
       {
@@ -239,7 +239,7 @@
           in
           {
             _module.args = {
-              inherit flakeloc;
+              inherit flakeloc flakepath;
               pkgs = pkgsGenerator inputs.nixpkgs system;
               mpkgs = pkgsGenerator inputs.nixpkgs-master system;
               spkgs = pkgsGenerator inputs.nixpkgs-stable system;

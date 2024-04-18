@@ -1,5 +1,6 @@
 { self
 , inputs
+, flakepath
 , withSystem
 , ...
 }@top:
@@ -13,19 +14,6 @@ in
         inputs.nixpkgs.lib.nixosSystem {
           inherit pkgs;
           modules = [
-            ../../common
-            ../../common/acme.nix
-            ../../common/btrfs.nix
-            ../../common/fish.nix
-            ../../common/hyprland.nix
-            ../../common/monitoring.nix
-            ../../common/nix.nix
-            ../../common/openvpn.nix
-            ../../common/stylix.nix
-            ../../common/thinkpad.nix
-            ../../common/users.nix
-            ../../common/verycommon.nix
-            ../../common/xdg.nix
             ./acme.nix
             ./default.nix
             ./fancontrol.nix
@@ -41,7 +29,7 @@ in
             {
               programs.niri.enable = true;
             }
-          ];
+          ] ++ pkgs.lib.raimport { source = ../_shared; regadd = ".*\.*.nix"; regdel = ".*shitbox.*"; };
           specialArgs = {
             inherit inputs flakeloc self;
           };

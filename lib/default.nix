@@ -28,4 +28,47 @@ rec {
     delFiltered;
 
   rimport = rimport1;
+
+  infinimport = infinidir:
+    let
+      getDir = dir: lib.mapAttrs
+        (file: type:
+          if type == "directory" then getDir "${dir}/${file}" else type
+        )
+        (builtins.readDir dir);
+
+      # Collects all files of a directory as a list of strings of paths
+      files = dir:
+        lib.collect
+          lib.isString
+          (lib.mapAttrsRecursive
+            (path: type:
+              lib.concatStringsSep
+                "/"
+                path
+            )
+            (getDir dir)
+          );
+
+      validFiles = dir: lib.pipe (files dir) [
+        (files: lib.filter (file: lib.hasSuffix ".nix" file) files)
+        (files: bs.map (file: ./. + "/${file}") files)
+      ];
+
+      validFiles2 = dir: lib.pipe (files dir) [
+        (files: lib.filter (file: lib.hasSuffix ".nix" file) files)
+        (files: bs.map (file: ./. + "/${file}") files)
+      ];
+    in
+      #validFiles infinidir;
+      files infinidir;
+
+  lilimport = { source, regadd ? ".*", regdel ? "" }:
+    let
+      sources = lib.toList source;
+      files = lib.flatten (bs.map (source: infinimport source) sources);
+      addFiltered = lib.filter (path: bs.match regadd (builtins.toString path) != null) files;
+      delFiltered = lib.filter (path: bs.match regdel (builtins.toString path) != null) addFiltered;
+    in
+    delFiltered;
 }
