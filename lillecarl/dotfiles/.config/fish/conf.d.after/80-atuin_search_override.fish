@@ -1,7 +1,10 @@
 # Defined via `source`
+function is_kitty
+    test $TERM = xterm-kitty && return 0 || return 1
+end
+
 function _atuin_search
-    set is_kitty (test $TERM = "xterm-kitty"; and echo 1; or echo 0)
-    if test $is_kitty -ne 0
+    if is_kitty -ne 0
         set pre_height (kitty @ kitten get_cursor.py | jq '.cursor.height')
     end
 
@@ -19,12 +22,12 @@ function _atuin_search
         end
     end
 
-    if test $is_kitty -ne 0
+    if is_kitty
         set post_height (kitty @ kitten get_cursor.py | jq '.cursor.height')
         set drop (math $post_height - $pre_height)
     end
 
-    if test $is_kitty -ne 0 && test $drop -gt 0
+    if is_kitty && test $drop -gt 0
         # This scrolls the commandline to the bottom after an atuin search
         printf %b '\e[$'$drop'+T'
         printf %b '\e[$'$drop'B'
