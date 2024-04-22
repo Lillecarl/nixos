@@ -221,7 +221,7 @@
       flakeloc = import ./.flakepath;
       flakepath = ./.;
       slib = import ./lib { lib = inputs.nixpkgs.lib; outPath = ./.; };
-      imports = slib.umport3 { path = ./.; regadd = "^.*flake-module.*\.nix$"; };
+      imports = slib.rimport { path = ./.; regadd = "^.*flake-module.*\.nix$"; };
 
       # Passed to flake-parts modules
       specialArgs = {
