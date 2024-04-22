@@ -1,7 +1,10 @@
 { pkgs
 , inputs
+, config
+, lib
 , ...
-}: {
+}:
+{
   programs.git = {
     enable = true;
     userName = "Carl Hjerpe";
@@ -35,6 +38,18 @@
     ignores = [
       ".privrc"
     ];
+
+    includes =
+      let
+        work = path: {
+          condition = "gitdir:${path}";
+          path = config.xdg.configFile."git/work".source;
+        };
+      in
+      [
+        (work "~/Code/SE")
+        (work "~/Work")
+      ];
 
     extraConfig = {
       branch.sort = "-committerdate";
@@ -75,4 +90,9 @@
     pkgs.git-ignore
     pkgs.gitflow
   ];
+
+  xdg.configFile."git/work".text = lib.generators.toGitINI {
+    user.name = "Carl Hjerpe";
+    user.email = "carl.hjerpe@helicon.ai";
+  };
 }
