@@ -27,8 +27,7 @@ in
               programs.niri.enable = true;
             }
           ]
-          ++ pkgs.lib.rimport { path = ../_shared; }
-          ++ pkgs.lib.rimport { path = ./.; regdel = __curPos.file; }
+          ++ pkgs.lib.rimport { path = [./. ../_shared ]; regdel = __curPos.file; }
           );
 
           specialArgs = {
