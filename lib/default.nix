@@ -5,26 +5,24 @@ let
   bs = builtins;
   all_files =
     let
-      basePath = builtins.toString outPath;
+      basePath = bs.toString outPath;
     in
     lib.pipe (lib.filesystem.listFilesRecursive basePath) [
-      (paths: builtins.map
+      (paths: bs.map
         (path: {
           noPrefix = lib.removePrefix basePath path;
-          pPath = path;
           sPath = bs.toString path;
         })
         paths)
     ];
 in
 rec {
-  trace = trace: bs.trace (builtins.toJSON trace) trace;
+  trace = trace: bs.trace (bs.toJSON trace) trace;
 
   _rimport = { path, regadd ? ".*", regdel ? "" }:
     let
       pathInfo =
         rec {
-          pPath = path;
           sPath = bs.toString path;
           sFlakeRoot = (lib.filesystem.locateDominatingFile "flake.nix" sPath).path;
         };
@@ -51,7 +49,7 @@ rec {
     {
       files =
         if
-          builtins.length filteredFiles == 0
+          bs.length filteredFiles == 0
         then
           lib.warn ''
             No files found to import from
@@ -67,7 +65,13 @@ rec {
       inherit pathInfo;
     };
 
-  rimport = args: lib.pipe (_rimport args).files [
-    (paths: bs.map (path: path.pPath) paths)
-  ];
+  _rimportMulti = { path, regadd ? ".*", regdel ? "" }@args:
+    lib.pipe (lib.toList path) [
+      (res: bs.map (subres: _rimport (args // { path = subres; })) res)
+      (res: bs.map (subres: subres.files) res)
+      (res: lib.flatten res)
+      (res: bs.map (subres: subres.sPath) res)
+    ];
+
+  rimport = args: _rimportMulti args;
 }
