@@ -224,21 +224,18 @@
       imports = slib.umport3 { path = ./.; regadd = "^.*flake-module.*\.nix$"; };
 
       # Passed to flake-parts modules
-      _specialArgs = {
+      specialArgs = {
         inherit flakeloc flakepath slib;
       };
     in
     flake-parts.lib.mkFlake
       {
         inherit inputs;
+        inherit specialArgs;
       }
       {
         inherit systems imports;
-        flake = {
-          fpdebug.new = slib.umport2 { path = ./.; };
-          fpdebug.slib = slib;
-          fpdebug.imports = imports;
-        };
+        flake = { };
         perSystem =
           { config
           , system
@@ -258,9 +255,7 @@
               pkgs = pkgsGenerator inputs.nixpkgs system;
               mpkgs = pkgsGenerator inputs.nixpkgs-master system;
               spkgs = pkgsGenerator inputs.nixpkgs-stable system;
-              flakeloc = "";
-              flakepath = "";
-            };
+            } // specialArgs;
 
             formatter = pkgs.nixpkgs-fmt;
             inherit legacyPackages packages;
