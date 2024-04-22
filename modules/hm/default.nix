@@ -3,10 +3,6 @@
 , ...
 }:
 {
-  imports = [
-    ../carl
-    ./swaync.nix
-  ];
   options.carl = with lib; {
     gui = {
       enable = mkEnableOption "Enable the Carl GUI";
