@@ -1,6 +1,7 @@
 { self
 , inputs
 , withSystem
+, __curPos ? __curPos
 , ...
 }@top:
 let
