@@ -51,11 +51,9 @@ rec {
           paths)
         # Match absolute "disk path" location with files absolute "disk path" location
         (paths: discardFilter paths (path: !lib.hasPrefix pathInfo.sPath path.newPrefix) "prefix")
-        # Match positive regex
-        #(paths: bs.map (path: path // { discarded = (path.discarded || !lib.any (re: bs.match re path.newPrefix != null) regadds); }) paths)
+        # Match any positive regex
         (paths: discardFilter paths (path: lib.all (re: bs.match re path.newPrefix == null) regadds) "regadd")
-        # Match negative regex
-        #(paths: bs.map (path: path // { discarded = (path.discarded || !lib.all (re: bs.match re path.newPrefix == null) regdels); }) paths)
+        # Don't match any negative regex
         (paths: discardFilter paths (path: lib.any (re: bs.match re path.newPrefix != null) regdels) "regdel")
       ];
     in
