@@ -4,7 +4,7 @@
 , ...
 }@top:
 let
-  system = builtins.trace (top.moduleLocation) "x86_64-linux";
+  system = "x86_64-linux";
 in
 {
   flake = {
@@ -25,7 +25,7 @@ in
               programs.niri.enable = true;
             }
           ]
-          ++ pkgs.lib.umport3 { path = ../../common; }
+          ++ pkgs.lib.umport3 { path = ../_shared; }
           ++ pkgs.lib.umport3 { path = ./.; regdel = __curPos.file; }
           );
 
