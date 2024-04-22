@@ -45,7 +45,7 @@ rec {
         # Match positive regex
         (paths: lib.filter (path: lib.any (re: bs.match re path.newPrefix != null) regadds) paths)
         # Match negative regex
-        (paths: lib.filter (path: lib.any (re: bs.match re path.newPrefix == null) regdels) paths)
+        (paths: lib.filter (path: lib.all (re: bs.match re path.newPrefix == null) regdels) paths)
       ];
     in
     {
