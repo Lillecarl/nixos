@@ -12,9 +12,30 @@
     nix-flatpak.url = "github:gmodena/nix-flatpak";
     #niri.url = "github:sodiboo/niri-flake";
 
+    nix-darwin = {
+      url = "github:lnl7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        home-manager.follows = "home-manager";
+        nix-darwin.follows = "nix-darwin";
+        flake-parts.follows = "flake-parts";
+        devshell.follows = "devshell";
+        pre-commit-hooks.follows = "pre-commit-hooks";
+      };
+    };
+    nypkgs = {
+      url = "github:yunfachi/nypkgs";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     niri = {
       url = "github:sodiboo/niri-flake";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs-stable.follows = "nixpkgs-stable";
+      inputs.flake-parts.follows = "flake-parts";
     };
     darwin = {
       url = "github:lnl7/nix-darwin/master";
@@ -38,12 +59,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
-    pre-commit-hooks-nix = {
+    pre-commit-hooks = {
       url = "github:cachix/pre-commit-hooks.nix";
       inputs = {
         flake-utils.follows = "flake-utils";
         gitignore.follows = "gitignore";
         nixpkgs.follows = "nixpkgs";
+        nixpkgs-stable.follows = "nixpkgs-stable";
       };
     };
     flake-utils = {
@@ -123,24 +145,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.utils.follows = "flake-utils";
     };
-    # Configure non-nixos systems with Nix modules
-    system-manager = {
-      url = "github:numtide/system-manager";
-      inputs = {
-        crane.follows = "crane";
-        devshell.follows = "devshell";
-        flake-utils.follows = "flake-utils";
-        nixpkgs.follows = "nixpkgs";
-        pre-commit-hooks.follows = "pre-commit-hooks-nix";
-        rust-overlay.follows = "rust-overlay";
-        treefmt-nix.follows = "treefmt-nix";
-      };
-    };
     mozilla-addons-to-nix = {
       url = "sourcehut:~rycee/mozilla-addons-to-nix";
       inputs = {
         flake-utils.follows = "flake-utils";
         nixpkgs.follows = "nixpkgs";
+        pre-commit-hooks.follows = "pre-commit-hooks";
       };
     };
     lanzaboote = {
@@ -150,7 +160,7 @@
         flake-parts.follows = "flake-parts";
         flake-utils.follows = "flake-utils";
         nixpkgs.follows = "nixpkgs";
-        pre-commit-hooks-nix.follows = "pre-commit-hooks-nix";
+        pre-commit-hooks-nix.follows = "pre-commit-hooks";
         rust-overlay.follows = "rust-overlay";
       };
     };
@@ -198,7 +208,7 @@
         inherit system;
         config.allowUnfree = true;
         overlays = [
-          (import ./lib/overlay.nix)
+          (import ./lib/overlay.nix self.outPath)
           (import ./pkgs)
           inputs.niri.overlays.niri
           inputs.nix-vscode-extensions.overlays.default
@@ -210,20 +220,25 @@
 
       flakeloc = import ./.flakepath;
       flakepath = ./.;
-      slib = import ./lib inputs.nixpkgs.lib;
+      slib = import ./lib { lib = inputs.nixpkgs.lib; outPath = ./.; };
+      imports = slib.umport3 { path = ./.; regadd = "^.*flake-module.*\.nix$"; };
+
+      # Passed to flake-parts modules
+      _specialArgs = {
+        inherit flakeloc flakepath slib;
+      };
     in
     flake-parts.lib.mkFlake
       {
         inherit inputs;
-        # Passed to flake-parts modules
-        specialArgs = {
-          inherit flakeloc flakepath slib;
-        };
       }
       {
-        inherit systems;
-        imports = slib.raimport { source = ./.; regadd = "^.*flake-module.*\.nix$"; };
-        flake = { };
+        inherit systems imports;
+        flake = {
+          fpdebug.new = slib.umport2 { path = ./.; };
+          fpdebug.slib = slib;
+          fpdebug.imports = imports;
+        };
         perSystem =
           { config
           , system
@@ -231,6 +246,7 @@
           , mpkgs
           , spkgs
           , inputs'
+          , withSystem
           , ...
           }:
           let
@@ -239,10 +255,11 @@
           in
           {
             _module.args = {
-              inherit flakeloc flakepath;
               pkgs = pkgsGenerator inputs.nixpkgs system;
               mpkgs = pkgsGenerator inputs.nixpkgs-master system;
               spkgs = pkgsGenerator inputs.nixpkgs-stable system;
+              flakeloc = "";
+              flakepath = "";
             };
 
             formatter = pkgs.nixpkgs-fmt;
