@@ -3,12 +3,6 @@
 , ...
 }:
 {
-  imports = [
-    ./secrets.nix
-    ./remapper.nix
-    ./polkit.nix
-  ];
-
   programs.goldwarden = {
     enable = true;
     useSshAgent = false;

@@ -1,23 +1,18 @@
 { self
 , inputs
-, flakepath
 , withSystem
 , ...
 }@top:
 let
-  system = "x86_64-linux";
+  system = builtins.trace (top.moduleLocation) "x86_64-linux";
 in
 {
   flake = {
     nixosConfigurations.nub =
-      withSystem system ({ pkgs, flakeloc, ... }@ctx:
+      withSystem system ({ config, pkgs, flakeloc, flakepath, ... }@ctx:
         inputs.nixpkgs.lib.nixosSystem {
           inherit pkgs;
-          modules = [
-            ./acme.nix
-            ./default.nix
-            ./fancontrol.nix
-            ./tlp.nix
+          modules = ([
             inputs.agenix.nixosModules.default
             inputs.disko.nixosModules.disko
             inputs.flake-programs-sqlite.nixosModules.programs-sqlite
@@ -29,9 +24,13 @@ in
             {
               programs.niri.enable = true;
             }
-          ] ++ pkgs.lib.raimport { source = ../_shared; regadd = ".*\.*.nix"; regdel = ".*shitbox.*"; };
+          ]
+          ++ pkgs.lib.umport3 { path = ../../common; }
+          ++ pkgs.lib.umport3 { path = ./.; regdel = __curPos.file; }
+          );
+
           specialArgs = {
-            inherit inputs flakeloc self;
+            inherit inputs flakeloc flakepath self;
           };
         });
   };
