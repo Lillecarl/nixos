@@ -31,8 +31,7 @@ in
               };
             })
           ]
-          ++ pkgs.lib.rimport { path = ../_shared; }
-          ++ pkgs.lib.rimport { path = ./.; regdel = [__curPos.file ".*disko\.nix"]; }
+          ++ pkgs.lib.rimport { path = [ ./. ../_shared ]; regdel = [__curPos.file ".*disko\.nix"]; }
           );
           specialArgs = {
             inherit inputs flakeloc self;

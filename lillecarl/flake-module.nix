@@ -64,9 +64,7 @@ in
               inputs.nix-flatpak.homeManagerModules.nix-flatpak
               inputs.stylix.homeManagerModules.stylix
             ]
-            ++ pkgs.lib.rimport { path = ./.; regdel = [ __curPos.file ".*nub.*" ]; }
-            ++ pkgs.lib.rimport { path = ../modules/carl/hm; }
-            ++ pkgs.lib.rimport { path = ../modules/hm; }
+            ++ pkgs.lib.rimport { path = [ ./. ../modules/carl/hm ../modules/hm ]; regdel = [ __curPos.file ".*nub.*" ]; }
             );
           });
         "lillecarl@nub_old" = mkHome "x86_64-linux" (guibase // {
@@ -93,9 +91,7 @@ in
               inputs.nix-flatpak.homeManagerModules.nix-flatpak
               inputs.stylix.homeManagerModules.stylix
             ]
-            ++ pkgs.lib.rimport { path = ./.; regdel = [ __curPos.file ".*shitbox.*" ]; }
-            ++ pkgs.lib.rimport { path = ../modules/carl/hm; }
-            ++ pkgs.lib.rimport { path = ../modules/hm; }
+            ++ pkgs.lib.rimport { path = [ ./. ../modules/carl/hm ../modules/hm ]; regdel = [ __curPos.file ".*shitbox.*" ]; }
             );
           });
         "lillecarl@wsl" = mkHome "x86_64-linux" {
