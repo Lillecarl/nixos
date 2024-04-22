@@ -2,6 +2,7 @@
 , inputs
 , withSystem
 , flakeloc
+, __curPos ? __curPos
 , ...
 }:
 let
@@ -88,20 +89,15 @@ in
                 inherit self inputs flakeloc mpkgs spkgs;
                 nixosConfig = self.nixosConfigurations.nub.config;
               };
-            modules = [
-              ../common/stylix.nix
-              ../modules/hm
-              ./default.nix
-              ./gui
-              ./gui/nub.nix
-              ./moduleOverrides.nix
-              ./secrets.nix
-              ./terminal
+            modules = ([
+              (self + "/stylix.nix")
               inputs.agenix.homeManagerModules.default
               inputs.niri.homeModules.niri
               inputs.nix-flatpak.homeManagerModules.nix-flatpak
               inputs.stylix.homeManagerModules.stylix
-            ];
+            ]
+            ++ pkgs.lib.rimport { path = ./.; regdel = [ __curPos.file ".*shitbox.*" ]; }
+            );
           });
         "lillecarl@wsl" = mkHome "x86_64-linux" {
           extraSpecialArgs = { };
