@@ -2,12 +2,6 @@
 , ...
 }:
 {
-  imports = [
-    ./acme.nix
-    ./home-assistant.nix
-    ./hardware-configuration.nix
-  ];
-
   carl = {
     remapper = {
       enable = true;

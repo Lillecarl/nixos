@@ -57,20 +57,15 @@ in
                 inherit self inputs flakeloc mpkgs spkgs;
                 nixosConfig = self.nixosConfigurations.shitbox.config;
               };
-            modules = [
-              ../common/stylix.nix
-              ../modules/hm
-              ./default.nix
-              ./gui
-              ./gui/shitbox.nix
-              ./moduleOverrides.nix
-              ./secrets.nix
-              ./terminal
+            modules = ([
+              (self + "/stylix.nix")
               inputs.agenix.homeManagerModules.default
               inputs.niri.homeModules.niri
               inputs.nix-flatpak.homeManagerModules.nix-flatpak
               inputs.stylix.homeManagerModules.stylix
-            ];
+            ]
+            ++ pkgs.lib.rimport { path = ./.; regdel = [ __curPos.file ".*nub.*" ]; }
+            );
           });
         "lillecarl@nub_old" = mkHome "x86_64-linux" (guibase // {
           modules = guibase.modules ++ [

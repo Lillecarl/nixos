@@ -1,6 +1,7 @@
 { self
 , inputs
 , withSystem
+, __curPos ? __curPos
 , ...
 }@top:
 let
@@ -12,17 +13,8 @@ in
       withSystem system ({ pkgs, flakeloc, ... }@ctx:
         inputs.nixpkgs.lib.nixosSystem {
           inherit pkgs;
-          modules = [
-            ../../common
-            ../../common/acme.nix
-            ../../common/fish.nix
-            ../../common/hyprland.nix
-            ../../common/nix.nix
-            ../../common/stylix.nix
-            ../../common/users.nix
-            ../../common/verycommon.nix
-            ../../common/xdg.nix
-            ./default.nix
+          modules = ([
+            (self + "/stylix.nix")
             inputs.agenix.nixosModules.default
             inputs.disko.nixosModules.disko
             inputs.flake-programs-sqlite.nixosModules.programs-sqlite
@@ -38,7 +30,10 @@ in
                 package = pkgs.niri-unstable;
               };
             })
-          ];
+          ]
+          ++ pkgs.lib.rimport { path = ../_shared; }
+          ++ pkgs.lib.rimport { path = ./.; regdel = [__curPos.file ".*disko\.nix"]; }
+          );
           specialArgs = {
             inherit inputs flakeloc self;
           };
