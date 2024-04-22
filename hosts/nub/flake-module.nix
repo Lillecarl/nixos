@@ -14,6 +14,7 @@ in
         inputs.nixpkgs.lib.nixosSystem {
           inherit pkgs;
           modules = ([
+            (self + "/stylix.nix")
             inputs.agenix.nixosModules.default
             inputs.disko.nixosModules.disko
             inputs.flake-programs-sqlite.nixosModules.programs-sqlite
