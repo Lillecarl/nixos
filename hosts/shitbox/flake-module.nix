@@ -13,7 +13,7 @@ in
       withSystem system ({ pkgs, flakeloc, ... }@ctx:
         inputs.nixpkgs.lib.nixosSystem {
           inherit pkgs;
-          modules = ([
+          modules = [
             (self + "/stylix.nix")
             inputs.agenix.nixosModules.default
             inputs.disko.nixosModules.disko
@@ -31,8 +31,7 @@ in
               };
             })
           ]
-          ++ pkgs.lib.rimport { path = [ ./. ../_shared ]; regdel = [__curPos.file ".*disko\.nix"]; }
-          );
+          ++ pkgs.lib.rimport { path = [ ./. ../_shared ]; regdel = [ __curPos.file ".*disko\.nix" ]; };
           specialArgs = {
             inherit inputs flakeloc self;
           };

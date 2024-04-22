@@ -220,7 +220,7 @@
 
       flakeloc = import ./.flakepath;
       flakepath = ./.;
-      slib = import ./lib { lib = inputs.nixpkgs.lib; outPath = ./.; };
+      slib = import ./lib { inherit (inputs.nixpkgs) lib; outPath = ./.; };
       imports = slib.rimport { path = ./.; regadd = "^.*flake-module.*\.nix$"; };
 
       # Passed to flake-parts modules

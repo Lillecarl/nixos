@@ -90,5 +90,5 @@ rec {
       (res: bs.map (subres: subres.sPath) res)
     ];
 
-  rimport = args: _rimportMulti args;
+  rimport = _rimportMulti;
 }
