@@ -42,7 +42,7 @@
     includes =
       let
         work = path: {
-          condition = "gitdir:${path}";
+          condition = "gitdir:${path}/";
           path = config.xdg.configFile."git/work".source;
         };
       in
