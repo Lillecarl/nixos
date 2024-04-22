@@ -4,9 +4,6 @@
 , ...
 }:
 {
-  imports = [
-    "${self}/modules/hm"
-  ];
   carl = {
     gui = {
       hyprland = {

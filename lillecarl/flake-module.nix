@@ -92,6 +92,8 @@ in
               inputs.stylix.homeManagerModules.stylix
             ]
             ++ pkgs.lib.rimport { path = ./.; regdel = [ __curPos.file ".*shitbox.*" ]; }
+            ++ pkgs.lib.rimport { path = ../modules/carl/hm; }
+            ++ pkgs.lib.rimport { path = ../modules/hm; }
             );
           });
         "lillecarl@wsl" = mkHome "x86_64-linux" {

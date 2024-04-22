@@ -3,10 +3,6 @@
 , ...
 }:
 {
-  imports = [
-    ./hardware-configuration.nix
-  ];
-
   carl = {
     remapper = {
       enable = true;
