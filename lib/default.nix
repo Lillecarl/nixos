@@ -67,9 +67,13 @@ rec {
 
   _rimportMulti = { path, regadd ? ".*", regdel ? "" }@args:
     lib.pipe (lib.toList path) [
+      # Run _rimport for each path
       (res: bs.map (subres: _rimport (args // { path = subres; })) res)
+      # Get the file lists
       (res: bs.map (subres: subres.files) res)
+      # Flatten the lists
       (res: lib.flatten res)
+      # Extract the paths
       (res: bs.map (subres: subres.sPath) res)
     ];
 
