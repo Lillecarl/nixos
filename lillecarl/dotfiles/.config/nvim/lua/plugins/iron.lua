@@ -13,7 +13,11 @@ function M.setup(config)
       -- Whether a repl should be discarded or not
       scratch_repl = true,
       -- Your repl definitions come here
-      repl_definition = repl_def,
+      repl_definition = {
+        nix = {
+          command = { "nix", "repl" },
+        },
+      },
       --repl_definition = {
       --  sh = {
       --    -- Can be a table or a function that
