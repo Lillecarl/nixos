@@ -27,7 +27,7 @@ rec {
 
   self = flake;
 
-  slib = import ./lib { outPath = self.outPath; inherit lib; };
+  slib = import ./lib { outPath = self.outPath; lib = flake.inputs.nixpkgs.lib; };
   nub_home = flake.homeConfigurations."lillecarl@nub";
   shitbox_home = flake.homeConfigurations."lillecarl@shitbox";
 }
