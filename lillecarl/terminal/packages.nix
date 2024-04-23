@@ -12,14 +12,14 @@
     terraform_1_5_5 # Terraform 1.5.5, last FOSS release
     mimeo # Open files with the right program
     (lowPrio kubectl) # Kubernetes management cli
-    mpkgs.vault # secrets mumbo jumbo
+    vault # secrets mumbo jumbo
     gdb # GNU debugger
     ngrok # reverse proxy
     pass # GPG based password store
     age # Modern crypto written in Go
     ansible-lint # Ansible linting software
     aws-vault # AWS Vault CLI (Used for MFA auth?)
-    mpkgs.awscli2 # AWS cli tool
+    awscli2 # AWS cli tool
     bat # Better cat
     broot # A new way to see and navigate directory trees
     choose # A human-friendly and fast alternative to cut and (sometimes) awk
