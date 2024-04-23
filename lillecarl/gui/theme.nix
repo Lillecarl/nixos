@@ -43,7 +43,7 @@ in
 
     qt = {
       enable = true;
-      platformTheme = "qtct";
+      platformTheme.name = "qtct";
     };
     xdg.configFile."qt5ct/colors/Catppuccin-Mocha.conf".source = "${inputs.catppuccin-qt5ct}/themes/Catppuccin-Mocha.conf";
     xdg.configFile."qt5ct/qt5ct.conf".text = ''
