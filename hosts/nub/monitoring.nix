@@ -1,16 +1,24 @@
 { pkgs
 , config
+, lib
 , ...
 }:
 let
-  plumpy = pkgs.python3.withPackages (ps: with ps; [
-    plumbum
-    psutil
-  ]);
-  pyscript = ../../scripts/monitoring.py;
   monitordbpath = "/var/lib/grafana/data/monitoring.sqlite3";
   domain = "grafana.127.lillecarl.com";
   certdir = config.security.acme.certs.grafana.directory;
+
+  script = pkgs.writers.writePython3Bin "pymonitoring"
+    {
+      libraries = with pkgs.python3.pkgs; [
+        plumbum
+        psutil
+      ];
+      flakeIgnore = [
+        "E501" # Line too long
+      ];
+    }
+    ../../scripts/monitoring.py;
 in
 {
   services = {
@@ -77,7 +85,7 @@ in
       # as root to gain access to MSR and such, so we can read and write either way)
       ${pkgs.coreutils-full}/bin/chown grafana:grafana ${monitordbpath}
 
-      ${plumpy}/bin/python3 -u ${pyscript}
+      ${lib.getExe script}
     '';
   };
 
