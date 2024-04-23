@@ -32,6 +32,7 @@
     interactiveShellInit = /* fish */ ''
       ${lib.getExe pkgs.zoxide} init fish | source
       ${pkgs.thefuck}/bin/thefuck --alias | source
+      source ${config.age.secrets.sourcegraph.path}
     '';
 
     shellInit = ''
