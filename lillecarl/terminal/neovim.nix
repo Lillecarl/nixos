@@ -197,7 +197,7 @@ in
               postgres_lsp = { cmd = [ (lib.getExe pkgs.postgres-lsp) ]; };
               psalm = { cmd = [ (lib.getExe pkgs.phpPackages.psalm) ]; };
               pyright = { cmd = [ "${pyright}/pyright-langserver" ]; };
-              ruby_ls = { cmd = [ (lib.getExe pkgs.ruby-lsp) ]; };
+              ruby_lsp = { cmd = [ (lib.getExe pkgs.ruby-lsp) ]; };
               rust_analyzer = { cmd = [ (lib.getExe pkgs.rust-analyzer) ]; };
               terraformls = { cmd = [ (lib.getExe pkgs.terraform-ls) ]; };
               tflint = { cmd = [ (lib.getExe pkgs.tflint) ]; };
