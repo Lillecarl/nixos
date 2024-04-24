@@ -138,13 +138,11 @@
       inputs.flake-utils.follows = "flake-utils";
       inputs.nixpkgs-lib.follows = "nix-community-lib";
     };
-    # Use Nix as Terraform
     terranix = {
       url = "github:terranix/terranix";
       inputs.flake-utils.follows = "flake-utils";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # Wayland packages for NixOS
     nixpkgs-wayland = {
       url = "github:nix-community/nixpkgs-wayland";
       inputs = {
@@ -153,22 +151,18 @@
         nixpkgs.follows = "nixpkgs";
       };
     };
-    # Support splitting flake into subflakes
     flake-parts = {
       url = "github:hercules-ci/flake-parts";
       inputs.nixpkgs-lib.follows = "nixpkgs-lib";
     };
-    # Manage home environment with Nix
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # Disk Partitioning with Nix
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # Gives me a pre-computed programs.sqlite for command-not-found
     flake-programs-sqlite = {
       url = "github:wamserma/flake-programs-sqlite";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -193,16 +187,15 @@
         rust-overlay.follows = "rust-overlay";
       };
     };
-    carapace = {
-      url = "github:rsteube/carapace-bin";
-      flake = false;
-    };
     fenix = {
       url = "github:nix-community/fenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Art / themeing
+    carapace = {
+      url = "github:rsteube/carapace-bin";
+      flake = false;
+    };
     nixos-artwork = {
       url = "github:NixOS/nixos-artwork";
       flake = false;
