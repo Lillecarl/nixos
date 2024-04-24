@@ -1,6 +1,5 @@
 {
   inputs = {
-    gitignore.url = "github:hercules-ci/gitignore.nix";
     nix-community-lib.url = "github:nix-community/nixpkgs.lib";
     nix-systems.url = "github:nix-systems/default-linux";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
@@ -10,8 +9,11 @@
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-23.11";
     nur.url = "github:nix-community/NUR";
     nix-flatpak.url = "github:gmodena/nix-flatpak";
-    #niri.url = "github:sodiboo/niri-flake";
 
+    gitignore = {
+      url = "github:hercules-ci/gitignore.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nix-darwin = {
       url = "github:lnl7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -47,7 +49,7 @@
         nixpkgs.follows = "nixpkgs";
         systems.follows = "nix-systems";
         darwin.follows = "darwin";
-        home-manager.inputs.nixpkgs.follows = "nixpkgs";
+        home-manager.follows = "home-manager";
       };
     };
     ags = {
@@ -83,6 +85,7 @@
     devshell = {
       url = "github:numtide/devshell";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
     };
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
@@ -103,6 +106,7 @@
       url = "github:nix-community/nix-eval-jobs/main";
       inputs.flake-parts.follows = "flake-parts";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.treefmt-nix.follows = "treefmt-nix";
     };
     lib-aggregate = {
       url = "github:nix-community/lib-aggregate/master";
