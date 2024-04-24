@@ -103,8 +103,10 @@ let
         "$gcloud"
         "$azure"
         "$direnv"
+        "\\["
         "$env_var"
         "$shlvl"
+        "\\]"
         "$crystal"
         "$custom"
         "$sudo"
@@ -152,7 +154,7 @@ let
       # Show how deep we're shelled
       shlvl = {
         disabled = false;
-        format = "[$symbol\\(($shlvl)\\)]($style)\\]";
+        format = "[$symbol\\(($shlvl)\\)]($style)";
         symbol = "";
       };
       # Show sudo wizard when we've got cached sudo (security alert/risk/awareness)
@@ -175,7 +177,7 @@ let
       };
       # Display which shell we're in
       env_var.STARSHIP_SHELL = {
-        format = "\\[[$symbol($env_value)]($style)";
+        format = "[$symbol($env_value)]($style)";
         style = "fg:green";
         symbol = "🐚";
       };
