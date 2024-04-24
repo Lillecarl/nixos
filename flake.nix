@@ -10,6 +10,29 @@
     nur.url = "github:nix-community/NUR";
     nix-flatpak.url = "github:gmodena/nix-flatpak";
 
+    nix-github-actions = {
+      url = "github:nix-community/nix-github-actions";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    cachix = {
+      url = "github:cachix/cachix";
+      inputs = {
+        pre-commit-hooks.follows = "pre-commit-hooks";
+        nixpkgs.follows = "nixpkgs";
+        devenv.follows = "";
+      };
+    };
+    crate2nix = {
+      url = "github:nix-community/crate2nix";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-parts.follows = "flake-parts";
+        devshell.follows = "devshell";
+        crate2nix_stable.follows = "";
+        pre-commit-hooks.follows = "pre-commit-hooks";
+        cachix.follows = "cachix";
+      };
+    };
     gitignore = {
       url = "github:hercules-ci/gitignore.nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -35,6 +58,7 @@
     };
     niri = {
       url = "github:sodiboo/niri-flake";
+      inputs.crate2nix.follows = "crate2nix";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.nixpkgs-stable.follows = "nixpkgs-stable";
       inputs.flake-parts.follows = "flake-parts";
@@ -107,6 +131,7 @@
       inputs.flake-parts.follows = "flake-parts";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.treefmt-nix.follows = "treefmt-nix";
+      inputs.nix-github-actions.follows = "nix-github-actions";
     };
     lib-aggregate = {
       url = "github:nix-community/lib-aggregate/master";
