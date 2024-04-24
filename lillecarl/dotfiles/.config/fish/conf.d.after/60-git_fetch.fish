@@ -8,12 +8,13 @@ function git_fetch --on-variable PWD
 
     if true &&
             test $time -gt $(math $$varname + $git_fetch_interval) &&
-            fd -I -d 1 -t d -H -q .git &&
+            fd -I -d 1 -t d -H -q '^.git$' &&
             test $(nmcli -t g | awk -F ':' '{ print $2 }') = full
 
+        echo "Fetching git repos in $PWD"
 
         git fetch --all --recurse-submodules &&
-            echo fetched &&
+            echo "Fetched git repos in $PWD" &&
             set -U $varname $time
     end
 end
