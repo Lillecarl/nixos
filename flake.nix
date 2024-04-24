@@ -58,10 +58,12 @@
     };
     niri = {
       url = "github:sodiboo/niri-flake";
-      inputs.crate2nix.follows = "crate2nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.nixpkgs-stable.follows = "nixpkgs-stable";
-      inputs.flake-parts.follows = "flake-parts";
+      inputs = {
+        crate2nix.follows = "crate2nix";
+        nixpkgs.follows = "nixpkgs";
+        nixpkgs-stable.follows = "nixpkgs-stable";
+        flake-parts.follows = "flake-parts";
+      };
     };
     darwin = {
       url = "github:lnl7/nix-darwin/master";
@@ -232,7 +234,6 @@
         overlays = [
           (import ./lib/overlay.nix self.outPath)
           (import ./pkgs)
-          inputs.niri.overlays.niri
           inputs.nix-vscode-extensions.overlays.default
           inputs.nur.overlay
         ];

@@ -24,12 +24,6 @@ in
             inputs.nixos-hardware.nixosModules.common-pc
             inputs.nixos-hardware.nixosModules.common-pc-ssd
             inputs.stylix.nixosModules.stylix
-            ({ pkgs, ... }: {
-              programs.niri = {
-                enable = true;
-                package = pkgs.niri-unstable;
-              };
-            })
           ]
           ++ pkgs.lib.rimport { path = [ ./. ../_shared ]; regdel = [ __curPos.file ".*disko\.nix" ]; };
           specialArgs = {
