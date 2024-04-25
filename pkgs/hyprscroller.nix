@@ -6,7 +6,7 @@
 }:
 hyprlandPlugins.mkHyprlandPlugin hyprland {
   pluginName = "hyprscroller";
-  version = hyprland.version;
+  inherit (hyprland) version;
 
   inherit src;
 

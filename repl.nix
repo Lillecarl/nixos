@@ -9,9 +9,9 @@ let
     os = self.nixosConfigurations.${host};
     home = self.homeConfigurations.${"${user}@${host}"};
 
-    pkgs = self.nixosConfigurations.${host}.pkgs;
-    config = self.nixosConfigurations.${host}.config;
-    lib = self.inputs.nixpkgs.lib;
+    inherit (self.nixosConfigurations.${host}) pkgs;
+    inherit (self.nixosConfigurations.${host}) config;
+    inherit (self.inputs.nixpkgs) lib;
     fsys = lib.filesystem;
     fset = lib.filesets;
 
