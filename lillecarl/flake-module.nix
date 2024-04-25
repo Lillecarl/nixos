@@ -5,12 +5,15 @@
 , __curPos ? __curPos
 , ...
 }:
+let
+  system = "x86_64-linux";
+in
 {
   flake = {
     homeConfigurations =
       let
         workstation = excludeName:
-          withSystem "x86_64-linux" ({ pkgs, mpkgs, spkgs, flakeloc, ... }:
+          withSystem system ({ pkgs, mpkgs, spkgs, flakeloc, ... }:
             inputs.home-manager.lib.homeManagerConfiguration {
               inherit pkgs;
               extraSpecialArgs =

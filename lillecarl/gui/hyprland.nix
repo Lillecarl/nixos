@@ -3,6 +3,7 @@
 , lib
 , pkgs
 , self
+, nixosConfig
 , ...
 }:
 let
@@ -124,9 +125,14 @@ in
       wayland.windowManager.hyprland = {
         enable = true;
 
+        package = nixosConfig.programs.hyprland.package;
+
         systemd.enable = true;
         xwayland.enable = true;
         inherit extraConfig;
+
+        plugins = [
+        ] ++ nixosConfig.programs.hyprland.plugins;
       };
 
       systemd.user.services.cliphist = {

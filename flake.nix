@@ -9,6 +9,7 @@
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-23.11";
     nur.url = "github:nix-community/NUR";
     nix-flatpak.url = "github:gmodena/nix-flatpak";
+    get-flake.url = "github:ursi/get-flake";
 
     nix-github-actions = {
       url = "github:nix-community/nix-github-actions";
@@ -212,6 +213,10 @@
     };
     catppuccin-qt5ct = {
       url = "github:catppuccin/qt5ct";
+      flake = false;
+    };
+    hyprscroller = {
+      url = "github:dawsers/hyprscroller";
       flake = false;
     };
   };
