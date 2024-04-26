@@ -17,13 +17,13 @@ in
       enable = true;
 
       extraConfig = ''
-        remote_kitty yes
         confirm_os_window_close 0
         scrollback_fill_enlarged_window yes
         scrollback_pager nvimpager
         notify_on_cmd_finish invisible 30
         allow_remote_control yes
         listen_on unix:@kitty
+        scrollback_lines 25000
       '';
 
       keybindings =
