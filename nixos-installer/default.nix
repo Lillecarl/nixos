@@ -17,7 +17,7 @@
   nix = {
     # Enable flakes
     extraOptions = ''
-      experimental-features = nix-command flakes repl-flake
+      experimental-features = nix-command flakes
     '';
     # Add flake inputs to flake registry
     registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
