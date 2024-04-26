@@ -80,7 +80,7 @@ in
       fzf # fuzzy finder
       git # Gitsigns, Fugitive
       cargo # for rust-analyzer
-      nodejs_21 # For copilot
+      nodePackages.nodejs # For copilot
       pkgs.copilotchat-nvim # python3 with copilotchat
     ];
 
