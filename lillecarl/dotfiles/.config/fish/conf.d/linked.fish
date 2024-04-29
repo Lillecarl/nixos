@@ -68,6 +68,8 @@ bind -M visual / _atuin_search
 # bind ctrl+shift+d to scroll down
 bind -M insert \e\[100\;6u scrolldown
 bind -M visual \e\[100\;6u scrolldown
+# bind ctrl+z to interactive zoxide
+bind \cZ __zi_drop
 
 function set_lastpath -e fish_postexec
     if not set -q TMUX
