@@ -46,7 +46,6 @@
     jq # CLI JSON utility, piping JSON here will always pretty-print it
     k2tf # Kubernetes YAML to Terraform
     kompose # Kubernetes docker-compose like tool
-    krew # kubectl plugin manager
     kubectx # Kube switcher
     kubernetes # Kubernetes packages
     kubernetes-helm # Kubernetes package manager
