@@ -89,6 +89,8 @@ prev.lib.filterAttrs
             };
           })
       else prev.nix-output-monitor;
+
+    buildGo120Module = prev.buildGoModule;
   }
 // (
   if flake

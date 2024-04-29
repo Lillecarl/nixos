@@ -27,6 +27,7 @@ in
                 inputs.niri.homeModules.niri
                 inputs.nix-flatpak.homeManagerModules.nix-flatpak
                 inputs.stylix.homeManagerModules.stylix
+                inputs.nix-snapshotter.homeModules.default
               ]
               ++ pkgs.lib.rimport { path = [ ./. ../modules/hm ]; regdel = [ __curPos.file ".*${excludeName}.*" ]; };
             });

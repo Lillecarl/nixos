@@ -5,12 +5,18 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     nixpkgs-lib.url = "github:NixOS/nixpkgs/nixos-unstable?dir=lib";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    #nixpkgs.url = "/home/lillecarl/Code/carl/nixpkgs";
     nixpkgs-master.url = "github:NixOS/nixpkgs/master";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-23.11";
     nur.url = "github:nix-community/NUR";
     nix-flatpak.url = "github:gmodena/nix-flatpak";
     get-flake.url = "github:ursi/get-flake";
 
+    nix-snapshotter = {
+      url = "github:pdtpartners/nix-snapshotter";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-parts.follows = "flake-parts";
+    };
     nix-github-actions = {
       url = "github:nix-community/nix-github-actions";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -241,6 +247,7 @@
           (import ./pkgs)
           inputs.nix-vscode-extensions.overlays.default
           inputs.nur.overlay
+          inputs.nix-snapshotter.overlays.default
         ];
       };
 
