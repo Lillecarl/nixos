@@ -20,6 +20,7 @@ alias cat="bat --paging=never"
 alias grt="cd (git root)"
 alias tg=terragrunt
 alias pager=$PAGER
+alias docker-compose=podman-compose
 
 abbr -a :q exit
 

@@ -244,9 +244,11 @@
     podman = {
       enable = true;
       dockerCompat = true;
+
+      autoPrune.enable = true;
+      dockerSocket.enable = true;
     };
   };
-
 
   environment.systemPackages = with pkgs; [
     # Kernel modules with userspace commands
@@ -268,8 +270,9 @@
     virt-manager # Virtualisation manager
     virt-manager-qt # Shitty version of virt-manager
     zenmonitor # AMD CPU monitoring
+    podman # foss docker
+    podman-compose # docker-compose for podman
   ];
-
 
   system.stateVersion = "24.05";
 }
