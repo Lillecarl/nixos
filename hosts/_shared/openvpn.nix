@@ -25,7 +25,7 @@
       PrivateTmp = "true";
       # Differs from official OpenVPN in that CWD is /etc/openvpn/client/%i rather than /etc/openvpn/client
       WorkingDirectory = "/etc/openvpn/client/%i";
-      ExecStart = "${lib.getExe pkgs.openvpn} --suppress-timestamps --nobind --config %i.conf";
+      ExecStart = "${lib.getExe pkgs.openvpn} --suppress-timestamps --nobind --config %i.ovpn";
       CapabilityBoundingSet = "CAP_IPC_LOCK CAP_NET_ADMIN CAP_NET_RAW CAP_SETGID CAP_SETUID CAP_SYS_CHROOT CAP_DAC_OVERRIDE";
       LimitNPROC = 10;
       DeviceAllow = [
