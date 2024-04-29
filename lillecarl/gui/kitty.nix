@@ -58,7 +58,7 @@ in
           "ctrl+shift+delete" = "no_op";
           "ctrl+shift+k" = "no_op";
           "ctrl+shift+e" = "no_op";
-          "ctrl+shift+enter" = "no_op";
+          "ctrl+shift+enter" = "new_window";
           "ctrl+shift+equal" = "no_op";
           "ctrl+shift+escape" = "no_op";
           "ctrl+shift+f" = "no_op";
