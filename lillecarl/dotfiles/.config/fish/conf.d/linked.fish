@@ -11,9 +11,11 @@ set -x KUBECONFIG "$XDG_CONFIG_HOME/kube/config"
 set -a PATH $KREW_ROOT/bin
 
 # cd into LASTPATH if we're not: in tmux, in vscode, or in a login shell
-if set -q LASTPATH
+if true
+    and set -q LASTPATH
     and not set -q TMUX
     and not set -q VSCODE_INJECTION
+    and not test "$_" = "source"
     and not status --is-login;
     and begin
         cd $LASTPATH
