@@ -81,5 +81,6 @@
     socat # Socket tool
     iperf3 # Speedtest
     src-cli # Sourcegraph CLI
+    skim # Modern rusty fzf
   ];
 }
