@@ -23,6 +23,7 @@ in
             inputs.nixos-hardware.nixosModules.common-pc-laptop-acpi_call
             inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t14-amd-gen3
             inputs.stylix.nixosModules.stylix
+            inputs.catppuccin-nix.nixosModules.catppuccin
             inputs.nix-snapshotter.nixosModules.default
           ]
           ++ pkgs.lib.rimport { path = [ ./. ../_shared ]; regdel = __curPos.file; };

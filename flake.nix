@@ -11,6 +11,7 @@
     nur.url = "github:nix-community/NUR";
     nix-flatpak.url = "github:gmodena/nix-flatpak";
     get-flake.url = "github:ursi/get-flake";
+    catppuccin-nix.url = "github:catppuccin/nix";
 
     nix-snapshotter = {
       url = "github:pdtpartners/nix-snapshotter";
