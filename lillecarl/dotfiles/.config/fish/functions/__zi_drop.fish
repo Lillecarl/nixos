@@ -16,4 +16,6 @@ function __zi_drop
         echo -en '\e['$drop'+T'
         echo -en '\e['$drop'B'
     end
+
+    commandline -f repaint
 end
