@@ -24,4 +24,5 @@ in
 out //
 {
   tmp = import ./repl_tmp.nix out;
+  inherit self;
 }
