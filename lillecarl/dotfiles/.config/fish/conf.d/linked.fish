@@ -22,7 +22,6 @@ if true
     end
 end
 
-alias cat="bat --paging=never"
 alias grt="cd (git root)"
 alias tg=terragrunt
 alias pager=$PAGER

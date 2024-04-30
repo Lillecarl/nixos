@@ -20,7 +20,6 @@
     ansible-lint # Ansible linting software
     aws-vault # AWS Vault CLI (Used for MFA auth?)
     awscli2 # AWS cli tool
-    bat # Better cat
     broot # A new way to see and navigate directory trees
     choose # A human-friendly and fast alternative to cut and (sometimes) awk
     cmatrix # Cool matrix style scrolling, really cpu intense
