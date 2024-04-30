@@ -93,6 +93,12 @@ in
       #tabmerge
       #toggleterm-nvim
       #vim-airline
+      (pkgs.vimUtils.buildVimPlugin {
+        pname = "nvimpager";
+        version = pkgs.nvimpager.drvAttrs.version;
+
+        src = pkgs.nvimpager.src;
+      })
       pkgs.copilotchat-nvim
       SchemaStore-nvim
       cmp-git
