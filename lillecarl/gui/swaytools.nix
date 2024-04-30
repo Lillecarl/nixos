@@ -29,6 +29,7 @@ in
 
     programs.swaylock = {
       enable = true;
+      catppuccin.enable = false;
 
       settings = {
         daemonize = true;

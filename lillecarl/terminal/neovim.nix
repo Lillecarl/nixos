@@ -95,7 +95,6 @@ in
       #vim-airline
       pkgs.copilotchat-nvim
       SchemaStore-nvim
-      catppuccin-nvim
       cmp-git
       cmp-nvim-lsp
       conform-nvim

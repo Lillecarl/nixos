@@ -23,21 +23,28 @@ in
         gtk.enable = false;
       };
     };
+    catppuccin = {
+      enable = true;
+
+      flavour = "mocha";
+      accent = "blue";
+    };
 
     gtk = {
       enable = true;
-      theme = {
-        name = "Catppuccin-Mocha-Compact-Blue-Dark";
-        package = pkgs.catppuccin-gtk.override {
-          accents = [ "blue" ];
-          size = "compact";
-          tweaks = [ "rimless" ];
-          variant = "mocha";
-        };
+      catppuccin = {
+        size = "compact";
+        tweaks = [ "rimless" ];
       };
       iconTheme = {
         name = "Adwaita";
-        package = pkgs.gnome.adwaita-icon-theme;
+        package = pkgs.buildEnv {
+          name = "merged-icons";
+          paths = [
+            pkgs.gnome.adwaita-icon-theme
+            pkgs.morewaita-icon-theme
+          ];
+        };
       };
     };
 

@@ -7,6 +7,7 @@ let
 in
 {
   stylix = {
+    autoEnable = false;
     image = "${inputs.nixos-artwork}/wallpapers/nix-wallpaper-watersplash.png";
     base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
     polarity = "dark";
@@ -39,8 +40,8 @@ in
 
     cursor = {
       size = 32;
-      package = pkgs.catppuccin-cursors.mochaDark;
-      name = "Catppuccin-Mocha-Dark-Cursors";
+      package = pkgs.catppuccin-cursors.mochaBlue;
+      name = "Catppuccin-Mocha-Blue-Cursors";
     };
   };
 }
