@@ -7,7 +7,7 @@
 {
   nix = {
     package = pkgs.nixVersions.latest;
-    channel.enable = false;
+    #channel.enable = false;
     extraOptions = ''
       experimental-features = nix-command flakes
       builders-use-substitutes = true
