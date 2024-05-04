@@ -5,6 +5,8 @@ function rebuild-home
     set fullflake "$FLAKE#homeConfigurations.\"$USER@$hostname\".activationPackage"
     set profile $HOME/.local/state/nix/profiles/home-manager
 
+    set -x HOME_MANAGER_BACKUP_EXT backup
+
     echo "Building $fullflake"
     echo "Into $result"
     nom \
@@ -19,8 +21,7 @@ function rebuild-home
 
     # home-manager links the profile itself.
     echo "Activating package $result/activate"
-    $result/activate
-    if test $status != 0
+    $result/activate || begin
         echo "Failed to activate profile"
         return 1
     end
