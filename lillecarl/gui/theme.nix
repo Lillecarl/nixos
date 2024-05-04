@@ -21,6 +21,10 @@ in
         swaylock.enable = false;
         # Use catppuccin for GTK and QT
         gtk.enable = false;
+        xresources.enable = true;
+        firefox.enable = true;
+        kde.enable = true;
+        gnome.enable = true;
       };
     };
     catppuccin = {
