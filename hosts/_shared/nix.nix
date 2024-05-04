@@ -6,7 +6,7 @@
 }:
 {
   nix = {
-    package = pkgs.nixVersions.unstable;
+    package = pkgs.nixVersions.latest;
     channel.enable = false;
     extraOptions = ''
       experimental-features = nix-command flakes
