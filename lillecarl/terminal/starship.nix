@@ -126,7 +126,7 @@ let
       };
       # Don't show k8s context, we manage them with direnv
       kubernetes = {
-        disabled = true;
+        disabled = false;
       };
       # Show how deep we're shelled
       shlvl = {
