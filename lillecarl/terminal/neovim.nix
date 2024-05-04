@@ -95,9 +95,9 @@ in
       #vim-airline
       (pkgs.vimUtils.buildVimPlugin {
         pname = "nvimpager";
-        version = pkgs.nvimpager.drvAttrs.version;
+        inherit (pkgs.nvimpager.drvAttrs) version;
 
-        src = pkgs.nvimpager.src;
+        inherit (pkgs.nvimpager) src;
       })
       pkgs.copilotchat-nvim
       SchemaStore-nvim

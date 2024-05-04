@@ -25,7 +25,7 @@ in
             inputs.stylix.nixosModules.stylix
             inputs.catppuccin-nix.nixosModules.catppuccin
             inputs.nix-snapshotter.nixosModules.default
-            ({...}: { catppuccin.enable = true; })
+            (_: { catppuccin.enable = true; })
           ]
           ++ pkgs.lib.rimport { path = [ ./. ../_shared ]; regdel = __curPos.file; };
 
