@@ -22,7 +22,7 @@
     thinkpad = {
       enable = false;
     };
-    bluetooth.enable = false;
+    bluetooth.enable = true;
   };
   programs.niri.config = null;
 }
