@@ -10,5 +10,6 @@ let
 in
 {
   "cloudflare.age".publicKeys = all;
+  "rclone.age".publicKeys = all;
   "sourcegraph.age".publicKeys = all;
 }

@@ -5,6 +5,7 @@
       "${config.home.homeDirectory}/.ssh/agenix"
     ];
     secrets.cloudflare.file = ../secrets/cloudflare.age;
+    secrets.rclone.file = ../secrets/cloudflare.age;
     secrets.sourcegraph.file = ../secrets/sourcegraph.age;
   };
 }
