@@ -42,6 +42,29 @@ in
           id = 0;
           isDefault = true;
 
+          containers = {
+            CH = {
+              id = 1;
+              color = "orange";
+              icon = "fingerprint";
+            };
+            Work = {
+              id = 2;
+              color = "purple";
+              icon = "briefcase";
+            };
+            KR = {
+              id = 3;
+              color = "blue";
+              icon = "briefcase";
+            };
+            tmp = {
+              id = 4;
+              color = "pink";
+              icon = "chill";
+            };
+          };
+
           search = {
             default = "Kagi";
             force = true;
