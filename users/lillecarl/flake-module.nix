@@ -21,16 +21,10 @@ in
                   inherit self inputs flakeloc mpkgs spkgs;
                   nixosConfig = self.nixosConfigurations.shitbox.config;
                 };
-              modules = [
-                (self + "/stylix.nix")
-                inputs.agenix.homeManagerModules.default
-                inputs.niri.homeModules.niri
-                inputs.nix-flatpak.homeManagerModules.nix-flatpak
-                inputs.stylix.homeManagerModules.stylix
-                inputs.nix-snapshotter.homeModules.default
-                inputs.catppuccin-nix.homeManagerModules.catppuccin
-              ]
-              ++ pkgs.lib.rimport { path = [ ./. ../../modules/hm ]; regdel = [ __curPos.file ".*${excludeName}.*" ]; };
+              modules = pkgs.lib.rimport {
+                path = [ ./. ../_shared ../../modules/hm ];
+                regdel = [ __curPos.file ".*${excludeName}.*" ];
+              };
             });
       in
       {
