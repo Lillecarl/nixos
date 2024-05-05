@@ -9,7 +9,7 @@ in
 {
   home.packages = [
     pkgs.tree-sitter # for TS troubleshooting
-    pkgs.nvimpager # Use Neovim as pager
+    config.lib.nvimpager
   ];
 
   stylix.targets.vim.enable = false;
@@ -258,5 +258,9 @@ in
       in
         /* lua */
       "require('init').setup(${luaConfig})";
+  };
+
+  lib.nvimpager = pkgs.nvimpager.override {
+    #neovim = config.programs.neovim.finalPackage;
   };
 }

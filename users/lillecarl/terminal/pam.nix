@@ -1,9 +1,10 @@
 { pkgs
+, config
 , lib
 , ...
 }:
 let
-  pager = lib.getExe pkgs.nvimpager;
+  pager = lib.getExe config.lib.nvimpager;
 in
 {
   pam = {

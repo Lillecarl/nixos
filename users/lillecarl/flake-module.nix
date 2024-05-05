@@ -30,7 +30,7 @@ in
                 inputs.nix-snapshotter.homeModules.default
                 inputs.catppuccin-nix.homeManagerModules.catppuccin
               ]
-              ++ pkgs.lib.rimport { path = [ ./. ../modules/hm ]; regdel = [ __curPos.file ".*${excludeName}.*" ]; };
+              ++ pkgs.lib.rimport { path = [ ./. ../../modules/hm ]; regdel = [ __curPos.file ".*${excludeName}.*" ]; };
             });
       in
       {

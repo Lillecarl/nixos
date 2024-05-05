@@ -7,7 +7,7 @@
 , ...
 }:
 let
-  sub_path = "lillecarl/dotfiles";
+  sub_path = "users/lillecarl/dotfiles";
   dot_path_real = "${flakeloc}/${sub_path}";
   dot_path_store = "${self}/${sub_path}";
   dot_paths = lib.filesystem.listFilesRecursive dot_path_store;
