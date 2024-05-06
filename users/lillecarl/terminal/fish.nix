@@ -18,11 +18,11 @@
           }
         )
         (
-          builtins.fromJSON (
-            builtins.readFile ./fishPlugins.json
-          )
+          builtins.fromJSON (builtins.readFile ./fishPlugins.json)
         )
-      ) ++ (with pkgs.fishPlugins; [
+      )
+      ++
+      (with pkgs.fishPlugins; [
         {
           name = "done";
           inherit (done) src;
