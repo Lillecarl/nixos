@@ -29,7 +29,6 @@ in
             inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t14-amd-gen3
             inputs.stylix.nixosModules.stylix
             inputs.catppuccin-nix.nixosModules.catppuccin
-            inputs.nix-snapshotter.nixosModules.default
             inputs.home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;

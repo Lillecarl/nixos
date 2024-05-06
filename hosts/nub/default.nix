@@ -261,7 +261,6 @@
     gnome.gnome-keyring
     gnome.seahorse
     iptables # Give us the iptables CLI (should map to nftables)
-    k3s # Kubernetes K3s
     polkit-kde-agent
     qpaeq # Pulse Equalizer
     sbctl # sb = secure boot
