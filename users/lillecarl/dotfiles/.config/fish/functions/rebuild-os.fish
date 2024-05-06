@@ -1,4 +1,5 @@
 function rebuild-os
+    sudo echo -n
     set tempdir "$(mktemp -d -t nix-rebuild-home_XXXX)"
     set result "$tempdir/result"
     set buildlog "$tempdir/buildlog.jsonish"
