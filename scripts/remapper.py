@@ -695,9 +695,12 @@ async def main():
                                 release(Keys.RIGHTALT)
                                 continue
 
-                        # Map CTRL + SHIFT + hjkl to arrow keys
-                        elif in_key_active(Keys.LEFTCTRL) and in_key_active(
-                            Keys.LEFTSHIFT
+                        # Map CTRL + SHIFT + LEFTMETA + hjkl to arrow keys
+                        elif (
+                            True
+                            and in_key_active(Keys.LEFTCTRL)
+                            and in_key_active(Keys.LEFTSHIFT)
+                            and in_key_active(Keys.LEFTMETA)
                         ):
                             code = None
 
