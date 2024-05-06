@@ -42,8 +42,14 @@
         "https://niri.cachix.org"
       ];
     };
-    registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
-    nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
+    registry = {
+      nixpkgs = { flake = inputs.nixpkgs; };
+    };
+    nixPath = [
+      "nixpkgs=${inputs.nixpkgs}"
+    ];
+    #registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
+    #nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
 
     sshServe = {
       enable = true;
