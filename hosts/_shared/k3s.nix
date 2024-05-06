@@ -1,27 +1,50 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 {
   services.k3s = {
     enable = true;
-    setKubeConfig = true;
+    package = pkgs.k3s_1_29;
+    #setKubeConfig = true;
+    #extraFlags = toString [
+    #  "--snapshotter=btrfs --container-runtime-endpoint unix:///run/containerd/containerd.sock"
+    #];
   };
 
   virtualisation.containerd = {
-    enable = true;
-    k3sIntegration = true;
-    nixSnapshotterIntegration = true;
+    enable = false;
+    settings =
+      let
+        fullCNIPlugins = pkgs.buildEnv {
+          name = "full-cni";
+          paths = with pkgs;[
+            cni-plugins
+            cni-plugin-flannel
+          ];
+        };
+      in
+      {
+        plugins."io.containerd.grpc.v1.cri".cni = {
+          bin_dir = "${fullCNIPlugins}/bin";
+          conf_dir = "/var/lib/rancher/k3s/agent/etc/cni/net.d/";
+        };
+        # Optionally set private registry credentials here instead of using /etc/rancher/k3s/registries.yaml
+        # plugins."io.containerd.grpc.v1.cri".registry.configs."registry.example.com".auth = {
+        #  username = "";
+        #  password = "";
+        # };
+      };
   };
 
-  services.nix-snapshotter = {
-    enable = true;
-  };
+  #services.nix-snapshotter = {
+  #  enable = true;
+  #};
 
   environment.systemPackages = [
-    pkgs.k3s
-    pkgs.nerdctl
+    #pkgs.nix-snapshotter
+    config.services.k3s.package
     pkgs.containerd
     pkgs.cri-tools
     pkgs.kubectl
-    pkgs.nix-snapshotter
+    pkgs.nerdctl
   ];
 
   networking.firewall.allowedTCPPorts = [
