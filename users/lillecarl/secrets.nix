@@ -9,7 +9,7 @@
     secrets.sourcegraph.file = "${self}/secrets/sourcegraph.age";
   };
 
-    systemd.user.tmpfiles.rules = [
-      #"L /home/user/Documents - - - - /mnt/data/Documents"
-    ];
+  systemd.user.tmpfiles.rules = [
+    #"L /home/user/Documents - - - - /mnt/data/Documents"
+  ];
 }
