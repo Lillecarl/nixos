@@ -6,7 +6,7 @@ bind --mode=browser J tabnext
 
 js console.log("tridactylrc: our binds")
 
-set editorcmd neovide
+set editorcmd kitty vim %f '+normal!%lGzv%c|'
 
 set searchurls.kagi https://www.kagi.com/search?q=%s
 setnull searchurls.google
