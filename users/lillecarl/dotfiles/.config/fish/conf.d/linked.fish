@@ -1,6 +1,7 @@
 set -x fish_greeting ""
 set -x SHELL fish
 set -x DIRENV_LOG_FORMAT ""
+
 fish_vi_key_bindings
 
 # trigger direnv before prompt is rendered
@@ -15,9 +16,9 @@ if true
     and set -q LASTPATH
     and not set -q TMUX
     and not set -q VSCODE_INJECTION
-    and not test "$_" = "source"
-    and not status --is-login;
-    and begin
+    and not status --is-login
+    and not test "$_" = source # Don't cd if we're sourcing this file
+    begin
         cd $LASTPATH
     end
 end
@@ -50,26 +51,6 @@ abbr -a gsgp "git switch main && git pull"
 abbr -a rb rebuild-both
 abbr -a ro rebuild-os
 abbr -a rh rebuild-home
-
-# bind ctrl+a to beginning of buffer
-bind -M insert \ca beginning-of-buffer
-bind -M visual \ca beginning-of-buffer
-# bind ctrl+e to end of buffer
-bind -M insert \ce end-of-buffer
-bind -M visual \ce end-of-buffer
-# bind alt+l to complete whatever fish is suggesting
-bind -M insert \el forward-char
-# bind ctrl+shift+e to edit command buffer
-bind -M insert \e\[101\;6u edit_command_buffer
-bind -M visual \e\[101\;6u edit_command_buffer
-# bind /
-bind -M visual / _atuin_search
-# bind ctrl+shift+d to scroll down
-bind -M insert \e\[100\;6u scrolldown
-bind -M visual \e\[100\;6u scrolldown
-# bind ctrl+z to interactive zoxide
-bind -M insert \cZ __zi_drop
-bind -M visual \cZ __zi_drop
 
 function set_lastpath -e fish_postexec
     if not set -q TMUX
