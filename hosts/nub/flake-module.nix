@@ -11,6 +11,11 @@ in
   flake = {
     nixosConfigurations.nub =
       withSystem system ({ config, pkgs, flakeloc, flakepath, ... }@ctx:
+        let
+          specialArgs = {
+            inherit inputs flakeloc flakepath self;
+          };
+        in
         inputs.nixpkgs.lib.nixosSystem {
           inherit pkgs;
           modules = [
@@ -25,13 +30,27 @@ in
             inputs.stylix.nixosModules.stylix
             inputs.catppuccin-nix.nixosModules.catppuccin
             inputs.nix-snapshotter.nixosModules.default
+            inputs.home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.extraSpecialArgs = specialArgs;
+              home-manager.users.root = { nixosConfig, ... }:
+                {
+                  imports = pkgs.lib.rimport {
+                    path = [ ../../users/_shared ../../users/root ];
+                    regdel = ".*_shared/gui/.*";
+                  };
+                  home.stateVersion = nixosConfig.system.stateVersion;
+                };
+            }
             (_: { catppuccin.enable = true; })
           ]
-          ++ pkgs.lib.rimport { path = [ ./. ../_shared ]; regdel = __curPos.file; };
-
-          specialArgs = {
-            inherit inputs flakeloc flakepath self;
+          ++ pkgs.lib.rimport {
+            path = [ ./. ../_shared ];
+            regdel = __curPos.file;
           };
+          inherit specialArgs;
         });
   };
 }
