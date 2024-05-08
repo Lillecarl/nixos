@@ -67,6 +67,7 @@
         flake-parts.follows = "flake-parts";
         devshell.follows = "devshell";
         pre-commit-hooks.follows = "pre-commit-hooks";
+        treefmt-nix.follows = "treefmt-nix";
       };
     };
     nypkgs = {
