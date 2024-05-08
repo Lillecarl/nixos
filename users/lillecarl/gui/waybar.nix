@@ -33,8 +33,6 @@ in
     programs.waybar = {
       enable = true;
 
-      package = pkgs.waybar.override { wireplumberSupport = false; };
-
       systemd = {
         enable = true;
         target = "hyprland-session.target";
