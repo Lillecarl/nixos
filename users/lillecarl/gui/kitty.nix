@@ -17,6 +17,7 @@ in
       enable = true;
 
       extraConfig = ''
+        include linked.conf
         update_check_interval 0
         confirm_os_window_close 0
         scrollback_fill_enlarged_window yes
