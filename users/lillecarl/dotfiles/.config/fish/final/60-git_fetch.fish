@@ -3,7 +3,7 @@ function git_fetch --on-variable PWD
     set varname "_git_fetch_last_$(echo $PWD | md5sum | cut -c 1-6)"
 
     if not set -q git_fetch_interval
-        set -g git_fetch_interval 3600
+        set -U git_fetch_interval 3600
     end
 
     if true &&
