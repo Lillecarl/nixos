@@ -80,5 +80,6 @@
     src-cli # Sourcegraph CLI
     skim # Modern rusty fzf
     dtach # Detach application from screen
+    kind # Kubernetes in Docker (podman)
   ];
 }
