@@ -3,6 +3,7 @@ unstable
 result
 .pijul
 .ignore
+.nixpath
 
 # Devenv
 /.devenv*
