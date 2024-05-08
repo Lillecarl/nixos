@@ -13,6 +13,15 @@
     get-flake.url = "github:ursi/get-flake";
     catppuccin-nix.url = "github:catppuccin/nix";
 
+    noshell = {
+      url = "github:viperML/noshell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    wrapper-manager = {
+      url = "github:viperML/wrapper-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    # Get this working with newer k3s and go versions
     nix-snapshotter = {
       url = "github:pdtpartners/nix-snapshotter";
       inputs.nixpkgs.follows = "nixpkgs";
