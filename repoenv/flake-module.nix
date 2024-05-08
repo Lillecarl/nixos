@@ -5,8 +5,9 @@ _:
     , ...
     }:
     let
-      repoenv = pkgs.mkShell {
-        packages = [
+      farm = pkgs.symlinkJoin {
+        name = "repoenv-farm";
+        paths = [
           pkgs.pokemonsay
           pkgs.msr-tools
           (pkgs.python3.withPackages (ps: with ps; [
@@ -27,6 +28,9 @@ _:
             qutebrowser
           ]))
         ];
+      };
+      repoenv = pkgs.mkShell {
+        packages = [ farm ];
 
         shellHook = ''
         '';
@@ -35,5 +39,6 @@ _:
     {
       devShells.default = repoenv;
       devShells.repoenv = repoenv;
+      packages.repofarm = farm;
     };
 }
