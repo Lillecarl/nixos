@@ -257,21 +257,18 @@
     config.boot.kernelPackages.turbostat
     config.boot.kernelPackages.usbip
     config.boot.kernelPackages.zenpower # zenpower
+    config.virtualisation.podman.package # foss docker
     distrobox # Run different distros on your machine
     gnome.gnome-keyring
     gnome.seahorse
     iptables # Give us the iptables CLI (should map to nftables)
     polkit-kde-agent
-    qpaeq # Pulse Equalizer
     sbctl # sb = secure boot
     screen # Just for TTY
     usbguard # USB blocking solution
     virt-manager # Virtualisation manager
-    virt-manager-qt # Shitty version of virt-manager
     zenmonitor # AMD CPU monitoring
-    podman # foss docker
-    podman-compose # docker-compose for podman
-  ];
+  ] ++ (if config.virtualisation.podman.enable then [ podman-compose ] else [ ]);
 
   system.stateVersion = "24.05";
 }
