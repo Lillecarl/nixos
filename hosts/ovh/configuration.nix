@@ -7,6 +7,8 @@
     "${self}/modules/nixos/ifupdown2"
   ];
 
+  networking.hostName = "ovh";
+
   virtualisation.libvirtd = {
     enable = true;
 
