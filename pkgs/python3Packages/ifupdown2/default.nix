@@ -3,19 +3,20 @@
 , buildPythonPackage
 , setuptools
 , six
-,
+, systemd
 }:
 let
   versiondata = builtins.fromJSON (builtins.readFile ./version.json);
 in
-buildPythonPackage rec {
+buildPythonPackage {
   pname = "ifupdown2";
-  version = "3.0.0-1";
+  version = "3.3.0";
   src = fetchFromGitHub versiondata;
 
   propagatedBuildInputs = [
     setuptools
     six
+    systemd
   ];
 
   meta = {
