@@ -63,7 +63,7 @@ in
           "ctrl+shift+b" = "no_op";
           "ctrl+shift+delete" = "no_op";
           "ctrl+shift+e" = "no_op";
-          "ctrl+shift+enter" = "new_window";
+          "ctrl+shift+enter" = "new_window_with_cwd";
           "ctrl+shift+equal" = "no_op";
           "ctrl+shift+escape" = "kitty_shell";
           "ctrl+shift+f" = "no_op";
