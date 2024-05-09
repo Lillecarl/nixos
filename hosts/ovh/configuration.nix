@@ -6,6 +6,23 @@
     ../_shared/fish.nix
     "${self}/modules/nixos/ifupdown2"
   ];
+
+  virtualisation.libvirtd = {
+    enable = true;
+
+    qemu = {
+      ovmf = {
+        enable = true;
+      };
+
+      swtpm = {
+        enable = true;
+      };
+
+    };
+  };
+
+
   boot.loader = {
     efi = {
       #canTouchEfiVariables = true;
