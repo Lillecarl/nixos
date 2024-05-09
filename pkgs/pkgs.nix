@@ -54,7 +54,7 @@ prev.lib.filterAttrs
     (n != "python3Packages" && n != "nodePackages" && n != "grafanaPlugins" && n != "wrapFirefox"))
   {
     inherit miconoff mictoggle;
-    ifupdown2 = python3Packages.ifupdown2;
+    inherit (python3Packages) ifupdown2;
 
     qutebrowser = qutebrowser true;
 
