@@ -6,6 +6,8 @@ function git_fetch --on-variable PWD
         set -U git_fetch_interval 3600
     end
 
+    set -g _git_fetch_var_name $varname
+
     if true &&
             test $time -gt $(math $$varname + $git_fetch_interval) &&
             fd -I -d 1 -t d -H -q '^.git$' &&
@@ -13,8 +15,6 @@ function git_fetch --on-variable PWD
 
         echo "Fetching git repos in $PWD"
 
-        git fetch --all --recurse-submodules &&
-            echo "Fetched git repos in $PWD" &&
-            set -U $varname $time
+        systemd-run --user --quiet --unit $varname fish -c "git fetch --all --recurse-submodules && set -U $varname $time"
     end
 end
