@@ -206,10 +206,6 @@
         rust-overlay.follows = "rust-overlay";
       };
     };
-    fenix = {
-      url = "github:nix-community/fenix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
 
     carapace = {
       url = "github:rsteube/carapace-bin";
