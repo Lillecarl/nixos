@@ -4,7 +4,7 @@
 , ...
 }: {
   flake = {
-    nixosConfigurations.ovh = inputs.nixpkgs.lib.nixosSystem {
+    nixosConfigurations.nixguest = inputs.nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
         inputs.disko.nixosModules.disko
