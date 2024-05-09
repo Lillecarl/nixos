@@ -1,9 +1,10 @@
-{ lib, pkgs, config, modulesPath, ... }:
+{ self, lib, pkgs, config, modulesPath, ... }:
 {
   imports = [
     ../_shared/users.nix
     ../_shared/nix.nix
     ../_shared/fish.nix
+    "${self}/modules/nixos/ifupdown2"
   ];
   boot.loader = {
     efi = {
