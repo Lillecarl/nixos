@@ -7,6 +7,14 @@
     "${self}/modules/nixos/ifupdown2"
   ];
 
+  environment.systemPackages = with pkgs; [
+    direnv
+    git
+    neovim
+    gitui
+    cryptsetup
+  ];
+
   networking.hostName = "ovh";
 
   virtualisation.libvirtd = {
