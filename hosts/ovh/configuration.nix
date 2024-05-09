@@ -17,6 +17,17 @@
 
   networking.hostName = "ovh";
 
+  # https://github.com/NixOS/nixpkgs/pull/277845
+  systemd.tmpfiles.rules =
+    let
+      vhostUserCollection = pkgs.buildEnv {
+        name = "vhost-user";
+        paths = [ pkgs.virtiofsd ];
+        pathsToLink = [ "/share/qemu/vhost-user" ];
+      };
+    in
+    [ "L+ /var/lib/qemu/vhost-user - - - - ${vhostUserCollection}/share/qemu/vhost-user" ];
+
   virtualisation.libvirtd = {
     enable = true;
 
@@ -28,7 +39,6 @@
       swtpm = {
         enable = true;
       };
-
     };
   };
 
