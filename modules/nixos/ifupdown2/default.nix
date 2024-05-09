@@ -12,7 +12,7 @@ in
     networking.ifupdown2 = {
       enable = mkOption {
         type = types.bool;
-        default = true;
+        default = false;
         description = lib.mdDoc ''
           Whether to enable ifupdown2 for device configuration.
         '';
