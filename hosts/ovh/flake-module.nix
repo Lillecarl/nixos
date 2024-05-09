@@ -1,20 +1,28 @@
-{ inputs
-, lib
-, flakeloc
+{ self
+, inputs
+, withSystem
+, __curPos ? __curPos
 , ...
-}: {
+}@top:
+let
+  system = "x86_64-linux";
+in
+{
   flake = {
-    nixosConfigurations.ovh = inputs.nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      modules = [
-        inputs.disko.nixosModules.disko
-        ./configuration.nix
-        ./disko.nix
-        ./hardware-configuration.nix
-      ];
-      specialArgs = {
-        inherit inputs;
-      };
-    };
+    nixosConfigurations.ovh =
+      withSystem system ({ pkgs, flakeloc, ... }@ctx:
+        inputs.nixpkgs.lib.nixosSystem {
+          inherit pkgs;
+          modules = [
+            inputs.disko.nixosModules.disko
+            ./configuration.nix
+            ./disko.nix
+            ./hardware-configuration.nix
+          ];
+          specialArgs = {
+            inherit inputs flakeloc self;
+          };
+        });
   };
 }
+
