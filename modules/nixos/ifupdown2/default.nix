@@ -42,7 +42,7 @@ in
       };
       extraConfig = mkOption {
         type = types.lines;
-        default = null;
+        default = "";
         description = lib.mdDoc ''
           /etc/network/interfaces configuration
         '';
