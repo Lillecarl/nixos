@@ -2,6 +2,8 @@ final: prev: flake:
 let
   # python3 packages
   python3Packages = {
+    ifupdown2 = prev.python3Packages.callPackage ../pkgs/python3Packages/ifupdown2 { };
+
     pyping = prev.python3Packages.callPackage ../pkgs/python3Packages/pyping { };
     hyprpy = prev.python3Packages.callPackage ../pkgs/python3Packages/hyprpy { };
     qutebrowser = qutebrowser false;
@@ -52,6 +54,7 @@ prev.lib.filterAttrs
     (n != "python3Packages" && n != "nodePackages" && n != "grafanaPlugins" && n != "wrapFirefox"))
   {
     inherit miconoff mictoggle;
+    ifupdown2 = python3Packages.ifupdown2;
 
     qutebrowser = qutebrowser true;
 
