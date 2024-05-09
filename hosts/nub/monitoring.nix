@@ -6,7 +6,7 @@
 let
   monitordbpath = "/var/lib/grafana/data/monitoring.sqlite3";
   domain = "grafana.127.lillecarl.com";
-  certdir = config.security.acme.certs.grafana.directory;
+  certdir = config.security.acme.certs.${domain}.directory;
 
   script = pkgs.writers.writePython3Bin "pymonitoring"
     {
@@ -21,6 +21,10 @@ let
     ../../scripts/monitoring.py;
 in
 {
+  users.users.grafana = {
+    extraGroups = [ config.security.acme.certs.${domain}.group ];
+  };
+
   services = {
     grafana = {
       enable = true;
@@ -45,11 +49,12 @@ in
 
       settings = {
         server = {
+          inherit domain;
           http_addr = "127.0.0.1";
           http_port = 3000;
-          inherit domain;
-          root_url = "https://${domain}/";
-          serve_from_sub_path = true;
+          protocol = "https";
+          cert_file = "${certdir}/fullchain.pem";
+          cert_key = "${certdir}/key.pem";
         };
       };
     };
@@ -61,12 +66,11 @@ in
     nginx.virtualHosts.${domain} = {
       locations."/" = {
         recommendedProxySettings = true;
-        proxyPass = "http://${toString config.services.grafana.settings.server.http_addr}:${toString config.services.grafana.settings.server.http_port}";
+        proxyPass = "https://${config.services.grafana.settings.server.http_addr}:${toString config.services.grafana.settings.server.http_port}";
         proxyWebsockets = true;
       };
       forceSSL = true;
-      sslCertificate = "${certdir}/fullchain.pem";
-      sslCertificateKey = "${certdir}/key.pem";
+      enableACME = true;
     };
   };
 
@@ -87,12 +91,6 @@ in
 
       ${lib.getExe script}
     '';
-  };
-
-
-  security.acme.certs.grafana = {
-    inherit domain;
-    inherit (config.services.nginx) group;
   };
 
   networking.hosts = {
