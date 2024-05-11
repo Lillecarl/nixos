@@ -100,6 +100,7 @@ in
         inherit (pkgs.nvimpager) src;
       })
       pkgs.copilotchat-nvim
+      aerial-nvim
       SchemaStore-nvim
       cmp-git
       cmp-nvim-lsp
