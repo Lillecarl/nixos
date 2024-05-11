@@ -12,12 +12,19 @@ from datetime import datetime
 from enum import IntEnum, auto
 from pathlib import Path
 from sh import ddcutil, virsh  # type: ignore
+from signal import SIGINT, SIGTERM
 import sh
 
 pyprint = print
 
 headset_xml_path = os.environ.get("HEADSET_XML_PATH") or "./resources/logitech-g933.xml"
 gaming_mode: bool = False
+
+outevents = None
+macroevents = None
+inputevents = None
+main_task = None
+macropad_attach: bool = True
 
 
 async def ddcutil_getvcp():
@@ -364,16 +371,23 @@ async def main():
 
     idev: evdev.InputDevice | None = None
 
-    devices = [evdev.InputDevice(path) for path in evdev.list_devices()]
+    def get_input_device(name: str):
+        devices = [evdev.InputDevice(path) for path in evdev.list_devices()]
+        for device in devices:
+            if device.name == name:
+                print(f"Found device: {device}")
+                return device
 
-    for device in devices:
-        if device.name == device_name:
-            print(device.path, device.name, device.phys)
-            idev = device
-            break
+        print(f"Device {name} not found")
+        print("Available devices:")
 
+        for device in devices:
+            print(device)
+
+        return None
+
+    idev = get_input_device(device_name)
     if idev is None:
-        print("No device found")
         return
 
     # Copy all capabilities from the original device
@@ -392,9 +406,8 @@ async def main():
     udev = evdev.UInput(events=all_capabilities, name="pykbd")
     odev = evdev.InputDevice(udev.device.path)  # type: ignore
 
+    print(f"Created device: {udev}")
     print(udev.capabilities(verbose=True).keys())
-    print(udev.phys)
-    print(udev.device)
 
     Path("/dev/input/pykbd").unlink(missing_ok=True)
     Path("/dev/input/pykbd").symlink_to(udev.device.path, False)  # type: ignore
@@ -408,6 +421,14 @@ async def main():
 
     def out_key_active(key: Keys) -> bool:
         return any(e == key for e in odev.active_keys())
+
+    def in_key_doubleclick(code) -> bool:
+        key_state = keys_state[code]
+
+        if time.time() - key_state[State.UPTIME] < 0.5:
+            return True
+
+        return False
 
     def update_key_state(event: evdev.InputEvent):
         if keys_state.get(event.code) is None:
@@ -520,6 +541,95 @@ async def main():
                     print(f"Output active keys: {odev.active_keys(verbose=True)}")
                     release(id)
 
+    async def handle_macropad_input_events():
+        global macropad_attach
+
+        mdev = get_input_device("IDOBAO ID3KEY")
+        if mdev is None:
+            return
+
+        with mdev.grab_context():
+            print("Grabbing macropad")
+            event: evdev.InputEvent
+
+            last_key_up_code = Keys.F24
+            last_key_up_time = time.time()
+
+            async for event in mdev.async_read_loop():
+                start_time = time.time()
+                base_path = "/home/lillecarl/Code/nixos/resources"
+
+                if event.type != Event.KEY:
+                    continue
+
+                if event.value == Action.HOLD:
+                    continue
+
+                print(f"event: {event}")
+                print(f"Macropad active keys: {mdev.active_keys(verbose=True)}")
+                print(f"last_key_up_code: {last_key_up_code}, event.code: {event.code}")
+                print(f"last_key_up_time: {last_key_up_time} diff: {time.time() - last_key_up_time}")
+
+                if (
+                    True
+                    and any(e == Keys.LEFTCTRL for e in mdev.active_keys())
+                    and event.code == Keys.C
+                    and last_key_up_code == Keys.C
+                    and time.time() - last_key_up_time < 0.5
+                ):
+                    if macropad_attach:
+                        print("Attaching devices")
+                        await attach_device(f"{base_path}/logitech-g933.xml")
+                        await attach_device(f"{base_path}/daskeyboard.xml")
+                        await attach_device(f"{base_path}/steelseries-sensei.xml")
+                        macropad_attach = False
+                    else:
+                        print("Detaching devices")
+                        await detach_device(f"{base_path}/logitech-g933.xml")
+                        await detach_device(f"{base_path}/daskeyboard.xml")
+                        await detach_device(f"{base_path}/steelseries-sensei.xml")
+                        macropad_attach = True
+                elif (
+                    True
+                    and any(e == Keys.LEFTCTRL for e in mdev.active_keys())
+                    and event.code == Keys.V
+                    and last_key_up_code == Keys.V
+                    and time.time() - last_key_up_time < 0.5
+                ):
+                    await ddc_switch()
+
+
+                if event.value == Action.UP:
+                    last_key_up_code = event.code
+                    last_key_up_time = time.time()
+
+    class VirshAction(IntEnum):
+        ATTACH = auto()
+        DETACH = auto()
+
+    async def _virsh_set_device(vm: str, xml_path: str, action: VirshAction):
+        actionstr = "attach-device" if action == VirshAction.ATTACH else "detach-device"
+        try:
+            await virsh(actionstr, vm, xml_path, "--live", _async=True)
+            print(f"{actionstr} {xml_path} to {vm}")
+        except sh.ErrorReturnCode as e:
+            print(f"Failed to {actionstr} {xml_path} to {vm}")
+            print(e.stderr.decode())
+
+    async def attach_device(xml_path: str):
+        await _virsh_set_device("win11-3", xml_path, VirshAction.ATTACH)
+
+    async def detach_device(xml_path: str):
+        await _virsh_set_device("win11-3", xml_path, VirshAction.DETACH)
+
+    async def ddc_switch():
+        ddcutil_current = str(await ddcutil_getvcp())
+        print(f"vcp: {ddcutil_current}")
+        if "VCP 60 SNC x00" in ddcutil_current:
+            await ddcutil_dp()
+        elif "VCP 60 SNC x0f" in ddcutil_current:
+            await ddcutil_hdmi()
+
     async def handle_input_events():
         global gaming_mode
 
@@ -554,13 +664,6 @@ async def main():
                         and time.time() - key_state[State.UPTIME] < 0.5
                     ):
 
-                        async def ddc_switch():
-                            ddcutil_current = str(await ddcutil_getvcp())
-                            print(f"vcp: {ddcutil_current}")
-                            if "VCP 60 SNC x00" in ddcutil_current:
-                                await ddcutil_dp()
-                            elif "VCP 60 SNC x0f" in ddcutil_current:
-                                await ddcutil_hdmi()
 
                         if in_key_active(Keys.LEFTMETA):
                             gaming_mode = not gaming_mode
@@ -726,10 +829,40 @@ async def main():
                 # Pass any events we haven't handled to the virtual device
                 write_event(event)
 
+    global outevents
+    global macroevents
+    global inputevents
+    loop = asyncio.get_event_loop()
     # Handle output events in a separate task
-    asyncio.create_task(handle_output_events())
-    await handle_input_events()
+    outevents = loop.create_task(handle_output_events())
+    macroevents = loop.create_task(handle_macropad_input_events())
+    inputevents = loop.create_task(handle_input_events())
+
+    while True:
+        await asyncio.sleep(1)
+
+
+def cancel_all():
+    if outevents is not None:
+        outevents.cancel()
+    if macroevents is not None:
+        macroevents.cancel()
+    if inputevents is not None:
+        inputevents.cancel()
+    if main_task is not None:
+        main_task.cancel()
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    loop = asyncio.get_event_loop()
+    main_task = asyncio.ensure_future(main())
+    if main_task is None:
+        exit(0)
+    for signal in [SIGINT, SIGTERM]:
+        loop.add_signal_handler(signal, cancel_all)
+    try:
+        loop.run_until_complete(main_task)
+    except asyncio.CancelledError:
+        print("Cancelled")
+    finally:
+        loop.close()
