@@ -4,7 +4,7 @@ function hmmove --wraps=cat
     # Where the head of old path is
     set -f from $HOME
     # Where the new path head is
-    set -f to $FLAKE/lillecarl/dotfiles
+    set -f to $FLAKE/users/lillecarl/dotfiles
     # Where we're moving to
     set -f newpath (echo $oldpath | sed "s,$HOME,$FLAKE/users/lillecarl/dotfiles,g")
     # Create the directory we're moving to
