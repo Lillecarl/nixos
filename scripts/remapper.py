@@ -7,6 +7,7 @@ import json
 import os
 import sys
 import time
+from evdev import util
 from collections import defaultdict
 from datetime import datetime
 from enum import IntEnum, auto
@@ -371,22 +372,26 @@ async def main():
 
     idev: evdev.InputDevice | None = None
 
-    def get_input_device(name: str):
+    def get_input_device(name: str, verbose: bool = True):
         devices = [evdev.InputDevice(path) for path in evdev.list_devices()]
         for device in devices:
             if device.name == name:
-                print(f"Found device: {device}")
+                if verbose:
+                    print(f"Found device: {device}")
+                #print(f"Leds: {device.leds(verbose=True)}")
+                #print(f"Capabilities: {device.capabilities(verbose=True)}")
                 return device
 
-        print(f"Device {name} not found")
-        print("Available devices:")
+        if verbose:
+            print(f"Device {name} not found")
+            print("Available devices:")
 
-        for device in devices:
-            print(device)
+            for device in devices:
+                print(device)
 
         return None
 
-    idev = get_input_device(device_name)
+    idev = get_input_device(device_name, verbose=False)
     if idev is None:
         return
 
@@ -543,6 +548,7 @@ async def main():
 
     async def handle_macropad_input_events():
         global macropad_attach
+        global inputevents
 
         mdev = get_input_device("IDOBAO ID3KEY")
         if mdev is None:
@@ -555,8 +561,10 @@ async def main():
             last_key_up_code = Keys.F24
             last_key_up_time = time.time()
 
+            ddctask = None
+            usb_xtach_task = None
+
             async for event in mdev.async_read_loop():
-                start_time = time.time()
                 base_path = "/home/lillecarl/Code/nixos/resources"
 
                 if event.type != Event.KEY:
@@ -565,7 +573,10 @@ async def main():
                 if event.value == Action.HOLD:
                     continue
 
-                print(f"event: {event}")
+                if event.value != Action.UP:
+                    continue
+
+                print(f"event: {util.categorize(event)}")
                 print(f"Macropad active keys: {mdev.active_keys(verbose=True)}")
                 print(f"last_key_up_code: {last_key_up_code}, event.code: {event.code}")
                 print(f"last_key_up_time: {last_key_up_time} diff: {time.time() - last_key_up_time}")
@@ -579,15 +590,21 @@ async def main():
                 ):
                     if macropad_attach:
                         print("Attaching devices")
-                        await attach_device(f"{base_path}/logitech-g933.xml")
-                        await attach_device(f"{base_path}/daskeyboard.xml")
-                        await attach_device(f"{base_path}/steelseries-sensei.xml")
+                        async def attach():
+                            await attach_device(f"{base_path}/logitech-g933.xml")
+                            await attach_device(f"{base_path}/daskeyboard.xml")
+                            await attach_device(f"{base_path}/steelseries-sensei.xml")
+                        if usb_xtach_task is None or usb_xtach_task.done():
+                            usb_xtach_task = loop.create_task(attach())
                         macropad_attach = False
                     else:
                         print("Detaching devices")
-                        await detach_device(f"{base_path}/logitech-g933.xml")
-                        await detach_device(f"{base_path}/daskeyboard.xml")
-                        await detach_device(f"{base_path}/steelseries-sensei.xml")
+                        async def detach():
+                            #await detach_device(f"{base_path}/logitech-g933.xml")
+                            await detach_device(f"{base_path}/daskeyboard.xml")
+                            await detach_device(f"{base_path}/steelseries-sensei.xml")
+                        if usb_xtach_task is None or usb_xtach_task.done():
+                            usb_xtach_task = loop.create_task(detach())
                         macropad_attach = True
                 elif (
                     True
@@ -596,12 +613,31 @@ async def main():
                     and last_key_up_code == Keys.V
                     and time.time() - last_key_up_time < 0.5
                 ):
-                    await ddc_switch()
+                    if ddctask is None or ddctask.done():
+                        ddctask = loop.create_task(ddc_switch())
+                elif (
+                    True
+                    and any(e == Keys.V for e in mdev.active_keys())
+                    and event.code == Keys.LEFTCTRL
+                    and last_key_up_code == Keys.LEFTCTRL
+                    and time.time() - last_key_up_time < 0.5
+                ):
+                    cancel_all()
+                elif (
+                    True
+                    and any(e == Keys.V for e in mdev.active_keys())
+                    and event.code == Keys.C
+                    and last_key_up_code == Keys.C
+                    and time.time() - last_key_up_time < 0.5
+                ):
+                    if inputevents is not None:
+                        print("Stopping inputevents")
+                        inputevents.cancel()
+                    print("Starting inputevents")
+                    inputevents = loop.create_task(handle_input_events())
 
-
-                if event.value == Action.UP:
-                    last_key_up_code = event.code
-                    last_key_up_time = time.time()
+                last_key_up_code = event.code
+                last_key_up_time = time.time()
 
     class VirshAction(IntEnum):
         ATTACH = auto()
@@ -632,6 +668,9 @@ async def main():
 
     async def handle_input_events():
         global gaming_mode
+        idev = get_input_device(device_name, verbose=False)
+        if idev is None:
+            return
 
         # Grab the device to prevent other processes from reading it
         with idev.grab_context():
@@ -645,7 +684,7 @@ async def main():
                         for id in odev.active_keys():
                             release(id)
 
-                        return
+                        cancel_all()
 
                     key_state = update_key_state(event)
 
