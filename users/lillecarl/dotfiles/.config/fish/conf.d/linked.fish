@@ -52,6 +52,8 @@ abbr -a rb rebuild-both
 abbr -a ro rebuild-os
 abbr -a rh rebuild-home
 
+set -x FISH_PID $fish_pid
+
 function set_lastpath -e fish_postexec
     if not set -q TMUX
         set -U LASTPATH $PWD
