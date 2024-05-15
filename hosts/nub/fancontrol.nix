@@ -16,6 +16,7 @@ let
 in
 {
   systemd.services.fancontrol = {
+    enable = false;
     wantedBy = [ "multi-user.target" ];
 
     path = with pkgs; [
