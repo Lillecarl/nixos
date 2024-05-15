@@ -52,6 +52,7 @@
       ];
 
     extraConfig = {
+      advice.diverging = false;
       branch.sort = "-committerdate";
       column.ui = "auto";
       core.fsmonitor = true;
