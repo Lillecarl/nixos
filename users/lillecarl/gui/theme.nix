@@ -40,16 +40,6 @@ in
         size = "compact";
         tweaks = [ "rimless" ];
       };
-      iconTheme = {
-        name = "Adwaita";
-        package = pkgs.buildEnv {
-          name = "merged-icons";
-          paths = [
-            pkgs.gnome.adwaita-icon-theme
-            pkgs.morewaita-icon-theme
-          ];
-        };
-      };
     };
 
     qt = {
