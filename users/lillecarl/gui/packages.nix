@@ -40,6 +40,7 @@ in
       okular # PDF viewer
       gimp # Photoshop alternative
       webcamoid # Webcam application
+      ghostwriter # Markdown editor (live renderer)
     ] ++ (
       if config.programs.rbw.enable then [
         pkgs.rofi-rbw-wayland
