@@ -1,0 +1,12 @@
+#! /usr/bin/env bash
+
+nix \
+  build \
+  "$FLAKE#repofarm" \
+  --verbose \
+  --out-link "$FLAKE/.nix" || exit 1
+
+echo "Sending SIGUSR1 to fish shell ($FISH_PID) to reload direnv"
+kill -USR1 "$FISH_PID"
+
+exit 0
