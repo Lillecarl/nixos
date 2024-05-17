@@ -10,18 +10,6 @@ set -g direnv_fish_mode eval_on_arrow
 set -x KREW_ROOT "$XDG_CONFIG_HOME/krew"
 set -a PATH $KREW_ROOT/bin
 
-# cd into LASTPATH if we're not: in tmux, in vscode, or in a login shell
-if true
-    and set -q LASTPATH
-    and not set -q TMUX
-    and not set -q VSCODE_INJECTION
-    and not status --is-login
-    and not test "$_" = source # Don't cd if we're sourcing this file
-    begin
-        cd $LASTPATH
-    end
-end
-
 alias grt="cd (git root)"
 alias tg=terragrunt
 alias pager=$PAGER
@@ -52,12 +40,6 @@ abbr -a ro rebuild-os
 abbr -a rh rebuild-home
 
 set -x FISH_PID $fish_pid
-
-function set_lastpath -e fish_postexec
-    if not set -q TMUX
-        set -U LASTPATH $PWD
-    end
-end
 
 function sshloop1
     set -l user $argv[1]
