@@ -41,6 +41,7 @@ in
       in
       {
         root = {
+          linger = true;
           subUidRanges = [
             {
               count = 1;

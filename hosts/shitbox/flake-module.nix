@@ -10,7 +10,12 @@ in
 {
   flake = {
     nixosConfigurations.shitbox =
-      withSystem system ({ pkgs, flakeloc, ... }@ctx:
+      withSystem system ({ pkgs, flakeloc, flakepath, ... }@ctx:
+      let
+        specialArgs = {
+          inherit inputs flakeloc flakepath self;
+        };
+      in
         inputs.nixpkgs.lib.nixosSystem {
           inherit pkgs;
           modules = [
@@ -24,11 +29,23 @@ in
             inputs.nixos-hardware.nixosModules.common-pc
             inputs.nixos-hardware.nixosModules.common-pc-ssd
             inputs.stylix.nixosModules.stylix
+            inputs.home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.extraSpecialArgs = specialArgs;
+              home-manager.users.root = { nixosConfig, ... }:
+                {
+                  imports = pkgs.lib.rimport {
+                    path = [ ../../users/_shared ../../users/root ];
+                    regdel = ".*_shared/gui/.*";
+                  };
+                  home.stateVersion = nixosConfig.system.stateVersion;
+                };
+            }
           ]
           ++ pkgs.lib.rimport { path = [ ./. ../_shared ]; regdel = [ __curPos.file ".*disko\.nix" ]; };
-          specialArgs = {
-            inherit inputs flakeloc self;
-          };
+          inherit specialArgs;
         });
   };
 }
