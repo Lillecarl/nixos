@@ -3,6 +3,9 @@
   xdg.configFile."distrobox_bin".source = pkgs.symlinkJoin {
     name = "distrobox_bin";
     paths = with config; [
+      pkgs.coreutils
+      pkgs.gawk
+
       nix.package
       programs.atuin.package
       programs.fd.package
