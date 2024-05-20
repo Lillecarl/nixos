@@ -261,7 +261,5 @@ in
       "require('init').setup(${luaConfig})";
   };
 
-  lib.nvimpager = pkgs.nvimpager.override {
-    #neovim = config.programs.neovim.finalPackage;
-  };
+  lib.nvimpager = pkgs.nvimpager;
 }
