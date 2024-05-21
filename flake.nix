@@ -192,7 +192,7 @@
       };
     };
     lanzaboote = {
-      url = "github:nix-community/lanzaboote/v0.3.0";
+      url = "github:nix-community/lanzaboote";
       inputs = {
         crane.follows = "crane";
         flake-parts.follows = "flake-parts";
