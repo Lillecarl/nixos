@@ -1,6 +1,7 @@
 set -x fish_greeting ""
 set -x SHELL fish
 set -x DIRENV_LOG_FORMAT ""
+set -x TZ Europe/Stockholm
 
 fish_vi_key_bindings
 
