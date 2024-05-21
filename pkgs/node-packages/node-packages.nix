@@ -202,13 +202,13 @@ let
         sha512 = "OsSVtHK8Ir8r3+Fxw/b4jS1ZLPXkV6ZxDRJQzeD7qo0SqMXWrHDM71DgYzPMHY8SFJ0Ao+nNU2p1MmwdzKqPrw==";
       };
     };
-    "commander-12.0.0" = {
+    "commander-12.1.0" = {
       name = "commander";
       packageName = "commander";
-      version = "12.0.0";
+      version = "12.1.0";
       src = fetchurl {
-        url = "https://registry.npmjs.org/commander/-/commander-12.0.0.tgz";
-        sha512 = "MwVNWlYjDTtOjX5PiD7o5pK0UrFU/OYgcJfjjK4RaHZETNtjJqrZa9Y9ds88+A+f+d5lv+561eZ+yCKoS3gbAA==";
+        url = "https://registry.npmjs.org/commander/-/commander-12.1.0.tgz";
+        sha512 = "Vw8qHK3bZM9y/P10u3Vib8o/DdkvA2OtPtZvD871QKjy74Wj1WSKFILMPRPSdUSx5RFK1arlJzEtA4PkFgnbuA==";
       };
     };
     "commander-2.13.0" = {
@@ -1422,7 +1422,7 @@ in
       sources."codepage-1.15.0"
       sources."coffee-script-1.12.7"
       sources."colors-0.6.2"
-      sources."commander-12.0.0"
+      sources."commander-12.1.0"
       sources."concat-map-0.0.1"
       sources."crc-32-1.2.2"
       sources."cson-4.1.0"

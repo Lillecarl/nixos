@@ -11,11 +11,11 @@ in
   flake = {
     nixosConfigurations.shitbox =
       withSystem system ({ pkgs, flakeloc, flakepath, ... }@ctx:
-      let
-        specialArgs = {
-          inherit inputs flakeloc flakepath self;
-        };
-      in
+        let
+          specialArgs = {
+            inherit inputs flakeloc flakepath self;
+          };
+        in
         inputs.nixpkgs.lib.nixosSystem {
           inherit pkgs;
           modules = [
