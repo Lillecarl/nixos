@@ -11,8 +11,8 @@
   hardware.uinput.enable = true;
 
   boot.tmp = {
-    #useTmpfs = true;
-    #tmpfsSize = "100%";
+    useTmpfs = true;
+    tmpfsSize = "24G";
     cleanOnBoot = true;
   };
 
