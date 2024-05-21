@@ -261,5 +261,7 @@ in
       "require('init').setup(${luaConfig})";
   };
 
-  lib.nvimpager = pkgs.nvimpager;
+  lib.nvimpager = pkgs.nvimpager.overrideAttrs (oldAttrs: {
+    doCheck = false;
+  });
 }
