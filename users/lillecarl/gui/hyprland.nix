@@ -31,7 +31,7 @@ in
   config =
     let
       writePython3 = import "${self}/lib/writePython3.nix" { inherit pkgs; };
-      hyprctl = "${pkgs.hyprland}/bin/hyprctl";
+      hyprctl = "${config.lib.hyprland}/bin/hyprctl";
 
       lockScript = config.home.file."swayLockScript".source;
 
@@ -109,6 +109,8 @@ in
       '';
     in
     lib.mkIf cfg.enable {
+      lib.hyprland = nixosConfig.programs.hyprland.package;
+
       carl.gui.systemdTarget = "hyprland-session.target";
 
       home.packages = [
@@ -125,7 +127,7 @@ in
       wayland.windowManager.hyprland = {
         enable = true;
 
-        inherit (nixosConfig.programs.hyprland) package;
+        package = config.lib.hyprland;
 
         systemd.enable = true;
         xwayland.enable = true;

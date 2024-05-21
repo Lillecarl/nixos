@@ -7,7 +7,7 @@
 let
   cfg = config.carl.gui.waybar;
   hyprCfg = config.carl.gui.hyprland;
-  hyprctl = "${pkgs.hyprland}/bin/hyprctl";
+  hyprctl = "${config.lib.hyprland}/bin/hyprctl";
   sleep = "${pkgs.coreutils-full}/bin/sleep";
   swaync-client = "${pkgs.swaynotificationcenter}/bin/swayncclient";
   bluetooth = nixosConfig.hardware.bluetooth.enable or false;

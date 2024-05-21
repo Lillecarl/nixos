@@ -13,7 +13,7 @@
       programs.ripgrep.package
       programs.starship.package
       programs.zoxide.package
-      wayland.windowManager.hyprland.package
+      config.lib.hyprland
     ];
   };
 }
