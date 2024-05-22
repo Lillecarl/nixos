@@ -34,7 +34,7 @@ in
       kdiff3 # Well know diffing tool
       ark # Archiving tool
       gparted # GUI partition manager
-      dbeaver # SQL database GUI
+      dbeaver-bin # SQL database GUI
       filezilla # Free FTP/FTPS/SFTP software
       qbittorrent # OpenSource Qt Bittorrent client
       okular # PDF viewer
