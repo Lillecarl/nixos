@@ -42,28 +42,7 @@ in
           id = 0;
           isDefault = true;
 
-          containers = {
-            CH = {
-              id = 1;
-              color = "orange";
-              icon = "fingerprint";
-            };
-            Work = {
-              id = 2;
-              color = "purple";
-              icon = "briefcase";
-            };
-            KR = {
-              id = 3;
-              color = "blue";
-              icon = "briefcase";
-            };
-            tmp = {
-              id = 4;
-              color = "pink";
-              icon = "chill";
-            };
-          };
+          # TODO: Fix something for containers that doesn't suck
 
           search = {
             default = "Kagi";
