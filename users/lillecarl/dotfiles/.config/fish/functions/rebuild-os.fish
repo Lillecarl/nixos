@@ -7,12 +7,14 @@ function rebuild-os
     set profile /nix/var/nix/profiles/system
     set NIXOS_INSTALL_BOOTLOADER 1
 
+
     echo "Building $fullflake"
     echo "Into $result"
-    nom \
+    SHELL=/bin/sh nom \
         build \
         $fullflake \
-        --out-link $result --show-trace || begin
+        --out-link $result --show-trace \
+        $XTRABUILDARGS || begin
         echo "Failed to build $fullflake"
         return 1
     end

@@ -9,17 +9,18 @@ function rebuild-home
 
     echo "Building $fullflake"
     echo "Into $result"
-    nom \
+    SHELL=/bin/sh nom \
         build \
         $fullflake \
-        --out-link $result || begin
+        --out-link $result \
+        $XTRABUILDARGS || begin
         echo "Failed to build $fullflake"
         return 1
     end
 
     nvd diff $profile $result
 
-    rm $HOME/.mozilla/firefox/lillecarl/containers.json.backup &> /dev/null
+    rm $HOME/.mozilla/firefox/lillecarl/containers.json.backup &>/dev/null
 
     # home-manager links the profile itself.
     echo "Activating package $result/activate"
