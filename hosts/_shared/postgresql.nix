@@ -1,0 +1,47 @@
+{ config, pkgs, ... }:
+{
+  services.postgresql = {
+    enable = true;
+    enableTCPIP = false;
+
+    package = pkgs.postgresql_16;
+
+    extraPlugins = with config.services.postgresql.package.pkgs; [
+      pg_cron
+      pg_ivm
+      pg_safeupdate
+      pg_similarity
+      pg_squeeze
+      pgrouting
+      pgsql-http
+      plpgsql_check
+      plv8
+      postgis
+      timescaledb
+      timescaledb_toolkit
+    ];
+
+    settings = {
+      shared_preload_libraries = [
+        "pg_cron"
+        "pg_squeeze"
+        "pg_stat_statements"
+        "plpgsql"
+        "plpgsql_check"
+        "safeupdate"
+        "timescaledb"
+      ];
+    };
+
+    ensureUsers = [
+      {
+        name = "lillecarl";
+        ensureDBOwnership = true;
+        ensureClauses.superuser = true;
+      }
+    ];
+    ensureDatabases = [
+      "lillecarl"
+    ];
+  };
+}
