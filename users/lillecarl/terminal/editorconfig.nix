@@ -21,6 +21,9 @@ _:
       "*.rs" = {
         indent_size = 4;
       };
+      "Makefile" = {
+        indent_style = "tab";
+      };
     };
   };
 }
