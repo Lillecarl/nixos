@@ -124,9 +124,10 @@ let
       time = {
         disabled = false;
       };
-      # Don't show k8s context, we manage them with direnv
+
       kubernetes = {
         disabled = false;
+        detect_env_vars = [ "KUBECONFIG" ];
       };
       # Show how deep we're shelled
       shlvl = {
