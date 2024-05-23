@@ -90,7 +90,8 @@ in
               car = "";
               default = [ "" "" "" ];
             };
-            on-click = "${pkgs.pavucontrol}/bin/pavucontrol";
+            on-click = "${lib.getExe config.programs.kitty.package} --single-instance ${lib.getExe pkgs.pulsemixer}";
+            on-click-right = "${pkgs.pavucontrol}/bin/pavucontrol";
           };
           backlight = {
             format = "{percent}%💡";
@@ -114,7 +115,6 @@ in
           };
           "hyprland/language" = {
             format = " KB: {} ";
-            format-en = "EN";
             format-sv = "SE";
             format-eu = "EU";
             keyboard-name = hyprCfg.keyboardName;
