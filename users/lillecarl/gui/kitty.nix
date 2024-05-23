@@ -26,11 +26,11 @@ in
         allow_remote_control yes
         listen_on unix:@kitty
         scrollback_lines 25000
-        tab_bar_edge top
-        tab_bar_style separator
         tab_bar_align center
-        tab_bar_separator " |"
+        tab_bar_edge top
         tab_bar_min_tabs 1
+        tab_bar_style separator
+        tab_separator " |"
         tab_activity_symbol 🔔
       '';
 
