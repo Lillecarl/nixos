@@ -34,7 +34,7 @@
             content = {
               type = "luks";
               name = "crypted";
-              extraOpenArgs = [ "--allow-discards" ];
+              settings.allowDiscards = true;
               content = {
                 type = "lvm_pv";
                 vg = "pool";

@@ -2,6 +2,15 @@
 , ...
 }:
 {
+  environment.etc."lvm/lvm.conf".text = lib.mkForce ''
+    devices {
+      issue_discards = 1
+    }
+    allocations {
+      thin_pool_discards = 1
+    }
+  '';
+
   boot = {
     initrd = {
       availableKernelModules = [
