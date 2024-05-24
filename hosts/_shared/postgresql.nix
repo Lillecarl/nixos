@@ -44,9 +44,14 @@
         ensureDBOwnership = true;
         ensureClauses.superuser = true;
       }
+      {
+        name = "keycloak";
+        ensureDBOwnership = true;
+      }
     ];
     ensureDatabases = [
       "lillecarl"
+      "keycloak"
     ];
   };
 }
