@@ -4,7 +4,12 @@
     enable = true;
     enableTCPIP = false;
 
-    package = pkgs.postgresql_16;
+    package = pkgs.postgresql_16.override {
+      pythonSupport = true;
+      python3 = pkgs.python3.withPackages (ps: with ps; [
+        numpy
+      ]);
+    };
 
     extraPlugins = with config.services.postgresql.package.pkgs; [
       pg_cron
