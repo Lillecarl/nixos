@@ -1,17 +1,7 @@
 #! /usr/bin/env fish
 
 function flake-update
-    set -g UPDATE_DIR (mktemp -d -t flake-update-XXXX) || return 1
-    cd $UPDATE_DIR || return 1
-    git clone git@github.com:Lillecarl/nixos.git || return 1
-    cd nixos || return 1
-    direnv allow || return 1
-
-    ./update.py || begin
-        echo "Failed to update flake"
-        return 1
-    end
-
+    set UPDATE_DIR $PWD
     echo Building
     set broken
     for host in nub shitbox
