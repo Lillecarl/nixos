@@ -74,7 +74,6 @@
   environment.systemPackages = with pkgs; [
     gnome.adwaita-icon-theme # Lutris icons
     virt-manager # Virtualisation manager
-    virt-manager-qt # Shitty version of virt-manager
     pciutils
     qemu_kvm
     dmidecode
