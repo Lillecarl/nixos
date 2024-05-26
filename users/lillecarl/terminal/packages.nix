@@ -82,5 +82,6 @@
     dtach # Detach application from screen
     kind # Kubernetes in Docker (podman)
     jnv # Interactive jq
+    hl # Terminal logfmt / json log tool
   ];
 }

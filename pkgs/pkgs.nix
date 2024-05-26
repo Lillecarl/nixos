@@ -70,10 +70,8 @@ prev.lib.filterAttrs
 
     inherit terraform_1_5_5;
     terraform = terraform_1_5_5;
-
-
-
     typos-lsp = prev.callPackage ./typos-lsp.nix { };
+    hl = prev.callPackage ./hl.nix { };
     one-small-step-for-vimkind = prev.callPackage ./one-small-step-for-vimkind.nix { };
     copilotchat-nvim = prev.callPackage ./copilotchat-nvim.nix { };
     wrapFirefox = prev.callPackage ./wrapFirefox.nix { };
