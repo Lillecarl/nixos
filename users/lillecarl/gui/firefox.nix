@@ -16,7 +16,8 @@ in
   };
   config = lib.mkIf cfg.enable {
     home.packages = [
-      pkgs.neovide # Allow editing input boxes with Neovide
+      config.programs.kitty.package
+      config.programs.neovim.package
     ];
 
     stylix.targets.firefox.profileNames = [ "lillecarl" ];
