@@ -1,4 +1,5 @@
 function git_fetch --on-variable PWD
+    return 0
     set time (date +%s)
     set varname "_git_fetch_last_$(echo $PWD | md5sum | cut -c 1-6)"
 
