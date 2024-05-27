@@ -14,6 +14,7 @@
       keep-outputs = true
       keep-derivations = true
       allow-import-from-derivation = true
+      warn-dirty = true
     '';
     settings = {
       auto-optimise-store = true;
