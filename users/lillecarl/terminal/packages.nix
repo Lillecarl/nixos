@@ -61,6 +61,11 @@
     tfswitch # Terraform version switcher
     tmate # terminal multiplexer with online sharing
     toilet # Ascii art text
+    jq # CLI JSON utility, piping JSON here will always pretty-print it
+    github-cli # CLI for github interactions
+    git-open # Open repo with browser in $sourcecontrol website
+    git-imerge # interactive and incremental git merging utility
+    bfg-repo-cleaner # Clean repos that are huge
     yq-go # CLI YAML utility, useful for those that thing YAML is a bit shit
     zellij # discoverable terminal multiplexer written in rust
     zoxide # Rust implementation of z/autojump

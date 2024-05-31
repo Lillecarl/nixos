@@ -91,10 +91,6 @@
       lazygit # Git TUI, golang
       gitui # Git TUI, rust
       overcommit # Git hooks manager
-      github-cli # CLI for github interactions
-      git-open # Open repo with browser in $sourcecontrol website
-      git-imerge # interactive and incremental git merging utility
-      bfg-repo-cleaner # Clean repos that are huge
       wl-clipboard # Wayland clipboard manipulation
       ansible # Server automation tool
       iftop # Show interface throughput and which IP's
@@ -102,9 +98,6 @@
       glances # Fancy system monitoring TUI
       lm_sensors # Read sensors
       file # Show information about files
-      jq # CLI JSON utility, piping JSON here will always pretty-print it
-      yq # CLI YAML utility, useful for those that thing YAML is a bit shit
-      gron # Flatten JSON to make it easy to grep
       desktop-file-utils # Required for VS Code live share
       ncdu # NCurses Disk Utility (TUI way of finding big files and folders)
       scrot # Commandline print-screen tool, use with GnuPG for automatic screenshotting
@@ -123,7 +116,6 @@
       swtpm # needed to emulate TPM on QEMU
       gnupg # PGP implementation
       nnn # file manager
-      fzf # fuzzy finder, pipe to this for nice search
       unipicker # unicode char finder
       waypipe # Wayland forwarding (Like X11 forwarding, but for Wayland)
       libinput # Libinput CLI tooling
