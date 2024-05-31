@@ -142,7 +142,9 @@ let
           symbol = "🧙";
           format = "\\[[as$symbol]($style)\\]";
         };
-      # Yay for direnv
+      directory = {
+        fish_style_pwd_dir_length = 1;
+      };
       direnv = {
         disabled = false;
         format = "\\[[$symbol$allowed/$loaded]($style)\\]";
