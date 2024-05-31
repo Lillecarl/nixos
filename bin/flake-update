@@ -1,7 +1,7 @@
 #! /usr/bin/env fish
 
 function flake-update
-    set -g UPDATE_DIR (mktemp -d -t flake-update)
+    set -g UPDATE_DIR (mktemp -d -t flake-update-XXXXX) || return 1
     cd $UPDATE_DIR || return 1
     git clone git@github.com:Lillecarl/nixos.git
     cd nixos || return 1
