@@ -1,11 +1,34 @@
 #! /usr/bin/env bash
 
+bootsys=/run/booted-system
+cursys=/run/current-system
+curhome=~/.local/state/nix/profiles/home-manager
+
 # cd into home-manager profile directory
 pushd ~/.local/state/nix/profiles || exit
 # clear all old profiles
 for profile in $(fd ".*-link" -t l --changed-before "$1d" .); do
-  echo "Removing HM profile $profile"
-  unlink "$profile"
+  if true && \
+    [[ "$(readlink -f "$profile")" != "$(readlink -f "$curhome")" ]]
+  then
+    echo "Removing HM profile $profile"
+    unlink "$profile"
+  fi
+done
+# go back to the previous directory
+popd || exit
+
+# cd into nixos profile directory
+pushd /nix/var/nix/profiles || exit
+# clear all old profiles
+for profile in $(fd "^system-\d+-link$" -t l --changed-before "$1d" .); do
+  if true && \
+    [[ "$(readlink -f "$profile")" != "$(readlink -f "$bootsys")" ]]
+    [[ "$(readlink -f "$profile")" != "$(readlink -f "$cursys")" ]]
+  then
+    echo "Removing nixos profile $profile"
+    sudo unlink "$profile"
+  fi
 done
 # go back to the previous directory
 popd || exit
