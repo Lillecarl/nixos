@@ -39,7 +39,6 @@
     gping # ping, but with a graph.
     gron # Flatten JSON to make it easy to grep
     htop # NCurses "task manager"
-    jekyll # Static site generator
     jq # CLI JSON utility, piping JSON here will always pretty-print it
     k2tf # Kubernetes YAML to Terraform
     kompose # Kubernetes docker-compose like tool
