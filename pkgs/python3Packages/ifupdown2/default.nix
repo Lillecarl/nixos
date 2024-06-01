@@ -4,6 +4,7 @@
 , setuptools
 , six
 , systemd
+, propagatedBuildInputs ? [ ]
 }:
 let
   versiondata = builtins.fromJSON (builtins.readFile ./version.json);
@@ -17,11 +18,11 @@ buildPythonPackage {
     setuptools
     six
     systemd
-  ];
+  ] ++ propagatedBuildInputs;
 
   meta = {
     description = "Linux Interface Network Manager 2";
-    homepage = "https://github.com/Lillecarl/ifupdown2";
+    homepage = "https://github.com/CumulusNetworks/ifupdown2";
     license = lib.licenses.gpl2;
   };
 }
