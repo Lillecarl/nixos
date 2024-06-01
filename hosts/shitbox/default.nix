@@ -1,4 +1,5 @@
 { pkgs
+, self
 , ...
 }:
 {
@@ -15,6 +16,10 @@
     disk1 = "ata-SAMSUNG_MZ7LM1T9HMJP-00005_S2TVNX0J404544";
     disk2 = "ata-SAMSUNG_MZ7LM1T9HMJP-00005_S2TVNX0J404560";
   };
+
+  system.activatableSystemBuilderCommands = ''
+    ln -s ${self} $out/flake
+  '';
 
   # Networking, virbr0 is WAN iface
   networking = {
