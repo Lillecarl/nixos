@@ -13,7 +13,7 @@ in
       enable = mkOption {
         type = types.bool;
         default = false;
-        description = lib.mdDoc ''
+        description = ''
           Whether to enable ifupdown2 for device configuration.
         '';
       };
@@ -26,6 +26,7 @@ in
             pkgs.dpkg
             pkgs.ethtool
             pkgs.iproute2
+            pkgs.iptables
             pkgs.kmod
             pkgs.mstpd
             pkgs.openvswitch
@@ -34,17 +35,19 @@ in
             pkgs.pstree
             pkgs.service-wrapper
             pkgs.systemd
+            pkgs.iptables
           ]
         '';
-        description = lib.mdDoc ''
-          The set of packages to add to $PATH of ifreload
+        description = ''
+          Set of packages to add to $PATH of ifreload/ifup/ifdown.
         '';
       };
       extraConfig = mkOption {
         type = types.lines;
         default = "";
-        description = lib.mdDoc ''
+        description = ''
           /etc/network/interfaces configuration
+          See https://cumulusnetworks.github.io/ifupdown2/ifupdown2/userguide.html#configuration-files
         '';
       };
     };
@@ -60,17 +63,23 @@ in
         in
         {
           environment.etc."network/interfaces".text = cfg.extraConfig;
-          environment.etc."network/ifupdown2/addons.conf".source = ./addons.conf;
-          environment.etc."network/ifupdown2/ifupdown2.conf".source = ./ifupdown2.conf;
+          environment.etc."network/ifupdown2/addons.conf".source = lib.mkDefault "${ifupdown2_pkg}/etc/network/ifupdown2/addons.conf";
+          environment.etc."network/ifupdown2/ifupdown2.conf".source = lib.mkDefault "${ifupdown2_pkg}/etc/network/ifupdown2/ifupdown2.conf";
+
+          environment.etc."iproute2/.keep".text = "";
+          environment.etc."iproute2/policy.d/.keep".text = "";
+          environment.etc."iproute2/rt_tables.d/.keep".text = "";
+          environment.etc."ppp/.keep".text = "";
 
           environment.systemPackages = [ ifupdown2_pkg ];
 
           systemd.services.ifupdown2 = {
-            wantedBy = [ "multi-user.target" ];
+            wantedBy = [ "network.target" ];
             wants = [ "network.target" ];
             before = [ "network-online.target" ];
             restartTriggers = [
               config.environment.etc."network/interfaces".source
+              config.environment.etc."network/ifupdown2/addons.conf".source
               config.environment.etc."network/ifupdown2/ifupdown2.conf".source
             ];
 
