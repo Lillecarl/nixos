@@ -60,6 +60,7 @@
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAHZ3pA0vIXiKQuwfM1ks8TipeOxfDT9fgo4xMi9iiWr lillecarl@lillecarl.com"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID6+IWwqGjVoXHcNR5Z5H2r7RYDQ0BzvPbl/RXeDnidv root@nub"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAUmhT3THV21iW0N8L8jx0DhOMkVHcJGF6I5tXeeBx6F root@shitbox"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINw+gQAy/GkwGFzmwhYCX/hWQbaLIZk5uePDmdW3i7gM lillecarl@nub"
       ];
     };
   };
