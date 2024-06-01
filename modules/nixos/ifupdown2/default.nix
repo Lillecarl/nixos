@@ -62,9 +62,9 @@ in
           });
         in
         {
-          environment.etc."network/interfaces".text = cfg.extraConfig;
-          environment.etc."network/ifupdown2/addons.conf".source = lib.mkDefault "${ifupdown2_pkg}/etc/network/ifupdown2/addons.conf";
-          environment.etc."network/ifupdown2/ifupdown2.conf".source = lib.mkDefault "${ifupdown2_pkg}/etc/network/ifupdown2/ifupdown2.conf";
+          environment.etc."network/interfaces".text = lib.mkDefault cfg.extraConfig;
+          environment.etc."network/ifupdown2/addons.conf".text = lib.mkDefault (builtins.readFile "${ifupdown2_pkg.src}/etc/network/ifupdown2/addons.conf");
+          environment.etc."network/ifupdown2/ifupdown2.conf".text = lib.mkDefault (builtins.readFile "${ifupdown2_pkg.src}/etc/network/ifupdown2/ifupdown2.conf");
 
           environment.etc."iproute2/.keep".text = "";
           environment.etc."iproute2/policy.d/.keep".text = "";
