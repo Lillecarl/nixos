@@ -78,9 +78,12 @@ in
             wants = [ "network.target" ];
             before = [ "network-online.target" ];
             restartTriggers = [
-              config.environment.etc."network/interfaces".source
               config.environment.etc."network/ifupdown2/addons.conf".source
+              config.environment.etc."network/ifupdown2/addons.conf".text
               config.environment.etc."network/ifupdown2/ifupdown2.conf".source
+              config.environment.etc."network/ifupdown2/ifupdown2.conf".text
+              config.environment.etc."network/interfaces".source
+              config.environment.etc."network/interfaces".text
             ];
 
             serviceConfig = {
