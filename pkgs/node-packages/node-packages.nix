@@ -319,13 +319,13 @@ let
         sha512 = "v9a2QLTVn1GQGXf02TQaSvNfeXA/V1FL2Tr0OQYqjI5+L9T5jEtCpLYG01sxFk+m1OtwMxydkKa8NKcflANAoQ==";
       };
     };
-    "deasync-0.1.29" = {
+    "deasync-0.1.30" = {
       name = "deasync";
       packageName = "deasync";
-      version = "0.1.29";
+      version = "0.1.30";
       src = fetchurl {
-        url = "https://registry.npmjs.org/deasync/-/deasync-0.1.29.tgz";
-        sha512 = "EBtfUhVX23CE9GR6m+F8WPeImEE4hR/FW9RkK0PMl9V1t283s0elqsTD8EZjaKX28SY1BW2rYfCgNsAYdpamUw==";
+        url = "https://registry.npmjs.org/deasync/-/deasync-0.1.30.tgz";
+        sha512 = "OaAjvEQuQ9tJsKG4oHO9nV1UHTwb2Qc2+fadB0VeVtD0Z9wiG1XPGLJ4W3aLhAoQSYTaLROFRbd5X20Dkzf7MQ==";
       };
     };
     "deasync-promise-1.0.1" = {
@@ -1432,7 +1432,7 @@ in
       sources."data-view-byte-length-1.0.1"
       sources."data-view-byte-offset-1.0.0"
       sources."date-extended-0.0.6"
-      sources."deasync-0.1.29"
+      sources."deasync-0.1.30"
       sources."deasync-promise-1.0.1"
       sources."declare.js-0.0.8"
       sources."define-data-property-1.1.4"
