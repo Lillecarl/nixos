@@ -90,6 +90,8 @@ prev.lib.filterAttrs
             };
           })
       else prev.nix-output-monitor;
+
+    xwayland-satellite = prev.callPackage ./xwayland-satellite.nix { };
   }
 // (
   if flake
