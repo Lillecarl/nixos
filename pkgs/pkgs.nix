@@ -99,6 +99,22 @@ prev.lib.filterAttrs
         cp usbreset $out/bin/
       '';
     });
+    vieb = prev.vieb.overrideAttrs (pattrs: {
+      postInstall = ''
+        install -Dm0644 {${pattrs.desktopItem},$out}/share/applications/vieb.desktop
+
+        pushd $out/lib/node_modules/vieb/app/img/icons
+        for file in *.png; do
+          install -Dm0644 $file $out/share/icons/hicolor/''${file//.png}/apps/vieb.png
+        done
+        popd
+
+        makeWrapper ${prev.electron}/bin/electron $out/bin/vieb \
+          --add-flags $out/lib/node_modules/vieb/app \
+          --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --enable-features=WaylandWindowDecorations}}" \
+          --set npm_package_version ${pattrs.version}
+      '';
+    });
   }
 // (
   if flake
