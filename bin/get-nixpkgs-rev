@@ -1,0 +1,6 @@
+#! /usr/bin/env bash
+
+rootnode=$(jq -r '.nodes.root.inputs.nixpkgs' < "$FLAKE/flake.lock")
+revision=$(jq -r ".nodes.$rootnode.locked.rev" < "$FLAKE/flake.lock")
+echo "$revision"
+
