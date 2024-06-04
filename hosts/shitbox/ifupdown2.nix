@@ -26,17 +26,12 @@
       auto lo
       iface lo inet loopback
 
-      # Dummy to keep br13 up
-      auto dummy0
-      iface dummy0 inet manual
-        pre-up ip link add dummy0 type dummy
-
       # VM bridge
       auto br13
       iface br13 inet static
           address 10.13.37.1
           netmask 255.255.255.0
-          bridge-ports dummy0
+          bridge-ports none
           bridge-stp off
           bridge-fd 0
           bridge-maxwait 0
