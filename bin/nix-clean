@@ -23,7 +23,7 @@ pushd /nix/var/nix/profiles || exit
 # clear all old profiles
 for profile in $(fd "^system-\d+-link$" -t l --changed-before "$1d" .); do
   if true && \
-    [[ "$(readlink -f "$profile")" != "$(readlink -f "$bootsys")" ]]
+    [[ "$(readlink -f "$profile")" != "$(readlink -f "$bootsys")" ]] && \
     [[ "$(readlink -f "$profile")" != "$(readlink -f "$cursys")" ]]
   then
     echo "Removing nixos profile $profile"
