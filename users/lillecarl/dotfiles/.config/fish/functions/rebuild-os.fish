@@ -14,11 +14,14 @@ function rebuild-os
 
     echo "Building $fullflake"
     echo "Into $result"
-    SHELL=/bin/sh nom \
+    echo "With log $buildlog"
+
+    nix \
         build \
         $fullflake \
         --out-link $result --show-trace \
-        $XTRABUILDARGS || begin
+        --log-format internal-json -v \
+        $XTRABUILDARGS &| tee $buildlog &| nom --json || begin
         echo "Failed to build $fullflake"
         return 1
     end
