@@ -6,6 +6,7 @@ function rebuild-os
     set fullflake "$FLAKE#nixosConfigurations.\"$hostname\".config.system.build.toplevel"
     set profile /nix/var/nix/profiles/system
     set NIXOS_INSTALL_BOOTLOADER 1
+    set -x SHELL "/bin/sh"
 
 
     echo "Building $fullflake"
