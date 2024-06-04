@@ -1,5 +1,8 @@
 function rebuild-os
-    sudo echo -n
+    sudo echo -n || begin
+        echo "Failed to get sudo"
+        return 1
+    end
     set tempdir "$(mktemp -d -t nix-rebuild-home_XXXX)"
     set result "$tempdir/result"
     set buildlog "$tempdir/buildlog.jsonish"
