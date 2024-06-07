@@ -1,36 +1,98 @@
-#! /usr/bin/env bash
+#! /usr/bin/env python3
 
-bootsys=/run/booted-system
-cursys=/run/current-system
-curhome=~/.local/state/nix/profiles/home-manager
+from datetime import timedelta
+from time import time as unixtime
+from pathlib import Path
+from functools import partial
 
-# cd into home-manager profile directory
-pushd ~/.local/state/nix/profiles || exit
-# clear all old profiles
-for profile in $(fd ".*-link" -t l --changed-before "$1d" .); do
-  if true && \
-    [[ "$(readlink -f "$profile")" != "$(readlink -f "$curhome")" ]]
-  then
-    echo "Removing HM profile $profile"
-    unlink "$profile"
-  fi
-done
-# go back to the previous directory
-popd || exit
+import argparse
+import re
+import sh
+import sys
 
-# cd into nixos profile directory
-pushd /nix/var/nix/profiles || exit
-# clear all old profiles
-for profile in $(fd "^system-\d+-link$" -t l --changed-before "$1d" .); do
-  if true && \
-    [[ "$(readlink -f "$profile")" != "$(readlink -f "$bootsys")" ]] && \
-    [[ "$(readlink -f "$profile")" != "$(readlink -f "$cursys")" ]]
-  then
-    echo "Removing nixos profile $profile"
-    sudo unlink "$profile"
-  fi
-done
-# go back to the previous directory
-popd || exit
-# clean the nix store of everything without gcroots
-sudo nix-collect-garbage --delete-older-than "$1d"
+nix: sh.Command = partial(sh.nix, _in=sys.stdin, _out=sys.stdout, _err=sys.stderr) # type: ignore
+
+bootedSystemPath = "/run/booted-system"
+currentSystemPath = "/run/current-system"
+
+bootedSystemProfile: Path | None = None
+currentSystemProfile: Path | None = None
+
+dontclean=[
+  bootedSystemPath,
+  currentSystemPath,
+  "~/.local/state/nix/profiles/home-manager",
+  "~/.local/state/nix/profiles/profile",
+]
+clean=[
+  "/nix/var/nix/profiles",
+  "~/.local/state/nix/profiles",
+]
+patterns=[
+  r"home-manager-\d+-link$",
+  r"profile-\d+-link$",
+  r"system-\d+-link$",
+]
+dontclean=[Path(x).expanduser().resolve() for x in dontclean]
+
+def main():
+  parser = argparse.ArgumentParser(
+                      prog='nix-clean',
+                      description='Clean up old nix profiles',
+                      epilog='Text at the bottom of help')
+
+  parser.add_argument('days', type=int, help='Days to keep profiles', default=0)
+
+  args = parser.parse_args()
+
+  doClean(args.days * 24 * 60 * 60)
+
+
+def doClean(seconds: int):
+  print(f"Cleaning profiles older than {timedelta(seconds=seconds)}")
+  for cleandir in clean:
+    cleandir = Path(cleandir).expanduser()
+
+    print(f"Cleaning {cleandir}")
+
+    for profile in cleandir.iterdir():
+      if not profile.is_symlink():
+        continue
+
+      if not any([re.match(pattern, profile.name) for pattern in patterns]):
+        continue
+
+      try:
+        profileStorePath = profile.resolve()
+
+        if profileStorePath == Path(bootedSystemPath).resolve():
+          bootedSystemProfile = profile
+        if profileStorePath == Path(currentSystemPath).resolve():
+          currentSystemProfile = profile
+
+        created = int(profile.stat().st_ctime)
+        curtime = int(unixtime())
+        diff = curtime - created
+
+        if profileStorePath in dontclean or diff < seconds:
+          print(f"Keeping profile {profile} created {timedelta(seconds=diff)} ago")
+        else:
+          print(f"Removing profile {profile} created {timedelta(seconds=diff)} ago")
+          profile.unlink()
+      except FileNotFoundError:
+        print(f"Broken symlink: {profile}")
+        continue
+
+  bootedSystemProfile = bootedSystemProfile # type: ignore
+  currentSystemProfile = currentSystemProfile # type: ignore
+  if bootedSystemProfile is not None:
+    print(f"Booted system profile {bootedSystemProfile}")
+  if currentSystemProfile is not None:
+    print(f"Current system profile {currentSystemProfile}")
+
+  print("Running 'nix store gc'")
+  with sh.contrib.sudo:
+    nix("store", "gc", "-vvv")
+
+if __name__ == "__main__":
+  main()
