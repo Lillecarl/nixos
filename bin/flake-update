@@ -16,9 +16,9 @@ function flake-update
     set broken
     for host in nub shitbox
         echo "Building $host"
-        nix build --no-link ".#nixosConfigurations.\"$host\".config.system.build.toplevel" || set broken "$broken $host"
+        nix build --out-link "nixos-$host" ".#nixosConfigurations.\"$host\".config.system.build.toplevel" || set broken "$broken $host"
         echo "Building lillecarl@$host"
-        nix build --no-link ".#homeConfigurations.\"lillecarl@$host\".activationPackage" || set broken "$broken lillecarl@$host"
+        nix build --out-link "home-$host" ".#homeConfigurations.\"lillecarl@$host\".activationPackage" || set broken "$broken lillecarl@$host"
     end
 
     if test -n "$broken"

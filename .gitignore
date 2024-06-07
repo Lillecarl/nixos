@@ -1,9 +1,11 @@
 nixpkgs
 unstable
-result
+/result
 .pijul
 .ignore
 .nixpath
+/home-*
+/nixos-*
 
 .terraform
 terraform.tfstate.backup
