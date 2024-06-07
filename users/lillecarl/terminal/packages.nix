@@ -88,5 +88,6 @@
     jnv # Interactive jq
     hl # Terminal logfmt / json log tool
     cliphist # Clipboard history tool
+    moreutils # stdin -> file (usable w/ sudo)
   ];
 }
