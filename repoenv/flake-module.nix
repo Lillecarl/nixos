@@ -26,6 +26,8 @@ _:
             sh
             textual
             qutebrowser
+            qemu-qmp
+            libvirt
           ]))
         ];
       };
