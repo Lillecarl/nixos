@@ -2,6 +2,9 @@
 // "/-" comments out the following node.
 
 input {
+    warp-mouse-to-focus
+    focus-follows-mouse
+
     keyboard {
         xkb {
             // You can set rules, model, layout, variant and options.
