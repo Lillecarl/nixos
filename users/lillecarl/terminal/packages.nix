@@ -88,6 +88,7 @@
     jnv # Interactive jq
     hl # Terminal logfmt / json log tool
     cliphist # Clipboard history tool
+    wofi # Rofi wayland
     moreutils # stdin -> file (usable w/ sudo)
     minicom # serial util
   ];
