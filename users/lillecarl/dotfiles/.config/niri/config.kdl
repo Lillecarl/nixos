@@ -405,7 +405,7 @@ binds {
     Mod+D { spawn "rofi" "-show" "drun"; }
     Mod+Tab { spawn "rofi" "-show" "window"; }
     Mod+Ctrl+F { spawn "firefox"; }
-    Super+Alt+L { spawn "swaylock"; }
+    Ctrl+Alt+Delete { spawn "swaylock"; }
 
     // You can also use a shell:
     // Mod+T { spawn "bash" "-c" "notify-send hello && exec alacritty"; }
