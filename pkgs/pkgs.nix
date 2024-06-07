@@ -92,6 +92,13 @@ prev.lib.filterAttrs
       else prev.nix-output-monitor;
 
     xwayland-satellite = prev.callPackage ./xwayland-satellite.nix { };
+
+    usbutils = prev.usbutils.overrideAttrs (oldAttrs: {
+      postInstall = ''
+        moveToOutput "bin/lsusb.py" "$python"
+        cp usbreset $out/bin/
+      '';
+    });
   }
 // (
   if flake
