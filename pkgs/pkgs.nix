@@ -3,9 +3,9 @@ let
   # python3 packages
   python3Packages = {
     ifupdown2 = prev.python3Packages.callPackage ../pkgs/python3Packages/ifupdown2 { };
-
     pyping = prev.python3Packages.callPackage ../pkgs/python3Packages/pyping { };
     hyprpy = prev.python3Packages.callPackage ../pkgs/python3Packages/hyprpy { };
+    qemu-qmp = prev.python3Packages.callPackage ../pkgs/python3Packages/qemu-qmp { };
     qutebrowser = qutebrowser false;
   };
   nodePackages = prev.callPackages ./node-packages { };
