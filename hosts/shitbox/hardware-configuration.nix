@@ -1,4 +1,5 @@
 { config
+, pkgs
 , ...
 }:
 {
@@ -6,9 +7,7 @@
     initrd.availableKernelModules = [
       "vfio-pci"
     ];
-    kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
-    #kernelPackages = pkgs.linuxPackages_latest;
-    #kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_latest;
+    kernelPackages = pkgs.linuxPackages_latest;
     initrd.kernelModules = [ "vfio-pci" ];
     extraModprobeConfig = ''
       options vfio-pci ids=10de:2487,10de:228b
@@ -32,7 +31,6 @@
       "mitigations=off"
       "iommu=pt"
       "acpi_enforce_resources=lax"
-      "delayacct"
       "hugepages=8192"
     ];
 
