@@ -93,7 +93,7 @@ prev.lib.filterAttrs
 
     xwayland-satellite = prev.callPackage ./xwayland-satellite.nix { };
 
-    usbutils = prev.usbutils.overrideAttrs (oldAttrs: {
+    usbutils2 = prev.usbutils.overrideAttrs (oldAttrs: {
       postInstall = ''
         moveToOutput "bin/lsusb.py" "$python"
         cp usbreset $out/bin/
