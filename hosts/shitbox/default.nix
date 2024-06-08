@@ -45,13 +45,6 @@
     ratbagd = {
       enable = true;
     };
-    zfs = {
-      autoSnapshot = {
-        enable = true;
-        frequent = 8;
-        monthly = 1;
-      };
-    };
     # Enable TOR
     tor = {
       enable = true;

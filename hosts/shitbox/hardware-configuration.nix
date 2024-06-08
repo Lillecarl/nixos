@@ -35,7 +35,6 @@
     ];
 
     extraModulePackages = with config.boot.kernelPackages; [
-      zfs
       v4l2loopback.out
       usbip
       zenpower
