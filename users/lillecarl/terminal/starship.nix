@@ -1,11 +1,8 @@
-{ inputs
-, lib
+{ lib
 , pkgs
 , ...
 }:
 let
-  catppuccinFlavour = "mocha";
-
   presets = [
     "nerd-font-symbols"
     "bracketed-segments"
@@ -13,14 +10,10 @@ let
   presetFiles = (builtins.map
     (
       name: pkgs.runCommandLocal "starship_${name}" { } ''
-        ${pkgs.starship}/bin/starship preset ${name} > $out
+        ${lib.getExe pkgs.starship} preset ${name} > $out
       ''
     )
-    presets)
-  ++
-  [
-    "${inputs.catppuccin-starship}/palettes/${catppuccinFlavour}.toml"
-  ];
+    presets);
 
   presetListAttrs = builtins.map
     (
@@ -32,9 +25,6 @@ let
     {
       # Don't waste space between prompts
       add_newline = false;
-
-      # Color them, to match the rest of our system
-      palette = "catppuccin_${catppuccinFlavour}";
 
       format = lib.concatStrings [
         "$username"
