@@ -1,7 +1,30 @@
 { lib
+, pkgs
 , ...
 }:
 {
+  services.udev.extraHwdb = ''
+    # thinkpad_acpi driver
+    evdev:name:ThinkPad Extra Buttons:dmi:bvn*:bvr*:bd*:svnLENOVO*:pn*:*
+     KEYBOARD_KEY_1a=micmute
+  '';
+
+  services.xserver.xkb.extraLayouts.lenovo = {
+    description = "Doing a multi billion dollar company's job for them";
+    languages = [ "US" "swe" ];
+    keycodesFile = pkgs.writeText "lenovo-keycodes" ''
+      partial xkb_keycodes "lenovo" {
+	      <I248> = 248;
+      }
+    '';
+    symbolsFile = pkgs.writeText "lenovo-symbols" ''
+      partial xkb_symbols "lenovo" {
+        key <I248> { [ XF86AudioMicMute ] };
+      }
+    '';
+  };
+
+
   boot = {
     initrd = {
       availableKernelModules = [
