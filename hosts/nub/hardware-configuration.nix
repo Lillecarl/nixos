@@ -13,9 +13,9 @@
     description = "Doing a multi billion dollar company's job for them";
     languages = [ "US" "swe" ];
     keycodesFile = pkgs.writeText "lenovo-keycodes" ''
-      partial xkb_keycodes "lenovo" {
-	      <I248> = 248;
-      }
+            partial xkb_keycodes "lenovo" {
+      	      <I248> = 248;
+            }
     '';
     symbolsFile = pkgs.writeText "lenovo-symbols" ''
       partial xkb_symbols "lenovo" {

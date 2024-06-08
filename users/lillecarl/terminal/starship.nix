@@ -7,13 +7,13 @@ let
     "nerd-font-symbols"
     "bracketed-segments"
   ];
-  presetFiles = (builtins.map
+  presetFiles = builtins.map
     (
       name: pkgs.runCommandLocal "starship_${name}" { } ''
         ${lib.getExe pkgs.starship} preset ${name} > $out
       ''
     )
-    presets);
+    presets;
 
   presetListAttrs = builtins.map
     (
