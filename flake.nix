@@ -210,10 +210,6 @@
       url = "github:NixOS/nixos-artwork";
       flake = false;
     };
-    catppuccin-gitui = {
-      url = "github:catppuccin/gitui";
-      flake = false;
-    };
     catppuccin-starship = {
       url = "github:catppuccin/starship";
       flake = false;

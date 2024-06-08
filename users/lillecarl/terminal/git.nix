@@ -1,5 +1,4 @@
 { pkgs
-, inputs
 , config
 , lib
 , ...
@@ -72,7 +71,6 @@
 
   programs.gitui = {
     enable = true;
-    theme = builtins.readFile "${inputs.catppuccin-gitui}/themes/catppuccin-mocha.ron";
   };
 
   home.packages = [
