@@ -145,6 +145,9 @@
     resolved = {
       enable = true;
 
+      dnssec = "allow-downgrade";
+      dnsovertls = "opportunistic";
+
       fallbackDns = [
         "1.1.1.1"
         "1.0.0.1"
