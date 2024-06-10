@@ -38,13 +38,13 @@ in
       lua-language-server
       marksman
       nil
+      pyright
       # fmt
       deno # deno fmt
       fish # fish_indent
       nodePackages_latest.bash-language-server
       nodePackages_latest.dockerfile-language-server-nodejs
       nodePackages_latest.fixjson
-      nodePackages_latest.pyright
       nodePackages_latest.typescript-language-server
       nodePackages_latest.vim-language-server
       nodePackages_latest.vscode-langservers-extracted # HTML, CSS, ESLint, JSON
@@ -148,7 +148,7 @@ in
             let
               bashls = "${nodeLatest.bash-language-server}/bin";
               dockerls = "${nodeLatest.dockerfile-language-server-nodejs}/bin";
-              pyright = "${nodeLatest.pyright}/bin";
+              pyright = "${pkgs.pyright}/bin";
               tsserver = "${nodeLatest.typescript-language-server}/bin";
               vimls = "${nodeLatest.vim-language-server}/bin";
               vscode-ls = "${nodeLatest.vscode-langservers-extracted}/bin";
