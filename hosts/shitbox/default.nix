@@ -96,43 +96,6 @@
     ddcutil # Monitor control
   ];
 
-  # https://github.com/NixOS/nixpkgs/pull/277845
-  systemd.tmpfiles.rules =
-    let
-      vhostUserCollection = pkgs.buildEnv {
-        name = "vhost-user";
-        paths = [ pkgs.virtiofsd ];
-        pathsToLink = [ "/share/qemu/vhost-user" ];
-      };
-    in
-    [ "L+ /var/lib/qemu/vhost-user - - - - ${vhostUserCollection}/share/qemu/vhost-user" ];
-
-  virtualisation = {
-    libvirtd = {
-      enable = true;
-      extraConfig = ''
-        user="lillecarl"
-      '';
-
-      qemu = {
-        package = pkgs.qemu_kvm;
-        ovmf = {
-          enable = true;
-          packages = [ pkgs.OVMFFull.fd pkgs.OVMFFull ];
-        };
-
-        swtpm = {
-          enable = true;
-        };
-
-        verbatimConfig = ''
-          namespaces = []
-          user = "+1000"
-        '';
-      };
-    };
-  };
-
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave

@@ -235,9 +235,6 @@
   services.printing.enable = false;
 
   virtualisation = {
-    libvirtd = {
-      enable = true;
-    };
     lxd = {
       enable = false;
       recommendedSysctlSettings = true;
