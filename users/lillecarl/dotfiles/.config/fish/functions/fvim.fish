@@ -1,5 +1,5 @@
 function fvim
-    set vimfile (fd -t f $argv | sk -m --preview "bat --color=always {}")
+    set vimfile (fd -t f --full-path $argv | sk -m --preview "bat --color=always {}")
 
     if test -n "$vimfile"
         commandline -r "vim $vimfile"
