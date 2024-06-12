@@ -146,18 +146,12 @@
     dconf.enable = true;
     # Enable wireshark
     wireshark.enable = true;
-    # gnupg settings
-    gnupg.agent = {
-      enable = true;
-      pinentryPackage = pkgs.pinentry-qt;
-    };
     # Bash autocomplete
     bash.completion.enable = true;
     # Some programs need SUID wrappers, can be configured further or are
     # started in user sessions.
     mtr.enable = true;
   };
-
 
   services = {
     # Local network autodiscovery services
