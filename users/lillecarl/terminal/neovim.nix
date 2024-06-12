@@ -70,7 +70,6 @@ in
       shellcheck
       stylua
       taplo
-      terraform # terraform fmt
       terragrunt # terragrunt hclfmt
       yamlfmt
       # misc tools

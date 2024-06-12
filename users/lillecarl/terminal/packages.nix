@@ -9,7 +9,6 @@
     #inputs.system-manager.packages.x86_64-linux.system-manager
     inputs.agenix.packages.${pkgs.system}.default
     nix-melt # nix flake viewer
-    terraform_1_5_5 # Terraform 1.5.5, last FOSS release
     mimeo # Open files with the right program
     (lowPrio kubectl) # Kubernetes management cli
     gdb # GNU debugger
