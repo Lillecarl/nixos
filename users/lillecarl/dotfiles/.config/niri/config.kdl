@@ -425,6 +425,10 @@ binds {
     // Example volume keys mappings for PipeWire & WirePlumber.
     XF86AudioRaiseVolume { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"; }
     XF86AudioLowerVolume { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"; }
+    XF86AudioMute { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
+    XF86AudioMicMute { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
+    XF86MonBrightnessDown { spawn "lightctl" "down"; }
+    XF86MonBrightnessUp { spawn "lightctl" "up"; }
 
     Mod+Q { close-window; }
 
