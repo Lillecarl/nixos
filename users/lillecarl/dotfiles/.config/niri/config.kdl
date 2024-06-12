@@ -417,6 +417,7 @@ binds {
     Mod+Tab { spawn "rofi" "-show" "window"; }
     Mod+Ctrl+F { spawn "firefox"; }
     Ctrl+Alt+Delete { spawn "swaylock"; }
+    Ctrl+Alt+V { spawn "sh" "-c" "cliphist list | wofi --dmenu | cliphist decode | wl-copy"; }
 
     // You can also use a shell:
     // Mod+T { spawn "bash" "-c" "notify-send hello && exec alacritty"; }
