@@ -3,7 +3,7 @@
 }: {
   services.gpg-agent = {
     enable = true;
-    enableSshSupport = true;
+    enableSshSupport = false; # gnome-keyring
     enableExtraSocket = true;
   };
 
