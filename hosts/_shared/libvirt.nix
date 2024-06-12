@@ -17,4 +17,16 @@
       };
     };
   };
+
+  services.persistent-evdev = {
+    enable = true;
+    devices = {
+      persist-vmdev = "vmdev";
+    };
+  };
+  systemd.services.persistent-evdev = {
+    serviceConfig = {
+      Nice = -10;
+    };
+  };
 }
