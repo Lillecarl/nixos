@@ -3,11 +3,6 @@
 , ...
 }:
 {
-  programs.goldwarden = {
-    enable = true;
-    useSshAgent = false;
-  };
-
   hardware.uinput.enable = true;
 
   boot.tmp = {
