@@ -144,8 +144,6 @@
   programs = {
     # dconf is good i guess
     dconf.enable = true;
-    # Enable SSH agent
-    ssh.startAgent = true;
     # Enable wireshark
     wireshark.enable = true;
     # gnupg settings
