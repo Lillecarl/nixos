@@ -1,6 +1,8 @@
 // This config is in the KDL format: https://kdl.dev
 // "/-" comments out the following node.
 
+spawn-at-startup "systemctl" "--user" "restart" "hyprland-session.target"
+
 input {
     warp-mouse-to-focus
     focus-follows-mouse
@@ -72,11 +74,20 @@ input {
 }
 
 output "eDP-1" {
-    position x=760 y=1440
-}
-output "HDMI-A-!" {
-    off
+    // laptop display
     position x=0 y=0
+}
+output "DP-1" {
+    // office display (port 1)
+    position x=-780 y=-1440
+}
+output "DP-2" {
+    // office display (port 2)
+    position x=-780 y=-1440
+}
+output "HDMI-A-1" {
+    // home display
+    position x=-320 y=-1440
 }
 
 // You can configure outputs by their name, which you can find
