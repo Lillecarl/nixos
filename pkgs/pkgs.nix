@@ -107,6 +107,16 @@ prev.lib.filterAttrs
           --set npm_package_version ${pattrs.version}
       '';
     });
+
+    catppuccin-cursors2 = import ./catppuccin-cursors.nix {
+      inherit (prev)
+        lib
+        stdenvNoCC
+        fetchFromGitHub
+        inkscape
+        just;
+      inherit (prev.xorg) xcursorgen;
+    };
   }
 // (
   if flake
