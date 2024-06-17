@@ -49,6 +49,9 @@ def main():
 
 
 def doClean(seconds: int):
+  global bootedSystemProfile
+  global currentSystemProfile
+
   print(f"Cleaning profiles older than {timedelta(seconds=seconds)}")
   for cleandir in clean:
     cleandir = Path(cleandir).expanduser()
@@ -83,8 +86,6 @@ def doClean(seconds: int):
         print(f"Broken symlink: {profile}")
         continue
 
-  bootedSystemProfile = bootedSystemProfile # type: ignore
-  currentSystemProfile = currentSystemProfile # type: ignore
   if bootedSystemProfile is not None:
     print(f"Booted system profile {bootedSystemProfile}")
   if currentSystemProfile is not None:
