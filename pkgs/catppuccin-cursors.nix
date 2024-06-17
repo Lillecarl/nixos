@@ -105,7 +105,7 @@ lib.pipe dimensions [
   (x: map
     (variant: {
       name = "${variant.flavors}${capitalizeFirst variant.accents}";
-      value = (cursorPackage { flavor = variant.flavors; accent = variant.accents; });
+      value = cursorPackage { flavor = variant.flavors; accent = variant.accents; };
     })
     x
   )

@@ -1,6 +1,6 @@
 let
   repl = import ./repl.nix;
-  lib = repl.lib;
+  inherit (repl) lib;
 
   str = "asdf";
 

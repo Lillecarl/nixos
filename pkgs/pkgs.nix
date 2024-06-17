@@ -8,7 +8,6 @@ let
     qemu-qmp = prev.python3Packages.callPackage ../pkgs/python3Packages/qemu-qmp { };
     qutebrowser = qutebrowser false;
   };
-  nodePackages = prev.callPackages ./node-packages { };
 
   grafanaPlugins = {
     frser-sqlite-datasource = prev.grafanaPlugins.callPackage ./grafanaPlugins/frser-sqlite-datasource { };
@@ -45,7 +44,7 @@ prev.lib.filterAttrs
     ||
     # Flake is implicitly true here
     # Filter out package sets if we're called from a flake.
-    (n != "python3Packages" && n != "nodePackages" && n != "grafanaPlugins" && n != "wrapFirefox"))
+    (n != "python3Packages" && n != "grafanaPlugins" && n != "wrapFirefox"))
   {
     inherit miconoff mictoggle;
     inherit (python3Packages) ifupdown2;
@@ -57,8 +56,6 @@ prev.lib.filterAttrs
     python3 = prev.python3.override {
       packageOverrides = final: prev: { } // python3Packages;
     };
-    # Inject node packages
-    nodePackages = nodePackages // prev.nodePackages;
     # Inject grafanaPlugins
     grafanaPlugins = grafanaPlugins // prev.grafanaPlugins;
 

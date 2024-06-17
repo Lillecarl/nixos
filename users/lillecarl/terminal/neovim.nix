@@ -42,7 +42,7 @@ in
       # fmt
       deno # deno fmt
       fish # fish_indent
-      nodePackages_latest.bash-language-server
+      bash-language-server
       nodePackages_latest.dockerfile-language-server-nodejs
       nodePackages_latest.fixjson
       nodePackages_latest.typescript-language-server
@@ -145,7 +145,7 @@ in
         config = {
           lsp =
             let
-              bashls = "${nodeLatest.bash-language-server}/bin";
+              bashls = "${pkgs.bash-language-server}/bin";
               dockerls = "${nodeLatest.dockerfile-language-server-nodejs}/bin";
               pyright = "${pkgs.pyright}/bin";
               tsserver = "${nodeLatest.typescript-language-server}/bin";
