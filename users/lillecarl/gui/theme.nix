@@ -19,14 +19,14 @@ in
       targets = {
         # Disable swaylock target since we're using Gandalf splash screen
         swaylock.enable = false;
-        # Use catppuccin for GTK and QT
-        gtk.enable = false;
+        gtk.enable = true;
         xresources.enable = true;
         firefox.enable = true;
         kde.enable = true;
         gnome.enable = true;
       };
     };
+
     catppuccin = {
       enable = true;
 
@@ -36,9 +36,13 @@ in
 
     gtk = {
       enable = true;
-      catppuccin = {
-        size = "compact";
-        tweaks = [ "rimless" ];
+      cursorTheme = config.stylix.cursor;
+      iconTheme = {
+        name = "Adwaita";
+        package = pkgs.gnome.adwaita-icon-theme;
+      };
+      theme = {
+        name = lib.mkForce "adw-gtk3-dark";
       };
     };
 
@@ -46,6 +50,10 @@ in
       enable = true;
       platformTheme.name = "qtct";
     };
+
+    home.file.".icons/Catppuccin-Mocha-Blue".source = lib.mkForce "${config.home.pointerCursor.package}/share/icons/catppuccin-mocha-blue-cursors";
+    xdg.dataFile."icons/Catppuccin-Mocha-Blue".source = lib.mkForce "${config.home.pointerCursor.package}/share/icons/catppuccin-mocha-blue-cursors";
+
     xdg.configFile."qt5ct/colors/Catppuccin-Mocha.conf".source = "${inputs.catppuccin-qt5ct}/themes/Catppuccin-Mocha.conf";
     xdg.configFile."qt5ct/qt5ct.conf".text = ''
       [Appearance]
