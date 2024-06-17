@@ -45,8 +45,6 @@
     kubernetes # Kubernetes packages
     kubernetes-helm # Kubernetes package manager
     kubevirt # virtctl tool for kubevirt
-    node2nix # Generate nix packages from NPM packages
-    nodePackages.pajv # JSON Schema Validator for multiple formats
     openvpn # VPN software
     operator-sdk # Kubernetes Operator Lifecycle Management(OLM) SDK
     packer # Tool to create images and stuff from Hashicorp

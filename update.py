@@ -14,7 +14,6 @@ git = local["git"]
 nix = local["nix"]
 nix_prefetch_github_latest_release = local["nix-prefetch-github-latest-release"]
 nix_prefetch_url = local["nix-prefetch-url"]
-node2nix = local["node2nix"]
 unzip = local["unzip"]
 gh = local["gh"]
 
@@ -28,13 +27,6 @@ def updatenix():
     print("Updating flake inputs")
     # Update nix flake lockfile
     nix["flake", "update", "--flake", gitroot].run_fg()
-
-
-def updatenode():
-    print("Updating node packages")
-    # chdir into node-packages
-    os.chdir(os.path.join(gitroot, "pkgs/node-packages"))
-    node2nix["-i", "packages.json"].run_fg()
 
 
 def updatevscode():
@@ -107,7 +99,6 @@ def updategit():
 
 def main():
     updatenix()
-    updatenode()
     updatevscode()
     updategit()
     os.chdir(gitroot)
