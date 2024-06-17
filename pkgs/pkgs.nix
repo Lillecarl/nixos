@@ -118,17 +118,13 @@ prev.lib.filterAttrs
       inherit (prev.xorg) xcursorgen;
     };
   }
-// (
+//
+(
   if flake
   then python3Packages
   else { }
-)
-// (
-  if flake
-  then nodePackages
-  else { }
-)
-  // (
+) //
+(
   if flake
   then grafanaPlugins
   else { }
