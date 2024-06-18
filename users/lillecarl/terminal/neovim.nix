@@ -39,6 +39,7 @@ in
       marksman
       nil
       pyright
+      jsonnet-language-server
       # fmt
       deno # deno fmt
       fish # fish_indent
