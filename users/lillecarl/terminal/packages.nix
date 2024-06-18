@@ -88,5 +88,6 @@
     wofi # Rofi wayland
     moreutils # stdin -> file (usable w/ sudo)
     minicom # serial util
+    just # make++
   ];
 }
