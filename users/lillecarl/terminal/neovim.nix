@@ -81,7 +81,6 @@ in
       git # Gitsigns, Fugitive
       cargo # for rust-analyzer
       nodePackages.nodejs # For copilot
-      pkgs.copilotchat-nvim # python3 with copilotchat
     ];
 
     plugins = with pkgs.vimPlugins; [
