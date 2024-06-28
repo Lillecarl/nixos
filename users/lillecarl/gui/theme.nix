@@ -37,10 +37,10 @@ in
     gtk = {
       enable = true;
       cursorTheme = config.stylix.cursor;
-      iconTheme = {
-        name = "Adwaita";
-        package = pkgs.gnome.adwaita-icon-theme;
-      };
+      #iconTheme = {
+      #  name = "Adwaita";
+      #  package = pkgs.gnome.adwaita-icon-theme;
+      #};
       theme = {
         name = lib.mkForce "adw-gtk3-dark";
       };
@@ -48,8 +48,12 @@ in
 
     qt = {
       enable = true;
-      platformTheme.name = "qtct";
+      style.name = "kvantum";
+      platformTheme.name = "kvantum";
     };
+
+    home.pointerCursor.name = lib.mkForce "Catppuccin-Mocha-Blue";
+    home.pointerCursor.package = lib.mkForce pkgs.catppuccin-cursors;
 
     home.file.".icons/Catppuccin-Mocha-Blue".source = lib.mkForce "${config.home.pointerCursor.package}/share/icons/catppuccin-mocha-blue-cursors";
     xdg.dataFile."icons/Catppuccin-Mocha-Blue".source = lib.mkForce "${config.home.pointerCursor.package}/share/icons/catppuccin-mocha-blue-cursors";

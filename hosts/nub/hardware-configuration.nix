@@ -72,10 +72,7 @@
   };
 
   hardware = {
-    opengl = {
-      driSupport32Bit = false;
-    };
-
+    graphics.enable = true;
     cpu.amd.updateMicrocode = true;
   };
 }

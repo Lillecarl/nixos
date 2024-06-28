@@ -75,7 +75,6 @@
       manix # Nix documentation search tool
       nix-du # Nix disk usage check
       nix-index # Files database for nixpkgs (find uninstalled commands)
-      nix-top # See what nix is doing when it's doing things
       nix-tree # visualize the Nix store interactively
       nix-update # Tool to help updating nix packages
       nix-prefetch # nix prefetcher

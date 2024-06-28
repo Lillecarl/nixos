@@ -78,7 +78,8 @@ if false then { } else {
           #hostname-admin = domain;
           hostname-debug = true;
           hostname-strict = false;
-          hostname-strict-backchannel = false;
+          #hostname-strict-backchannel = false;
+          hostname-backchannel-dynamic = true;
           http-enabled = false;
           https-port = httpsPort;
           log = "console";

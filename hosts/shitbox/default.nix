@@ -33,8 +33,7 @@
     firewall.enable = false;
   };
 
-  hardware.opengl.enable = true;
-  hardware.opengl.driSupport32Bit = true;
+  hardware.graphics.enable = true;
 
   services.iperf3 = {
     enable = true;
