@@ -2,9 +2,13 @@
 let
   samedisk =
     { disk
-    , bootloc
+    , index
     ,
-    }: {
+    }: 
+    let
+      idx = toString index;
+    in
+    {
       device = "/dev/disk/by-id/${disk}";
       type = "disk";
       content = {
@@ -16,27 +20,27 @@ let
             type = "EF02";
           };
           ESP = {
-            label = "ESP";
+            label = "ESP${idx}";
             start = "1MiB";
             end = "1GiB";
             type = "EF00";
             content = {
               type = "filesystem";
               format = "vfat";
-              mountpoint = "/${bootloc}/efi";
+              mountpoint = "/boot${idx}/efi";
               mountOptions = [
                 "sync"
               ];
             };
           };
           boot = {
-            label = "boot";
+            label = "boot${idx}";
             start = "1GiB";
             end = "2GiB";
             content = {
               type = "filesystem";
               format = "ext4";
-              mountpoint = "/${bootloc}";
+              mountpoint = "/boot${idx}";
               mountOptions = [
                 "defaults"
                 "sync"
@@ -61,11 +65,11 @@ in
     # 1GiB boot, rest mdraid
     "disk1" = samedisk {
       disk = disk1;
-      bootloc = "boot";
+      index = 1; 
     };
     "disk2" = samedisk {
       disk = disk2;
-      bootloc = "boot2";
+      index = 2; 
     };
   };
   mdadm = {
