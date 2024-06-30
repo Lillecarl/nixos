@@ -4,17 +4,26 @@
 }:
 {
   boot = {
+    kernelPackages = pkgs.linuxPackages_latest;
     initrd.availableKernelModules = [
+      "amdgpu"
       "vfio-pci"
     ];
-    kernelPackages = pkgs.linuxPackages_latest;
-    initrd.kernelModules = [ "vfio-pci" ];
+    initrd.kernelModules = [
+      "amdgpu"
+      "vfio-pci"
+    ];
     extraModprobeConfig = ''
       options vfio-pci ids=10de:2487,10de:228b
-      blacklist nouveau
-      options nouveau modeset=0
+      options kvm ignore_msrs=1 report_ignored_msrs=0
     '';
-    blacklistedKernelModules = [ "nouveau" "nvidia" "nvidia_drm" "nvidia_modeset" ];
+    blacklistedKernelModules = [
+      "radeon"
+      "nouveau"
+      "nvidia"
+      "nvidia_drm"
+      "nvidia_modeset"
+    ];
     kernelModules = [
       "drivetemp"
       "nct6775"
@@ -26,12 +35,14 @@
       "vfio"
     ];
     kernelParams = [
-      "nohibernate"
-      "amd_iommu=on"
-      "mitigations=off"
-      "iommu=pt"
       "acpi_enforce_resources=lax"
+      "amd_iommu=on"
       "hugepages=8192"
+      "iommu=pt"
+      "kvm.ignore_msrs=1"
+      "mitigations=off"
+      "nohibernate"
+      "vfio_iommu_type1.allow_unsafe_interrupts=1"
     ];
 
     extraModulePackages = with config.boot.kernelPackages; [
