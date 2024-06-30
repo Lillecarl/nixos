@@ -45,10 +45,11 @@
     loader = {
       efi = {
         canTouchEfiVariables = true;
-        efiSysMountPoint = "/boot1/efi"; # ← use the same mount point here.
+        efiSysMountPoint = "/boot/efi"; # ← use the same mount point here.
       };
       grub = {
         enable = true;
+        enableCryptodisk = true;
         inherit (config.disko.devices.disk.disk1) device;
         efiSupport = true;
         copyKernels = true;

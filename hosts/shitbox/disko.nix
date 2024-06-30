@@ -4,7 +4,7 @@ let
     { disk
     , index
     ,
-    }: 
+    }:
     let
       idx = toString index;
     in
@@ -65,11 +65,11 @@ in
     # 1GiB boot, rest mdraid
     "disk1" = samedisk {
       disk = disk1;
-      index = 1; 
+      index = "";
     };
     "disk2" = samedisk {
       disk = disk2;
-      index = 2; 
+      index = 2;
     };
   };
   mdadm = {
