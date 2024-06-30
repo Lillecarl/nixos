@@ -35,8 +35,8 @@
           bridge-stp off
           bridge-fd 0
           bridge-maxwait 0
-          post-up iptables -t nat -A POSTROUTING -o br13 -j MASQUERADE
-          pre-down iptables -t nat -D POSTROUTING -o br13 -j MASQUERADE
+          post-up iptables -t nat -A POSTROUTING -s 10.13.37.1/24 -j MASQUERADE
+          pre-down iptables -t nat -D POSTROUTING -s 10.13.37.1/24 -j MASQUERADE
     '';
   };
 }
