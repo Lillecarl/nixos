@@ -42,6 +42,9 @@ abbr -a rb rebuild-both
 abbr -a ro rebuild-os
 abbr -a rh rebuild-home
 
+# Run previous command with sudo
+abbr -a !! -f histsudo
+
 set -x FISH_PID $fish_pid
 
 function sshloop1
