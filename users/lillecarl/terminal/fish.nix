@@ -33,6 +33,7 @@
       ${lib.getExe pkgs.zoxide} init fish | source
       ${pkgs.thefuck}/bin/thefuck --alias | source
       source ${config.age.secrets.sourcegraph.path}
+      source ${config.age.secrets.copilot.path}
     '';
 
     shellInit = ''

@@ -12,6 +12,7 @@ in
   "cloudflare.age".publicKeys = all;
   "rclone.age".publicKeys = all;
   "sourcegraph.age".publicKeys = all;
+  "copilot.fish.age".publicKeys = all;
   "root_ssh.age".publicKeys = all;
   "root_ssh.pub.age".publicKeys = all;
 }
