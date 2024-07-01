@@ -9,10 +9,11 @@
     package = pkgs.nixVersions.latest;
     #channel.enable = false;
     extraOptions = ''
-      experimental-features = nix-command flakes
+      experimental-features = nix-command flakes impure-derivations recursive-nix
       builders-use-substitutes = true
       keep-outputs = true
       keep-derivations = true
+      keep-going = true
       allow-import-from-derivation = true
       warn-dirty = true
     '';
