@@ -24,6 +24,7 @@ in
         firefox.enable = true;
         kde.enable = true;
         gnome.enable = true;
+        helix.enable = false;
       };
     };
 
@@ -33,10 +34,15 @@ in
       flavor = "mocha";
       accent = "blue";
     };
+    programs.helix.catppuccin.enable = true;
+    programs.helix.catppuccin.useItalics = true;
 
     gtk = {
       enable = true;
-      cursorTheme = config.stylix.cursor;
+      cursorTheme = lib.mkForce {
+        name = "Catppuccin-Mocha-Blue";
+        package = lib.mkForce pkgs.catppuccin-cursors.mochaBlue;
+      };
       #iconTheme = {
       #  name = "Adwaita";
       #  package = pkgs.gnome.adwaita-icon-theme;
@@ -53,7 +59,7 @@ in
     };
 
     home.pointerCursor.name = lib.mkForce "Catppuccin-Mocha-Blue";
-    home.pointerCursor.package = lib.mkForce pkgs.catppuccin-cursors;
+    home.pointerCursor.package = lib.mkForce pkgs.catppuccin-cursors.mochaBlue;
 
     home.file.".icons/Catppuccin-Mocha-Blue".source = lib.mkForce "${config.home.pointerCursor.package}/share/icons/catppuccin-mocha-blue-cursors";
     xdg.dataFile."icons/Catppuccin-Mocha-Blue".source = lib.mkForce "${config.home.pointerCursor.package}/share/icons/catppuccin-mocha-blue-cursors";
