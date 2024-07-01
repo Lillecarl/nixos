@@ -6,6 +6,10 @@
   programs.helix = {
     enable = true;
 
+    settings = {
+      auto-save = false;
+    };
+
     languages = {
       language-server.nil = {
         command = lib.getExe pkgs.nil;
