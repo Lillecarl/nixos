@@ -1,4 +1,4 @@
-{ ... }:
+_:
 {
   services.kea = {
     dhcp4 = {
