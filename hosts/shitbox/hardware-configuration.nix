@@ -35,9 +35,15 @@
       "vfio"
     ];
     kernelParams = [
+      # don't sort
+      "default_hugepagesz=2MB"
+      "hugepagesz=1G"
+      "hugepages=16"
+      "hugepagesz=2M"
+      "hugepages=100"
+      # maybe sort
       "acpi_enforce_resources=lax"
       "amd_iommu=on"
-      "hugepages=8192"
       "iommu=pt"
       "kvm.ignore_msrs=1"
       "mitigations=off"
