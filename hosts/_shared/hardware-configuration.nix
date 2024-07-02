@@ -7,7 +7,7 @@
 
     kernel.sysctl = {
       "kernel.task_delayacct" = 1;
-      "net.ipv4_forward" = 1;
+      "net.ipv4.ip_forward" = 1;
     };
   };
 
