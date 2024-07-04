@@ -90,5 +90,6 @@
     minicom # serial util
     just # make++
     frogmouth # TUI Markdown viewer
+    colima # Managed K8s VM's
   ];
 }
