@@ -258,8 +258,6 @@
     config.boot.kernelPackages.zenpower # zenpower
     config.virtualisation.podman.package # foss docker
     distrobox # Run different distros on your machine
-    gnome.gnome-keyring
-    gnome.seahorse
     iptables # Give us the iptables CLI (should map to nftables)
     polkit-kde-agent
     sbctl # sb = secure boot

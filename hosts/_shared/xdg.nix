@@ -12,7 +12,7 @@
       wlr.enable = false;
 
       extraPortals = [
-        pkgs.gnome.gnome-keyring
+        pkgs.gnome-keyring
         pkgs.xdg-desktop-portal-gtk
       ];
       config = {
