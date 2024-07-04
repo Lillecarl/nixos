@@ -89,5 +89,6 @@
     moreutils # stdin -> file (usable w/ sudo)
     minicom # serial util
     just # make++
+    frogmouth # TUI Markdown viewer
   ];
 }
