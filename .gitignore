@@ -9,6 +9,7 @@ unstable
 
 .terraform
 terraform.tfstate.backup
+.terragrunt-cache
 
 # Devenv
 /.devenv*
