@@ -591,16 +591,16 @@ async def main():
                     if macropad_attach:
                         print("Attaching devices")
                         async def attach():
-                            await attach_device(f"{base_path}/logitech-g933.xml")
                             await attach_device(f"{base_path}/daskeyboard.xml")
                             await attach_device(f"{base_path}/steelseries-sensei.xml")
+                            await attach_device(f"{base_path}/logitech-g933.xml")
                         if usb_xtach_task is None or usb_xtach_task.done():
                             usb_xtach_task = loop.create_task(attach())
                         macropad_attach = False
                     else:
                         print("Detaching devices")
                         async def detach():
-                            #await detach_device(f"{base_path}/logitech-g933.xml")
+                            await detach_device(f"{base_path}/logitech-g933.xml")
                             await detach_device(f"{base_path}/daskeyboard.xml")
                             await detach_device(f"{base_path}/steelseries-sensei.xml")
                         if usb_xtach_task is None or usb_xtach_task.done():
