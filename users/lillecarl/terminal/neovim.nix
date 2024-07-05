@@ -12,6 +12,11 @@ in
     config.lib.nvimpager
   ];
 
+  home.sessionVariables = {
+    # Use NeoVim for sudo edits, but without plugins and muck
+    SUDO_EDITOR = lib.getExe pkgs.neovim;
+  };
+
   stylix.targets.vim.enable = false;
 
   programs.neovim = {
