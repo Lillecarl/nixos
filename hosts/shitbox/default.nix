@@ -69,7 +69,6 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    gnome.adwaita-icon-theme # Lutris icons
     virt-manager # Virtualisation manager
     pciutils
     qemu_kvm
