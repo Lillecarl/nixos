@@ -350,6 +350,13 @@ animations {
 
 // Window rules let you adjust behavior for individual windows.
 // They are processed in order of appearance in this file.
+
+// Rounded corners are essential to look like you're a pro
+window-rule {
+    geometry-corner-radius 10
+    clip-to-geometry true
+}
+
 // (This example rule is commented out with a "/-" in front.)
 /-window-rule {
     // Match directives control which windows this rule will apply to.
