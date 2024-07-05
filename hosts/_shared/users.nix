@@ -32,6 +32,7 @@ in
               "pipewire"
               "uaccess"
               "uinput"
+              "input"
             ];
             openssh.authorizedKeys.keys = [
               "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAHZ3pA0vIXiKQuwfM1ks8TipeOxfDT9fgo4xMi9iiWr lillecarl@lillecarl.com"
@@ -58,12 +59,11 @@ in
 
         lillecarl = carl_base firstUid pkgs.fish;
         bash = carl_base (firstUid + 1) pkgs.bash;
+        qemu-libvirtd.extraGroups = [ "qemu-libvirt" "kvm" "input" "uinput" ];
       };
     groups = {
       uaccess = { };
     };
   };
 }
-
-
 
