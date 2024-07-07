@@ -16,6 +16,7 @@ in
   config = lib.mkIf cfg.enable {
     home.packages = [
       pkgs.keyutils
+      pkgs.bitwarden-cli
     ];
     programs.qutebrowser = {
       enable = true;
