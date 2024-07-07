@@ -29,8 +29,5 @@ function rebuild-home
         return 1
     end
 
-    # Store editorconfig in /tmp so temporary vim edits follow my rules
-    ln -f -s $HOME/.editorconfig /tmp/.editorconfig
-
     rm -rf $tempdir
 end

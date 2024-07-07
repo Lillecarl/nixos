@@ -1,4 +1,4 @@
-_:
+{ config, ... }:
 {
   editorconfig = {
     enable = true;
@@ -26,4 +26,7 @@ _:
       };
     };
   };
+  systemd.user.tmpfiles.rules = [
+    "L ${config.home.homeDirectory}/.editorconfig - - - - /tmp/.editorconfig"
+  ];
 }
