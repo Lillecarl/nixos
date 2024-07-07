@@ -1,6 +1,7 @@
 { pkgs
 , lib
 , config
+, nixosConfig
 , ...
 }:
 let
@@ -201,7 +202,20 @@ in
               jsonls = { cmd = [ "${vscode-ls}/vscode-json-language-server" ]; };
               lua_ls = { cmd = [ (lib.getExe pkgs.lua-language-server) ]; };
               marksman = { cmd = [ (lib.getExe pkgs.marksman) ]; };
-              nil_ls = { cmd = [ (lib.getExe pkgs.nil) ]; };
+              nil_ls = {
+                cmd = [ (lib.getExe pkgs.nil) ];
+                settings = {
+                  nil = {
+                    formatting.command = lib.getExe pkgs.nixpkgs-fmt;
+                    nix = {
+                      binary = lib.getExe nixosConfig.nix.package;
+                      autoArchive = true;
+                      autoEvalInputs = true;
+                      nixpkgsInputName = "nixpkgs";
+                    };
+                  };
+                };
+              };
               nushell = { cmd = [ (lib.getExe pkgs.nushell) ]; };
               omnisharp = { cmd = [ (lib.getExe pkgs.omnisharp-roslyn) ]; };
               postgres_lsp = { cmd = [ (lib.getExe pkgs.postgres-lsp) ]; };
