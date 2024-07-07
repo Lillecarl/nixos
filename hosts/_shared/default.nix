@@ -11,6 +11,9 @@
     cleanOnBoot = true;
   };
 
+  # Don't install the /lib/ld-linux.so.2 stub. This saves one instance of nixpkgs.
+  environment.ldso32 = null;
+
   # Select internationalisation properties.
   i18n = rec {
     defaultLocale = "en_DK.UTF-8";
