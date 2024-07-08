@@ -239,14 +239,6 @@
       enable = false;
       recommendedSysctlSettings = true;
     };
-    #lxc.lxcfs.enable = true;
-    podman = {
-      enable = true;
-      dockerCompat = true;
-
-      autoPrune.enable = true;
-      dockerSocket.enable = true;
-    };
   };
 
   environment.systemPackages = with pkgs; [
@@ -256,7 +248,6 @@
     config.boot.kernelPackages.turbostat
     config.boot.kernelPackages.usbip
     config.boot.kernelPackages.zenpower # zenpower
-    config.virtualisation.podman.package # foss docker
     distrobox # Run different distros on your machine
     iptables # Give us the iptables CLI (should map to nftables)
     polkit-kde-agent
@@ -265,7 +256,7 @@
     usbguard # USB blocking solution
     virt-manager # Virtualisation manager
     zenmonitor # AMD CPU monitoring
-  ] ++ (if config.virtualisation.podman.enable then [ podman-compose ] else [ ]);
+  ];
 
   system.stateVersion = "24.05";
 }

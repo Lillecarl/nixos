@@ -15,7 +15,6 @@ set -a PATH $KREW_ROOT/bin
 alias grt="cd (git root)"
 alias tg=terragrunt
 alias pager=$PAGER
-alias docker-compose=podman-compose
 alias kc=kubectl
 
 abbr -a :q exit

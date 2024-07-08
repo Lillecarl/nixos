@@ -81,7 +81,7 @@
     src-cli # Sourcegraph CLI
     skim # Modern rusty fzf
     dtach # Detach application from screen
-    kind # Kubernetes in Docker (podman)
+    kind # Kubernetes in "Docker"
     jnv # Interactive jq
     hl # Terminal logfmt / json log tool
     cliphist # Clipboard history tool
