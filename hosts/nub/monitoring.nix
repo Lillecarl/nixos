@@ -4,9 +4,10 @@
 , ...
 }:
 let
+  hostname = config.networking.hostName;
   monitordbpath = "/var/lib/grafana/data/monitoring.sqlite3";
-  domain = "grafana.127.lillecarl.com";
-  certdir = config.security.acme.certs.${domain}.directory;
+  domain = "grafana.${hostname}.lillecarl.com";
+  certdir = config.security.acme.certs.${hostname}.directory;
 
   script = pkgs.writers.writePython3Bin "pymonitoring"
     {
@@ -22,7 +23,7 @@ let
 in
 {
   users.users.grafana = {
-    extraGroups = [ config.security.acme.certs.${domain}.group ];
+    extraGroups = [ config.security.acme.certs.${hostname}.group ];
   };
 
   services = {
@@ -61,16 +62,16 @@ in
 
     nginx = {
       enable = true;
-    };
 
-    nginx.virtualHosts.${domain} = {
-      locations."/" = {
-        recommendedProxySettings = true;
-        proxyPass = "https://${config.services.grafana.settings.server.http_addr}:${toString config.services.grafana.settings.server.http_port}";
-        proxyWebsockets = true;
+      virtualHosts.${domain} = {
+        locations."/" = {
+          recommendedProxySettings = true;
+          proxyPass = "https://${config.services.grafana.settings.server.http_addr}:${toString config.services.grafana.settings.server.http_port}";
+          proxyWebsockets = true;
+        };
+        forceSSL = true;
+        useACMEHost = config.networking.hostName;
       };
-      forceSSL = true;
-      enableACME = true;
     };
   };
 
