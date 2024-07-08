@@ -1,5 +1,6 @@
 { pkgs
 , lib
+, config
 , ...
 }:
 {
@@ -9,6 +10,10 @@
     useTmpfs = true;
     tmpfsSize = "24G";
     cleanOnBoot = true;
+  };
+
+  networking.hosts = {
+    "127.0.0.1" = [ "${config.networking.hostName}.lillecarl.com" ];
   };
 
   # Don't install the /lib/ld-linux.so.2 stub. This saves one instance of nixpkgs.
