@@ -24,14 +24,6 @@ in
 
     programs.firefox = lib.mkIf cfg.enable {
       enable = true;
-      package = pkgs.wrapFirefox pkgs.firefox-unwrapped {
-        omniPatches = [
-          (pkgs.fetchpatch {
-            url = "file://${self}/pkgs/ff.patch";
-            sha256 = "sha256-9GcctuRKfaFLOlOln3Gf/vwEyPy3eHQjJty61tFIBxs=";
-          })
-        ];
-      };
 
       nativeMessagingHosts = [
         pkgs.ff2mpv

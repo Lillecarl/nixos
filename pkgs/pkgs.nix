@@ -44,7 +44,7 @@ prev.lib.filterAttrs
     ||
     # Flake is implicitly true here
     # Filter out package sets if we're called from a flake.
-    (n != "python3Packages" && n != "grafanaPlugins" && n != "wrapFirefox"))
+    (n != "python3Packages" && n != "grafanaPlugins"))
   {
     inherit miconoff mictoggle;
     inherit (python3Packages) ifupdown2;
@@ -63,23 +63,6 @@ prev.lib.filterAttrs
     hl = prev.callPackage ./hl.nix { };
     one-small-step-for-vimkind = prev.callPackage ./one-small-step-for-vimkind.nix { };
     copilotchat-nvim = prev.callPackage ./copilotchat-nvim.nix { };
-    wrapFirefox = prev.callPackage ./wrapFirefox.nix { };
-    nix-output-monitor =
-      if (builtins.compareVersions
-        "2.1.2"
-        prev.nix-output-monitor.drvAttrs.version >= 0)
-      then
-        prev.nix-output-monitor.overrideAttrs
-          (pattrs: {
-            src = prev.fetchFromGitHub {
-              owner = "maralorn";
-              repo = "nix-output-monitor";
-              rev = "5cc29ee7cc056bff2aac639e89d3389b77d52f7a";
-              sha256 = "sha256-IDife7x1BKyxcQlCocVICUXXO+YIJzqj1Lgss8oWCUU=";
-            };
-          })
-      else prev.nix-output-monitor;
-
     xwayland-satellite = prev.callPackage ./xwayland-satellite.nix { };
 
     usbutils2 = prev.usbutils.overrideAttrs (oldAttrs: {
