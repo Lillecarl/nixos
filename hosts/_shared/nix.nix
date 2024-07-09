@@ -13,18 +13,26 @@
 
   nix = {
     package = pkgs.nixVersions.latest;
-    #channel.enable = false;
-    extraOptions = ''
-      experimental-features = nix-command flakes impure-derivations recursive-nix
-      builders-use-substitutes = true
-      keep-outputs = true
-      keep-derivations = true
-      keep-going = true
-      allow-import-from-derivation = true
-      warn-dirty = true
-    '';
     settings = {
+      allow-import-from-derivation = true;
+      auto-allocate-uids = true;
       auto-optimise-store = true;
+      builders-use-substitutes = true;
+      keep-going = true;
+      warn-dirty = false;
+
+      system-features = [ "uid-range" ];
+
+      experimental-features = [
+        "auto-allocate-uids"
+        "cgroups"
+        "nix-command"
+        "flakes"
+        "impure-derivations"
+        "recursive-nix"
+        "fetch-closure"
+      ];
+
       trusted-users = [
         "nix-ssh"
         "root"
