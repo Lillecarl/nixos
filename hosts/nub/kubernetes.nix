@@ -1,4 +1,5 @@
 { config
+, lib
 , pkgs
 , ...
 }:
@@ -38,6 +39,12 @@ in
           plugins."io.containerd.grpc.v1.cri" = {
             enable_unprivileged_ports = true;
             enable_unprivileged_icmp = true;
+            registry.mirrors."${config.networking.hostName}.io" = {
+              endpoint = [ "https://registry.${config.networking.hostName}.lillecarl.com" ];
+            };
+            registry.mirrors."local.io" = {
+              endpoint = [ "https://registry.${config.networking.hostName}.lillecarl.com" ];
+            };
           };
           grpc = {
             address = "/run/containerd/containerd.sock";
