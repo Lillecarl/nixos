@@ -36,14 +36,8 @@ in
 
         settings = {
           plugins."io.containerd.grpc.v1.cri" = {
-            #stream_server_address = "127.0.0.1";
-            #stream_server_port = "10010";
-            enable_selinux = false;
             enable_unprivileged_ports = true;
             enable_unprivileged_icmp = true;
-            disable_apparmor = true;
-            disable_cgroup = true;
-            restrict_oom_score_adj = true;
           };
           grpc = {
             address = "/run/containerd/containerd.sock";
