@@ -5,6 +5,12 @@
 , ...
 }:
 {
+  # Use switch-to-configuration Rust implementation
+  system.switch = {
+    enable = false;
+    enableNg = true;
+  };
+
   nix = {
     package = pkgs.nixVersions.latest;
     #channel.enable = false;
