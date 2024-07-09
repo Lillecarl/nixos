@@ -30,8 +30,16 @@
     supportedLocales = [ "all" ];
   };
 
-  # Disable network-manager wait-online service that prohibits nixos-rebuild
-  systemd.services.NetworkManager-wait-online.enable = false;
+  systemd = {
+    # Enable out of memory daemon (killer) on all slices, we're a workstation
+    oomd = {
+      enableUserSlices = true;
+      enableSystemSlice = true;
+      enableRootSlice = true;
+    };
+    # Disable network-manager wait-online service that prohibits nixos-rebuild
+    services.NetworkManager-wait-online.enable = false;
+  };
 
   # Use us keymap
   console = {
