@@ -25,6 +25,8 @@
     extraConfig = ''
       auto lo
       iface lo inet loopback
+        address 10.13.38.1
+        netmask 255.255.255.0
 
       # VM bridge
       auto br13
