@@ -48,6 +48,7 @@ in
           };
           grpc = {
             address = "/run/containerd/containerd.sock";
+            gid = config.users.groups.kubernetes.gid;
           };
         };
       };
