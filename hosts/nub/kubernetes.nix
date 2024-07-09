@@ -37,8 +37,6 @@ in
 
         settings = {
           plugins."io.containerd.grpc.v1.cri" = {
-            enable_unprivileged_ports = true;
-            enable_unprivileged_icmp = true;
             containerd.runtimes.runc.options = {
               SystemdCgroup = true;
             };
