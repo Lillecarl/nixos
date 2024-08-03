@@ -88,6 +88,7 @@
                 refresh = 60.003;
               };
               position = { x = 0; y = 0; };
+              scale = 1.0;
             };
             # Office display (port 1)
             DP-1 = OfficeMon;
