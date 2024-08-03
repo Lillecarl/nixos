@@ -123,7 +123,6 @@
     devshell = {
       url = "github:numtide/devshell";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-utils.follows = "flake-utils";
     };
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
@@ -194,7 +193,6 @@
       inputs = {
         crane.follows = "crane";
         flake-parts.follows = "flake-parts";
-        flake-utils.follows = "flake-utils";
         nixpkgs.follows = "nixpkgs";
         pre-commit-hooks-nix.follows = "pre-commit-hooks";
         rust-overlay.follows = "rust-overlay";
