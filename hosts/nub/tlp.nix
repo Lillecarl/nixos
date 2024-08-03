@@ -1,7 +1,7 @@
 _:
 {
   services.tlp = {
-    enable = true;
+    enable = false;
 
     settings = {
       CPU_ENERGY_PERF_POLICY_ON_AC = "balance_power";
