@@ -247,6 +247,10 @@
 
     sudo = {
       enable = true;
+      extraConfig = ''
+        Defaults insults
+        Defaults pwfeedback
+      '';
       # Allow some commands superuser rights without password
       extraRules = [
         {
