@@ -2,7 +2,6 @@ final: prev: flake:
 let
   # python3 packages
   python3Packages = {
-    ifupdown2 = prev.python3Packages.callPackage ../pkgs/python3Packages/ifupdown2 { };
     pyping = prev.python3Packages.callPackage ../pkgs/python3Packages/pyping { };
     hyprpy = prev.python3Packages.callPackage ../pkgs/python3Packages/hyprpy { };
     qemu-qmp = prev.python3Packages.callPackage ../pkgs/python3Packages/qemu-qmp { };
@@ -39,7 +38,6 @@ prev.lib.filterAttrs
     (n != "python3Packages" && n != "grafanaPlugins"))
   {
     inherit miconoff mictoggle;
-    inherit (python3Packages) ifupdown2;
 
     # Inject python3 packages
     python3Packages = python3Packages // prev.python3Packages;
