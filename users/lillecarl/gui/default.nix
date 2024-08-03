@@ -6,7 +6,6 @@
 {
   carl = {
     gui = {
-      enable = true;
       hyprland = {
         enable = true;
       };
