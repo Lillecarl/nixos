@@ -24,8 +24,6 @@ _:
             pywlroots
             requests
             sh
-            textual
-            qutebrowser
             qemu-qmp
             libvirt
           ]))
