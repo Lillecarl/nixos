@@ -89,7 +89,6 @@
       iotop # See disk IO information
       nixpkgs-fmt # Format Nix like the Nix project wants
       manix # Nix documentation search tool
-      nix-du # Nix disk usage check
       nix-index # Files database for nixpkgs (find uninstalled commands)
       nix-tree # visualize the Nix store interactively
       nix-update # Tool to help updating nix packages

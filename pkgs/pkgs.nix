@@ -6,7 +6,6 @@ let
     pyping = prev.python3Packages.callPackage ../pkgs/python3Packages/pyping { };
     hyprpy = prev.python3Packages.callPackage ../pkgs/python3Packages/hyprpy { };
     qemu-qmp = prev.python3Packages.callPackage ../pkgs/python3Packages/qemu-qmp { };
-    qutebrowser = qutebrowser false;
   };
 
   grafanaPlugins = {
@@ -30,13 +29,6 @@ let
     ${prev.pulseaudio}/bin/pactl set-source-mute @DEFAULT_SOURCE@ $mute
     echo $mute > /sys/class/leds/platform\:\:micmute/brightness
   '';
-
-  qutebrowser = buildApplication: (prev.callPackage ./qutebrowser.nix {
-    inherit (prev.__splicedPackages.qt6Packages) qtbase qtwebengine wrapQtAppsHook qtwayland;
-    inherit buildApplication;
-  }).overridePythonAttrs (oldAttrs: {
-    patches = [ "${prev.path}/pkgs/applications/networking/browsers/qutebrowser/fix-restart.patch" ];
-  });
 in
 prev.lib.filterAttrs
   (n: v:
@@ -48,8 +40,6 @@ prev.lib.filterAttrs
   {
     inherit miconoff mictoggle;
     inherit (python3Packages) ifupdown2;
-
-    qutebrowser = qutebrowser true;
 
     # Inject python3 packages
     python3Packages = python3Packages // prev.python3Packages;

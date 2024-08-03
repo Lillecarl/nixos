@@ -10,7 +10,7 @@ in
   options.carl.gui.qutebrowser = with lib; {
     enable = lib.mkOption {
       type = types.bool;
-      default = config.carl.gui.enable;
+      default = false;
     };
   };
   config = lib.mkIf cfg.enable {

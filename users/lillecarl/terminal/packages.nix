@@ -89,7 +89,7 @@
     moreutils # stdin -> file (usable w/ sudo)
     minicom # serial util
     just # make++
-    frogmouth # TUI Markdown viewer
+    #frogmouth # TUI Markdown viewer
     colima # Managed K8s VM's
     graphviz-nox # Graphviz tools
   ];
