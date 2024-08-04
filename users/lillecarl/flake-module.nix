@@ -21,10 +21,11 @@ in
                   inherit self inputs flakeloc mpkgs spkgs;
                   nixosConfig = self.nixosConfigurations.${sysName}.config;
                 };
-              modules = pkgs.lib.rimport {
-                path = [ ./. ../_shared ../../modules/hm ];
-                regdel = [ __curPos.file ".*${excludeName}.*" ];
-              } ++ [ config ];
+              modules = pkgs.lib.rimport
+                {
+                  path = [ ./. ../_shared ../../modules/hm ];
+                  regdel = [ __curPos.file ".*${excludeName}.*" ];
+                } ++ [ config ];
             });
       in
       {

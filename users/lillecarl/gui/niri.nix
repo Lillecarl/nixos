@@ -11,7 +11,7 @@
   programs.niri = {
     enable = true;
 
-    package = nixosConfig.programs.niri.package;
+    inherit (nixosConfig.programs.niri) package;
 
     settings = {
       spawn-at-startup = [
@@ -34,7 +34,7 @@
 
       outputs =
         let
-          hostName = nixosConfig.networking.hostName;
+          inherit (nixosConfig.networking) hostName;
         in
         if hostName == "shitbox" then
           {
