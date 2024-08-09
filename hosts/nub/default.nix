@@ -220,8 +220,6 @@
   networking = {
     hostName = "nub"; # System hostname
     domain = "helicon.ai"; # System domain
-    nftables.enable = true; # Enable nftables
-    firewall.enable = false; # Disable iptables
     networkmanager = {
       enable = true; # Laptops do well with networkmanager
       unmanaged = [ "virbr0" "lilbr" ];
