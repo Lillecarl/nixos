@@ -250,6 +250,8 @@
       extraConfig = ''
         Defaults insults
         Defaults pwfeedback
+        Defaults:%wheel env_keep += "XDG_RUNTIME_DIR"
+        Defaults:%wheel env_keep += "PATH"
       '';
       # Allow some commands superuser rights without password
       extraRules = [
