@@ -1,4 +1,4 @@
-if status --is-login && test "$XDG_VTNR" = 2
+if status --is-login && test "$XDG_VTNR" = 1
     set -x NIRI_LOGFILE /run/user/$(id -u)/niri.log
 
     set -e __HM_SESS_VARS_SOURCED
