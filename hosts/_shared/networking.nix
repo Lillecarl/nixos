@@ -18,6 +18,7 @@
     firewall = {
       enable = true;
     };
+    networkmanager.unmanaged = lib.attrNames config.systemd.network.netdevs;
   };
 
   systemd.network = {
