@@ -8,6 +8,9 @@ let
   certdir = config.security.acme.certs.home-assistant.directory;
 in
 {
+  # Required for home-assistant remote access
+  networking.firewall.allowedTCPPorts = [ 443 ];
+
   systemd.services.home-assistant = {
     # Device scanning with NMAP
     path = [
