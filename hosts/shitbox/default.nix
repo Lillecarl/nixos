@@ -30,7 +30,6 @@
       enable = true;
       unmanaged = [ "virbr0" "lxdbr0" ];
     };
-    firewall.enable = false;
   };
 
   hardware.graphics.enable = true;
