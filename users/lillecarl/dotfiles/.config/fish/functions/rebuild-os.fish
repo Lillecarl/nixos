@@ -3,7 +3,7 @@ function rebuild-os
         echo "Failed to get sudo"
         return 1
     end
-    set tempdir "$(mktemp -d -t nix-rebuild-home_XXXX)"
+    set tempdir "$(mktemp -d -t nix-rebuild-nixos_XXXX)"
     set result "$tempdir/result"
     set buildlog "$tempdir/buildlog.jsonish"
     set fullflake "$FLAKE#nixosConfigurations.\"$hostname\".config.system.build.toplevel"
