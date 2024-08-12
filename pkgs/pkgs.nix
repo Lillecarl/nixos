@@ -85,6 +85,21 @@ prev.lib.filterAttrs
         just;
       inherit (prev.xorg) xcursorgen;
     };
+
+    pllua = prev.callPackage ./pllua.nix {
+      lua = prev.lua5_4.override {
+        version = "5.4.7";
+        hash = "sha256-n79eKO+GxphY9tPTTszDLpEcGii0Eg/z6EqqcM+/HjA=";
+      };
+    };
+    pllua_jit = prev.callPackage ./pllua.nix {
+      lua = (prev.luajit_2_1.override { enable52Compat = true; }).overrideAttrs (oldAttrs: {
+        # workaround for stupid pllua Makefile
+        postFixup = ''
+          ln -s $out/bin/luajit $out/bin/luac
+        '';
+      });
+    };
   }
 //
 (
