@@ -92,5 +92,7 @@
     #frogmouth # TUI Markdown viewer
     colima # Managed K8s VM's
     graphviz-nox # Graphviz tools
+    bintools # bin tools, like nm and such for reading ELF headers
+    patchelf # Tool for displaying and modifying ELF headers
   ];
 }
