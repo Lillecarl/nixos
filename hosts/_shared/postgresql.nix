@@ -1,14 +1,25 @@
-{ config, pkgs, ... }:
+{ config
+, pkgs
+, ...
+}:
+let
+  ourPython3 = pkgs.python3.withPackages (ps: with ps; [
+    numpy
+  ]);
+in
 {
+  systemd.services.postgresql.environment.PYTHONPATH = builtins.concatStringsSep ":" [
+    "${ourPython3}/lib/${ourPython3.libPrefix}"
+    "${ourPython3}/lib/${ourPython3.libPrefix}/site-packages"
+  ];
+
   services.postgresql = {
     enable = true;
     enableTCPIP = false;
 
     package = pkgs.postgresql_16.override {
       pythonSupport = true;
-      python3 = pkgs.python3.withPackages (ps: with ps; [
-        numpy
-      ]);
+      python3 = pkgs.python3;
     };
 
     extraPlugins = with config.services.postgresql.package.pkgs; [
