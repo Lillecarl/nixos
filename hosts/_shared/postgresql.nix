@@ -39,6 +39,7 @@ in
       plpgsql_check
       plv8
       postgis
+      system_stats
       timescaledb
       timescaledb_toolkit
     ];
