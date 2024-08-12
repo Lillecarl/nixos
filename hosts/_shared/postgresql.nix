@@ -15,6 +15,9 @@
       (pkgs.pllua_jit.override {
         postgresql = config.services.postgresql.package;
       })
+      (pkgs.plprql.override {
+        postgresql = config.services.postgresql.package;
+      })
       pg_cron
       pg_ivm
       pg_safeupdate

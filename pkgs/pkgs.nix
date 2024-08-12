@@ -100,6 +100,8 @@ prev.lib.filterAttrs
         '';
       });
     };
+
+    plprql = prev.callPackage ./plprql.nix { };
   }
 //
 (
