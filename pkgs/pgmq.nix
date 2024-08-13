@@ -28,8 +28,6 @@ stdenv.mkDerivation rec {
     "DESTDIR=${placeholder "out"}"
   ];
 
-  NIX_DEBUG = "1";
-
   postInstall = ''
     # Move the redirected to proper directory.
     # There appear to be no references to the install directories
@@ -45,4 +43,8 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     autoPatchelfHook
   ];
+
+  meta = {
+    platforms = postgresql.meta.platforms;
+  };
 }

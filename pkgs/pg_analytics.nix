@@ -42,4 +42,8 @@ buildPgrxExtension rec {
     ln -s ${./${name}.lock} ./Cargo.lock
     substituteInPlace ./${name}.control --subst-var-by CARGO_VERSION ${version}
   '';
+
+  meta = {
+    platforms = postgresql.meta.platforms;
+  };
 }

@@ -31,4 +31,8 @@ buildPgrxExtension {
   postPatch = /* bash */ ''
     substituteInPlace ./${name}.control --subst-var-by CARGO_VERSION ${version}
   '';
+
+  meta = {
+    platforms = postgresql.meta.platforms;
+  };
 }

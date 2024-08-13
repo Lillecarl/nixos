@@ -48,8 +48,6 @@ stdenv.mkDerivation {
         "-llua"
       ];
 
-  NIX_DEBUG = "1";
-
   postInstall = ''
     # Move the redirected to proper directory.
     # There appear to be no references to the install directories
@@ -70,4 +68,8 @@ stdenv.mkDerivation {
   nativeBuildInputs = [
     autoPatchelfHook
   ];
+
+  meta = {
+    platforms = postgresql.meta.platforms;
+  };
 }
