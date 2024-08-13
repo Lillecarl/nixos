@@ -89,7 +89,12 @@
           size = "32G";
           content = {
             type = "swap";
+            priority = 25;
+            discardPolicy = "both";
           };
+        };
+        zram-writeback = {
+          size = "16G";
         };
       };
     };
