@@ -50,10 +50,6 @@
         enable = true;
       };
     };
-    # Enable SSD trimming
-    fstrim = {
-      enable = true;
-    };
     ntp = {
       enable = true;
       servers = [
