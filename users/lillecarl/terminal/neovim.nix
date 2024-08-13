@@ -206,7 +206,7 @@ in
                 cmd = [ (lib.getExe pkgs.nil) ];
                 settings = {
                   nil = {
-                    #formatting.command = lib.getExe pkgs.nixpkgs-fmt;
+                    formatting.command = [ lib.getExe pkgs.nixpkgs-fmt ];
                     nix = {
                       binary = lib.getExe nixosConfig.nix.package;
                       autoArchive = true;
