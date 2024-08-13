@@ -13,7 +13,6 @@
       programs.ripgrep.package
       programs.starship.package
       programs.zoxide.package
-      config.lib.hyprland
     ];
   };
 }

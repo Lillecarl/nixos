@@ -3,31 +3,12 @@ let
   # python3 packages
   python3Packages = {
     pyping = prev.python3Packages.callPackage ../pkgs/python3Packages/pyping { };
-    hyprpy = prev.python3Packages.callPackage ../pkgs/python3Packages/hyprpy { };
     qemu-qmp = prev.python3Packages.callPackage ../pkgs/python3Packages/qemu-qmp { };
   };
 
   grafanaPlugins = {
     frser-sqlite-datasource = prev.grafanaPlugins.callPackage ./grafanaPlugins/frser-sqlite-datasource { };
   };
-  mictoggle = prev.writeShellScript "mictoggle" ''
-    # Get mute status
-    source_mute=$(${prev.pulseaudio}/bin/pactl get-source-mute @DEFAULT_SOURCE@)
-
-    muted=1
-    mute=0
-    if [[ "$source_mute" == *"no"* ]]; then
-      muted=0
-      mute=1
-    fi
-    ${miconoff} $mute
-  '';
-
-  miconoff = prev.writeShellScript "miconoff" ''
-    export mute=$1
-    ${prev.pulseaudio}/bin/pactl set-source-mute @DEFAULT_SOURCE@ $mute
-    echo $mute > /sys/class/leds/platform\:\:micmute/brightness
-  '';
 in
 prev.lib.filterAttrs
   (n: v:
@@ -37,8 +18,6 @@ prev.lib.filterAttrs
     # Filter out package sets if we're called from a flake.
     (n != "python3Packages" && n != "grafanaPlugins"))
   {
-    inherit miconoff mictoggle;
-
     # Inject python3 packages
     python3Packages = python3Packages // prev.python3Packages;
     python3 = prev.python3.override {

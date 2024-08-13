@@ -6,8 +6,6 @@
 }:
 let
   cfg = config.carl.gui.waybar;
-  hyprCfg = config.carl.gui.hyprland;
-  hyprctl = "${config.lib.hyprland}/bin/hyprctl";
   sleep = "${pkgs.coreutils-full}/bin/sleep";
   swaync-client = "${pkgs.swaynotificationcenter}/bin/swayncclient";
   bluetooth = nixosConfig.hardware.bluetooth.enable or false;
@@ -44,12 +42,8 @@ in
           position = "top";
           modules-left = [
             "idle_inhibitor"
-            "hyprland/workspaces"
-            "hyprland/language"
-            "hyprland/submap"
           ];
           modules-center = [
-            "hyprland/window"
           ];
           modules-right = [
             "custom/nixos-update"
@@ -112,18 +106,6 @@ in
           tray = {
             icon-size = 24;
             spacing = 5;
-          };
-          "hyprland/language" = {
-            format = " KB: {} ";
-            format-sv = "SE";
-            format-eu = "EU";
-            keyboard-name = hyprCfg.keyboardName;
-            on-click = "${hyprctl} switchxkblayout ${hyprCfg.keyboardName} next";
-          };
-          "hyprland/submap" = {
-            format = ", {}";
-            max-length = 10;
-            tooltip = false;
           };
           "custom/nixos-update" =
             let

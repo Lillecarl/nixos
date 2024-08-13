@@ -206,10 +206,6 @@
       url = "github:catppuccin/qt5ct";
       flake = false;
     };
-    hyprscroller = {
-      url = "github:dawsers/hyprscroller";
-      flake = false;
-    };
   };
 
   outputs =
