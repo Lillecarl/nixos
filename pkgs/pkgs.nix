@@ -102,6 +102,7 @@ prev.lib.filterAttrs
     };
 
     plprql = prev.callPackage ./plprql.nix { };
+    pg_graphql = prev.callPackage ./pg_graphql.nix { };
   }
 //
 (
