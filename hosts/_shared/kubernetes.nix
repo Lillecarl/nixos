@@ -5,7 +5,7 @@
 , ...
 }:
 let
-  kubeMasterIP = (builtins.elemAt config.networking.interfaces.br13.ipv4.addresses 0).address
+  kubeMasterIP = lib.removeSuffix (lib.head config.systemd.network.networks.br13.address) "/24"
   ;
   kubeMasterHostname = "k8s.${config.networking.hostName}.lillecarl.com";
   kubeMasterAPIServerPort = 6443;
