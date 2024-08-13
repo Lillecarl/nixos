@@ -208,13 +208,6 @@
     enableRedistributableFirmware = true;
   };
 
-
-  powerManagement = {
-    enable = true;
-    powertop.enable = true;
-    cpuFreqGovernor = "schedutil";
-  };
-
   programs.seahorse.enable = true;
 
   networking = {
