@@ -4,3 +4,6 @@ sudo cryptsetup --verbose open --test-passphrase /dev/nvme0n1p3
 sudo cryptsetup luksDump /dev/nvme0n1p3
 # Add key to LUKS
 sudo cryptsetup luksAddKey /dev/nvme0n1p3 /root/luks_key --pbkdf-force-iterations=4 --pbkdf-parallel=1  --pbkdf-memory=32
+
+# TPM unlock LUKS
+sudo systemd-cryptenroll --tpm2-device auto /dev/nvme0n1p3
