@@ -35,6 +35,9 @@ in
       (pkgs.pg_jsonschema.override {
         postgresql = config.services.postgresql.package;
       })
+      (pkgs.pg_analytics.override {
+        postgresql = config.services.postgresql.package;
+      })
       pg_cron
       pg_ivm
       pg_safeupdate
