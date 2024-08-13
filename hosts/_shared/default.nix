@@ -145,7 +145,6 @@
       debootstrap # Bootstrap Debian based (deb package manager) Linux distros
 
       # Misc
-      scrcpy # Print-screen tool
       wineWowPackages.waylandFull # Win32 API compatibility layer for Linux
     ];
   };
