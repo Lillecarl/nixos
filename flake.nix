@@ -34,7 +34,6 @@
     cachix = {
       url = "github:cachix/cachix";
       inputs = {
-        pre-commit-hooks.follows = "pre-commit-hooks";
         nixpkgs.follows = "nixpkgs";
         devenv.follows = "";
       };
