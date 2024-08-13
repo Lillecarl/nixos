@@ -10,6 +10,8 @@
     nftables = {
       enable = true;
 
+      # reserved tables: filter, nixos-fw, nat (maybe more?)
+
       tables.masq = {
         family = "inet";
         content = ''
