@@ -22,7 +22,6 @@ in
             (self + "/stylix.nix")
             inputs.agenix.nixosModules.default
             inputs.disko.nixosModules.disko
-            inputs.flake-programs-sqlite.nixosModules.programs-sqlite
             inputs.niri.nixosModules.niri
             inputs.nixos-hardware.nixosModules.common-cpu-amd
             inputs.nixos-hardware.nixosModules.common-gpu-intel

@@ -175,11 +175,6 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    flake-programs-sqlite = {
-      url = "github:wamserma/flake-programs-sqlite";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.utils.follows = "flake-utils";
-    };
     mozilla-addons-to-nix = {
       url = "sourcehut:~rycee/mozilla-addons-to-nix";
       inputs = {
