@@ -1,4 +1,5 @@
-{ config
+{ lib
+, config
 , pkgs
 , ...
 }:
@@ -9,7 +10,7 @@ let
 in
 {
   systemd.services.postgresql.environment.PYTHONPATH = builtins.concatStringsSep ":" [
-    "${ourPython3}/lib/${ourPython3.libPrefix}"
+
     "${ourPython3}/lib/${ourPython3.libPrefix}/site-packages"
   ];
 
@@ -83,5 +84,60 @@ in
       "lillecarl"
       "keycloak"
     ];
+
+    authentication = ''
+      host    all             all             0.0.0.0/0               pam     pamservice=postgresql
+    '';
+  };
+
+  # Enable pgAdmin
+  services.pgadmin = {
+    enable = true;
+
+    initialEmail = "user@pgadmin.com";
+    initialPasswordFile = "${pkgs.writeText "pgadmin-password" "changeme"}";
+    openFirewall = false;
+
+    settings = {
+      #SERVER_MODE = lib.mkForce false;
+      #DATA_DIR = "/var/lib/pgadmin";
+      #LOG_FILE = "/var/log/pgadmin/pg.log";
+    };
+  };
+
+
+  # Only run pgAdmin when it's required
+  systemd = {
+    services = {
+      pgadmin = {
+        wantedBy = lib.mkForce [ ];
+        after = lib.mkForce [ ];
+        requires = lib.mkForce [ ];
+        unitConfig = {
+          StopWhenUnneeded = true;
+        };
+      };
+      proxy-to-pgadmin = {
+        requires = [ "pgadmin.service" "proxy-to-pgadmin.socket" ];
+        after = [ "pgadmin.service" "proxy-to-pgadmin.socket" ];
+
+        unitConfig = {
+          JoinsNamespaceOf = "pgadmin.service";
+        };
+
+        serviceConfig = {
+          Type = "notify";
+          ExecStart = "${config.systemd.package}/lib/systemd/systemd-socket-proxyd --exit-idle-time=1h 127.0.0.1:5050";
+          PrivateTmp = true;
+          PrivateNetwork = true;
+        };
+      };
+    };
+    sockets = {
+      proxy-to-pgadmin = {
+        wantedBy = [ "sockets.target" ];
+        listenStreams = [ "127.0.0.1:5051" ];
+      };
+    };
   };
 }
