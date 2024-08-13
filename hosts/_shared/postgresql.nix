@@ -9,11 +9,6 @@ let
   ]);
 in
 {
-  systemd.services.postgresql.environment.PYTHONPATH = builtins.concatStringsSep ":" [
-
-    "${ourPython3}/lib/${ourPython3.libPrefix}/site-packages"
-  ];
-
   services.postgresql = {
     enable = true;
     enableTCPIP = false;
@@ -106,9 +101,15 @@ in
   };
 
 
-  # Only run pgAdmin when it's required
   systemd = {
     services = {
+      # Add python packaes to postgres through PYTHONPATH
+      postgresql.environment.PYTHONPATH = builtins.concatStringsSep ":" [
+        "${ourPython3}/lib/${ourPython3.libPrefix}"
+        "${ourPython3}/lib/${ourPython3.libPrefix}/site-packages"
+      ];
+
+      # Only run pgAdmin when it's required
       pgadmin = {
         wantedBy = lib.mkForce [ ];
         after = lib.mkForce [ ];
