@@ -102,6 +102,7 @@ prev.lib.filterAttrs
     };
 
     plprql = prev.callPackage ./plprql.nix { };
+    pgmq = prev.callPackage ./pgmq.nix { };
     pg_graphql = prev.callPackage ./pg_graphql.nix { };
     pg_jsonschema = prev.callPackage ./pg_jsonschema.nix { };
     pg_analytics = prev.callPackage ./pg_analytics.nix { };

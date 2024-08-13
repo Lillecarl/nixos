@@ -38,6 +38,9 @@ in
       (pkgs.pg_analytics.override {
         postgresql = config.services.postgresql.package;
       })
+      (pkgs.pgmq.override {
+        postgresql = config.services.postgresql.package;
+      })
       pg_cron
       pg_ivm
       pg_safeupdate
