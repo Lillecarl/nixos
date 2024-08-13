@@ -5,8 +5,7 @@
 {
   services.udev.extraHwdb = ''
     # thinkpad_acpi driver
-    evdev:name:ThinkPad Extra Buttons:dmi:bvn*:bvr*:bd*:svnLENOVO*:pn*:*
-     KEYBOARD_KEY_1a=micmute
+    evdev:name:ThinkPad Extra Buttons:dmi:bvn*:bvr*:bd*:svnLENOVO*:pn*:* KEYBOARD_KEY_1a=micmute
   '';
 
   services.xserver.xkb.extraLayouts.lenovo = {
@@ -24,6 +23,12 @@
     '';
   };
 
+  services.system76-scheduler = {
+    enable = true;
+  };
+  hardware.system76.power-daemon = {
+    enable = true;
+  };
 
   boot = {
     initrd = {
@@ -45,14 +50,15 @@
     extraModulePackages = [ ];
     extraModprobeConfig = ''
       options kvm_amd nested=1
-      options thinkpad_acpi experimental=1 fan_control=1
+      #options thinkpad_acpi experimental=1 fan_control=1
     '';
     kernelParams = [
       "iommu=soft"
       # Exposes all the available tunables to userspace as r/w rather than r/o.
       # https://community.frame.work/t/tracking-ppd-v-tlp-for-amd-ryzen-7040/39423/29
-      "amdgpu.ppfeaturemask=0xffffffff"
-      #"amd_pstate=active"
+      #"amdgpu.ppfeaturemask=0xffffffff"
+      "amd_pstate=guided"
+      "kernel.nmi_watchdog=0"
       #"amdgpu.ppfeaturemask=0xffffffff"
       #"amdgpu.sg_display=0"
       #"cpufreq.default_governor=powersave"
