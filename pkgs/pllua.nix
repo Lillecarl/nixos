@@ -1,20 +1,21 @@
-{ lib
-, stdenv
+{ stdenv
 , fetchFromGitHub
 , autoPatchelfHook
 , postgresql
 , lua ? throw "lua is required"
 }:
 let
+  name = "pllua";
+  version = "REL_2_0_12";
   jit = lua.pname == "luajit";
 in
 stdenv.mkDerivation {
-  name = "pllua";
+  inherit name;
 
   src = fetchFromGitHub {
-    owner = "pllua";
-    repo = "pllua";
-    rev = "f1d32581014a6e4e532a63d1c1ca79dddfa25336";
+    owner = name;
+    repo = name;
+    rev = version;
     sha256 = "sha256-xzfuSTzobNT3q4HlJXov1v9OgF8uzaxVFsvl5xBxoEI=";
   };
 
@@ -56,14 +57,6 @@ stdenv.mkDerivation {
     mv "$out/nix/store"/*/* "$out"
     rmdir "$out/nix/store"/* "$out/nix/store" "$out/nix"
   '';
-
-  #postFixup = ''
-  #  # Patch elf, add lua rpath and needed.
-  #  patchelf \
-  #    --add-rpath ${lua}/lib/liblua.so \
-  #    --add-needed ${lua}/lib/liblua.so \
-  #    $out/lib/pllua.so
-  #'';
 
   propagatedBuildInputs = [
     lua

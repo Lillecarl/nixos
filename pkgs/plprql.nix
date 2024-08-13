@@ -4,21 +4,21 @@
 , postgresql
 }:
 let
+  name = "plprql";
+  version = "1.0.0";
   src = fetchFromGitHub {
     owner = "kaspermarstal";
-    repo = "plprql";
-    rev = "v1.0.0";
+    repo = name;
+    rev = "v${version}";
     sha256 = "sha256-2huSmh1PPJt9wwM1ZmsKjh6XC/bIoJy1fFn55x4ukds=";
   };
 in
 buildPgrxExtension {
-  inherit postgresql;
+  inherit postgresql src version;
 
-  pname = "plprql";
-  buildAndTestSubdir = "plprql";
-  version = "1.0.0";
+  pname = name;
+  buildAndTestSubdir = name;
 
-  inherit src;
 
   nativeBuildInputs = [ pkg-config ];
 
@@ -30,6 +30,6 @@ buildPgrxExtension {
   };
 
   postPatch = ''
-    substituteInPlace ./plprql/plprql.control --subst-var-by CARGO_VERSION 1.0.0
+    substituteInPlace ./${name}/${name}.control --subst-var-by CARGO_VERSION ${version}
   '';
 }
