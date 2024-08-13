@@ -34,6 +34,10 @@ buildPgrxExtension rec {
     };
   };
 
+  passthru = {
+    shared_preload_library = "pg_analytics";
+  };
+
   postPatch = /* bash */ ''
     ln -s ${./${name}.lock} ./Cargo.lock
     substituteInPlace ./${name}.control --subst-var-by CARGO_VERSION ${version}

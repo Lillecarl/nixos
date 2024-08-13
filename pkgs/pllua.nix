@@ -58,6 +58,10 @@ stdenv.mkDerivation {
     rmdir "$out/nix/store"/* "$out/nix/store" "$out/nix"
   '';
 
+  passthru = {
+    shared_preload_library = "pllua";
+  };
+
   propagatedBuildInputs = [
     lua
     postgresql
