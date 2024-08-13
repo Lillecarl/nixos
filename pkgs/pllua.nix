@@ -16,7 +16,7 @@ stdenv.mkDerivation {
     owner = name;
     repo = name;
     rev = version;
-    sha256 = "sha256-xzfuSTzobNT3q4HlJXov1v9OgF8uzaxVFsvl5xBxoEI=";
+    sha256 = "sha256-6GDTnS0aj23irITDrR4ykMpR5ATTbe7YCc8f/KzLagI=";
   };
 
   makeFlags = [
