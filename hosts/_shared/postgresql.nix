@@ -15,7 +15,7 @@ in
 
     package = pkgs.postgresql_16.override {
       pythonSupport = true;
-      python3 = pkgs.python3;
+      inherit (pkgs) python3;
     };
 
     extraPlugins = with config.services.postgresql.package.pkgs; [

@@ -11,7 +11,7 @@
       buildGoModule = args: pkgs.buildGoModule (args // {
         version = inputs.carapace.shortRev;
         src = inputs.carapace;
-        vendorHash = "sha256-52b/Su3xDd51KsGsu7med6+iYFCVN8ihAhUHUVkaCRY=";
+        vendorHash = "sha256-+Y1njjula1LDpImjfj7OMHKjHt8YS2/j+/2lfhc+hEU=";
       });
     };
 

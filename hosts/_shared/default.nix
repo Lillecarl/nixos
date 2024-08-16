@@ -57,7 +57,6 @@
       nmap # Network scanner
       execline # Tools for dbus n stuff
       handlr # xdg-open alternative
-      distrobuilder # Build other distros
       asciinema # Terminal session recorder
       wireguard-tools # Wireguard tools
       pmutils # Suspend tools
@@ -75,7 +74,6 @@
       libnotify # Cli utils for sending KDE notifications
       vim # Modal CLI text editor
       neovim # Modal CLI text editor, modern version of Vim
-      amp # Modal CLI text editor, modern, rust
       lsof # Check who uses file
       wget # Fetch things quickly with HTTP
       gnufdisk # CLI partition management (MBR)
@@ -94,14 +92,9 @@
       nix-update # Tool to help updating nix packages
       nix-prefetch # nix prefetcher
       nix-prefetch-github # fetch nix package from github
-      comma # Run stuff without installing it
-      lorri # nix-shell alternative
       pijul # Patch based git alternative (Similar to darcs but written in rust)
-      lazygit # Git TUI, golang
       gitui # Git TUI, rust
-      overcommit # Git hooks manager
       wl-clipboard # Wayland clipboard manipulation
-      ansible # Server automation tool
       iftop # Show interface throughput and which IP's
       smartmontools # Read SSD SMART information
       glances # Fancy system monitoring TUI

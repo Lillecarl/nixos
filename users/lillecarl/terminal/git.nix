@@ -10,7 +10,6 @@
     userEmail = "git@hjerpe.xyz";
 
     lfs.enable = true;
-    delta.enable = true;
 
     signing = {
       key = "3916387439FCDA33";

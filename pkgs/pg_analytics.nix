@@ -44,6 +44,6 @@ buildPgrxExtension rec {
   '';
 
   meta = {
-    platforms = postgresql.meta.platforms;
+    inherit (postgresql.meta) platforms;
   };
 }

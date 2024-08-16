@@ -1,6 +1,8 @@
-_:
+{ pkgs
+, ...
+}:
 {
   services.guix = {
-    enable = true;
+    enable = false;
   };
 }

@@ -8,7 +8,6 @@
     #inputs.mozilla-addons-to-nix.packages.x86_64-linux.default
     #inputs.system-manager.packages.x86_64-linux.system-manager
     inputs.agenix.packages.${pkgs.system}.default
-    nix-melt # nix flake viewer
     mimeo # Open files with the right program
     (lowPrio kubectl) # Kubernetes management cli
     gdb # GNU debugger
@@ -17,14 +16,12 @@
     age # Modern crypto written in Go
     ansible-lint # Ansible linting software
     aws-vault # AWS Vault CLI (Used for MFA auth?)
-    awscli2 # AWS cli tool
     broot # A new way to see and navigate directory trees
     choose # A human-friendly and fast alternative to cut and (sometimes) awk
     cmatrix # Cool matrix style scrolling, really cpu intense
     cmctl # cert-manager CLI
     colmena # Stateless Nix deploy tool
     cowsay # Make a cow say shit
-    delta # Diffing software
     direnv # Do stuff on cd.
     du-dust # A more intuitive version of du written in rust.
     duf # A better df alternative
