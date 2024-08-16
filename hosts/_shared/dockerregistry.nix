@@ -30,6 +30,6 @@ in
   };
   # Add domain to hosts
   networking.hosts = {
-    "10.13.37.1" = [ domain ];
+    ${config.lib.lobr.ip} = [ domain ];
   };
 }

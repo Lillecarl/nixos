@@ -10,7 +10,7 @@ _:
 
         interfaces-config = {
           interfaces = [
-            "br13"
+            config.lib.lobr.name
           ];
         };
 
@@ -21,30 +21,25 @@ _:
         };
 
         subnet4 = [
-          (
-            let
-              subPref = "10.13.37.";
-            in
-            {
-              id = 1;
-              subnet = "${subPref}0/24";
-              pools = [
-                {
-                  pool = "${subPref}10 - ${subPref}250";
-                  option-data = [
-                    {
-                      name = "routers";
-                      data = "${subPref}1";
-                    }
-                    {
-                      name = "domain-name-servers";
-                      data = "1.1.1.1, 1.0.0.1";
-                    }
-                  ];
-                }
-              ];
-            }
-          )
+          {
+            id = 1;
+            subnet = "${config.lib.lobr.network}/${config.lib.lobr.mask}";
+            pools = [
+              {
+                pool = "${config.lib.lobr.first24}.10 - ${config.lib.lobr.first24}.250";
+                option-data = [
+                  {
+                    name = "routers";
+                    data = "${config.lib.lobr.first24}.1";
+                  }
+                  {
+                    name = "domain-name-servers";
+                    data = "1.1.1.1, 1.0.0.1";
+                  }
+                ];
+              }
+            ];
+          }
         ];
       };
     };

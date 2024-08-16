@@ -3,6 +3,15 @@
 , ...
 }:
 {
+  lib = {
+    lobr = rec {
+      first24 = "10.13.37";
+      ip = "${first24}.1";
+      network = "${first24}.0";
+      mask = "24";
+      name = "br13";
+    };
+  };
   # Disable systemd-networkd-wait-online, we just want a bridge to add VM's to.
   systemd.services.systemd-networkd-wait-online.enable = lib.mkForce false;
 
@@ -17,8 +26,8 @@
         content = ''
           chain nat {
             type nat hook postrouting priority mangle;
-            ip saddr == 10.13.37.0/24 ip daddr != 10.13.37.0/24 masquerade comment "Masquerade VM traffic"
-            iifname == br13 oifname != br13 masquerade comment "Masquerade VM traffic"
+            ip saddr == ${config.lib.lobr.network}/${config.lib.lobr.mask} ip daddr != ${config.lib.lobr.network}/${config.lib.lobr.mask} masquerade comment "Masquerade VM traffic"
+            iifname == ${config.lib.lobr.name} oifname != ${config.lib.lobr.name} masquerade comment "Masquerade VM traffic"
           }
         '';
       };
@@ -47,9 +56,9 @@
         };
       };
 
-      br13 = {
+      ${config.lib.lobr.name} = {
         netdevConfig = {
-          Name = "br13";
+          Name = config.lib.lobr.name;
           Kind = "bridge";
         };
       };
@@ -63,14 +72,14 @@
         # Bridge(s) to add this interface to.
         # br13 is our bridge for VM's
         bridge = [
-          config.systemd.network.netdevs.br13.netdevConfig.Name
+          config.systemd.network.netdevs.${config.lib.lobr.name}.netdevConfig.Name
         ];
       };
 
       br13 = {
-        matchConfig.Name = config.systemd.network.netdevs.br13.netdevConfig.Name;
-        name = "br13";
-        address = [ "10.13.37.1/24" ];
+        matchConfig.Name = config.systemd.network.netdevs.${config.lib.lobr.name}.netdevConfig.Name;
+        name = config.lib.lobr.name;
+        address = [ "${config.lib.lobr.ip}/${config.lib.lobr.mask}" ];
       };
     };
   };
