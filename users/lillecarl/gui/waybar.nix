@@ -33,7 +33,7 @@ in
 
       systemd = {
         enable = true;
-        target = "hyprland-session.target";
+        target = "wayland.target";
       };
 
       settings = {

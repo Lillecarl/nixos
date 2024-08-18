@@ -8,6 +8,15 @@
     inputs.niri.homeModules.niri
   ];
 
+  systemd.user.targets = {
+    wayland = {
+      Unit = {
+        Description = "Target reached when Wayland compositor is running";
+        Requires = [ "graphical-session-pre.target" ];
+      };
+    };
+  };
+
   programs.niri = {
     enable = true;
 
@@ -15,7 +24,7 @@
 
     settings = {
       spawn-at-startup = [
-        { command = [ "systemctl" "--user" "restart" "hyprland-session.target" ]; }
+        { command = [ "systemctl" "--user" "restart" "wayland.target" ]; }
       ];
       input = {
         warp-mouse-to-focus = true;

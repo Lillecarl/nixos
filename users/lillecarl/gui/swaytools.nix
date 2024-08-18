@@ -12,7 +12,7 @@ let
     ${lib.getExe pkgs.swaylock}
     ${config.programs.rbw.package}/bin/rbw unlock
   '');
-  systemdTarget = "hyprland-session.target";
+  systemdTarget = "wayland.target";
 in
 {
   options.carl.gui.swaytools = with lib; {
