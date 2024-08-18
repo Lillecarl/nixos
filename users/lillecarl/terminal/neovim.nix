@@ -145,7 +145,21 @@ in
       tiktoken_core
     ];
 
-    extraLuaConfig = "require('init').setup({})";
+    extraLuaConfig = let
+      config = {
+      ui = {
+        # For Neovide
+        font = {
+          inherit (fonts.monospace) name;
+          size = fonts.sizes.terminal;
+        };
+      };
+      };
+    in
+    ''
+
+      require('init').setup(${lib.generators.toLua {} config})
+    '';
   };
 
   lib.nvimpager = pkgs.nvimpager.overrideAttrs (oldAttrs: {

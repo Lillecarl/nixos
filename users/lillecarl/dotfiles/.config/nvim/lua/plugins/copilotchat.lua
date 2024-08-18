@@ -5,7 +5,6 @@ function M.setup(config)
     show_help = "yes", -- Show help text for CopilotChatInPlace, default: yes
     debug = false, -- Enable or disable debug mode, the log file will be in ~/.local/state/nvim/CopilotChat.nvim.log
     disable_extra_info = "no", -- Disable extra information (e.g: system prompt) in the response.
-    python_path = config["tools"]["paths"]["copilotchatPython"]
   })
 
   --" python3 plugins

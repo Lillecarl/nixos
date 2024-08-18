@@ -3,7 +3,6 @@ local M = {}
 function M.setup(config)
   local conform = require("conform")
   local formatters_by_ft = conform.formatters_by_ft
-  local nixFormatters = config["fmt"]
 
   conform.setup({
     lsp_fallback = true,
@@ -11,15 +10,6 @@ function M.setup(config)
     notify_on_error = true,
   })
 
-  for key, value in pairs(nixFormatters) do
-    local status, result = pcall(require, "conform.formatters." .. key)
-    if not status then
-      result = require("conform").formatters[key]
-    end
-    require("conform").formatters[key] = vim.tbl_deep_extend("force", result or {}, value)
-  end
-
-  --formatters_by_ft.yaml = { "yamlfmt" }
   formatters_by_ft.bash = { "shellcheck" }
   formatters_by_ft.fish = { "fish_indent" }
   formatters_by_ft.go = { "gofmt", "goimports", "golines" }

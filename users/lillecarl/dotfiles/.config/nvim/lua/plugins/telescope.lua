@@ -108,7 +108,7 @@ function M.setup(config)
       default_mappings = ts_mappings,
 
       vimgrep_arguments = {
-        config["tools"]["paths"]["ripgrep"],
+        "ripgrep",
         "--vimgrep",
         "--follow",
         "--hidden",
@@ -124,7 +124,7 @@ function M.setup(config)
     pickers = {
       find_files = {
         find_command = {
-          config["tools"]["paths"]["ripgrep"],
+          "ripgrep",
           "--follow",
           "--hidden",
           "--ignore",
