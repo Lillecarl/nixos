@@ -23,7 +23,6 @@ in
       GIT_COMMITTER_EMAIL = GIT_AUTHOR_EMAIL;
       EMAIL = GIT_AUTHOR_EMAIL;
       NIXPKGS_ALLOW_UNFREE = 1;
-      NIX_AUTO_RUN = 1;
     };
   };
 }
