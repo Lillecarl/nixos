@@ -145,18 +145,19 @@ in
       tiktoken_core
     ];
 
-    extraLuaConfig = let
-      config = {
-      ui = {
-        # For Neovide
-        font = {
-          inherit (fonts.monospace) name;
-          size = fonts.sizes.terminal;
+    extraLuaConfig =
+      let
+        config = {
+          ui = {
+            # For Neovide
+            font = {
+              inherit (fonts.monospace) name;
+              size = fonts.sizes.terminal;
+            };
+          };
         };
-      };
-      };
-    in
-    ''
+      in
+      ''
 
       require('init').setup(${lib.generators.toLua {} config})
     '';

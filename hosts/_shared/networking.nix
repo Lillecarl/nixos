@@ -78,7 +78,7 @@
 
       br13 = {
         matchConfig.Name = config.systemd.network.netdevs.${config.lib.lobr.name}.netdevConfig.Name;
-        name = config.lib.lobr.name;
+        inherit (config.lib.lobr) name;
         address = [ "${config.lib.lobr.ip}/${config.lib.lobr.mask}" ];
       };
     };

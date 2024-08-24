@@ -132,11 +132,6 @@
       inputs.flake-utils.follows = "flake-utils";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nix-vscode-extensions = {
-      url = "github:nix-community/nix-vscode-extensions";
-      inputs.flake-utils.follows = "flake-utils";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     nix-eval-jobs = {
       url = "github:nix-community/nix-eval-jobs/main";
       inputs.flake-parts.follows = "flake-parts";
@@ -225,7 +220,6 @@
         overlays = [
           (import ./lib/overlay.nix self.outPath)
           (import ./pkgs)
-          inputs.nix-vscode-extensions.overlays.default
           inputs.nur.overlay
           inputs.nix-snapshotter.overlays.default
         ];

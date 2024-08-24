@@ -51,7 +51,6 @@ in
 
       timeouts = [
         { timeout = 300; command = lockScript; }
-        { timeout = 600; command = "${pkgs.hyprland}/bin/hyprctl dispatch dpms off"; }
       ];
     };
 
