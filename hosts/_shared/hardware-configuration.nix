@@ -6,6 +6,7 @@
   boot = {
     kernelParams = [
       "delayacct"
+      "psi=1"
     ];
 
     kernel.sysctl = {
