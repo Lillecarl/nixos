@@ -37,6 +37,10 @@ in
       (pkgs.pgmq.override {
         postgresql = config.services.postgresql.package;
       })
+      (postgis.overrideAttrs (oldAttrs: {
+        doCheck = false; # postgis tests take ages
+        doInstallCheck = false;
+      }))
       pg_cron
       pg_ivm
       pg_safeupdate
@@ -46,7 +50,6 @@ in
       pgsql-http
       plpgsql_check
       plv8
-      postgis
       system_stats
       timescaledb
       timescaledb_toolkit
