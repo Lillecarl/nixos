@@ -12,6 +12,7 @@
     nix-flatpak.url = "github:gmodena/nix-flatpak";
     get-flake.url = "github:ursi/get-flake";
     catppuccin-nix.url = "github:catppuccin/nix";
+    crane.url = "github:ipetkov/crane";
 
     noshell = {
       url = "github:viperML/noshell";
@@ -110,10 +111,6 @@
     flake-utils = {
       url = "github:numtide/flake-utils";
       inputs.systems.follows = "nix-systems";
-    };
-    crane = {
-      url = "github:ipetkov/crane";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
