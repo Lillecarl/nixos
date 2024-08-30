@@ -1,4 +1,4 @@
-{ ... }:
+_:
 {
   # How to Google apps:
   # 1. Start Waydroid
