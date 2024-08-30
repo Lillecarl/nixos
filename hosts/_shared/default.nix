@@ -54,6 +54,7 @@
       home-manager # Tool to build your home environment in a reproducible fashion, anywhere with Nix!
       rmtrash # rm compatible remove tool
       inetutils # Common internet utilities
+      tcpdump # Network packet analyzer / cap tool
       nmap # Network scanner
       execline # Tools for dbus n stuff
       handlr # xdg-open alternative
@@ -61,6 +62,7 @@
       wireguard-tools # Wireguard tools
       pmutils # Suspend tools
       inotify-tools # CLI tools for inotify in Linux
+      inotify-info # inotify troubleshooter helper
       sshfs # Mount SFTP as filesystem
       rclone # rsync for clouds (+ loads of other cool things)
       gnumake # make
