@@ -1,4 +1,5 @@
 { pkgs
+, config
 , ...
 }:
 let
@@ -6,7 +7,6 @@ let
 in
 {
   users = {
-    defaultUserShell = pkgs.fish;
     enforceIdUniqueness = true;
     mutableUsers = false;
 
@@ -58,7 +58,7 @@ in
           ];
         };
 
-        lillecarl = carl_base firstUid pkgs.fish;
+        lillecarl = carl_base firstUid config.programs.noshell.package;
         bash = carl_base (firstUid + 1) pkgs.bash;
         qemu-libvirtd.extraGroups = [ "qemu-libvirt" "kvm" "input" "uinput" ];
       };
@@ -67,4 +67,3 @@ in
     };
   };
 }
-
