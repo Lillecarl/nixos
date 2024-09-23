@@ -140,5 +140,12 @@ in
         };
       };
     };
+
+    systemd.user.services.waybar = {
+      Service = {
+        RestartSec = "1s";
+        Restart = "on-failure";
+      };
+    };
   };
 }
