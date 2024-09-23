@@ -19,7 +19,7 @@
       ];
       input = {
         warp-mouse-to-focus = true;
-        focus-follows-mouse.enable = true;
+        focus-follows-mouse.enable = false;
 
         keyboard.xkb.layout = "eu,se";
         touchpad = {
