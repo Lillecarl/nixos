@@ -91,6 +91,10 @@ in
   # Enable pgAdmin
   services.pgadmin = {
     enable = true;
+    package = pkgs.pgadmin.overrideAttrs (oldAttrs: {
+      doCheck = false;
+      doInstallCheck = false;
+    });
 
     initialEmail = "user@pgadmin.com";
     initialPasswordFile = "${pkgs.writeText "pgadmin-password" "changeme"}";
