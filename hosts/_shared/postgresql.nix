@@ -51,8 +51,8 @@ in
       plpgsql_check
       plv8
       system_stats
-      timescaledb
-      timescaledb_toolkit
+      #timescaledb
+      #timescaledb_toolkit
     ];
 
     settings = {
