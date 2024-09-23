@@ -1,4 +1,6 @@
-{ inputs
+{ pkgs
+, lib
+, inputs
 , config
 , nixosConfig
 , ...
@@ -15,7 +17,7 @@
 
     settings = {
       spawn-at-startup = [
-        { command = [ "systemctl" "--user" "restart" "niri-session.target" ]; }
+        { command = [ "systemctl" "--user" "start" "${config.systemd.user.targets.niri-session.Unit.X-Name}" ]; }
       ];
       input = {
         warp-mouse-to-focus = true;
@@ -252,8 +254,10 @@
   systemd.user.targets = {
     niri-session = {
       Unit = {
-        Description = "Target reached when Wayland compositor is running";
+        X-Name = "niri-session.target";
+        Description = "Target reached when niri Wayland compositor is running";
 
+        # The following is copied from $nirisrc/resources/niri.service
         BindsTo = [ "graphical-session.target" ];
         Before = [ "graphical-session.target" "xdg-desktop-autostart.target" ];
         Wants = [ "graphical-session-pre.target" "xdg-desktop-autostart.target" ];
