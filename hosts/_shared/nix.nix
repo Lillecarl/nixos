@@ -21,7 +21,11 @@
       keep-going = true;
       warn-dirty = false;
 
-      system-features = [ "uid-range" ];
+      system-features = [
+        "kvm"
+        "recursive-nix"
+        "uid-range"
+      ];
 
       experimental-features = [
         "auto-allocate-uids"
