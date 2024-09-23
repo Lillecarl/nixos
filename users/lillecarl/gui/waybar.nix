@@ -33,7 +33,7 @@ in
 
       systemd = {
         enable = true;
-        target = "wayland.target";
+        target = "graphical-session.target";
       };
 
       settings = {
