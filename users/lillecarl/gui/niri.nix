@@ -15,7 +15,7 @@
 
     settings = {
       spawn-at-startup = [
-        { command = [ "systemctl" "--user" "restart" "graphical-session.target" ]; }
+        { command = [ "systemctl" "--user" "restart" "niri-session.target" ]; }
       ];
       input = {
         warp-mouse-to-focus = true;
@@ -245,6 +245,19 @@
 
         "Mod+Shift+E".action.quit = [ ];
         "Mod+Shift+P".action.power-off-monitors = [ ];
+      };
+    };
+  };
+
+  systemd.user.targets = {
+    niri-session = {
+      Unit = {
+        Description = "Target reached when Wayland compositor is running";
+
+        BindsTo = [ "graphical-session.target" ];
+        Before = [ "graphical-session.target" "xdg-desktop-autostart.target" ];
+        Wants = [ "graphical-session-pre.target" "xdg-desktop-autostart.target" ];
+        After = [ "graphical-session-pre.target" ];
       };
     };
   };
