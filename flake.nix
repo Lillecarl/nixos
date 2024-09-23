@@ -214,6 +214,9 @@
       pkgsSettings = system: {
         inherit system;
         config.allowUnfree = true;
+        config.permittedInsecurePackages = [
+          "nix-2.24.5"
+        ];
         overlays = [
           (import ./lib/overlay.nix self.outPath)
           (import ./pkgs)
