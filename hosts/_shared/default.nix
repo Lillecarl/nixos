@@ -138,6 +138,7 @@
       # System tools
       hardinfo # Hardware information
       debootstrap # Bootstrap Debian based (deb package manager) Linux distros
+      libhugetlbfs # Huge pages tooling
 
       # Misc
       wineWowPackages.waylandFull # Win32 API compatibility layer for Linux
