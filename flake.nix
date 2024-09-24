@@ -5,7 +5,7 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     nixpkgs-lib.url = "github:NixOS/nixpkgs/nixos-unstable?dir=lib";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    #nixpkgs.url = "/home/lillecarl/Code/carl/nixpkgs";
+    #nixpkgs.url = "/home/lillecarl/Code/nixpkgs";
     nixpkgs-master.url = "github:NixOS/nixpkgs/master";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-23.11";
     nur.url = "github:nix-community/NUR";
@@ -14,6 +14,11 @@
     catppuccin-nix.url = "github:catppuccin/nix";
     crane.url = "github:ipetkov/crane";
 
+    nixvirt = {
+      url = "github:AshleyYakeley/NixVirt";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs-ovmf.follows = "nixpkgs";
+    };
     noshell = {
       url = "github:viperML/noshell";
       inputs.nixpkgs.follows = "nixpkgs";

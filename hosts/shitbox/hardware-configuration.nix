@@ -37,7 +37,6 @@
     kernelParams = [
       "acpi_enforce_resources=lax"
       "amd_iommu=on"
-      "hugepages=8192"
       "iommu=pt"
       "kvm.ignore_msrs=1"
       "mitigations=off"
@@ -72,11 +71,6 @@
           }
         ];
       };
-    };
-
-    kernel.sysctl = {
-      "vm.hugetlb_shm_group" = 0;
-      "kernel.shmmax" = 17179869184;
     };
   };
 

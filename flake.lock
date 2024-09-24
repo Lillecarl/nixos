@@ -1268,6 +1268,29 @@
         "type": "github"
       }
     },
+    "nixvirt": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "nixpkgs-ovmf": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1726943089,
+        "narHash": "sha256-6PUMdsh4FRvOVgPCkfT8cjcmCSvf61fVJFeH8oad90c=",
+        "owner": "AshleyYakeley",
+        "repo": "NixVirt",
+        "rev": "926320fd53fe3db2ea618ede5b6e82f715c750e6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "AshleyYakeley",
+        "repo": "NixVirt",
+        "type": "github"
+      }
+    },
     "noshell": {
       "inputs": {
         "nixpkgs": [
@@ -1409,6 +1432,7 @@
         "nixpkgs-stable": "nixpkgs-stable_2",
         "nixpkgs-wayland": "nixpkgs-wayland",
         "nixvim": "nixvim",
+        "nixvirt": "nixvirt",
         "noshell": "noshell",
         "nur": "nur",
         "nypkgs": "nypkgs",
