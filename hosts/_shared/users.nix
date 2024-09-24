@@ -15,6 +15,7 @@ in
         carl_base = uid: shell:
           {
             inherit uid shell;
+            linger = true;
             hashedPassword = "$y$j9T$U4zBBS9RMV9YMttHauO8k0$V.KT/P/AdBTXXT8f6p9EIlCsZV5UnaPDgEVtUvUJU3C";
             createHome = true;
             isNormalUser = true;
