@@ -26,15 +26,20 @@
             exit 0
           end
 
+          # Prepare runs before the VM starts
+          # Prepare kernel memory for win11-4 hugepages
           if test $argv[2] = "prepare"
             # Clear memory before starting win11-4
             echo 3 > /proc/sys/vm/drop_caches
             echo 1 > /proc/sys/vm/compact_memory
-            sleep 1 # To let the memory be compacted(?)
+
+            # Allocate 2M hugepages for win11-4
             virsh allocpages 2M 8192 || begin
               echo "Failed to allocate hugepages for win11-4"
               exit 1
             end
+          # Release runs after the VM stops and resources are cleared
+          # Release hugepages back to the system
           else if test $argv[2] = "release"
             virsh allocpages 2M 0
           end
