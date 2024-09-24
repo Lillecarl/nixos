@@ -67,4 +67,10 @@ in
       uaccess = { };
     };
   };
+
+  environment = {
+    homeBinInPath = true;
+    localBinInPath = true;
+  };
 }
+
