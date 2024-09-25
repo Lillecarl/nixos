@@ -4,9 +4,9 @@ let
     uuid = "c3d5b031-1166-46c0-b86e-ec9f09bb550b";
     name = "win11-4";
     memory = 14336; # 14GiB
-    vcpu = 10; # 10 out of 12 cores on shitbox
     threads = 2; # Better scheduling maybe?
     userUID = config.users.users.lillecarl.uid;
+    inherit lib pkgs;
   };
   gamingvmxml = pkgs.writeText "gamingvm.xml" (import "${self}/resources/gamingvm.xml.nix" gamingvm);
 in
@@ -34,7 +34,7 @@ in
       hooks.qemu =
         let
           hugepages = builtins.ceil (builtins.div gamingvm.memory 2);
-          hugepagesWithOverhead = hugepages + 64; # 128MiB extra
+          hugepagesWithOverhead = hugepages + 64; # 128MiB extra (64 pages) for eventual overhead
         in
         {
           ${gamingvm.name} = pkgs.writeScript "${gamingvm.name}-hook" /* fish */ ''
@@ -70,11 +70,23 @@ in
             else if test $event = "started"
               # Renice VM to -1
               renice -1 -g $vmpgid
+              # Only schedule Linux stuff on CPU 6 and 11 (the 6th physical core)
+              systemctl set-property --runtime -- init.scope AllowedCPUs=6,11
+              systemctl set-property --runtime -- kubepods.scope AllowedCPUs=6,11
+              systemctl set-property --runtime -- kubernetes.scope AllowedCPUs=6,11
+              systemctl set-property --runtime -- system.slice AllowedCPUs=6,11
+              systemctl set-property --runtime -- user.slice AllowedCPUs=6,11
             else if test $event = "release"
               # Release hugepages back to the system
 
               set reason $argv[4] # shutoff-reason is passed as fourth argument
               virsh allocpages 2M 0
+              # Reset scheduling back to use the entire CPU
+              systemctl set-property --runtime -- init.scope AllowedCPUs=0-11
+              systemctl set-property --runtime -- kubepods.scope AllowedCPUs=0-11
+              systemctl set-property --runtime -- kubernetes.scope AllowedCPUs=0-11
+              systemctl set-property --runtime -- system.slice AllowedCPUs=0-11
+              systemctl set-property --runtime -- user.slice AllowedCPUs=0-11
             end
           '';
         };

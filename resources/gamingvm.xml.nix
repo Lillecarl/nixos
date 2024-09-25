@@ -1,8 +1,6 @@
 { uuid
 , name
 , memory
-, vcpu
-, threads ? 1
 , userUID
 , pkgs
 , ...
@@ -34,7 +32,31 @@ in
       <access mode='shared'/>
       <discard/>
     </memoryBacking>
-    <vcpu placement='auto'>${toString vcpu}</vcpu>
+    <iothreads>2</iothreads>
+    <vcpu placement='static'>10</vcpu>
+    <cpu mode='host-passthrough' check='none' migratable='off'>
+      <topology sockets='1' dies='1' clusters='1' cores='5' threads='2'/>
+      <!-- Enable SMT in the guest, disabled by default since timing attacks became a thing -->
+      <feature policy='require' name='topoext'/>
+    </cpu>
+    <cputune>
+      <!-- Pin QEMU threads to cores not passed to guest -->
+      <emulatorpin cpuset='6-11'/>
+      <iothreadpin iothread='1' cpuset='6-11'/>
+      <iothreadpin iothread='2' cpuset='6-11'/>
+      <!-- Pin CPU's by their SMT topology -->
+      <vcpupin vcpu='0' cpuset='0'/>
+      <vcpupin vcpu='1' cpuset='6'/>
+      <vcpupin vcpu='2' cpuset='1'/>
+      <vcpupin vcpu='3' cpuset='7'/>
+      <vcpupin vcpu='4' cpuset='2'/>
+      <vcpupin vcpu='5' cpuset='8'/>
+      <vcpupin vcpu='6' cpuset='3'/>
+      <vcpupin vcpu='7' cpuset='9'/>
+      <vcpupin vcpu='8' cpuset='4'/>
+      <vcpupin vcpu='9' cpuset='10'/>
+      <vcpupin vcpu='10' cpuset='5'/>
+    </cputune>
     <os>
       <type arch='x86_64' machine='pc-q35-9.0'>hvm</type>
       <loader readonly='yes' type='pflash'>${pkgs.OVMFFull.fd}/FV/OVMF_CODE.ms.fd</loader>
@@ -61,9 +83,6 @@ in
       </hyperv>
       <vmport state='off'/>
     </features>
-    <cpu mode='host-passthrough' check='none' migratable='on'>
-      <topology sockets='1' dies='1' clusters='1' cores='${toString (builtins.div vcpu threads)}' threads='${toString threads}'/>
-    </cpu>
     <clock offset='localtime'>
       <timer name='rtc' tickpolicy='catchup'/>
       <timer name='pit' tickpolicy='delay'/>
