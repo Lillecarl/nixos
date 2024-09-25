@@ -76,6 +76,15 @@ in
       <suspend-to-disk enabled='no'/>
     </pm>
     <devices>
+      <sound model='ich9'>
+        <codec type='micro'/>
+        <audio id='1'/>
+        <address type='pci' domain='0x0000' bus='0x00' slot='0x1b' function='0x0'/>
+      </sound>
+      <audio id='1' type='pipewire' runtimeDir='/run/user/1000'>
+        <input mixingEngine='no' name='win11in' streamName='win11input' latency='15000'/>
+        <output mixingEngine='no' name='win11out' streamName='win11output' latency='15000'/>
+      </audio>
       <emulator>/run/libvirt/nix-emulators/qemu-system-x86_64</emulator>
       <disk type='block' device='disk'>
         <driver name='qemu' type='raw' cache='none' io='native' discard='unmap'/>
@@ -188,7 +197,6 @@ in
         <listen type='address'/>
         <image compression='off'/>
       </graphics>
-      <audio id='1' type='spice'/>
       <video>
         <model type='none'/>
       </video>
