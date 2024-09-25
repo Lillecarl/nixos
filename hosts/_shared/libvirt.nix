@@ -30,34 +30,53 @@ in
       };
 
       # Hook to (de)allocate hugepages for Windows gaming VM
-      hooks.qemu = {
-        ${gamingvm.name} = pkgs.writeScript "${gamingvm.name}-hook" /* fish */ ''
-          #!${lib.getExe pkgs.fish}
+      hooks.qemu =
+        let
+          hugepages = builtins.ceil (builtins.div gamingvm.memory 2);
+          hugepagesWithOverhead = hugepages + 64; # 128MiB extra
+        in
+        {
+          ${gamingvm.name} = pkgs.writeScript "${gamingvm.name}-hook" /* fish */ ''
+            #!${lib.getExe pkgs.fish}
+            # See https://libvirt.org/hooks.html#etc-libvirt-hooks-qemu for hook documentation
 
-          # Only run this hook for gaming VM
-          if test $argv[1] != ${gamingvm.name}
-            exit 0
-          end
+            set vmname $argv[1] # vm name is passed as first argument
+            set event $argv[2] # hooked event is passed as second argument
 
-          # Prepare runs before the VM starts
-          # Prepare kernel memory for gaming VM hugepages
-          if test $argv[2] = "prepare"
-            # Clear memory before starting vm
-            echo 3 > /proc/sys/vm/drop_caches
-            echo 1 > /proc/sys/vm/compact_memory
-
-            # Allocate 2M hugepages for vm (count = VM MiB / 2)
-            virsh allocpages 2M ${toString (builtins.ceil (builtins.div gamingvm.memory 2))} || begin
-              echo Failed to allocate hugepages for ${gamingvm.name}
-              exit 1
+            # Only run this hook for gaming VM
+            if test $vmname != ${gamingvm.name}
+              exit 0
             end
-          # Release runs after the VM stops and resources are cleared
-          # Release hugepages back to the system
-          else if test $argv[2] = "release"
-            virsh allocpages 2M 0
-          end
-        '';
-      };
+
+            # Get the process id of the VM
+            set vmpid $(cat /var/run/libvirt/qemu/$vmname.pid)
+            # Get the process group id of the VM so we can renice all threads
+            set vmpgid $(ps -o pgid --no-heading $vmpid | awk '{print $1}')
+
+            if test $event = "prepare"
+              # Prepare kernel memory for gaming VM hugepages
+
+              # Drop filesystem caches
+              echo 3 > /proc/sys/vm/drop_caches
+              # Compact memory to make hugepages available
+              echo 1 > /proc/sys/vm/compact_memory
+
+              # Allocate 2M hugepages for vm (count = VM MiB / 2)
+              virsh allocpages 2M ${toString hugepagesWithOverhead} || begin
+                echo Failed to allocate hugepages for ${gamingvm.name}
+                exit 1
+              end
+            else if test $event = "started"
+              # Renice VM to -1
+              renice -1 -g $vmpgid
+            else if test $event = "release"
+              # Release hugepages back to the system
+
+              set reason $argv[4] # shutoff-reason is passed as fourth argument
+              virsh allocpages 2M 0
+            end
+          '';
+        };
     };
 
     # NixVirt https://github.com/AshleyYakeley/NixVirt
