@@ -222,9 +222,6 @@ in
         <address type='usb' bus='0' port='3'/>
       </redirdev>
       <watchdog model='itco' action='reset'/>
-      <memballoon model='virtio'>
-        <address type='pci' domain='0x0000' bus='0x05' slot='0x00' function='0x0'/>
-      </memballoon>
     </devices>
   </domain>
 ''
