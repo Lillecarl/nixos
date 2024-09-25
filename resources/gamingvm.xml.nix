@@ -3,6 +3,7 @@
 , memory
 , vcpu
 , threads ? 1
+, userUID
 , ...
 }:
 let
@@ -81,9 +82,9 @@ in
         <audio id='1'/>
         <address type='pci' domain='0x0000' bus='0x00' slot='0x1b' function='0x0'/>
       </sound>
-      <audio id='1' type='pipewire' runtimeDir='/run/user/1000'>
         <input mixingEngine='no' name='win11in' streamName='win11input' latency='15000'/>
         <output mixingEngine='no' name='win11out' streamName='win11output' latency='15000'/>
+      <audio id='1' type='pipewire' runtimeDir='/run/user/${toString userUID}'>
       </audio>
       <emulator>/run/libvirt/nix-emulators/qemu-system-x86_64</emulator>
       <disk type='block' device='disk'>

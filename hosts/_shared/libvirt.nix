@@ -6,6 +6,7 @@ let
     memory = 14336; # 14GiB
     vcpu = 10; # 10 out of 12 cores on shitbox
     threads = 2; # Better scheduling maybe?
+    userUID = config.users.users.lillecarl.uid;
   };
   gamingvmxml = pkgs.writeText "gamingvm.xml" (import "${self}/resources/gamingvm.xml.nix" gamingvm);
 in
