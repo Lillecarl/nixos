@@ -1,4 +1,4 @@
-{ self, pkgs, lib, inputs, ... }:
+{ self, pkgs, lib, inputs, config, ... }:
 let
   gamingvm = {
     uuid = "c3d5b031-1166-46c0-b86e-ec9f09bb550b";
@@ -95,6 +95,13 @@ in
       };
     };
   };
+
+  # Relink libvirt hooks when they change
+  systemd.services.libvirtd-config.restartTriggers = lib.pipe config.virtualisation.libvirtd.hooks [
+    (x: lib.attrValues x)
+    (x: builtins.map (y: lib.attrValues y) x)
+    (x: lib.flatten x)
+  ];
 
   services.persistent-evdev = {
     enable = true;
