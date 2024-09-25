@@ -32,7 +32,7 @@ in
       <access mode='shared'/>
       <discard/>
     </memoryBacking>
-    <vcpu placement='static'>${toString vcpu}</vcpu>
+    <vcpu placement='auto'>${toString vcpu}</vcpu>
     <os>
       <type arch='x86_64' machine='pc-q35-9.0'>hvm</type>
       <loader readonly='yes' type='pflash'>/run/libvirt/nix-ovmf/OVMF_CODE.fd</loader>
