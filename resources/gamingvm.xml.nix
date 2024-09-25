@@ -4,6 +4,7 @@
 , vcpu
 , threads ? 1
 , userUID
+, pkgs
 , ...
 }:
 let
@@ -36,8 +37,8 @@ in
     <vcpu placement='auto'>${toString vcpu}</vcpu>
     <os>
       <type arch='x86_64' machine='pc-q35-9.0'>hvm</type>
-      <loader readonly='yes' type='pflash'>/run/libvirt/nix-ovmf/OVMF_CODE.fd</loader>
-      <nvram template='/run/libvirt/nix-ovmf/OVMF_VARS.fd'>/var/lib/libvirt/qemu/nvram/win11-4_VARS.fd</nvram>
+      <loader readonly='yes' type='pflash'>${pkgs.OVMFFull.fd}/FV/OVMF_CODE.ms.fd</loader>
+      <nvram template='${pkgs.OVMFFull.fd}/FV/OVMF_VARS.ms.fd'>/var/lib/libvirt/qemu/nvram/win11-4_VARS.fd</nvram>
       <bootmenu enable='yes'/>
     </os>
     <features>
