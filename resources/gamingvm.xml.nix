@@ -7,6 +7,8 @@
 }:
 let
   memoryKiB = builtins.mul memory 1024;
+  xmlComment = comment: "<!-- " + comment + " -->";
+  xc = xmlComment;
 in
   /* xml */ ''
   <domain type='kvm'>
@@ -17,6 +19,9 @@ in
         <libosinfo:os id="http://microsoft.com/win/11"/>
       </libosinfo:libosinfo>
     </metadata>
+    <resource>
+      <partition>/machine/${toString name}</partition>${xc "default cgroup name is dumb"}
+    </resource>
     <memory unit='KiB'>${toString memoryKiB}</memory>
     <currentMemory unit='KiB'>${toString memoryKiB}</currentMemory>
     <memoryBacking>
