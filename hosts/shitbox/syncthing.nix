@@ -1,4 +1,4 @@
-{ pkgs, config, ...}:
+{ pkgs, config, ... }:
 let
   domain = "syncthing.${config.networking.hostName}.lillecarl.com";
 in
