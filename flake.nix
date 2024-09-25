@@ -81,7 +81,6 @@
     niri = {
       url = "github:sodiboo/niri-flake";
       inputs = {
-        crate2nix.follows = "crate2nix";
         nixpkgs.follows = "nixpkgs";
         nixpkgs-stable.follows = "nixpkgs-stable";
         flake-parts.follows = "flake-parts";
