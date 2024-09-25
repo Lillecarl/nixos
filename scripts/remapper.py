@@ -7,6 +7,7 @@ import json
 import os
 import sys
 import time
+import sh
 from evdev import util
 from collections import defaultdict
 from datetime import datetime
@@ -14,7 +15,6 @@ from enum import IntEnum, auto
 from pathlib import Path
 from sh import ddcutil, virsh  # type: ignore
 from signal import SIGINT, SIGTERM
-import sh
 
 pyprint = print
 
@@ -653,10 +653,10 @@ async def main():
             print(e.stderr.decode())
 
     async def attach_device(xml_path: str):
-        await _virsh_set_device("win11-3", xml_path, VirshAction.ATTACH)
+        await _virsh_set_device("win11-4", xml_path, VirshAction.ATTACH)
 
     async def detach_device(xml_path: str):
-        await _virsh_set_device("win11-3", xml_path, VirshAction.DETACH)
+        await _virsh_set_device("win11-4", xml_path, VirshAction.DETACH)
 
     async def ddc_switch():
         ddcutil_current = str(await ddcutil_getvcp())
@@ -714,7 +714,7 @@ async def main():
                         elif in_key_active(Keys.LEFTCTRL):
                             press(Keys.RIGHTSHIFT)
                         elif in_key_active(Keys.LEFTALT):
-                            vm = "win11-3"
+                            vm = "win11-4"
                             try:
                                 await virsh(
                                     "detach-device",
