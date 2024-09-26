@@ -206,7 +206,7 @@
       pulse.enable = true;
       wireplumber.enable = true;
       socketActivation = true;
-      systemWide = false;
+      systemWide = true;
     };
     udev.packages = [ pkgs.mixxx ];
   };
@@ -267,7 +267,4 @@
       ];
     };
   };
-
-
-
 }

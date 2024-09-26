@@ -1,7 +1,6 @@
 { uuid
 , name
 , memory
-, userUID
 , pkgs
 , ...
 }:
@@ -100,7 +99,7 @@ in
         <audio id='1'/>
         <address type='pci' domain='0x0000' bus='0x00' slot='0x1b' function='0x0'/>
       </sound>
-      <audio id='1' type='pipewire' runtimeDir='/run/user/${toString userUID}'>
+      <audio id='1' type='pipewire' runtimeDir='/run'>
         <input mixingEngine='no' streamName='win11input' latency='15000'/>
         <output mixingEngine='no' streamName='win11output' latency='15000'/>
       </audio>

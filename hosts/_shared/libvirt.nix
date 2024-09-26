@@ -5,7 +5,7 @@ let
     name = "win11-4";
     memory = 14336; # 14GiB
     threads = 2; # Better scheduling maybe?
-    userUID = config.users.users.lillecarl.uid;
+    userUID = config.users.users.lillecarl.uid; # When running pipewire as lillecarl user rather than system-wide
     inherit lib pkgs;
   };
   gamingvmxml = pkgs.writeText "gamingvm.xml" (import "${self}/resources/gamingvm.xml.nix" gamingvm);
