@@ -107,17 +107,6 @@ in
             icon-size = 24;
             spacing = 5;
           };
-          "custom/nixos-update" =
-            let
-              cmd = "date --date=@$(curl 'https://prometheus.nixos.org/api/v1/query?query=channel_update_time%7Bchannel%3D%22nixos-unstable%22%7D' | jq -r '.data.result[0].value[1]') -u '+%m-%dT%H'";
-            in
-            {
-              tooltip = false;
-              exec = cmd;
-              on-click = cmd;
-              interval = 3600;
-              format = "{}";
-            };
           "custom/notification" = {
             tooltip = false;
             format = "{icon} {}";
