@@ -1,5 +1,10 @@
 { pkgs, ... }:
 {
+  # Restream webcam to virtual camera
+  boot.kernelModules = [
+    "v4l2loopback"
+  ];
+
   # RNNoise filtering for microphone input
   services.pipewire.extraConfig.pipewire.libpipewire-module-filter-chain = {
     "context.modules" = [

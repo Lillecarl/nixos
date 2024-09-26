@@ -1,6 +1,7 @@
 { pkgs
 , mpkgs
 , inputs
+, nixosConfig
 , ...
 }: {
   home.packages = with pkgs; [
@@ -91,5 +92,7 @@
     graphviz-nox # Graphviz tools
     bintools # bin tools, like nm and such for reading ELF headers
     patchelf # Tool for displaying and modifying ELF headers
+    v4l-utils # Video4Linux utils
+    nixosConfig.boot.kernelPackages.v4l2loopback.bin # Tooling for controlling v4l2loopback kmod
   ];
 }
