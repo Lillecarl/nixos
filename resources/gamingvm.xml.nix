@@ -70,21 +70,7 @@ in
     <features>
       <acpi/>
       <apic/>
-      <hyperv mode='custom'>
-        <relaxed state='on'/>
-        <vapic state='on'/>
-        <spinlocks state='on' retries='8191'/>
-        <vpindex state='on'/>
-        <runtime state='on'/>
-        <synic state='on'/>
-        <stimer state='on'/>
-        <reset state='on'/>
-        <vendor_id state='on' value='KVM Hv'/>
-        <frequencies state='on'/>
-        <reenlightenment state='on'/>
-        <tlbflush state='on'/>
-        <ipi state='on'/>
-      </hyperv>
+      <hyperv mode='passthrough'/>
       <vmport state='off'/>
     </features>
     <clock offset='localtime'>
