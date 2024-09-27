@@ -70,12 +70,12 @@ in
             else if test $event = "started"
               # Renice VM to -1
               renice -1 -g $vmpgid
-              # Only schedule Linux stuff on CPU 6 and 11 (the 6th physical core)
-              systemctl set-property --runtime -- init.scope AllowedCPUs=6,11
-              systemctl set-property --runtime -- kubepods.scope AllowedCPUs=6,11
-              systemctl set-property --runtime -- kubernetes.scope AllowedCPUs=6,11
-              systemctl set-property --runtime -- system.slice AllowedCPUs=6,11
-              systemctl set-property --runtime -- user.slice AllowedCPUs=6,11
+              # Only schedule Linux stuff on CPU 5 and 11 (the 6th physical core)
+              systemctl set-property --runtime -- init.scope AllowedCPUs=5,11
+              systemctl set-property --runtime -- kubepods.scope AllowedCPUs=5,11
+              systemctl set-property --runtime -- kubernetes.scope AllowedCPUs=5,11
+              systemctl set-property --runtime -- system.slice AllowedCPUs=5,11
+              systemctl set-property --runtime -- user.slice AllowedCPUs=5,11
             else if test $event = "release"
               # Release hugepages back to the system
 

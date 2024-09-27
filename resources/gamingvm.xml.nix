@@ -30,7 +30,8 @@ in
       <discard/>
     </memoryBacking>
     <iothreads>2</iothreads>
-    <vcpu placement='static'>10</vcpu>
+    <vcpu placement='static'>10</vcpu> <!-- 5 cores with 2 threads each -->
+    <!-- Guest CPU model = host CPU model, don't support live migration -->
     <cpu mode='host-passthrough' check='none' migratable='off'>
       <topology sockets='1' dies='1' clusters='1' cores='5' threads='2'/>
       <!-- Enable SMT in the guest, disabled by default since timing attacks became a thing -->
@@ -38,21 +39,25 @@ in
     </cpu>
     <cputune>
       <!-- Pin QEMU threads to cores not passed to guest -->
-      <emulatorpin cpuset='6-11'/>
-      <iothreadpin iothread='1' cpuset='6-11'/>
-      <iothreadpin iothread='2' cpuset='6-11'/>
-      <!-- Pin CPU's by their SMT topology -->
+      <emulatorpin cpuset='5,11'/>
+      <iothreadpin iothread='1' cpuset='5,11'/>
+      <iothreadpin iothread='2' cpuset='5,11'/>
+      <!--
+        Pin CPU's by their SMT topology,
+        vcpu = guest index, cpuset = host core index.
+        Both start from 0
+      -->
       <vcpupin vcpu='0' cpuset='0'/>
-      <vcpupin vcpu='1' cpuset='6'/>
       <vcpupin vcpu='2' cpuset='1'/>
-      <vcpupin vcpu='3' cpuset='7'/>
       <vcpupin vcpu='4' cpuset='2'/>
-      <vcpupin vcpu='5' cpuset='8'/>
       <vcpupin vcpu='6' cpuset='3'/>
-      <vcpupin vcpu='7' cpuset='9'/>
       <vcpupin vcpu='8' cpuset='4'/>
+
+      <vcpupin vcpu='1' cpuset='6'/>
+      <vcpupin vcpu='3' cpuset='7'/>
+      <vcpupin vcpu='5' cpuset='8'/>
+      <vcpupin vcpu='7' cpuset='9'/>
       <vcpupin vcpu='9' cpuset='10'/>
-      <vcpupin vcpu='10' cpuset='5'/>
     </cputune>
     <os>
       <type arch='x86_64' machine='pc-q35-9.0'>hvm</type>
