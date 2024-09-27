@@ -79,6 +79,10 @@ in
       <acpi/>
       <apic/>
       <hyperv mode='passthrough'/>
+      <kvm>
+        <hint-dedicated state='on'/>
+        <poll-control state='on'/>
+      </kvm>
       <vmport state='off'/>
       <!-- Set this once libvirt 10.7.0 hits nixpkgs
       <ps2 state='off'/>
