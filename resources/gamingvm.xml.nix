@@ -219,13 +219,6 @@ in
       <tpm model='tpm-crb'>
         <backend type='emulator' version='2.0'/>
       </tpm>
-      <graphics type='spice' autoport='yes'>
-        <listen type='address'/>
-        <image compression='off'/>
-      </graphics>
-      <video>
-        <model type='none'/>
-      </video>
       <!-- PCI-E passthrough NVIDIA GPU -->
       <hostdev mode='subsystem' type='pci' managed='yes'>
         <source>
@@ -241,12 +234,6 @@ in
         </source>
         <address type='pci' domain='0x0000' bus='0x07' slot='0x00' function='0x0'/>
       </hostdev>
-      <redirdev bus='usb' type='spicevmc'>
-        <address type='usb' bus='0' port='2'/>
-      </redirdev>
-      <redirdev bus='usb' type='spicevmc'>
-        <address type='usb' bus='0' port='3'/>
-      </redirdev>
       <watchdog model='itco' action='reset'/>
     </devices>
   </domain>
