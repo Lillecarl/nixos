@@ -19,18 +19,26 @@ in
       </libosinfo:libosinfo>
     </metadata>
     <resource>
-      <partition>/machine/${toString name}</partition><!-- default cgroup name is dumb -->
+      <!-- default cgroup name is dumb -->
+      <partition>/machine/${toString name}</partition>
     </resource>
     <memory unit='KiB'>${toString memoryKiB}</memory>
     <currentMemory unit='KiB'>${toString memoryKiB}</currentMemory>
     <memoryBacking>
+      <!--
+        Hugepages are good for performance, we would use transparent hugepages (THP)
+        but it doesn't work with shared memory, which is a requirement for virtiofs
+        and Looking Glass.
+      -->
       <hugepages>
         <page size='2048' unit='KiB'/>
       </hugepages>
       <source type='memfd'/>
+      <!-- Shared memory is required for virtiofs and Looking Glass -->
       <access mode='shared'/>
       <discard/>
     </memoryBacking>
+    <!-- 2 threads not allocated to the guest, use them for IO -->
     <iothreads>2</iothreads>
     <vcpu placement='static'>10</vcpu> <!-- 5 cores with 2 threads each -->
     <!-- Guest CPU model = host CPU model, don't support live migration -->
@@ -72,6 +80,9 @@ in
       <apic/>
       <hyperv mode='passthrough'/>
       <vmport state='off'/>
+      <!-- Set this once libvirt 10.7.0 hits nixpkgs
+      <ps2 state='off'/>
+      -->
     </features>
     <clock offset='localtime'>
       <timer name='rtc' tickpolicy='catchup'/>
@@ -211,6 +222,7 @@ in
       <video>
         <model type='none'/>
       </video>
+      <!-- PCI-E passthrough NVIDIA GPU -->
       <hostdev mode='subsystem' type='pci' managed='yes'>
         <source>
           <address domain='0x0000' bus='0x09' slot='0x00' function='0x0'/>
@@ -218,6 +230,7 @@ in
         <rom bar='on'/>
         <address type='pci' domain='0x0000' bus='0x06' slot='0x00' function='0x0'/>
       </hostdev>
+      <!-- PCI-E passthrough NVIDIA soundcard -->
       <hostdev mode='subsystem' type='pci' managed='yes'>
         <source>
           <address domain='0x0000' bus='0x09' slot='0x00' function='0x1'/>
