@@ -36,13 +36,21 @@
   home = {
     username = "lillecarl";
     homeDirectory = "/home/lillecarl";
+
+    # Set FLAKE to repo path
+    sessionVariables = {
+      FLAKE = flakeloc;
+    };
     stateVersion = nixosConfig.system.stateVersion or "24.05";
     enableNixpkgsReleaseCheck = true;
-
-    };
   };
   # Don't display HM news.
   news.display = "silent";
+
+  # Set FLAKE to repo path for all systemd user units
+  systemd.user.sessionVariables = {
+    FLAKE = flakeloc;
+  };
 
   # Use experimental sd-switch to determine which systemd user units
   # to restart, do it automatically.
