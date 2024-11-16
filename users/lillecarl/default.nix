@@ -13,6 +13,8 @@
 
   programs.home-manager.enable = true;
 
+  xdg.dataFile = lib.mapAttrs' (key: val: { name = "flakeinputs/${key}"; value = { source = "${val}"; }; }) inputs;
+
   xdg = {
     enable = true;
     userDirs.createDirectories = true;
