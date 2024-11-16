@@ -34,16 +34,8 @@ _:
           '')
         ];
       };
-      repoenv = pkgs.mkShell {
-        packages = [ farm ];
-
-        shellHook = ''
-        '';
-      };
     in
     {
-      devShells.default = repoenv;
-      devShells.repoenv = repoenv;
       packages.repofarm = farm;
     };
 }
