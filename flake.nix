@@ -22,7 +22,6 @@
     nixvirt = {
       url = "github:AshleyYakeley/NixVirt";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.nixpkgs-ovmf.follows = "nixpkgs";
     };
     noshell = {
       url = "github:viperML/noshell";
@@ -152,7 +151,6 @@
     };
     terranix = {
       url = "github:terranix/terranix";
-      inputs.flake-utils.follows = "flake-utils";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixpkgs-wayland = {
