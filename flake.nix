@@ -14,6 +14,11 @@
     catppuccin-nix.url = "github:catppuccin/nix";
     crane.url = "github:ipetkov/crane";
 
+    nixgl = {
+      url = "github:nix-community/nixGL";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
+    };
     nixvirt = {
       url = "github:AshleyYakeley/NixVirt";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -224,8 +229,9 @@
         overlays = [
           (import ./lib/overlay.nix self.outPath)
           (import ./pkgs)
-          inputs.nur.overlay
           inputs.nix-snapshotter.overlays.default
+          inputs.nixgl.overlay
+          inputs.nur.overlay
         ];
       };
 
