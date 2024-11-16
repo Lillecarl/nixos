@@ -1,5 +1,65 @@
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
 add_newline = false
-format = "$username$hostname$kubernetes$directory$git_branch$git_commit$git_state$git_metrics$git_status$pijul_channel$docker_context$package$c$cmake$daml$dart$deno$dotnet$golang$helm$lua$nodejs$perl$php$pulumi$python$red$ruby$rust$terraform$typst$vagrant$zig$buf$nix_shell$conda$meson$spack$memory_usage$aws$gcloud$azure$direnv\\[$env_var$shlvl\\]$crystal$custom$sudo$cmd_duration$line_break$jobs$battery$time$status$os$container$shell$character"
+format = """
+$username\
+$hostname\
+$kubernetes\
+$directory\
+$git_branch\
+$git_commit\
+$git_state\
+$git_metrics\
+$git_status\
+$pijul_channel\
+$docker_context\
+$package\
+$c\
+$cmake\
+$daml\
+$dart\
+$deno\
+$dotnet\
+$golang\
+$helm\
+$lua\
+$nodejs\
+$perl\
+$php\
+$pulumi\
+$python\
+$red\
+$ruby\
+$rust\
+$terraform\
+$typst\
+$vagrant\
+$zig\
+$buf\
+$nix_shell\
+$conda\
+$meson\
+$spack\
+$memory_usage\
+$aws\
+$gcloud\
+$azure\
+$direnv\
+\\[$env_var$shlvl\\]\
+$crystal\
+$custom\
+$sudo\
+$cmd_duration\
+$line_break\
+$jobs\
+$battery\
+$time\
+$status\
+$os\
+$shell\
+$character\
+"""
 
 [aws]
 format = "\\[[$symbol($profile)(\\($region\\))(\\[$duration\\])]($style)\\]"

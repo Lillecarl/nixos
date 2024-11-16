@@ -9,8 +9,4 @@
     secrets.sourcegraph.file = "${self}/secrets/sourcegraph.age";
     secrets.copilot.file = "${self}/secrets/copilot.fish.age";
   };
-
-  systemd.user.tmpfiles.rules = [
-    #"L /home/user/Documents - - - - /mnt/data/Documents"
-  ];
 }
