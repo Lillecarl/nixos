@@ -4,10 +4,12 @@
 , self
 , config
 , nixosConfig
+, inputs
 , ...
 }:
 {
   imports = [
+    ./terminal
     ./dotfiles.nix
   ];
 
