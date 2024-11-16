@@ -6,9 +6,7 @@
   programs.helix = {
     enable = true;
 
-    settings = {
-      auto-save = false;
-    };
+    settings = { };
 
     languages = {
       language-server.nil = {
