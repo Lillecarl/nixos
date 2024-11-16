@@ -2,6 +2,40 @@
 , pkgs
 , ...
 }: {
+  imports = [
+    #./default.nix
+    ./atuin.nix
+    ./awscli.nix
+    ./bat.nix
+    ./batmon.nix
+    ./dircolors.nix
+    ./direnv.nix
+    ./distrobox.nix
+    ./editorconfig.nix
+    ./fish.nix
+    ./git.nix
+    ./glab.nix
+    ./gnome-keyring.nix
+    ./gpg.nix
+    ./helix.nix
+    ./krew.nix
+    ./lsd.nix
+    ./neovim.nix
+    ./noshell.nix
+    ./nushell.nix
+    ./packages.nix
+    ./pam.nix
+    ./readline.nix
+    ./ripgrep.nix
+    ./ssh.nix
+    ./starship.nix
+    ./tealdeer.nix
+    ./thinkpad.nix
+    ./tmux.nix
+    ./xdg-user-dirs.nix
+    ./zsh.nix
+  ];
+
   home = {
     file.".local/bin/.keep".text = "";
 
