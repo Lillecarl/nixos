@@ -87,7 +87,6 @@
       inputs = {
         nixpkgs.follows = "nixpkgs";
         nixpkgs-stable.follows = "nixpkgs-stable";
-        flake-parts.follows = "flake-parts";
       };
     };
     darwin = {
