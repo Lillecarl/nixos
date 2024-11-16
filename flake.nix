@@ -214,8 +214,9 @@
     let
       # limits perSystem
       systems = [
-        "x86_64-linux"
+        "aarch64-linux"
         "x86_64-darwin"
+        "x86_64-linux"
       ];
       # Same settings for all nixpkgs instances
       pkgsSettings = system: {
