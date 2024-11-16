@@ -236,7 +236,10 @@
       flakeloc = import ./.flakepath;
       flakepath = ./.;
       slib = import ./lib { inherit (inputs.nixpkgs) lib; outPath = ./.; };
-      imports = slib.rimport { path = ./.; regadd = "^.*flake-module.*\.nix$"; };
+      imports = [
+        ./repoenv/flake-module.nix
+        ./users/penguin/flake-module.nix
+      ];
 
       # Passed to flake-parts modules
       specialArgs = {
