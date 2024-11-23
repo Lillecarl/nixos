@@ -19,6 +19,9 @@ in
               };
             modules = [
               ../lillecarl
+              {
+                ps.terminal.nerdfonts = false;
+              }
             ];
           });
       };
