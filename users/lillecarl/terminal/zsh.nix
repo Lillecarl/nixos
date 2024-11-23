@@ -1,6 +1,6 @@
-_:
+{ lib, config, ... }:
 {
-  programs.zsh = {
+  programs.zsh = lib.mkIf config.ps.terminal.enable {
     enable = true;
 
     autocd = true;

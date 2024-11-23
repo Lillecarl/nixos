@@ -1,6 +1,6 @@
-_:
+{ lib, config, ... }:
 {
-  programs.readline = {
+  programs.readline = lib.mkIf config.ps.terminal.enable {
     enable = true;
 
     extraConfig = ''

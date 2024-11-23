@@ -7,7 +7,6 @@
     ./atuin.nix
     ./awscli.nix
     ./bat.nix
-    ./batmon.nix
     ./dircolors.nix
     ./direnv.nix
     ./distrobox.nix
@@ -30,7 +29,6 @@
     ./ssh.nix
     ./starship.nix
     ./tealdeer.nix
-    ./thinkpad.nix
     ./tmux.nix
     ./xdg-user-dirs.nix
     ./zsh.nix

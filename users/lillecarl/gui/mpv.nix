@@ -1,18 +1,6 @@
-{ config
-, lib
-, ...
-}:
-let
-  cfg = config.carl.gui.mpv;
-in
+{ lib, config, ... }:
 {
-  options.carl.gui.mpv = with lib; {
-    enable = lib.mkOption {
-      type = types.bool;
-      default = config.carl.gui.enable;
-    };
-  };
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf config.ps.gui.enable {
     programs.mpv = {
       enable = true;
       config = { };

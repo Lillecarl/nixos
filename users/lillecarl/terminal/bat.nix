@@ -1,6 +1,6 @@
-_:
+{ lib, config, ... }:
 {
-  programs.bat = {
+  programs.bat = lib.mkIf config.ps.terminal.enable {
     enable = true;
   };
 }

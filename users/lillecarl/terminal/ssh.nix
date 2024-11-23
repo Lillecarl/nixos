@@ -1,6 +1,4 @@
-{ lib
-, ...
-}:
+{ lib, config, ... }:
 let
   setEnv = {
     TERM = "xterm-256color";
@@ -26,7 +24,7 @@ let
   };
 in
 {
-  programs.ssh = {
+  programs.ssh = lib.mkIf config.ps.terminal.enable {
     enable = true;
 
     forwardAgent = false;

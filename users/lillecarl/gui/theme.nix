@@ -1,20 +1,11 @@
-{ config
-, inputs
-, lib
-, pkgs
-, ...
-}:
-let
-  cfg = config.carl.gui.theme;
-in
+{ lib, config, pkgs, inputs, ... }:
 {
-  options.carl.gui.theme = with lib; {
-    enable = lib.mkOption {
-      type = types.bool;
-      default = config.carl.gui.enable;
-    };
-  };
-  config = lib.mkIf cfg.enable {
+  imports = [
+    inputs.catppuccin-nix.homeManagerModules.catppuccin
+    inputs.stylix.homeManagerModules.stylix
+  ];
+
+  config = lib.mkIf config.ps.gui.enable {
     stylix = {
       targets = {
         # Disable swaylock target since we're using Gandalf splash screen

@@ -1,8 +1,6 @@
-{ pkgs
-, ...
-}:
+{ lib, config, ... }:
 {
-  programs.awscli = {
+  programs.awscli = lib.mkIf config.ps.terminal.enable {
     enable = true;
   };
 }

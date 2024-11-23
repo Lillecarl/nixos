@@ -1,6 +1,6 @@
-_:
+{ lib, config, ... }:
 {
-  programs.direnv = {
+  programs.direnv = lib.mkIf config.ps.terminal.enable {
     enable = true;
 
     enableBashIntegration = true;

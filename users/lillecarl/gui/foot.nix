@@ -1,18 +1,6 @@
-{ config
-, lib
-, ...
-}:
-let
-  cfg = config.carl.gui.foot;
-in
+{ lib, config, ... }:
 {
-  options.carl.gui.foot = with lib; {
-    enable = lib.mkOption {
-      type = types.bool;
-      default = config.carl.gui.enable;
-    };
-  };
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf config.ps.gui.enable {
     programs.foot = {
       enable = true;
 

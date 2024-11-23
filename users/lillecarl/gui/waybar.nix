@@ -1,23 +1,16 @@
-{ pkgs
+{ lib
 , config
-, lib
+, pkgs
 , nixosConfig ? null
 , ...
 }:
 let
-  cfg = config.carl.gui.waybar;
   sleep = "${pkgs.coreutils-full}/bin/sleep";
   swaync-client = "${pkgs.swaynotificationcenter}/bin/swayncclient";
   bluetooth = nixosConfig.hardware.bluetooth.enable or false;
 in
 {
-  options.carl.gui.waybar = with lib; {
-    enable = lib.mkOption {
-      type = types.bool;
-      default = config.carl.gui.enable;
-    };
-  };
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf config.ps.gui.enable {
     home.packages = [
       pkgs.networkmanagerapplet # For nm-applet icons
     ];

@@ -1,13 +1,16 @@
-_:
+{ lib, config, ... }:
 {
-  programs.lsd = {
+  programs.lsd = lib.mkIf config.ps.terminal.enable {
     enable = true;
 
     enableAliases = true;
 
     settings = {
       icons = {
-        theme = "fancy";
+        theme = if config.ps.terminal.nerdfonts == true then
+          "fancy"
+        else
+          "unicode";
       };
       permission = "octal";
       sorting = {

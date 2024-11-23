@@ -1,6 +1,8 @@
-{ pkgs, ... }:
+{ lib, config, pkgs, ... }:
 {
-  home.packages = [
-    pkgs.vieb
-  ];
+  config = lib.mkIf config.ps.gui.enable {
+    home.packages = [
+      pkgs.vieb
+    ];
+  };
 }

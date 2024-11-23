@@ -1,19 +1,6 @@
-{ config
-, lib
-, pkgs
-, ...
-}:
-let
-  cfg = config.carl.gui.qutebrowser;
-in
+{ lib, config, pkgs, ... }:
 {
-  options.carl.gui.qutebrowser = with lib; {
-    enable = lib.mkOption {
-      type = types.bool;
-      default = false;
-    };
-  };
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf config.ps.gui.enable {
     home.packages = [
       pkgs.keyutils
       pkgs.bitwarden-cli

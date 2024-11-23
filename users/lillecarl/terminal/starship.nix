@@ -1,10 +1,6 @@
-{ lib
-, pkgs
-, config
-, ...
-}:
+{ lib, config, pkgs, ... }:
 {
-  programs.starship = {
+  programs.starship = lib.mkIf config.ps.terminal.enable {
     enable = true;
     enableNushellIntegration = true;
     enableZshIntegration = true;

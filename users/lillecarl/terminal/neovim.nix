@@ -4,9 +4,6 @@
 , nixosConfig
 , ...
 }:
-let
-  inherit (config.stylix) fonts;
-in
 {
   home.packages = [
     pkgs.tree-sitter # for TS troubleshooting
@@ -17,8 +14,6 @@ in
     # Use NeoVim for sudo edits, but without plugins and muck
     SUDO_EDITOR = lib.getExe pkgs.neovim;
   };
-
-  stylix.targets.vim.enable = false;
 
   programs.neovim = {
     enable = true;
@@ -37,56 +32,56 @@ in
 
     extraPackages = with pkgs; [
       # lsp
-      clang-tools
-      cmake-language-server
-      dot-language-server
-      gopls
-      lua-language-server
-      marksman
-      nil
-      pyright
-      jsonnet-language-server
-      # fmt
-      deno # deno fmt
-      fish # fish_indent
-      bash-language-server
-      nodePackages_latest.dockerfile-language-server-nodejs
-      nodePackages_latest.fixjson
-      nodePackages_latest.typescript-language-server
-      nodePackages_latest.vim-language-server
-      nodePackages_latest.vscode-langservers-extracted # HTML, CSS, ESLint, JSON
-      nodePackages_latest.yaml-language-server
-      nushell
-      omnisharp-roslyn
-      phpPackages.psalm
-      postgres-lsp
-      ruby-lsp
-      rust-analyzer
-      statix
-      terraform-ls
-      tflint
-      typos-lsp
-      zls
-      go # gofmt
-      gotools # goimports, golines
-      nixpkgs-fmt
-      packer # packer fmt
-      prettierd
-      ruff
-      rustfmt
-      shellcheck
-      stylua
-      taplo
-      terragrunt # terragrunt hclfmt
-      yamlfmt
-      # misc tools
-      fd # for telescope
-      ripgrep # for telescope
-      tree-sitter # silence tree-sitter warning
-      fzf # fuzzy finder
-      git # Gitsigns, Fugitive
-      cargo # for rust-analyzer
-      nodePackages.nodejs # For copilot
+      #clang-tools
+      #cmake-language-server
+      #dot-language-server
+      #gopls
+      #lua-language-server
+      #marksman
+      #nil
+      #pyright
+      #jsonnet-language-server
+      ## fmt
+      #deno # deno fmt
+      #fish # fish_indent
+      #bash-language-server
+      #nodePackages_latest.dockerfile-language-server-nodejs
+      #nodePackages_latest.fixjson
+      #nodePackages_latest.typescript-language-server
+      #nodePackages_latest.vim-language-server
+      #nodePackages_latest.vscode-langservers-extracted # HTML, CSS, ESLint, JSON
+      #nodePackages_latest.yaml-language-server
+      #nushell
+      #omnisharp-roslyn
+      #phpPackages.psalm
+      #postgres-lsp
+      #ruby-lsp
+      #rust-analyzer
+      #statix
+      #terraform-ls
+      #tflint
+      #typos-lsp
+      #zls
+      #go # gofmt
+      #gotools # goimports, golines
+      #nixpkgs-fmt
+      #packer # packer fmt
+      #prettierd
+      #ruff
+      #rustfmt
+      #shellcheck
+      #stylua
+      #taplo
+      #terragrunt # terragrunt hclfmt
+      #yamlfmt
+      ## misc tools
+      #fd # for telescope
+      #ripgrep # for telescope
+      #tree-sitter # silence tree-sitter warning
+      #fzf # fuzzy finder
+      #git # Gitsigns, Fugitive
+      #cargo # for rust-analyzer
+      #nodePackages.nodejs # For copilot
     ];
 
     plugins = with pkgs.vimPlugins; [
@@ -147,15 +142,7 @@ in
 
     extraLuaConfig =
       let
-        config = {
-          ui = {
-            # For Neovide
-            font = {
-              inherit (fonts.monospace) name;
-              size = fonts.sizes.terminal;
-            };
-          };
-        };
+        config = { };
       in
       ''
 

@@ -1,6 +1,6 @@
-_:
+{ lib, config, ... }:
 {
-  programs.dircolors = {
+  programs.dircolors = lib.mkIf config.ps.terminal.enable {
     enable = true;
   };
 }

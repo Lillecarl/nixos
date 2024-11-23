@@ -1,6 +1,6 @@
-_:
+{ lib, config, ... }:
 {
-  programs.atuin = {
+  programs.atuin = lib.mkIf config.ps.terminal.enable {
     enable = true;
 
     flags = [

@@ -1,19 +1,6 @@
-{ config
-, lib
-, pkgs
-, ...
-}:
-let
-  cfg = config.carl.gui.obs;
-in
+{ lib, config, pkgs, ... }:
 {
-  options.carl.gui.obs = with lib; {
-    enable = lib.mkOption {
-      type = types.bool;
-      default = config.carl.gui.enable;
-    };
-  };
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf config.ps.gui.enable {
     programs.obs-studio = {
       enable = true;
 

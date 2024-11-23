@@ -1,5 +1,6 @@
-_: {
-  programs.nushell = {
+{ lib, config, ... }:
+{
+  programs.nushell = lib.mkIf config.ps.terminal.enable {
     enable = true;
 
     configFile.text = ''

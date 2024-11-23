@@ -1,18 +1,6 @@
-{ config
-, lib
-, ...
-}:
-let
-  cfg = config.carl.gui.swaync;
-in
+{ lib, config, ... }:
 {
-  options.carl.gui.swaync = with lib; {
-    enable = lib.mkOption {
-      type = types.bool;
-      default = config.carl.gui.enable;
-    };
-  };
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf config.ps.gui.enable {
     services.swaync = {
       enable = true;
 

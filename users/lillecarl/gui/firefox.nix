@@ -1,20 +1,8 @@
-{ config
-, lib
-, self
-, pkgs
-, ...
-}:
-let
-  cfg = config.carl.gui.firefox;
-in
+{ lib, config, pkgs, ...}:
 {
-  options.carl.gui.firefox = with lib; {
-    enable = lib.mkOption {
-      type = types.bool;
-      default = config.carl.gui.enable;
-    };
-  };
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf config.ps.gui.enable {
+    # Looks weird, but firefox requires kitty and neovim on PATH for tridactyl
+    # native-messenger editing
     home.packages = [
       config.programs.kitty.package
       config.programs.neovim.package
@@ -22,7 +10,7 @@ in
 
     stylix.targets.firefox.profileNames = [ "lillecarl" ];
 
-    programs.firefox = lib.mkIf cfg.enable {
+    programs.firefox = {
       enable = true;
 
       nativeMessagingHosts = [

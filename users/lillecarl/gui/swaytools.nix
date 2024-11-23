@@ -1,27 +1,19 @@
-{ config
-, lib
+{ lib
+, config
 , pkgs
 , self
 , inputs
 , ...
 }:
 let
-  cfg = config.carl.gui.swaytools;
   lockScript = lib.getExe (pkgs.writeShellScriptBin "swayLockScript" ''
     ${config.programs.rbw.package}/bin/rbw lock
     ${lib.getExe pkgs.swaylock}
     ${config.programs.rbw.package}/bin/rbw unlock
   '');
-  systemdTarget = "graphical-session.target";
 in
 {
-  options.carl.gui.swaytools = with lib; {
-    enable = lib.mkOption {
-      type = types.bool;
-      default = config.carl.gui.enable;
-    };
-  };
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf config.ps.gui.enable {
     home.file."swayLockScript" = {
       target = ".local/bin/swayLockScript";
       source = lockScript;
@@ -42,7 +34,7 @@ in
     services.swayidle = {
       enable = true;
 
-      inherit systemdTarget;
+      systemdTarget = config.ps.gui.systemdTarget;
 
       events = [
         { event = "before-sleep"; command = lockScript; }
@@ -57,13 +49,13 @@ in
     systemd.user.services.swaybg = {
       Unit = {
         Description = "Sway background image daemon";
-        PartOf = [ systemdTarget ];
+        PartOf = [ config.ps.gui.systemdTarget ];
       };
 
       Service = {
         ExecStart = "${lib.getExe pkgs.swaybg} --image ${inputs.nixos-artwork}/wallpapers/nix-wallpaper-watersplash.png";
       };
-      Install = { WantedBy = [ systemdTarget ]; };
+      Install = { WantedBy = [ config.ps.gui.systemdTarget ]; };
     };
   };
 }

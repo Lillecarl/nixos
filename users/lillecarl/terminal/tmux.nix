@@ -1,8 +1,6 @@
-{ pkgs
-, ...
-}:
+{ lib, config, pkgs, ... }:
 {
-  programs.tmux = {
+  programs.tmux = lib.mkIf config.ps.terminal.enable {
     enable = true;
 
     clock24 = true;

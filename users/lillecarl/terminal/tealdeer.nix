@@ -1,5 +1,6 @@
-_: {
-  programs.tealdeer = {
+{ lib, config, ... }:
+{
+  programs.tealdeer = lib.mkIf config.ps.terminal.enable {
     enable = true;
 
     settings = {

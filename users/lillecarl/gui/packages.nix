@@ -1,17 +1,6 @@
-{ config
-, lib
-, pkgs
-, ...
-}:
-let
-  cfg = config.carl.gui;
-in
+{ lib, config, pkgs, ... }:
 {
-  options.carl.gui.packages = with lib; mkOption {
-    type = types.listOf types.package;
-    default = [ ];
-  };
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf config.ps.gui.enable {
     home.packages = with pkgs; [
       ferdium # Web multiplexer
       bitwarden # Password manager

@@ -1,19 +1,6 @@
-{ config
-, lib
-, pkgs
-, ...
-}:
-let
-  cfg = config.carl.gui.chromium;
-in
+{ lib, config, pkgs, ... }:
 {
-  options.carl.gui.chromium = with lib; {
-    enable = lib.mkOption {
-      type = types.bool;
-      default = config.carl.gui.enable;
-    };
-  };
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf config.ps.gui.enable {
     programs.chromium = {
       enable = true;
       package = pkgs.chromium;

@@ -10,7 +10,7 @@
     inputs.niri.homeModules.niri
   ];
 
-  programs.niri = {
+  programs.niri = lib.mkIf config.ps.gui.enable {
     enable = true;
 
     inherit (nixosConfig.programs.niri) package;
