@@ -73,10 +73,13 @@
   };
 
   home.packages = [
-    pkgs.tig # TUI tool to see branches and commit log graph
+    pkgs.gh # GitHub CLI
     pkgs.glab # Gitlab CLI
-    pkgs.git-open # Open git repo in browser
+
     pkgs.git-imerge # Interactive merge, rebase
+    pkgs.git-open # Open git repo in browser
+    pkgs.tig # TUI tool to see branches and commit log graph
+
     # untested
     pkgs.git-up # Update git repo
     pkgs.git-gone # Remove stale branches
