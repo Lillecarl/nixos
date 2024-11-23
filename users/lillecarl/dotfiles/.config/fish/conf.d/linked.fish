@@ -9,15 +9,13 @@ fish_vi_key_bindings
 # trigger direnv before prompt is rendered
 set -g direnv_fish_mode eval_on_arrow
 
-set -x KREW_ROOT "$XDG_CONFIG_HOME/krew"
-set -a PATH $KREW_ROOT/bin
-
-alias grt="cd (git root)"
-alias tg=terragrunt
 alias pager=$PAGER
 alias kc=kubectl
 
 abbr -a :q exit
+
+abbr -a tg terragrunt
+abbr -a grt 'cd (git root)'
 
 abbr -a sc sudo systemctl
 abbr -a ssc sudo systemctl
