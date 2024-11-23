@@ -25,25 +25,6 @@ function M.setup(config)
     return os.date("%H:%M:%S")
   end
 
-  vim.g.log = function(data)
-    local file, err = io.open(vim.fn.expand("$XDG_DATA_HOME/nvim/disk"), "a")
-    if file then
-      file:write(clock() .. " " .. vim.inspect(data) .. "\n")
-      file:flush()
-    elseif err then
-      vim.notify("Unable to open custom log\n" .. err, vim.log.levels.ERROR, { title = "Log error" })
-    end
-  end
-
-  vim.g.log("Initiialised logger " .. fulldate())
-
-  local font = config["ui"]["font"]
-  if vim.g.neovide then
-    vim.opt.guifont = font["name"] .. ":h" .. font["size"]
-    vim.g.neovide_fullscreen = false
-    vim.g.neovide_remember_window_size = false
-  end
-
   vim.api.nvim_create_autocmd("BufReadPost", {
     callback = function()
       local mark = vim.api.nvim_buf_get_mark(0, '"')
