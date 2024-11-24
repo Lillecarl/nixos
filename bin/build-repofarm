@@ -1,13 +1,12 @@
 #! /usr/bin/env bash
 
+echo "Building linkfarm"
 nix \
   build \
   "$FLAKE#repofarm" \
   --out-link "$FLAKE/.nix" || exit 1
 
-echo "Sending SIGUSR1 to fish shell ($FISH_PID) to reload direnv"
-kill -USR1 "$FISH_PID"
-
-nix flake archive "$FLAKE"
+echo "Archiving flake"
+nix flake archive "$FLAKE" || exit 1
 
 exit 0
