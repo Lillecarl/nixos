@@ -20,6 +20,7 @@
     ./krew.nix
     ./lsd.nix
     ./neovim.nix
+    ./nix.nix
     ./noshell.nix
     ./nushell.nix
     ./packages.nix
