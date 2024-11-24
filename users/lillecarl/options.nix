@@ -61,7 +61,7 @@
         enable = lib.mkEnableOption "Enable Bluetooth";
       };
       hostname = lib.mkOption {
-        type = lib.types.string;
+        type = lib.types.str;
         default = nixosConfig.networking.hostName or "hostname";
         description = ''
           Configures $HOST variable
