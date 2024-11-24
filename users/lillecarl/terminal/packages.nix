@@ -55,6 +55,7 @@
       bintools # bin tools, like nm and such for reading ELF headers
       wl-clipboard # CLI utilities to copy/paste from wayland clipboard
       rclone # rsync for the cloud
+      dogdns # CLI DNS tool
       nixgl.nixGLMesa # OpenGL wrapper helper
     ];
   };
