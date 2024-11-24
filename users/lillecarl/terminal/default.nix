@@ -26,6 +26,7 @@
     ./pam.nix
     ./readline.nix
     ./ripgrep.nix
+    ./sessionVariables.nix
     ./ssh.nix
     ./starship.nix
     ./tealdeer.nix
