@@ -49,6 +49,7 @@
     homeDirectory = "/home/lillecarl";
     stateVersion = nixosConfig.system.stateVersion or "24.05";
     enableNixpkgsReleaseCheck = true;
+    preferXdgDirectories = true;
   };
   # Don't display HM news.
   news.display = "silent";
