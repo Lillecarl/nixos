@@ -21,6 +21,7 @@ in
               ../lillecarl
               {
                 ps.terminal.nerdfonts = false;
+                ps.hostname = "penguin";
               }
             ];
           });
