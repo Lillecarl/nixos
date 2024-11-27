@@ -6,9 +6,8 @@
       #inputs.mozilla-addons-to-nix.packages.x86_64-linux.default
       #inputs.system-manager.packages.x86_64-linux.system-manager
       #inputs.agenix.packages.${pkgs.system}.default
+      inputs.nix-auto-follow.packages.${pkgs.system}.default
       mimeo # Open files with the right program
-      (lowPrio kubectl) # Kubernetes management cli
-      age # Modern crypto written in Go
       broot # A new way to see and navigate directory trees
       choose # A human-friendly and fast alternative to cut and (sometimes) awk
       direnv # Do stuff on cd.
