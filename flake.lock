@@ -188,7 +188,7 @@
           "nixpkgs"
         ],
         "pre-commit-hooks": [
-          "pre-commit-hooks"
+          "git-hooks"
         ]
       },
       "locked": {
@@ -277,6 +277,21 @@
       "original": {
         "owner": "hercules-ci",
         "repo": "flake-parts",
+        "type": "github"
+      }
+    },
+    "flake-schemas": {
+      "locked": {
+        "lastModified": 1721999734,
+        "narHash": "sha256-G5CxYeJVm4lcEtaO87LKzOsVnWeTcHGKbKxNamNWgOw=",
+        "owner": "DeterminateSystems",
+        "repo": "flake-schemas",
+        "rev": "0a5c42297d870156d9c57d8f99e476b738dcd982",
+        "type": "github"
+      },
+      "original": {
+        "owner": "DeterminateSystems",
+        "repo": "flake-schemas",
         "type": "github"
       }
     },
@@ -461,7 +476,7 @@
           "nixpkgs"
         ],
         "pre-commit-hooks-nix": [
-          "pre-commit-hooks"
+          "git-hooks"
         ],
         "rust-overlay": [
           "rust-overlay"
@@ -490,7 +505,7 @@
           "nixpkgs"
         ],
         "pre-commit-hooks": [
-          "pre-commit-hooks"
+          "git-hooks"
         ]
       },
       "locked": {
@@ -975,35 +990,6 @@
         "type": "github"
       }
     },
-    "pre-commit-hooks": {
-      "inputs": {
-        "flake-compat": [
-          "flake-compat"
-        ],
-        "gitignore": [
-          "gitignore"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "nixpkgs-stable": [
-          "nixpkgs-stable"
-        ]
-      },
-      "locked": {
-        "lastModified": 1732021966,
-        "narHash": "sha256-mnTbjpdqF0luOkou8ZFi2asa1N3AA2CchR/RqCNmsGE=",
-        "owner": "cachix",
-        "repo": "pre-commit-hooks.nix",
-        "rev": "3308484d1a443fc5bc92012435d79e80458fe43c",
-        "type": "github"
-      },
-      "original": {
-        "owner": "cachix",
-        "repo": "pre-commit-hooks.nix",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "agenix": "agenix",
@@ -1016,6 +1002,7 @@
         "disko": "disko",
         "flake-compat": "flake-compat",
         "flake-parts": "flake-parts",
+        "flake-schemas": "flake-schemas",
         "flake-utils": "flake-utils",
         "git-hooks": "git-hooks",
         "gitignore": "gitignore",
@@ -1043,7 +1030,6 @@
         "noshell": "noshell",
         "nur": "nur",
         "nuschtosSearch": "nuschtosSearch",
-        "pre-commit-hooks": "pre-commit-hooks",
         "rust-overlay": "rust-overlay",
         "stylix": "stylix",
         "treefmt-nix": "treefmt-nix"
