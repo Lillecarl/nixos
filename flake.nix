@@ -11,6 +11,31 @@
     catppuccin-nix.url = "github:catppuccin/nix";
     crane.url = "github:ipetkov/crane";
 
+    ixx = {
+      url = "github:NuschtOS/ixx";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
+    };
+    nuschtosSearch = {
+      url = "github:NuschtOS/search";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
+      inputs.ixx.follows = "flake-utils";
+    };
+    git-hooks = {
+      url = "github:cachix/git-hooks.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs-stable.follows = "nixpkgs-stable";
+      inputs.gitignore.follows = "gitignore";
+    };
+    flake-compat = {
+      url = "github:edolstra/flake-compat";
+      flake = false;
+    };
+    nix-auto-follow = {
+      url = "github:fzakaria/nix-auto-follow";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nixgl = {
       url = "github:nix-community/nixGL";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -22,10 +47,6 @@
     };
     noshell = {
       url = "github:viperML/noshell";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    wrapper-manager = {
-      url = "github:viperML/wrapper-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     # Get this working with newer k3s and go versions
@@ -42,6 +63,7 @@
       url = "github:cachix/cachix";
       inputs = {
         nixpkgs.follows = "nixpkgs";
+        git-hooks.follows = "git-hooks";
         devenv.follows = "";
       };
     };
@@ -73,6 +95,8 @@
         flake-parts.follows = "flake-parts";
         devshell.follows = "devshell";
         treefmt-nix.follows = "treefmt-nix";
+        git-hooks.follows = "git-hooks";
+        nuschtosSearch.follows = "nuschtosSearch";
       };
     };
     niri = {
@@ -95,6 +119,8 @@
       url = "github:danth/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
+      inputs.flake-utils.follows = "flake-utils";
+      inputs.systems.follows = "nix-systems";
     };
     pre-commit-hooks = {
       url = "github:cachix/pre-commit-hooks.nix";
