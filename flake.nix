@@ -1,41 +1,13 @@
 {
   inputs = {
-    nix-community-lib.url = "github:nix-community/nixpkgs.lib";
-    nix-systems.url = "github:nix-systems/default-linux";
-    nixos-hardware.url = "github:NixOS/nixos-hardware";
-    nixpkgs-lib.url = "github:NixOS/nixpkgs/nixos-unstable?dir=lib";
+    # Direct inputs
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixos-hardware.url = "github:NixOS/nixos-hardware";
     nixpkgs-master.url = "github:NixOS/nixpkgs/master";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.05";
     nur.url = "github:nix-community/NUR";
     catppuccin-nix.url = "github:catppuccin/nix";
-    crane.url = "github:ipetkov/crane";
-
-    ixx = {
-      url = "github:NuschtOS/ixx";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-utils.follows = "flake-utils";
-    };
-    nuschtosSearch = {
-      url = "github:NuschtOS/search";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-utils.follows = "flake-utils";
-      inputs.ixx.follows = "flake-utils";
-    };
-    git-hooks = {
-      url = "github:cachix/git-hooks.nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.nixpkgs-stable.follows = "nixpkgs-stable";
-      inputs.gitignore.follows = "gitignore";
-      inputs.flake-compat.follows = "flake-compat";
-    };
-    flake-compat = {
-      url = "github:edolstra/flake-compat";
-    };
-    nix-auto-follow = {
-      url = "github:fzakaria/nix-auto-follow";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    flake-schemas.url = "github:DeterminateSystems/flake-schemas";
     nixgl = {
       url = "github:nix-community/nixGL";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -49,12 +21,88 @@
       url = "github:viperML/noshell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-auto-follow = {
+      url = "github:fzakaria/nix-auto-follow";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     # Get this working with newer k3s and go versions
     nix-snapshotter = {
       url = "github:pdtpartners/nix-snapshotter";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-parts.follows = "flake-parts";
       inputs.flake-compat.follows = "flake-compat";
+    };
+    niri = {
+      url = "github:sodiboo/niri-flake";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        nixpkgs-stable.follows = "nixpkgs-stable";
+      };
+    };
+    stylix = {
+      url = "github:danth/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+      inputs.flake-utils.follows = "flake-utils";
+      inputs.systems.follows = "nix-systems";
+      inputs.flake-compat.follows = "flake-compat";
+    };
+    flake-parts = {
+      url = "github:hercules-ci/flake-parts";
+      inputs.nixpkgs-lib.follows = "nixpkgs-lib";
+    };
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    mozilla-addons-to-nix = {
+      url = "sourcehut:~rycee/mozilla-addons-to-nix";
+      inputs = {
+        flake-utils.follows = "flake-utils";
+        nixpkgs.follows = "nixpkgs";
+        pre-commit-hooks.follows = "git-hooks";
+      };
+    };
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote";
+      inputs = {
+        crane.follows = "crane";
+        flake-parts.follows = "flake-parts";
+        nixpkgs.follows = "nixpkgs";
+        pre-commit-hooks-nix.follows = "git-hooks";
+        rust-overlay.follows = "rust-overlay";
+        flake-compat.follows = "flake-compat";
+      };
+    };
+    nixos-artwork = {
+      url = "github:NixOS/nixos-artwork";
+      flake = false;
+    };
+    catppuccin-qt5ct = {
+      url = "github:catppuccin/qt5ct";
+      flake = false;
+    };
+
+    # Indirect inputs
+    nix-community-lib.url = "github:nix-community/nixpkgs.lib";
+    nix-systems.url = "github:nix-systems/default-linux";
+    nixpkgs-lib.url = "github:NixOS/nixpkgs/nixos-unstable?dir=lib";
+    crane.url = "github:ipetkov/crane";
+    flake-compat.url = "github:edolstra/flake-compat";
+    ixx = {
+      url = "github:NuschtOS/ixx";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
+    };
+    nuschtosSearch = {
+      url = "github:NuschtOS/search";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
+      inputs.ixx.follows = "flake-utils";
     };
     nix-github-actions = {
       url = "github:nix-community/nix-github-actions";
@@ -76,7 +124,7 @@
         flake-parts.follows = "flake-parts";
         devshell.follows = "devshell";
         crate2nix_stable.follows = "";
-        pre-commit-hooks.follows = "pre-commit-hooks";
+        pre-commit-hooks.follows = "git-hooks";
         cachix.follows = "cachix";
         flake-compat.follows = "flake-compat";
       };
@@ -103,13 +151,6 @@
         flake-compat.follows = "flake-compat";
       };
     };
-    niri = {
-      url = "github:sodiboo/niri-flake";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        nixpkgs-stable.follows = "nixpkgs-stable";
-      };
-    };
     agenix = {
       url = "github:ryantm/agenix";
       inputs = {
@@ -119,21 +160,13 @@
         home-manager.follows = "home-manager";
       };
     };
-    stylix = {
-      url = "github:danth/stylix";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.home-manager.follows = "home-manager";
-      inputs.flake-utils.follows = "flake-utils";
-      inputs.systems.follows = "nix-systems";
-      inputs.flake-compat.follows = "flake-compat";
-    };
-    pre-commit-hooks = {
-      url = "github:cachix/pre-commit-hooks.nix";
+    git-hooks = {
+      url = "github:cachix/git-hooks.nix";
       inputs = {
-        gitignore.follows = "gitignore";
-        nixpkgs.follows = "nixpkgs";
-        nixpkgs-stable.follows = "nixpkgs-stable";
         flake-compat.follows = "flake-compat";
+        gitignore.follows = "gitignore";
+        nixpkgs-stable.follows = "nixpkgs-stable";
+        nixpkgs.follows = "nixpkgs";
       };
     };
     flake-utils = {
@@ -158,46 +191,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.treefmt-nix.follows = "treefmt-nix";
       inputs.nix-github-actions.follows = "nix-github-actions";
-    };
-    flake-parts = {
-      url = "github:hercules-ci/flake-parts";
-      inputs.nixpkgs-lib.follows = "nixpkgs-lib";
-    };
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    disko = {
-      url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    mozilla-addons-to-nix = {
-      url = "sourcehut:~rycee/mozilla-addons-to-nix";
-      inputs = {
-        flake-utils.follows = "flake-utils";
-        nixpkgs.follows = "nixpkgs";
-        pre-commit-hooks.follows = "pre-commit-hooks";
-      };
-    };
-    lanzaboote = {
-      url = "github:nix-community/lanzaboote";
-      inputs = {
-        crane.follows = "crane";
-        flake-parts.follows = "flake-parts";
-        nixpkgs.follows = "nixpkgs";
-        pre-commit-hooks-nix.follows = "pre-commit-hooks";
-        rust-overlay.follows = "rust-overlay";
-        flake-compat.follows = "flake-compat";
-      };
-    };
-
-    nixos-artwork = {
-      url = "github:NixOS/nixos-artwork";
-      flake = false;
-    };
-    catppuccin-qt5ct = {
-      url = "github:catppuccin/qt5ct";
-      flake = false;
     };
   };
 
