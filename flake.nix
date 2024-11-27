@@ -246,13 +246,10 @@
         inherit systems imports;
         flake = { };
         perSystem =
-          { config
+          { self'
+          , inputs'
           , system
           , pkgs
-          , mpkgs
-          , spkgs
-          , inputs'
-          , withSystem
           , ...
           }:
           let
