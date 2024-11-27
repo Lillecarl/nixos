@@ -15,6 +15,7 @@
           self.homeConfigurations."${user}@${host}"
       ).pkgs;
       lib = pkgs.lib;
+      inherit self inputs;
 
       os = self.nixosConfigurations.${host} or { };
       home = self.homeConfigurations."${user}@${host}" or { };
