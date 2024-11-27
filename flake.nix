@@ -27,10 +27,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.nixpkgs-stable.follows = "nixpkgs-stable";
       inputs.gitignore.follows = "gitignore";
+      inputs.flake-compat.follows = "flake-compat";
     };
     flake-compat = {
       url = "github:edolstra/flake-compat";
-      flake = false;
     };
     nix-auto-follow = {
       url = "github:fzakaria/nix-auto-follow";
@@ -54,6 +54,7 @@
       url = "github:pdtpartners/nix-snapshotter";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-parts.follows = "flake-parts";
+      inputs.flake-compat.follows = "flake-compat";
     };
     nix-github-actions = {
       url = "github:nix-community/nix-github-actions";
@@ -64,6 +65,7 @@
       inputs = {
         nixpkgs.follows = "nixpkgs";
         git-hooks.follows = "git-hooks";
+        flake-compat.follows = "flake-compat";
         devenv.follows = "";
       };
     };
@@ -76,6 +78,7 @@
         crate2nix_stable.follows = "";
         pre-commit-hooks.follows = "pre-commit-hooks";
         cachix.follows = "cachix";
+        flake-compat.follows = "flake-compat";
       };
     };
     gitignore = {
@@ -97,6 +100,7 @@
         treefmt-nix.follows = "treefmt-nix";
         git-hooks.follows = "git-hooks";
         nuschtosSearch.follows = "nuschtosSearch";
+        flake-compat.follows = "flake-compat";
       };
     };
     niri = {
@@ -121,6 +125,7 @@
       inputs.home-manager.follows = "home-manager";
       inputs.flake-utils.follows = "flake-utils";
       inputs.systems.follows = "nix-systems";
+      inputs.flake-compat.follows = "flake-compat";
     };
     pre-commit-hooks = {
       url = "github:cachix/pre-commit-hooks.nix";
@@ -128,6 +133,7 @@
         gitignore.follows = "gitignore";
         nixpkgs.follows = "nixpkgs";
         nixpkgs-stable.follows = "nixpkgs-stable";
+        flake-compat.follows = "flake-compat";
       };
     };
     flake-utils = {
@@ -181,6 +187,7 @@
         nixpkgs.follows = "nixpkgs";
         pre-commit-hooks-nix.follows = "pre-commit-hooks";
         rust-overlay.follows = "rust-overlay";
+        flake-compat.follows = "flake-compat";
       };
     };
 
