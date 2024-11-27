@@ -1,4 +1,4 @@
-{ lib, config, ...}:
+{ lib, config, ... }:
 {
   programs.ripgrep = lib.mkIf config.ps.terminal.enable {
     enable = true;

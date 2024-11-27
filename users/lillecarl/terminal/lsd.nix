@@ -7,10 +7,11 @@
 
     settings = {
       icons = {
-        theme = if config.ps.terminal.nerdfonts == true then
-          "fancy"
-        else
-          "unicode";
+        theme =
+          if config.ps.terminal.nerdfonts == true then
+            "fancy"
+          else
+            "unicode";
       };
       permission = "octal";
       sorting = {

@@ -1,4 +1,4 @@
-{ lib, config, pkgs, ...}:
+{ lib, config, pkgs, ... }:
 {
   config = lib.mkIf config.ps.gui.enable {
     # Looks weird, but firefox requires kitty and neovim on PATH for tridactyl

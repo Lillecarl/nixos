@@ -46,7 +46,7 @@
         };
 
         mode = lib.mkOption {
-          type  = lib.types.enum [
+          type = lib.types.enum [
             "slim"
             "fat"
           ];

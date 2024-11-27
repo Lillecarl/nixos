@@ -1,6 +1,6 @@
 { lib, config, pkgs, ... }:
 {
-  programs.helix = lib.mkIf (config.ps.editors.enable  && config.ps.editors.mode == "fat") {
+  programs.helix = lib.mkIf (config.ps.editors.enable && config.ps.editors.mode == "fat") {
     languages = {
       language-server.nil = {
         command = lib.getExe pkgs.nil;
