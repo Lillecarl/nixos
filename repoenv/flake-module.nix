@@ -10,6 +10,7 @@ _:
         paths = [
           pkgs.pokemonsay
           pkgs.msr-tools
+          pkgs.pre-commit
           (pkgs.python3.withPackages (ps: with ps; [
             PyGithub
             deepmerge
