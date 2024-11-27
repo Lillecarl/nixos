@@ -233,6 +233,7 @@
       slib = import ./lib { inherit (inputs.nixpkgs) lib; outPath = ./.; };
       imports = [
         ./repl/flake-module.nix
+        ./checks/flake-module.nix
         ./repoenv/flake-module.nix
         ./users/penguin/flake-module.nix
       ];
