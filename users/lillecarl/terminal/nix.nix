@@ -5,6 +5,7 @@
       package = pkgs.nixVersions.latest;
       settings = {
         warn-dirty = false;
+        keep-going = true;
       };
       registry = {
         nixpkgs = { flake = inputs.nixpkgs; };
