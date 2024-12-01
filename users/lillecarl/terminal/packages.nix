@@ -7,6 +7,7 @@
       #inputs.system-manager.packages.x86_64-linux.system-manager
       #inputs.agenix.packages.${pkgs.system}.default
       inputs.nix-auto-follow.packages.${pkgs.system}.default
+      nixgl.nixGLMesa # OpenGL wrapper helper
       mimeo # Open files with the right program
       broot # A new way to see and navigate directory trees
       choose # A human-friendly and fast alternative to cut and (sometimes) awk
@@ -55,7 +56,7 @@
       wl-clipboard # CLI utilities to copy/paste from wayland clipboard
       rclone # rsync for the cloud
       dogdns # CLI DNS tool
-      nixgl.nixGLMesa # OpenGL wrapper helper
+      entr # Do something when a file changes
     ];
   };
 }
