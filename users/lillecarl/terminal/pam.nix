@@ -8,7 +8,7 @@ let
 in
 {
   pam = {
-    sessionVariables = rec {
+    sessionVariables = {
       # Pager configuration
       PAGER = pager;
       SYSTEMD_PAGER = pager;
@@ -17,11 +17,11 @@ in
       SYSTEMD_PAGERSECURE = "true";
       SYSTEMD_COLORS = "true";
       # Git configuration (For sending over SSH)
-      GIT_AUTHOR_NAME = "Carl Hjerpe";
-      GIT_AUTHOR_EMAIL = "git@lillecarl.com";
-      GIT_COMMITTER_NAME = GIT_AUTHOR_NAME;
-      GIT_COMMITTER_EMAIL = GIT_AUTHOR_EMAIL;
-      EMAIL = GIT_AUTHOR_EMAIL;
+      GIT_AUTHOR_NAME = config.ps.info.name;
+      GIT_AUTHOR_EMAIL = "git@${config.ps.info.emailDomain}";
+      GIT_COMMITTER_NAME = config.ps.info.name;
+      GIT_COMMITTER_EMAIL = "git@${config.ps.info.emailDomain}";
+      EMAIL = config.ps.info.emailPrivate;
       NIXPKGS_ALLOW_UNFREE = 1;
     };
   };

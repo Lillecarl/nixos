@@ -3,8 +3,8 @@
   config = lib.mkIf config.ps.terminal.enable {
     programs.git = {
       enable = true;
-      userName = "Carl Andersson";
-      userEmail = "git@lillecarl.com";
+      userName = config.ps.info.name;
+      userEmail = "git@${config.ps.info.emailDomain}";
 
       lfs.enable = true;
 
@@ -89,8 +89,8 @@
     ];
 
     xdg.configFile."git/work".text = lib.generators.toGitINI {
-      user.name = "Carl Andersson";
-      user.email = "carl.andersson@hire.me";
+      user.name = config.ps.info.name;
+      user.email = config.ps.info.emailWork;
     };
   };
 }
