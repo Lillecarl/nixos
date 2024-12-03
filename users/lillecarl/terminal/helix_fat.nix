@@ -24,6 +24,7 @@
         pkgs.shfmt
         pkgs.taplo
         pkgs.terraform-ls
+        pkgs.vscode-langservers-extracted
         pkgs.wl-clipboard
         pkgs.yaml-language-server
       ];
