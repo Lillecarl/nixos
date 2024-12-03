@@ -15,6 +15,14 @@
     ./terminal
   ];
 
+  ps.info = {
+    name = "Carl Andersson";
+    emailDomain = "lillecarl.com";
+    serviceDomain = "lillecarl.com";
+    emailPrivate = "carl@postspace.net";
+    emailWork = "carl@hire.me";
+  };
+
   programs.home-manager.enable = true;
 
   # Reference flake inputs in xdg datadir. Prevents Nix collecting flake inputs as garbage.

@@ -1,10 +1,28 @@
 { lib
+, config
 , nixosConfig ? { }
 , ...
 }:
 {
   options = {
     ps = {
+      info = {
+        name = lib.mkOption {
+          type = lib.types.str;
+        };
+        emailDomain = lib.mkOption {
+          type = lib.types.str;
+        };
+        emailPrivate = lib.mkOption {
+          type = lib.types.str;
+        };
+        emailWork = lib.mkOption {
+          type = lib.types.str;
+        };
+        serviceDomain = lib.mkOption {
+          type = lib.types.str;
+        };
+      };
       gui = {
         enable = lib.mkOption {
           type = lib.types.bool;
