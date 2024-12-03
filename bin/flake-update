@@ -28,7 +28,6 @@ function flake-update
 
     echo Gitting
     git add . || return 1
-    git restore --staged .flakepath || return 1
     git restore --staged bin/flake-update || return 1
     git commit -m 'Maintenance
 

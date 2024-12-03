@@ -1,4 +1,4 @@
-{ config, flakepath, ... }:
+{ config, ... }:
 {
   age.secrets.cloudflare = {
     file = ../../secrets/cloudflare.age;

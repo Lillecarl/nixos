@@ -10,10 +10,10 @@ in
 {
   flake = {
     nixosConfigurations.nub =
-      withSystem system ({ config, pkgs, flakeloc, flakepath, ... }@ctx:
+      withSystem system ({ config, pkgs, flakeloc, ... }@ctx:
         let
           specialArgs = {
-            inherit inputs flakeloc flakepath self;
+            inherit inputs flakeloc self;
           };
         in
         inputs.nixpkgs.lib.nixosSystem {

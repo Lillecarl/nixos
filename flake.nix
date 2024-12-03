@@ -222,9 +222,21 @@
 
       pkgsGenerator = input: system: import input (pkgsSettings system);
 
-      flakeloc = import ./.flakepath;
-      flakepath = ./.;
-      slib = import ./lib { inherit (inputs.nixpkgs) lib; outPath = ./.; };
+      flakeloc =
+        let
+          loc = builtins.getEnv "FLAKE";
+        in
+        if builtins.stringLength loc == 0 then
+          builtins.throw ''
+            FLAKE environment variable is 0 length or not set at all, please
+            set FLAKE to the repository root and evaluate with --impure
+          ''
+        else
+          loc;
+      slib = import ./lib {
+        inherit (inputs.nixpkgs) lib;
+        outPath = ./.;
+      };
       imports = [
         ./checks/flake-module.nix
         ./nixvim/flake-module.nix
@@ -235,7 +247,7 @@
 
       # Passed to flake-parts modules
       specialArgs = {
-        inherit flakeloc flakepath slib;
+        inherit flakeloc slib;
       };
     in
     flake-parts.lib.mkFlake

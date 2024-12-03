@@ -10,10 +10,10 @@ in
 {
   flake = {
     nixosConfigurations.shitbox =
-      withSystem system ({ pkgs, flakeloc, flakepath, ... }@ctx:
+      withSystem system ({ pkgs, flakeloc, ... }@ctx:
         let
           specialArgs = {
-            inherit inputs flakeloc flakepath self;
+            inherit inputs flakeloc self;
           };
         in
         inputs.nixpkgs.lib.nixosSystem {
