@@ -44,6 +44,9 @@ abbr -a !! -f histsudo
 
 set -x FISH_PID $fish_pid
 
+# Don't show client popups in fish LSP
+set -gx fish_lsp_show_client_popups false
+
 function sshloop1
     set -l user $argv[1]
     set -l host $argv[2]

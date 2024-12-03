@@ -35,6 +35,13 @@
             then we want to configure applications to use them.
           '';
         };
+        true-color = lib.mkOption {
+          type = lib.types.bool;
+          default = true;
+          description = ''
+            If the terminal we use supports true-color (24) colorspace.
+          '';
+        };
       };
       editors = {
         enable = lib.mkOption {

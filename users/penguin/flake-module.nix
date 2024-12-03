@@ -22,6 +22,7 @@ in
               {
                 ps.terminal.nerdfonts = false;
                 ps.hostname = "penguin";
+                ps.editors.mode = "fat";
               }
             ];
           });
