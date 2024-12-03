@@ -4,7 +4,7 @@
 , ...
 }:
 let
-  pager = lib.getExe config.lib.nvimpager;
+  pager = "less";
 in
 {
   pam = {
