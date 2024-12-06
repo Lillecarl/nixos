@@ -14,6 +14,8 @@ alias kc=kubectl
 
 abbr -a :q exit
 
+abbr -a edit $EDITOR
+
 abbr -a tg terragrunt
 abbr -a grt 'cd (git root)'
 
