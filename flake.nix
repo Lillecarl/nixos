@@ -7,7 +7,10 @@
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.05";
     nur.url = "github:nix-community/NUR";
     catppuccin-nix.url = "github:catppuccin/nix";
-    flake-schemas.url = "github:DeterminateSystems/flake-schemas";
+    system-manager = {
+      url = "github:numtide/system-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nixgl = {
       url = "github:nix-community/nixGL";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -240,6 +243,7 @@
       };
       imports = [
         ./checks/flake-module.nix
+        ./hosts/penguin/flake-module.nix
         ./hosts/shitbox/flake-module.nix
         ./nixvim/flake-module.nix
         ./repl/flake-module.nix
@@ -259,9 +263,7 @@
       }
       {
         inherit systems imports;
-        flake =
-          {
-          };
+        flake = { };
         perSystem =
           {
             self',
