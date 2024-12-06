@@ -65,6 +65,7 @@
       rclone # rsync for the cloud
       dogdns # CLI DNS tool
       entr # Do something when a file changes
+      expect # Automate interactive applications (contains unbuffer and friends)
     ];
   };
 }
