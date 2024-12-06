@@ -1,4 +1,3 @@
-_:
-{
+_: {
   programs.command-not-found.enable = false;
 }

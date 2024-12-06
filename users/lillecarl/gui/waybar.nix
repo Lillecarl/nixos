@@ -1,8 +1,9 @@
-{ lib
-, config
-, pkgs
-, nixosConfig ? null
-, ...
+{
+  lib,
+  config,
+  pkgs,
+  nixosConfig ? null,
+  ...
 }:
 let
   sleep = "${pkgs.coreutils-full}/bin/sleep";
@@ -36,24 +37,29 @@ in
           modules-left = [
             "idle_inhibitor"
           ];
-          modules-center = [
-          ];
-          modules-right = [
-            "custom/nixos-update"
-            "backlight"
-            "battery"
-            "pulseaudio"
-          ]
-          ++ (if bluetooth then
+          modules-center =
             [
-              "bluetooth"
-            ] else [ ])
-          ++
-          [
-            "tray"
-            "custom/notification"
-            "clock"
-          ];
+            ];
+          modules-right =
+            [
+              "custom/nixos-update"
+              "backlight"
+              "battery"
+              "pulseaudio"
+            ]
+            ++ (
+              if bluetooth then
+                [
+                  "bluetooth"
+                ]
+              else
+                [ ]
+            )
+            ++ [
+              "tray"
+              "custom/notification"
+              "clock"
+            ];
 
           clock = {
             interval = 1;
@@ -75,7 +81,11 @@ in
               phone = "";
               portable = "";
               car = "";
-              default = [ "" "" "" ];
+              default = [
+                ""
+                ""
+                ""
+              ];
             };
             on-click = "${lib.getExe config.programs.kitty.package} --single-instance ${lib.getExe pkgs.pulsemixer}";
             on-click-right = "${pkgs.pavucontrol}/bin/pavucontrol";

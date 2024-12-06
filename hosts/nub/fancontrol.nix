@@ -1,18 +1,17 @@
-{ pkgs
-, self
-, lib
-, ...
+{
+  pkgs,
+  self,
+  lib,
+  ...
 }:
 let
-  fanscript = pkgs.writers.writePython3Bin "fancontrol2"
-    {
-      libraries = with pkgs.python3.pkgs; [
-        psutil
-        plumbum
-      ];
-      flakeIgnore = [ "E265" ]; # E265 block comment should start with '# '
-    }
-    (builtins.readFile "${self}/scripts/fancontrol2.py");
+  fanscript = pkgs.writers.writePython3Bin "fancontrol2" {
+    libraries = with pkgs.python3.pkgs; [
+      psutil
+      plumbum
+    ];
+    flakeIgnore = [ "E265" ]; # E265 block comment should start with '# '
+  } (builtins.readFile "${self}/scripts/fancontrol2.py");
 in
 {
   systemd.services.fancontrol = {

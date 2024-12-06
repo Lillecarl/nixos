@@ -1,7 +1,8 @@
-{ stdenv
-, fetchFromGitHub
-, autoPatchelfHook
-, postgresql
+{
+  stdenv,
+  fetchFromGitHub,
+  autoPatchelfHook,
+  postgresql,
 }:
 let
   name = "pgmq";

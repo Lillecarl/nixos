@@ -1,4 +1,12 @@
-{ lib, config, pkgs, mpkgs, inputs, nixosConfig, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  mpkgs,
+  inputs,
+  nixosConfig,
+  ...
+}:
 {
   config = lib.mkIf config.ps.terminal.enable {
     home.packages = with pkgs; [

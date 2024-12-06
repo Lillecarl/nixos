@@ -1,5 +1,4 @@
-_:
-{
+_: {
   stylix = {
     homeManagerIntegration.autoImport = false;
 

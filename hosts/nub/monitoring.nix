@@ -1,7 +1,8 @@
-{ pkgs
-, config
-, lib
-, ...
+{
+  pkgs,
+  config,
+  lib,
+  ...
 }:
 let
   hostname = config.networking.hostName;
@@ -9,17 +10,15 @@ let
   domain = "grafana.${hostname}.lillecarl.com";
   certdir = config.security.acme.certs.${hostname}.directory;
 
-  script = pkgs.writers.writePython3Bin "pymonitoring"
-    {
-      libraries = with pkgs.python3.pkgs; [
-        plumbum
-        psutil
-      ];
-      flakeIgnore = [
-        "E501" # Line too long
-      ];
-    }
-    ../../scripts/monitoring.py;
+  script = pkgs.writers.writePython3Bin "pymonitoring" {
+    libraries = with pkgs.python3.pkgs; [
+      plumbum
+      psutil
+    ];
+    flakeIgnore = [
+      "E501" # Line too long
+    ];
+  } ../../scripts/monitoring.py;
 in
 {
   users.users.grafana = {

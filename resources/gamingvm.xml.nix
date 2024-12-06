@@ -1,13 +1,15 @@
-{ uuid
-, name
-, memory
-, pkgs
-, ...
+{
+  uuid,
+  name,
+  memory,
+  pkgs,
+  ...
 }:
 let
   memoryKiB = builtins.mul memory 1024;
 in
-  /* xml */ ''
+# xml
+''
   <domain type='kvm'>
     <name>${toString name}</name>
     <uuid>${toString uuid}</uuid>

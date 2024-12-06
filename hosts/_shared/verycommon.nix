@@ -1,7 +1,8 @@
-{ pkgs
-, config
-, flakeloc
-, ...
+{
+  pkgs,
+  config,
+  flakeloc,
+  ...
 }:
 {
   environment.systemPackages = with pkgs; [

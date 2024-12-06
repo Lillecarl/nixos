@@ -1,5 +1,6 @@
-{ vimUtils
-, fetchFromGitHub
+{
+  vimUtils,
+  fetchFromGitHub,
 }:
 let
   pname = "one-small-step-for-vimkind";

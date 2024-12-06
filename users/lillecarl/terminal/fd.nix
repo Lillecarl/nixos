@@ -1,5 +1,4 @@
-_:
-{
+_: {
   xdg.configFile."fd/ignore".text = ''
     .git
     .hg

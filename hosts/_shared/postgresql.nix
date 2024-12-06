@@ -1,12 +1,15 @@
-{ lib
-, config
-, pkgs
-, ...
+{
+  lib,
+  config,
+  pkgs,
+  ...
 }:
 let
-  ourPython3 = pkgs.python3.withPackages (ps: with ps; [
-    numpy
-  ]);
+  ourPython3 = pkgs.python3.withPackages (
+    ps: with ps; [
+      numpy
+    ]
+  );
 in
 {
   services.postgresql = {
@@ -107,7 +110,6 @@ in
     };
   };
 
-
   systemd = {
     services = {
       # Add python packaes to postgres through PYTHONPATH
@@ -126,8 +128,14 @@ in
         };
       };
       proxy-to-pgadmin = {
-        requires = [ "pgadmin.service" "proxy-to-pgadmin.socket" ];
-        after = [ "pgadmin.service" "proxy-to-pgadmin.socket" ];
+        requires = [
+          "pgadmin.service"
+          "proxy-to-pgadmin.socket"
+        ];
+        after = [
+          "pgadmin.service"
+          "proxy-to-pgadmin.socket"
+        ];
 
         unitConfig = {
           JoinsNamespaceOf = "pgadmin.service";

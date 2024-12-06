@@ -1,6 +1,7 @@
-{ vimUtils
-, fetchFromGitHub
-, lib
+{
+  vimUtils,
+  fetchFromGitHub,
+  lib,
 }:
 let
   self = vimUtils.buildVimPlugin {

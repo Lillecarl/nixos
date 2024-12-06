@@ -1,4 +1,9 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 {
   config = lib.mkIf config.ps.gui.enable {
     home.packages = [
@@ -10,9 +15,10 @@
       searchEngines = {
         DEFAULT = "https://kagi.com/search?q={}";
       };
-      extraConfig = /* python */ ''
-        config.source('linked.py')
-      '';
+      extraConfig = # python
+        ''
+          config.source('linked.py')
+        '';
     };
   };
 }

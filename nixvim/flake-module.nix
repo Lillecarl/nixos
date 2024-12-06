@@ -1,10 +1,12 @@
-{ self
-, inputs
-, __curPos ? __curPos
-, ...
+{
+  self,
+  inputs,
+  __curPos ? __curPos,
+  ...
 }:
 {
-  perSystem = { system, pkgs, ... }:
+  perSystem =
+    { system, pkgs, ... }:
     {
       packages.nixvim = inputs.nixvim.legacyPackages.${pkgs.system}.makeNixvimWithModule {
         inherit pkgs;

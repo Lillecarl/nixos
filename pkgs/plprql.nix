@@ -1,7 +1,8 @@
-{ buildPgrxExtension
-, fetchFromGitHub
-, pkg-config
-, postgresql
+{
+  buildPgrxExtension,
+  fetchFromGitHub,
+  pkg-config,
+  postgresql,
 }:
 let
   name = "plprql";
@@ -18,7 +19,6 @@ buildPgrxExtension {
 
   pname = name;
   buildAndTestSubdir = name;
-
 
   nativeBuildInputs = [ pkg-config ];
 

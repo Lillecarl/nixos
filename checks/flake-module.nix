@@ -1,16 +1,18 @@
-{ self
-, inputs
-, __curPos ? __curPos
-, ...
+{
+  self,
+  inputs,
+  __curPos ? __curPos,
+  ...
 }:
 {
-  perSystem = { system, pkgs, ... }:
+  perSystem =
+    { system, pkgs, ... }:
     {
       checks.pre-commit-check = inputs.git-hooks.lib.${system}.run {
         src = ../.;
         #src = ./.;
         hooks = {
-          nixpkgs-fmt.enable = true;
+          nixfmt-rfc-style.enable = true;
         };
       };
 

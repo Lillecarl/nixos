@@ -7,16 +7,20 @@ let
   };
 
   grafanaPlugins = {
-    frser-sqlite-datasource = prev.grafanaPlugins.callPackage ./grafanaPlugins/frser-sqlite-datasource { };
+    frser-sqlite-datasource =
+      prev.grafanaPlugins.callPackage ./grafanaPlugins/frser-sqlite-datasource
+        { };
   };
 in
 prev.lib.filterAttrs
-  (n: v:
+  (
+    n: v:
     !flake
     ||
-    # Flake is implicitly true here
-    # Filter out package sets if we're called from a flake.
-    (n != "python3Packages" && n != "grafanaPlugins"))
+      # Flake is implicitly true here
+      # Filter out package sets if we're called from a flake.
+      (n != "python3Packages" && n != "grafanaPlugins")
+  )
   {
     # Inject python3 packages
     python3Packages = python3Packages // prev.python3Packages;
@@ -60,14 +64,5 @@ prev.lib.filterAttrs
     pg_jsonschema = prev.callPackage ./pg_jsonschema.nix { };
     pg_analytics = prev.callPackage ./pg_analytics.nix { };
   }
-//
-(
-  if flake
-  then python3Packages
-  else { }
-) //
-(
-  if flake
-  then grafanaPlugins
-  else { }
-)
+// (if flake then python3Packages else { })
+// (if flake then grafanaPlugins else { })

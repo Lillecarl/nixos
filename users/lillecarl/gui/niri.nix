@@ -1,9 +1,10 @@
-{ pkgs
-, lib
-, inputs
-, config
-, nixosConfig
-, ...
+{
+  pkgs,
+  lib,
+  inputs,
+  config,
+  nixosConfig,
+  ...
 }:
 {
   imports = [
@@ -17,7 +18,14 @@
 
     settings = {
       spawn-at-startup = [
-        { command = [ "systemctl" "--user" "start" "${config.systemd.user.targets.niri-session.Unit.X-Name}" ]; }
+        {
+          command = [
+            "systemctl"
+            "--user"
+            "start"
+            "${config.systemd.user.targets.niri-session.Unit.X-Name}"
+          ];
+        }
       ];
       input = {
         warp-mouse-to-focus = true;
@@ -30,8 +38,12 @@
         };
         mouse = { };
         trackpoint = { };
-        tablet = { map-to-output = "eDP-1"; };
-        touch = { map-to-output = "eDP-1"; };
+        tablet = {
+          map-to-output = "eDP-1";
+        };
+        touch = {
+          map-to-output = "eDP-1";
+        };
       };
 
       outputs =
@@ -47,7 +59,10 @@
                 height = 1440;
                 refresh = 119.998;
               };
-              position = { x = 0; y = 0; };
+              position = {
+                x = 0;
+                y = 0;
+              };
             };
             # Right BENQ
             DP-1 = {
@@ -56,7 +71,10 @@
                 height = 1080;
                 refresh = 143.996;
               };
-              position = { x = 2560; y = -75; };
+              position = {
+                x = 2560;
+                y = -75;
+              };
               transform.rotation = 90;
             };
             # Left BENQ
@@ -66,7 +84,10 @@
                 height = 1080;
                 refresh = 143.996;
               };
-              position = { x = -1080; y = -75; };
+              position = {
+                x = -1080;
+                y = -75;
+              };
               transform.rotation = 270;
             };
           }
@@ -78,7 +99,10 @@
               #  width = 1920;
               #  refresh = 60;
               #};
-              position = { x = -780; y = -1440; };
+              position = {
+                x = -780;
+                y = -1440;
+              };
             };
           in
           {
@@ -89,7 +113,10 @@
                 height = 1200;
                 refresh = 60.003;
               };
-              position = { x = 0; y = 0; };
+              position = {
+                x = 0;
+                y = 0;
+              };
               scale = 1.0;
             };
             # Office display (port 1)
@@ -103,17 +130,25 @@
                 height = 1440;
                 refresh = 119.998;
               };
-              position = { x = -320; y = -1440; };
+              position = {
+                x = -320;
+                y = -1440;
+              };
             };
           }
-        else throw "Unknown hostname, can't configure niri outputs";
+        else
+          throw "Unknown hostname, can't configure niri outputs";
 
       layout = {
         focus-ring = {
           enable = true;
           width = 2;
-          active = { color = "#7fc8ff"; };
-          inactive = { color = "#505050"; };
+          active = {
+            color = "#7fc8ff";
+          };
+          inactive = {
+            color = "#505050";
+          };
         };
 
         border = {
@@ -126,7 +161,9 @@
           { proportion = 2.0 / 3.0; }
         ];
 
-        default-column-width = { proportion = 1.0 / 2.0; };
+        default-column-width = {
+          proportion = 1.0 / 2.0;
+        };
 
         gaps = 2;
 
@@ -137,12 +174,16 @@
 
       window-rules = [
         {
-          geometry-corner-radius = let px = 10.0; in {
-            bottom-left = px;
-            bottom-right = px;
-            top-left = px;
-            top-right = px;
-          };
+          geometry-corner-radius =
+            let
+              px = 10.0;
+            in
+            {
+              bottom-left = px;
+              bottom-right = px;
+              top-left = px;
+              top-right = px;
+            };
           clip-to-geometry = true;
         }
       ];
@@ -151,18 +192,56 @@
         "Mod+Shift+Slash".action = show-hotkey-overlay;
 
         "Mod+T".action.spawn = [ "kitty" ];
-        "Mod+D".action.spawn = [ "rofi" "-show" "drun" ];
-        "Mod+Tab".action.spawn = [ "rofi" "-show" "window" ];
+        "Mod+D".action.spawn = [
+          "rofi"
+          "-show"
+          "drun"
+        ];
+        "Mod+Tab".action.spawn = [
+          "rofi"
+          "-show"
+          "window"
+        ];
         "Mod+Ctrl+F".action.spawn = [ "firefox" ];
         "Ctrl+Alt+Delete".action.spawn = [ "swaylock" ];
-        "Ctrl+Alt+V".action.spawn = [ "sh" "-c" "cliphist list | wofi --dmenu | cliphist decode | wl-copy" ];
+        "Ctrl+Alt+V".action.spawn = [
+          "sh"
+          "-c"
+          "cliphist list | wofi --dmenu | cliphist decode | wl-copy"
+        ];
 
-        "XF86AudioRaiseVolume".action.spawn = [ "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+" ];
-        "XF86AudioLowerVolume".action.spawn = [ "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-" ];
-        "XF86AudioMute".action.spawn = [ "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle" ];
-        "XF86AudioMicMute".action.spawn = [ "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle" ];
-        "XF86MonBrightnessDown".action.spawn = [ "lightctl" "down" ];
-        "XF86MonBrightnessUp".action.spawn = [ "lightctl" "up" ];
+        "XF86AudioRaiseVolume".action.spawn = [
+          "wpctl"
+          "set-volume"
+          "@DEFAULT_AUDIO_SINK@"
+          "0.1+"
+        ];
+        "XF86AudioLowerVolume".action.spawn = [
+          "wpctl"
+          "set-volume"
+          "@DEFAULT_AUDIO_SINK@"
+          "0.1-"
+        ];
+        "XF86AudioMute".action.spawn = [
+          "wpctl"
+          "set-mute"
+          "@DEFAULT_AUDIO_SINK@"
+          "toggle"
+        ];
+        "XF86AudioMicMute".action.spawn = [
+          "wpctl"
+          "set-mute"
+          "@DEFAULT_AUDIO_SOURCE@"
+          "toggle"
+        ];
+        "XF86MonBrightnessDown".action.spawn = [
+          "lightctl"
+          "down"
+        ];
+        "XF86MonBrightnessUp".action.spawn = [
+          "lightctl"
+          "up"
+        ];
 
         "Mod+Q".action.close-window = [ ];
 
@@ -227,7 +306,6 @@
         "Mod+Ctrl+8".action.move-column-to-workspace = [ 8 ];
         "Mod+Ctrl+9".action.move-column-to-workspace = [ 9 ];
 
-
         "Mod+Comma".action.consume-window-into-column = [ ];
         "Mod+Period".action.expel-window-from-column = [ ];
 
@@ -259,8 +337,14 @@
 
         # The following is copied from $nirisrc/resources/niri.service
         BindsTo = [ "graphical-session.target" ];
-        Before = [ "graphical-session.target" "xdg-desktop-autostart.target" ];
-        Wants = [ "graphical-session-pre.target" "xdg-desktop-autostart.target" ];
+        Before = [
+          "graphical-session.target"
+          "xdg-desktop-autostart.target"
+        ];
+        Wants = [
+          "graphical-session-pre.target"
+          "xdg-desktop-autostart.target"
+        ];
         After = [ "graphical-session-pre.target" ];
       };
     };

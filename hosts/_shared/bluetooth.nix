@@ -1,5 +1,4 @@
-_:
-{
+_: {
   services.blueman.enable = true;
 
   hardware = {

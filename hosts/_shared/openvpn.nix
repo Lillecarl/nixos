@@ -1,6 +1,7 @@
-{ pkgs
-, lib
-, ...
+{
+  pkgs,
+  lib,
+  ...
 }:
 {
   environment.systemPackages = [
@@ -11,7 +12,10 @@
     enable = true;
 
     description = "OpenVPN tunnel for %I";
-    after = [ "syslog.target" "network-online.target" ];
+    after = [
+      "syslog.target"
+      "network-online.target"
+    ];
     wants = [ "network-online.target" ];
 
     documentation = [

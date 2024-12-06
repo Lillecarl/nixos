@@ -1,16 +1,19 @@
-{ lib
-, config
-, pkgs
-, self
-, inputs
-, ...
+{
+  lib,
+  config,
+  pkgs,
+  self,
+  inputs,
+  ...
 }:
 let
-  lockScript = lib.getExe (pkgs.writeShellScriptBin "swayLockScript" ''
-    ${config.programs.rbw.package}/bin/rbw lock
-    ${lib.getExe pkgs.swaylock}
-    ${config.programs.rbw.package}/bin/rbw unlock
-  '');
+  lockScript = lib.getExe (
+    pkgs.writeShellScriptBin "swayLockScript" ''
+      ${config.programs.rbw.package}/bin/rbw lock
+      ${lib.getExe pkgs.swaylock}
+      ${config.programs.rbw.package}/bin/rbw unlock
+    ''
+  );
 in
 {
   config = lib.mkIf config.ps.gui.enable {
@@ -37,12 +40,21 @@ in
       systemdTarget = config.ps.gui.systemdTarget;
 
       events = [
-        { event = "before-sleep"; command = lockScript; }
-        { event = "lock"; command = lockScript; }
+        {
+          event = "before-sleep";
+          command = lockScript;
+        }
+        {
+          event = "lock";
+          command = lockScript;
+        }
       ];
 
       timeouts = [
-        { timeout = 300; command = lockScript; }
+        {
+          timeout = 300;
+          command = lockScript;
+        }
       ];
     };
 
@@ -55,7 +67,9 @@ in
       Service = {
         ExecStart = "${lib.getExe pkgs.swaybg} --image ${inputs.nixos-artwork}/wallpapers/nix-wallpaper-watersplash.png";
       };
-      Install = { WantedBy = [ config.ps.gui.systemdTarget ]; };
+      Install = {
+        WantedBy = [ config.ps.gui.systemdTarget ];
+      };
     };
   };
 }

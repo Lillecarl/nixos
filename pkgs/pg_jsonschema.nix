@@ -1,7 +1,8 @@
-{ buildPgrxExtension
-, fetchFromGitHub
-, pkg-config
-, postgresql
+{
+  buildPgrxExtension,
+  fetchFromGitHub,
+  pkg-config,
+  postgresql,
 }:
 let
   name = "pg_jsonschema";
@@ -28,9 +29,10 @@ buildPgrxExtension {
     outputHashes = { };
   };
 
-  postPatch = /* bash */ ''
-    substituteInPlace ./${name}.control --subst-var-by CARGO_VERSION ${version}
-  '';
+  postPatch = # bash
+    ''
+      substituteInPlace ./${name}.control --subst-var-by CARGO_VERSION ${version}
+    '';
 
   meta = {
     inherit (postgresql.meta) platforms;

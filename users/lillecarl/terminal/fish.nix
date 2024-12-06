@@ -1,4 +1,9 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 {
   programs.starship.enableFishIntegration = config.ps.terminal.enable;
 
@@ -12,12 +17,13 @@
       }
     ];
 
-    interactiveShellInit = /* fish */ ''
-      ${lib.getExe pkgs.zoxide} init fish | source
-      ${pkgs.thefuck}/bin/thefuck --alias | source
-      #source $XDG_RUNTIME_DIR/agenix/sourcegraph
-      #source $XDG_RUNTIME_DIR/agenix/copilot
-    '';
+    interactiveShellInit = # fish
+      ''
+        ${lib.getExe pkgs.zoxide} init fish | source
+        ${pkgs.thefuck}/bin/thefuck --alias | source
+        #source $XDG_RUNTIME_DIR/agenix/sourcegraph
+        #source $XDG_RUNTIME_DIR/agenix/copilot
+      '';
 
     # Prepend some Nix & HM paths if they're not already there.
     # Required when using fish as login shell in Crostini.

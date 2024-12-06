@@ -1,4 +1,9 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 {
   config = lib.mkIf config.ps.gui.enable {
     # Looks weird, but firefox requires kitty and neovim on PATH for tridactyl
@@ -57,27 +62,32 @@
             };
           };
 
-          extensions = with pkgs.nur.repos.rycee.firefox-addons; ([
-            # Normal extensions
-            bitwarden
-            canvasblocker
-            consent-o-matic
-            cookie-autodelete
-            decentraleyes
-            multi-account-containers
-            onetab
-            kagi-search
-            privacy-badger
-            privacy-pass
-            sponsorblock
-            temporary-containers
-            tree-style-tab
-            ublock-origin
-          ] ++ [
-            # Native messaging hosts
-            ff2mpv
-            tridactyl
-          ]);
+          extensions =
+            with pkgs.nur.repos.rycee.firefox-addons;
+            (
+              [
+                # Normal extensions
+                bitwarden
+                canvasblocker
+                consent-o-matic
+                cookie-autodelete
+                decentraleyes
+                multi-account-containers
+                onetab
+                kagi-search
+                privacy-badger
+                privacy-pass
+                sponsorblock
+                temporary-containers
+                tree-style-tab
+                ublock-origin
+              ]
+              ++ [
+                # Native messaging hosts
+                ff2mpv
+                tridactyl
+              ]
+            );
 
           settings = {
             # A lot of settings are taken from here: https://github.com/yokoffing/Betterfox/blob/main/user.js
@@ -198,21 +208,22 @@
             "general.smoothScroll.mouseWheel.migrationPercent" = 100;
           };
 
-          userChrome = /* css */ ''
-            /* Hide tab bar */
-            #tabbrowser-tabs {
-              visibility: collapse !important;
-            }
-            /* Hide side-bad header */
-            #sidebar-header {
-              visibility: collapse !important;
-            }
-            /* hide titlebar entirely */
-            #titlebar {
-              /* display: none !important; */
-              visibility: collapse !important;
-            }
-          '';
+          userChrome = # css
+            ''
+              /* Hide tab bar */
+              #tabbrowser-tabs {
+                visibility: collapse !important;
+              }
+              /* Hide side-bad header */
+              #sidebar-header {
+                visibility: collapse !important;
+              }
+              /* hide titlebar entirely */
+              #titlebar {
+                /* display: none !important; */
+                visibility: collapse !important;
+              }
+            '';
           bookmarks = [
             {
               toolbar = true;

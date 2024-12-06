@@ -1,4 +1,11 @@
-{ self, lib, pkgs, config, modulesPath, ... }:
+{
+  self,
+  lib,
+  pkgs,
+  config,
+  modulesPath,
+  ...
+}:
 {
   imports = [
     ../_shared/users.nix
@@ -41,7 +48,6 @@
       };
     };
   };
-
 
   boot.loader = {
     efi = {

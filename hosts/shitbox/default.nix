@@ -1,6 +1,7 @@
-{ pkgs
-, self
-, ...
+{
+  pkgs,
+  self,
+  ...
 }:
 {
   carl = {
@@ -28,7 +29,10 @@
     useDHCP = false;
     networkmanager = {
       enable = true;
-      unmanaged = [ "virbr0" "lxdbr0" ];
+      unmanaged = [
+        "virbr0"
+        "lxdbr0"
+      ];
     };
   };
 

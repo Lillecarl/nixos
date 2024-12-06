@@ -1,17 +1,18 @@
-{ pkgs
-, lib
-, config
-, self
-, ...
+{
+  pkgs,
+  lib,
+  config,
+  self,
+  ...
 }:
 let
-  python = pkgs.python3.withPackages (ps: with ps; [
-    evdev
-    sh
-  ]);
-  script = pkgs.writeScript "remapperd_wrapped" (
-    builtins.readFile "${self}/scripts/remapper.py"
+  python = pkgs.python3.withPackages (
+    ps: with ps; [
+      evdev
+      sh
+    ]
   );
+  script = pkgs.writeScript "remapperd_wrapped" (builtins.readFile "${self}/scripts/remapper.py");
   wrapper = pkgs.writers.writeFish "remapperd_wrapper" ''
     exec ${lib.getExe python} -u ${script}
   '';

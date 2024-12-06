@@ -1,9 +1,9 @@
 { disk1, disk2, ... }:
 let
   samedisk =
-    { disk
-    , index
-    ,
+    {
+      disk,
+      index,
     }:
     let
       idx = toString index;
@@ -124,7 +124,10 @@ in
                 mountpoint = "/home";
               };
               "/nix" = {
-                mountOptions = [ "compress=zstd" "noatime" ];
+                mountOptions = [
+                  "compress=zstd"
+                  "noatime"
+                ];
                 mountpoint = "/nix";
               };
               "/var" = {

@@ -1,11 +1,12 @@
-{ lib
-, pkgs
-, flakeloc
-, self
-, config
-, nixosConfig
-, inputs
-, ...
+{
+  lib,
+  pkgs,
+  flakeloc,
+  self,
+  config,
+  nixosConfig,
+  inputs,
+  ...
 }:
 {
   imports = [
@@ -27,7 +28,12 @@
 
   # Reference flake inputs in xdg datadir. Prevents Nix collecting flake inputs as garbage.
   # I find it weird this isn't the default behaviour
-  xdg.dataFile = lib.mapAttrs' (key: val: { name = "flakeinputs/${key}"; value = { source = "${val}"; }; }) inputs;
+  xdg.dataFile = lib.mapAttrs' (key: val: {
+    name = "flakeinputs/${key}";
+    value = {
+      source = "${val}";
+    };
+  }) inputs;
 
   xdg = {
     enable = true;

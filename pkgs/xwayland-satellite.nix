@@ -1,8 +1,9 @@
-{ lib
-, fetchFromGitHub
-, rustPlatform
-, xcb-util-cursor
-, ...
+{
+  lib,
+  fetchFromGitHub,
+  rustPlatform,
+  xcb-util-cursor,
+  ...
 }:
 rustPlatform.buildRustPackage rec {
   pname = "xwayland-satellite";

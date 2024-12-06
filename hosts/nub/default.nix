@@ -1,6 +1,7 @@
-{ config
-, pkgs
-, ...
+{
+  config,
+  pkgs,
+  ...
 }:
 {
   carl = {
@@ -10,9 +11,10 @@
     };
   };
 
-  disko.devices = (import ./disko.nix {
-    disk = "nvme-eui.00a075013ca91384";
-  }).disko.devices;
+  disko.devices =
+    (import ./disko.nix {
+      disk = "nvme-eui.00a075013ca91384";
+    }).disko.devices;
 
   programs.noisetorch.enable = true;
 
@@ -105,22 +107,26 @@
         packages = [
           pkgs.ddcutil
         ];
-        extraRules = /* udev */ ''
-          # Disable power/wakeup for ELAN touchpad that prevents suspending.
-          SUBSYSTEM=="i2c", DRIVER=="i2c_hid_acpi", ATTR{name}=="ELAN*", ATTR{power/wakeup}="disabled"
-          # Limit battery max charge to 86% (85 in reality)
-          ACTION=="add", SUBSYSTEM=="power_supply", ENV{POWER_SUPPLY_NAME}=="BAT0", ATTR{charge_control_start_threshold}="83", ATTR{charge_control_end_threshold}="86"
-          # Allow anyone to change mic led
-          SUBSYSTEM=="leds", KERNEL=="platform::micmute", RUN{program}+="${coreutilsb}/chmod a+rw /sys/devices/platform/thinkpad_acpi/leds/platform::micmute/brightness"
-          # Allow anyone to change screen backlight
-          ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="amdgpu_bl0", RUN{program}+="${coreutilsb}/chmod a+rw /sys/class/backlight/%k/brightness"
-        '';
+        extraRules = # udev
+          ''
+            # Disable power/wakeup for ELAN touchpad that prevents suspending.
+            SUBSYSTEM=="i2c", DRIVER=="i2c_hid_acpi", ATTR{name}=="ELAN*", ATTR{power/wakeup}="disabled"
+            # Limit battery max charge to 86% (85 in reality)
+            ACTION=="add", SUBSYSTEM=="power_supply", ENV{POWER_SUPPLY_NAME}=="BAT0", ATTR{charge_control_start_threshold}="83", ATTR{charge_control_end_threshold}="86"
+            # Allow anyone to change mic led
+            SUBSYSTEM=="leds", KERNEL=="platform::micmute", RUN{program}+="${coreutilsb}/chmod a+rw /sys/devices/platform/thinkpad_acpi/leds/platform::micmute/brightness"
+            # Allow anyone to change screen backlight
+            ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="amdgpu_bl0", RUN{program}+="${coreutilsb}/chmod a+rw /sys/class/backlight/%k/brightness"
+          '';
       };
 
     usbguard = {
       enable = true;
 
-      IPCAllowedUsers = [ "root" "lillecarl" ];
+      IPCAllowedUsers = [
+        "root"
+        "lillecarl"
+      ];
       implicitPolicyTarget = "allow"; # Allow everything
     };
 
@@ -215,7 +221,10 @@
     domain = "helicon.ai"; # System domain
     networkmanager = {
       enable = true; # Laptops do well with networkmanager
-      unmanaged = [ "virbr0" "lilbr" ];
+      unmanaged = [
+        "virbr0"
+        "lilbr"
+      ];
     };
     useDHCP = false; # deprecated, should be false
 

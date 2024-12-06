@@ -3,8 +3,7 @@
   programs.readline = lib.mkIf config.ps.terminal.enable {
     enable = true;
 
-    extraConfig = ''
-    '';
+    extraConfig = '''';
 
     variables = {
       editing-mode = "vi";

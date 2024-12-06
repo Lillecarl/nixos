@@ -1,6 +1,7 @@
-{ inputs
-, pkgs
-, ...
+{
+  inputs,
+  pkgs,
+  ...
 }:
 let
   nerdFont = pkgs.nerdfonts.override { fonts = [ "Hack" ]; };

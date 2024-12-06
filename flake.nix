@@ -195,10 +195,11 @@
   };
 
   outputs =
-    { self
-    , flake-parts
-    , ...
-    } @ inputs:
+    {
+      self,
+      flake-parts,
+      ...
+    }@inputs:
     let
       # limits perSystem
       systems = [
@@ -239,6 +240,7 @@
       };
       imports = [
         ./checks/flake-module.nix
+        ./hosts/shitbox/flake-module.nix
         ./nixvim/flake-module.nix
         ./repl/flake-module.nix
         ./repoenv/flake-module.nix
@@ -257,13 +259,16 @@
       }
       {
         inherit systems imports;
-        flake = { };
+        flake =
+          {
+          };
         perSystem =
-          { self'
-          , inputs'
-          , system
-          , pkgs
-          , ...
+          {
+            self',
+            inputs',
+            system,
+            pkgs,
+            ...
           }:
           let
             legacyPackages = pkgs.extend (import ./pkgs);
@@ -276,7 +281,7 @@
               spkgs = pkgsGenerator inputs.nixpkgs-stable system;
             } // specialArgs;
 
-            formatter = pkgs.nixpkgs-fmt;
+            formatter = pkgs.nixfmt-rfc-style;
             inherit legacyPackages packages;
           };
       };

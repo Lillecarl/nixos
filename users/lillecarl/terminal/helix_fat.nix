@@ -1,4 +1,9 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 {
   config = lib.mkIf (config.ps.editors.enable && config.ps.editors.mode == "fat") {
     programs.helix = {
@@ -17,6 +22,7 @@
         pkgs.fish-lsp
         pkgs.helix-gpt
         pkgs.nil
+        pkgs.nixd
         pkgs.nixpkgs-fmt
         pkgs.pyright
         pkgs.python3Packages.python-lsp-server
@@ -39,7 +45,10 @@
         };
         language-server.gpt = {
           command = "helix-gpt";
-          args = [ "--handler" "copilot" ];
+          args = [
+            "--handler"
+            "copilot"
+          ];
           config = { };
         };
         language-server.fish-lsp = {
@@ -73,7 +82,10 @@
         language = [
           {
             name = "nix";
-            language-servers = [ "nil" "gpt" ];
+            language-servers = [
+              "nil"
+              "gpt"
+            ];
             # auto-pairs = {
             #   "'''" = "'''";
             #   "(" = ")";
@@ -83,9 +95,27 @@
             #   "{" = "}";
             # };
           }
-          { name = "fish"; language-servers = [ "fish-lsp" "gpt" ]; }
-          { name = "toml"; language-servers = [ "taplo" "gpt" ]; }
-          { name = "python"; language-servers = [ "pyright" "gpt" ]; }
+          {
+            name = "fish";
+            language-servers = [
+              "fish-lsp"
+              "gpt"
+            ];
+          }
+          {
+            name = "toml";
+            language-servers = [
+              "taplo"
+              "gpt"
+            ];
+          }
+          {
+            name = "python";
+            language-servers = [
+              "pyright"
+              "gpt"
+            ];
+          }
           # { name = "lua"; language-servers = [ "luals" "gpt" ]; }
           # { name = "yaml"; language-servers = [ "yamlls" "gpt" ]; }
         ];

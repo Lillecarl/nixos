@@ -1,4 +1,9 @@
-{ lib, config, flakeloc, ... }:
+{
+  lib,
+  config,
+  flakeloc,
+  ...
+}:
 {
   # Set variables for shells
   home.sessionVariables = {
@@ -11,4 +16,3 @@
     HOST = config.ps.hostname;
   };
 }
-

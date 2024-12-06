@@ -1,8 +1,9 @@
-{ pkgs
-, lib
-, inputs
-, config
-, ...
+{
+  pkgs,
+  lib,
+  inputs,
+  config,
+  ...
 }:
 {
   # Use switch-to-configuration Rust implementation
@@ -59,7 +60,9 @@
       ];
     };
     registry = {
-      nixpkgs = { flake = inputs.nixpkgs; };
+      nixpkgs = {
+        flake = inputs.nixpkgs;
+      };
     };
     nixPath = [
       "nixpkgs=${inputs.nixpkgs}"

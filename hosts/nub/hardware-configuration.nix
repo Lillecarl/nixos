@@ -1,6 +1,7 @@
-{ lib
-, pkgs
-, ...
+{
+  lib,
+  pkgs,
+  ...
 }:
 {
   services.udev.extraHwdb = ''
@@ -10,7 +11,10 @@
 
   services.xserver.xkb.extraLayouts.lenovo = {
     description = "Doing a multi billion dollar company's job for them";
-    languages = [ "US" "swe" ];
+    languages = [
+      "US"
+      "swe"
+    ];
     keycodesFile = pkgs.writeText "lenovo-keycodes" ''
             partial xkb_keycodes "lenovo" {
       	      <I248> = 248;

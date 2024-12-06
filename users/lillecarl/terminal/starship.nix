@@ -1,4 +1,9 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 {
   programs.starship = lib.mkIf config.ps.terminal.enable {
     enable = true;

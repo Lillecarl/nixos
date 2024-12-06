@@ -1,4 +1,8 @@
-{ lib, fetchFromGitHub, rustPlatform }:
+{
+  lib,
+  fetchFromGitHub,
+  rustPlatform,
+}:
 let
   pname = "typos-vscode";
   version = "0.1.12";
@@ -24,4 +28,3 @@ rustPlatform.buildRustPackage {
     #maintainers = with maintainers; [ ];
   };
 }
-

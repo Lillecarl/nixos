@@ -1,4 +1,10 @@
-{ lib, pkgs, config, modulesPath, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  modulesPath,
+  ...
+}:
 {
   imports = [
     ../_shared/users.nix

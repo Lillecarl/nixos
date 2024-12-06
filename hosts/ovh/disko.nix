@@ -1,5 +1,4 @@
-_:
-{
+_: {
   disko.devices = {
     disk = {
       one = {
@@ -129,13 +128,19 @@ _:
                   mountpoint = "/home";
                 };
                 "/nix" = {
-                  mountOptions = [ "compress=zstd" "noatime" ];
+                  mountOptions = [
+                    "compress=zstd"
+                    "noatime"
+                  ];
                   mountpoint = "/nix";
                 };
                 "/var" = { };
                 "/srv" = { };
                 "/tmp" = {
-                  mountOptions = [ "compress=zstd:1" "noatime" ];
+                  mountOptions = [
+                    "compress=zstd:1"
+                    "noatime"
+                  ];
                   mountpoint = "/tmp";
                 };
               };

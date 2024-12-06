@@ -1,22 +1,23 @@
-{ lib
-, pkgs
-, flakeloc
-, self
-, config
-, ...
+{
+  lib,
+  pkgs,
+  flakeloc,
+  self,
+  config,
+  ...
 }:
 let
   dotfilesPath = "${flakeloc}/users/lillecarl/dotfiles";
-  fromTo = builtins.map
-    (path:
-      let
-        name = lib.removePrefix dotfilesPath path;
-      in
-      {
-        src = path;
-        dst = "${config.home.homeDirectory}${name}";
-      })
-    (lib.filesystem.listFilesRecursive dotfilesPath);
+  fromTo = builtins.map (
+    path:
+    let
+      name = lib.removePrefix dotfilesPath path;
+    in
+    {
+      src = path;
+      dst = "${config.home.homeDirectory}${name}";
+    }
+  ) (lib.filesystem.listFilesRecursive dotfilesPath);
 in
 {
   home = {
@@ -25,12 +26,10 @@ in
         text = builtins.toJSON fromTo;
         onChange =
           let
-            uglinker = pkgs.writers.writePython3 "uglinker"
-              {
-                libraries = [ pkgs.python3Packages.plumbum ];
-                flakeIgnore = [ "E265" ];
-              }
-              (builtins.readFile "${self}/scripts/uglinker.py");
+            uglinker = pkgs.writers.writePython3 "uglinker" {
+              libraries = [ pkgs.python3Packages.plumbum ];
+              flakeIgnore = [ "E265" ];
+            } (builtins.readFile "${self}/scripts/uglinker.py");
           in
           ''
             ${uglinker} \

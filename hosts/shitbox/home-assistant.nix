@@ -1,7 +1,8 @@
-{ config
-, pkgs
-, lib
-, ...
+{
+  config,
+  pkgs,
+  lib,
+  ...
 }:
 let
   domain = "hass.lillecarl.com";
@@ -25,20 +26,21 @@ in
     enable = true;
     openFirewall = true;
 
-    extraPackages = ps: with ps; [
-      gtts
-      aiohue
-      radios
-      androidtvremote2
-      getmac
-      spotipy
-      pychromecast
-      pycfdns
-      python-nmap
-      colorlog
-      librouteros
-      aiowebostv
-    ];
+    extraPackages =
+      ps: with ps; [
+        gtts
+        aiohue
+        radios
+        androidtvremote2
+        getmac
+        spotipy
+        pychromecast
+        pycfdns
+        python-nmap
+        colorlog
+        librouteros
+        aiowebostv
+      ];
 
     config = {
       default_config = { };
@@ -61,39 +63,45 @@ in
         use_x_forwarded_for = true;
       };
       feedreader.urls = [ "https://nixos.org/blogs.xml" ];
-      device_tracker = lib.mkIf false [{
-        platform = "mikrotik";
-        host = " 192.168.88.1";
-        username = "admin";
-        password = ";m3gafuckyou";
-        new_device_defaults = {
-          track_new_devices = true;
-        };
-      }];
+      device_tracker = lib.mkIf false [
+        {
+          platform = "mikrotik";
+          host = " 192.168.88.1";
+          username = "admin";
+          password = ";m3gafuckyou";
+          new_device_defaults = {
+            track_new_devices = true;
+          };
+        }
+      ];
       script = {
         home_button = {
-          sequence = [{
-            service = "webostv.button";
-            target = {
-              entity_id = "media_player.lg_webos_smart_tv";
-            };
-            data = {
-              button = "HOME";
-            };
-          }];
+          sequence = [
+            {
+              service = "webostv.button";
+              target = {
+                entity_id = "media_player.lg_webos_smart_tv";
+              };
+              data = {
+                button = "HOME";
+              };
+            }
+          ];
         };
 
         set_volume = {
-          sequence = [{
-            service = "webostv.command";
-            target = {
-              entity_id = "media_player.lg_webos_smart_tv";
-            };
-            data = {
-              command = "audio/setVolume";
-              payload.volume = "15";
-            };
-          }];
+          sequence = [
+            {
+              service = "webostv.command";
+              target = {
+                entity_id = "media_player.lg_webos_smart_tv";
+              };
+              data = {
+                command = "audio/setVolume";
+                payload.volume = "15";
+              };
+            }
+          ];
         };
         start_atv = {
           sequence = [

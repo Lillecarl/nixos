@@ -1,4 +1,10 @@
-{ lib, config, pkgs, inputs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 {
   config = lib.mkIf config.ps.terminal.enable {
     nix = {
@@ -8,7 +14,9 @@
         keep-going = true;
       };
       registry = {
-        nixpkgs = { flake = inputs.nixpkgs; };
+        nixpkgs = {
+          flake = inputs.nixpkgs;
+        };
       };
     };
   };

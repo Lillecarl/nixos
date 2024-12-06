@@ -1,4 +1,9 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 {
   xdg.configFile."distrobox_bin" = lib.mkIf config.ps.terminal.enable {
     source = pkgs.symlinkJoin {

@@ -1,5 +1,4 @@
-_:
-{
+_: {
   disko.devices = {
     disk = {
       vdb = {
@@ -41,7 +40,10 @@ _:
                   "/home/user" = { };
                   # Parent is not mounted so the mountpoint must be set
                   "/nix" = {
-                    mountOptions = [ "compress=zstd" "noatime" ];
+                    mountOptions = [
+                      "compress=zstd"
+                      "noatime"
+                    ];
                     mountpoint = "/nix";
                   };
                   # This subvolume will be created but not mounted

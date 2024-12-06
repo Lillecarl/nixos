@@ -1,8 +1,9 @@
-{ stdenv
-, fetchFromGitHub
-, autoPatchelfHook
-, postgresql
-, lua ? throw "lua is required"
+{
+  stdenv,
+  fetchFromGitHub,
+  autoPatchelfHook,
+  postgresql,
+  lua ? throw "lua is required",
 }:
 let
   name = "pllua";
@@ -19,25 +20,27 @@ stdenv.mkDerivation {
     sha256 = "sha256-6GDTnS0aj23irITDrR4ykMpR5ATTbe7YCc8f/KzLagI=";
   };
 
-  makeFlags = [
-    # Use PGXS
-    "USE_PGXS=1"
-    # PGXS only supports installing to postgresql prefix so we need to redirect this
-    "DESTDIR=${placeholder "out"}"
-    # Lua paths
-    "LUA_INCDIR=${lua}/include"
-    "LUALIB=-L${lua}/lib" # Set where Lua is installed
-  ] ++ (
-    if jit then
-      [
-        "LUAJIT=${lua}/bin/luajit"
-      ]
-    else
-      [
-        "LUAC=${lua}/bin/luac"
-        "LUA=${lua}/bin/lua"
-      ]
-  );
+  makeFlags =
+    [
+      # Use PGXS
+      "USE_PGXS=1"
+      # PGXS only supports installing to postgresql prefix so we need to redirect this
+      "DESTDIR=${placeholder "out"}"
+      # Lua paths
+      "LUA_INCDIR=${lua}/include"
+      "LUALIB=-L${lua}/lib" # Set where Lua is installed
+    ]
+    ++ (
+      if jit then
+        [
+          "LUAJIT=${lua}/bin/luajit"
+        ]
+      else
+        [
+          "LUAC=${lua}/bin/luac"
+          "LUA=${lua}/bin/lua"
+        ]
+    );
 
   # Workaround for stupid pllua Makefile
   NIX_LDFLAGS =

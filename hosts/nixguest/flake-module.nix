@@ -1,8 +1,10 @@
-{ inputs
-, lib
-, flakeloc
-, ...
-}: {
+{
+  inputs,
+  lib,
+  flakeloc,
+  ...
+}:
+{
   flake = {
     nixosConfigurations.nixguest = inputs.nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";

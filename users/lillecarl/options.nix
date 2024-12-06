@@ -1,7 +1,8 @@
-{ lib
-, config
-, nixosConfig ? { }
-, ...
+{
+  lib,
+  config,
+  nixosConfig ? { },
+  ...
 }:
 {
   options = {

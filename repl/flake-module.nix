@@ -1,7 +1,8 @@
-{ self
-, inputs
-, __curPos ? __curPos
-, ...
+{
+  self,
+  inputs,
+  __curPos ? __curPos,
+  ...
 }:
 {
   flake.repl =
@@ -10,10 +11,7 @@
       user = builtins.getEnv "USER";
     in
     rec {
-      pkgs = (
-        self.nixosConfigurations.${host} or
-          self.homeConfigurations."${user}@${host}"
-      ).pkgs;
+      pkgs = (self.nixosConfigurations.${host} or self.homeConfigurations."${user}@${host}").pkgs;
       lib = pkgs.lib;
       inherit self inputs;
 

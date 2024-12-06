@@ -1,6 +1,7 @@
-{ fetchFromGitLab
-, python3Packages
-, setuptools-scm
+{
+  fetchFromGitLab,
+  python3Packages,
+  setuptools-scm,
 }:
 let
   pname = "qemu-qmp";

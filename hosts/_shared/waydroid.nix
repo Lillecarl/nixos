@@ -1,5 +1,4 @@
-_:
-{
+_: {
   # How to Google apps:
   # 1. Start Waydroid
   # 2. Browse https://www.google.com/android/uncertified/
