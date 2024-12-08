@@ -5,8 +5,15 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     nixpkgs-master.url = "github:NixOS/nixpkgs/master";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.05";
-    nur.url = "github:nix-community/NUR";
     catppuccin-nix.url = "github:catppuccin/nix";
+    nur = {
+      url = "github:nix-community/NUR";
+      inputs = {
+        flake-parts.follows = "flake-parts";
+        nixpkgs.follows = "nixpkgs";
+        treefmt-nix.follows = "treefmt-nix";
+      };
+    };
     system-manager = {
       url = "github:numtide/system-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -220,7 +227,7 @@
           (import ./pkgs)
           inputs.nix-snapshotter.overlays.default
           inputs.nixgl.overlay
-          inputs.nur.overlay
+          inputs.nur.overlays.default
         ];
       };
 
