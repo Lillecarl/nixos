@@ -66,6 +66,7 @@
       dogdns # CLI DNS tool
       entr # Do something when a file changes
       expect # Automate interactive applications (contains unbuffer and friends)
+      ncdu # NCurses disk usage, like du but with a UI
     ];
   };
 }
