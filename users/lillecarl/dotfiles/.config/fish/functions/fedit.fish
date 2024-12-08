@@ -1,4 +1,4 @@
-function fhx
+function fedit
     set editfile (fd -t f --full-path $argv | sk -m --preview "bat --color=always {}")
 
     if test -n "$editfile"
