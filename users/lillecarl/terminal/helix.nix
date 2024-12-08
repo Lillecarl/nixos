@@ -16,6 +16,7 @@
       keys = {
         normal = {
           "C-s" = ":w";
+          "X" = "extend_line_above";
         };
         insert = {
           "C-s" = ":w";
