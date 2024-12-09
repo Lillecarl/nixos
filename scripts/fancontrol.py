@@ -11,15 +11,16 @@ sensors = local["sensors"]
 fanpath = local.path("/proc/acpi/ibm/fan")
 _lastwrite = time()
 
+
 def setwatchdog():
     # Set timeout to 120 (fallback to auto fan)
     fanpath.write("watchdog 120")
+
 
 def getlevel():
     faninfo: str = fanpath.read()
     faninfolines = faninfo.splitlines()
     fanlevel = None
-
 
     for line in faninfolines:
         regex = r"^level:\s*(.*)$"
@@ -62,13 +63,16 @@ def setlevel(level: int, force: bool = False):
 
     return True
 
+
 def gettemp():
     sensordata: dict[str, dict] = json.loads(sensors["-j"]())
     return float(sensordata["thinkpad-isa-0000"]["CPU"]["temp1_input"])
 
+
 def getspeed():
     sensordata: dict[str, dict] = json.loads(sensors["-j"]())
     return float(sensordata["thinkpad-isa-0000"]["fan1"]["fan1_input"])
+
 
 def setfan(cpu_avg: float):
     level = getlevel()
@@ -90,6 +94,7 @@ def setfan(cpu_avg: float):
     else:
         return setlevel(level - 1)
 
+
 def main():
     setwatchdog()
     watchdog_counter: int = 0
@@ -101,11 +106,11 @@ def main():
     while True:
         sleep(1)
         cpu_pct = cpu_percent()
-        print("cpu_pct: {} fan_counter: {} watchdog_counter {}".format(
-            cpu_pct,
-            fan_counter,
-            watchdog_counter
-            ))
+        print(
+            "cpu_pct: {} fan_counter: {} watchdog_counter {}".format(
+                cpu_pct, fan_counter, watchdog_counter
+            )
+        )
 
         fan_counter += 1
         watchdog_counter += 1
@@ -121,6 +126,7 @@ def main():
         if watchdog_counter > 110:
             setlevel(getlevel(), True)
             watchdog_counter = 0
+
 
 if __name__ == "__main__":
     exit(main())

@@ -17,4 +17,3 @@ function reload_awscreds -e fish_preexec
         direnv reload
     end
 end
-

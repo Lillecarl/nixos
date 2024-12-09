@@ -9,12 +9,7 @@ fish_vi_key_bindings
 # trigger direnv before prompt is rendered
 set -g direnv_fish_mode eval_on_arrow
 
-alias pager=$PAGER
-alias kc=kubectl
-
 abbr -a :q exit
-
-abbr -a edit $EDITOR
 
 abbr -a tg terragrunt
 abbr -a grt 'cd (git root)'
@@ -48,27 +43,3 @@ set -x FISH_PID $fish_pid
 
 # Don't show client popups in fish LSP
 set -gx fish_lsp_show_client_popups false
-
-function sshloop1
-    set -l user $argv[1]
-    set -l host $argv[2]
-    while true
-        sleep 1
-        set -l time (date +%s)
-        ssh-keygen -R $host >/dev/null 2>&1
-        kitten ssh $user@$host
-        if [ $(math $(date +%s) - $time) -gt 60 ]
-            break
-        end
-    end
-end
-
-function sshloop2
-    set -l user $argv[1]
-    set -l host $argv[2]
-    while true
-        sleep 1
-        ssh-keygen -R $host >/dev/null 2>&1
-        kitten ssh $user@$host
-    end
-end

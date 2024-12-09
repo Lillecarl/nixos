@@ -58,10 +58,13 @@
     home.pointerCursor.name = lib.mkForce "Catppuccin-Mocha-Blue";
     home.pointerCursor.package = lib.mkForce pkgs.catppuccin-cursors.mochaBlue;
 
-    home.file.".icons/Catppuccin-Mocha-Blue".source = lib.mkForce "${config.home.pointerCursor.package}/share/icons/catppuccin-mocha-blue-cursors";
-    xdg.dataFile."icons/Catppuccin-Mocha-Blue".source = lib.mkForce "${config.home.pointerCursor.package}/share/icons/catppuccin-mocha-blue-cursors";
+    home.file.".icons/Catppuccin-Mocha-Blue".source =
+      lib.mkForce "${config.home.pointerCursor.package}/share/icons/catppuccin-mocha-blue-cursors";
+    xdg.dataFile."icons/Catppuccin-Mocha-Blue".source =
+      lib.mkForce "${config.home.pointerCursor.package}/share/icons/catppuccin-mocha-blue-cursors";
 
-    xdg.configFile."qt5ct/colors/Catppuccin-Mocha.conf".source = "${inputs.catppuccin-qt5ct}/themes/Catppuccin-Mocha.conf";
+    xdg.configFile."qt5ct/colors/Catppuccin-Mocha.conf".source =
+      "${inputs.catppuccin-qt5ct}/themes/Catppuccin-Mocha.conf";
     xdg.configFile."qt5ct/qt5ct.conf".text = ''
       [Appearance]
       color_scheme_path=/home/lillecarl/.config/qt5ct/colors/Catppuccin-Mocha.conf

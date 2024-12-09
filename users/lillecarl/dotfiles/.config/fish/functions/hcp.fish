@@ -13,7 +13,7 @@ function hcp
     end
 
     if is_kitty && test $drop -gt 0
-	set drop (math $drop - 2)
+        set drop (math $drop - 2)
         # This scrolls the commandline to the bottom after an atuin search
         echo "Dropping $drop" >&3
         echo -en '\e['$drop'+T'

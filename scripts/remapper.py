@@ -378,8 +378,8 @@ async def main():
             if device.name == name:
                 if verbose:
                     print(f"Found device: {device}")
-                #print(f"Leds: {device.leds(verbose=True)}")
-                #print(f"Capabilities: {device.capabilities(verbose=True)}")
+                # print(f"Leds: {device.leds(verbose=True)}")
+                # print(f"Capabilities: {device.capabilities(verbose=True)}")
                 return device
 
         if verbose:
@@ -579,7 +579,9 @@ async def main():
                 print(f"event: {util.categorize(event)}")
                 print(f"Macropad active keys: {mdev.active_keys(verbose=True)}")
                 print(f"last_key_up_code: {last_key_up_code}, event.code: {event.code}")
-                print(f"last_key_up_time: {last_key_up_time} diff: {time.time() - last_key_up_time}")
+                print(
+                    f"last_key_up_time: {last_key_up_time} diff: {time.time() - last_key_up_time}"
+                )
 
                 if (
                     True
@@ -590,19 +592,23 @@ async def main():
                 ):
                     if macropad_attach:
                         print("Attaching devices")
+
                         async def attach():
                             await attach_device(f"{base_path}/daskeyboard.xml")
                             await attach_device(f"{base_path}/steelseries-sensei.xml")
                             await attach_device(f"{base_path}/logitech-g933.xml")
+
                         if usb_xtach_task is None or usb_xtach_task.done():
                             usb_xtach_task = loop.create_task(attach())
                         macropad_attach = False
                     else:
                         print("Detaching devices")
+
                         async def detach():
                             await detach_device(f"{base_path}/logitech-g933.xml")
                             await detach_device(f"{base_path}/daskeyboard.xml")
                             await detach_device(f"{base_path}/steelseries-sensei.xml")
+
                         if usb_xtach_task is None or usb_xtach_task.done():
                             usb_xtach_task = loop.create_task(detach())
                         macropad_attach = True
@@ -702,8 +708,6 @@ async def main():
                         and event.value == Action.DOWN
                         and time.time() - key_state[State.UPTIME] < 0.5
                     ):
-
-
                         if in_key_active(Keys.LEFTMETA):
                             gaming_mode = not gaming_mode
                             print(f"Gaming mode: {'on' if gaming_mode else 'off'}")

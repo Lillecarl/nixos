@@ -37,9 +37,8 @@ in
           modules-left = [
             "idle_inhibitor"
           ];
-          modules-center =
-            [
-            ];
+          modules-center = [
+          ];
           modules-right =
             [
               "custom/nixos-update"

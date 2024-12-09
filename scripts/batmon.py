@@ -7,10 +7,12 @@ from dataclasses import dataclass
 
 notify_send = local["notify-send"]
 
+
 @dataclass
 class State:
     lastNotify: float
     lastPct: int
+
 
 class Runner:
     def __init__(self):
@@ -38,12 +40,7 @@ class Runner:
             self.state.lastNotify = time()
 
     def notify(self, seconds, percentage):
-        notify_send[
-                "-t",
-                f"{seconds * 1000}",
-                "Low battery",
-                f"Battery {percentage}"
-                ]()
+        notify_send["-t", f"{seconds * 1000}", "Low battery", f"Battery {percentage}"]()
 
         self.state.lastNotify = time()
 
@@ -56,4 +53,3 @@ class Runner:
 
 if __name__ == "__main__":
     exit(Runner().spin())
-
