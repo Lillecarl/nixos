@@ -12,7 +12,7 @@
       user = builtins.getEnv "USER";
     in
     rec {
-      pkgs = (self.nixosConfigurations.${host} or self.homeConfigurations."${user}@${host}").pkgs;
+      pkgs = withSystem builtins.currentSystem ({ pkgs, ... }: pkgs);
       fmt = inputs.treefmt-nix.lib.evalModule pkgs ../fmt/default.nix;
       lib = pkgs.lib;
       inherit self inputs;
