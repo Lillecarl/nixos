@@ -12,6 +12,6 @@
     in
     {
       formatter = treefmtEval.config.build.wrapper;
-      checks.formatting = treefmtEval.config.build.check;
+      checks.formatting = treefmtEval.config.build.check self;
     };
 }
