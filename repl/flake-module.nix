@@ -1,6 +1,7 @@
 {
   self,
   inputs,
+  withSystem,
   __curPos ? __curPos,
   ...
 }:
@@ -12,6 +13,7 @@
     in
     rec {
       pkgs = (self.nixosConfigurations.${host} or self.homeConfigurations."${user}@${host}").pkgs;
+      fmt = inputs.treefmt-nix.lib.evalModule pkgs ../fmt/default.nix;
       lib = pkgs.lib;
       inherit self inputs;
 

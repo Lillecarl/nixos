@@ -250,6 +250,7 @@
       };
       imports = [
         ./checks/flake-module.nix
+        ./fmt/flake-module.nix
         ./hosts/penguin/flake-module.nix
         ./hosts/shitbox/flake-module.nix
         ./nixvim/flake-module.nix
@@ -290,7 +291,6 @@
               spkgs = pkgsGenerator inputs.nixpkgs-stable system;
             } // specialArgs;
 
-            formatter = pkgs.nixfmt-rfc-style;
             inherit legacyPackages packages;
           };
       };
