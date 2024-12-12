@@ -27,6 +27,7 @@
     ./nushell.nix
     ./packages.nix
     ./pam.nix
+    ./podman.nix
     ./readline.nix
     ./ripgrep.nix
     ./sessionVariables.nix
