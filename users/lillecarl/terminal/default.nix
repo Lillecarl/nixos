@@ -33,6 +33,7 @@
     ./ssh.nix
     ./starship.nix
     ./tealdeer.nix
+    ./template.nix
     ./tmux.nix
     ./zsh.nix
   ];
