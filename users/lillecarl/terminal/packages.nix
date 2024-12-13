@@ -70,6 +70,7 @@
       progress # Coreutils Progress Viewer
       opentofu # FLOSS Terraform
       deploy-rs # Nix deploy tool
+      kubectl # Kubernetes CLI
     ];
   };
 }
