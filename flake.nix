@@ -14,9 +14,24 @@
         treefmt-nix.follows = "treefmt-nix";
       };
     };
+    nixos-anywhere = {
+      url = "github:nix-community/nixos-anywhere";
+      inputs  = {
+        disko.follows = "disko";
+        flake-parts.follows = "flake-parts";
+        nixpkgs.follows = "nixpkgs";
+        treefmt-nix.follows = "treefmt-nix";
+      };
+    };
     system-manager = {
       url = "github:numtide/system-manager";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+    deploy-rs = {
+      url = "github:serokell/deploy-rs";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.utils.follows = "flake-utils";
+      inputs.flake-compat.follows = "flake-compat";
     };
     nixgl = {
       url = "github:nix-community/nixGL";
@@ -253,6 +268,7 @@
         ./fmt/flake-module.nix
         ./hosts/penguin/flake-module.nix
         ./hosts/shitbox/flake-module.nix
+        ./hosts/hetzner1/flake-module.nix
         ./nixvim/flake-module.nix
         ./repl/flake-module.nix
         ./repoenv/flake-module.nix
