@@ -39,7 +39,7 @@
         language-server.nil = {
           config = {
             nil = {
-              formatting.command = [ "nixpkgs-fmt" ];
+              formatting.command = [ (lib.getExe pkgs.nixfmt-rfc-style) ];
             };
           };
         };
