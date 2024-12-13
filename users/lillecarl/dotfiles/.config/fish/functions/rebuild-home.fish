@@ -13,6 +13,7 @@ function rebuild-home
         build \
         $fullflake \
         --out-link $result \
+        --impure \
         $XTRABUILDARGS || begin
         echo "Failed to build $fullflake"
         return 1
