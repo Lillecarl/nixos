@@ -240,7 +240,7 @@
         overlays = [
           (import ./lib/overlay.nix self.outPath)
           (import ./pkgs)
-          inputs.nix-snapshotter.overlays.default
+          # inputs.nix-snapshotter.overlays.default
           inputs.nixgl.overlay
           inputs.nur.overlays.default
         ];

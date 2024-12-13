@@ -38,6 +38,7 @@ in
           ];
           openssh.authorizedKeys.keys = [
             "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAHZ3pA0vIXiKQuwfM1ks8TipeOxfDT9fgo4xMi9iiWr lillecarl@lillecarl.com"
+            "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF4AwtWUz3usygb2J6owsUJs4X2yTchIGZyI+VDE76tF"
           ];
           autoSubUidGidRange = true;
         };
@@ -57,16 +58,17 @@ in
               startGid = 1000;
             }
           ];
+          inherit (carl_base firstUid pkgs.bash) openssh;
         };
 
         lillecarl = carl_base firstUid config.programs.noshell.package;
         bash = carl_base (firstUid + 1) pkgs.bash;
-        qemu-libvirtd.extraGroups = [
-          "qemu-libvirt"
-          "kvm"
-          "input"
-          "uinput"
-        ];
+        # qemu-libvirtd.extraGroups = [
+        #   "qemu-libvirt"
+        #   "kvm"
+        #   "input"
+        #   "uinput"
+        # ];
       };
     groups = {
       uaccess = { };
