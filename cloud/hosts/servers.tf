@@ -56,3 +56,33 @@ resource "hcloud_volume_attachment" "defconf" {
   server_id = hcloud_server.defconf[each.key].id
   automount = false
 }
+
+locals {
+  servers_out = {
+    for k, _ in local.servers : k => {
+      ipv4_address = hcloud_server.defconf[k].ipv4_address
+      ipv6_address = hcloud_server.defconf[k].ipv6_address
+    }
+  }
+}
+
+module "install" {
+  for_each    = local.servers_out
+  source      = "github.com/nix-community/nixos-anywhere//terraform/install"
+  instance_id = hcloud_server.defconf[each.key].id
+  flake       = "${var.FLAKE}#${each.key}"
+  target_host = each.value.ipv4_address
+  depends_on = [
+    hcloud_server.defconf,
+    local_file.hosts_json,
+  ]
+}
+
+# Configured by direnv
+variable "FLAKE" {}
+# Dump host names and IP addresses into a JSON to be consumed by a Nix 
+# deployment tool (currently deploy-rs).
+resource "local_file" "hosts_json" {
+  content  = jsonencode(local.servers_out)
+  filename = "${var.FLAKE}/hosts/hetzner/hosts.json"
+}

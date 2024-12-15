@@ -9,12 +9,10 @@ let
   system = "aarch64-linux";
 in
 {
-  flake =
-    let
-      hostname = "hetzner1";
-    in
-    {
-      nixosConfigurations.${hostname} = withSystem system (
+  flake = {
+    nixosConfigurations = builtins.mapAttrs (
+      name: data:
+      withSystem system (
         {
           config,
           pkgs,
@@ -30,7 +28,7 @@ in
           inherit pkgs;
           modules = [
             {
-              networking.hostName = hostname;
+              networking.hostName = name;
               networking.firewall.enable = false;
               services.openssh.enable = true;
               programs.git.enable = true;
@@ -42,19 +40,21 @@ in
           ];
           inherit specialArgs;
         }
-      );
-      deploy.nodes.${hostname} = {
-        hostname = "65.21.63.133";
-        profiles.system = {
-          user = "root";
-          sshUser = "root";
-          path = inputs.deploy-rs.lib.${system}.activate.nixos self.nixosConfigurations.${hostname};
-        };
-      };
+      )
+    ) (builtins.fromJSON (builtins.readFile ./hosts.json));
 
-      # This is highly advised, and will prevent many possible mistakes
-      # checks = builtins.mapAttrs (
-      #   system: deployLib: deployLib.deployChecks self.deploy
-      # ) inputs.deploy-rs.lib;
-    };
+    deploy.nodes = builtins.mapAttrs (name: data: {
+      hostname = data.ipv4_address;
+      profiles.system = {
+        user = "root";
+        sshUser = "root";
+        path = inputs.deploy-rs.lib.${system}.activate.nixos self.nixosConfigurations.${name};
+      };
+    }) (builtins.fromJSON (builtins.readFile ./hosts.json));
+
+    # This is highly advised, and will prevent many possible mistakes
+    # checks = builtins.mapAttrs (
+    #   system: deployLib: deployLib.deployChecks self.deploy
+    # ) inputs.deploy-rs.lib;
+  };
 }
