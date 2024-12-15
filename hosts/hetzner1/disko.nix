@@ -17,8 +17,14 @@
                 mountOptions = [ "umask=0077" ];
               };
             };
+            zramWriteback = {
+              size = "20%";
+              content = {
+                type = "nodev";
+              };
+            };
             plainSwap = {
-              size = "100%";
+              size = "80%";
               content = {
                 type = "swap";
                 discardPolicy = "both";

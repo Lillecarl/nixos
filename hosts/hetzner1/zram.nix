@@ -1,0 +1,6 @@
+{
+  zramSwap = {
+    enable = true;
+    # writebackDevice = "";
+  };
+}
