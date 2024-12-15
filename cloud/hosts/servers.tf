@@ -2,12 +2,16 @@ locals {
   defaults = {
     location    = "hel1"
     server_type = "cax11"
+    labels      = {}
   }
   servers = {
     hetzner1 = {
       server_type = "cax11"
       vol_size    = 40
       priv_ip     = "10.137.1.1"
+      labels = {
+        k8s_role = "server"
+      }
     }
     hetzner2 = {
       server_type = "cax11"
@@ -24,6 +28,7 @@ resource "hcloud_server" "defconf" {
   image       = "debian-12"
   server_type = try(each.value.server_type, local.defaults.server_type)
   location    = try(each.value.location, local.defaults.location)
+  labels      = merge(local.defaults.labels, try(each.value.labels, local.defaults.labels))
 
   ssh_keys = [
     hcloud_ssh_key.main.id
@@ -62,6 +67,7 @@ locals {
     for k, _ in local.servers : k => {
       ipv4_address = hcloud_server.defconf[k].ipv4_address
       ipv6_address = hcloud_server.defconf[k].ipv6_address
+      labels       = hcloud_server.defconf[k].labels
     }
   }
 }

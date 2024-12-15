@@ -36,6 +36,9 @@ in
                 pkgs.gitui
               ];
             }
+            {
+              ps.labels = data.labels;
+            }
             ./default.nix
           ];
           inherit specialArgs;
