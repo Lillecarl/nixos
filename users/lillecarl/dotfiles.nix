@@ -32,9 +32,16 @@ in
             } (builtins.readFile "${self}/scripts/uglinker.py");
           in
           ''
+            # Work around -u
+            export OGP=""
+            if [ -n "''${oldGenPath+.}" ]
+            then
+              export OGP="$oldGenPath"
+            fi
+            
             ${uglinker} \
-              $oldGenPath/home-files/.local/linkstate \
-              $newGenPath/home-files/.local/linkstate
+              "$OGP/home-files/.local/linkstate" \
+              "$newGenPath/home-files/.local/linkstate"
 
             echo newGenPath $newGenPath
             echo oldGenPath $oldGenPath
