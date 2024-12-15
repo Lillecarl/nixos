@@ -32,19 +32,14 @@ in
             } (builtins.readFile "${self}/scripts/uglinker.py");
           in
           ''
-            # Work around -u
-            export OGP=""
-            if [ -n "''${oldGenPath+.}" ]
-            then
-              export OGP="$oldGenPath"
-            fi
-            
+            set +u #oldGenPath is unset the first time we're running home-manager
             ${uglinker} \
-              "$OGP/home-files/.local/linkstate" \
+              "$oldGenPath/home-files/.local/linkstate" \
               "$newGenPath/home-files/.local/linkstate"
 
             echo newGenPath $newGenPath
             echo oldGenPath $oldGenPath
+            set -u
           '';
       };
       ".local/repo" = {
