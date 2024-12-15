@@ -3,11 +3,12 @@
     disk = {
       local = {
         type = "disk";
-        device = "/dev/sda";
+        device = "/dev/disk/by-path/pci-0000:06:00.0-scsi-0:0:0:1";
         content = {
           type = "gpt";
           partitions = {
             ESP = {
+              priority = 0;
               size = "1G";
               type = "EF00";
               content = {
@@ -18,13 +19,12 @@
               };
             };
             zramWriteback = {
-              size = "20%";
-              content = {
-                type = "nodev";
-              };
+              priority = 1;
+              size = "9G";
             };
             plainSwap = {
-              size = "80%";
+              priority = 2;
+              size = "100%";
               content = {
                 type = "swap";
                 discardPolicy = "both";
@@ -36,7 +36,7 @@
       };
       remote = {
         type = "disk";
-        device = "/dev/sdb";
+        device = "/dev/disk/by-path/pci-0000:06:00.0-scsi-0:0:0:2";
         content = {
           type = "gpt";
           partitions = {
