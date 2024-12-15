@@ -6,16 +6,13 @@
   __curPos ? __curPos,
   ...
 }:
-let
-  system = "x86_64-linux";
-in
 {
   flake = {
     homeConfigurations =
       let
         workstation =
           sysName: excludeName: config:
-          withSystem system (
+          withSystem "x86_64-linux" (
             {
               pkgs,
               mpkgs,
@@ -58,6 +55,67 @@ in
         "lillecarl@nub" = workstation "nub" "shitbox" {
           carl.gui.enable = true;
         };
+        "lillecarl@penguin" = withSystem "aarch64-linux" (
+          {
+            pkgs,
+            mpkgs,
+            spkgs,
+            flakeloc,
+            ...
+          }:
+          inputs.home-manager.lib.homeManagerConfiguration {
+            inherit pkgs;
+            extraSpecialArgs = {
+              inherit
+                self
+                inputs
+                flakeloc
+                mpkgs
+                spkgs
+                ;
+            };
+            modules = [
+              ../lillecarl
+              {
+                ps.terminal.nerdfonts = false;
+                ps.hostname = "penguin";
+                ps.editors.mode = "fat";
+                ps.podman.enable = true;
+              }
+            ];
+          }
+        );
+        "lillecarl@hetzner1" = withSystem "aarch64-linux" (
+          {
+            pkgs,
+            mpkgs,
+            spkgs,
+            flakeloc,
+            ...
+          }:
+          inputs.home-manager.lib.homeManagerConfiguration {
+            inherit pkgs;
+            extraSpecialArgs = {
+              inherit
+                self
+                inputs
+                flakeloc
+                mpkgs
+                spkgs
+                ;
+              nixosConfig = self.nixosConfigurations.hetzner1;
+            };
+            modules = [
+              ../lillecarl
+              {
+                ps.terminal.nerdfonts = false;
+                ps.hostname = "penguin";
+                ps.editors.mode = "fat";
+                ps.podman.enable = false;
+              }
+            ];
+          }
+        );
       };
   };
 }

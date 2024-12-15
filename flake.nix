@@ -266,13 +266,13 @@
       imports = [
         ./checks/flake-module.nix
         ./fmt/flake-module.nix
+        ./hosts/hetzner1/flake-module.nix
         ./hosts/penguin/flake-module.nix
         ./hosts/shitbox/flake-module.nix
-        ./hosts/hetzner1/flake-module.nix
         ./nixvim/flake-module.nix
         ./repl/flake-module.nix
         ./repoenv/flake-module.nix
-        ./users/penguin/flake-module.nix
+        ./users/lillecarl/flake-module.nix
       ];
 
       # Passed to flake-parts modules
