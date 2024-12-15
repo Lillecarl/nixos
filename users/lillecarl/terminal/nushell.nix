@@ -4,7 +4,6 @@
     enable = true;
 
     configFile.text = ''
-      $env.SHELL = "nu"
       $env.config = {
         edit_mode: vi
         show_banner: false
