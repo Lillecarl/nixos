@@ -71,6 +71,18 @@
       opentofu # FLOSS Terraform
       deploy-rs # Nix deploy tool
       kubectl # Kubernetes CLI
+      (kubectl-cnpg.overrideAttrs (pattrs: rec {
+        version = "1.25.0-rc1";
+
+        src = fetchFromGitHub {
+          owner = "cloudnative-pg";
+          repo = "cloudnative-pg";
+          rev = "v${version}";
+          hash = "sha256-j94AagvDEFsr/hbDZrDzXVdOJSF0Dnkd2djuK2vzIsU=";
+        };
+
+        vendorHash = "sha256-FJ2ugKL4u9sWQhDu/7Dxzms+XitiXwu3FSULTZh4qiA=";
+      }))
     ];
   };
 }
