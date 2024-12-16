@@ -12,11 +12,12 @@ in
       };
     };
   };
-  config = lib.mkIf cfg.enable {
+  config = {
+    ps.k3s.enable = !config.ps.smth.anywhere or true;
     services.k3s = {
-      enable = true;
+      enable = cfg.enable;
 
-      role = "server";
+      role = config.ps.labels.k8s_role;
     };
   };
 }

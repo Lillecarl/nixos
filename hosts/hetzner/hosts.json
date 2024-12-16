@@ -1,1 +1,1 @@
-{"hetzner1":{"ipv4_address":"65.21.63.133","ipv6_address":"2a01:4f9:c012:1249::1","labels":{"k8s_role":"server"}},"hetzner2":{"ipv4_address":"37.27.210.66","ipv6_address":"2a01:4f9:c012:a2d3::1","labels":{}}}
+{"hetzner1":{"ipv4_address":"65.21.63.133","ipv6_address":"2a01:4f9:c012:1249::1","labels":{"arch":"aarch64-linux","k8s_role":"server"}}}
