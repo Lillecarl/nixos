@@ -1,14 +1,15 @@
 locals {
   kust_path = "${path.module}/rendered-kustomize"
+  cnpg_path = "${local.kust_path}/cnpg"
 }
 
-data "http" "manifest" {
+data "http" "cnpg-manifest" {
   url = "https://raw.githubusercontent.com/cloudnative-pg/cloudnative-pg/main/releases/cnpg-1.25.0-rc1.yaml"
 }
 
 resource "local_file" "cnpg-release" {
-  content  = data.http.manifest.response_body
-  filename = "${local.kust_path}/cnpg/operator.yaml"
+  content  = data.http.cnpg-manifest.response_body
+  filename = "${local.cnpg_path}/operator.yaml"
 }
 
 resource "local_file" "cnpg-kustomize" {
@@ -17,10 +18,10 @@ resource "local_file" "cnpg-kustomize" {
       "./operator.yaml"
     ]
   })
-  filename = "${local.kust_path}/cnpg/kustomization.yaml"
+  filename = "${local.cnpg_path}/kustomization.yaml"
 
   provisioner "local-exec" {
-    command = "kubectl apply -k ${path.module}/cnpg/ --server-side"
+    command = "kubectl apply -k ${local.cnpg_path} --server-side"
   }
 }
 
@@ -36,6 +37,10 @@ spec:
   storage:
     size: 1Gi
 YAML
+
+  depends_on = [
+    local_file.cnpg-kustomize
+  ]
 }
 
 # data "kubectl_kustomize_documents" "cnpg-manifests" {
