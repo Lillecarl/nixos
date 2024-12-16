@@ -16,7 +16,7 @@ in
       fileData = builtins.readFile filePath;
       fileAttrs = builtins.fromJSON fileData;
       fileAttrsAnywhere = lib.mapAttrs' (k: v: lib.nameValuePair "${k}-anywhere" (v // {
-        anywhere = true;
+        labels = v.labels // { anywhere = "yes"; };
       })) fileAttrs;
       fileAttrsMerged = fileAttrs // fileAttrsAnywhere;
     in
@@ -48,7 +48,6 @@ in
                   pkgs.gitui
                 ];
                 ps.labels = data.labels;
-                ps.smth.anywhere = data.anywhere or false;
               }
               ./default.nix
             ];

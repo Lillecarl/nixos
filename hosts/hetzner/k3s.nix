@@ -13,7 +13,7 @@ in
     };
   };
   config = {
-    ps.k3s.enable = !config.ps.smth.anywhere or true;
+    ps.k3s.enable = !((config.ps.labels.anywhere or "no") == "yes");
     services.k3s = {
       enable = cfg.enable;
 
