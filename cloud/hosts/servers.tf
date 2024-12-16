@@ -2,7 +2,9 @@ locals {
   defaults = {
     location    = "hel1"
     server_type = "cax11"
-    labels      = {}
+    labels      = {
+      arch = "x86_64-linux"
+    }
   }
   servers = {
     hetzner1 = {
@@ -16,7 +18,7 @@ locals {
       }
     }
     hetzner2 = {
-      enabled = true
+      enabled = false
       server_type = "cax11"
       vol_size    = 40
       priv_ip     = "10.137.1.2"
