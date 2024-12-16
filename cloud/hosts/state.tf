@@ -4,7 +4,7 @@ terraform {
     region = "us-east-1"
 
     bucket = "postspace-tfstate"
-    key    = "k8s.tfstate"
+    key    = "hosts.tfstate"
     # ignore this for r2 compatibility
     skip_credentials_validation = true
     skip_region_validation      = true
