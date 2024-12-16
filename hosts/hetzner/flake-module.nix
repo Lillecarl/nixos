@@ -24,7 +24,7 @@ in
       inherit fileAttrsMerged;
       nixosConfigurations = builtins.mapAttrs (
         name: data:
-        withSystem system (
+        withSystem data.labels.arch (
           {
             config,
             pkgs,
