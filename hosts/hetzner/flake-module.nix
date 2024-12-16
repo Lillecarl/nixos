@@ -50,7 +50,10 @@ in
               (
                 { config, ... }:
                 {
-                  boot.tmp.useTmpfs = true;
+                  boot.tmp = {
+                    useTmpfs = true;
+                    tmpfsSize = "20G";
+                  };
                   networking.hostName = name;
                   networking.firewall.enable = false;
                   services.openssh.enable = true;
