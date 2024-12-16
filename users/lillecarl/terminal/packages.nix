@@ -70,6 +70,7 @@
       progress # Coreutils Progress Viewer
       opentofu # FLOSS Terraform
       deploy-rs # Nix deploy tool
+      waypipe # Wayland over SSH mostly for wl-clipboard
       kubectl # Kubernetes CLI
       (kubectl-cnpg.overrideAttrs (pattrs: rec {
         version = "1.25.0-rc1";
