@@ -2,33 +2,33 @@ locals {
   defaults = {
     location    = "hel1"
     server_type = "cax11"
-    labels      = {
+    labels = {
       arch = "x86_64-linux"
     }
   }
   servers = {
     hetzner1 = {
-      enabled = true
+      enabled     = true
       server_type = "cax11"
       vol_size    = 40
       priv_ip     = "10.137.1.1"
       labels = {
         k8s_role = "server"
-        arch = "aarch64-linux"
+        arch     = "aarch64-linux"
       }
     }
     hetzner2 = {
-      enabled = false
+      enabled     = false
       server_type = "cax11"
       vol_size    = 40
       priv_ip     = "10.137.1.2"
       labels = {
         k8s_role = "agent"
-        arch = "aarch64-linux"
+        arch     = "aarch64-linux"
       }
     }
   }
-  servers_filtered = { for k,v in local.servers: k => v if try(v.enabled, false) }
+  servers_filtered = { for k, v in local.servers : k => v if try(v.enabled, false) }
 }
 
 resource "hcloud_server" "defconf" {

@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
     # Get credentials and endpoints from environment variables
-    region     = "us-east-1"
+    region = "us-east-1"
 
     bucket = "postspace-tfstate"
     key    = "k8s.tfstate"

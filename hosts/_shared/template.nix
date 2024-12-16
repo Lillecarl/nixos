@@ -13,6 +13,8 @@ in
     };
   };
   config = lib.mkIf cfg.enable {
-    lib.template = { info = "Template module is enabled"; };
+    lib.template = {
+      info = "Template module is enabled";
+    };
   };
 }

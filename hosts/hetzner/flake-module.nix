@@ -15,9 +15,17 @@ in
       filePath = ./hosts.json;
       fileData = builtins.readFile filePath;
       fileAttrs = builtins.fromJSON fileData;
-      fileAttrsAnywhere = lib.mapAttrs' (k: v: lib.nameValuePair "${k}-anywhere" (v // {
-        labels = v.labels // { anywhere = "yes"; };
-      })) fileAttrs;
+      fileAttrsAnywhere = lib.mapAttrs' (
+        k: v:
+        lib.nameValuePair "${k}-anywhere" (
+          v
+          // {
+            labels = v.labels // {
+              anywhere = "yes";
+            };
+          }
+        )
+      ) fileAttrs;
       fileAttrsMerged = fileAttrs // fileAttrsAnywhere;
     in
     {
@@ -39,16 +47,24 @@ in
           inputs.nixpkgs.lib.nixosSystem {
             inherit pkgs;
             modules = [
-              {
-                networking.hostName = name;
-                networking.firewall.enable = false;
-                services.openssh.enable = true;
-                programs.git.enable = true;
-                environment.systemPackages = [
-                  pkgs.gitui
-                ];
-                ps.labels = data.labels;
-              }
+              (
+                { config, ... }:
+                {
+                  boot.tmp.useTmpfs = true;
+                  networking.hostName = name;
+                  networking.firewall.enable = false;
+                  services.openssh.enable = true;
+                  programs.git.enable = true;
+                  zramSwap = {
+                    enable = true;
+                    writebackDevice = config.disko.devices.disk.local.content.partitions.zramWriteback.device;
+                  };
+                  environment.systemPackages = [
+                    pkgs.gitui
+                  ];
+                  ps.labels = data.labels;
+                }
+              )
               ./default.nix
             ];
             inherit specialArgs;

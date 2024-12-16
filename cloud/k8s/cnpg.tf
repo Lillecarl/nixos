@@ -25,7 +25,7 @@ resource "local_file" "cnpg-kustomize" {
 }
 
 resource "kubectl_manifest" "cnpg-cluster" {
-    yaml_body = <<YAML
+  yaml_body = <<YAML
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:

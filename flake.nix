@@ -16,7 +16,7 @@
     };
     nixos-anywhere = {
       url = "github:nix-community/nixos-anywhere";
-      inputs  = {
+      inputs = {
         disko.follows = "disko";
         flake-parts.follows = "flake-parts";
         nixpkgs.follows = "nixpkgs";
