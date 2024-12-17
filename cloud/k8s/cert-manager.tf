@@ -1,5 +1,7 @@
 locals {
   cm_path = "${local.kust_path}/cm"
+  cm_release_file = "${local.cm_path}/operator.yaml"
+  cm_extras_file = "${local.cm_path}/extras.yaml"
 }
 variable "CF_DNS_TOKEN" {}
 
@@ -21,8 +23,8 @@ YAML
 
 data "kustomization_overlay" "cm-manifests" {
   resources = [
-    "${local_file.cm-release.filename}",
-    "${local_file.cm-extras.filename}",
+    (fileexists(local.cm_release_file ) ? "${local.cm_release_file }" : "${path.module}/empty.yaml"),
+    (fileexists(local.cm_extras_file ) ? "${local.cm_extras_file }" : "${path.module}/empty.yaml"),
   ]
 } 
 

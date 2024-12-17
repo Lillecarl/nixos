@@ -1,6 +1,8 @@
 locals {
   kust_path = "${path.module}/rendered-kustomize"
   cnpg_path = "${local.kust_path}/cnpg"
+  cnpg_release_file = "${local.cnpg_path}/operator.yaml"
+  cnpg_extras_file = "${local.cnpg_path}/extras.yaml"
 }
 
 data "http" "cnpg-manifest" {
@@ -21,8 +23,8 @@ YAML
 
 data "kustomization_overlay" "cnpg-manifests" {
   resources = [
-    "${local_file.cnpg-release.filename}",
-    "${local_file.cnpg-extras.filename}",
+    (fileexists(local.cnpg_release_file ) ? "${local.cnpg_release_file }" : "${path.module}/empty.yaml"),
+    (fileexists(local.cnpg_extras_file ) ? "${local.cnpg_extras_file }" : "${path.module}/empty.yaml"),
   ]
 } 
 
