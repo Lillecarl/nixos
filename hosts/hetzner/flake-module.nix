@@ -48,7 +48,7 @@ in
             inherit pkgs;
             modules = [
               (
-                { config, ... }:
+                { lib, config, ... }:
                 {
                   boot.tmp = {
                     useTmpfs = true;
@@ -62,6 +62,7 @@ in
                     enable = true;
                     writebackDevice = config.disko.devices.disk.local.content.partitions.zramWriteback.device;
                   };
+                  services.nix-serve.enable = lib.mkForce false;
                   environment.systemPackages = [
                     pkgs.gitui
                   ];
