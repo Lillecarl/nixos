@@ -47,28 +47,10 @@ in
           inputs.nixpkgs.lib.nixosSystem {
             inherit pkgs;
             modules = [
-              (
-                { lib, config, ... }:
-                {
-                  boot.tmp = {
-                    useTmpfs = true;
-                    tmpfsSize = "20G";
-                  };
-                  networking.hostName = name;
-                  networking.firewall.enable = false;
-                  services.openssh.enable = true;
-                  programs.git.enable = true;
-                  zramSwap = {
-                    enable = true;
-                    writebackDevice = config.disko.devices.disk.local.content.partitions.zramWriteback.device;
-                  };
-                  services.nix-serve.enable = lib.mkForce false;
-                  environment.systemPackages = [
-                    pkgs.gitui
-                  ];
-                  ps.labels = data.labels;
-                }
-              )
+              {
+                networking.hostName = name;
+                ps.labels = data.labels;
+              }
               ./default.nix
             ];
             inherit specialArgs;

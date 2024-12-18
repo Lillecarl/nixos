@@ -10,5 +10,6 @@
     ./hardware-configuration.nix
     ./k3s.nix
     ./labels.nix
+    ./stuff.nix
   ];
 }
