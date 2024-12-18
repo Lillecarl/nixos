@@ -72,6 +72,7 @@
       deploy-rs # Nix deploy tool
       waypipe # Wayland over SSH mostly for wl-clipboard
       kubectl # Kubernetes CLI
+      kubernetes-helm # Kubernetes package manager built in go templates
       (kubectl-cnpg.overrideAttrs (pattrs: rec {
         version = "1.25.0-rc1";
 
