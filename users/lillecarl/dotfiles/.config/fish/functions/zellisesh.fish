@@ -8,5 +8,5 @@ function zellisesh
     set -e WAYLAND_DISPLAY
     set -Ux WAYLAND_DISPLAY $WAYLAND_DISPLAY_ORIG
     # Attach to zellij or create a new session
-    zellij attach || zellij
+    zellij attach 2>/dev/null || env -u SHLVL zellij
 end
