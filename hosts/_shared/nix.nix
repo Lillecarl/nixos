@@ -50,6 +50,7 @@
         "rycee.cachix.org-1:TiiXyeSk0iRlzlys4c7HiXLkP3idRf20oQ/roEUAh/A="
         "viperml.cachix.org-1:qZhKBMTfmcLL+OG6fj/hzsMEedgKvZVFRRAhq7j8Vh8="
         "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="
+        "nixbuild.net/CHEAKK-1:IvfuR1Ldmkef8pMcSuCl9N2jppEb8KpBzdoB8uKQdxE="
       ];
       trusted-substituters = [
         "https://cachix.cachix.org"
@@ -57,6 +58,7 @@
         "https://rycee.cachix.org"
         "https://viperml.cachix.org"
         "https://niri.cachix.org"
+        "ssh://eu.nixbuild.net"
       ];
     };
     registry = {
