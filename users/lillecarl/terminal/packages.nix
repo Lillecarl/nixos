@@ -73,6 +73,7 @@
       waypipe # Wayland over SSH mostly for wl-clipboard
       kubectl # Kubernetes CLI
       kubernetes-helm # Kubernetes package manager built in go templates
+      nerdctl # containerd cli tool
       (kubectl-cnpg.overrideAttrs (pattrs: rec {
         version = "1.25.0-rc1";
 
