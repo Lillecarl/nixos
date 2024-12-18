@@ -12,6 +12,10 @@ terraform {
       source  = "hashicorp/kubernetes"
       version = "2.35.0"
     }
+    helm = {
+      source = "hashicorp/helm"
+      version = "2.16.1"
+    }
     http = {
       source  = "hashicorp/http"
       version = "3.4.5"
@@ -36,5 +40,8 @@ provider "http" {
   # Configuration options
 }
 provider "local" {
+  # Configuration options
+}
+provider "helm" {
   # Configuration options
 }
