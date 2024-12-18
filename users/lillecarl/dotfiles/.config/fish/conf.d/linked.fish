@@ -2,6 +2,7 @@ set -x fish_greeting ""
 set -x DIRENV_LOG_FORMAT ""
 set -x TZ Europe/Stockholm
 set -x MYDATE "+%y-%m-%d %H:%M:%S"
+set -x HOST $hostname
 
 fish_vi_key_bindings
 
