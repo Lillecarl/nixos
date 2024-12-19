@@ -38,6 +38,7 @@
     ./tealdeer.nix
     ./template.nix
     ./tmux.nix
+    ./zoxide.nix
     ./zsh.nix
   ];
 
