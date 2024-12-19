@@ -111,13 +111,13 @@ in
                 mpkgs
                 spkgs
                 ;
-              nixosConfig = self.nixosConfigurations.hetzner1.config;
+              nixosConfig = self.nixosConfigurations.${name}.config;
             };
             modules = [
               ../lillecarl
               {
                 ps.terminal.nerdfonts = false;
-                ps.hostname = "penguin";
+                ps.hostname = name;
                 ps.editors.mode = "fat";
                 ps.podman.enable = false;
               }
