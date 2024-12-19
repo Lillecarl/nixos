@@ -1,3 +1,18 @@
-_: {
-  programs.command-not-found.enable = false;
+{ lib, config, ... }:
+let
+  modName = "command-not-found";
+  cfg = config.ps.${modName};
+in
+{
+  options.ps = {
+    ${modName} = {
+      enable = lib.mkOption {
+        default = false;
+        description = "Whether to enable ${modName}.";
+      };
+    };
+  };
+  config = lib.mkIf cfg.enable {
+    programs.command-not-found.enable = false;
+  };
 }

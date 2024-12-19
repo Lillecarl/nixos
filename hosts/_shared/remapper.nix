@@ -1,11 +1,14 @@
 {
-  pkgs,
   lib,
   config,
+  pkgs,
   self,
   ...
 }:
 let
+  modName = "remapper";
+  cfg = config.ps.${modName};
+
   python = pkgs.python3.withPackages (
     ps: with ps; [
       evdev
@@ -16,19 +19,23 @@ let
   wrapper = pkgs.writers.writeFish "remapperd_wrapper" ''
     exec ${lib.getExe python} -u ${script}
   '';
-  cfg = config.carl;
 in
 {
-  options.carl.remapper = {
-    enable = lib.mkEnableOption "Enable remapper";
-    debug = lib.mkEnableOption "Enable remapper debug";
-    keyboardName = lib.mkOption {
-      type = lib.types.str;
-      #default = "AT Translated Set 2 keyboard";
-      description = "Name of the keyboard to remap";
+  options.ps = {
+    ${modName} = {
+      enable = lib.mkOption {
+        default = config.ps.workstation.enable;
+        description = "Whether to enable ${modName}.";
+      };
+      debug = lib.mkEnableOption "Enable remapper debug";
+      keyboardName = lib.mkOption {
+        type = lib.types.str;
+        default = "";
+        description = "Name of the keyboard to remap";
+      };
     };
   };
-  config = {
+  config = lib.mkIf cfg.enable {
     systemd.services.remapper = {
       description = "remapper";
       wantedBy = [ "multi-user.target" ];

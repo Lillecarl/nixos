@@ -15,6 +15,7 @@
           lib.types.list
         ]
       );
+      default = "";
     };
   };
 }
