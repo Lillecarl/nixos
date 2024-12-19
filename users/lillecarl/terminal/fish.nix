@@ -23,7 +23,6 @@ in
 
     programs.fish = {
       enable = true;
-      preferAbbrs = true;
 
       generateCompletions = config.ps.terminal.mode == "fat";
 
