@@ -87,11 +87,12 @@
       ++ (
         if config.ps.terminal.mode == "slim" then
           [
-            waypipe
-            ncdu
-            rclone
-            wl-clipboard
-            nvd
+            waypipe # Clipboard over SSH
+            ncdu # Inspect disk usage
+            rclone # Cloud storage
+            wl-clipboard # CLI clipboard handling
+            nvd # Nix diff tool
+            nix-output-monitor # Nix build with progress
           ]
         else
           [ ]

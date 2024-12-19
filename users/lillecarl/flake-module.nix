@@ -86,6 +86,8 @@ in
                   ps.terminal.mode = "slim";
                   ps.editors.mode = "slim";
                   ps.podman.enable = false;
+                  # thrash eMMC disk less
+                  nix.settings.auto-optimise-store = true;
                 }
               ];
             }
