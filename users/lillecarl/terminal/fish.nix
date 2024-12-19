@@ -37,8 +37,6 @@ in
         ''
           ${lib.getExe pkgs.zoxide} init fish | source
           ${pkgs.thefuck}/bin/thefuck --alias | source
-          #source $XDG_RUNTIME_DIR/agenix/sourcegraph
-          #source $XDG_RUNTIME_DIR/agenix/copilot
         '';
 
       # Prepend some Nix & HM paths if they're not already there.
