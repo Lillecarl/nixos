@@ -83,27 +83,27 @@ data "kustomization_overlay" "prometheus-manifests" {
     "${local_file.prometheus-release.filename}",
     "${local_file.prometheus-extras.filename}",
   ]
-} 
+}
 
 resource "kubectl_manifest" "prometheus0" {
   for_each = data.kustomization_overlay.prometheus-manifests.ids_prio[0]
 
-  yaml_body = data.kustomization_overlay.prometheus-manifests.manifests[each.value]
+  yaml_body         = data.kustomization_overlay.prometheus-manifests.manifests[each.value]
   server_side_apply = true
 }
 
 resource "kubectl_manifest" "prometheus1" {
   for_each = data.kustomization_overlay.prometheus-manifests.ids_prio[1]
 
-  yaml_body = data.kustomization_overlay.prometheus-manifests.manifests[each.value]
+  yaml_body         = data.kustomization_overlay.prometheus-manifests.manifests[each.value]
   server_side_apply = true
-  depends_on = [kubectl_manifest.prometheus0]
+  depends_on        = [kubectl_manifest.prometheus0]
 }
 
 resource "kubectl_manifest" "prometheus2" {
   for_each = data.kustomization_overlay.prometheus-manifests.ids_prio[2]
 
-  yaml_body = data.kustomization_overlay.prometheus-manifests.manifests[each.value]
+  yaml_body         = data.kustomization_overlay.prometheus-manifests.manifests[each.value]
   server_side_apply = true
-  depends_on = [kubectl_manifest.prometheus1]
+  depends_on        = [kubectl_manifest.prometheus1]
 }

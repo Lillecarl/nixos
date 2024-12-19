@@ -1,7 +1,7 @@
 locals {
-  cm_path = "${local.kust_path}/cm"
+  cm_path         = "${local.kust_path}/cm"
   cm_release_file = "${local.cm_path}/operator.yaml"
-  cm_extras_file = "${local.cm_path}/extras.yaml"
+  cm_extras_file  = "${local.cm_path}/extras.yaml"
 }
 variable "CF_DNS_TOKEN" {}
 
@@ -23,36 +23,36 @@ YAML
 
 data "kustomization_overlay" "cm-manifests" {
   resources = [
-    (fileexists(local.cm_release_file ) ? "${local.cm_release_file }" : "${path.module}/empty.yaml"),
-    (fileexists(local.cm_extras_file ) ? "${local.cm_extras_file }" : "${path.module}/empty.yaml"),
+    (fileexists(local.cm_release_file) ? "${local.cm_release_file}" : "${path.module}/empty.yaml"),
+    (fileexists(local.cm_extras_file) ? "${local.cm_extras_file}" : "${path.module}/empty.yaml"),
   ]
-} 
+}
 
 resource "kubectl_manifest" "cm0" {
   for_each = data.kustomization_overlay.cm-manifests.ids_prio[0]
 
-  yaml_body = data.kustomization_overlay.cm-manifests.manifests[each.value]
+  yaml_body         = data.kustomization_overlay.cm-manifests.manifests[each.value]
   server_side_apply = true
 }
 
 resource "kubectl_manifest" "cm1" {
   for_each = data.kustomization_overlay.cm-manifests.ids_prio[1]
 
-  yaml_body = data.kustomization_overlay.cm-manifests.manifests[each.value]
+  yaml_body         = data.kustomization_overlay.cm-manifests.manifests[each.value]
   server_side_apply = true
-  depends_on = [kubectl_manifest.cm0]
+  depends_on        = [kubectl_manifest.cm0]
 }
 
 resource "kubectl_manifest" "cm2" {
   for_each = data.kustomization_overlay.cm-manifests.ids_prio[2]
 
-  yaml_body = data.kustomization_overlay.cm-manifests.manifests[each.value]
+  yaml_body         = data.kustomization_overlay.cm-manifests.manifests[each.value]
   server_side_apply = true
-  depends_on = [kubectl_manifest.cm1]
+  depends_on        = [kubectl_manifest.cm1]
 }
 
 resource "kubectl_manifest" "cm-cf-secret" {
-    yaml_body = <<YAML
+  yaml_body = <<YAML
 apiVersion: v1
 kind: Secret
 metadata:
@@ -70,7 +70,7 @@ YAML
 }
 
 resource "kubectl_manifest" "cm-cf-issuer" {
-    yaml_body = <<YAML
+  yaml_body = <<YAML
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
@@ -94,8 +94,8 @@ YAML
 }
 
 resource "kubectl_manifest" "cm-cert-lillecarl-com" {
-  count = 1
-    yaml_body = <<YAML
+  count     = 1
+  yaml_body = <<YAML
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:

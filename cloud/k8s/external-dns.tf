@@ -1,5 +1,5 @@
 resource "kubectl_manifest" "external-dns-namespace" {
-    yaml_body = <<YAML
+  yaml_body = <<YAML
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -8,7 +8,7 @@ YAML
 }
 
 resource "kubectl_manifest" "cloudflare-dns-token" {
-    yaml_body = <<YAML
+  yaml_body = <<YAML
 apiVersion: v1
 kind: Secret
 metadata:

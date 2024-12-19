@@ -27,8 +27,8 @@ in
 
     # Start gnome-keyring as soon as user is logged in.
     systemd.user.services.gnome-keyring = {
-      Install.WantedBy = [ "default.target" ];
-      Unit.PartOf = [ "default.target" ];
+      Install.WantedBy = lib.mkForce [ "default.target" ];
+      Unit.PartOf = lib.mkForce [ "default.target" ];
     };
   };
 }

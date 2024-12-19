@@ -20,7 +20,7 @@
   config = {
     ps.polkit.enable = false;
     ps.verycommon.enable = false;
-    
+
     networking.firewall.enable = false;
     services.openssh.enable = true;
     programs.git.enable = true;
