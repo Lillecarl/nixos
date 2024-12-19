@@ -32,6 +32,7 @@
     ./readline.nix
     ./ripgrep.nix
     ./sessionVariables.nix
+    ./slim.nix
     ./ssh.nix
     ./starship.nix
     ./tealdeer.nix

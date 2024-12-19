@@ -18,11 +18,14 @@ in
     };
   };
   config = lib.mkIf cfg.enable {
+    programs.atuin.enableFishIntegration = true;
     programs.starship.enableFishIntegration = true;
-    programs.direnv.enableFishIntegration = true;
 
     programs.fish = {
       enable = true;
+      preferAbbrs = true;
+
+      generateCompletions = config.ps.terminal.mode == "fat";
 
       plugins = with pkgs.fishPlugins; [
         {
