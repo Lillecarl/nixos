@@ -12,7 +12,7 @@ in
   options.ps = {
     ${modName} = {
       enable = lib.mkOption {
-        default = true;
+        default = false;
         description = "Whether to enable ${modName}.";
       };
     };
@@ -23,14 +23,14 @@ in
       # Enable wireshark
       wireshark.enable = true;
       # dconf is good i guess
-      programs.dconf.enable = true;
+      dconf.enable = true;
     };
     environment = {
       enableDebugInfo = true;
-      # Enabled fwupd daemon, allows applications to update firmware
-      fwupd.enable = true;
     };
     security = {
+      # rtkit for pipewire? (Recommended on NixOS wiki)
+      rtkit.enable = true;
       # Pluggable Authentication Modules (PAM)
       pam.services =
         let
@@ -154,6 +154,8 @@ in
     };
 
     services = {
+      # Enabled fwupd daemon, allows applications to update firmware
+      fwupd.enable = true;
       # enable tailscale daemon
       tailscale.enable = true;
       # Local network autodiscovery services
@@ -171,8 +173,6 @@ in
       };
       # Enable Flatpak
       flatpak.enable = true;
-      # rtkit for pipewire? (Recommended on NixOS wiki)
-      rtkit.enable = true;
       # Enable PipeWire A/V daemon
       # replaces all other sound daemons
       pipewire = {

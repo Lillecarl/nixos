@@ -33,14 +33,15 @@ in
     ./remapper.nix
     ./samba.nix
     ./secrets.nix
+    ./server.nix
     ./stylix.nix
     ./users.nix
     ./verycommon.nix
     ./waydroid.nix
+    ./workstation.nix
     ./xdg.nix
     ./template.nix
     ./nix.nix
-    ./options.nix
   ];
 
   options.ps = {
