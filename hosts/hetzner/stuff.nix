@@ -24,4 +24,5 @@
   security.pki.certificateFiles = [
     "${self}/resources/letsencrypt-stg-root-x1.pem"
   ];
+  security.polkit.enable = true;
 }
