@@ -102,6 +102,7 @@
             ncdu
             rclone
             wl-clipboard
+            nvd
           ]
         else
           [ ]
