@@ -158,20 +158,6 @@
       url = "github:lnl7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixvim = {
-      url = "github:nix-community/nixvim";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        home-manager.follows = "home-manager";
-        nix-darwin.follows = "nix-darwin";
-        flake-parts.follows = "flake-parts";
-        devshell.follows = "devshell";
-        treefmt-nix.follows = "treefmt-nix";
-        git-hooks.follows = "git-hooks";
-        nuschtosSearch.follows = "nuschtosSearch";
-        flake-compat.follows = "flake-compat";
-      };
-    };
     agenix = {
       url = "github:ryantm/agenix";
       inputs = {
@@ -265,7 +251,6 @@
         ./hosts/hetzner/flake-module.nix
         ./hosts/penguin/flake-module.nix
         ./hosts/shitbox/flake-module.nix
-        ./nixvim/flake-module.nix
         ./repl/flake-module.nix
         ./repoenv/flake-module.nix
         ./users/lillecarl/flake-module.nix
