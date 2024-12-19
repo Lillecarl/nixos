@@ -78,19 +78,8 @@
             kubectl # Kubernetes CLI
             kubernetes-helm # Kubernetes package manager built in go templates
             nerdctl # containerd cli tool
-            (kubectl-cnpg.overrideAttrs (pattrs: rec {
-              version = "1.25.0-rc1";
-
-              src = fetchFromGitHub {
-                owner = "cloudnative-pg";
-                repo = "cloudnative-pg";
-                rev = "v${version}";
-                hash = "sha256-j94AagvDEFsr/hbDZrDzXVdOJSF0Dnkd2djuK2vzIsU=";
-              };
-
-              vendorHash = "sha256-FJ2ugKL4u9sWQhDu/7Dxzms+XitiXwu3FSULTZh4qiA=";
-            }))
-            config.lib.pspkgs.cmctl
+            config.lib.pspkgs.cmctl # Cert-Manager
+            config.lib.pspkgs.kubectl-cnpg # CloudnativePG
           ]
         else
           [ ]
@@ -107,6 +96,20 @@
         else
           [ ]
       );
+    lib.pspkgs.kubectl-cnpg = (
+      pkgs.kubectl-cnpg.overrideAttrs (pattrs: rec {
+        version = "1.25.0-rc1";
+
+        src = pkgs.fetchFromGitHub {
+          owner = "cloudnative-pg";
+          repo = "cloudnative-pg";
+          rev = "v${version}";
+          hash = "sha256-j94AagvDEFsr/hbDZrDzXVdOJSF0Dnkd2djuK2vzIsU=";
+        };
+
+        vendorHash = "sha256-FJ2ugKL4u9sWQhDu/7Dxzms+XitiXwu3FSULTZh4qiA=";
+      })
+    );
     lib.pspkgs.cmctl = (
       pkgs.cmctl.overrideAttrs (pattrs: rec {
         version = "2.1.1";
@@ -123,7 +126,7 @@
         doCheck = false;
         postInstall = ''
           # Link as kubectl plugin
-          ln -s $out/bin/cmctl $out/bin/kubectl-cert-manager
+          ln -s $out/bin/cmctl $out/bin/kubectl_cert-manager
           # Install shell completions
           installShellCompletion --cmd cmctl \
             --bash <($out/bin/cmctl completion bash) \
