@@ -1,17 +1,31 @@
 { lib, config, ... }:
+let
+  modName = "tealdeer";
+  cfg = config.ps.${modName};
+in
 {
-  programs.tealdeer = lib.mkIf config.ps.terminal.enable {
-    enable = true;
-
-    settings = {
-      display = {
-        compact = false;
-        use_pager = false;
+  options.ps = {
+    ${modName} = {
+      enable = lib.mkOption {
+        default = config.ps.terminal.mode == "fat";
+        description = "Whether to enable ${modName}.";
       };
+    };
+  };
+  config = lib.mkIf cfg.enable {
+    programs.tealdeer = {
+      enable = true;
 
-      updates = {
-        auto_update = true;
-        auto_update_interval_hours = 168;
+      settings = {
+        display = {
+          compact = false;
+          use_pager = false;
+        };
+
+        updates = {
+          auto_update = true;
+          auto_update_interval_hours = 168;
+        };
       };
     };
   };

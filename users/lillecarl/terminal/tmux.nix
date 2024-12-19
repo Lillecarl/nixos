@@ -4,20 +4,34 @@
   pkgs,
   ...
 }:
+let
+  modName = "tmux";
+  cfg = config.ps.${modName};
+in
 {
-  programs.tmux = lib.mkIf config.ps.terminal.enable {
-    enable = true;
+  options.ps = {
+    ${modName} = {
+      enable = lib.mkOption {
+        default = config.ps.terminal.mode == "fat";
+        description = "Whether to enable ${modName}.";
+      };
+    };
+  };
+  config = lib.mkIf cfg.enable {
+    programs.tmux = {
+      enable = true;
 
-    clock24 = true;
-    baseIndex = 1;
+      clock24 = true;
+      baseIndex = 1;
 
-    plugins = with pkgs.tmuxPlugins; [
-      vim-tmux-navigator
-      catppuccin
-    ];
+      plugins = with pkgs.tmuxPlugins; [
+        vim-tmux-navigator
+        catppuccin
+      ];
 
-    extraConfig = ''
-      source-file ~/.config/tmux/linked.conf
-    '';
+      extraConfig = ''
+        source-file ~/.config/tmux/linked.conf
+      '';
+    };
   };
 }

@@ -61,6 +61,17 @@
             If the terminal we use supports true-color (24) colorspace.
           '';
         };
+        mode = lib.mkOption {
+          type = lib.types.enum [
+            "slim"
+            "fat"
+          ];
+          default = "slim";
+          description = ''
+            If the terminal experience should be slimmed down to the "semi-bare-minimum"
+            to remote into other machines.
+          '';
+        };
       };
       editors = {
         enable = lib.mkOption {

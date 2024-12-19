@@ -4,8 +4,12 @@
   pkgs,
   ...
 }:
+let
+  modName = "helix";
+  cfg = config.ps.${modName};
+in
 {
-  config = lib.mkIf (config.ps.editors.enable && config.ps.editors.mode == "fat") {
+  config = lib.mkIf (cfg.enable && config.ps.editors.mode == "fat") {
     programs.helix = {
       settings = {
         editor = {

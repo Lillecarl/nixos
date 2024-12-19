@@ -1,21 +1,35 @@
 { lib, config, ... }:
+let
+  modName = "lsd";
+  cfg = config.ps.${modName};
+in
 {
-  programs.lsd = lib.mkIf config.ps.terminal.enable {
-    enable = true;
-
-    enableAliases = true;
-
-    settings = {
-      icons = {
-        theme = if config.ps.terminal.nerdfonts == true then "fancy" else "unicode";
+  options.ps = {
+    ${modName} = {
+      enable = lib.mkOption {
+        default = config.ps.terminal.mode == "fat";
+        description = "Whether to enable ${modName}.";
       };
-      permission = "octal";
-      sorting = {
-        dir-grouping = "first";
+    };
+  };
+  config = lib.mkIf cfg.enable {
+    programs.lsd = {
+      enable = true;
+
+      enableAliases = true;
+
+      settings = {
+        icons = {
+          theme = if config.ps.terminal.nerdfonts == true then "fancy" else "unicode";
+        };
+        permission = "octal";
+        sorting = {
+          dir-grouping = "first";
+        };
+        ignore-globs = [
+          ".git"
+        ];
       };
-      ignore-globs = [
-        ".git"
-      ];
     };
   };
 }

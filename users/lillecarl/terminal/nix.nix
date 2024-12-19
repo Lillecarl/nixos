@@ -5,8 +5,20 @@
   inputs,
   ...
 }:
+let
+  modName = "nix";
+  cfg = config.ps.${modName};
+in
 {
-  config = lib.mkIf config.ps.terminal.enable {
+  options.ps = {
+    ${modName} = {
+      enable = lib.mkOption {
+        default = true;
+        description = "Whether to enable ${modName}.";
+      };
+    };
+  };
+  config = lib.mkIf cfg.enable {
     nix = {
       package = pkgs.nixVersions.latest;
       settings = {

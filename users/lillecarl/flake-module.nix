@@ -83,8 +83,9 @@ in
                 {
                   ps.terminal.nerdfonts = false;
                   ps.hostname = "penguin";
-                  ps.editors.mode = "fat";
-                  ps.podman.enable = true;
+                  ps.terminal.mode = "slim";
+                  ps.editors.mode = "slim";
+                  ps.podman.enable = false;
                 }
               ];
             }
@@ -118,6 +119,7 @@ in
               {
                 ps.terminal.nerdfonts = false;
                 ps.hostname = name;
+                ps.terminal.mode = "fat";
                 ps.editors.mode = "fat";
                 ps.podman.enable = false;
               }

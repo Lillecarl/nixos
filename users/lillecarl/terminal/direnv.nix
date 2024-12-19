@@ -1,10 +1,20 @@
 { lib, config, ... }:
+let
+  modName = "direnv";
+  cfg = config.ps.${modName};
+in
 {
-  programs.direnv = lib.mkIf config.ps.terminal.enable {
-    enable = true;
-
-    enableBashIntegration = true;
-    enableNushellIntegration = true;
-    enableZshIntegration = true;
+  options.ps = {
+    ${modName} = {
+      enable = lib.mkOption {
+        default = config.ps.terminal.mode == "fat";
+        description = "Whether to enable ${modName}.";
+      };
+    };
+  };
+  config = lib.mkIf cfg.enable {
+    programs.direnv = {
+      enable = true;
+    };
   };
 }

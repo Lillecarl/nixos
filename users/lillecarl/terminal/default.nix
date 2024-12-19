@@ -1,4 +1,5 @@
 {
+  lib,
   config,
   pkgs,
   ...
@@ -47,7 +48,7 @@
 
   xdg.enable = true;
 
-  programs = {
+  programs = lib.mkIf (config.ps.terminal.mode == "fat") {
     man = {
       enable = true;
       generateCaches = false;
