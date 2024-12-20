@@ -54,10 +54,13 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    boot.tmp = {
-      useTmpfs = true;
-      tmpfsSize = "24G";
-      cleanOnBoot = true;
+    boot = {
+      kernelPackages = pkgs.linuxPackages_latest;
+      tmp = {
+        useTmpfs = true;
+        tmpfsSize = "24G";
+        cleanOnBoot = true;
+      };
     };
 
     networking.hosts = {
