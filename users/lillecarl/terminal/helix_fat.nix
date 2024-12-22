@@ -37,6 +37,17 @@ in
         pkgs.vscode-langservers-extracted
         pkgs.wl-clipboard
         pkgs.yaml-language-server
+        # Add opentofu as terraform to Helix PATH
+        # Required because terraform-ls uses the terraform binary from path
+        # to format documents.
+        (pkgs.stdenv.mkDerivation {
+          name = "tofu-wrapper";
+          phases = "installPhase";
+          installPhase = ''
+            mkdir -p $out/bin
+            ln -s ${pkgs.opentofu}/bin/tofu $out/bin/terraform
+          '';
+        })
       ];
 
       languages = {
