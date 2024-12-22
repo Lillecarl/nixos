@@ -21,8 +21,10 @@ in
     programs.tmux = {
       enable = true;
 
+      sensibleOnTop = true;
       clock24 = true;
       baseIndex = 1;
+      escapeTime = 0;
 
       plugins = with pkgs.tmuxPlugins; [
         vim-tmux-navigator
