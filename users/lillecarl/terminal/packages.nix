@@ -76,7 +76,9 @@
             deploy-rs # Nix deploy tool
             waypipe # Wayland over SSH mostly for wl-clipboard
             kubectl # Kubernetes CLI
+            kubectx # Kubernetes context switcher
             kubernetes-helm # Kubernetes package manager built in go templates
+            k9s # Kubernetes TUI
             nerdctl # containerd cli tool
             config.lib.pspkgs.cmctl # Cert-Manager
             config.lib.pspkgs.kubectl-cnpg # CloudnativePG
