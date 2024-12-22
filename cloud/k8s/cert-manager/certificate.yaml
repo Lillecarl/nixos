@@ -1,0 +1,18 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: lillecarl-com
+  namespace: default
+spec:
+  secretName: lillecarl-com-tls
+
+  additionalOutputFormats:
+  - type: CombinedPEM
+  - type: DER
+  dnsNames:
+    - lillecarl.com
+    - www.lillecarl.com
+
+  issuerRef:
+    name: letsencrypt-staging
+    kind: ClusterIssuer

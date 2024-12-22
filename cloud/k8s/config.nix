@@ -13,5 +13,11 @@
         sha256 = "sha256-j63Zu8K3on4+MvYohiw99iaXBcH+LNG8qJ3qC/eEyUI=";
       }
     );
+    cert-manager_bundle = toString (
+      pkgs.fetchurl {
+        url = "https://github.com/cert-manager/cert-manager/releases/download/v1.16.2/cert-manager.yaml";
+        sha256 = "sha256-HVHN7NRC8fX4l4Pp4BabldNyck2iA8x13XpcTlChDOY=";
+      }
+    );
   };
 }
