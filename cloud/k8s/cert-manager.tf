@@ -1,4 +1,5 @@
 locals {
+  kust_path       = "${path.module}/rendered-kustomize"
   cm_path         = "${local.kust_path}/cm"
   cm_release_file = "${local.cm_path}/operator.yaml"
   cm_extras_file  = "${local.cm_path}/extras.yaml"
