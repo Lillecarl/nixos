@@ -17,6 +17,7 @@ in
     ./command-not-found.nix
     ./dockerregistry.nix
     ./earlyoom.nix
+    ./fail2ban.nix
     ./fish.nix
     ./guix.nix
     ./hardware-configuration.nix
@@ -26,6 +27,7 @@ in
     ./networking.nix
     ./nginx.nix
     ./niri.nix
+    ./nix.nix
     ./noshell.nix
     ./openvpn.nix
     ./polkit.nix
@@ -34,14 +36,14 @@ in
     ./samba.nix
     ./secrets.nix
     ./server.nix
+    ./ssh.nix
     ./stylix.nix
+    ./template.nix
     ./users.nix
     ./verycommon.nix
     ./waydroid.nix
     ./workstation.nix
     ./xdg.nix
-    ./template.nix
-    ./nix.nix
   ];
 
   options.ps = {
@@ -63,8 +65,17 @@ in
       };
     };
 
-    networking.hosts = {
-      "127.0.0.1" = [ "${config.networking.hostName}.lillecarl.com" ];
+    networking = {
+      firewall = {
+        rejectPackets = true;
+        allowedTCPPorts = [
+          80
+          443
+        ];
+      };
+      hosts = {
+        "127.0.0.1" = [ "${config.networking.hostName}.lillecarl.com" ];
+      };
     };
 
     # # Don't install the /lib/ld-linux.so.2 stub. This saves one instance of nixpkgs.
