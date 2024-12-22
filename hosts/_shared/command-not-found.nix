@@ -7,7 +7,7 @@ in
   options.ps = {
     ${modName} = {
       enable = lib.mkOption {
-        default = false;
+        default = true;
         description = "Whether to enable ${modName}.";
       };
     };
