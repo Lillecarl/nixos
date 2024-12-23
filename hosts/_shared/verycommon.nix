@@ -27,8 +27,6 @@ in
 
     # Install git
     programs.git.enable = true;
-    # Enable IO perf monitoring
-    programs.iotop.enable = true;
 
     # XDG Base Directory Specification
     environment.sessionVariables = {

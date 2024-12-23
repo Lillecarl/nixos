@@ -58,6 +58,9 @@ in
   config = lib.mkIf cfg.enable {
     boot = {
       kernelPackages = pkgs.linuxPackages_latest;
+      kernel.sysctl = {
+        "kernel.task_delayacct" = 1;
+      };
       tmp = {
         useTmpfs = true;
         tmpfsSize = "24G";
@@ -101,7 +104,10 @@ in
     programs = {
       # Bash autocomplete
       bash.completion.enable = true;
-      mtr.enable = true; # suid wrapper
+      # mtr w/o sudo
+      mtr.enable = true;
+      # Enable IO perf monitoring
+      iotop.enable = true;
     };
 
     services = {
