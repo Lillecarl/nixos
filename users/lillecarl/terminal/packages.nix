@@ -79,6 +79,8 @@
             kubectx # Kubernetes context switcher
             kubernetes-helm # Kubernetes package manager built in go templates
             k9s # Kubernetes TUI
+            terranix # Nix -> config.tf.json
+            kustomize # Kubernetes YAML wrangler
             nerdctl # containerd cli tool
             config.lib.pspkgs.cmctl # Cert-Manager
             config.lib.pspkgs.kubectl-cnpg # CloudnativePG
