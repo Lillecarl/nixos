@@ -1,31 +1,30 @@
-locals {
-  prometheus-file-path = "${path.module}/prometheus"
-  prometheus-vars = {
-    namespace = "prometheus"
-  }
-}
+resource "helm_release" "kube-prometheus-stack" {
+  name             = "kube-prometheus-stack"
+  namespace        = "prometheus"
+  repository       = "https://prometheus-community.github.io/helm-charts"
+  chart            = "kube-prometheus-stack"
+  version          = "67.4.0"
+  create_namespace = true
 
-data "kubectl_file_documents" "prometheus_operator_manifest" {
-  content = file(local.prometheus_bundle)
-}
-
-resource "kubectl_manifest" "prometheus_operator_manifest" {
-  for_each          = data.kubectl_file_documents.prometheus_operator_manifest.manifests
-  yaml_body         = each.value
-  server_side_apply = true
-}
-
-data "local_file" "prometheus_yaml" {
-  for_each = fileset(local.prometheus-file-path, "*.yaml")
-  filename = "${local.prometheus-file-path}/${each.key}"
-}
-
-resource "kubectl_manifest" "prometheus_resource" {
-  for_each = data.local_file.prometheus_yaml
-
-  yaml_body         = templatestring(each.value.content, local.prometheus-vars)
-  server_side_apply = true
+  values = [
+    (<<YAML
+grafana:
+  adminPassword: "${local.keycloak_password_raw}"
+  persistence:
+    enabled: true
+    size: 2Gi
+  ingress:
+    enabled: true
+    hosts: [ "grafana.lillecarl.com" ]
+    tls: [{
+      hosts: [ "grafana.lillecarl.com" ]
+    }]
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-staging
+YAML
+    )
+  ]
   depends_on = [
-    kubectl_manifest.prometheus_operator_manifest
+    kubectl_manifest.cloudflare-dns-token
   ]
 }
