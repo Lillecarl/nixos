@@ -2,7 +2,7 @@ locals {
   cert-manager-file-path = "${path.module}/cert-manager"
   cert-manager-vars = {
     namespace           = "cert-manager"
-    cloudflare-apitoken = base64encode(var.CF_DNS_TOKEN)
+    cloudflare-apitoken = var.CF_DNS_TOKEN
   }
 }
 variable "CF_DNS_TOKEN" {}
