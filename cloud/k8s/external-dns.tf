@@ -40,6 +40,7 @@ metrics:
 provider: cloudflare
 cloudflare:
   secretName: cloudflare-dns-token
+  proxied: false
 YAML
     )
   ]
