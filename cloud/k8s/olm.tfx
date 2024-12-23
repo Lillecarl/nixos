@@ -47,11 +47,12 @@ resource "kubectl_manifest" "olm_operator_packageserver" {
   yaml_body         = each.value
   server_side_apply = true
   wait              = true
-  lifecycle {
-    ignore_changes = [
-      yaml_incluster,
-    ]
-  }
+  ignore_fields = [
+    "spec.version",
+    "spec.install.spec.deployments",
+    ".spec.version",
+    ".spec.install.spec.deployments",
+  ]
   depends_on = [
     kubectl_manifest.olm_operator_olm,
   ]
