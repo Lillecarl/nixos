@@ -35,6 +35,12 @@ externalDatabase:
   existingSecretPasswordKey: "pass"
   existingSecretDatabaseKey: "database"
   annotations: {}
+metrics:
+  enabled: true
+  serviceMonitor:
+    enabled: true
+  prometheusRule:
+    enabled: true
 YAML
     )
   ]
