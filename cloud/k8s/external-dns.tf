@@ -1,9 +1,12 @@
+locals {
+  external-dns-namespace = "external-dns"
+}
 resource "kubectl_manifest" "external-dns-namespace" {
   yaml_body = <<YAML
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: external-dns
+  name: "${local.external-dns-namespace}"
 YAML
 }
 
@@ -11,12 +14,12 @@ resource "kubectl_manifest" "cloudflare-dns-token" {
   yaml_body = <<YAML
 apiVersion: v1
 kind: Secret
+type: Opaque
 metadata:
   name: cloudflare-dns-token
-  namespace: external-dns
+  namespace: "${local.external-dns-namespace}"
 data:
-  token: ${base64encode(var.CF_DNS_TOKEN)}
-type: Opaque
+  cloudflare_api_token: ${base64encode(var.CF_DNS_TOKEN)}
 YAML
   depends_on = [
     kubectl_manifest.external-dns-namespace
@@ -25,21 +28,18 @@ YAML
 
 resource "helm_release" "external-dns" {
   name       = "external-dns"
-  namespace  = "external-dns"
-  repository = "https://kubernetes-sigs.github.io/external-dns/"
+  namespace  = local.external-dns-namespace
+  repository = "oci://registry-1.docker.io/bitnamicharts/"
   chart      = "external-dns"
-  version    = "1.15.0"
+  version    = "8.7.1"
 
   values = [
     (<<YAML
-provider: 
-  name: cloudflare
-env:
-  - name: CF_API_TOKEN
-    valueFrom:
-      secretKeyRef:
-        name: cloudflare-dns-token
-        key: token
+metrics:
+  enabled: true
+provider: cloudflare
+cloudflare:
+  secretName: cloudflare-dns-token
 YAML
     )
   ]
