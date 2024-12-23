@@ -1,0 +1,58 @@
+locals {
+  olm-file-path = "${path.module}/olm"
+  olm-vars = {
+    namespace = "operator-lifecycle-manager"
+  }
+}
+
+data "kubectl_file_documents" "olm_operator_crd" {
+  content = file(local.operator-lifecycle-manager_crd)
+}
+
+data "kubectl_file_documents" "olm_operator_olm" {
+  content = file(local.operator-lifecycle-manager_olm)
+}
+
+resource "kubectl_manifest" "olm_operator_crd" {
+  for_each          = data.kubectl_file_documents.olm_operator_crd.manifests
+  yaml_body         = each.value
+  server_side_apply = true
+  wait              = true
+}
+
+locals {
+  packageServerKey = "/apis/operators.coreos.com/v1alpha1/namespaces/olm/clusterserviceversions/packageserver"
+  olm_operator_manifests = {
+    for k, v in data.kubectl_file_documents.olm_operator_olm.manifests : k => v if k != local.packageServerKey
+  }
+}
+
+resource "kubectl_manifest" "olm_operator_olm" {
+  for_each          = local.olm_operator_manifests
+  yaml_body         = each.value
+  server_side_apply = true
+  wait              = true
+  depends_on = [
+    kubectl_manifest.olm_operator_crd,
+  ]
+}
+
+# Make sure we create the packageserver last, so that we also destroy it first
+# This is a workaround to make sure something with finalizers is done in the 
+# correct order, else everything gets stuck really bad.
+resource "kubectl_manifest" "olm_operator_packageserver" {
+  for_each = {
+    "${local.packageServerKey}" = data.kubectl_file_documents.olm_operator_olm.manifests[local.packageServerKey]
+  }
+  yaml_body         = each.value
+  server_side_apply = true
+  wait              = true
+  lifecycle {
+    ignore_changes = [
+      yaml_incluster,
+    ]
+  }
+  depends_on = [
+    kubectl_manifest.olm_operator_olm,
+  ]
+}

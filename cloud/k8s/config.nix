@@ -1,4 +1,12 @@
-{ lib, pkgs, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
+let
+  operator-lifecycle-manager-version = "0.30.0";
+in
 {
   locals = {
     prometheus_bundle = toString (
@@ -19,5 +27,18 @@
         sha256 = "sha256-HVHN7NRC8fX4l4Pp4BabldNyck2iA8x13XpcTlChDOY=";
       }
     );
+    operator-lifecycle-manager_crd = toString (
+      pkgs.fetchurl {
+        url = "https://github.com/operator-framework/operator-lifecycle-manager/releases/download/v${operator-lifecycle-manager-version}/crds.yaml";
+        sha256 = "sha256-HFR5j7szJW2KU/YVzUQjagLDxZvSQ2KpmKL+nYHO9Pg=";
+      }
+    );
+    operator-lifecycle-manager_olm = toString (
+      pkgs.fetchurl {
+        url = "https://github.com/operator-framework/operator-lifecycle-manager/releases/download/v${operator-lifecycle-manager-version}/olm.yaml";
+        sha256 = "sha256-CXCTagaGZ1c+QCEEPqcTv9UwojadYscUOVQwpVYdQb8=";
+      }
+    );
   };
+  output = builtins.mapAttrs (name: value: { inherit value; }) config.locals;
 }
