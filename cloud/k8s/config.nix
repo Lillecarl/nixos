@@ -39,6 +39,7 @@ in
         sha256 = "sha256-CXCTagaGZ1c+QCEEPqcTv9UwojadYscUOVQwpVYdQb8=";
       }
     );
+    helm_path = lib.getExe pkgs.kubernetes-helm;
   };
   output = builtins.mapAttrs (name: value: { inherit value; }) config.locals;
 }
