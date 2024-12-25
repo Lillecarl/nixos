@@ -27,21 +27,11 @@ terraform {
   }
 }
 
-provider "kustomization" {
-  # Configuration options
-}
-provider "kubernetes" {
-  # Configuration options
-}
 provider "kubectl" {
-  # Configuration options
+  apply_retry_count = 15
 }
-provider "http" {
-  # Configuration options
-}
-provider "local" {
-  # Configuration options
-}
-provider "helm" {
-  # Configuration options
-}
+provider "kustomization" {}
+provider "kubernetes" {}
+provider "http" {}
+provider "local" {}
+provider "helm" {}
