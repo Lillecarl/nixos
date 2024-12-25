@@ -1,33 +1,70 @@
-locals {
-  cert-manager-file-path = "${path.module}/cert-manager"
-  cert-manager-vars = {
-    namespace           = "cert-manager"
-    cloudflare-apitoken = var.CF_DNS_TOKEN
+variable "CF_DNS_TOKEN" {}
+data "kustomization_overlay" "cert_manager" {
+  resources = concat(
+    [local.cert-manager_bundle],
+    tolist(fileset(path.module, "cert-manager/*.yaml")),
+  )
+  patches {
+    target {
+      kind = "Certificate"
+      name = "example-tld"
+    }
+    patch = <<YAML
+kind: Certificate
+metadata:
+  name: lillecarl-com
+  namespace: default
+spec:
+  secretName: lillecarl-com-tls
+  dnsNames:
+    - lillecarl.com
+    - www.lillecarl.com
+YAML
+    options {
+      allow_name_change = true
+    }
+  }
+  secret_generator {
+    name      = "cloudflare-api-token-secret"
+    namespace = "cert-manager"
+    type      = "Opaque"
+    literals = [
+      "api-token=${var.CF_DNS_TOKEN}"
+    ]
+  }
+  generator_options {
+    disable_name_suffix_hash = true
+  }
+  kustomize_options {
+    load_restrictor = "none"
+    enable_helm     = true
+    helm_path       = local.helm_path
   }
 }
-variable "CF_DNS_TOKEN" {}
+resource "kubectl_manifest" "cert_manager0" {
+  for_each   = data.kustomization_overlay.cert_manager.ids_prio[0]
+  yaml_body  = data.kustomization_overlay.cert_manager.manifests[each.value]
+  depends_on = []
 
-data "kubectl_file_documents" "cert-manager_operator_manifest" {
-  content = file(local.cert-manager_bundle)
-}
-
-resource "kubectl_manifest" "cert-manager_operator_manifest" {
-  for_each          = data.kubectl_file_documents.cert-manager_operator_manifest.manifests
-  yaml_body         = each.value
   server_side_apply = true
+  wait              = true
+  timeouts { create = "1m" }
 }
+resource "kubectl_manifest" "cert_manager1" {
+  for_each   = data.kustomization_overlay.cert_manager.ids_prio[1]
+  yaml_body  = data.kustomization_overlay.cert_manager.manifests[each.value]
+  depends_on = [kubectl_manifest.cert_manager0]
 
-data "local_file" "cert-manager_yaml" {
-  for_each = fileset(local.cert-manager-file-path, "*.yaml")
-  filename = "${local.cert-manager-file-path}/${each.key}"
-}
-
-resource "kubectl_manifest" "cert-manager_resource" {
-  for_each = data.local_file.cert-manager_yaml
-
-  yaml_body         = templatestring(each.value.content, local.cert-manager-vars)
   server_side_apply = true
-  depends_on = [
-    kubectl_manifest.cert-manager_operator_manifest
-  ]
+  wait              = true
+  timeouts { create = "1m" }
+}
+resource "kubectl_manifest" "cert_manager2" {
+  for_each   = data.kustomization_overlay.cert_manager.ids_prio[2]
+  yaml_body  = data.kustomization_overlay.cert_manager.manifests[each.value]
+  depends_on = [kubectl_manifest.cert_manager1]
+
+  server_side_apply = true
+  wait              = true
+  timeouts { create = "1m" }
 }
