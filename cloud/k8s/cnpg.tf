@@ -18,6 +18,7 @@ data "kubectl_file_documents" "cnpg_operator" {
 resource "kubectl_manifest" "cnpg_operator" {
   for_each          = data.kubectl_file_documents.cnpg_operator.manifests
   yaml_body         = each.value
+  force_conflicts   = local.k8s_force
   server_side_apply = true
 }
 data "local_file" "cnpg_yaml" {
@@ -28,6 +29,7 @@ resource "kubectl_manifest" "cnpg_resource" {
   for_each = data.local_file.cnpg_yaml
 
   yaml_body         = templatestring(each.value.content, local.cnpg-vars)
+  force_conflicts   = local.k8s_force
   server_side_apply = true
   depends_on        = [kubectl_manifest.cnpg_operator]
 }

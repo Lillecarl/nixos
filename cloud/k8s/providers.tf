@@ -27,6 +27,8 @@ terraform {
   }
 }
 
+variable "K8S_FORCE" { default = true }
+locals { k8s_force = var.K8S_FORCE }
 provider "kubectl" {
   apply_retry_count = 15
 }

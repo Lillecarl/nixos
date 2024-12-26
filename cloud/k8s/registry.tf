@@ -17,4 +17,5 @@ resource "kubectl_manifest" "registry_resource" {
 
   yaml_body = templatestring(each.value.content, local.registry-vars)
   server_side_apply = true
+  force_conflicts   = local.k8s_force
 }

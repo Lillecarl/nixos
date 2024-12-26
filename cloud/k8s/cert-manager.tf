@@ -46,6 +46,7 @@ resource "kubectl_manifest" "cert_manager0" {
   yaml_body  = data.kustomization_overlay.cert_manager.manifests[each.value]
   depends_on = []
 
+  force_conflicts   = local.k8s_force
   server_side_apply = true
   wait              = true
   timeouts { create = "1m" }
@@ -55,6 +56,7 @@ resource "kubectl_manifest" "cert_manager1" {
   yaml_body  = data.kustomization_overlay.cert_manager.manifests[each.value]
   depends_on = [kubectl_manifest.cert_manager0]
 
+  force_conflicts   = local.k8s_force
   server_side_apply = true
   wait              = true
   timeouts { create = "1m" }
@@ -64,6 +66,7 @@ resource "kubectl_manifest" "cert_manager2" {
   yaml_body  = data.kustomization_overlay.cert_manager.manifests[each.value]
   depends_on = [kubectl_manifest.cert_manager1]
 
+  force_conflicts   = local.k8s_force
   server_side_apply = true
   wait              = true
   timeouts { create = "1m" }

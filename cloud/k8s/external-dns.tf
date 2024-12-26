@@ -36,6 +36,7 @@ YAML
 resource "kubectl_manifest" "external-dns-chart0" {
   for_each          = data.kustomization_overlay.external-dns-chart.ids_prio[0]
   yaml_body         = data.kustomization_overlay.external-dns-chart.manifests[each.value]
+  force_conflicts   = local.k8s_force
   server_side_apply = true
   wait              = true
   depends_on        = []
@@ -43,6 +44,7 @@ resource "kubectl_manifest" "external-dns-chart0" {
 resource "kubectl_manifest" "external-dns-chart1" {
   for_each          = data.kustomization_overlay.external-dns-chart.ids_prio[1]
   yaml_body         = data.kustomization_overlay.external-dns-chart.manifests[each.value]
+  force_conflicts   = local.k8s_force
   server_side_apply = true
   wait              = true
   depends_on        = [kubectl_manifest.external-dns-chart0]
@@ -50,6 +52,7 @@ resource "kubectl_manifest" "external-dns-chart1" {
 resource "kubectl_manifest" "external-dns-chart2" {
   for_each          = data.kustomization_overlay.external-dns-chart.ids_prio[2]
   yaml_body         = data.kustomization_overlay.external-dns-chart.manifests[each.value]
+  force_conflicts   = local.k8s_force
   server_side_apply = true
   wait              = true
   depends_on        = [kubectl_manifest.external-dns-chart1]
