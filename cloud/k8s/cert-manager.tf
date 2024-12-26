@@ -31,9 +31,9 @@ YAML
     literals = [
       "api-token=${var.CF_DNS_TOKEN}"
     ]
-  }
-  generator_options {
-    disable_name_suffix_hash = true
+    options {
+      disable_name_suffix_hash = true
+    }
   }
   kustomize_options {
     load_restrictor = "none"

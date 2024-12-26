@@ -1,13 +1,23 @@
-resource "kubectl_manifest" "keycloak-namespace" {
-  yaml_body = <<YAML
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: keycloak
-YAML
-}
-
 data "kustomization_overlay" "keycloak-chart" {
+  namespace = "keycloak"
+  resources = concat(
+    tolist(fileset(path.module, "keycloak/*.yaml")),
+  )
+  secret_generator {
+    name      = "cluster-keycloak"
+    namespace = "keycloak"
+    type      = "Opaque"
+    literals = [
+      "host=${base64encode("cluster-rw.cnpg.svc.cluster.local")}",
+      "port=${base64encode("5432")}",
+      "user=${local.cnpg-vars.keycloak_username}",
+      "pass=${local.cnpg-vars.keycloak_password}",
+      "database=${base64encode("keycloak")}",
+    ]
+    options {
+      disable_name_suffix_hash = true
+    }
+  }
   helm_charts {
     name          = "keycloak"
     namespace     = "keycloak"
@@ -37,10 +47,10 @@ externalDatabase:
   annotations: {}
 metrics:
   enabled: true
-  serviceMonitor:
-    enabled: true
-  prometheusRule:
-    enabled: true
+  # serviceMonitor:
+  #   enabled: true
+  # prometheusRule:
+  #   enabled: true
 YAML
   }
   kustomize_options {
@@ -50,26 +60,29 @@ YAML
   }
 }
 resource "kubectl_manifest" "keycloak-chart0" {
-  for_each          = data.kustomization_overlay.keycloak-chart.ids_prio[0]
-  yaml_body         = data.kustomization_overlay.keycloak-chart.manifests[each.value]
+  for_each   = data.kustomization_overlay.keycloak-chart.ids_prio[0]
+  yaml_body  = data.kustomization_overlay.keycloak-chart.manifests[each.value]
+  depends_on = [kubectl_manifest.cnpg_resource]
+
   server_side_apply = true
   wait              = true
-  depends_on = [
-    kubectl_manifest.keycloak-namespace,
-    kubectl_manifest.cnpg_database,
-  ]
+  timeouts { create = "1m" }
 }
 resource "kubectl_manifest" "keycloak-chart1" {
-  for_each          = data.kustomization_overlay.keycloak-chart.ids_prio[1]
-  yaml_body         = data.kustomization_overlay.keycloak-chart.manifests[each.value]
+  for_each   = data.kustomization_overlay.keycloak-chart.ids_prio[1]
+  yaml_body  = data.kustomization_overlay.keycloak-chart.manifests[each.value]
+  depends_on = [kubectl_manifest.keycloak-chart0]
+
   server_side_apply = true
   wait              = true
-  depends_on        = [kubectl_manifest.keycloak-chart0]
+  timeouts { create = "1m" }
 }
 resource "kubectl_manifest" "keycloak-chart2" {
-  for_each          = data.kustomization_overlay.keycloak-chart.ids_prio[2]
-  yaml_body         = data.kustomization_overlay.keycloak-chart.manifests[each.value]
+  for_each   = data.kustomization_overlay.keycloak-chart.ids_prio[2]
+  yaml_body  = data.kustomization_overlay.keycloak-chart.manifests[each.value]
+  depends_on = [kubectl_manifest.keycloak-chart1]
+
   server_side_apply = true
   wait              = true
-  depends_on        = [kubectl_manifest.keycloak-chart1]
+  timeouts { create = "1m" }
 }

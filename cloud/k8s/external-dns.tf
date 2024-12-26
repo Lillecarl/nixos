@@ -1,33 +1,19 @@
-locals {
-  external-dns-namespace = "external-dns"
-}
-resource "kubectl_manifest" "external-dns-namespace" {
-  yaml_body = <<YAML
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: "${local.external-dns-namespace}"
-YAML
-}
-resource "kubectl_manifest" "cloudflare-dns-token" {
-  yaml_body = <<YAML
-apiVersion: v1
-kind: Secret
-type: Opaque
-metadata:
-  name: cloudflare-dns-token
-  namespace: "${local.external-dns-namespace}"
-data:
-  cloudflare_api_token: ${base64encode(var.CF_DNS_TOKEN)}
-YAML
-  depends_on = [
-    kubectl_manifest.external-dns-namespace
-  ]
-}
 data "kustomization_overlay" "external-dns-chart" {
+  resources = fileset(path.module, "external-dns/*.yaml")
+  secret_generator {
+    name      = "cloudflare-api-token-secret"
+    namespace = "external-dns"
+    type      = "Opaque"
+    literals = [
+      "cloudflare_api_token=${var.CF_DNS_TOKEN}"
+    ]
+    options {
+      disable_name_suffix_hash = true
+    }
+  }
   helm_charts {
     name          = "external-dns"
-    namespace     = local.external-dns-namespace
+    namespace     = "external-dns"
     repo          = "oci://registry-1.docker.io/bitnamicharts/"
     release_name  = "external-dns"
     version       = "8.7.1"
@@ -37,7 +23,7 @@ metrics:
   enabled: true
 provider: cloudflare
 cloudflare:
-  secretName: cloudflare-dns-token
+  secretName: cloudflare-api-token-secret
   proxied: false
 YAML
   }
@@ -52,7 +38,7 @@ resource "kubectl_manifest" "external-dns-chart0" {
   yaml_body         = data.kustomization_overlay.external-dns-chart.manifests[each.value]
   server_side_apply = true
   wait              = true
-  depends_on        = [kubectl_manifest.cloudflare-dns-token]
+  depends_on        = []
 }
 resource "kubectl_manifest" "external-dns-chart1" {
   for_each          = data.kustomization_overlay.external-dns-chart.ids_prio[1]
