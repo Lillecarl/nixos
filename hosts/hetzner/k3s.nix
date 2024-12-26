@@ -22,6 +22,14 @@ in
     services.k3s = {
       enable = cfg.enable;
 
+      extraFlags = [
+        "--disable=traefik"
+        "--kube-apiserver-arg=oidc-issuer-url=https://keycloak.lillecarl.com/realms/master"
+        "--kube-apiserver-arg=oidc-client-id=kubernetes"
+        "--kube-apiserver-arg=oidc-username-claim=sub" # usename is less fluid
+        "--kube-apiserver-arg=oidc-groups-claim=groups"
+      ];
+
       role = config.ps.labels.k8s_role;
     };
     environment.variables = lib.mkIf cfg.enable {

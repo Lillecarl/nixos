@@ -8,11 +8,11 @@ data "kustomization_overlay" "keycloak-chart" {
     namespace = "keycloak"
     type      = "Opaque"
     literals = [
-      "host=${base64encode("cluster-rw.cnpg.svc.cluster.local")}",
-      "port=${base64encode("5432")}",
-      "user=${local.cnpg-vars.keycloak_username}",
-      "pass=${local.cnpg-vars.keycloak_password}",
-      "database=${base64encode("keycloak")}",
+      "host=cluster-rw.cnpg.svc.cluster.local",
+      "port=5432",
+      "user=keycloak",
+      "pass=${var.KEYCLOAK_ADMIN_PASS}",
+      "database=keycloak",
     ]
     options {
       disable_name_suffix_hash = true
@@ -29,14 +29,15 @@ data "kustomization_overlay" "keycloak-chart" {
 postgresql:
   enabled: false
 auth:
-  adminUser: carl
-  adminPassword: carl
+  adminUser: superadmin
+  adminPassword: ${var.KEYCLOAK_ADMIN_PASS}"
 ingress:
   enabled: true
   tls: true
   hostname: keycloak.lillecarl.com
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-staging
+  ingressClassName: nginx
 externalDatabase:
   existingSecret: "cluster-keycloak"
   existingSecretHostKey: "host"
@@ -64,6 +65,7 @@ resource "kubectl_manifest" "keycloak-chart0" {
   yaml_body  = data.kustomization_overlay.keycloak-chart.manifests[each.value]
   depends_on = [kubectl_manifest.cnpg_resource]
 
+  force_conflicts   = local.k8s_force
   server_side_apply = true
   wait              = true
   timeouts { create = "1m" }
@@ -73,6 +75,7 @@ resource "kubectl_manifest" "keycloak-chart1" {
   yaml_body  = data.kustomization_overlay.keycloak-chart.manifests[each.value]
   depends_on = [kubectl_manifest.keycloak-chart0]
 
+  force_conflicts   = local.k8s_force
   server_side_apply = true
   wait              = true
   timeouts { create = "1m" }
@@ -82,6 +85,7 @@ resource "kubectl_manifest" "keycloak-chart2" {
   yaml_body  = data.kustomization_overlay.keycloak-chart.manifests[each.value]
   depends_on = [kubectl_manifest.keycloak-chart1]
 
+  force_conflicts   = local.k8s_force
   server_side_apply = true
   wait              = true
   timeouts { create = "1m" }
