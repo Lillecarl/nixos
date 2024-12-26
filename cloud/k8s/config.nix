@@ -5,47 +5,60 @@
   ...
 }:
 let
-  operator-lifecycle-manager-version = "0.30.0";
+  olm-version = "0.30.0";
+  prometheus-version = "v0.79.2";
+  cnpg-version = "1.25.0";
+  cert_manager-version = "1.16.2";
+  nginx-version = "1.12.0-beta.0";
+  rook-version = "1.16.0";
 in
 {
   locals = {
-    prometheus_bundle = toString (
+    prometheus-bundle = toString (
       pkgs.fetchurl {
-        url = "https://github.com/prometheus-operator/prometheus-operator/releases/download/v0.79.2/bundle.yaml";
+        url = "https://github.com/prometheus-operator/prometheus-operator/releases/download/v${prometheus-version}/bundle.yaml";
         sha256 = "sha256-39t/bVxkgXKa7TGFIx9FJdhoFUzDz6uVjlwW7m5yiAM=";
       }
     );
-    cnpg_bundle = toString (
+    cnpg-bundle = toString (
       pkgs.fetchurl {
-        url = "https://raw.githubusercontent.com/cloudnative-pg/cloudnative-pg/main/releases/cnpg-1.25.0-rc1.yaml";
-        sha256 = "sha256-j63Zu8K3on4+MvYohiw99iaXBcH+LNG8qJ3qC/eEyUI=";
+        url = "https://github.com/cloudnative-pg/cloudnative-pg/releases/download/v${cnpg-version}/cnpg-${cnpg-version}.yaml";
+        sha256 = "sha256-VAMlYSMT93W2JKREwhfEwYUSacBD9yynPbz2r/Qz3LQ=";
       }
     );
-    cert-manager_bundle = toString (
+    cert_manager-bundle = toString (
       pkgs.fetchurl {
-        url = "https://github.com/cert-manager/cert-manager/releases/download/v1.16.2/cert-manager.yaml";
+        url = "https://github.com/cert-manager/cert-manager/releases/download/v${cert_manager-version}/cert-manager.yaml";
         sha256 = "sha256-HVHN7NRC8fX4l4Pp4BabldNyck2iA8x13XpcTlChDOY=";
       }
     );
-    operator-lifecycle-manager_crd = toString (
+    olm-crd = toString (
       pkgs.fetchurl {
-        url = "https://github.com/operator-framework/operator-lifecycle-manager/releases/download/v${operator-lifecycle-manager-version}/crds.yaml";
+        url = "https://github.com/operator-framework/olm/releases/download/v${olm-version}/crds.yaml";
         sha256 = "sha256-HFR5j7szJW2KU/YVzUQjagLDxZvSQ2KpmKL+nYHO9Pg=";
       }
     );
-    operator-lifecycle-manager_olm = toString (
+    olm-olm = toString (
       pkgs.fetchurl {
-        url = "https://github.com/operator-framework/operator-lifecycle-manager/releases/download/v${operator-lifecycle-manager-version}/olm.yaml";
+        url = "https://github.com/operator-framework/olm/releases/download/v${olm-version}/olm.yaml";
         sha256 = "sha256-CXCTagaGZ1c+QCEEPqcTv9UwojadYscUOVQwpVYdQb8=";
       }
     );
     nginx-bundle = toString (
       pkgs.fetchurl {
-        url = "https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.12.0-beta.0/deploy/static/provider/cloud/deploy.yaml";
+        url = "https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v${nginx-version}/deploy/static/provider/cloud/deploy.yaml";
         sha256 = "sha256-Bm4k2hezCmSBJhsAMqm83lH06A3gqIyaKB1BA1SxdGE=";
       }
     );
-    helm_path = lib.getExe pkgs.kubernetes-helm;
+    rook-repo = toString (
+      pkgs.fetchFromGitHub {
+        owner = "rook";
+        repo = "rook";
+        rev = "v${rook-version}";
+        sha256 = "sha256-kn8h/3s/U1hHVM0n6r6RvafSGnnYuxOkJSSJPe7KEc8=";
+      }
+    );
+    helm-path = lib.getExe pkgs.kubernetes-helm;
   };
   output = builtins.mapAttrs (name: value: { inherit value; }) config.locals;
 }
