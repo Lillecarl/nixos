@@ -22,7 +22,6 @@ in
     ./guix.nix
     ./hardware-configuration.nix
     ./kea.nix
-    ./kubernetes.nix
     ./libvirt.nix
     ./networking.nix
     ./nginx.nix
