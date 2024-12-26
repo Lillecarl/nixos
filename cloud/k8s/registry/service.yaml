@@ -9,5 +9,5 @@ spec:
   ports:
     - protocol: TCP
       port: 5000
-      targetPort: 5000  # The port your application is listening on in the container
+      targetPort: 5000 # The port your application is listening on in the container
   type: ClusterIP

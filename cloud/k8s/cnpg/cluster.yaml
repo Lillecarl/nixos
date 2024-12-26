@@ -6,15 +6,15 @@ metadata:
 spec:
   managed:
     roles:
-    - name: keycloak
-      ensure: present
-      passwordSecret:
-        name: cluster-keycloak
-      login: true
-      superuser: false
-      inRoles:
-        - pg_monitor
-        - pg_signal_backend
+      - name: keycloak
+        ensure: present
+        passwordSecret:
+          name: cluster-keycloak
+        login: true
+        superuser: false
+        inRoles:
+          - pg_monitor
+          - pg_signal_backend
   instances: 1
   storage:
     size: 1Gi

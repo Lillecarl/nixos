@@ -2,8 +2,8 @@ locals {
   registry-file-path = "${path.module}/registry"
   registry-vars = {
     namespace = "registry"
-    userpass = base64encode("regadm:$2y$05$88ayJRNPFmy9dCpwEKd4uumcb88rvUTgg.x.lJpo0Mkn0Hs7.VNVi")
-    service = "registry"
+    userpass  = base64encode("regadm:$2y$05$88ayJRNPFmy9dCpwEKd4uumcb88rvUTgg.x.lJpo0Mkn0Hs7.VNVi")
+    service   = "registry"
   }
 }
 
@@ -15,7 +15,7 @@ data "local_file" "registry_yaml" {
 resource "kubectl_manifest" "registry_resource" {
   for_each = data.local_file.registry_yaml
 
-  yaml_body = templatestring(each.value.content, local.registry-vars)
+  yaml_body         = templatestring(each.value.content, local.registry-vars)
   server_side_apply = true
   force_conflicts   = local.k8s_force
 }

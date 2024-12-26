@@ -7,9 +7,9 @@ metadata:
     cert-manager.io/cluster-issuer: "letsencrypt-staging"
 spec:
   tls:
-  - hosts:
-      - registry.lillecarl.com
-    secretName: registry-lillecarl-com-tls
+    - hosts:
+        - registry.lillecarl.com
+      secretName: registry-lillecarl-com-tls
   rules:
     - host: registry.lillecarl.com
       http:

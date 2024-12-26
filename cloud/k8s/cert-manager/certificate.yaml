@@ -5,14 +5,12 @@ metadata:
   namespace: default
 spec:
   secretName: example-tdl-tls
-
   additionalOutputFormats:
-  - type: CombinedPEM
-  - type: DER
+    - type: CombinedPEM
+    - type: DER
   dnsNames:
     - example.com
     - www.example.com
-
   issuerRef:
     name: letsencrypt-staging
     kind: ClusterIssuer
