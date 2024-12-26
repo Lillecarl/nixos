@@ -1,7 +1,7 @@
 variable "CF_DNS_TOKEN" {}
 data "kustomization_overlay" "cert_manager" {
   resources = concat(
-    [local.cert-manager_bundle],
+    [local.cert_manager-bundle],
     tolist(fileset(path.module, "cert-manager/*.yaml")),
   )
   patches {
@@ -38,7 +38,7 @@ YAML
   kustomize_options {
     load_restrictor = "none"
     enable_helm     = true
-    helm_path       = local.helm_path
+    helm_path       = local.helm-path
   }
 }
 resource "kubectl_manifest" "cert_manager0" {

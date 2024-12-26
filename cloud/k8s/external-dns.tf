@@ -32,7 +32,7 @@ YAML
   kustomize_options {
     load_restrictor = "none"
     enable_helm     = true
-    helm_path       = local.helm_path
+    helm_path       = local.helm-path
   }
 }
 resource "kubectl_manifest" "external-dns-chart0" {

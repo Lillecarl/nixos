@@ -2,7 +2,7 @@ apiVersion: postgresql.cnpg.io/v1
 kind: Database
 metadata:
   name: cluster-keycloak
-  namespace: "${namespace}"
+  namespace: cnpg
 spec:
   name: keycloak
   owner: keycloak

@@ -57,13 +57,13 @@ YAML
   kustomize_options {
     load_restrictor = "none"
     enable_helm     = true
-    helm_path       = local.helm_path
+    helm_path       = local.helm-path
   }
 }
 resource "kubectl_manifest" "keycloak-chart0" {
   for_each   = data.kustomization_overlay.keycloak-chart.ids_prio[0]
   yaml_body  = data.kustomization_overlay.keycloak-chart.manifests[each.value]
-  depends_on = [kubectl_manifest.cnpg_resource]
+  depends_on = [kubectl_manifest.cnpg-chart2]
 
   force_conflicts   = local.k8s_force
   server_side_apply = true

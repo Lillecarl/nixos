@@ -7,13 +7,13 @@ data "kustomization_overlay" "nginx-chart" {
   kustomize_options {
     load_restrictor = "none"
     enable_helm     = true
-    helm_path       = local.helm_path
+    helm_path       = local.helm-path
   }
 }
 resource "kubectl_manifest" "nginx-chart0" {
   for_each   = data.kustomization_overlay.nginx-chart.ids_prio[0]
   yaml_body  = data.kustomization_overlay.nginx-chart.manifests[each.value]
-  depends_on = [kubectl_manifest.cnpg_resource]
+  depends_on = []
 
   force_conflicts   = local.k8s_force
   server_side_apply = true

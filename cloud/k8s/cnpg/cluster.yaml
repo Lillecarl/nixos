@@ -2,7 +2,7 @@ apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
   name: cluster
-  namespace: "${namespace}"
+  namespace: cnpg
 spec:
   managed:
     roles:
