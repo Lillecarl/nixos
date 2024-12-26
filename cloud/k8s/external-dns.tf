@@ -19,6 +19,8 @@ data "kustomization_overlay" "external-dns-chart" {
     version       = "8.7.1"
     include_crds  = true
     values_inline = <<YAML
+crd:
+  create: true
 metrics:
   enabled: true
 provider: cloudflare
