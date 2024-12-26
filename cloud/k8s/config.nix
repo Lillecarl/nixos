@@ -39,6 +39,12 @@ in
         sha256 = "sha256-CXCTagaGZ1c+QCEEPqcTv9UwojadYscUOVQwpVYdQb8=";
       }
     );
+    nginx-bundle = toString (
+      pkgs.fetchurl {
+        url = "https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.12.0-beta.0/deploy/static/provider/cloud/deploy.yaml";
+        sha256 = "sha256-Bm4k2hezCmSBJhsAMqm83lH06A3gqIyaKB1BA1SxdGE=";
+      }
+    );
     helm_path = lib.getExe pkgs.kubernetes-helm;
   };
   output = builtins.mapAttrs (name: value: { inherit value; }) config.locals;
