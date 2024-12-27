@@ -1,7 +1,7 @@
 variable "keycloak_db_pass" {}
 variable "keycloak_admin_pass" {}
 module "keycloak" {
-  source              = "../modules/keycloak"
+  source              = "../modules/keycloak-deploy"
   paths               = local.paths
   stage0              = false
   stage1              = true

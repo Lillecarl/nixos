@@ -28,5 +28,9 @@ terraform {
       source  = "loafoe/htpasswd"
       version = "1.2.1"
     }
+    keycloak = {
+      source  = "mrparkers/keycloak"
+      version = "4.4.0"
+    }
   }
 }

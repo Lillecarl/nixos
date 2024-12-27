@@ -1,7 +1,6 @@
 locals {
   realm_id = data.keycloak_realm.realm.id
 }
-
 data "keycloak_realm" "realm" {
   realm = "master"
 }
@@ -9,7 +8,6 @@ data "keycloak_role" "admin" {
   realm_id = data.keycloak_realm.realm.id
   name     = "admin"
 }
-
 resource "keycloak_group" "kubernetes-admin" {
   realm_id = local.realm_id
   name     = "kubernetes-admin"
@@ -35,7 +33,6 @@ resource "keycloak_group_roles" "kubernetes-admin" {
     data.keycloak_role.admin.id
   ]
 }
-
 resource "keycloak_group" "kubernetes-viewer" {
   realm_id = local.realm_id
   name     = "kubernetes-viewer"
@@ -53,7 +50,6 @@ resource "keycloak_user_groups" "kubernetes-viewer" {
     keycloak_group.kubernetes-viewer.id
   ]
 }
-
 resource "keycloak_openid_client" "openid_client" {
   realm_id  = local.realm_id
   client_id = "kubernetes"
@@ -63,12 +59,11 @@ resource "keycloak_openid_client" "openid_client" {
     "http://localhost:8000",
   ]
 
-  direct_access_grants_enabled = true
   standard_flow_enabled        = true
-  service_accounts_enabled     = true
-  access_type                  = "CONFIDENTIAL"
+  direct_access_grants_enabled = false
+  service_accounts_enabled     = false
+  access_type                  = "PUBLIC"
 }
-
 resource "keycloak_openid_group_membership_protocol_mapper" "group_membership_mapper" {
   realm_id  = local.realm_id
   client_id = keycloak_openid_client.openid_client.id
