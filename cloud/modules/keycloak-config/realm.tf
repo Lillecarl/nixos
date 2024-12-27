@@ -52,11 +52,11 @@ resource "keycloak_user_groups" "kubernetes-viewer" {
 }
 resource "keycloak_openid_client" "openid_client" {
   realm_id  = local.realm_id
-  client_id = "kubernetes"
-  name      = "client_kubernetes"
+  client_id = "kubernetes" # Identifier
+  name      = "Kubernetes" # Visual name
 
   valid_redirect_uris = [
-    "http://localhost:8000",
+    "http://localhost:8000", # kubelogin port
   ]
 
   standard_flow_enabled        = true

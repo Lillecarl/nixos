@@ -32,7 +32,6 @@ data "kustomization_overlay" "this" {
     helm_path       = var.paths.helm-path
   }
 }
-output "kustomization" { value = data.kustomization_overlay.this }
 resource "kubectl_manifest" "stage0" {
   for_each   = local.stage0-ids
   yaml_body  = data.kustomization_overlay.this.manifests[each.value]

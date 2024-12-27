@@ -13,7 +13,7 @@ let
   rook-version = "1.16.0";
 in
 {
-  locals.paths = {
+  locals.nixpaths = {
     prometheus-bundle = toString (
       pkgs.fetchurl {
         url = "https://github.com/prometheus-operator/prometheus-operator/releases/download/v${prometheus-version}/bundle.yaml";

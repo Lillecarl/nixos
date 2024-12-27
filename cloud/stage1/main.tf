@@ -5,12 +5,7 @@ locals {
     replace(title("${random_pet.this[k].id}${random_integer.this[k].result}"), " ", ".")
   }
 }
-output "paths" { value = local.paths }
 output "secrets" {
-  sensitive = true
-  value     = local.secrets
-}
-output "hashes" {
   sensitive = true
   value     = htpasswd_password.hash
 }
