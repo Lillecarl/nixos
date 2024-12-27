@@ -13,6 +13,9 @@ abbr -a :q exit
 
 abbr -a kc kubectl
 abbr -a tg terragrunt
+abbr -a tga terragrunt apply
+abbr -a tgaa terragrunt apply -auto-approve
+
 abbr -a grt 'cd (git root)'
 
 abbr -a sc sudo systemctl
