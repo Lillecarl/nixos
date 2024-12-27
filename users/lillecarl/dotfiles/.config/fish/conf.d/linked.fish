@@ -43,3 +43,6 @@ set -x FISH_PID $fish_pid
 
 # Don't show client popups in fish LSP
 set -gx fish_lsp_show_client_popups false
+
+# ctrl+l fish completes
+bind -M insert \f forward-char
