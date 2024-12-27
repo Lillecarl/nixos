@@ -32,6 +32,10 @@ terraform {
       source  = "mrparkers/keycloak"
       version = "4.4.0"
     }
+    string-functions = {
+      source  = "registry.terraform.io/random-things/string-functions"
+      version = "0.2.0"
+    }
   }
 }
 provider "kubectl" {
