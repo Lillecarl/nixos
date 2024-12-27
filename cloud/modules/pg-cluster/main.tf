@@ -11,10 +11,10 @@ locals {
 }
 data "kustomization_overlay" "this" {
   resources = [for file in tolist(fileset(path.module, "*.yaml")) : "${path.module}/${file}"]
+  namespace = "pg-cluster"
   secret_generator {
-    name      = "cluster-keycloak"
-    namespace = "cnpg"
-    type      = "Opaque"
+    name = "cluster-keycloak"
+    type = "Opaque"
     literals = [
       "username=keycloak",
       "password=${var.keycloak_db_pass}",
