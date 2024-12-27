@@ -82,6 +82,8 @@
             terranix # Nix -> config.tf.json
             kustomize # Kubernetes YAML wrangler
             nerdctl # containerd cli tool
+            kubelogin-oidc # Kubernetes OIDC login
+            xdg-utils # xdg-open
             config.lib.pspkgs.cmctl # Cert-Manager
             config.lib.pspkgs.kubectl-cnpg # CloudnativePG
           ]
