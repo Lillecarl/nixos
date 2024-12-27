@@ -18,7 +18,7 @@ data "kustomization_overlay" "this" {
     namespace = "keycloak"
     type      = "Opaque"
     literals = [
-      "host=cluster-rw.cnpg.svc.cluster.local",
+      "host=cluster-rw.pg-cluster.svc.cluster.local",
       "port=5432",
       "user=keycloak",
       "pass=${var.keycloak_db_pass}",
@@ -36,11 +36,16 @@ data "kustomization_overlay" "this" {
     version       = "24.3.1"
     include_crds  = true
     values_inline = <<YAML
+tls:
+  enabled: true
+  existingSecret: keycloak.lillecarl.com-tls
+  usePem: true
+production: true
 postgresql:
   enabled: false
 auth:
   adminUser: superadmin
-  adminPassword: ${var.keycloak_admin_pass}"
+  adminPassword: ${var.keycloak_admin_pass}
 ingress:
   enabled: true
   tls: true
