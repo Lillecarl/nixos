@@ -180,3 +180,26 @@ provider "registry.opentofu.org/hashicorp/time" {
     "zh:ecff2e823ef49eda03663fa8ee8bdc17d27cd419dbdacbf1719f38812dbf417e",
   ]
 }
+
+provider "registry.terraform.io/random-things/string-functions" {
+  version     = "0.2.0"
+  constraints = "0.2.0"
+  hashes = [
+    "h1:EjHeAk2PmtvHrhT7MvJAgB3gbD0sUlGnQmNWLNknDBk=",
+    "zh:171351361a8ab30b647fde17baaf1aea11ac6c61e3782a0f7c3485f609fb7f23",
+    "zh:1739415ef0a01b8b5ed4a96b41fe06af48fca511e0d8ed516c767ce105cb8a8f",
+    "zh:27ea0622f926e1015e6b13635ff8dea2be76412df5e38c797c469eaa491d6a1a",
+    "zh:742d205a8ad753635d6236620ace7191e7ee8717e76de1a4ccb38c22fff36263",
+    "zh:7aad32ef278c5848ff0fdffea1eb1210cf6a9efb502217613bacdd1d751f6fd5",
+    "zh:8c40f970be3c29c79c2dc157ac0f80565ef6d2105a601f785019e509d025b70b",
+    "zh:9d65834c47f7024a33c62123063c28e75dfc1fa74c73bc84da64fde9b7a0ff2d",
+    "zh:aba80126b796a0352796b7c5e06cd8fa37c76ea9ed48e2b22a269ee66cb02314",
+    "zh:b3c2c8e7ccdcdc72c5f9faa0a4a0841dcc97bb356c26aa4a84449bdae784247a",
+    "zh:b7484307919beaa1c7d3174a5a8d08a0d4f93d8e3e7b30cd9afe08043aa95acd",
+    "zh:c2ce703a2b3e33daadf631cac62eaa7e8d02b275025004331b81c2ee053719b2",
+    "zh:defa817891f60474883014541b2ef12d7d1e1779d70ac26457c363bf52f9427d",
+    "zh:e0f73fdbc519315111d41ab1eb008c13e6d0596d3697b279967dd28cede58e75",
+    "zh:eec53a59d08e6aefc9326950b484f1f72e353c7f65e9eba60474ee5954a172bc",
+    "zh:f809ab383cca0a5f83072981c64208cbd7fa67e986a86ee02dd2c82333221e32",
+  ]
+}
