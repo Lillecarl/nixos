@@ -13,6 +13,8 @@ chaoskube:
   args:
     interval: 1h
     minimum-age: 12h
+    no-dry-run: ""
+    timezone: Europe/Stockholm
 YAML
   }
   kustomize_options {
