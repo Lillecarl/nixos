@@ -1,8 +1,19 @@
 locals {
   realm_id = data.keycloak_realm.realm.id
 }
+data "http" "keycloak" {
+  url = "https://keycloak.lillecarl.com"
+  retry {
+    attempts     = 30
+    max_delay_ms = 10000
+    min_delay_ms = 10000
+  }
+}
 data "keycloak_realm" "realm" {
   realm = "master"
+  depends_on = [
+    data.http.keycloak
+  ]
 }
 data "keycloak_role" "admin" {
   realm_id = data.keycloak_realm.realm.id

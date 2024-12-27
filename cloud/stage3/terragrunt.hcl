@@ -4,15 +4,15 @@ terraform {
   source = "${dirname(find_in_parent_folders("root.hcl"))}//modules/keycloak-config"
 }
 
-dependency "paths-creds" {
-  config_path = "../paths-creds"
+dependency "stage1" {
+  config_path = "../stage1"
 }
 dependencies {
   paths = [
-    "../apps"
+    "../stage2"
   ]
 }
 
 inputs = {
-  keycloak_admin_pass = dependency.paths-creds.outputs.secrets["keycloak-admin"]
+  keycloak_admin_pass = dependency.stage1.outputs.secrets["keycloak-admin"].password
 }
