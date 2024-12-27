@@ -11,6 +11,7 @@ set -g direnv_fish_mode eval_on_arrow
 
 abbr -a :q exit
 
+abbr -a kc kubectl
 abbr -a tg terragrunt
 abbr -a grt 'cd (git root)'
 
