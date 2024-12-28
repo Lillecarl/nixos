@@ -1,3 +1,17 @@
+terraform {
+  extra_arguments "TF_IN_AUTOMATION" {
+    commands = [
+      "apply",
+      "destroy",
+      "output",
+      "plan",
+      "refresh",
+    ]
+    env_vars = {
+      TF_IN_AUTOMATION = "1"
+    }
+  }
+}
 generate "provider" {
   path      = "providers.tf"
   if_exists = "overwrite"
