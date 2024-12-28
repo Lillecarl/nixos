@@ -27,6 +27,10 @@ resource "keycloak_user" "kubernetes-admin" {
   realm_id       = local.realm_id
   email_verified = true
   username       = "kubernetes-admin"
+  initial_password {
+    value     = var.keycloak_admin_pass
+    temporary = false
+  }
 }
 resource "keycloak_user_groups" "kubernetes-admin" {
   realm_id = local.realm_id
