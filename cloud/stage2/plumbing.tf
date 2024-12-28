@@ -1,1 +1,0 @@
-locals { paths = local.nixpaths }
