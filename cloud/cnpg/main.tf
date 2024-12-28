@@ -3,24 +3,35 @@ variable "paths" { type = map(string) }
 variable "k8s_force" { type = bool }
 variable "deploy" { type = bool }
 locals {
-  ids-bundle-stage0  = data.kustomization_overlay.bundle.ids_prio[0]
-  ids-bundle-stage1  = var.deploy ? data.kustomization_overlay.bundle.ids_prio[1] : []
-  ids-bundle-stage2  = var.deploy ? data.kustomization_overlay.bundle.ids_prio[2] : []
+  ids-chart-stage0   = data.kustomization_overlay.chart.ids_prio[0]
+  ids-chart-stage1   = var.deploy ? data.kustomization_overlay.chart.ids_prio[1] : []
+  ids-chart-stage2   = var.deploy ? data.kustomization_overlay.chart.ids_prio[2] : []
   ids-cluster-stage0 = var.deploy ? data.kustomization_overlay.cluster.ids_prio[0] : []
   ids-cluster-stage1 = var.deploy ? data.kustomization_overlay.cluster.ids_prio[1] : []
   ids-cluster-stage2 = var.deploy ? data.kustomization_overlay.cluster.ids_prio[2] : []
 }
-data "kustomization_overlay" "bundle" {
-  resources = [var.paths.cnpg-bundle]
+data "kustomization_overlay" "chart" {
+  helm_charts {
+    name          = "cloudnative-pg"
+    namespace     = "cnpg-system"
+    repo          = "https://cloudnative-pg.io/charts/"
+    release_name  = "cloudnative-pg"
+    version       = "0.23.0"
+    include_crds  = true
+    values_inline = <<YAML
+monitoring:
+  podMonitorEnabled: true
+YAML
+  }
   kustomize_options {
     load_restrictor = "none"
     enable_helm     = true
     helm_path       = var.paths.helm-path
   }
 }
-resource "kubectl_manifest" "bundle-stage0" {
-  for_each   = local.ids-bundle-stage0
-  yaml_body  = data.kustomization_overlay.bundle.manifests[each.value]
+resource "kubectl_manifest" "chart-stage0" {
+  for_each   = local.ids-chart-stage0
+  yaml_body  = data.kustomization_overlay.chart.manifests[each.value]
   depends_on = []
 
   force_conflicts   = var.k8s_force
@@ -29,21 +40,21 @@ resource "kubectl_manifest" "bundle-stage0" {
   wait              = true
   timeouts { create = "1m" }
 }
-resource "kubectl_manifest" "bundle-stage1" {
-  for_each   = local.ids-bundle-stage1
-  yaml_body  = data.kustomization_overlay.bundle.manifests[each.value]
-  depends_on = [kubectl_manifest.bundle-stage0]
+resource "kubectl_manifest" "chart-stage1" {
+  for_each   = local.ids-chart-stage1
+  yaml_body  = data.kustomization_overlay.chart.manifests[each.value]
+  depends_on = [kubectl_manifest.chart-stage0]
 
   force_conflicts   = var.k8s_force
   server_side_apply = true
   wait              = true
   timeouts { create = "1m" }
 }
-resource "kubectl_manifest" "bundle-stage2" {
-  for_each   = local.ids-bundle-stage2
-  yaml_body  = data.kustomization_overlay.bundle.manifests[each.value]
-  depends_on = [kubectl_manifest.bundle-stage0]
-  # kubestack people recommend applying bundle-stage 2 (MutatingWebhookConfiguration
+resource "kubectl_manifest" "chart-stage2" {
+  for_each   = local.ids-chart-stage2
+  yaml_body  = data.kustomization_overlay.chart.manifests[each.value]
+  depends_on = [kubectl_manifest.chart-stage0]
+  # kubestack people recommend applying chart-stage 2 (MutatingWebhookConfiguration
   # and ValidatingWebhookConfiguration) after all other resources. This is invalid
   # for CNPG since it uses the hooks for setting up some PKI infra
 
@@ -79,8 +90,8 @@ resource "kubectl_manifest" "cluster-stage0" {
   for_each  = local.ids-cluster-stage0
   yaml_body = data.kustomization_overlay.cluster.manifests[each.value]
   depends_on = [
-    kubectl_manifest.bundle-stage1,
-    kubectl_manifest.bundle-stage2,
+    kubectl_manifest.chart-stage1,
+    kubectl_manifest.chart-stage2,
   ]
 
   force_conflicts   = var.k8s_force
