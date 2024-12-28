@@ -23,6 +23,7 @@
     ./helix_fat.nix
     ./krew.nix
     ./lsd.nix
+    ./neovim.nix
     ./nix.nix
     ./noshell.nix
     ./nushell.nix
