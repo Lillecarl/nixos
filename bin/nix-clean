@@ -9,6 +9,7 @@ import argparse
 import re
 import sh
 import sys
+import os
 
 nix: sh.Command = partial(sh.nix, _in=sys.stdin, _out=sys.stdout, _err=sys.stderr) # type: ignore
 
@@ -21,19 +22,24 @@ currentSystemProfile: Path | None = None
 dontclean=[
   bootedSystemPath,
   currentSystemPath,
-  "~/.local/state/nix/profiles/home-manager",
-  "~/.local/state/nix/profiles/profile",
+  "$HOME/.local/state/nix/profiles/home-manager",
+  "$HOME/.local/state/nix/profiles/profile",
 ]
 clean=[
   "/nix/var/nix/profiles",
-  "~/.local/state/nix/profiles",
+  "$HOME/.local/state/nix/profiles",
 ]
 patterns=[
   r"home-manager-\d+-link$",
   r"profile-\d+-link$",
   r"system-\d+-link$",
 ]
-dontclean=[Path(x).expanduser().resolve() for x in dontclean]
+home = f"/home/{os.environ.get("USER")}"
+if os.environ.get("SUDO_USER"):
+  home = f"/home/{os.environ.get("SUDO_USER")}"
+
+dontclean=[Path(x.replace("$HOME", home)).resolve() for x in dontclean]
+clean=[Path(x.replace("$HOME", home)) for x in clean]
 
 def main():
   parser = argparse.ArgumentParser(
@@ -54,7 +60,7 @@ def doClean(seconds: int):
 
   print(f"Cleaning profiles older than {timedelta(seconds=seconds)}")
   for cleandir in clean:
-    cleandir = Path(cleandir).expanduser()
+    cleandir = Path(cleandir)
 
     print(f"Cleaning {cleandir}")
 
@@ -81,7 +87,10 @@ def doClean(seconds: int):
           print(f"Keeping profile {profile} created {timedelta(seconds=diff)} ago")
         else:
           print(f"Removing profile {profile} created {timedelta(seconds=diff)} ago")
-          profile.unlink()
+          try:
+            profile.unlink()
+          except PermissionError:
+            print(f"Unable to remove profile {profile} try sudo")
       except FileNotFoundError:
         print(f"Broken symlink: {profile}")
         continue
@@ -91,9 +100,8 @@ def doClean(seconds: int):
   if currentSystemProfile is not None:
     print(f"Current system profile {currentSystemProfile}")
 
-  print("Running 'nix store gc'")
-  with sh.contrib.sudo:
-    nix("store", "gc", "-vvv")
+  print("Running 'nix store gc -vvv'")
+  nix(["store", "gc", "-vvv"])
 
 if __name__ == "__main__":
   main()
