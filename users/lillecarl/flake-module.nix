@@ -124,6 +124,7 @@ in
                 ps.terminal.mode = "fat";
                 ps.editors.mode = "fat";
                 ps.podman.enable = false;
+                ps.awscli.enable = false; # broken atm
               }
             ];
           }

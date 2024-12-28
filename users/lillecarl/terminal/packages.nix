@@ -61,7 +61,6 @@
             jnv # Interactive jq
             cliphist # Clipboard history tool
             moreutils # stdin -> file (usable w/ sudo)
-            minicom # serial util
             just # make++
             graphviz-nox # Graphviz tools
             bintools # bin tools, like nm and such for reading ELF headers
@@ -83,7 +82,6 @@
             kustomize # Kubernetes YAML wrangler
             nerdctl # containerd cli tool
             kubelogin-oidc # Kubernetes OIDC login
-            xdg-utils # xdg-open
             config.lib.pspkgs.cmctl # Cert-Manager
             config.lib.pspkgs.kubectl-cnpg # CloudnativePG
           ]
