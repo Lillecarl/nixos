@@ -6,7 +6,7 @@
 }:
 let
   olm-version = "0.30.0";
-  prometheus-version = "v0.79.2";
+  prometheus-version = "0.79.2";
   cnpg-version = "1.25.0";
   cert_manager-version = "1.16.2";
   nginx-version = "1.12.0-beta.0";
@@ -35,13 +35,13 @@ in
     );
     olm-crd = toString (
       pkgs.fetchurl {
-        url = "https://github.com/operator-framework/olm/releases/download/v${olm-version}/crds.yaml";
+        url = "https://github.com/operator-framework/operator-lifecycle-manager/releases/download/v${olm-version}/crds.yaml";
         sha256 = "sha256-HFR5j7szJW2KU/YVzUQjagLDxZvSQ2KpmKL+nYHO9Pg=";
       }
     );
     olm-olm = toString (
       pkgs.fetchurl {
-        url = "https://github.com/operator-framework/olm/releases/download/v${olm-version}/olm.yaml";
+        url = "https://github.com/operator-framework/operator-lifecycle-manager/releases/download/v${olm-version}/olm.yaml";
         sha256 = "sha256-CXCTagaGZ1c+QCEEPqcTv9UwojadYscUOVQwpVYdQb8=";
       }
     );
