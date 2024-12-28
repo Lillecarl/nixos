@@ -11,6 +11,7 @@ let
   cert_manager-version = "1.16.2";
   nginx-version = "1.12.0-beta.0";
   rook-version = "1.16.0";
+  valkey-version = "0.0.42";
 in
 {
   locals.nixpaths = {
@@ -48,6 +49,12 @@ in
       pkgs.fetchurl {
         url = "https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v${nginx-version}/deploy/static/provider/cloud/deploy.yaml";
         sha256 = "sha256-Bm4k2hezCmSBJhsAMqm83lH06A3gqIyaKB1BA1SxdGE=";
+      }
+    );
+    valkey-bundle = toString (
+      pkgs.fetchurl {
+        url = "https://github.com/hyperspike/valkey-operator/releases/download/v${valkey-version}/install.yaml";
+        sha256 = "sha256-rNmQyIkZ7GVLEBhmZ/ZoXeV/ynDB74Qulx7qFjtjuKM=";
       }
     );
     rook-repo = toString (
