@@ -5,8 +5,8 @@ terraform {
       version = "0.9.6"
     }
     kubectl = {
-      source  = "gavinbunney/kubectl"
-      version = "1.18.0"
+      source  = "alekc/kubectl"
+      version = "2.1.3"
     }
     kubernetes = {
       source  = "hashicorp/kubernetes"
@@ -39,5 +39,5 @@ terraform {
   }
 }
 provider "kubectl" {
-  apply_retry_count = 3
+  apply_retry_count = 1
 }
