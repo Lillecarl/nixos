@@ -50,6 +50,7 @@ resource "kubectl_manifest" "stage0" {
   depends_on = []
 
   force_conflicts   = var.k8s_force
+  apply_only        = true
   server_side_apply = true
   wait              = true
   timeouts { create = "1m" }
