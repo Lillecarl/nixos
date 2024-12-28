@@ -1,7 +1,7 @@
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: oidc-group-admin-kube-apiserver
+  name: oidc-group-kubernetes-admin
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
