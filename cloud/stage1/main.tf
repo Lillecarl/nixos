@@ -9,6 +9,9 @@ output "secrets" {
   sensitive = true
   value     = htpasswd_password.hash
 }
+output "paths" {
+  value = local.paths
+}
 resource "random_pet" "this" {
   for_each = var.secrets
 
