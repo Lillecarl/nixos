@@ -3,13 +3,27 @@ variable "k8s_force" { type = bool }
 variable "deploy" { type = bool }
 variable "CF_DNS_TOKEN" {}
 locals {
-  ids-bundle-stage0 = data.kustomization_overlay.bundle.ids_prio[0]
-  ids-bundle-stage1 = var.deploy ? data.kustomization_overlay.bundle.ids_prio[1] : []
-  ids-bundle-stage2 = var.deploy ? data.kustomization_overlay.bundle.ids_prio[2] : []
+  ids-chart-stage0  = data.kustomization_overlay.chart.ids_prio[0]
+  ids-chart-stage1  = var.deploy ? data.kustomization_overlay.chart.ids_prio[1] : []
+  ids-chart-stage2  = var.deploy ? data.kustomization_overlay.chart.ids_prio[2] : []
   ids-config-stageX = var.deploy ? data.kustomization_overlay.config.ids : []
 }
-data "kustomization_overlay" "bundle" {
-  resources = [var.paths.cert_manager-bundle]
+data "kustomization_overlay" "chart" {
+  helm_charts {
+    name          = "cert-manager"
+    namespace     = "cert-manager"
+    repo          = "https://charts.jetstack.io"
+    release_name  = "cert-manager"
+    version       = "1.16.2"
+    include_crds  = true
+    values_inline = <<YAML
+crds:
+  enabled: true
+prometheus:
+  servicemonitor:
+    enabled: true
+YAML
+  }
   kustomize_options {
     load_restrictor = "none"
     enable_helm     = true
@@ -55,9 +69,9 @@ YAML
     helm_path       = var.paths.helm-path
   }
 }
-resource "kubectl_manifest" "bundle-stage0" {
-  for_each   = local.ids-bundle-stage0
-  yaml_body  = data.kustomization_overlay.bundle.manifests[each.value]
+resource "kubectl_manifest" "chart-stage0" {
+  for_each   = local.ids-chart-stage0
+  yaml_body  = data.kustomization_overlay.chart.manifests[each.value]
   depends_on = []
 
   force_conflicts   = var.k8s_force
@@ -66,20 +80,20 @@ resource "kubectl_manifest" "bundle-stage0" {
   wait              = true
   timeouts { create = "1m" }
 }
-resource "kubectl_manifest" "bundle-stage1" {
-  for_each   = local.ids-bundle-stage1
-  yaml_body  = data.kustomization_overlay.bundle.manifests[each.value]
-  depends_on = [kubectl_manifest.bundle-stage0]
+resource "kubectl_manifest" "chart-stage1" {
+  for_each   = local.ids-chart-stage1
+  yaml_body  = data.kustomization_overlay.chart.manifests[each.value]
+  depends_on = [kubectl_manifest.chart-stage0]
 
   force_conflicts   = var.k8s_force
   server_side_apply = true
   wait              = true
   timeouts { create = "1m" }
 }
-resource "kubectl_manifest" "bundle-stage2" {
-  for_each   = local.ids-bundle-stage2
-  yaml_body  = data.kustomization_overlay.bundle.manifests[each.value]
-  depends_on = [kubectl_manifest.bundle-stage1]
+resource "kubectl_manifest" "chart-stage2" {
+  for_each   = local.ids-chart-stage2
+  yaml_body  = data.kustomization_overlay.chart.manifests[each.value]
+  depends_on = [kubectl_manifest.chart-stage1]
 
   force_conflicts   = var.k8s_force
   server_side_apply = true
@@ -88,7 +102,7 @@ resource "kubectl_manifest" "bundle-stage2" {
 }
 resource "time_sleep" "cert_wait" {
   count      = var.deploy ? 1 : 0
-  depends_on = [kubectl_manifest.bundle-stage2]
+  depends_on = [kubectl_manifest.chart-stage2]
 
   create_duration = "60s"
 }

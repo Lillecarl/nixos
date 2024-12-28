@@ -10,6 +10,11 @@ feature "deploy" {
 dependency "stage1" {
   config_path = "../stage1"
 }
+dependencies {
+  paths = [
+    "../prometheus" # Monitoring CRDs
+  ]
+}
 inputs = {
   CF_DNS_TOKEN = get_env("CF_DNS_TOKEN")
   paths        = dependency.stage1.outputs.paths
