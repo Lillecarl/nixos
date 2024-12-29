@@ -140,5 +140,8 @@
         '';
       })
     );
+    lib.pspkgs.fish4 = (
+      pkgs.callPackage "${inputs.nixpkgs-fish}/pkgs/shells/fish" {}
+    );
   };
 }

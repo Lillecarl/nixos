@@ -893,6 +893,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-fish": {
+      "locked": {
+        "lastModified": 1735426515,
+        "narHash": "sha256-oaMXDMfuQNYjVbkZhkJGdIxHefm/wpNuZrv6oEMsVp0=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "0f4a537b5864a9efcf5cddda1a4fe6a507a627de",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "fish",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs-lib": {
       "locked": {
         "dir": "lib",
@@ -1067,6 +1083,7 @@
         "nixos-anywhere": "nixos-anywhere",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
+        "nixpkgs-fish": "nixpkgs-fish",
         "nixpkgs-lib": "nixpkgs-lib",
         "nixpkgs-master": "nixpkgs-master",
         "nixpkgs-stable": "nixpkgs-stable",

@@ -18,6 +18,6 @@ in
     };
   };
   config = lib.mkIf cfg.enable {
-    xdg.configFile."shell".source = lib.getExe pkgs.fish;
+    xdg.configFile."shell".source = lib.getExe config.programs.fish.package;
   };
 }
