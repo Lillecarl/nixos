@@ -11,8 +11,8 @@ dependency "stage1" {
   config_path = "../stage1"
 }
 inputs = {
-  CF_DNS_TOKEN = get_env("CF_DNS_TOKEN")
-  paths        = dependency.stage1.outputs.paths
-  deploy       = feature.deploy.value
-  k8s_force    = false
+  valkey-password = dependency.stage1.outputs.secrets["valkey"].password
+  paths           = dependency.stage1.outputs.paths
+  deploy          = feature.deploy.value
+  k8s_force       = false
 }

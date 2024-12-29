@@ -24,5 +24,6 @@ inputs = {
     "keycloak-admin",
     "grafana-admin",
     "registry",
+    "valkey",
   ]
 }

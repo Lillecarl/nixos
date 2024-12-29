@@ -1,4 +1,4 @@
-variable "CF_DNS_TOKEN" {}
+variable "valkey-password" {}
 variable "paths" { type = map(string) }
 variable "k8s_force" { type = bool }
 variable "deploy" { type = bool }
@@ -10,6 +10,16 @@ locals {
 data "kustomization_overlay" "this" {
   resources = [for file in tolist(fileset(path.module, "*.yaml")) : "${path.module}/${file}"]
   namespace = "valkey"
+  secret_generator {
+    name = "valkey-password"
+    type = "Opaque"
+    literals = [
+      "valkey-password=${var.valkey-password}"
+    ]
+    options {
+      disable_name_suffix_hash = true
+    }
+  }
   helm_charts {
     name          = "valkey"
     namespace     = "valkey"
@@ -18,8 +28,10 @@ data "kustomization_overlay" "this" {
     version       = "2.2.1"
     include_crds  = true
     values_inline = <<YAML
-replica:
-  replicaCount: 0
+architecture: standalone # fuck HA
+auth:
+  existingSecret: "valkey-password"
+  existingSecretPasswordKey: "valkey-password"
 YAML
   }
   kustomize_options {
