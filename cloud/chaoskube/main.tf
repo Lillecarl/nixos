@@ -18,7 +18,7 @@ data "kustomization_overlay" "this" {
 chaoskube:
   args:
     interval: 15m
-    minimum-age: 12h
+    minimum-age: 6h
     no-dry-run: ""
     timezone: Europe/Stockholm
 YAML
