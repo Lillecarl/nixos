@@ -1,4 +1,6 @@
 variable "keycloak_db_pass" {}
+variable "R2_ACCESS_KEY_ID" {}
+variable "R2_ACCESS_SECRET_KEY" {}
 variable "paths" { type = map(string) }
 variable "k8s_force" { type = bool }
 variable "deploy" { type = bool }
@@ -66,6 +68,20 @@ resource "kubectl_manifest" "chart-stage2" {
 data "kustomization_overlay" "cluster" {
   resources = [for file in tolist(fileset(path.module, "*.yaml")) : "${path.module}/${file}"]
   namespace = "pg-cluster"
+  secret_generator {
+    name = "r2-credentials"
+    type = "Opaque"
+    literals = [
+      "ACCESS_KEY_ID=${var.R2_ACCESS_KEY_ID}",
+      "ACCESS_SECRET_KEY=${var.R2_ACCESS_SECRET_KEY}",
+    ]
+    options {
+      disable_name_suffix_hash = true
+      labels = {
+        "cnpg.io/reload" = true
+      }
+    }
+  }
   secret_generator {
     name = "cluster-keycloak"
     type = "Opaque"
