@@ -18,7 +18,7 @@ data "kustomization_overlay" "this" {
 }
 resource "kubectl_manifest" "stage0" {
   for_each   = local.ids-this-stage0
-  yaml_body  = data.kustomization_overlay.this.manifests[each.value]
+  yaml_body  = local.manifests_substituted[each.value]
   depends_on = []
 
   force_conflicts   = var.k8s_force
@@ -28,7 +28,7 @@ resource "kubectl_manifest" "stage0" {
 }
 resource "kubectl_manifest" "stage1" {
   for_each   = local.ids-this-stage1
-  yaml_body  = data.kustomization_overlay.this.manifests[each.value]
+  yaml_body  = local.manifests_substituted[each.value]
   depends_on = [kubectl_manifest.stage0]
 
   force_conflicts   = var.k8s_force
@@ -37,7 +37,7 @@ resource "kubectl_manifest" "stage1" {
 }
 resource "kubectl_manifest" "stage2" {
   for_each   = local.ids-this-stage2
-  yaml_body  = data.kustomization_overlay.this.manifests[each.value]
+  yaml_body  = local.manifests_substituted[each.value]
   depends_on = [kubectl_manifest.stage1]
 
   force_conflicts   = var.k8s_force
