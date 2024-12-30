@@ -35,10 +35,7 @@ in
       ];
 
       interactiveShellInit = # fish
-        ''
-          ${lib.getExe pkgs.zoxide} init fish | source
-          ${pkgs.thefuck}/bin/thefuck --alias | source
-        '';
+        '''';
 
       # Prepend some Nix & HM paths if they're not already there.
       # Required when using fish as login shell in Crostini.
