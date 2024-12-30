@@ -34,6 +34,6 @@ spec:
         inRoles:
           - pg_monitor
           - pg_signal_backend
-  instances: 1
+  instances: 2 # For failing over quickly when chaoskube bonks the master
   storage:
     size: 1Gi
