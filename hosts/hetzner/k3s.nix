@@ -24,6 +24,8 @@ in
 
       extraFlags = [
         "--disable=traefik"
+        "--flannel-backend=none"
+        "--disable-network-policy"
         "--kube-apiserver-arg=oidc-issuer-url=https://keycloak.lillecarl.com/realms/master"
         "--kube-apiserver-arg=oidc-client-id=kubernetes"
         "--kube-apiserver-arg=oidc-username-claim=sub" # usename is less fluid
@@ -36,5 +38,8 @@ in
       CONTAINERD_ADDRESS = "/run/k3s/containerd/containerd.sock";
       CONTAINERD_NAMESPACE = "k8s.io";
     };
+    environment.systemPackages = [
+      pkgs.cilium-cli
+    ];
   };
 }
