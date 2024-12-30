@@ -36,6 +36,10 @@ terraform {
       source  = "registry.terraform.io/random-things/string-functions"
       version = "0.2.0"
     }
+    postgresql = {
+      source  = "cyrilgdn/postgresql"
+      version = "1.25.0"
+    }
   }
 }
 provider "kubectl" {

@@ -27,22 +27,24 @@ spec:
         # encryption: AES256
     retentionPolicy: "30d"
   managed:
+    services:
+      additional:
+        - selectorType: rw
+          serviceTemplate:
+            metadata:
+              name: "cluster"
+              annotations:
+                external-dns.alpha.kubernetes.io/target-type: "A"
+                external-dns.alpha.kubernetes.io/hostname: postgres.lillecarl.com
+            spec:
+              type: LoadBalancer
     roles:
-      - name: pgadmin
+      - name: postgres-admin
         ensure: present
         passwordSecret:
-          name: cluster-pgadmin
+          name: cluster-postgres-admin
         login: true
         superuser: true
-        inRoles:
-          - pg_monitor
-          - pg_signal_backend
-      - name: keycloak
-        ensure: present
-        passwordSecret:
-          name: cluster-keycloak
-        login: true
-        superuser: false
         inRoles:
           - pg_monitor
           - pg_signal_backend

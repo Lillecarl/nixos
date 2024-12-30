@@ -22,9 +22,8 @@ inputs = {
   secrets = [
     "grafana-admin",
     "keycloak-admin",
-    "keycloak-db",
     "pgadmin-admin",
-    "pgadmin-db",
+    "postgres-admin",
     "registry",
     "valkey",
   ]

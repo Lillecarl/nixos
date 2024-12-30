@@ -10,13 +10,16 @@ feature "deploy" {
 dependency "stage1" {
   config_path = "../stage1"
 }
+dependency "pg-cluster-config" {
+  config_path = "../pg-cluster-config"
+}
 dependencies {
   paths = [
     "../cnpg"
   ]
 }
 inputs = {
-  keycloak_db_pass    = dependency.stage1.outputs.secrets["keycloak-db"].password
+  keycloak_db_pass    = dependency.pg-cluster-config.outputs.secrets["keycloak"].result
   keycloak_admin_pass = dependency.stage1.outputs.secrets["keycloak-admin"].password
   paths               = dependency.stage1.outputs.paths
   deploy              = feature.deploy.value
