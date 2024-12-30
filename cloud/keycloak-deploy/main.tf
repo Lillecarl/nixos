@@ -16,7 +16,7 @@ data "kustomization_overlay" "this" {
     namespace = "keycloak"
     type      = "Opaque"
     literals = [
-      "host=cluster-transaction-pooler.pg-cluster.svc.cluster.local",
+      "host=cluster-rw.pg-cluster.svc.cluster.local",
       "port=5432",
       "user=keycloak",
       "pass=${var.keycloak_db_pass}",
@@ -111,4 +111,3 @@ resource "kubectl_manifest" "stage2" {
   wait              = true
   timeouts { create = "1m" }
 }
-
