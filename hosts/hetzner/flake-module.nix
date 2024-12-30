@@ -50,6 +50,10 @@ in
               {
                 networking.hostName = name;
                 ps.labels = data.labels;
+                lib.hetzip = {
+                  v4 = data.ipv4_address;
+                  v6 = data.ipv6_address;
+                };
               }
               ./default.nix
             ];

@@ -1,4 +1,4 @@
-{ ... }:
+{ config, ... }:
 {
   networking.useDHCP = false;
   networking.interfaces.enp1s0.useDHCP = false;
@@ -7,8 +7,8 @@
     matchConfig.Name = "enp1s0"; # either ens3 (amd64) or enp1s0 (arm64)
     networkConfig.DHCP = "no";
     address = [
-      "65.21.63.133/32"
-      "fe80::9400:3ff:feec:ce8f/64"
+      "${config.lib.hetzip.v4}/32"
+      "${config.lib.hetzip.v6}/64"
     ];
     routes = [
       {
