@@ -6,22 +6,23 @@ metadata:
 spec:
   backup:
     barmanObjectStore:
-      destinationPath: s3://postspace-pg-cluster  # The S3 bucket path where backups will be stored
-      endpointURL: https://5456ceefee94cfc7fa487e309956d7a2.eu.r2.cloudflarestorage.com  # Optional: S3-compatible endpoint URL (omit for AWS S3)
+      destinationPath: s3://postspace-pg-cluster
+      endpointURL: https://5456ceefee94cfc7fa487e309956d7a2.eu.r2.cloudflarestorage.com
       s3Credentials:
         accessKeyId:
-          name: r2-credentials  # Name of the Kubernetes secret
-          key: ACCESS_KEY_ID    # Key in the secret containing the access key
+          name: r2-credentials
+          key: ACCESS_KEY_ID
         secretAccessKey:
-          name: r2-credentials  # Name of the Kubernetes secret
-          key: ACCESS_SECRET_KEY  # Key in the secret containing the secret key
+          name: r2-credentials
+          key: ACCESS_SECRET_KEY
       wal:
-        compression: gzip  # Optional: Enable WAL compression (gzip)
-        maxParallel: 8    # Optional: Number of parallel WAL operations
-        # encryption: AES256  # Optional: Enable encryption
+        compression: gzip
+        maxParallel: 1
+        # encryption: AES256
       data:
-        compression: gzip  # Optional: Enable backup data compression
-        # encryption: AES256  # Optional: Enable encryption
+        compression: gzip
+        # encryption: AES256
+    retentionPolicy: "30d"
   managed:
     roles:
       - name: keycloak
