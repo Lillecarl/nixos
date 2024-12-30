@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  generation: 2
+  labels:
+    app: pgadmin
+    app.kubernetes.io/instance: pgadmin
+    app.kubernetes.io/name: pgadmin
+  name: pgadmin
+  namespace: pgadmin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: pgadmin
+      app.kubernetes.io/name: pgadmin
+  template:
+    metadata:
+      labels:
+        app: pgadmin
+        app.kubernetes.io/instance: pgadmin
+        app.kubernetes.io/name: pgadmin
+    spec:
+      containers:
+      - name: pgadmin4
+        env:
+        - name: PGADMIN_EMAIL
+          value: test@test.com
+        - name: PGADMIN_PASSWORD
+          value: password123
+        - name: SSL_CERT_FILE
+          value: /etc/ssl/certs/ca-bundle.crt
+        image: quay.io/spacetrain/pgadmin4:latest
+        # imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5050
+          name: webui
+          protocol: TCP
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/pgadmin_custom
+      volumes:
+      - name: config-volume
+        configMap:
+          name: config
+      dnsPolicy: ClusterFirst
+      enableServiceLinks: false
+      nodeSelector:
+        kubernetes.io/os: linux
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      terminationGracePeriodSeconds: 30
