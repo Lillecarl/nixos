@@ -1,0 +1,12 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: pg-cluster-daily
+  namespace: pg-cluster
+spec:
+  # second, minute, hour, day, month, day of week
+  schedule: "0 0 4 * * *"
+  cluster:
+    name: pg-backup
+  backupOwnerReference: self # This resource will be owner of Backup resource
+  method: barmanObjectStore
