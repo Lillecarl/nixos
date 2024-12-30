@@ -15,11 +15,15 @@
     ./hardware-configuration.nix
     ./k3s.nix
     ./labels.nix
+    ./networking.nix
   ];
 
   config = {
     ps.polkit.enable = false;
     ps.verycommon.enable = false;
+    ps.fail2ban.enable = false;
+
+    networking.firewall.enable = lib.mkForce false;
 
     programs.git.enable = true;
     zramSwap = {
