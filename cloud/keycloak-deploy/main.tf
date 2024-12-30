@@ -34,6 +34,7 @@ data "kustomization_overlay" "this" {
     version       = "24.3.1"
     include_crds  = true
     values_inline = <<YAML
+replicaCount: 2
 tls:
   enabled: true
   existingSecret: keycloak.lillecarl.com-tls
@@ -61,10 +62,10 @@ externalDatabase:
   annotations: {}
 metrics:
   enabled: true
-  # serviceMonitor:
-  #   enabled: true
-  # prometheusRule:
-  #   enabled: true
+  serviceMonitor:
+    enabled: true
+  prometheusRule:
+    enabled: true
 startupProbe:
   enabled: true
   initialDelaySeconds: 30
@@ -111,3 +112,4 @@ resource "kubectl_manifest" "stage2" {
   wait              = true
   timeouts { create = "1m" }
 }
+
