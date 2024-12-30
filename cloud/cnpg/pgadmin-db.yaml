@@ -1,0 +1,10 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: pgadmin
+  namespace: pg-cluster
+spec:
+  name: pgadmin
+  owner: pgadmin
+  cluster:
+    name: cluster

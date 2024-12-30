@@ -1,3 +1,7 @@
+variable "pgadmin_admin_email" {}
+variable "pgadmin_admin_password" {}
+variable "pgadmin_db_username" {}
+variable "pgadmin_db_password" {}
 variable "pgadmin_client_secret" {}
 variable "paths" { type = map(string) }
 variable "k8s_force" { type = bool }
@@ -10,6 +14,34 @@ locals {
 data "kustomization_overlay" "this" {
   resources = [for file in tolist(fileset(path.module, "*.yaml")) : "${path.module}/${file}"]
   namespace = "pgadmin"
+  secret_generator {
+    name = "pgadmin-admin"
+    type = "Opaque"
+    literals = [
+      "PGADMIN_SETUP_EMAIL=${var.pgadmin_admin_email}",
+      "PGADMIN_SETUP_PASSWORD=${var.pgadmin_admin_password}",
+    ]
+    options {
+      disable_name_suffix_hash = true
+      labels = {
+        "cnpg.io/reload" = true
+      }
+    }
+  }
+  secret_generator {
+    name = "pgadmin-db"
+    type = "Opaque"
+    literals = [
+      "PGADMIN_PG_USERNAME=${var.pgadmin_db_username}",
+      "PGADMIN_PG_PASSWORD=${var.pgadmin_db_password}",
+    ]
+    options {
+      disable_name_suffix_hash = true
+      labels = {
+        "cnpg.io/reload" = true
+      }
+    }
+  }
   kustomize_options {
     load_restrictor = "none"
     enable_helm     = true

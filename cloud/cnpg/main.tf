@@ -1,4 +1,5 @@
 variable "keycloak_db_pass" {}
+variable "pgadmin_db_pass" {}
 variable "R2_ACCESS_KEY_ID" {}
 variable "R2_ACCESS_SECRET_KEY" {}
 variable "paths" { type = map(string) }
@@ -88,6 +89,20 @@ data "kustomization_overlay" "cluster" {
     literals = [
       "username=keycloak",
       "password=${var.keycloak_db_pass}",
+    ]
+    options {
+      disable_name_suffix_hash = true
+      labels = {
+        "cnpg.io/reload" = true
+      }
+    }
+  }
+  secret_generator {
+    name = "cluster-pgadmin"
+    type = "Opaque"
+    literals = [
+      "username=pgadmin",
+      "password=${var.pgadmin_db_pass}",
     ]
     options {
       disable_name_suffix_hash = true

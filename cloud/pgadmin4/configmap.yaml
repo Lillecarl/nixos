@@ -5,12 +5,13 @@ metadata:
   namespace: pgadmin
 data:
   config_system.py: |
-    CA_FILE = '/etc/ssl/certs/ca-bundle.crt',
+    import os
+    CA_FILE = '/etc/ssl/certs/ca-bundle.crt'
     # With external auth pgAdmin needs a master password for encrypting secrets
     # but we'll prioritize UX here and disable this. If someone hacks this non
     # production system it's pretty much their wasted effort.
-    MASTER_PASSWORD_REQUIRED = False 
     AUTHENTICATION_SOURCES = ['oauth2']
+    CONFIG_DATABASE_URI = f"postgresql://{os.environ["PGADMIN_PG_USERNAME"]}:{os.environ["PGADMIN_PG_PASSWORD"]}@cluster-rw.pg-cluster.svc.cluster.local/pgadmin"
     OAUTH2_CONFIG = [
         {
             'OAUTH2_NAME': 'keycloak',

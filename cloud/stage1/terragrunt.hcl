@@ -20,9 +20,11 @@ terraform {
 
 inputs = {
   secrets = [
-    "keycloak-db",
-    "keycloak-admin",
     "grafana-admin",
+    "keycloak-admin",
+    "keycloak-db",
+    "pgadmin-admin",
+    "pgadmin-db",
     "registry",
     "valkey",
   ]

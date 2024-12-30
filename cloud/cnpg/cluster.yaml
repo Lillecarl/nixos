@@ -28,6 +28,15 @@ spec:
     retentionPolicy: "30d"
   managed:
     roles:
+      - name: pgadmin
+        ensure: present
+        passwordSecret:
+          name: cluster-pgadmin
+        login: true
+        superuser: true
+        inRoles:
+          - pg_monitor
+          - pg_signal_backend
       - name: keycloak
         ensure: present
         passwordSecret:
