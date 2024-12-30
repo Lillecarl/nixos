@@ -53,6 +53,11 @@ resource "hcloud_server" "defconf" {
     ip         = each.value.priv_ip
     alias_ips  = []
   }
+  lifecycle {
+    ignore_changes = [
+      server_type
+    ]
+  }
   depends_on = [
     hcloud_network_subnet.this
   ]
