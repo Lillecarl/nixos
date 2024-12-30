@@ -25,6 +25,7 @@ resource "keycloak_group" "kubernetes-admin" {
 }
 resource "keycloak_user" "kubernetes-admin" {
   realm_id       = local.realm_id
+  email          = "kubernetes-admin@lillecarl.com"
   email_verified = true
   username       = "kubernetes-admin"
   initial_password {
@@ -65,7 +66,7 @@ resource "keycloak_user_groups" "kubernetes-viewer" {
     keycloak_group.kubernetes-viewer.id
   ]
 }
-resource "keycloak_openid_client" "openid_client" {
+resource "keycloak_openid_client" "kubernetes" {
   realm_id  = local.realm_id
   client_id = "kubernetes" # Identifier
   name      = "Kubernetes" # Visual name
@@ -81,9 +82,30 @@ resource "keycloak_openid_client" "openid_client" {
 }
 resource "keycloak_openid_group_membership_protocol_mapper" "group_membership_mapper" {
   realm_id  = local.realm_id
-  client_id = keycloak_openid_client.openid_client.id
+  client_id = keycloak_openid_client.kubernetes.id
   name      = "Group Membership"
 
   claim_name = "groups"
   full_path  = false
+}
+
+resource "keycloak_openid_client" "pgadmin" {
+  realm_id  = local.realm_id
+  client_id = "pgadmin" # Identifier
+  name      = "pgAdmin" # Visual name
+
+  valid_redirect_uris = [
+    "http://localhost:8000", # kubelogin port
+    "*",
+    "https://pgadmin.lillecarl.com/oauth2/authorize",
+  ]
+
+  standard_flow_enabled        = true
+  direct_access_grants_enabled = false
+  service_accounts_enabled     = false
+  access_type                  = "CONFIDENTIAL"
+}
+output "pgadmin_client_secret" {
+  value     = keycloak_openid_client.pgadmin.client_secret
+  sensitive = true
 }
