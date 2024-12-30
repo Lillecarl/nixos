@@ -4,6 +4,9 @@ metadata:
   name: cluster
   namespace: pg-cluster
 spec:
+  postgresql:
+    parameters:
+      wal_keep_size: "64MB"
   backup:
     barmanObjectStore:
       destinationPath: s3://postspace-pg-cluster
