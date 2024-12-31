@@ -50,7 +50,8 @@ in
               {
                 networking.hostName = name;
                 ps.labels = data.labels;
-                lib.hetzip = {
+                lib.hetzAttrs = {
+                  id = data.id;
                   v4 = data.ipv4_address;
                   v6 = data.ipv6_address;
                 };

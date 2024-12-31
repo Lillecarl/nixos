@@ -80,6 +80,7 @@ resource "hcloud_volume_attachment" "defconf" {
 locals {
   servers_out = {
     for k, _ in local.servers_filtered : k => {
+      id           = hcloud_server.defconf[k].id
       ipv4_address = hcloud_server.defconf[k].ipv4_address
       ipv6_address = hcloud_server.defconf[k].ipv6_address
       labels       = hcloud_server.defconf[k].labels

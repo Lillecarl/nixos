@@ -27,6 +27,10 @@ in
         "--disable=coredns"
         "--flannel-backend=none"
         "--disable-network-policy"
+        # "--no-deploy servicelb"
+        "--disable-cloud-controller"
+        "--kubelet-arg=cloud-provider=external"
+        "--kubelet-arg=provider-id=hcloud://${config.lib.hetzAttrs.id}"
         "--kube-apiserver-arg=oidc-issuer-url=https://keycloak.lillecarl.com/realms/master"
         "--kube-apiserver-arg=oidc-client-id=kubernetes"
         "--kube-apiserver-arg=oidc-username-claim=sub" # usename is less fluid
