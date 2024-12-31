@@ -21,6 +21,7 @@ chaoskube:
     minimum-age: 6h
     no-dry-run: ""
     timezone: Europe/Stockholm
+    labels: k8s-app!=cilium
 YAML
   }
   kustomize_options {
