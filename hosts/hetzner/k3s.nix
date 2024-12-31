@@ -24,6 +24,7 @@ in
 
       extraFlags = [
         "--disable=traefik"
+        "--disable=coredns"
         "--flannel-backend=none"
         "--disable-network-policy"
         "--kube-apiserver-arg=oidc-issuer-url=https://keycloak.lillecarl.com/realms/master"
