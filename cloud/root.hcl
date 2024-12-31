@@ -37,3 +37,10 @@ terraform {
 }
 TF
 }
+dependencies {
+  paths = (
+    !strcontains(get_original_terragrunt_dir(), "stage1") &&
+    !strcontains(get_original_terragrunt_dir(), "prometheus-crd")
+  ) ? ["../prometheus-crd"] : []
+
+}
