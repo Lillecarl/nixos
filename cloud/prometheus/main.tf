@@ -2,7 +2,10 @@ variable "paths" { type = map(string) }
 variable "k8s_force" { type = bool }
 variable "deploy" { type = bool }
 locals {
-  ids-bundle-stage0  = data.kustomization_overlay.bundle.ids_prio[0]
+  ids-bundle-stage0 = toset([
+    for id in data.kustomization_overlay.bundle.ids_prio[0] :
+    id if !strcontains(id, "CustomResourceDefinition")
+  ])
   ids-bundle-stage1  = var.deploy ? data.kustomization_overlay.bundle.ids_prio[1] : []
   ids-bundle-stage2  = var.deploy ? data.kustomization_overlay.bundle.ids_prio[2] : []
   ids-cluster-stage0 = var.deploy ? data.kustomization_overlay.cluster.ids_prio[0] : []
