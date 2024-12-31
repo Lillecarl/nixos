@@ -5,8 +5,9 @@ variable "k8s_force" { type = bool }
 variable "deploy" { type = bool }
 locals {
   namespace        = "vault"
+  excludedIDs      = ["_/Pod/vault/vault-server-test"]
   ids-chart-stage0 = data.kustomization_overlay.chart.ids_prio[0]
-  ids-chart-stage1 = var.deploy ? data.kustomization_overlay.chart.ids_prio[1] : []
+  ids-chart-stage1 = var.deploy ? toset([for id in data.kustomization_overlay.chart.ids_prio[1] : id if !contains(local.excludedIDs, id)]) : []
   ids-chart-stage2 = var.deploy ? data.kustomization_overlay.chart.ids_prio[2] : []
 }
 data "kustomization_overlay" "chart" {
