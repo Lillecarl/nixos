@@ -1,19 +1,32 @@
-variable "R2_ACCESS_KEY_ID" {}
-variable "R2_ACCESS_SECRET_KEY" {}
+variable "AWS_ACCESS_KEY_ID" {}
+variable "AWS_SECRET_ACCESS_KEY" {}
 variable "paths" { type = map(string) }
 variable "k8s_force" { type = bool }
 variable "deploy" { type = bool }
 locals {
+  namespace        = "vault"
   ids-chart-stage0 = data.kustomization_overlay.chart.ids_prio[0]
   ids-chart-stage1 = var.deploy ? data.kustomization_overlay.chart.ids_prio[1] : []
   ids-chart-stage2 = var.deploy ? data.kustomization_overlay.chart.ids_prio[2] : []
 }
 data "kustomization_overlay" "chart" {
   resources = [for file in tolist(fileset(path.module, "*.yaml")) : "${path.module}/${file}"]
-  namespace = "vault"
+  namespace = local.namespace
+  secret_generator {
+    name      = "vault-s3"
+    namespace = local.namespace
+    type      = "Opaque"
+    literals = [
+      "AWS_ACCESS_KEY_ID=${var.AWS_ACCESS_KEY_ID}",
+      "AWS_SECRET_ACCESS_KEY=${var.AWS_SECRET_ACCESS_KEY}",
+    ]
+    options {
+      disable_name_suffix_hash = true
+    }
+  }
   helm_charts {
     name          = "vault"
-    namespace     = "vault"
+    namespace     = local.namespace
     repo          = "https://helm.releases.hashicorp.com"
     release_name  = "vault"
     version       = "0.29.1"
@@ -40,15 +53,19 @@ server:
     enabled: false
   extraEnvironmentVars:
     VAULT_LOG_LEVEL: "debug"
+  extraSecretEnvironmentVars:
+    - envName: AWS_ACCESS_KEY_ID
+      secretName: vault-s3
+      secretKey: AWS_ACCESS_KEY_ID
+    - envName: AWS_SECRET_ACCESS_KEY
+      secretName: vault-s3
+      secretKey: AWS_SECRET_ACCESS_KEY
   standalone:
     enabled: true
     config: |
       storage "s3" {
         bucket = "postspace-vault"
-        # region = "us-east-1"
         endpoint = "https://5456ceefee94cfc7fa487e309956d7a2.eu.r2.cloudflarestorage.com"
-        access_key = "b15d6068f4fbda3ee57e4d523f200755"
-        secret_key = "2267c3458d868682ac65759f37cca0b7fba74731a816ba8eb4b809ad067f1395"
       }
       listener "tcp" {
         address = "0.0.0.0:8200"
