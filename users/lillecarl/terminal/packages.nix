@@ -71,7 +71,8 @@
             expect # Automate interactive applications (contains unbuffer and friends)
             ncdu # NCurses disk usage, like du but with a UI
             progress # Coreutils Progress Viewer
-            opentofu # FLOSS Terraform
+            # opentofu # FLOSS Terraform
+            config.lib.pspkgs.opentofu
             deploy-rs # Nix deploy tool
             waypipe # Wayland over SSH mostly for wl-clipboard
             kubectl # Kubernetes CLI
@@ -140,8 +141,52 @@
         '';
       })
     );
-    lib.pspkgs.fish4 = (
-      pkgs.callPackage "${inputs.nixpkgs-fish}/pkgs/shells/fish" {}
-    );
+
+    lib.pspkgs.tfBin = inputs.nixpkgs-terraform-providers-bin.legacyPackages.${pkgs.system};
+    lib.pspkgs.opentofu =
+      let
+        tfProviders = config.lib.pspkgs.tfBin.providers;
+        string-functions = pkgs.terraform-providers.mkProvider {
+          "hash" = "sha256-JeLF3racYZPIoPk/f5+jY8kHRVsiEGZNtPON90mDkgI=";
+          "homepage" = "https://registry.opentofu.org/random-things/string-functions";
+          "owner" = "random-things";
+          "repo" = "terraform-provider-string-functions";
+          "rev" = "v0.3.0";
+          "vendorHash" = "sha256-XhKqR54HNhzRgpPbH+nQYjYeMLtlPvHkaU7hm9JTJzA=";
+        };
+        kustomization = pkgs.terraform-providers.mkProvider {
+          "hash" = "sha256-nZJx9k11VIqC3wi3PdoMMpYNWeqH0Ca73tVZhWugAeI=";
+          "homepage" = "https://registry.opentofu.org/kbst/kustomization";
+          "owner" = "kbst";
+          "repo" = "terraform-provider-kustomization";
+          "rev" = "v0.9.6";
+          "spdx" = "Apache-2.0";
+          "vendorHash" = "sha256-Xo5zjMuBcc5vMdL3JB0bhna+aBfavN7hlOJ0oViQ2TE=";
+        };
+        pluginList =
+          (builtins.map (p: p.override { registry = "registry.opentofu.org"; }) (
+            with tfProviders;
+            [
+              alekc.kubectl
+              cyrilgdn.postgresql
+              hashicorp.http
+              hashicorp.local
+              hashicorp.null
+              hashicorp.random
+              hetznercloud.hcloud
+              keycloak.keycloak
+              loafoe.htpasswd
+            ]
+          ))
+          ++ [
+            (pkgs.terraform-providers.migadu.override ({
+              provider-source-address = "registry.opentofu.org/metio/migadu";
+            }))
+            string-functions
+            kustomization
+          ];
+      in
+      (pkgs.opentofu.withPlugins (p: pluginList));
+    lib.pspkgs.fish4 = (pkgs.callPackage "${inputs.nixpkgs-fish}/pkgs/shells/fish" { });
   };
 }
