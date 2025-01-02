@@ -65,6 +65,15 @@ in
         sha256 = "sha256-kn8h/3s/U1hHVM0n6r6RvafSGnnYuxOkJSSJPe7KEc8=";
       }
     );
+    cacert-bundle = toString (
+      pkgs.cacert.override {
+        extraCertificateFiles = [
+          (pkgs.writeText "cabundle" (
+            builtins.readFile "${builtins.getEnv "FLAKE"}/resources/letsencrypt-stg-root-x1.pem"
+          ))
+        ];
+      }
+    );
     helm-path = lib.getExe pkgs.kubernetes-helm;
   };
 }
