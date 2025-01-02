@@ -50,7 +50,7 @@ ingress:
   tls: true
   hostname: keycloak.lillecarl.com
   annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-staging
+    cert-manager.io/cluster-issuer: letsencrypt-production
   ingressClassName: nginx
 externalDatabase:
   existingSecret: "cluster-keycloak"
