@@ -95,8 +95,6 @@ resource "keycloak_openid_client" "pgadmin" {
   name      = "pgAdmin" # Visual name
 
   valid_redirect_uris = [
-    "http://localhost:8000", # kubelogin port
-    "*",
     "https://pgadmin.lillecarl.com/oauth2/authorize",
   ]
 
