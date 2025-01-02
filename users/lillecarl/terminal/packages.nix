@@ -173,6 +173,7 @@
               hashicorp.http
               hashicorp.local
               hashicorp.null
+              hashicorp.time
               hashicorp.random
               hetznercloud.hcloud
               keycloak.keycloak
