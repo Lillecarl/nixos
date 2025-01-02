@@ -15,6 +15,7 @@ abbr -a kc kubectl
 abbr -a kns kubens
 abbr -a knd kubens default
 abbr -a tg terragrunt
+abbr -a tgp terragrunt plan
 abbr -a tga terragrunt apply
 abbr -a tgaa terragrunt apply -auto-approve
 
