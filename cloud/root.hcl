@@ -1,3 +1,13 @@
+locals {
+  pluginDirCommands = [
+    "apply",
+    "destroy",
+    "output",
+    "plan",
+    "refresh",
+    "init",
+  ]
+}
 terraform {
   extra_arguments "TF_IN_AUTOMATION" {
     commands = [
@@ -6,10 +16,18 @@ terraform {
       "output",
       "plan",
       "refresh",
+      "init",
     ]
     env_vars = {
-      TF_IN_AUTOMATION = "1"
+      TF_IN_AUTOMATION   = "1"
+      TF_CLI_CONFIG_FILE = get_env("TF_CLI_CONFIG_FILE")
     }
+  }
+  extra_arguments "pluginDir" {
+    commands = local.pluginDirCommands
+    arguments = [
+      "-plugin-dir=${get_env("TF_PLUGIN_CACHE_DIR")}"
+    ]
   }
 }
 generate "provider" {

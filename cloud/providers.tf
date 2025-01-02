@@ -1,44 +1,34 @@
 terraform {
   required_providers {
     kustomization = {
-      source  = "kbst/kustomization"
-      version = "0.9.6"
+      source = "registry.opentofu.org/kbst/kustomization"
     }
     kubectl = {
-      source  = "alekc/kubectl"
-      version = "2.1.3"
-    }
-    kubernetes = {
-      source  = "hashicorp/kubernetes"
-      version = "2.35.0"
-    }
-    helm = {
-      source  = "hashicorp/helm"
-      version = "2.16.1"
+      source = "registry.opentofu.org/alekc/kubectl"
     }
     http = {
-      source  = "hashicorp/http"
-      version = "3.4.5"
+      source = "registry.opentofu.org/hashicorp/http"
     }
     local = {
-      source  = "hashicorp/local"
-      version = "2.5.2"
+      source = "registry.opentofu.org/hashicorp/local"
     }
     htpasswd = {
-      source  = "loafoe/htpasswd"
-      version = "1.2.1"
+      source = "registry.opentofu.org/loafoe/htpasswd"
     }
     keycloak = {
-      source  = "mrparkers/keycloak"
-      version = "4.4.0"
+      source = "registry.opentofu.org/keycloak/keycloak"
     }
     string-functions = {
-      source  = "registry.terraform.io/random-things/string-functions"
-      version = "0.2.0"
+      source = "registry.opentofu.org/random-things/string-functions"
     }
     postgresql = {
-      source  = "cyrilgdn/postgresql"
-      version = "1.25.0"
+      source = "registry.opentofu.org/cyrilgdn/postgresql"
+    }
+    random = {
+      source = "hashicorp/random"
+    }
+    migadu = {
+      source = "registry.opentofu.org/metio/migadu"
     }
   }
 }
