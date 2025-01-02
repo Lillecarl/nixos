@@ -7,8 +7,7 @@
     nixpkgs-master.url = "github:NixOS/nixpkgs/master";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.05";
     nixpkgs-terraform-providers-bin = {
-      # url = "github:nix-community/nixpkgs-terraform-providers-bin";
-      url = "/home/lillecarl/Code/ntpb_overridable";
+      url = "github:nix-community/nixpkgs-terraform-providers-bin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     catppuccin-nix = {

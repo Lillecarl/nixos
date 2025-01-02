@@ -146,49 +146,25 @@
     lib.pspkgs.opentofu =
       let
         tfProviders = config.lib.pspkgs.tfBin.providers;
-        string-functions = pkgs.terraform-providers.mkProvider {
-          "hash" = "sha256-JeLF3racYZPIoPk/f5+jY8kHRVsiEGZNtPON90mDkgI=";
-          "homepage" = "https://registry.opentofu.org/random-things/string-functions";
-          "owner" = "random-things";
-          "repo" = "terraform-provider-string-functions";
-          "rev" = "v0.3.0";
-          "vendorHash" = "sha256-XhKqR54HNhzRgpPbH+nQYjYeMLtlPvHkaU7hm9JTJzA=";
-        };
-        kustomization = pkgs.terraform-providers.mkProvider {
-          "hash" = "sha256-nZJx9k11VIqC3wi3PdoMMpYNWeqH0Ca73tVZhWugAeI=";
-          "homepage" = "https://registry.opentofu.org/kbst/kustomization";
-          "owner" = "kbst";
-          "repo" = "terraform-provider-kustomization";
-          "rev" = "v0.9.6";
-          "spdx" = "Apache-2.0";
-          "vendorHash" = "sha256-Xo5zjMuBcc5vMdL3JB0bhna+aBfavN7hlOJ0oViQ2TE=";
-        };
-        pluginList =
-          (builtins.map (p: p.override { registry = "registry.opentofu.org"; }) (
-            with tfProviders;
-            [
-              alekc.kubectl
-              cloudflare.cloudflare
-              cyrilgdn.postgresql
-              hashicorp.http
-              hashicorp.local
-              hashicorp.null
-              hashicorp.time
-              hashicorp.random
-              hetznercloud.hcloud
-              keycloak.keycloak
-              loafoe.htpasswd
-            ]
-          ))
-          ++ [
-            (pkgs.terraform-providers.migadu.override ({
-              provider-source-address = "registry.opentofu.org/metio/migadu";
-            }))
-            string-functions
-            kustomization
-          ];
       in
-      (pkgs.opentofu.withPlugins (p: pluginList));
+      (pkgs.opentofu.withPlugins (
+        p: with tfProviders; [
+          alekc.kubectl
+          cloudflare.cloudflare
+          cyrilgdn.postgresql
+          hashicorp.http
+          hashicorp.local
+          hashicorp.null
+          hashicorp.random
+          hashicorp.time
+          hetznercloud.hcloud
+          kbst.kustomization
+          keycloak.keycloak
+          loafoe.htpasswd
+          metio.migadu
+          random-things.string-functions
+        ]
+      ));
     lib.pspkgs.fish4 = (pkgs.callPackage "${inputs.nixpkgs-fish}/pkgs/shells/fish" { });
   };
 }

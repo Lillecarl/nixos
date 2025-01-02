@@ -558,11 +558,11 @@
         "xwayland-satellite-unstable": "xwayland-satellite-unstable"
       },
       "locked": {
-        "lastModified": 1735763107,
-        "narHash": "sha256-3I6v08M1i/AZ9GFi8nKVw/HwsBc+NOcM2KiNAT/9HFI=",
+        "lastModified": 1735807957,
+        "narHash": "sha256-Jqdmt2TmqKj5gujK1rnmVWo+pDe/mu1yIfjZWsxqvNU=",
         "owner": "sodiboo",
         "repo": "niri-flake",
-        "rev": "ad80fe5616d547e5ac58df8171bbb90cf2cacb6f",
+        "rev": "719516b9d1e02ac96232e28032bd0f58a0bbc599",
         "type": "github"
       },
       "original": {
@@ -591,11 +591,11 @@
     "niri-unstable": {
       "flake": false,
       "locked": {
-        "lastModified": 1735586144,
-        "narHash": "sha256-YenL+60BJHF2cc4htz/iKEMgYd9dNfegzgH9tMBMhEY=",
+        "lastModified": 1735806047,
+        "narHash": "sha256-SEu0A2sZrAwG9UT6oj9FF581Xh4Ia+uaKFBuNAd0tbA=",
         "owner": "YaLTeR",
         "repo": "niri",
-        "rev": "4741ab2e0465275d58c36db426b169c742d964cf",
+        "rev": "3bf0a57b821e865548ff84ebc43a12cb45acbe3d",
         "type": "github"
       },
       "original": {
@@ -929,11 +929,11 @@
     },
     "nixpkgs-master": {
       "locked": {
-        "lastModified": 1735798142,
-        "narHash": "sha256-ZSHUQemRS+gTb297Jv8VRI2qhtT4JioQBJ5xjQA+DUY=",
+        "lastModified": 1735808600,
+        "narHash": "sha256-/2S/RQ5PwbwGml6sK1Q/gyZtLFA9yXyRwUfV50QRDXc=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "c0d71ad01729bf1acca3200ab418301ff2f9ee81",
+        "rev": "10fd006d4a0ee69021d101422172f3fac8cae1dd",
         "type": "github"
       },
       "original": {
@@ -966,17 +966,17 @@
         ]
       },
       "locked": {
-        "lastModified": 1735794828,
-        "narHash": "sha256-g6mDsn+RzR7W0gzH9/rI1gzAnrz5J9jhkewiG/tp1Do=",
-        "ref": "refs/heads/makeOverridable",
-        "rev": "336ba14b5f42710bace731da4ce6b92ed249738f",
-        "revCount": 1221,
-        "type": "git",
-        "url": "file:///home/lillecarl/Code/ntpb_overridable"
+        "lastModified": 1735808551,
+        "narHash": "sha256-9GS5I78t+hdx/73aao2k748ZbJ70KSjAnE7EYUUykn4=",
+        "owner": "nix-community",
+        "repo": "nixpkgs-terraform-providers-bin",
+        "rev": "7207fb604ef8d946344b90bf3254e51dd6d12571",
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "file:///home/lillecarl/Code/ntpb_overridable"
+        "owner": "nix-community",
+        "repo": "nixpkgs-terraform-providers-bin",
+        "type": "github"
       }
     },
     "nixvirt": {
@@ -1032,11 +1032,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1735791719,
-        "narHash": "sha256-ozGThGNbMhXzrafBIC8h6tDleIyrnKjBaYXorXKFCIg=",
+        "lastModified": 1735807837,
+        "narHash": "sha256-TkwD2lmDHBkWkieDk2EYHDfhwFvKXdEmC4BU6d9tU48=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "4b6bbb7b8198d6cd42c632cebe6c122c61ba9302",
+        "rev": "a5d86e6a82ddb651a2d4c1609dc550d683e6eba3",
         "type": "github"
       },
       "original": {
@@ -1255,11 +1255,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1735653038,
-        "narHash": "sha256-Q6xAmciTXDtZfUxf6c15QqtRR8BvX4edYPstF/uoqMk=",
+        "lastModified": 1735807918,
+        "narHash": "sha256-8b09m8eIT/0TPkrT3BVRZ+Bc5LOP8l1CYkBzrfQ/aok=",
         "owner": "numtide",
         "repo": "treefmt-nix",
-        "rev": "56c0ecd79f7ba01a0ec027da015df751d6ca3ae7",
+        "rev": "8cfde27e47460d80e92f759caadddfb31f391d0f",
         "type": "github"
       },
       "original": {
