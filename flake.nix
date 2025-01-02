@@ -6,6 +6,11 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     nixpkgs-master.url = "github:NixOS/nixpkgs/master";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.05";
+    nixpkgs-terraform-providers-bin = {
+      # url = "github:nix-community/nixpkgs-terraform-providers-bin";
+      url = "/home/lillecarl/Code/ntpb_overridable";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     catppuccin-nix = {
       url = "github:catppuccin/nix";
       inputs = {
