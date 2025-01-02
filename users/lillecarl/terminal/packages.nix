@@ -168,6 +168,7 @@
             with tfProviders;
             [
               alekc.kubectl
+              cloudflare.cloudflare
               cyrilgdn.postgresql
               hashicorp.http
               hashicorp.local
