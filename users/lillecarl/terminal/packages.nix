@@ -148,22 +148,27 @@
         tfProviders = config.lib.pspkgs.tfBin.providers;
       in
       (pkgs.opentofu.withPlugins (
-        p: with tfProviders; [
-          alekc.kubectl
-          cloudflare.cloudflare
-          cyrilgdn.postgresql
-          hashicorp.http
-          hashicorp.local
-          hashicorp.null
-          hashicorp.random
-          hashicorp.time
-          hetznercloud.hcloud
-          kbst.kustomization
-          keycloak.keycloak
-          loafoe.htpasswd
-          metio.migadu
-          random-things.string-functions
-        ]
+        _:
+        builtins.map (p: p.override { registry = "registry.opentofu.org"; }) (
+          with tfProviders;
+          [
+            alekc.kubectl
+            cloudflare.cloudflare
+            cyrilgdn.postgresql
+            hashicorp.http
+            hashicorp.local
+            hashicorp.null
+            hashicorp.random
+            hashicorp.time
+            hetznercloud.hcloud
+            kbst.kustomization
+            keycloak.keycloak
+            mrparkers.keycloak
+            loafoe.htpasswd
+            metio.migadu
+            random-things.string-functions
+          ]
+        )
       ));
     lib.pspkgs.fish4 = (pkgs.callPackage "${inputs.nixpkgs-fish}/pkgs/shells/fish" { });
   };
