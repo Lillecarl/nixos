@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ferretdb-lb
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: mongo.lillecarl.com
+    external-dns.alpha.kubernetes.io/target-type: A
+spec:
+  type: LoadBalancer
+  selector:
+    app: ferretdb
+  ports:
+  - protocol: TCP
+    name: mongo
+    port: 27018
+    targetPort: 27018
+  - protocol: TCP
+    name: mongotls
+    port: 27017
+    targetPort: 27018
