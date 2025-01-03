@@ -7,6 +7,6 @@ spec:
   # second, minute, hour, day, month, day of week
   schedule: "0 0 4 * * *"
   cluster:
-    name: pg-backup
+    name: cluster
   backupOwnerReference: self # This resource will be owner of Backup resource
   method: barmanObjectStore
