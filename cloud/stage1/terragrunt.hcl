@@ -12,7 +12,7 @@ terraform {
       "destroy",
     ]
     execute = [
-      "sh", "-c", "terranix ${get_working_dir()}/config.nix > ${get_working_dir()}/config.tf.json"
+      "sh", "-c", "terranix ${get_working_dir()}/config.nix > ${get_working_dir()}/config_tf_json && mv ${get_working_dir()}/config_tf_json ${get_working_dir()}/config.tf.json"
     ]
     run_on_error = false
   }
