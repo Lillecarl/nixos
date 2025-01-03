@@ -30,3 +30,16 @@ output "secrets" {
   value     = { for k in var.stdroles : k => random_password.this[k] }
   sensitive = true
 }
+output "dbinfo" {
+  sensitive = true
+  value = {
+    for k in var.stdroles : k => {
+      pubhost = "postgres.lillecarl.com"
+      host    = "cluster-rw.pg-cluster.svc.cluster.local"
+      port    = 5432
+      user    = k # username
+      pass    = random_password.this[k].result
+      name    = k # dbname
+    }
+  }
+}
