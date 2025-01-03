@@ -9,7 +9,8 @@ terraform {
       "init",
     ]
     env_vars = {
-      TF_IN_AUTOMATION = "1"
+      TF_IN_AUTOMATION   = "1"
+      TF_CLI_CONFIG_FILE = get_env("TF_CLI_CONFIG_FILE")
     }
   }
   extra_arguments "pluginDir" {
