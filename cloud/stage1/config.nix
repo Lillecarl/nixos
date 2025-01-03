@@ -12,9 +12,10 @@ let
   nginx-version = "1.12.0-beta.0";
   rook-version = "1.16.0";
   valkey-version = "0.0.42";
+  dragonfly-operator-version = "1.1.8";
 in
 {
-  locals.nixpaths = {
+  locals.nixpaths = rec {
     prometheus-bundle = toString (
       pkgs.fetchurl {
         url = "https://github.com/prometheus-operator/prometheus-operator/releases/download/v${prometheus-version}/bundle.yaml";
@@ -57,6 +58,17 @@ in
         sha256 = "sha256-rNmQyIkZ7GVLEBhmZ/ZoXeV/ynDB74Qulx7qFjtjuKM=";
       }
     );
+    dragonfly-operator-repo = toString (
+      pkgs.fetchFromGitHub {
+        owner = "dragonflydb";
+        repo = "dragonfly-operator";
+        rev = "v${dragonfly-operator-version}";
+        sha256 = "sha256-xCCqPCKPpRDJdHhjJ0HzU/Ha6jxXB+7qyS64cUVyXPs=";
+      }
+    );
+    dragonfly-bundle = "${dragonfly-operator-repo}/manifests/dragonfly-operator.yaml";
+    dragonfly-operator-chart = "${dragonfly-operator-repo}/charts/dragonfly-operator";
+    dragonfly-charts = "${dragonfly-operator-repo}/charts";
     rook-repo = toString (
       pkgs.fetchFromGitHub {
         owner = "rook";
