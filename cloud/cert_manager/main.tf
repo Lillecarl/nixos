@@ -7,6 +7,12 @@ locals {
   ids-chart-stage1  = var.deploy ? data.kustomization_overlay.chart.ids_prio[1] : []
   ids-chart-stage2  = var.deploy ? data.kustomization_overlay.chart.ids_prio[2] : []
   ids-config-stageX = var.deploy ? data.kustomization_overlay.config.ids : []
+  helm_values = {
+    crds = { enabled = true }
+    prometheus = {
+      servicemonitor = { enabled = true }
+    }
+  }
 }
 data "kustomization_overlay" "chart" {
   helm_charts {
@@ -16,13 +22,14 @@ data "kustomization_overlay" "chart" {
     release_name  = "cert-manager"
     version       = "1.16.2"
     include_crds  = true
-    values_inline = <<YAML
-crds:
-  enabled: true
-prometheus:
-  servicemonitor:
-    enabled: true
-YAML
+    values_inline = yamlencode(local.helm_values)
+  }
+  helm_charts {
+    name         = "cert-manager-csi-driver"
+    namespace    = "cert-manager"
+    repo         = "https://charts.jetstack.io"
+    release_name = "cert-manager-csi-driver"
+    include_crds = true
   }
   kustomize_options {
     load_restrictor = "none"
