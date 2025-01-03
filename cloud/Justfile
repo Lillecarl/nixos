@@ -1,0 +1,4 @@
+clean:
+    fd --hidden --no-ignore ".terragrunt-cache" --exec rm -rf
+    fd --hidden --no-ignore ".terraform.lock.hcl" --exec rm
+    fd --hidden --no-ignore ".terraform" --exec rm -rf

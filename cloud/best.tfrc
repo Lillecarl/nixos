@@ -1,0 +1,9 @@
+provider_installation {
+  filesystem_mirror {
+    path    = "~/.local/share/tfplugins"
+    include = ["registry.opentofu.org/*/*"]
+  }
+  direct {
+    exclude = ["registry.opentofu.org/*/*"]
+  }
+}
