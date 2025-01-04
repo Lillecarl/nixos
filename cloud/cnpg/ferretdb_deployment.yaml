@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ferretdb-deployment
+  name: ferretdb
   namespace: pg-cluster
 spec:
   replicas: 1
