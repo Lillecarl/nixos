@@ -7,11 +7,16 @@ locals {
   ids-chart-stage1  = var.deploy ? data.kustomization_overlay.chart.ids_prio[1] : []
   ids-chart-stage2  = var.deploy ? data.kustomization_overlay.chart.ids_prio[2] : []
   ids-config-stageX = var.deploy ? data.kustomization_overlay.config.ids : []
-  helm_values = {
-    crds = { enabled = true }
+  cert-manager-values = {
+    dns01RecursiveNameservers     = "1.1.1.1:53,1.0.0.1:53"
+    dns01RecursiveNameserversOnly = true
+    crds                          = { enabled = true }
     prometheus = {
       servicemonitor = { enabled = true }
     }
+  }
+  trust-manager-values = {
+    # secretTargets = { enabled = true }
   }
 }
 data "kustomization_overlay" "chart" {
@@ -22,7 +27,7 @@ data "kustomization_overlay" "chart" {
     release_name  = "cert-manager"
     version       = "1.16.2"
     include_crds  = true
-    values_inline = yamlencode(local.helm_values)
+    values_inline = yamlencode(local.cert-manager-values)
   }
   helm_charts {
     name         = "cert-manager-csi-driver"
@@ -30,6 +35,14 @@ data "kustomization_overlay" "chart" {
     repo         = "https://charts.jetstack.io"
     release_name = "cert-manager-csi-driver"
     include_crds = true
+  }
+  helm_charts {
+    name          = "trust-manager"
+    namespace     = "cert-manager"
+    repo          = "https://charts.jetstack.io"
+    release_name  = "trust-manager"
+    include_crds  = true
+    values_inline = yamlencode(local.trust-manager-values)
   }
   kustomize_options {
     load_restrictor = "none"
