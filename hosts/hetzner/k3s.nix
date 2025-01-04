@@ -24,6 +24,7 @@ in
 
       extraFlags = [
         "--cluster-cidr 10.42.0.0/16"
+        "--cluster-domain k8s.lillecarl.com"
         "--embedded-registry" # Allow local mirroring
         "--disable=traefik" # We use nginx
         "--disable=coredns" # We deploy ourselves
