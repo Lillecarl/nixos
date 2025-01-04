@@ -23,19 +23,17 @@ in
       enable = cfg.enable;
 
       extraFlags = [
-        "--disable=traefik"
-        "--disable=coredns"
-
-        # "--disable-kube-proxy"
-
-        "--flannel-backend=none"
-        "--disable-network-policy"
-
-        # "--no-deploy servicelb"
-        # "--disable-cloud-controller"
-        # "--kubelet-arg=cloud-provider=external"
+        "--cluster-cidr 10.42.0.0/16"
+        "--embedded-registry" # Allow local mirroring
+        "--disable=traefik" # We use nginx
+        "--disable=coredns" # We deploy ourselves
+        "--disable-helm-controller" # We don't use Helm like this
+        "--disable-kube-proxy" # Cilium
+        "--flannel-backend=none" # Cilium
+        "--disable-network-policy" # Cilium
+        # Make Hetzner Controller happy
         "--kubelet-arg=provider-id=hcloud://${config.lib.hetzAttrs.id}"
-
+        # OIDC with Keycloak
         "--kube-apiserver-arg=oidc-issuer-url=https://keycloak.lillecarl.com/realms/master"
         "--kube-apiserver-arg=oidc-client-id=kubernetes"
         "--kube-apiserver-arg=oidc-username-claim=sub" # usename is less fluid
@@ -51,7 +49,8 @@ in
     environment.systemPackages = [
       pkgs.cilium-cli
     ];
-    boot.kernel.sysctl = { # virtualisation.lxd.recommendedSysctlSettings
+    boot.kernel.sysctl = {
+      # virtualisation.lxd.recommendedSysctlSettings
       "fs.inotify.max_queued_events" = 1048576;
       "fs.inotify.max_user_instances" = 1048576;
       "fs.inotify.max_user_watches" = 1048576;
