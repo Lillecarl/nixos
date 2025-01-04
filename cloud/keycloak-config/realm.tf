@@ -107,3 +107,23 @@ output "pgadmin_client_secret" {
   value     = keycloak_openid_client.pgadmin.client_secret
   sensitive = true
 }
+
+resource "keycloak_openid_client" "vault" {
+  realm_id  = local.realm_id
+  client_id = "vault" # Identifier
+  name      = "Vault" # Visual name
+
+  valid_redirect_uris = [
+    "https://vault.lillecarl.com/ui/vault/auth/oidc/oidc/callback",
+  ]
+
+  standard_flow_enabled        = true
+  direct_access_grants_enabled = false
+  service_accounts_enabled     = false
+  access_type                  = "CONFIDENTIAL"
+}
+
+output "vault_client_secret" {
+  value     = keycloak_openid_client.vault.client_secret
+  sensitive = true
+}
