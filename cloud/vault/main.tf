@@ -1,5 +1,6 @@
 variable "AWS_ACCESS_KEY_ID" {}
 variable "AWS_SECRET_ACCESS_KEY" {}
+variable "VAULT_UNSEAL_TOKEN" {}
 variable "paths" { type = map(string) }
 variable "k8s_force" { type = bool }
 variable "deploy" { type = bool }
@@ -9,6 +10,75 @@ locals {
   ids-chart-stage0 = data.kustomization_overlay.chart.ids_prio[0]
   ids-chart-stage1 = var.deploy ? toset([for id in data.kustomization_overlay.chart.ids_prio[1] : id if !contains(local.excludedIDs, id)]) : []
   ids-chart-stage2 = var.deploy ? data.kustomization_overlay.chart.ids_prio[2] : []
+  helm_values = {
+    global = {
+      enabled    = true
+      tlsDisable = true
+    }
+    injector = { enabled = false }
+    server = {
+      ingress = {
+        enabled          = true
+        ingressClassName = "nginx"
+        annotations      = { "cert-manager.io/cluster-issuer" = "letsencrypt-staging" }
+        hosts = [{
+          host  = "vault.lillecarl.com"
+          paths = ["/"]
+        }]
+        tls = [{
+          hosts      = ["vault.lillecarl.com"]
+          secretName = "vault-tls"
+        }]
+      }
+      dataStorage = { enabled = false }
+      volumes = [{
+        name   = "cert"
+        secret = { secretName = "vault-tls" }
+      }]
+      volumeMounts = [{
+        mountPath = "/tls"
+        name      = "cert"
+        readOnly  = true
+      }]
+      extraEnvironmentVars = {
+        VAULT_LOG_LEVEL = "debug"
+      }
+      extraSecretEnvironmentVars = [
+        {
+          envName    = "AWS_ACCESS_KEY_ID"
+          secretName = "vault-s3"
+          secretKey  = "AWS_ACCESS_KEY_ID"
+        },
+        {
+          envName    = "AWS_SECRET_ACCESS_KEY"
+          secretName = "vault-s3"
+          secretKey  = "AWS_SECRET_ACCESS_KEY"
+        },
+        {
+          envName    = "VAULT_UNSEAL_TOKEN"
+          secretName = "unsealer"
+          secretKey  = "VAULT_UNSEAL_TOKEN"
+        },
+      ]
+      standalone = {
+        enabled = true
+        config  = <<HCL
+ui = true
+api_addr = "https://vault.lillecarl.com"
+storage "s3" {
+  bucket = "postspace-vault"
+  endpoint = "https://5456ceefee94cfc7fa487e309956d7a2.eu.r2.cloudflarestorage.com"
+}
+listener "tcp" {
+  address       = "0.0.0.0:8200"
+  tls_disable   = 1
+  tls_cert_file = "/tls/tls.crt"
+  tls_key_file  = "/tls/tls.key"
+}
+HCL
+      }
+    }
+  }
 }
 data "kustomization_overlay" "chart" {
   resources = [for file in tolist(fileset(path.module, "*.yaml")) : "${path.module}/${file}"]
@@ -25,6 +95,38 @@ data "kustomization_overlay" "chart" {
       disable_name_suffix_hash = true
     }
   }
+  secret_generator {
+    name      = "unsealer"
+    namespace = local.namespace
+    type      = "Opaque"
+    literals = [
+      "VAULT_UNSEAL_TOKEN=${var.VAULT_UNSEAL_TOKEN}",
+    ]
+    options {
+      disable_name_suffix_hash = true
+    }
+  }
+  patches {
+    patch = <<YAML
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: vault
+  namespace: vault
+spec:
+  template:
+    spec:
+      containers:
+      - name: vault
+        lifecycle:
+          postStart:
+            exec:
+              command:
+              - "/bin/sh"
+              - "-c"
+              - "while ! vault operator unseal $VAULT_UNSEAL_TOKEN; do echo trying to unlock vault; sleep 5; done"
+YAML
+  }
   helm_charts {
     name          = "vault"
     namespace     = local.namespace
@@ -32,49 +134,7 @@ data "kustomization_overlay" "chart" {
     release_name  = "vault"
     version       = "0.29.1"
     include_crds  = true
-    values_inline = <<YAML
-global:
-  enabled: true
-  tlsDisable: true
-injector:
-  enabled: "false"
-server:
-  ingress:
-    enabled: true
-    ingressClassName: nginx
-    annotations:
-      cert-manager.io/cluster-issuer: letsencrypt-staging
-    hosts:
-      - host: vault.lillecarl.com
-        paths: [ "/" ]
-    tls:
-      - hosts: [ "vault.lillecarl.com" ]
-        secretName: vault-tls
-  dataStorage:
-    enabled: false
-  extraEnvironmentVars:
-    VAULT_LOG_LEVEL: "debug"
-  extraSecretEnvironmentVars:
-    - envName: AWS_ACCESS_KEY_ID
-      secretName: vault-s3
-      secretKey: AWS_ACCESS_KEY_ID
-    - envName: AWS_SECRET_ACCESS_KEY
-      secretName: vault-s3
-      secretKey: AWS_SECRET_ACCESS_KEY
-  standalone:
-    enabled: true
-    config: |
-      storage "s3" {
-        bucket = "postspace-vault"
-        endpoint = "https://5456ceefee94cfc7fa487e309956d7a2.eu.r2.cloudflarestorage.com"
-      }
-      listener "tcp" {
-        address = "0.0.0.0:8200"
-        tls_disable = 1
-      }
-      disable_mlock = true
-      ui = true
-YAML
+    values_inline = yamlencode(local.helm_values)
   }
   kustomize_options {
     load_restrictor = "none"
