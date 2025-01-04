@@ -20,6 +20,7 @@ locals {
   }
 }
 data "kustomization_overlay" "chart" {
+  # If you set namespace here cert-manager dies
   helm_charts {
     name          = "cert-manager"
     namespace     = "cert-manager"
