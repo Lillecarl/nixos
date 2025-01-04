@@ -73,3 +73,8 @@ resource "kubectl_manifest" "olm_operator_packageserver" {
     kubectl_manifest.stage2,
   ]
 }
+resource "time_sleep" "operator-wait" {
+  depends_on = [kubectl_manifest.olm_operator_packageserver]
+
+  create_duration = "60s"
+}

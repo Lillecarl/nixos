@@ -6,6 +6,15 @@ locals {
   ids-this-stage0 = data.kustomization_overlay.this.ids_prio[0]
   ids-this-stage1 = var.deploy ? data.kustomization_overlay.this.ids_prio[1] : []
   ids-this-stage2 = var.deploy ? data.kustomization_overlay.this.ids_prio[2] : []
+  helm_values = {
+    crd        = { create = true }
+    metrics    = { enabled = true }
+    "provider" = "cloudflare"
+    cloudflare = {
+      secretName = "cloudflare-api-token-secret"
+      proxied    = false
+    }
+  }
 }
 data "kustomization_overlay" "this" {
   resources = [for file in tolist(fileset(path.module, "*.yaml")) : "${path.module}/${file}"]
@@ -27,16 +36,7 @@ data "kustomization_overlay" "this" {
     release_name  = "external-dns"
     version       = "8.7.1"
     include_crds  = true
-    values_inline = <<YAML
-crd:
-  create: true
-metrics:
-  enabled: true
-provider: cloudflare
-cloudflare:
-  secretName: cloudflare-api-token-secret
-  proxied: false
-YAML
+    values_inline = yamlencode(local.helm_values)
   }
   kustomize_options {
     load_restrictor = "none"

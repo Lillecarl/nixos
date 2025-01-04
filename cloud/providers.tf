@@ -9,6 +9,9 @@ terraform {
     kubernetes = {
       source = "registry.opentofu.org/hashicorp/kubernetes"
     }
+    vault = {
+      source = "registry.opentofu.org/hashicorp/vault"
+    }
     http = {
       source = "registry.opentofu.org/hashicorp/http"
     }

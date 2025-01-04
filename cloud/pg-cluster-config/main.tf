@@ -35,7 +35,7 @@ output "dbinfo" {
   value = {
     for k in var.stdroles : k => {
       pubhost = "postgres.lillecarl.com"
-      host    = "cluster-rw.pg-cluster.svc.cluster.local"
+      host    = "cluster-rw.pg-cluster.svc.k8s.lillecarl.com"
       port    = 5432
       user    = k # username
       pass    = random_password.this[k].result

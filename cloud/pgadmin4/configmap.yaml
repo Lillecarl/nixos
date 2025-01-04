@@ -11,7 +11,7 @@ data:
     # but we'll prioritize UX here and disable this. If someone hacks this non
     # production system it's pretty much their wasted effort.
     AUTHENTICATION_SOURCES = ['oauth2']
-    CONFIG_DATABASE_URI = f"postgresql://{os.environ["PGADMIN_PG_USERNAME"]}:{os.environ["PGADMIN_PG_PASSWORD"]}@cluster-rw.pg-cluster.svc.cluster.local/pgadmin"
+    CONFIG_DATABASE_URI = f"postgresql://{os.environ["PGADMIN_PG_USERNAME"]}:{os.environ["PGADMIN_PG_PASSWORD"]}@cluster-rw.pg-cluster.svc.k8s.lillecarl.com/pgadmin"
     OAUTH2_CONFIG = [
         {
             'OAUTH2_NAME': 'keycloak',

@@ -16,7 +16,7 @@ data "kustomization_overlay" "this" {
     namespace = "keycloak"
     type      = "Opaque"
     literals = [
-      "host=cluster-rw.pg-cluster.svc.cluster.local",
+      "host=cluster-rw.pg-cluster.svc.k8s.lillecarl.com",
       "port=5432",
       "user=keycloak",
       "pass=${var.keycloak_db_pass}",
