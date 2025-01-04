@@ -6,6 +6,9 @@ terraform {
     kubectl = {
       source = "registry.opentofu.org/alekc/kubectl"
     }
+    kubernetes = {
+      source = "registry.opentofu.org/hashicorp/kubernetes"
+    }
     http = {
       source = "registry.opentofu.org/hashicorp/http"
     }
