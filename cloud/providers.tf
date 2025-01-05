@@ -1,43 +1,43 @@
 terraform {
   required_providers {
     bitwarden = {
-      source = "registry.terraform.io/maxlaverse/bitwarden"
+      source = "maxlaverse/bitwarden"
     }
     kustomization = {
-      source = "registry.opentofu.org/kbst/kustomization"
+      source = "kbst/kustomization"
     }
     kubectl = {
-      source = "registry.opentofu.org/alekc/kubectl"
+      source = "alekc/kubectl"
     }
     kubernetes = {
-      source = "registry.opentofu.org/hashicorp/kubernetes"
+      source = "hashicorp/kubernetes"
     }
     vault = {
-      source = "registry.opentofu.org/hashicorp/vault"
+      source = "hashicorp/vault"
     }
     http = {
-      source = "registry.opentofu.org/hashicorp/http"
+      source = "hashicorp/http"
     }
     local = {
-      source = "registry.opentofu.org/hashicorp/local"
+      source = "hashicorp/local"
     }
     htpasswd = {
-      source = "registry.opentofu.org/loafoe/htpasswd"
+      source = "loafoe/htpasswd"
     }
     keycloak = {
-      source = "registry.opentofu.org/keycloak/keycloak"
+      source = "keycloak/keycloak"
     }
     string-functions = {
-      source = "registry.opentofu.org/random-things/string-functions"
+      source = "random-things/string-functions"
     }
     postgresql = {
-      source = "registry.opentofu.org/cyrilgdn/postgresql"
+      source = "cyrilgdn/postgresql"
     }
     random = {
       source = "hashicorp/random"
     }
     migadu = {
-      source = "registry.opentofu.org/metio/migadu"
+      source = "metio/migadu"
     }
   }
 }
