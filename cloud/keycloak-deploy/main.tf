@@ -21,13 +21,12 @@ locals {
       adminPassword = var.keycloak_admin_pass
     }
     service = {
-      http  = { enabled = false }
-      ports = { https = 8443 }
+      http = { enabled = false }
     }
     ingress = {
       enabled     = true
       tls         = true
-      servicePort = 8443
+      servicePort = "https"
       hostname    = "keycloak.lillecarl.com"
       annotations = {
         "cert-manager.io/cluster-issuer"               = "letsencrypt-production"
@@ -75,21 +74,6 @@ data "kustomization_overlay" "this" {
     options {
       disable_name_suffix_hash = true
     }
-  }
-  patches {
-    patch = <<YAML
-apiVersion: v1
-kind: Service
-metadata:
-  name: keycloak
-  namespace: keycloak
-spec:
-  ports:
-  - name: https
-    port: 8443
-    protocol: TCP
-    targetPort: 8443
-YAML
   }
   helm_charts {
     name          = "keycloak"
