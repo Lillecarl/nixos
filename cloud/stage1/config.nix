@@ -5,6 +5,179 @@
   ...
 }:
 let
+  # Thanks https://github.com/farcaller/nix-kube-generators/blob/master/lib/default.nix
+  downloadHelmChart =
+    {
+      repo,
+      chart,
+      version,
+      chartHash ? pkgs.lib.fakeHash,
+    }:
+    let
+      pullCommand =
+        if lib.hasPrefix "oci://" repo then
+          ''
+            ${pkgs.kubernetes-helm}/bin/helm pull \
+              "${repo}" \
+              --version "${version}" \
+              -d $OUT_DIR \
+              --untar
+          ''
+        else
+          ''
+            ${pkgs.kubernetes-helm}/bin/helm pull \
+              --repo "${repo}" \
+              --version "${version}" \
+              "${chart}" \
+              -d $OUT_DIR \
+              --untar
+          '';
+    in
+    pkgs.stdenv.mkDerivation {
+      name = "helmchart-${chart}-${version}";
+      nativeBuildInputs = [ pkgs.cacert ];
+
+      phases = [ "installPhase" ];
+      installPhase = ''
+        export HELM_CACHE_HOME="$TMP/.nix-helm-build-cache"
+        OUT_DIR="$TMP/temp-chart-output"
+        mkdir -p "$OUT_DIR"
+        mkdir -p "$HELM_CACHE_HOME"
+        mkdir -p "$out"
+        ${pullCommand}
+        mv $OUT_DIR/${chart} "$out/${chart}"
+      '';
+
+      outputHashMode = "recursive";
+      outputHashAlgo = "sha256";
+      outputHash = chartHash;
+    };
+
+  dragonfly-chart = downloadHelmChart {
+    repo = "oci://ghcr.io/dragonflydb/dragonfly/helm/dragonfly";
+    chart = "dragonfly";
+    version = "v1.26.0";
+    chartHash = "sha256-aXIYu1HOVzpgqAodxcy/nkficJDCcvzrXKKtkKMJlpY=";
+  };
+  cnpg-chart = downloadHelmChart {
+    repo = "https://cloudnative-pg.io/charts";
+    chart = "cloudnative-pg";
+    version = "0.23.0";
+    chartHash = "sha256-UPuNKFWmZP8cZE1xOllkoEM7gOtc+TwQm6MIDKA05Ug=";
+  };
+  cilium-chart = downloadHelmChart {
+    repo = "https://helm.cilium.io";
+    chart = "cilium";
+    version = "1.16.5";
+    chartHash = "sha256-vDlQDb0cGSlphD8zA22TlKm4P4cVW68SrCrJLUFZR9U=";
+  };
+  external_dns-chart = downloadHelmChart {
+    repo = "https://kubernetes-sigs.github.io/external-dns";
+    chart = "external-dns";
+    version = "1.15.0";
+    chartHash = "sha256-BsgC1aAzpdgXIlJKZ6jSl5uLgPvjB9qcAaWxIZZvUf0=";
+  };
+  cert_manager-chart = downloadHelmChart {
+    repo = "https://charts.jetstack.io";
+    chart = "cert-manager";
+    version = "1.16.2";
+    chartHash = "sha256-rOkG5UVFx/s07Yyk7+irAPHQZCrV9alnSt9LhdjwCuA=";
+  };
+  cert_manager_csi_driver-chart = downloadHelmChart {
+    repo = "https://charts.jetstack.io";
+    chart = "cert-manager-csi-driver";
+    version = "0.10.1";
+    chartHash = "sha256-uet2RM2SC2xNUXBOfUxe3ZBt+KNmDdWkOUNH9QtY2SA=";
+  };
+  trust_manager-chart = downloadHelmChart {
+    repo = "https://charts.jetstack.io";
+    chart = "trust-manager";
+    version = "0.14.0";
+    chartHash = "sha256-GEMNhJjaTz9fqUrJ972gDGXCxLOK+Ve4taCZowo9W8Q=";
+  };
+  chaoskube-chart = downloadHelmChart {
+    repo = "https://linki.github.io/chaoskube";
+    chart = "chaoskube";
+    version = "0.4.0";
+    chartHash = "sha256-UosQPXXTWm1Tp8jnHvcJUcugirS/DwXxVeR6PO0++UU=";
+  };
+  coredns-chart = downloadHelmChart {
+    repo = "https://coredns.github.io/helm";
+    chart = "coredns";
+    version = "1.37.0";
+    chartHash = "sha256-V1492bMu4TzGxk02R39nlZjpZyVei198CI6ZDzk72t0=";
+  };
+  external_secrets-chart = downloadHelmChart {
+    repo = "https://charts.external-secrets.io";
+    chart = "external-secrets";
+    version = "0.12.1";
+    chartHash = "sha256-gU5QzxOzYqIBLbNZIdj06+Yl6im2Seh+n9OBH4/ddkc=";
+  };
+  hcloud_ccm-chart = downloadHelmChart {
+    repo = "https://charts.hetzner.cloud";
+    chart = "hcloud-cloud-controller-manager";
+    version = "1.21.0";
+    chartHash = "sha256-dXPuQvMKiB0nKUXMP01SRIDsHmOxQlvHG0vvoTYGE9c=";
+  };
+  hcloud_csi-chart = downloadHelmChart {
+    repo = "https://charts.hetzner.cloud";
+    chart = "hcloud-csi";
+    version = "2.11.0";
+    chartHash = "sha256-9K+Axt4GygTds2n3hNonxtHh8GvG9x8el+BTyVxVckA=";
+  };
+  keycloak-chart = downloadHelmChart {
+    repo = "oci://registry-1.docker.io/bitnamicharts/keycloak";
+    chart = "keycloak";
+    version = "24.3.2";
+    chartHash = "sha256-XtYF6e99mXIYq3Hinkk9va6Elc690Ki0cfWzkXoaLrE=";
+  };
+  ingress_nginx-chart = downloadHelmChart {
+    repo = "https://kubernetes.github.io/ingress-nginx";
+    chart = "ingress-nginx";
+    version = "4.12.0";
+    chartHash = "sha256-BwGi7t+Jdtstzy01ggJNxyAp13wTcfkEumAjdsCLbPk=";
+  };
+  docker_registry_ui-chart = downloadHelmChart {
+    repo = "https://helm.joxit.dev";
+    chart = "docker-registry-ui";
+    version = "1.1.3";
+    chartHash = "sha256-X4w5c0W7+O88LUzs0aJETL2VDoeU1A12FlKXU3wNZH0=";
+  };
+  reloader-chart = downloadHelmChart {
+    repo = "https://stakater.github.io/stakater-charts";
+    chart = "reloader";
+    version = "1.2.0";
+    chartHash = "sha256-7a6+2NfTeIgmnGfvU6haUXU94rO5RGKNDNmd3KX2E/c=";
+  };
+  vault-chart = downloadHelmChart {
+    repo = "https://helm.releases.hashicorp.com";
+    chart = "vault";
+    version = "0.29.1";
+    chartHash = "sha256-dilwGm8Jr1wANpLucSBtjkdu1qY4SZ/kPbc2lKDp9N0=";
+  };
+  charts = pkgs.symlinkJoin {
+    name = "helm-chart-collection";
+    paths = [
+      dragonfly-chart
+      cnpg-chart
+      cilium-chart
+      external_dns-chart
+      cert_manager-chart
+      cert_manager_csi_driver-chart
+      trust_manager-chart
+      chaoskube-chart
+      coredns-chart
+      external_secrets-chart
+      hcloud_ccm-chart
+      hcloud_csi-chart
+      keycloak-chart
+      ingress_nginx-chart
+      docker_registry_ui-chart
+      reloader-chart
+      vault-chart
+    ];
+  };
+
   olm-version = "0.30.0";
   prometheus-version = "0.79.2";
   cnpg-version = "1.25.0";
@@ -13,9 +186,30 @@ let
   rook-version = "1.16.0";
   valkey-version = "0.0.42";
   dragonfly-operator-version = "1.1.8";
+  cilium-version = "1.16.5";
+  cnpg-chart-version = "cloudnative-pg-v0.23.0";
+
+  dragonfly-operator-repo = pkgs.fetchFromGitHub {
+    owner = "dragonflydb";
+    repo = "dragonfly-operator";
+    rev = "v${dragonfly-operator-version}";
+    sha256 = "sha256-xCCqPCKPpRDJdHhjJ0HzU/Ha6jxXB+7qyS64cUVyXPs=";
+  };
+  cilium-repo = pkgs.fetchFromGitHub {
+    owner = "cilium";
+    repo = "cilium";
+    rev = "v${cilium-version}";
+    sha256 = "sha256-LNO22MFB6b6clfBXsAyU+PzKiP8I/AcERcx2gIDPZ24=";
+  };
+  cnpg-chart-repo = pkgs.fetchFromGitHub {
+    owner = "cloudnative-pg";
+    repo = "charts";
+    rev = cnpg-chart-version;
+    sha256 = "sha256-xmvWf5H+nvFjhIPKnyDvAjJyeRLZYNlYa8s/spVqOLE=";
+  };
 in
 {
-  locals.nixpaths = rec {
+  locals.nixpaths = {
     prometheus-bundle = toString (
       pkgs.fetchurl {
         url = "https://github.com/prometheus-operator/prometheus-operator/releases/download/v${prometheus-version}/bundle.yaml";
@@ -58,17 +252,6 @@ in
         sha256 = "sha256-rNmQyIkZ7GVLEBhmZ/ZoXeV/ynDB74Qulx7qFjtjuKM=";
       }
     );
-    dragonfly-operator-repo = toString (
-      pkgs.fetchFromGitHub {
-        owner = "dragonflydb";
-        repo = "dragonfly-operator";
-        rev = "v${dragonfly-operator-version}";
-        sha256 = "sha256-xCCqPCKPpRDJdHhjJ0HzU/Ha6jxXB+7qyS64cUVyXPs=";
-      }
-    );
-    dragonfly-bundle = "${dragonfly-operator-repo}/manifests/dragonfly-operator.yaml";
-    dragonfly-operator-chart = "${dragonfly-operator-repo}/charts/dragonfly-operator";
-    dragonfly-charts = "${dragonfly-operator-repo}/charts";
     rook-repo = toString (
       pkgs.fetchFromGitHub {
         owner = "rook";
@@ -86,6 +269,11 @@ in
         ];
       }
     );
+    dragonfly-chart-home = "${dragonfly-operator-repo}/charts";
+    cilium-chart-home = "${cilium-repo}/install/kubernetes";
+    cnpg-chart-home = "${cnpg-chart-repo}/charts";
+    cnpg-chart-home2 = "${cnpg-chart}";
+    charts = toString charts;
     helm-path = lib.getExe pkgs.kubernetes-helm;
   };
 }
