@@ -156,16 +156,19 @@
             cloudflare.cloudflare
             cyrilgdn.postgresql
             hashicorp.http
+            hashicorp.kubernetes
             hashicorp.local
             hashicorp.null
             hashicorp.random
             hashicorp.time
+            hashicorp.vault
             hetznercloud.hcloud
             kbst.kustomization
             keycloak.keycloak
-            mrparkers.keycloak
             loafoe.htpasswd
+            maxlaverse.bitwarden
             metio.migadu
+            mrparkers.keycloak
             random-things.string-functions
           ]
         )

@@ -1,5 +1,8 @@
 terraform {
   required_providers {
+    bitwarden = {
+      source = "registry.terraform.io/maxlaverse/bitwarden"
+    }
     kustomization = {
       source = "registry.opentofu.org/kbst/kustomization"
     }
@@ -40,4 +43,9 @@ terraform {
 }
 provider "kubectl" {
   apply_retry_count = 1
+}
+provider "bitwarden" {
+  experimental {
+    embedded_client = true
+  }
 }
