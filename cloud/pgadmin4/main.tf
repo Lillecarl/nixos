@@ -15,6 +15,19 @@ data "kustomization_overlay" "this" {
   resources = [for file in tolist(fileset(path.module, "*.yaml")) : "${path.module}/${file}"]
   namespace = "pgadmin"
   secret_generator {
+    name = "pgadmin-oauth-secret"
+    type = "Opaque"
+    literals = [
+      "OAUTH2_CLIENT_SECRET=${var.pgadmin_client_secret}",
+    ]
+    options {
+      disable_name_suffix_hash = true
+      labels = {
+        "cnpg.io/reload" = true
+      }
+    }
+  }
+  secret_generator {
     name = "pgadmin-admin"
     type = "Opaque"
     literals = [
@@ -50,7 +63,7 @@ data "kustomization_overlay" "this" {
 }
 resource "kubectl_manifest" "stage0" {
   for_each   = local.ids-this-stage0
-  yaml_body  = local.manifests_substituted[each.value]
+  yaml_body  = data.kustomization_overlay.this.manifests[each.value]
   depends_on = []
 
   force_conflicts   = var.k8s_force
@@ -60,7 +73,7 @@ resource "kubectl_manifest" "stage0" {
 }
 resource "kubectl_manifest" "stage1" {
   for_each   = local.ids-this-stage1
-  yaml_body  = local.manifests_substituted[each.value]
+  yaml_body  = data.kustomization_overlay.this.manifests[each.value]
   depends_on = [kubectl_manifest.stage0]
 
   force_conflicts   = var.k8s_force
@@ -69,17 +82,10 @@ resource "kubectl_manifest" "stage1" {
 }
 resource "kubectl_manifest" "stage2" {
   for_each   = local.ids-this-stage2
-  yaml_body  = local.manifests_substituted[each.value]
+  yaml_body  = data.kustomization_overlay.this.manifests[each.value]
   depends_on = [kubectl_manifest.stage1]
 
   force_conflicts   = var.k8s_force
   server_side_apply = true
   wait              = true
-}
-locals {
-  manifests_substituted = { for k, v in data.kustomization_overlay.this.manifests : k =>
-    provider::string-functions::multi_replace(v, {
-      "$OAUTH2_CLIENT_SECRET" = sensitive(var.pgadmin_client_secret),
-    })
-  }
 }

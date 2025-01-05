@@ -26,6 +26,11 @@ spec:
         env:
         - name: SSL_CERT_FILE
           value: /etc/ssl/certs/ca-bundle.crt
+        - name: OAUTH2_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: pgadmin-oauth-secret
+              key: OAUTH2_CLIENT_SECRET
         - name: PGADMIN_SETUP_EMAIL
           valueFrom:
             secretKeyRef:
