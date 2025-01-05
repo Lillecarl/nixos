@@ -175,7 +175,24 @@ let
       reloader-chart
       trust_manager-chart
       vault-chart
+      oauth2_proxy-chart
+      local_path_provisioner-chart
     ];
+  };
+
+  local_path_provisioner-repo = pkgs.fetchFromGitHub {
+    owner = "rancher";
+    repo = "local-path-provisioner";
+    rev = "v0.0.30";
+    sha256 = "sha256-FsKx5FO9u1+WNqjPjfl4O7uxPC+F44P++Am6r4Y6OPw=";
+  };
+  local_path_provisioner-chart = pkgs.stdenv.mkDerivation {
+    name = "helmchart-local-path-provisioner-0.0.30";
+    phases = [ "installPhase" ];
+    installPhase = ''
+      mkdir -p $out/local-path-provisioner
+      cp -r ${local_path_provisioner-repo}/deploy/chart/local-path-provisioner/* $out/local-path-provisioner/
+    '';
   };
 
   olm-version = "0.30.0";
