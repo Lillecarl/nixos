@@ -8,7 +8,7 @@ locals {
   ids-this-stage1 = var.deploy ? data.kustomization_overlay.this.ids_prio[1] : []
   ids-this-stage2 = var.deploy ? data.kustomization_overlay.this.ids_prio[2] : []
   helm_values = {
-    replicaCount = 2
+    replicaCount = 1
     tls = {
       enabled        = true
       existingSecret = "keycloak.lillecarl.com-tls"
