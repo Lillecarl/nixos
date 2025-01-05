@@ -21,17 +21,20 @@ locals {
     k8sServiceHost       = "65.21.63.133"
     k8sServicePort       = "6443"
     tunnelProtocol       = "geneve"
+    routingMode          = "tunnel"
     cluster              = { name = "default" }
-    ipam                 = { operator = { clusterPoolIPv4PodCIDRList = "10.42.0.0/16" } }
-    operator             = { replicas = 1 }
-    hostFirewall         = { enabled = true }
-    ipv6                 = { enabled = true }
+    ipam = { operator = {
+      clusterPoolIPv4PodCIDRList = "10.42.0.0/16"
+      # clusterPoolIPv6PodCIDRList = "2a01:4f9:c01f:e028::/64"
+    } }
+    operator     = { replicas = 1 }
+    hostFirewall = { enabled = true }
+    ipv6         = { enabled = true }
+    bpf          = { masquerade = true }
     cgroup = {
       autoMount = { enabled = false }
       hostRoot  = "/sys/fs/cgroup"
     }
-    routingMode    = "tunnel"
-    tunnelProtocol = "vxlan"
   }
 }
 data "kustomization_overlay" "this" {

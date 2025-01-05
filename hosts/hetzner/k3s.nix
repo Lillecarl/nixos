@@ -33,6 +33,7 @@ in
         "--disable-kube-proxy" # Cilium
         "--flannel-backend=none" # Cilium
         "--disable-network-policy" # Cilium
+        "--disable=servicelb" # Cilium
         # Make Hetzner Controller happy
         "--kubelet-arg=provider-id=hcloud://${config.lib.hetzAttrs.id}"
         # OIDC with Keycloak
@@ -61,6 +62,8 @@ in
       "net.ipv4.neigh.default.gc_thresh3" = 8192;
       "net.ipv6.neigh.default.gc_thresh3" = 8192;
       "kernel.keys.maxkeys" = 2000;
+      # IPv6 stuff
+      "net.ipv6.conf.all.accept_ra" = 2;
     };
     # Load IPv6 modules requred by Cilium
     boot.kernelModules = [
