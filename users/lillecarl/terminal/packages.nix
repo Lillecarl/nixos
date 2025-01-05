@@ -81,6 +81,7 @@
             k9s # Kubernetes TUI
             terranix # Nix -> config.tf.json
             kustomize # Kubernetes YAML wrangler
+            stern # Better kubectl logs
             nerdctl # containerd cli tool
             kubelogin-oidc # Kubernetes OIDC login
             config.lib.pspkgs.cmctl # Cert-Manager
