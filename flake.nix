@@ -188,7 +188,6 @@
       inputs = {
         flake-compat.follows = "flake-compat";
         gitignore.follows = "gitignore";
-        nixpkgs-stable.follows = "nixpkgs-stable";
         nixpkgs.follows = "nixpkgs";
       };
     };
