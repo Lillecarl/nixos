@@ -7,6 +7,56 @@ locals {
   ids-this-stage0 = data.kustomization_overlay.this.ids_prio[0]
   ids-this-stage1 = var.deploy ? data.kustomization_overlay.this.ids_prio[1] : []
   ids-this-stage2 = var.deploy ? data.kustomization_overlay.this.ids_prio[2] : []
+  helm_values = {
+    replicaCount = 2
+    tls = {
+      enabled        = true
+      existingSecret = "keycloak.lillecarl.com-tls"
+      usePem         = true
+    }
+    production = true
+    postgresql = { enabled = false }
+    auth = {
+      adminUser     = "superadmin"
+      adminPassword = var.keycloak_admin_pass
+    }
+    service = {
+      http  = { enabled = false }
+      ports = { https = 8443 }
+    }
+    ingress = {
+      enabled     = true
+      tls         = true
+      servicePort = 8443
+      hostname    = "keycloak.lillecarl.com"
+      annotations = {
+        "cert-manager.io/cluster-issuer"               = "letsencrypt-production"
+        "nginx.ingress.kubernetes.io/backend-protocol" = "HTTPS"
+      }
+      ingressClassName = "nginx"
+    }
+    externalDatabase = {
+      existingSecret            = "cluster-keycloak"
+      existingSecretHostKey     = "host"
+      existingSecretPortKey     = "port"
+      existingSecretUserKey     = "user"
+      existingSecretPasswordKey = "pass"
+      existingSecretDatabaseKey = "database"
+    }
+    metrics = {
+      enabled        = true
+      serviceMonitor = { enabled = true }
+      prometheusRule = { enabled = true }
+    }
+    startupProbe = {
+      enabled             = true
+      initialDelaySeconds = 30
+      periodSeconds       = 10
+      timeoutSeconds      = 1
+      failureThreshold    = 60
+      successThreshold    = 1
+    }
+  }
 }
 data "kustomization_overlay" "this" {
   namespace = "keycloak"
@@ -26,6 +76,22 @@ data "kustomization_overlay" "this" {
       disable_name_suffix_hash = true
     }
   }
+  patches {
+    patch = <<YAML
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: keycloak
+  namespace: keycloak
+spec:
+  ports:
+  - name: https
+    port: 8443
+    protocol: TCP
+    targetPort: 8443
+YAML
+  }
   helm_charts {
     name          = "keycloak"
     namespace     = "keycloak"
@@ -33,47 +99,7 @@ data "kustomization_overlay" "this" {
     release_name  = "keycloak"
     version       = "24.3.1"
     include_crds  = true
-    values_inline = <<YAML
-replicaCount: 2
-tls:
-  enabled: true
-  existingSecret: keycloak.lillecarl.com-tls
-  usePem: true
-production: true
-postgresql:
-  enabled: false
-auth:
-  adminUser: superadmin
-  adminPassword: ${var.keycloak_admin_pass}
-ingress:
-  enabled: true
-  tls: true
-  hostname: keycloak.lillecarl.com
-  annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-production
-  ingressClassName: nginx
-externalDatabase:
-  existingSecret: "cluster-keycloak"
-  existingSecretHostKey: "host"
-  existingSecretPortKey: "port"
-  existingSecretUserKey: "user"
-  existingSecretPasswordKey: "pass"
-  existingSecretDatabaseKey: "database"
-  annotations: {}
-metrics:
-  enabled: true
-  serviceMonitor:
-    enabled: true
-  prometheusRule:
-    enabled: true
-startupProbe:
-  enabled: true
-  initialDelaySeconds: 30
-  periodSeconds: 10
-  timeoutSeconds: 1
-  failureThreshold: 60
-  successThreshold: 1
-YAML
+    values_inline = yamlencode(local.helm_values)
   }
   kustomize_options {
     load_restrictor = "none"
