@@ -25,6 +25,7 @@ locals {
     ipam                 = { operator = { clusterPoolIPv4PodCIDRList = "10.42.0.0/16" } }
     operator             = { replicas = 1 }
     hostFirewall         = { enabled = true }
+    ipv6                 = { enabled = true }
     cgroup = {
       autoMount = { enabled = false }
       hostRoot  = "/sys/fs/cgroup"

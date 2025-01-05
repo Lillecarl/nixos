@@ -24,6 +24,7 @@ in
 
       extraFlags = [
         "--cluster-cidr 10.42.0.0/16"
+        "--service-cidr 10.43.0.0/16"
         "--cluster-domain k8s.lillecarl.com"
         "--embedded-registry" # Allow local mirroring
         "--disable=traefik" # We use nginx
@@ -61,5 +62,12 @@ in
       "net.ipv6.neigh.default.gc_thresh3" = 8192;
       "kernel.keys.maxkeys" = 2000;
     };
+    # Load IPv6 modules requred by Cilium
+    boot.kernelModules = [
+      "ip6_tables"
+      "ip6table_mangle"
+      "ip6table_raw"
+      "ip6table_filter"
+    ];
   };
 }

@@ -24,4 +24,12 @@ spec:
     - fields:
       - type: EchoRequest
         family: IPv4
+      - type: RouterSolicitation
+        family: IPv6
+      - type: RouterAdvertisement
+        family: IPv6
+      - type: NeighborSolicitation
+        family: IPv6
+      - type: NeighborAdvertisement
+        family: IPv6
 
