@@ -8,6 +8,19 @@ locals {
 }
 data "kustomization_overlay" "this" {
   resources = [var.paths.nginx-bundle]
+  patches {
+    patch = yamlencode({
+      apiVersion = "v1"
+      kind       = "Service"
+      metadata = {
+        name      = "ingress-nginx-controller"
+        namespace = "ingress-nginx"
+      }
+      spec = {
+        loadBalancerClass = "io.cilium/node"
+      }
+    })
+  }
   kustomize_options {
     load_restrictor = "none"
     enable_helm     = true

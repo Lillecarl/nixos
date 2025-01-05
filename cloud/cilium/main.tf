@@ -23,6 +23,7 @@ locals {
     tunnelProtocol       = "geneve"
     routingMode          = "tunnel"
     cluster              = { name = "default" }
+    nodeIPAM             = { enabled = true }
     ipam = { operator = {
       clusterPoolIPv4PodCIDRList = "10.42.0.0/16"
       # clusterPoolIPv6PodCIDRList = "2a01:4f9:c01f:e028::/64"
