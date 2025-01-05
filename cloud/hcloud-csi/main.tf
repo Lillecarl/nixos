@@ -6,6 +6,18 @@ locals {
   ids-this-stage0 = data.kustomization_overlay.this.ids_prio[0]
   ids-this-stage1 = var.deploy ? data.kustomization_overlay.this.ids_prio[1] : []
   ids-this-stage2 = var.deploy ? data.kustomization_overlay.this.ids_prio[2] : []
+  helm_values = {
+    controller = {
+      hcloudVolumeDefaultLocation = "hel1"
+      hcloudToken = {
+        existingSecret = {
+          name = "hcloud"
+          key  = "token"
+        }
+      }
+    }
+    node = { hostNetwork = true }
+  }
 }
 data "kustomization_overlay" "this" {
   resources = [for file in tolist(fileset(path.module, "*.yaml")) : "${path.module}/${file}"]
@@ -22,22 +34,14 @@ data "kustomization_overlay" "this" {
     }
   }
   helm_charts {
-    name         = "hcloud-csi"
-    namespace    = "hcloud-csi"
-    repo         = "https://charts.hetzner.cloud"
-    release_name = "hcloud-csi"
-    # version       = "1.21.0"
+    name          = "hcloud-csi"
+    release_name  = "hcloud-csi"
+    namespace     = "hcloud-csi"
     include_crds  = true
-    values_inline = <<YAML
-controller:
-  hcloudVolumeDefaultLocation: hel1
-  hcloudToken:
-    existingSecret:
-      name: hcloud
-      key: token
-node:
-  hostNetwork: true
-YAML
+    values_inline = yamlencode(local.helm_values)
+  }
+  helm_globals {
+    chart_home = var.paths.charts
   }
   kustomize_options {
     load_restrictor = "none"

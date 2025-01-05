@@ -11,19 +11,20 @@ locals {
   ids-cluster-stage0 = var.deploy ? data.kustomization_overlay.cluster.ids_prio[0] : []
   ids-cluster-stage1 = var.deploy ? data.kustomization_overlay.cluster.ids_prio[1] : []
   ids-cluster-stage2 = var.deploy ? data.kustomization_overlay.cluster.ids_prio[2] : []
+  helm_values = {
+    monitoring = { podMonitorEnabled = true }
+  }
 }
 data "kustomization_overlay" "chart" {
   helm_charts {
     name          = "cloudnative-pg"
-    namespace     = "cnpg-system"
-    repo          = "https://cloudnative-pg.io/charts/"
     release_name  = "cloudnative-pg"
-    version       = "0.23.0"
+    namespace     = "cnpg-system"
     include_crds  = true
-    values_inline = <<YAML
-monitoring:
-  podMonitorEnabled: true
-YAML
+    values_inline = yamlencode(local.helm_values)
+  }
+  helm_globals {
+    chart_home = var.paths.charts
   }
   kustomize_options {
     load_restrictor = "none"

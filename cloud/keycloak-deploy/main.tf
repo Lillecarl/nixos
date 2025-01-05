@@ -78,7 +78,6 @@ data "kustomization_overlay" "this" {
   }
   patches {
     patch = <<YAML
-
 apiVersion: v1
 kind: Service
 metadata:
@@ -94,12 +93,13 @@ YAML
   }
   helm_charts {
     name          = "keycloak"
-    namespace     = "keycloak"
-    repo          = "oci://registry-1.docker.io/bitnamicharts/"
     release_name  = "keycloak"
-    version       = "24.3.1"
+    namespace     = "keycloak"
     include_crds  = true
     values_inline = yamlencode(local.helm_values)
+  }
+  helm_globals {
+    chart_home = var.paths.charts
   }
   kustomize_options {
     load_restrictor = "none"

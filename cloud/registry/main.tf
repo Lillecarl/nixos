@@ -63,13 +63,14 @@ data "kustomization_overlay" "this" {
     }
   }
   helm_charts {
-    name         = "docker-registry-ui"
-    namespace    = local.namespace
-    repo         = "https://helm.joxit.dev"
-    release_name = "docker-registry-ui"
-    # version       = "8.7.1"
+    name          = "docker-registry-ui"
+    release_name  = "docker-registry-ui"
+    namespace     = local.namespace
     include_crds  = true
     values_inline = yamlencode(local.helm_values)
+  }
+  helm_globals {
+    chart_home = var.paths.charts
   }
   kustomize_options {
     load_restrictor = "none"

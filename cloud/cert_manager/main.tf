@@ -23,27 +23,26 @@ data "kustomization_overlay" "chart" {
   # If you set namespace here cert-manager dies
   helm_charts {
     name          = "cert-manager"
-    namespace     = "cert-manager"
-    repo          = "https://charts.jetstack.io"
     release_name  = "cert-manager"
-    version       = "1.16.2"
+    namespace     = "cert-manager"
     include_crds  = true
     values_inline = yamlencode(local.cert-manager-values)
   }
   helm_charts {
     name         = "cert-manager-csi-driver"
-    namespace    = "cert-manager"
-    repo         = "https://charts.jetstack.io"
     release_name = "cert-manager-csi-driver"
+    namespace    = "cert-manager"
     include_crds = true
   }
   helm_charts {
     name          = "trust-manager"
-    namespace     = "cert-manager"
-    repo          = "https://charts.jetstack.io"
     release_name  = "trust-manager"
+    namespace     = "cert-manager"
     include_crds  = true
     values_inline = yamlencode(local.trust-manager-values)
+  }
+  helm_globals {
+    chart_home = var.paths.charts
   }
   kustomize_options {
     load_restrictor = "none"

@@ -34,11 +34,9 @@ data "kustomization_overlay" "this" {
     }
   }
   helm_charts {
-    name         = "external-secrets"
-    namespace    = local.namespace
-    repo         = "https://charts.external-secrets.io"
-    release_name = "external-secrets"
-    # version       = "8.7.1"
+    name          = "external-secrets"
+    release_name  = "external-secrets"
+    namespace     = local.namespace
     include_crds  = true
     values_inline = yamlencode(local.helm_values)
   }
@@ -53,6 +51,9 @@ spec:
     bitwardensecretsmanager:
       caBundle: ${data.kubernetes_resource.cabundle.object.data["ca.crt"]}
 YAML
+  }
+  helm_globals {
+    chart_home = var.paths.charts
   }
   kustomize_options {
     load_restrictor = "none"

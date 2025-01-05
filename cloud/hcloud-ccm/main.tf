@@ -6,6 +6,11 @@ locals {
   ids-this-stage0 = data.kustomization_overlay.this.ids_prio[0]
   ids-this-stage1 = var.deploy ? data.kustomization_overlay.this.ids_prio[1] : []
   ids-this-stage2 = var.deploy ? data.kustomization_overlay.this.ids_prio[2] : []
+  helm_values = {
+    env = { HCLOUD_LOAD_BALANCERS_ENABLED = {
+      value = "false"
+    } }
+  }
 }
 data "kustomization_overlay" "this" {
   resources = [for file in tolist(fileset(path.module, "*.yaml")) : "${path.module}/${file}"]
@@ -28,11 +33,10 @@ data "kustomization_overlay" "this" {
     release_name = "hcloud-cloud-controller-manager"
     # version       = "1.21.0"
     include_crds  = true
-    values_inline = <<YAML
-env:
-  HCLOUD_LOAD_BALANCERS_ENABLED:
-    value: "false"
-YAML
+    values_inline = yamlencode(local.helm_values)
+  }
+  helm_globals {
+    chart_home = var.paths.charts
   }
   kustomize_options {
     load_restrictor = "none"

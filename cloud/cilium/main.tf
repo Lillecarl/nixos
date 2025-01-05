@@ -41,12 +41,13 @@ data "kustomization_overlay" "this" {
   resources = [for file in tolist(fileset(path.module, "*.yaml")) : "${path.module}/${file}"]
   helm_charts {
     name          = "cilium"
-    namespace     = "kube-system"
-    repo          = "https://helm.cilium.io/"
     release_name  = "cilium"
-    version       = "1.16.5"
+    namespace     = "kube-system"
     include_crds  = true
     values_inline = yamlencode(local.helm_values)
+  }
+  helm_globals {
+    chart_home = var.paths.charts
   }
   kustomize_options {
     load_restrictor = "none"

@@ -31,12 +31,13 @@ data "kustomization_overlay" "this" {
   }
   helm_charts {
     name          = "external-dns"
-    namespace     = "external-dns"
-    repo          = "oci://registry-1.docker.io/bitnamicharts/"
     release_name  = "external-dns"
-    version       = "8.7.1"
+    namespace     = "external-dns"
     include_crds  = true
     values_inline = yamlencode(local.helm_values)
+  }
+  helm_globals {
+    chart_home = var.paths.charts
   }
   kustomize_options {
     load_restrictor = "none"

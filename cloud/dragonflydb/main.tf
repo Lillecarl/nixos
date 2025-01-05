@@ -23,17 +23,15 @@ data "kustomization_overlay" "this" {
   resources = [for file in tolist(fileset(path.module, "*.yaml")) : "${path.module}/${file}"]
   namespace = local.namespace
   helm_charts {
-    name          = "dragonfly-operator"
-    release_name  = "dragonfly-operator"
+    name          = "dragonfly"
+    release_name  = "dragonfly"
     namespace     = local.namespace
     include_crds  = true
     values_inline = <<YAML
 YAML
   }
   helm_globals {
-    # Set chart_home to the path above our predownloaded chart. This somehow
-    # makes Kustomize use the local chart.
-    chart_home = var.paths.dragonfly-charts
+    chart_home = var.paths.charts
   }
   kustomize_options {
     load_restrictor = "none"

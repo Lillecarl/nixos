@@ -72,10 +72,10 @@ let
     chartHash = "sha256-vDlQDb0cGSlphD8zA22TlKm4P4cVW68SrCrJLUFZR9U=";
   };
   external_dns-chart = downloadHelmChart {
-    repo = "https://kubernetes-sigs.github.io/external-dns";
+    repo = "oci://registry-1.docker.io/bitnamicharts/external-dns";
     chart = "external-dns";
-    version = "1.15.0";
-    chartHash = "sha256-BsgC1aAzpdgXIlJKZ6jSl5uLgPvjB9qcAaWxIZZvUf0=";
+    version = "8.7.1";
+    chartHash = "sha256-ZTUgh18fh0V27GyB+qiSUlQawKHWhu3d2qGVVHNOMA8=";
   };
   cert_manager-chart = downloadHelmChart {
     repo = "https://charts.jetstack.io";
@@ -158,22 +158,22 @@ let
   charts = pkgs.symlinkJoin {
     name = "helm-chart-collection";
     paths = [
-      dragonfly-chart
-      cnpg-chart
-      cilium-chart
-      external_dns-chart
       cert_manager-chart
       cert_manager_csi_driver-chart
-      trust_manager-chart
       chaoskube-chart
+      cilium-chart
+      cnpg-chart
       coredns-chart
+      docker_registry_ui-chart
+      dragonfly-chart
+      external_dns-chart
       external_secrets-chart
       hcloud_ccm-chart
       hcloud_csi-chart
-      keycloak-chart
       ingress_nginx-chart
-      docker_registry_ui-chart
+      keycloak-chart
       reloader-chart
+      trust_manager-chart
       vault-chart
     ];
   };

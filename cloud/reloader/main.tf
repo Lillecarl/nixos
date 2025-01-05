@@ -12,12 +12,13 @@ data "kustomization_overlay" "this" {
   resources = [for file in tolist(fileset(path.module, "*.yaml")) : "${path.module}/${file}"]
   helm_charts {
     name          = "reloader"
-    namespace     = "reloader"
-    repo          = "https://stakater.github.io/stakater-charts"
     release_name  = "reloader"
-    version       = "1.2.0"
+    namespace     = "reloader"
     include_crds  = true
     values_inline = yamlencode(local.helm_values)
+  }
+  helm_globals {
+    chart_home = var.paths.charts
   }
   kustomize_options {
     load_restrictor = "none"

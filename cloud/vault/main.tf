@@ -129,12 +129,13 @@ YAML
   }
   helm_charts {
     name          = "vault"
-    namespace     = local.namespace
-    repo          = "https://helm.releases.hashicorp.com"
     release_name  = "vault"
-    version       = "0.29.1"
+    namespace     = local.namespace
     include_crds  = true
     values_inline = yamlencode(local.helm_values)
+  }
+  helm_globals {
+    chart_home = var.paths.charts
   }
   kustomize_options {
     load_restrictor = "none"
