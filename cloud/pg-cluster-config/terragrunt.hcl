@@ -24,6 +24,7 @@ inputs = {
     "pgadmin",
     "keycloak",
     "ferretdb",
+    "roundcube",
   ]
   paths     = dependency.stage1.outputs.paths
   deploy    = feature.deploy.value

@@ -155,6 +155,12 @@ let
     version = "0.29.1";
     chartHash = "sha256-dilwGm8Jr1wANpLucSBtjkdu1qY4SZ/kPbc2lKDp9N0=";
   };
+  roundcube-chart = downloadHelmChart {
+    repo = "https://helm-charts.mlohr.com/";
+    chart = "roundcube";
+    version = "1.16.0";
+    chartHash = "sha256-oYnbzc0Ul4h48+u5KXQDAgWX86sMg/TooGsHh2XAP6c=";
+  };
   charts = pkgs.symlinkJoin {
     name = "helm-chart-collection";
     paths = [
@@ -177,6 +183,7 @@ let
       vault-chart
       oauth2_proxy-chart
       local_path_provisioner-chart
+      roundcube-chart
     ];
   };
 
