@@ -1,0 +1,9 @@
+apiVersion: k8s.mariadb.com/v1alpha1
+kind: MariaDB
+metadata:
+  name: mariadb
+spec:
+  storage:
+    ephemeral: false
+    storageClassName: local-path
+    size: 1G
