@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose --file docker-compose.yaml convert
+    kompose.version: 1.35.0 (HEAD)
+  labels:
+    io.kompose.service: cypht
+  name: cypht
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: cypht
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose --file docker-compose.yaml convert
+        kompose.version: 1.35.0 (HEAD)
+      labels:
+        io.kompose.service: cypht
+    spec:
+      containers:
+        - env:
+            - name: AUTH_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  key: user
+                  name: login
+            - name: AUTH_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: pass
+                  name: login
+
+            - name: DEBUG_MODE
+              value: "true"
+            - name: DB_CONNECTION_TYPE
+              value: host
+            - name: DB_DRIVER
+              value: mysql
+            - name: DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  key: host
+                  name: db
+            - name: DB_PORT
+              valueFrom:
+                secretKeyRef:
+                  key: port
+                  name: db
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  key: name
+                  name: db
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  key: pass
+                  name: db
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  key: user
+                  name: db
+
+            - name: SESSION_TYPE
+              value: DB
+            - name: USER_CONFIG_TYPE
+              value: DB
+          image: cypht/cypht:2.4.0
+          name: cypht
+          ports:
+            - containerPort: 80
+              protocol: TCP
+      restartPolicy: Always
