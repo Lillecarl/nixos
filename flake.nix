@@ -87,6 +87,7 @@
       inputs.flake-utils.follows = "flake-utils";
       inputs.systems.follows = "nix-systems";
       inputs.flake-compat.follows = "flake-compat";
+      inputs.git-hooks.follows = "git-hooks";
     };
     flake-parts = {
       url = "github:hercules-ci/flake-parts";

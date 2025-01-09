@@ -174,7 +174,7 @@
           ]
         )
       ));
-    lib.pspkgs.fish4 = (pkgs.callPackage "${inputs.nixpkgs-fish}/pkgs/shells/fish" { });
+    lib.pspkgs.fish4 = (pkgs.callPackage "${inputs.nixpkgs-fish}/pkgs/by-name/fi/fish/package.nix" { });
     xdg.dataFile.tfplugins = {
       source = "${config.lib.pspkgs.opentofu}/libexec/terraform-providers";
       recursive = true;
