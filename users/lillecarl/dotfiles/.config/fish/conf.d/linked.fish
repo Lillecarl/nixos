@@ -11,7 +11,7 @@ set -g direnv_fish_mode eval_on_arrow
 
 abbr -a :q exit
 
-abbr -a kc kubectl
+abbr -a kc pkubectl
 abbr -a kns kubens
 abbr -a knd kubens default
 abbr -a tg terragrunt
