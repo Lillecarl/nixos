@@ -2,6 +2,8 @@ function hmmove --wraps=cat
     for path in $argv
         # Where we're moving from
         set -f oldpath (path resolve $path)
+        # Don't run for files that are already in the flake directory
+        echo $oldpath | rg --quiet $FLAKE && break
         # Only hmmove files
         test -f $oldpath || continue
         # Where the head of old path is
