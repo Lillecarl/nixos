@@ -30,6 +30,7 @@
     ./packages.nix
     ./pam.nix
     ./podman.nix
+    ./pueue.nix
     ./readline.nix
     ./ripgrep.nix
     ./sessionVariables.nix
