@@ -156,6 +156,7 @@
             alekc.kubectl
             cloudflare.cloudflare
             cyrilgdn.postgresql
+            grafana.grafana
             hashicorp.http
             hashicorp.kubernetes
             hashicorp.local
@@ -169,7 +170,6 @@
             loafoe.htpasswd
             maxlaverse.bitwarden
             metio.migadu
-            mrparkers.keycloak
             random-things.string-functions
           ]
         )
