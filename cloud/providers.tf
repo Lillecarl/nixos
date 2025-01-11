@@ -1,44 +1,19 @@
 terraform {
   required_providers {
-    bitwarden = {
-      source = "maxlaverse/bitwarden"
-    }
-    kustomization = {
-      source = "kbst/kustomization"
-    }
-    kubectl = {
-      source = "alekc/kubectl"
-    }
-    kubernetes = {
-      source = "hashicorp/kubernetes"
-    }
-    vault = {
-      source = "hashicorp/vault"
-    }
-    http = {
-      source = "hashicorp/http"
-    }
-    local = {
-      source = "hashicorp/local"
-    }
-    htpasswd = {
-      source = "loafoe/htpasswd"
-    }
-    keycloak = {
-      source = "keycloak/keycloak"
-    }
-    string-functions = {
-      source = "random-things/string-functions"
-    }
-    postgresql = {
-      source = "cyrilgdn/postgresql"
-    }
-    random = {
-      source = "hashicorp/random"
-    }
-    migadu = {
-      source = "metio/migadu"
-    }
+    bitwarden        = { source = "maxlaverse/bitwarden" }
+    grafana          = { source = "grafana/grafana" }
+    htpasswd         = { source = "loafoe/htpasswd" }
+    http             = { source = "hashicorp/http" }
+    keycloak         = { source = "keycloak/keycloak" }
+    kubectl          = { source = "alekc/kubectl" }
+    kubernetes       = { source = "hashicorp/kubernetes" }
+    kustomization    = { source = "kbst/kustomization" }
+    local            = { source = "hashicorp/local" }
+    migadu           = { source = "metio/migadu" }
+    postgresql       = { source = "cyrilgdn/postgresql" }
+    random           = { source = "hashicorp/random" }
+    string-functions = { source = "random-things/string-functions" }
+    vault            = { source = "hashicorp/vault" }
   }
 }
 provider "kubectl" {
