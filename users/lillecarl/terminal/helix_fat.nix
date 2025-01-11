@@ -20,6 +20,7 @@ in
         };
       };
       extraPackages = [
+        pkgs.stylua
         pkgs.ansible-language-server
         pkgs.bash-language-server
         pkgs.dockerfile-language-server-nodejs
@@ -27,9 +28,10 @@ in
         pkgs.helix-gpt
         pkgs.nil
         pkgs.nixd
-        pkgs.nixpkgs-fmt
+        pkgs.nixfmt-rfc-style
         pkgs.pyright
         pkgs.python3Packages.python-lsp-server
+        pkgs.rust-analyzer
         pkgs.shellcheck
         pkgs.shfmt
         pkgs.taplo
