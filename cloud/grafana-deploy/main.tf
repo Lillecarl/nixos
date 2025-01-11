@@ -7,6 +7,7 @@ locals {
   ids-this-stage0 = data.kustomization_overlay.this.ids_prio[0]
   ids-this-stage1 = var.deploy ? data.kustomization_overlay.this.ids_prio[1] : []
   ids-this-stage2 = var.deploy ? data.kustomization_overlay.this.ids_prio[2] : []
+  grafana-url     = "grafana.lillecarl.com"
   helm_values = {
     assertNoLeakedSecrets = false
     admin = {
@@ -18,9 +19,9 @@ locals {
       enabled          = true
       ingressClassName = "nginx"
       annotations      = { "cert-manager.io/cluster-issuer" = "letsencrypt-staging" }
-      hosts            = ["grafana.lillecarl.com"]
+      hosts            = [local.grafana-url]
       tls = [{
-        hosts      = ["grafana.lillecarl.com"]
+        hosts      = [local.grafana-url]
         secretName = "tls"
       }]
     }
@@ -32,27 +33,8 @@ locals {
     "grafana.ini" = {
       analytics = { check_for_updates = false }
       server = {
-        root_url = "https://grafana.lillecarl.com"
+        root_url = "https://${local.grafana-url}"
       }
-      # "auth.generic_oauth" = {
-      #   enabled                    = true
-      #   name                       = "Keycloak"
-      #   allow_sign_up              = true
-      #   auto_login                 = true
-      #   client_id                  = "grafana"
-      #   client_secret              = var.grafana-client-secret
-      #   scopes                     = "openid email profile roles"
-      #   auth_url                   = "https://keycloak.lillecarl.com/realms/master/protocol/openid-connect/auth"
-      #   token_url                  = "https://keycloak.lillecarl.com/realms/master/protocol/openid-connect/token"
-      #   api_url                    = "https://keycloak.lillecarl.com/realms/master/protocol/openid-connect/userinfo"
-      #   email_attribute_path       = "email"
-      #   groups_attribute_path      = "groups"
-      #   login_attribute_path       = "username"
-      #   name_attribute_path        = "full_name"
-      #   role_attribute_path        = "contains(roles[*], 'grafana-admin') && 'GrafanaAdmin' || contains(roles[*], 'admin') && 'Admin' || contains(roles[*], 'editor') && 'Editor' || 'Viewer'"
-      #   allow_assign_grafana_admin = true
-      #   # use_refresh_token          = true
-      # }
     }
   }
 }
