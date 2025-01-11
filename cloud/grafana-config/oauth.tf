@@ -15,7 +15,7 @@ resource "grafana_sso_settings" "github_sso_settings" {
     groups_attribute_path      = "groups"
     login_attribute_path       = "username"
     name_attribute_path        = "full_name"
-    role_attribute_path        = "contains(roles[*], 'grafana-admin') && 'GrafanaAdmin' || contains(roles[*], 'admin') && 'Admin' || contains(roles[*], 'editor') && 'Editor' || 'Viewer'"
+    role_attribute_path        = "contains(realm_access.roles[*], 'grafana-admin') && 'GrafanaAdmin' || contains(realm_access.roles[*], 'admin') && 'Admin' || contains(realm_access.roles[*], 'editor') && 'Editor' || 'Viewer'"
     allow_assign_grafana_admin = true
   }
 }

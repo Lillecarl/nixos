@@ -28,14 +28,6 @@ resource "keycloak_openid_group_membership_protocol_mapper" "grafana" {
   claim_name = "groups"
   full_path  = false
 }
-resource "keycloak_openid_user_realm_role_protocol_mapper" "grafana" {
-  realm_id  = local.realm_id
-  client_id = keycloak_openid_client.grafana.id
-  name      = "user-realm-role-mapper"
-
-  claim_name  = "roles"
-  multivalued = true
-}
 output "grafana_client_secret" {
   value     = keycloak_openid_client.grafana.client_secret
   sensitive = true
