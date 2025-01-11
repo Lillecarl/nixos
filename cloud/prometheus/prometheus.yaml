@@ -12,4 +12,3 @@ spec:
   probeNamespaceSelector: {}
   scrapeConfigSelector: {}
   scrapeConfigNamespaceSelector: {}
-

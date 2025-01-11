@@ -8,28 +8,27 @@ spec:
     matchLabels:
       node-access: ssh
   ingress:
-  - fromEntities:
-    - cluster
-  - toPorts:
-    - ports:
-      - port: "22"
-        protocol: TCP
-      - port: "80"
-        protocol: TCP
-      - port: "443"
-        protocol: TCP
-      - port: "6443"
-        protocol: TCP
-  - icmps:
-    - fields:
-      - type: EchoRequest
-        family: IPv4
-      - type: RouterSolicitation
-        family: IPv6
-      - type: RouterAdvertisement
-        family: IPv6
-      - type: NeighborSolicitation
-        family: IPv6
-      - type: NeighborAdvertisement
-        family: IPv6
-
+    - fromEntities:
+        - cluster
+    - toPorts:
+        - ports:
+            - port: "22"
+              protocol: TCP
+            - port: "80"
+              protocol: TCP
+            - port: "443"
+              protocol: TCP
+            - port: "6443"
+              protocol: TCP
+    - icmps:
+        - fields:
+            - type: EchoRequest
+              family: IPv4
+            - type: RouterSolicitation
+              family: IPv6
+            - type: RouterAdvertisement
+              family: IPv6
+            - type: NeighborSolicitation
+              family: IPv6
+            - type: NeighborAdvertisement
+              family: IPv6

@@ -7,6 +7,17 @@
   programs.fish_indent.enable = true;
   programs.nixfmt.enable = true;
   programs.ruff-format.enable = true;
+  programs.stylua.enable = true;
+  programs.taplo.enable = true;
   programs.terraform.enable = true;
-  programs.yamlfmt.enable = true;
+  programs.toml-sort.enable = true;
+  programs.yamlfmt = {
+    enable = true;
+    settings = {
+      trim_trailing_whitespace = true;
+      scan_folded_as_literal = true;
+      indentless_arrays = true; # k8s does this
+      eof_newline = true;
+    };
+  };
 }

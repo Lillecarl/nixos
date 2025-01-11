@@ -11,11 +11,11 @@ spec:
   selector:
     app: ferretdb
   ports:
-  - protocol: TCP
-    name: mongo
-    port: 27018
-    targetPort: 27018
-  - protocol: TCP
-    name: mongotls
-    port: 27017
-    targetPort: 27018
+    - protocol: TCP
+      name: mongo
+      port: 27018
+      targetPort: 27018
+    - protocol: TCP
+      name: mongotls
+      port: 27017
+      targetPort: 27018

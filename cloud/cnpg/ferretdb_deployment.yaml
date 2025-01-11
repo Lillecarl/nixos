@@ -14,42 +14,42 @@ spec:
         app: ferretdb
     spec:
       containers:
-      - name: ferretdb
-        image: ghcr.io/ferretdb/ferretdb:latest
-        ports:
-          - containerPort: 27017
-          - containerPort: 27018
-        env:
-          - name: FERRETDB_POSTGRESQL_URL
-            # 
-            value: postgres://cluster-rw:5432/ferretdb
-            # value: postgres://cluster-rw:5432
-          - name: FERRETDB_LISTEN_TLS
-            value: :27018
-          - name: FERRETDB_LISTEN_TLS_CERT_FILE
-            value: /tls/tls.crt
-          - name: FERRETDB_LISTEN_TLS_KEY_FILE
-            value: /tls/tls.key
-          - name: FERRETDB_TELEMETRY
-            value: disable
-          - name: DO_NOT_TRACK
-            value: "true"
-        livenessProbe:
-          httpGet:
-            path: /debug/livez
-            port: 8088
-          initialDelaySeconds: 3
-          periodSeconds: 3
-        readinessProbe:
-          httpGet:
-            path: /debug/readyz
-            port: 8088
-          initialDelaySeconds: 3
-          periodSeconds: 3
-        volumeMounts:
-          - mountPath: "/tls"
-            readOnly: true
-            name: cert
+        - name: ferretdb
+          image: ghcr.io/ferretdb/ferretdb:latest
+          ports:
+            - containerPort: 27017
+            - containerPort: 27018
+          env:
+            - name: FERRETDB_POSTGRESQL_URL
+              # 
+              value: postgres://cluster-rw:5432/ferretdb
+              # value: postgres://cluster-rw:5432
+            - name: FERRETDB_LISTEN_TLS
+              value: :27018
+            - name: FERRETDB_LISTEN_TLS_CERT_FILE
+              value: /tls/tls.crt
+            - name: FERRETDB_LISTEN_TLS_KEY_FILE
+              value: /tls/tls.key
+            - name: FERRETDB_TELEMETRY
+              value: disable
+            - name: DO_NOT_TRACK
+              value: "true"
+          livenessProbe:
+            httpGet:
+              path: /debug/livez
+              port: 8088
+            initialDelaySeconds: 3
+            periodSeconds: 3
+          readinessProbe:
+            httpGet:
+              path: /debug/readyz
+              port: 8088
+            initialDelaySeconds: 3
+            periodSeconds: 3
+          volumeMounts:
+            - mountPath: "/tls"
+              readOnly: true
+              name: cert
       volumes:
         - name: cert
           secret:

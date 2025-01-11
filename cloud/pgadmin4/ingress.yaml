@@ -7,17 +7,17 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: pgadmin.lillecarl.com
-    http:
-      paths:
-      - backend:
-          service:
-            name: pgadmin
-            port:
-              name: http
-        path: /
-        pathType: ImplementationSpecific
+    - host: pgadmin.lillecarl.com
+      http:
+        paths:
+          - backend:
+              service:
+                name: pgadmin
+                port:
+                  name: http
+            path: /
+            pathType: ImplementationSpecific
   tls:
-  - hosts:
-    - pgadmin.lillecarl.com
-    secretName: pgadmin-tls
+    - hosts:
+        - pgadmin.lillecarl.com
+      secretName: pgadmin-tls

@@ -4,8 +4,8 @@ metadata:
   name: cnpg-backup-rolebinding
   namespace: pg-cluster
 subjects:
-- kind: ServiceAccount
-  name: cluster
+  - kind: ServiceAccount
+    name: cluster
 roleRef:
   kind: Role
   name: cluster-backup-role

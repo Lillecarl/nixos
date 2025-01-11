@@ -32,7 +32,6 @@ spec:
                 secretKeyRef:
                   key: pass
                   name: login
-
             - name: DEBUG_MODE
               value: "true"
             - name: DB_CONNECTION_TYPE
@@ -64,7 +63,6 @@ spec:
                 secretKeyRef:
                   key: user
                   name: db
-
             - name: SESSION_TYPE
               value: DB
             - name: USER_CONFIG_TYPE

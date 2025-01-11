@@ -4,7 +4,7 @@ metadata:
   name: cluster-backup-role
   namespace: pg-cluster
 rules:
-- apiGroups: [""]
-  resources: ["secrets"]
-  verbs: ["get"]
-  resourceNames: ["r2-credentials"]
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get"]
+    resourceNames: ["r2-credentials"]

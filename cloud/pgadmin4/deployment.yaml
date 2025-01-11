@@ -22,66 +22,66 @@ spec:
         app.kubernetes.io/name: pgadmin
     spec:
       containers:
-      - name: pgadmin4
-        env:
-        - name: SSL_CERT_FILE
-          value: /etc/ssl/certs/ca-bundle.crt
-        - name: OAUTH2_CLIENT_SECRET
-          valueFrom:
-            secretKeyRef:
-              name: pgadmin-oauth-secret
-              key: OAUTH2_CLIENT_SECRET
-        - name: PGADMIN_SETUP_EMAIL
-          valueFrom:
-            secretKeyRef:
-              name: pgadmin-admin
-              key: PGADMIN_SETUP_EMAIL
-        - name: PGADMIN_SETUP_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: pgadmin-admin
-              key: PGADMIN_SETUP_PASSWORD
-        - name: PGADMIN_PG_USERNAME
-          valueFrom:
-            secretKeyRef:
-              name: pgadmin-db
-              key: PGADMIN_PG_USERNAME
-        - name: PGADMIN_PG_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: pgadmin-db
-              key: PGADMIN_PG_PASSWORD
-        image: quay.io/spacetrain/pgadmin4:latest
-        # imagePullPolicy: IfNotPresent
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 5050
-          name: webui
-          protocol: TCP
-        securityContext:
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-            - ALL
-        volumeMounts:
-        - name: config-volume
-          mountPath: /etc/pgadmin_custom
-        # livenessProbe:
-        #   httpGet:
-        #     path: /login
-        #     port: 5050
-        #   initialDelaySeconds: 3
-        #   periodSeconds: 3
-        # readinessProbe:
-        #   httpGet:
-        #     path: /login
-        #     port: 5050
-        #   initialDelaySeconds: 3
-        #   periodSeconds: 3
+        - name: pgadmin4
+          env:
+            - name: SSL_CERT_FILE
+              value: /etc/ssl/certs/ca-bundle.crt
+            - name: OAUTH2_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: pgadmin-oauth-secret
+                  key: OAUTH2_CLIENT_SECRET
+            - name: PGADMIN_SETUP_EMAIL
+              valueFrom:
+                secretKeyRef:
+                  name: pgadmin-admin
+                  key: PGADMIN_SETUP_EMAIL
+            - name: PGADMIN_SETUP_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pgadmin-admin
+                  key: PGADMIN_SETUP_PASSWORD
+            - name: PGADMIN_PG_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: pgadmin-db
+                  key: PGADMIN_PG_USERNAME
+            - name: PGADMIN_PG_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pgadmin-db
+                  key: PGADMIN_PG_PASSWORD
+          image: quay.io/spacetrain/pgadmin4:latest
+          # imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5050
+              name: webui
+              protocol: TCP
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+          volumeMounts:
+            - name: config-volume
+              mountPath: /etc/pgadmin_custom
+              # livenessProbe:
+              #   httpGet:
+              #     path: /login
+              #     port: 5050
+              #   initialDelaySeconds: 3
+              #   periodSeconds: 3
+              # readinessProbe:
+              #   httpGet:
+              #     path: /login
+              #     port: 5050
+              #   initialDelaySeconds: 3
+              #   periodSeconds: 3
       volumes:
-      - name: config-volume
-        configMap:
-          name: config
+        - name: config-volume
+          configMap:
+            name: config
       dnsPolicy: ClusterFirst
       enableServiceLinks: false
       nodeSelector:

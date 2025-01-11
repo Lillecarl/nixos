@@ -24,14 +24,11 @@ data:
             'OAUTH2_SCOPE': 'openid email profile',
             'OAUTH2_ICON': 'fa-key',
             'OAUTH2_BUTTON_COLOR': '#000000',
-            
             # Claims mapping
             'OAUTH2_USERNAME_CLAIM': 'preferred_username',
             'OAUTH2_EMAIL_CLAIM': 'email',
-            
             # Optional: Auto-create users that don't exist
             'OAUTH2_AUTO_CREATE_USER': True,
-            
             # Optional: Additional parameters
             'OAUTH2_ADDITIONAL_PARAMS': {
                 'access_type': 'offline'
