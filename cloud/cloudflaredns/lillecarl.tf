@@ -17,8 +17,8 @@ resource "cloudflare_record" "migadu-dkim" {
   zone_id = data.cloudflare_zone.lillecarl.id
 
   type    = "CNAME"
-  name    = "key${count.index}._domainkey"
-  content = "key${count.index}.lillecarl.com._domainkey.migadu.com"
+  name    = "key${count.index + 1}._domainkey"
+  content = "key${count.index + 1}.lillecarl.com._domainkey.migadu.com"
   comment = "Migadu DKIM signing key"
   proxied = false
   ttl     = 1
