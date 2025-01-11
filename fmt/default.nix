@@ -3,6 +3,16 @@
 {
   # Used to find the project root
   projectRootFile = "flake.nix";
+  settings.global.excludes = [
+    "*.fmt"
+    "*.age"
+    "*.pem"
+    "*.conf"
+    "*.jpg"
+    "*.txt"
+    "*.md"
+    ".gitignore"
+  ];
 
   programs.fish_indent.enable = true;
   programs.nixfmt.enable = true;
