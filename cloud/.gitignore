@@ -1,1 +1,2 @@
 .terraform.lock.hcl
+config.tf.json

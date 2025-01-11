@@ -1,4 +1,3 @@
-variable "grafana_client_secret" {}
 resource "grafana_sso_settings" "github_sso_settings" {
   provider_name = "generic_oauth"
   oauth2_settings {
@@ -6,7 +5,7 @@ resource "grafana_sso_settings" "github_sso_settings" {
     allow_sign_up              = true
     auto_login                 = true
     client_id                  = "grafana"
-    client_secret              = var.grafana_client_secret
+    client_secret              = local.rs.keycloak-config.grafana_client_secret
     scopes                     = "openid email profile roles"
     auth_url                   = "https://keycloak.lillecarl.com/realms/master/protocol/openid-connect/auth"
     token_url                  = "https://keycloak.lillecarl.com/realms/master/protocol/openid-connect/token"
