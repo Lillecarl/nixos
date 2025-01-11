@@ -6,7 +6,7 @@ function M.setup(cfg)
     event = "DeferredUIEnter",
     after = function()
       require("ibl").setup()
-    end
+    end,
   }
 end
 

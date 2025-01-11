@@ -6,8 +6,8 @@ function M.setup(cfg)
     event = "DeferredUIEnter",
     after = function()
       require("catppuccin").setup()
-      vim.cmd.colorscheme "catppuccin"
-    end
+      vim.cmd.colorscheme("catppuccin")
+    end,
   }
 end
 
