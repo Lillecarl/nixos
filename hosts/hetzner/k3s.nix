@@ -23,6 +23,7 @@ in
       enable = cfg.enable;
 
       extraFlags = [
+        "--enable-pprof"
         "--cluster-cidr 10.42.0.0/16"
         "--service-cidr 10.43.0.0/16"
         "--cluster-domain k8s.lillecarl.com"
