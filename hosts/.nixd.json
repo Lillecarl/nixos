@@ -1,9 +1,9 @@
 {
-    "options": {
-        "enable": true,
-        "target": {
-            "args": [],
-            "installable": ".#nixosConfigurations.nub.options"
-        }
+  "options": {
+    "enable": true,
+    "target": {
+      "args": [],
+      "installable": ".#nixosConfigurations.nub.options"
     }
+  }
 }

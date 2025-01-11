@@ -12,6 +12,7 @@
   programs.terraform.enable = true;
   programs.toml-sort.enable = true;
   programs.hclfmt.enable = true;
+  programs.jsonfmt.enable = true;
   programs.yamlfmt = {
     enable = true;
     settings = {
