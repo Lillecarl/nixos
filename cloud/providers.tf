@@ -1,6 +1,7 @@
 terraform {
   required_providers {
     bitwarden        = { source = "maxlaverse/bitwarden" }
+    cloudflare       = { source = "cloudflare/cloudflare" }
     grafana          = { source = "grafana/grafana" }
     htpasswd         = { source = "loafoe/htpasswd" }
     http             = { source = "hashicorp/http" }
