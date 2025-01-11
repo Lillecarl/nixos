@@ -25,6 +25,7 @@ inputs = {
     "keycloak",
     "ferretdb",
     "roundcube",
+    "cypht",
   ]
   paths     = dependency.stage1.outputs.paths
   deploy    = feature.deploy.value
