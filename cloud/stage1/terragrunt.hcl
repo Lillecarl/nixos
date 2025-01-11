@@ -26,5 +26,6 @@ inputs = {
     "postgres-admin",
     "registry",
     "valkey",
+    "cypht",
   ]
 }

@@ -155,11 +155,35 @@ let
     version = "0.29.1";
     chartHash = "sha256-dilwGm8Jr1wANpLucSBtjkdu1qY4SZ/kPbc2lKDp9N0=";
   };
+  oauth2_proxy-chart = downloadHelmChart {
+    repo = "https://oauth2-proxy.github.io/manifests";
+    chart = "oauth2-proxy";
+    version = "7.9.0";
+    chartHash = "sha256-wN3TaUme6vFtYlQcl3j82rirCR4JPCeUN4IZZKYE1j4=";
+  };
   roundcube-chart = downloadHelmChart {
-    repo = "https://helm-charts.mlohr.com/";
+    repo = "https://helm-charts.mlohr.com";
     chart = "roundcube";
     version = "1.16.0";
     chartHash = "sha256-oYnbzc0Ul4h48+u5KXQDAgWX86sMg/TooGsHh2XAP6c=";
+  };
+  mariadb_operator-chart = downloadHelmChart {
+    repo = "https://helm.mariadb.com/mariadb-operator";
+    chart = "mariadb-operator";
+    version = "0.36.0";
+    chartHash = "sha256-Sii3ZbJ5jlnuzNfjYygKHvl1Or1zbxhywidHNknhu/E=";
+  };
+  nextcloud-chart = downloadHelmChart {
+    repo = "https://nextcloud.github.io/helm";
+    chart = "nextcloud";
+    version = "6.5.2";
+    chartHash = "sha256-htEwsHWMoUgskfLCjA8DX4M9FRtdewTxlhfwpU/9XuA=";
+  };
+  grafana-chart = downloadHelmChart {
+    repo = "https://grafana.github.io/helm-charts";
+    chart = "grafana";
+    version = "8.8.2";
+    chartHash = "sha256-9bDAsBtUF7LwoqsfW45Gnu+yzQqrc6yskRzNcHavrYo=";
   };
   charts = pkgs.symlinkJoin {
     name = "helm-chart-collection";
@@ -184,6 +208,9 @@ let
       oauth2_proxy-chart
       local_path_provisioner-chart
       roundcube-chart
+      mariadb_operator-chart
+      nextcloud-chart
+      grafana-chart
     ];
   };
 

@@ -5,6 +5,8 @@ locals {
     replace(title("${random_pet.this[k].id}${random_integer.this[k].result}"), " ", ".")
   }
 }
+locals {
+}
 output "secrets" {
   sensitive = true
   value     = htpasswd_password.hash
@@ -34,4 +36,13 @@ resource "htpasswd_password" "hash" {
 
   password = local.secrets[each.key]
   salt     = random_password.salt[each.key].result
+}
+
+resource "random_password" "oauthproxy_cookie_secret" {
+  length           = 32
+  override_special = "-_"
+}
+output "oauthproxy_cookie_secret" {
+  sensitive = true
+  value     = random_password.oauthproxy_cookie_secret.result
 }
