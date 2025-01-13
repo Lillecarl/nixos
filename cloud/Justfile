@@ -18,10 +18,12 @@ external_dns: prometheus-crd
     @echo external_dns
 external_secrets: prometheus-crd
     @echo external_secrets
-grafana-config: keycloak-config
-    @echo grafana-config
-grafana-deploy: prometheus-crd
+grafana-config: keycloak-config grafana-deploy
+#
+grafana-deploy: grafana-operator
     @echo grafana-deploy
+grafana-operator: prometheus-crd
+    @echo grafana-operator
 hcloud-ccm: prometheus-crd
     @echo hcloud-ccm
 hcloud-csi: prometheus-crd
@@ -54,7 +56,7 @@ pgadmin4: pg-cluster-config
     @echo pgadmin4
 prometheus: prometheus-crd
     @echo prometheus
-prometheus-crd: hosts
+prometheus-crd: stage1 hosts
     @echo prometheus-crd
 registry: prometheus-crd
     @echo registry

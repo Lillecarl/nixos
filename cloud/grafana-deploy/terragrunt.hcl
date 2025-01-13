@@ -18,5 +18,5 @@ inputs = {
   grafana-client-secret = dependency.keycloak.outputs.grafana_client_secret
   paths                 = dependency.stage1.outputs.paths
   deploy                = feature.deploy.value
-  k8s_force             = false
+  k8s_force             = true
 }
