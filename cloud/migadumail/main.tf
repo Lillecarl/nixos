@@ -6,7 +6,7 @@ resource "random_password" "noreply" {
 }
 resource "migadu_mailbox" "noreply" {
   name        = "noreply"
-  domain_name = "lillecarl.com"
+  domain_name = "postspace.net"
   local_part  = "noreply"
   password    = random_password.noreply.result
 
