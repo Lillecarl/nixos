@@ -1,4 +1,72 @@
-clean:
-    fd --hidden --no-ignore ".terragrunt-cache" --exec rm -rf
-    fd --hidden --no-ignore ".terraform.lock.hcl" --exec rm
-    fd --hidden --no-ignore ".terraform" --exec rm -rf
+cert_manager: prometheus-crd
+    @echo cert_manager
+chaoskube:
+    @echo chaoskube
+cilium: prometheus-crd
+    @echo cilium
+cloudflaredns:
+    @echo cloudflaredns
+cnpg: prometheus-crd stage1
+    @echo cnpg
+coredns: prometheus-crd
+    @echo coredns
+cypht:
+#
+dragonflydb: prometheus-crd
+    @echo dragonflydb
+external_dns: prometheus-crd
+    @echo external_dns
+external_secrets: prometheus-crd
+    @echo external_secrets
+grafana-config: keycloak-config
+    @echo grafana-config
+grafana-deploy: prometheus-crd
+    @echo grafana-deploy
+hcloud-ccm: prometheus-crd
+    @echo hcloud-ccm
+hcloud-csi: prometheus-crd
+    @echo hcloud-csi
+hostfirewall: cilium
+    @echo hostfirewall
+hosts:
+#
+keycloak-config: keycloak-deploy
+    @echo keycloak-config
+keycloak-deploy: prometheus-crd
+    @echo keycloak-deploy
+mariadb_deploy: mariadb_operator
+    @echo mariadb_deploy
+mariadb_operator: prometheus-crd
+    @echo mariadb_operator
+migadumail:
+    @echo migadumail
+nextcloud: cnpg pg-cluster-config
+#
+nginx: prometheus-crd
+    @echo nginx
+nix:
+#
+oauth_proxy:
+#
+pg-cluster-config: cnpg
+    @echo pg-cluster-config
+pgadmin4: pg-cluster-config
+    @echo pgadmin4
+prometheus: prometheus-crd
+    @echo prometheus
+prometheus-crd: hosts
+    @echo prometheus-crd
+registry: prometheus-crd
+    @echo registry
+reloader: prometheus-crd
+    @echo reloader
+roundcube: pg-cluster-config prometheus-crd
+#
+stage1:
+    @echo stage1
+test:
+#
+vault: prometheus-crd
+    @echo vault
+vault-root-config: vault
+    @echo vault-root-config
