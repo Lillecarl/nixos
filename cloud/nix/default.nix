@@ -1,5 +1,4 @@
-_:
-{
+_: {
   imports = [
     ./remote_state.nix
     ./required_providers.nix

@@ -8,10 +8,10 @@
   options = {
     remoteStates = lib.mkOption {
       type = lib.types.listOf lib.types.str;
-      default = [];
+      default = [ ];
     };
   };
-  config = lib.mkIf (config.remoteStates != []) {
+  config = lib.mkIf (config.remoteStates != [ ]) {
     data.terraform_remote_state = builtins.listToAttrs (
       builtins.map (x: {
         name = x;
