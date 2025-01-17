@@ -2,6 +2,7 @@
   lib,
   config,
   pkgs,
+  inputs,
   ...
 }:
 let
@@ -55,6 +56,15 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    # Reference flake inputs in /etc. Prevents Nix collecting flake inputs as garbage.
+    # I find it weird this isn't the default behaviour
+    environment.etc = lib.mapAttrs' (key: val: {
+      name = "flakeinputs/${key}";
+      value = {
+        source = "${val}";
+      };
+    }) inputs;
+
     boot = {
       kernelPackages = pkgs.linuxPackages_latest;
       kernel.sysctl = {
