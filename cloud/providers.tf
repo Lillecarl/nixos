@@ -15,6 +15,7 @@ terraform {
     random           = { source = "hashicorp/random" }
     string-functions = { source = "random-things/string-functions" }
     vault            = { source = "hashicorp/vault" }
+    jwks             = { source = "iwarapter/jwks" }
   }
 }
 provider "kubectl" {

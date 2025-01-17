@@ -173,6 +173,17 @@
             random-things.string-functions
           ]
         )
+        ++ [
+          (pkgs.terraform-providers.mkProvider {
+            owner = "iwarapter";
+            repo = "terraform-provider-jwks";
+            rev = "v0.1.0";
+            spdx = "MIT";
+            hash = "sha256-crIluhHmsNBYYzXM57z/Hmyln8QNpnVzNf6AyXILT9c=";
+            vendorHash = "sha256-LMN+me0hq/XKT2Z20tKSeM531o47ez0a6S0ojdNrbd0=";
+            homepage = "https://registry.opentofu.org/iwarapter/jwks";
+          })
+        ]
       ));
     lib.pspkgs.fish4 = (pkgs.callPackage "${inputs.nixpkgs-fish}/pkgs/by-name/fi/fish/package.nix" { });
     xdg.dataFile.tfplugins = {
