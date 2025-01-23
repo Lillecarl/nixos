@@ -26,6 +26,7 @@ inputs = {
     "ferretdb",
     "roundcube",
     "cypht",
+    "postgrest",
   ]
   paths     = dependency.stage1.outputs.paths
   deploy    = feature.deploy.value
