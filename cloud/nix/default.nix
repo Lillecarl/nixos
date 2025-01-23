@@ -4,5 +4,6 @@ _: {
     ./required_providers.nix
     ./state.nix
     ./lib.nix
+    ./helm.nix
   ];
 }
