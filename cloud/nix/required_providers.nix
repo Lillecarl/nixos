@@ -46,5 +46,8 @@
     vault = {
       source = "hashicorp/vault";
     };
+    jwks = {
+      source = "iwarapter/jwks";
+    };
   };
 }
