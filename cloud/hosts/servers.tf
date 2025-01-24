@@ -10,7 +10,7 @@ locals {
     hetzner1 = {
       enabled     = true
       server_type = "cax11"
-      vol_size    = 40
+      vol_size    = 60
       priv_ip     = "10.137.1.1"
       labels = {
         k8s_role = "server"
