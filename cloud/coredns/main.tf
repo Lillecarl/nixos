@@ -1,35 +1,32 @@
-variable "paths" { type = map(string) }
-variable "deploy" { type = bool }
 locals {
-  ids-this-stage0 = data.kustomization_overlay.this.ids_prio[0]
-  ids-this-stage1 = var.deploy ? data.kustomization_overlay.this.ids_prio[1] : []
-  ids-this-stage2 = var.deploy ? data.kustomization_overlay.this.ids_prio[2] : []
   helm_values = {
     replicaCount = 2
     service      = { clusterIP = "10.43.0.10" }
     deployment   = { skipConfig = true }
   }
+  namespace = "coredns"
 }
 data "kustomization_overlay" "this" {
   resources = [for file in tolist(fileset(path.module, "*.yaml")) : "${path.module}/${file}"]
+  namespace = local.namespace
   helm_charts {
     name          = "coredns"
     release_name  = "coredns"
-    namespace     = "kube-system"
+    namespace     = local.namespace
     include_crds  = true
     values_inline = yamlencode(local.helm_values)
   }
   helm_globals {
-    chart_home = var.paths.charts
+    chart_home = local.chartParentPath
   }
   kustomize_options {
     load_restrictor = "none"
     enable_helm     = true
-    helm_path       = var.paths.helm-path
+    helm_path       = local.helmBinPath
   }
 }
 resource "kubectl_manifest" "stage0" {
-  for_each   = local.ids-this-stage0
+  for_each   = data.kustomization_overlay.this.ids_prio[0]
   yaml_body  = data.kustomization_overlay.this.manifests[each.value]
   depends_on = []
 
@@ -40,7 +37,7 @@ resource "kubectl_manifest" "stage0" {
   timeouts { create = "1m" }
 }
 resource "kubectl_manifest" "stage1" {
-  for_each   = local.ids-this-stage1
+  for_each   = data.kustomization_overlay.this.ids_prio[1]
   yaml_body  = data.kustomization_overlay.this.manifests[each.value]
   depends_on = [kubectl_manifest.stage0]
 
@@ -50,7 +47,7 @@ resource "kubectl_manifest" "stage1" {
   timeouts { create = "1m" }
 }
 resource "kubectl_manifest" "stage2" {
-  for_each   = local.ids-this-stage2
+  for_each   = data.kustomization_overlay.this.ids_prio[2]
   yaml_body  = data.kustomization_overlay.this.manifests[each.value]
   depends_on = [kubectl_manifest.stage1]
 
