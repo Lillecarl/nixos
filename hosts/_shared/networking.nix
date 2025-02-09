@@ -65,7 +65,6 @@ in
             Kind = "dummy";
           };
         };
-
         ${config.lib.lobr.name} = {
           netdevConfig = {
             Name = config.lib.lobr.name;

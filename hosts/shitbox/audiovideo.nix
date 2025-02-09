@@ -20,7 +20,7 @@
                 name = "rnnoise";
                 plugin = "${pkgs.rnnoise-plugin}/lib/ladspa/librnnoise_ladspa.so";
 
-                label = "noise_suppressor_mono";
+                label = "noise_suppressor_stereo";
                 control = {
                   "VAD Threshold (%)" = 50.0;
                   "VAD Grace Period (ms)" = 200;

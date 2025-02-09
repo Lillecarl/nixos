@@ -37,6 +37,7 @@ in
   };
   config = lib.mkIf cfg.enable {
     systemd.services.remapper = {
+      enable = false;
       description = "remapper";
       wantedBy = [ "multi-user.target" ];
       environment = {
