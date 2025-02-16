@@ -8,6 +8,8 @@ import os
 import sys
 import time
 import sh
+import libvirt
+
 from evdev import util
 from collections import defaultdict
 from datetime import datetime
@@ -596,8 +598,7 @@ async def main():
                         async def attach():
                             await attach_device(f"{base_path}/daskeyboard.xml")
                             await attach_device(f"{base_path}/steelseries-sensei.xml")
-                            await attach_device(f"{base_path}/logitech-g933.xml")
-
+                            await attach_device(f"{base_path}/8bitdo.xml")
                         if usb_xtach_task is None or usb_xtach_task.done():
                             usb_xtach_task = loop.create_task(attach())
                         macropad_attach = False
@@ -605,10 +606,9 @@ async def main():
                         print("Detaching devices")
 
                         async def detach():
-                            await detach_device(f"{base_path}/logitech-g933.xml")
                             await detach_device(f"{base_path}/daskeyboard.xml")
                             await detach_device(f"{base_path}/steelseries-sensei.xml")
-
+                            await detach_device(f"{base_path}/8bitdo.xml")
                         if usb_xtach_task is None or usb_xtach_task.done():
                             usb_xtach_task = loop.create_task(detach())
                         macropad_attach = True
