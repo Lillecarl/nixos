@@ -19,6 +19,21 @@ let
     inherit lib pkgs;
   };
   gamingvmxml = pkgs.writeText "gamingvm.xml" (import "${self}/resources/gamingvm.xml.nix" gamingvm);
+
+  networkxml = pkgs.writeText "network.xml" ''
+    <network>
+      <name>default</name>
+      <uuid>a0d2739a-6dce-4c55-a2ae-90cd8820d39b</uuid>
+      <forward mode='nat'/>
+      <bridge name='virbr0' stp='on' delay='0'/>
+      <mac address='52:54:00:0d:27:18'/>
+      <ip address='192.168.122.1' netmask='255.255.255.0'>
+        <dhcp>
+          <range start='192.168.122.2' end='192.168.122.254'/>
+        </dhcp>
+      </ip>
+    </network>
+  '';
 in
 {
   # Imports virtualisation.libvirt (without d) options
