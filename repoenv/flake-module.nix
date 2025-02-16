@@ -33,7 +33,6 @@ _: {
           (pkgs.writeScriptBin "terragrunt" # bash
             ''
               #! ${pkgs.runtimeShell}
-
               exec ${pkgs.lib.getExe pkgs.terragrunt} --terragrunt-tfpath ${pkgs.lib.getExe pkgs.opentofu} "$@"
             ''
           )
