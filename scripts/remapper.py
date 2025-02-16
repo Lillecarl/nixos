@@ -841,31 +841,6 @@ async def main():
                                 release(Keys.RIGHTALT)
                                 continue
 
-                        # Map CTRL + SHIFT + LEFTMETA + hjkl to arrow keys
-                        elif (
-                            True
-                            and in_key_active(Keys.LEFTCTRL)
-                            and in_key_active(Keys.LEFTSHIFT)
-                            and in_key_active(Keys.LEFTMETA)
-                        ):
-                            code = None
-
-                            if event.code == Keys.H:
-                                code = Keys.LEFT
-                            elif event.code == Keys.J:
-                                code = Keys.DOWN
-                            elif event.code == Keys.K:
-                                code = Keys.UP
-                            elif event.code == Keys.L:
-                                code = Keys.RIGHT
-
-                            if code is not None:
-                                event.code = code
-                                release(Keys.LEFTCTRL)
-                                release(Keys.LEFTSHIFT)
-                                write_event(event)
-                                continue
-
                     if debug:
                         print(f"Time to process event: {time.time() - start_time}")
 
