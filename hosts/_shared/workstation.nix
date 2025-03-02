@@ -79,7 +79,6 @@ in
       neovim # Modal CLI text editor, modern version of Vim
       lsof # Check who uses file
       wget # Fetch things quickly with HTTP
-      gnufdisk # CLI partition management (MBR)
       gptfdisk # CLI partition management (GPT)
       efitools # Tools for managing EFI, variables and such
       curl # All things HTTP and other web transfer protocols
@@ -128,7 +127,6 @@ in
       conntrack-tools # Connection tracking userspace tools
       iptstate # Conntrack "top like" tool
       nixos-generators # Tools for generating nixos images (AWS, Azure, ISO etc..)
-      archiver # "Generic" decompression tool
       unzip # Decompress zip files
       unrar # Decompress rar files
       libressl # Crypto library, userspace tools

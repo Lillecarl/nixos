@@ -250,7 +250,6 @@
     config.boot.kernelPackages.zenpower # zenpower
     distrobox # Run different distros on your machine
     iptables # Give us the iptables CLI (should map to nftables)
-    polkit-kde-agent
     sbctl # sb = secure boot
     screen # Just for TTY
     usbguard # USB blocking solution

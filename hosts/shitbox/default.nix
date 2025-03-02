@@ -78,13 +78,10 @@
     units
     piper
     nmap
-    okular
     OVMFFull
     numactl
     looking-glass-client
     barrier
-    ark
-    archiver
     libarchive
     discord
 
