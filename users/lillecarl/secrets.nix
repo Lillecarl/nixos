@@ -1,6 +1,9 @@
-{ self, config, ... }:
+{ self, config, inputs, ... }:
 {
-  age = {
+  imports = [
+    inputs.agenix.homeManagerModules.age
+  ];
+  config.age = {
     identityPaths = [
       "${config.home.homeDirectory}/.ssh/agenix"
     ];
