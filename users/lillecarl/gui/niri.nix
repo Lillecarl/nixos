@@ -52,30 +52,17 @@
         in
         if hostName == "shitbox" then
           {
-            # Middle Huawei
-            HDMI-A-2 = {
+            # Right Huawei
+            DP-1 = {
               mode = {
                 width = 2560;
                 height = 1440;
-                refresh = 143.972;
+                refresh = 164.802;
               };
               position = {
-                x = 0;
-                y = 0;
+                x = 1080;
+                y = 240;
               };
-            };
-            # Right BENQ
-            DP-1 = {
-              mode = {
-                width = 1920;
-                height = 1080;
-                refresh = 143.996;
-              };
-              position = {
-                x = 2560;
-                y = -75;
-              };
-              transform.rotation = 90;
             };
             # Left BENQ
             DP-2 = {
@@ -85,10 +72,10 @@
                 refresh = 143.996;
               };
               position = {
-                x = -1080;
-                y = -75;
+                x = 0;
+                y = 0;
               };
-              transform.rotation = 270;
+              transform.rotation = 90;
             };
           }
         else if hostName == "nub" then
