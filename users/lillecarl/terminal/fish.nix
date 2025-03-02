@@ -60,5 +60,10 @@ in
         end
       '';
     };
+    # We use fd and ripgrep in fish scripts so we need to install them.
+    home.packages = [
+      config.programs.fd.package
+      config.programs.ripgrep.package
+    ];
   };
 }
