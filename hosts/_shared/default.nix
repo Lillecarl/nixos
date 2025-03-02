@@ -25,7 +25,6 @@ in
     ./kea.nix
     ./libvirt.nix
     ./networking.nix
-    ./nginx.nix
     ./niri.nix
     ./nix.nix
     ./noshell.nix

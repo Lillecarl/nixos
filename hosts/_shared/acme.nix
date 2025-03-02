@@ -29,5 +29,8 @@ in
         extraDomainNames = [ "*.${hostname}.lillecarl.com" ];
       };
     };
+    users.users.nginx.extraGroups = [
+      config.security.acme.defaults.group
+    ];
   };
 }
