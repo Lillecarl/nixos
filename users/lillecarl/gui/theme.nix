@@ -13,12 +13,11 @@
   config = lib.mkIf config.ps.gui.enable {
     catppuccin = {
       enable = true;
-
       flavor = "mocha";
       accent = "blue";
     };
-    programs.helix.catppuccin.enable = true;
-    programs.helix.catppuccin.useItalics = true;
+    catppuccin.helix.enable = true;
+    catppuccin.helix.useItalics = true;
 
     gtk = {
       enable = true;

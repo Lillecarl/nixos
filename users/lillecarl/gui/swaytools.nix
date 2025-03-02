@@ -22,6 +22,8 @@ let
 in
 {
   config = lib.mkIf config.ps.gui.enable {
+    catppuccin.swaylock.enable = false;
+
     home.file."swayLockScript" = {
       target = ".local/bin/swayLockScript";
       source = lockScript;
@@ -29,7 +31,6 @@ in
 
     programs.swaylock = {
       enable = true;
-      catppuccin.enable = false;
 
       settings = {
         daemonize = true;

@@ -15,6 +15,7 @@ in
     home.packages = [
       pkgs.networkmanagerapplet # For nm-applet icons
     ];
+    catppuccin.waybar.enable = true;
 
     programs.waybar = {
       enable = true;
