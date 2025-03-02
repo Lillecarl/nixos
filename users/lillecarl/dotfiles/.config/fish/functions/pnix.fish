@@ -7,6 +7,8 @@ function pnix
         nix build $args --no-link --print-out-paths --impure
     else if test $command = repl
         nix repl --file $FLAKE
+    else if test $command = run
+        nix run $args --impure
     else
         nix $argv
     end
