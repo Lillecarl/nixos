@@ -13,8 +13,6 @@
       config.programs.neovim.package
     ];
 
-    stylix.targets.firefox.profileNames = [ "lillecarl" ];
-
     programs.firefox = {
       enable = true;
 
