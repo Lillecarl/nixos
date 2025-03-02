@@ -16,12 +16,6 @@ in
       pkgs.networkmanagerapplet # For nm-applet icons
     ];
 
-    stylix.targets.waybar = {
-      enable = true;
-      enableCenterBackColors = true;
-      enableLeftBackColors = true;
-      enableRightBackColors = true;
-    };
     programs.waybar = {
       enable = true;
 
