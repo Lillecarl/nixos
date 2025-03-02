@@ -8,23 +8,9 @@
 {
   imports = [
     inputs.catppuccin-nix.homeManagerModules.catppuccin
-    inputs.stylix.homeManagerModules.stylix
   ];
 
   config = lib.mkIf config.ps.gui.enable {
-    stylix = {
-      targets = {
-        # Disable swaylock target since we're using Gandalf splash screen
-        swaylock.enable = false;
-        gtk.enable = true;
-        xresources.enable = true;
-        firefox.enable = true;
-        kde.enable = true;
-        gnome.enable = true;
-        helix.enable = false;
-      };
-    };
-
     catppuccin = {
       enable = true;
 

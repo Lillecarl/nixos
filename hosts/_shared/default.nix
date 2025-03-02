@@ -36,7 +36,6 @@ in
     ./secrets.nix
     ./server.nix
     ./ssh.nix
-    ./stylix.nix
     ./template.nix
     ./users.nix
     ./verycommon.nix

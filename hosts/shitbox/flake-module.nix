@@ -21,7 +21,6 @@ in
         inherit pkgs;
         modules =
           [
-            (self + "/stylix.nix")
             inputs.agenix.nixosModules.default
             inputs.disko.nixosModules.disko
             inputs.niri.nixosModules.niri
@@ -29,7 +28,6 @@ in
             inputs.nixos-hardware.nixosModules.common-gpu-intel
             inputs.nixos-hardware.nixosModules.common-pc
             inputs.nixos-hardware.nixosModules.common-pc-ssd
-            inputs.stylix.nixosModules.stylix
             inputs.home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;

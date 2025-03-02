@@ -26,14 +26,12 @@ in
         inherit pkgs;
         modules =
           [
-            (self + "/stylix.nix")
             inputs.agenix.nixosModules.default
             inputs.disko.nixosModules.disko
             inputs.lanzaboote.nixosModules.lanzaboote
             inputs.niri.nixosModules.niri
             inputs.nixos-hardware.nixosModules.common-pc-laptop-acpi_call
             inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t14-amd-gen3
-            inputs.stylix.nixosModules.stylix
             inputs.catppuccin-nix.nixosModules.catppuccin
             inputs.home-manager.nixosModules.home-manager
             {
