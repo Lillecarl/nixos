@@ -8,7 +8,7 @@ in
   options.ps = {
     ${modName} = {
       enable = lib.mkOption {
-        default = false;
+        default = config.ps.secrets.enable;
         description = "Whether to enable ${modName}.";
       };
     };

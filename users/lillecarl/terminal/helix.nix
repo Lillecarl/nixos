@@ -37,14 +37,14 @@ in
               #! ${pkgs.runtimeShell}
               # Tells Helix where to look for runtime code (tree-sitter
               # grammars, themes and stuff)
-              export HELIX_RUNTIME="${runtime}" 
+              export HELIX_RUNTIME="${runtime}"
               exec ${exe} "$@"
             ''
         else
           pkgs.helix;
 
       settings = {
-        theme = if config.ps.terminal.true-color then "catppuccin_mocha" else "default";
+        theme = lib.mkDefault (if config.ps.terminal.true-color then "catppuccin-mocha" else "default");
         editor = {
           true-color = config.ps.terminal.true-color;
           indent-guides.render = true;

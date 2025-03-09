@@ -30,6 +30,7 @@ in
               ps.guix.enable = true;
               ps.kerneltune.enable = true;
               ps.acme.enable = true;
+              ps.secrets.enable = true;
             }
             inputs.agenix.nixosModules.default
             inputs.disko.nixosModules.disko
