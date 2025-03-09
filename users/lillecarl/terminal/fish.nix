@@ -23,7 +23,6 @@ in
 
     programs.fish = {
       enable = true;
-      package = config.lib.pspkgs.fish4;
 
       generateCompletions = config.ps.terminal.mode == "fat";
 
