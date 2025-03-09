@@ -21,6 +21,16 @@ in
         inherit pkgs;
         modules =
           [
+            {
+              ps.networking.enable = true;
+              ps.workstation.enable = true;
+              ps.libvirt.enable = true;
+              ps.kea.enable = true;
+              ps.btrfs.enable = true;
+              ps.guix.enable = true;
+              ps.kerneltune.enable = true;
+              ps.acme.enable = true;
+            }
             inputs.agenix.nixosModules.default
             inputs.disko.nixosModules.disko
             inputs.niri.nixosModules.niri
@@ -33,18 +43,6 @@ in
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.extraSpecialArgs = specialArgs;
-              home-manager.users.root =
-                { nixosConfig, ... }:
-                {
-                  imports = pkgs.lib.rimport {
-                    path = [
-                      ../../users/_shared
-                      ../../users/root
-                    ];
-                    regdel = ".*_shared/gui/.*";
-                  };
-                  home.stateVersion = nixosConfig.system.stateVersion;
-                };
             }
           ]
           ++ pkgs.lib.rimport {

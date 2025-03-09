@@ -41,23 +41,33 @@ in
                     path = [
                       ./.
                       ../_shared
-                      ../../modules/hm
                     ];
                     regdel = [
                       __curPos.file
                       ".*${excludeName}.*"
                     ];
                   }
-                  ++ [ config ];
+                  ++ [ config ]
+                  ++ [
+                    ../lillecarl
+                    {
+                      ps.terminal.nerdfonts = true;
+                      ps.hostname = "shitbox";
+                      ps.terminal.mode = "fat";
+                      ps.editors.mode = "fat";
+                      ps.podman.enable = false;
+                      ps.gui.enable = true;
+                    }
+                  ];
               }
             );
         in
         {
           "lillecarl@shitbox" = workstation "shitbox" "nub" {
-            carl.gui.enable = true;
+            # module code
           };
           "lillecarl@nub" = workstation "nub" "shitbox" {
-            carl.gui.enable = true;
+            # module code
           };
           "lillecarl@penguin" = withSystem "aarch64-linux" (
             {
@@ -87,7 +97,7 @@ in
                   ps.editors.mode = "slim";
                   ps.podman.enable = false;
                   # thrash eMMC disk less
-                  nix.settings.auto-optimise-store = true;
+                  nix.settings.auto-optimise-store = false;
                 }
               ];
             }

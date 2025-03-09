@@ -20,7 +20,7 @@ in
       ];
 
       kernel.sysctl = {
-        "kernel.task_delayacct" = 1;
+        "kernel.task_delayacct" = lib.mkDefault 1;
         "net.ipv4.ip_forward" = lib.mkDefault 1;
         "vm.swappiness" = 180;
         "vm.watermark_boost_factor" = 0;

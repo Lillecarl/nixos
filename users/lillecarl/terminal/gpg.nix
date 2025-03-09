@@ -22,7 +22,7 @@ in
       enable = true;
       enableSshSupport = false; # gnome-keyring
       enableExtraSocket = true;
-      pinentryPackage = pkgs.pinentry-qt;
+      #pinentryPackage = pkgs.pinentry-qt;
       grabKeyboardAndMouse = false;
     };
 

@@ -59,7 +59,7 @@
     };
 
     zellij = {
-      enable = true;
+      enable = false;
 
       settings = { };
     };
@@ -68,7 +68,7 @@
       enable = true;
       settings = {
         email = "bitwarden@lillecarl.com";
-        pinentry = pkgs.pinentry-qt;
+        #pinentry = pkgs.pinentry-qt;
         sync_interval = 300;
         lock_timeout = 3600 * 24;
       };

@@ -4,13 +4,6 @@
   ...
 }:
 {
-  carl = {
-    remapper = {
-      enable = true;
-      keyboardName = "daskeyboard";
-    };
-  };
-
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   disko.devices = import ./disko.nix {

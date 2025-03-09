@@ -1,11 +1,12 @@
 {
   config,
+  lib,
   pkgs,
   ...
 }:
 {
   boot = {
-    kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = lib.mkForce pkgs.linuxPackages_latest;
     initrd.availableKernelModules = [
       "amdgpu"
       "vfio-pci"
