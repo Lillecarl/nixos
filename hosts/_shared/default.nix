@@ -24,6 +24,7 @@ in
     ./hardware-configuration.nix
     ./kea.nix
     ./libvirt.nix
+    ./mosh.nix
     ./networking.nix
     ./niri.nix
     ./nix.nix
