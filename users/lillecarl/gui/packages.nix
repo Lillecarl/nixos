@@ -9,7 +9,6 @@
     home.packages =
       with pkgs;
       [
-        ferdium # Web multiplexer
         bitwarden # Password manager
         xfce.ristretto # Image viewer
         pcmanfm # File manager
