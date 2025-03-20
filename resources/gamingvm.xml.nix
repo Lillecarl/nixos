@@ -46,6 +46,8 @@ in
       <topology sockets='1' dies='1' clusters='1' cores='5' threads='2'/>
       <!-- Enable SMT in the guest, disabled by default since timing attacks became a thing -->
       <feature policy='require' name='topoext'/>
+      <!-- Enable nested virtualisation "svm" on AMD "vmx" on Intel -->
+      <feature policy='require' name='svm'/>
     </cpu>
     <cputune>
       <!-- Pin QEMU threads to cores not passed to guest -->
