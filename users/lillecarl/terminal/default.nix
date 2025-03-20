@@ -40,6 +40,8 @@
     ./tealdeer.nix
     ./template.nix
     ./tmux.nix
+    ./xonsh.nix
+    ./xonsh_mod.nix
     ./zoxide.nix
     ./zsh.nix
   ];
