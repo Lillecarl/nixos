@@ -45,6 +45,7 @@ in
           "auto-allocate-uids"
           "cgroups"
           "nix-command"
+          "ca-derivations"
           "flakes"
           "impure-derivations"
           "recursive-nix"
