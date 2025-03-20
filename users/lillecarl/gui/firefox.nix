@@ -52,11 +52,11 @@
                 definedAliases = [ "@kagi" ];
               };
 
-              "Amazon.se".metaData.hidden = true;
-              "Bing".metaData.hidden = true;
-              "DuckDuckGo".metaData.hidden = true;
-              "Google".metaData.hidden = true;
-              "Wikipedia (en)".metaData.hidden = true;
+              "amazon".metaData.hidden = true;
+              "bing".metaData.hidden = true;
+              "ddg".metaData.hidden = true;
+              "google".metaData.hidden = true;
+              "wikipedia".metaData.hidden = true;
             };
           };
 
@@ -222,35 +222,38 @@
                 visibility: collapse !important;
               }
             '';
-          bookmarks = [
-            {
-              toolbar = true;
-              bookmarks = [
-                {
-                  name = "Home Manager";
-                  url = "https://nixos.wiki/wiki/Home_Manager";
-                }
-                {
-                  name = "Noogle Nix Search";
-                  url = "https://noogle.dev/";
-                }
-              ];
-            }
-            {
-              toolbar = true;
-              bookmarks = [
-                {
-                  name = "Folder";
-                  bookmarks = [
-                    {
-                      name = "Home Manager";
-                      url = "https://nixos.wiki/wiki/Home_Manager";
-                    }
-                  ];
-                }
-              ];
-            }
-          ];
+          bookmarks = {
+            force = true;
+            settings = [
+              {
+                toolbar = true;
+                bookmarks = [
+                  {
+                    name = "bitwarden";
+                    url = "moz-extension://db6ea6cc-d6c8-4d44-a564-ccef3eb9c3c5/popup/index.html#/tabs/vault";
+                  }
+                  {
+                    name = "Home Manager";
+                    url = "https://nixos.wiki/wiki/Home_Manager";
+                  }
+                  {
+                    name = "Noogle Nix Search";
+                    url = "https://noogle.dev/";
+                  }
+                ];
+              }
+              {
+                name = "Folder";
+                toolbar = true;
+                bookmarks = [
+                  {
+                    name = "Home Manager";
+                    url = "https://nixos.wiki/wiki/Home_Manager";
+                  }
+                ];
+              }
+            ];
+          };
         };
       };
     };
