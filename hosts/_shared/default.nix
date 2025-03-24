@@ -41,6 +41,7 @@ in
     ./users.nix
     ./verycommon.nix
     ./waydroid.nix
+    ./wireguard.nix
     ./workstation.nix
     ./xdg.nix
   ];
