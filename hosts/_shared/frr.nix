@@ -48,12 +48,12 @@ in
             neighbor 192.168.88.1 remote-as external
             address-family ipv4 unicast
               redistribute connected
-              neighbor spoke route-map home out
-              neighbor spoke route-map 1918 in
+              neighbor spoke prefix-list home out
+              neighbor spoke prefix-list 1918 in
               neighbor spoke soft-reconfiguration inbound
 
-              neighbor 192.168.88.1 route-map 1918 out
-              neighbor 192.168.88.1 route-map 1918 in
+              neighbor 192.168.88.1 prefix-list 1918 out
+              neighbor 192.168.88.1 prefix-list 1918 in
               neighbor 192.168.88.1 soft-reconfiguration inbound
             exit-address-family
           ''
@@ -61,8 +61,8 @@ in
           ''
             bgp listen range 10.44.33.0/24 peer-group spoke
             address-family ipv4 unicast
-              neighbor hub route-map 1918 out
-              neighbor hub route-map 1918 in
+              neighbor hub prefix-list 1918 out
+              neighbor hub prefix-list 1918 in
               neighbor hub soft-reconfiguration inbound
             exit-address-family
           ''
