@@ -50,9 +50,11 @@ in
               redistribute connected
               neighbor spoke route-map home out
               neighbor spoke route-map 1918 in
+              neighbor spoke soft-reconfiguration inbound
 
               neighbor 192.168.88.1 route-map 1918 out
               neighbor 192.168.88.1 route-map 1918 in
+              neighbor 192.168.88.1 soft-reconfiguration inbound
             exit-address-family
           ''
         else if config.networking.hostName == "hetzner1" then
@@ -61,6 +63,7 @@ in
             address-family ipv4 unicast
               neighbor hub route-map 1918 out
               neighbor hub route-map 1918 in
+              neighbor hub soft-reconfiguration inbound
             exit-address-family
           ''
         else
