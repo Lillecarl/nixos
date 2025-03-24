@@ -5,7 +5,7 @@ function git --wraps=git
 
     if test $command = push
         command git push $args
-        command git remote | rg -q forgejo && git push forgejo $args
+        command git remote | rg -q forgejo && command git push forgejo $args
     else if test $command = something
         command git something $args
     else
