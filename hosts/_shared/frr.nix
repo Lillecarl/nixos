@@ -25,16 +25,23 @@ in
   config = lib.mkIf cfg.enable {
     services.frr = {
       bgpd.enable = true;
-      config = if cfg.isHub then ''
+      config = ''
+        frr defaults datacenter
         router bgp ${toString cfg.ASN}
           neighbor spoke peer-group
           neighbor spoke remote-as external
-          neighbor 10.44.33.0/24 interface peer-group spoke
-      '' else ''
-        router bgp ${toString cfg.ASN}
           neighbor hub peer-group
           neighbor hub remote-as external
-          neighbor 10.44.33.1 peer-group hub
+          ${
+            if cfg.isHub then
+              ''
+                bgp listen range 10.44.33.0/24 interface peer-group spoke
+              ''
+            else
+              ''
+                neighbor 10.44.33.1 peer-group hub
+              ''
+          }
       '';
     };
   };
