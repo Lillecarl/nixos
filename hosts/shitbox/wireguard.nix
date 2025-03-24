@@ -6,7 +6,7 @@
       mtu = 1280;
       allowedIPsAsRoutes = false;
       privateKeyFile = "/etc/wireguard/private.key";
-      ips = [ "10.44.0.1/30" ];
+      ips = [ "10.44.33.2/24" ];
 
       peers = [
         {
