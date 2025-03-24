@@ -13,7 +13,10 @@
           name = "hetzner1";
           publicKey = "T0x47QL79R7pwBAOoR1WqiwjKixvH/QcCyWKHaH5Bwc=";
           endpoint = "65.21.63.133:51820";
-          allowedIPs = [ "0.0.0.0/0" ];
+          allowedIPs = [
+            "0.0.0.0/0"
+            "::/0"
+          ];
           persistentKeepalive = 25;
         }
       ];

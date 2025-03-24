@@ -13,7 +13,10 @@
         {
           name = "shitbox";
           publicKey = "nPky+d8cQ0dT5IfS3NPJX4v3Vmy/YegsLscY2vSWa3U=";
-          allowedIPs = [ "0.0.0.0/0" ];
+          allowedIPs = [
+            "0.0.0.0/0"
+            "::/0"
+          ];
           persistentKeepalive = 25;
         }
       ];
