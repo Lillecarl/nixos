@@ -11,12 +11,11 @@ function rebuild-os
     set NIXOS_INSTALL_BOOTLOADER 1
     set -xl SHELL /bin/sh
 
-
     echo "Building $fullflake"
     echo "Into $result"
     echo "With log $buildlog"
 
-    nix \
+    command nix \
         build \
         $fullflake \
         --out-link $result --show-trace \
