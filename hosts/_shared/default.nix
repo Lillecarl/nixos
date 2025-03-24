@@ -65,6 +65,8 @@ in
       };
     }) inputs;
 
+    environment.enableAllTerminfo = true; # This installs a lot of terminals
+
     boot = {
       kernelPackages = pkgs.linuxPackages_latest;
       kernel.sysctl = {
