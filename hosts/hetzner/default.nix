@@ -16,6 +16,7 @@
     ./k3s.nix
     ./labels.nix
     ./networking.nix
+    ./wireguard.nix
   ];
 
   config = {
