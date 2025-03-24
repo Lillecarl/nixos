@@ -22,6 +22,7 @@ in
         modules =
           [
             {
+              ps.frr.ASN = 65001;
               ps.networking.enable = true;
               ps.workstation.enable = true;
               ps.libvirt.enable = true;

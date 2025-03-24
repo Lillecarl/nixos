@@ -19,6 +19,7 @@ in
     ./dockerregistry.nix
     ./earlyoom.nix
     ./fail2ban.nix
+    ./frr.nix
     ./fish.nix
     ./guix.nix
     ./hardware-configuration.nix
