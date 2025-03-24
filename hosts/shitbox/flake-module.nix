@@ -45,10 +45,10 @@ in
               home-manager.useUserPackages = true;
               home-manager.extraSpecialArgs = specialArgs;
             }
+            ./default.nix
           ]
           ++ pkgs.lib.rimport {
             path = [
-              ./.
               ../_shared
             ];
             regdel = [

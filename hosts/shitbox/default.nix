@@ -4,6 +4,13 @@
   ...
 }:
 {
+  imports = [
+    ./audiovideo.nix
+    ./hardware-configuration.nix
+    ./home-assistant.nix
+    ./syncthing.nix
+    ./wireguard.nix
+  ];
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   disko.devices = import ./disko.nix {
