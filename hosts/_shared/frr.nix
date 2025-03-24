@@ -34,14 +34,12 @@ in
           neighbor hub remote-as external
           ${
             if cfg.isHub then
-              ''
-                bgp listen range 10.44.33.0/24 interface peer-group spoke
-              ''
+              "bgp listen range 10.44.33.0/24 peer-group spoke"
             else
-              ''
-                neighbor 10.44.33.1 peer-group hub
-              ''
+              "neighbor 10.44.33.1 peer-group hub"
           }
+        exit
+        end
       '';
     };
   };
