@@ -55,10 +55,6 @@
       url = "github:viperML/noshell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nix-auto-follow = {
-      url = "github:fzakaria/nix-auto-follow";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     # Get this working with newer k3s and go versions
     nix-snapshotter = {
       url = "github:pdtpartners/nix-snapshotter";
