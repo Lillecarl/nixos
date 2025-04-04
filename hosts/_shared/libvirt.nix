@@ -155,7 +155,7 @@ in
     ];
 
     services.persistent-evdev = {
-      enable = true;
+      enable = false;
       devices = {
         persist-vmdev = "vmdev";
       };
