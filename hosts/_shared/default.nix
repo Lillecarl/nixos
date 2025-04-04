@@ -96,6 +96,8 @@ in
     # # Don't install the /lib/ld-linux.so.2 stub. This saves one instance of nixpkgs.
     environment.ldso32 = null;
 
+    services.sysstat.enable = true;
+
     # Select internationalisation properties.
     # This adds 200MiB to system
     i18n = lib.mkIf false rec {
