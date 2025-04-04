@@ -1,13 +1,13 @@
 {
   fetchFromGitLab,
-  python3Packages,
+  buildPythonPackage,
   setuptools-scm,
 }:
 let
   pname = "qemu-qmp";
   version = "0.0.3";
 in
-python3Packages.buildPythonPackage {
+buildPythonPackage {
   inherit pname version;
   src = fetchFromGitLab {
     owner = "qemu-project";

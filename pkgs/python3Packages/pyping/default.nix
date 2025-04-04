@@ -1,12 +1,12 @@
 {
   lib,
-  python3Packages,
+  buildPythonPackage,
   fetchFromGitHub,
 }:
 let
   versiondata = builtins.fromJSON (builtins.readFile ./version.json);
 in
-python3Packages.buildPythonPackage {
+buildPythonPackage {
   pname = "pyping3";
   version = "0.0.1";
   src = fetchFromGitHub versiondata;
