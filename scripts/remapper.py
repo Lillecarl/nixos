@@ -380,8 +380,6 @@ async def main():
             if device.name == name:
                 if verbose:
                     print(f"Found device: {device}")
-                # print(f"Leds: {device.leds(verbose=True)}")
-                # print(f"Capabilities: {device.capabilities(verbose=True)}")
                 return device
 
         if verbose:
@@ -393,7 +391,7 @@ async def main():
 
         return None
 
-    idev = get_input_device(device_name, verbose=False)
+    idev = get_input_device(device_name, verbose=True)
     if idev is None:
         return
 
@@ -678,7 +676,7 @@ async def main():
 
     async def handle_input_events():
         global gaming_mode
-        idev = get_input_device(device_name, verbose=False)
+        idev = get_input_device(device_name, verbose=True)
         if idev is None:
             return
 
