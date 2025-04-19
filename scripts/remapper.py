@@ -600,6 +600,7 @@ async def main():
                             await attach_device(f"{base_path}/steelseries-sensei.xml")
                             await attach_device(f"{base_path}/glorious-mouse.xml")
                             await attach_device(f"{base_path}/8bitdo.xml")
+                            await attach_device(f"{base_path}/8bitdo_idle.xml")
                         if usb_xtach_task is None or usb_xtach_task.done():
                             usb_xtach_task = loop.create_task(attach())
                         macropad_attach = False
@@ -611,6 +612,7 @@ async def main():
                             await detach_device(f"{base_path}/steelseries-sensei.xml")
                             await detach_device(f"{base_path}/glorious-mouse.xml")
                             await detach_device(f"{base_path}/8bitdo.xml")
+                            await detach_device(f"{base_path}/8bitdo_idle.xml")
                         if usb_xtach_task is None or usb_xtach_task.done():
                             usb_xtach_task = loop.create_task(detach())
                         macropad_attach = True
