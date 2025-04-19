@@ -596,7 +596,7 @@ async def main():
                         print("Attaching devices")
 
                         async def attach():
-                            await attach_device(f"{base_path}/daskeyboard.xml")
+                            await attach_device(f"{base_path}/shitkeyboard.xml")
                             await attach_device(f"{base_path}/steelseries-sensei.xml")
                             await attach_device(f"{base_path}/glorious-mouse.xml")
                             await attach_device(f"{base_path}/8bitdo.xml")
@@ -607,7 +607,7 @@ async def main():
                         print("Detaching devices")
 
                         async def detach():
-                            await detach_device(f"{base_path}/daskeyboard.xml")
+                            await detach_device(f"{base_path}/shitkeyboard.xml")
                             await detach_device(f"{base_path}/steelseries-sensei.xml")
                             await detach_device(f"{base_path}/glorious-mouse.xml")
                             await detach_device(f"{base_path}/8bitdo.xml")
