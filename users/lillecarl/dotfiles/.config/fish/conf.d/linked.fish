@@ -3,6 +3,7 @@ set -x DIRENV_LOG_FORMAT ""
 set -x TZ Europe/Stockholm
 set -x MYDATE "+%y-%m-%d %H:%M:%S"
 set -x HOST $hostname
+set -x NERDFONTS
 
 fish_vi_key_bindings
 

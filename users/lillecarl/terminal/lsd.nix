@@ -16,7 +16,7 @@ in
     programs.lsd = {
       enable = true;
 
-      enableAliases = true;
+      enableAliases = false; # Wrap with our own fish functions
 
       settings = {
         icons = {
