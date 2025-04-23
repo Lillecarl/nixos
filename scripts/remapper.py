@@ -396,7 +396,7 @@ async def main():
         return
 
     # Copy all capabilities from the original device
-    all_capabilities = defaultdict(set)
+    all_capabilities: dict = defaultdict(set)
     for ev_type, ev_codes in idev.capabilities().items():
         all_capabilities[ev_type].update(ev_codes)
 
