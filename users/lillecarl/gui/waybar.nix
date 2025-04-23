@@ -31,12 +31,14 @@ in
           position = "top";
           modules-left = [
             "idle_inhibitor"
+            "niri/workspaces"
           ];
           modules-center = [
+            "niri/window"
           ];
           modules-right =
             [
-              "custom/nixos-update"
+              "niri/language"
               "backlight"
               "battery"
               "pulseaudio"
