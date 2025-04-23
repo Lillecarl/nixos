@@ -11,7 +11,7 @@ function unlink
     set linkpath $argv[1]
 
     if ! test -L $linkpath
-        echo "Not a symlink"
+        echo "$linkpath is not a symlink"
         return
     end
 
