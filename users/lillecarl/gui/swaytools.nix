@@ -43,8 +43,6 @@ in
     services.swayidle = {
       enable = true;
 
-      systemdTarget = config.ps.gui.systemdTarget;
-
       events = [
         {
           event = "before-sleep";
@@ -67,14 +65,14 @@ in
     systemd.user.services.swaybg = {
       Unit = {
         Description = "Sway background image daemon";
-        PartOf = [ config.ps.gui.systemdTarget ];
+        PartOf = [ config.wayland.systemd.target ];
       };
 
       Service = {
-        ExecStart = "${lib.getExe pkgs.swaybg} --image ${backgroundImage}";
+        ExecStart = "${lib.getExe pkgs.swaybg} --image ${backgroundImage} --mode center";
       };
       Install = {
-        WantedBy = [ config.ps.gui.systemdTarget ];
+        WantedBy = [ config.wayland.systemd.target ];
       };
     };
   };

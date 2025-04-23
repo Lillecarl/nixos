@@ -32,11 +32,6 @@
             If we should configure GUI/Wayland applications.
           '';
         };
-        systemdTarget = lib.mkOption {
-          type = lib.types.str;
-          default = "";
-          description = "The systemd target to bind GUI services to";
-        };
       };
       terminal = {
         enable = lib.mkOption {
