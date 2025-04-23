@@ -21,8 +21,9 @@
     ./packages.nix
     ./qutebrowser.nix
     ./rofi.nix
+    ./swaybg.nix
+    ./swayidlelock.nix
     ./swaync.nix
-    ./swaytools.nix
     ./theme.nix
     ./udiskie.nix
     ./vieb.nix
