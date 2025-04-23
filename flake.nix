@@ -5,6 +5,7 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     nixpkgs-master.url = "github:NixOS/nixpkgs/master";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.05";
+    nixos-facter-modules.url = "github:nix-community/nixos-facter-modules";
     nixpkgs-terraform-providers-bin = {
       url = "github:nix-community/nixpkgs-terraform-providers-bin";
       inputs.nixpkgs.follows = "nixpkgs";

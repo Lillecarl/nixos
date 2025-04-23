@@ -6,6 +6,7 @@
 {
   imports = [
     ./audiovideo.nix
+    ./facter.nix
     ./hardware-configuration.nix
     ./home-assistant.nix
     ./syncthing.nix

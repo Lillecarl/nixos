@@ -18,6 +18,7 @@ in
     ./command-not-found.nix
     ./dockerregistry.nix
     ./earlyoom.nix
+    ./facter.nix
     ./fail2ban.nix
     ./frr.nix
     ./fish.nix
