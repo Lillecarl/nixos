@@ -304,7 +304,7 @@
         "Mod+Shift+F".action.fullscreen-window = [ ];
         "Mod+C".action.center-column = [ ];
 
-        "Mod+E".action.switch-layout = [ "next" ];
+        "Mod+Space".action.switch-layout = [ "next" ];
 
         "Print".action.screenshot = [ ];
         "Ctrl+Print".action.screenshot-screen = [ ];
