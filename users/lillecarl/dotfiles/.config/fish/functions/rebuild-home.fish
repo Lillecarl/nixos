@@ -5,7 +5,7 @@ function rebuild-home
     set fullflake "$FLAKE#homeConfigurations.\"$USER@$hostname\".activationPackage"
     set profile $HOME/.local/state/nix/profiles/home-manager
 
-    set -x HOME_MANAGER_BACKUP_EXT backup
+    set -x HOME_MANAGER_BACKUP_EXT "$bak(openssl rand -hex 2)"
 
     echo "Building $fullflake"
     echo "Into $result"
