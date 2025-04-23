@@ -15,6 +15,7 @@ in
   config = lib.mkIf cfg.enable {
     programs.starship = {
       enable = true;
+      settings = lib.mkForce {};
     };
   };
 }
