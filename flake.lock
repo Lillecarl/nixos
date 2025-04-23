@@ -159,6 +159,23 @@
         "type": "github"
       }
     },
+    "cpu-microcodes": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1744580596,
+        "narHash": "sha256-0WgBGViIPozInkjUZSUKyndN9ldZGtCKlUiiw8VAK3o=",
+        "owner": "platomav",
+        "repo": "CPUMicrocodes",
+        "rev": "58897a4b77be3ebb17ee41c12002cd986d3da6ed",
+        "type": "github"
+      },
+      "original": {
+        "owner": "platomav",
+        "repo": "CPUMicrocodes",
+        "rev": "58897a4b77be3ebb17ee41c12002cd986d3da6ed",
+        "type": "github"
+      }
+    },
     "crane": {
       "locked": {
         "lastModified": 1745022865,
@@ -1146,7 +1163,8 @@
         "rust-overlay": "rust-overlay",
         "stylix": "stylix",
         "system-manager": "system-manager",
-        "treefmt-nix": "treefmt-nix_2"
+        "treefmt-nix": "treefmt-nix_2",
+        "ucodenix": "ucodenix"
       }
     },
     "rust-overlay": {
@@ -1357,6 +1375,24 @@
       "original": {
         "owner": "numtide",
         "repo": "treefmt-nix",
+        "type": "github"
+      }
+    },
+    "ucodenix": {
+      "inputs": {
+        "cpu-microcodes": "cpu-microcodes"
+      },
+      "locked": {
+        "lastModified": 1744630518,
+        "narHash": "sha256-xRbcLC6AVjB8etaw1T9MEywqjuRWeZZu5Ee8RU3q4R0=",
+        "owner": "e-tho",
+        "repo": "ucodenix",
+        "rev": "b26e195f4272306f6bd30445bb73657449a1f574",
+        "type": "github"
+      },
+      "original": {
+        "owner": "e-tho",
+        "repo": "ucodenix",
         "type": "github"
       }
     },

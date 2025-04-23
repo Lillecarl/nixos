@@ -5,6 +5,7 @@
 }:
 {
   imports = [
+    ./amdmicrocode.nix
     ./audiovideo.nix
     ./facter.nix
     ./hardware-configuration.nix
