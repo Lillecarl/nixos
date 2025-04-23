@@ -10,6 +10,7 @@
     ./avizo.nix
     ./chromium.nix
     ./cliphist.nix
+    ./eww.nix
     ./firefox.nix
     ./foot.nix
     ./kitty.nix
