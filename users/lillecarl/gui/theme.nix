@@ -7,7 +7,7 @@
 }:
 {
   imports = [
-    inputs.catppuccin-nix.homeManagerModules.catppuccin
+    inputs.catppuccin-nix.homeModules.catppuccin
   ];
 
   config = lib.mkIf config.ps.gui.enable {
