@@ -67,6 +67,7 @@ in
     }) inputs;
 
     environment.enableAllTerminfo = true; # This installs a lot of terminals
+    environment.shellAliases = lib.mkForce {};
 
     boot = {
       kernelPackages = pkgs.linuxPackages_latest;
