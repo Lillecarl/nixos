@@ -77,7 +77,6 @@
                 privacy-pass
                 sponsorblock
                 temporary-containers
-                tree-style-tab
                 ublock-origin
               ]
               ++ [
@@ -89,6 +88,11 @@
 
           settings = {
             # A lot of settings are taken from here: https://github.com/yokoffing/Betterfox/blob/main/user.js
+
+            # Use native vertical tabs, tree isn't that important imho
+            "sidebar.revamp" = true;
+            "sidebar.verticalTabs" = true;
+            "sidebar.visibility" = "always-show";
 
             # Fastfox
             "browser.startup.preXulSkeletonUI" = false;
@@ -206,22 +210,6 @@
             "general.smoothScroll.mouseWheel.migrationPercent" = 100;
           };
 
-          userChrome = # css
-            ''
-              /* Hide tab bar */
-              #tabbrowser-tabs {
-                visibility: collapse !important;
-              }
-              /* Hide side-bad header */
-              #sidebar-header {
-                visibility: collapse !important;
-              }
-              /* hide titlebar entirely */
-              #titlebar {
-                /* display: none !important; */
-                visibility: collapse !important;
-              }
-            '';
           bookmarks = {
             force = true;
             settings = [
