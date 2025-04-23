@@ -25,6 +25,18 @@ in
         target = "graphical-session.target";
       };
 
+      style = # scss
+      ''
+        * {
+          font-family: "Hack Nerd Font";
+          color: @text;
+        }
+
+        #waybar {
+          background-color: @base;
+        }
+      '';
+
       settings = {
         mainBar = {
           layer = "top";
