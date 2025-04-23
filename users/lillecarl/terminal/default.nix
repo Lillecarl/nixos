@@ -10,6 +10,7 @@
     ./atuin.nix
     ./awscli.nix
     ./bat.nix
+    ./btop.nix
     ./dircolors.nix
     ./direnv.nix
     ./distrobox.nix
