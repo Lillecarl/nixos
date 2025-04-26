@@ -116,7 +116,7 @@ in
       <emulator>/run/libvirt/nix-emulators/qemu-system-x86_64</emulator>
       <disk type='block' device='disk'>
         <driver name='qemu' type='raw' cache='none' io='native' discard='unmap'/>
-        <source dev='/dev/pool/windows11_24'/>
+        <source dev='/dev/pool/winthin'/>
         <target dev='vda' bus='virtio'/>
         <boot order='1'/>
         <address type='pci' domain='0x0000' bus='0x04' slot='0x00' function='0x0'/>
