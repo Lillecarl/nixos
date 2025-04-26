@@ -6,7 +6,7 @@
 
     services.ucodenix = {
       enable = true;
-      cpuModelId = "00A20F12";
+      cpuModelId = ./facter.json;
     };
   };
 }
