@@ -35,6 +35,8 @@
       "vfio_pci"
       "vfio_iommu_type1"
       "vfio"
+      "dm_thin_pool"
+      "dm_snapshot"
     ];
     kernelParams = [
       "acpi_enforce_resources=lax"
