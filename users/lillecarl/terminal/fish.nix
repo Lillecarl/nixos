@@ -2,6 +2,7 @@
   lib,
   config,
   pkgs,
+  nixosConfig ? null,
   ...
 }:
 let
@@ -23,6 +24,7 @@ in
 
     programs.fish = {
       enable = true;
+      package = nixosConfig.programs.fish.package ? pkgs.fish;
 
       generateCompletions = config.ps.terminal.mode == "fat";
 
