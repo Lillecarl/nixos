@@ -16,6 +16,13 @@ in
     programs.television = {
       enable = true;
       enableFishIntegration = config.ps.fish.enable;
+
+      settings = {
+        ui = {
+          theme = "catppuccin";
+          input_bar_position = "bottom";
+        };
+      };
     };
   };
 }
