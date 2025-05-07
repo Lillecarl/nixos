@@ -36,7 +36,9 @@
           tap = true;
           natural-scroll = true;
         };
-        mouse = { };
+        mouse = {
+          accel-profile = "flat";
+        };
         trackpoint = { };
         tablet = {
           map-to-output = "eDP-1";
