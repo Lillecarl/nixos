@@ -77,6 +77,11 @@
     };
   };
 
+  services.udev.extraRules = # udev
+  ''
+    ACTION=="add|change", SUBSYSTEM=="block", ATTR{queue/scheduler}=="*kyber*", ATTR{queue/scheduler}="kyber"
+  '';
+
   hardware = {
     enableAllFirmware = true;
     i2c.enable = true;
