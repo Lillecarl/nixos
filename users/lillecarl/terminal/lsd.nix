@@ -16,8 +16,6 @@ in
     programs.lsd = {
       enable = true;
 
-      enableAliases = false; # Wrap with our own fish functions
-
       settings = {
         icons = {
           theme = if config.ps.terminal.nerdfonts == true then "fancy" else "unicode";
