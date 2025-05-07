@@ -39,6 +39,7 @@
     ./ssh.nix
     ./starship.nix
     ./tealdeer.nix
+    ./television.nix
     ./template.nix
     ./tmux.nix
     ./xonsh.nix
