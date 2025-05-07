@@ -550,7 +550,7 @@ async def main():
         global macropad_attach
         global inputevents
 
-        mdev = get_input_device("IDOBAO ID3KEY")
+        mdev = get_input_device("Drop Inc. The Key V2")
         if mdev is None:
             return
 
