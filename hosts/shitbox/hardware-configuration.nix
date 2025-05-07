@@ -82,6 +82,8 @@
     ACTION=="add|change", SUBSYSTEM=="block", ATTR{queue/scheduler}=="*kyber*", ATTR{queue/scheduler}="kyber"
   '';
 
+  services.lvm.boot.thin.enable = true;
+
   hardware = {
     enableAllFirmware = true;
     i2c.enable = true;
