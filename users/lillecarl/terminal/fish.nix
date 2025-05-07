@@ -24,7 +24,11 @@ in
 
     programs.fish = {
       enable = true;
-      package = nixosConfig.programs.fish.package ? pkgs.fish;
+      package =
+        if (lib.isDerivation (nixosConfig.programs.fish.package ? null)) then
+          nixosConfig.programs.fish.package
+        else
+          pkgs.fish;
 
       generateCompletions = config.ps.terminal.mode == "fat";
 
