@@ -21,8 +21,6 @@ function rebuild-home
 
     nvd diff $profile $result
 
-    rm $HOME/.mozilla/firefox/lillecarl/containers.json.backup &>/dev/null
-
     # home-manager links the profile itself.
     echo "Activating package $result/activate"
     $result/activate || begin
