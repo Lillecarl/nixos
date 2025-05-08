@@ -12,7 +12,7 @@ in
   options.ps = {
     ${modName} = {
       enable = lib.mkOption {
-        default = config.ps.workstation.enable;
+        default = false;
         description = "Whether to enable ${modName}.";
       };
     };
