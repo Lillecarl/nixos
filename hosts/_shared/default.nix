@@ -20,6 +20,7 @@ in
     ./earlyoom.nix
     ./facter.nix
     ./fail2ban.nix
+    ./fonts.nix
     ./frr.nix
     ./fish.nix
     ./guix.nix
