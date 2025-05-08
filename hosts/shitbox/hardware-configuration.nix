@@ -78,9 +78,9 @@
   };
 
   services.udev.extraRules = # udev
-  ''
-    ACTION=="add|change", SUBSYSTEM=="block", ATTR{queue/scheduler}=="*kyber*", ATTR{queue/scheduler}="kyber"
-  '';
+    ''
+      ACTION=="add|change", SUBSYSTEM=="block", ATTR{queue/scheduler}=="*kyber*", ATTR{queue/scheduler}="kyber"
+    '';
 
   services.lvm.boot.thin.enable = true;
 
