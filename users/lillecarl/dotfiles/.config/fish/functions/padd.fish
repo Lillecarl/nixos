@@ -4,7 +4,7 @@ function padd
             set bin "$path/bin"
             if ! test -d $bin
                 echo "$bin doesn't exist"
-            else if contains $PATH $bin
+            else if contains $bin $PATH
                 echo "$bin is already on PATH"
             else
                 echo "Added $bin to PATH"
