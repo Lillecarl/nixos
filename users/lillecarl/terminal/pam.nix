@@ -16,7 +16,6 @@ in
       MAN_PAGER = pager;
       GIT_PAGER = pager;
       SYSTEMD_PAGERSECURE = "true";
-      SYSTEMD_COLORS = "true";
       # Git configuration (For sending over SSH)
       GIT_AUTHOR_NAME = config.ps.info.name;
       GIT_AUTHOR_EMAIL = "git@${config.ps.info.emailDomain}";
