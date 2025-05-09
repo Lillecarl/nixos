@@ -2,6 +2,7 @@
   inputs = {
     # Direct inputs
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgsOnFS.url = "path:///home/lillecarl/Code/nixpkgs";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     nixpkgs-master.url = "github:NixOS/nixpkgs/master";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.05";
@@ -200,11 +201,7 @@
   };
 
   outputs =
-    {
-      self,
-      flake-parts,
-      ...
-    }@inputs:
+    inputs:
     let
       # limits perSystem
       systems = [
@@ -218,15 +215,13 @@
         inherit system;
         config.allowUnfree = true;
         overlays = [
-          (import ./lib/overlay.nix self.outPath)
+          (import ./lib/overlay.nix inputs.self.outPath)
           (import ./pkgs)
           # inputs.nix-snapshotter.overlays.default
           inputs.nixgl.overlay
           inputs.nur.overlays.default
         ];
       };
-
-      pkgsGenerator = input: system: import input (pkgsSettings system);
 
       flakeloc =
         let
@@ -259,7 +254,7 @@
         inherit flakeloc slib;
       };
     in
-    flake-parts.lib.mkFlake
+    inputs.flake-parts.lib.mkFlake
       {
         inherit inputs;
         inherit specialArgs;
@@ -272,18 +267,22 @@
             self',
             inputs',
             system,
-            pkgs,
             ...
           }:
           let
+            pkgsGenerator = input: system: import input (pkgsSettings system);
+
+            pkgs = pkgsGenerator inputs.nixpkgs system;
+            mpkgs = pkgsGenerator inputs.nixpkgs-master system;
+            spkgs = pkgsGenerator inputs.nixpkgs-stable system;
+
             legacyPackages = pkgs.extend (import ./pkgs);
             packages = import ./pkgs/pkgs.nix legacyPackages legacyPackages true;
           in
           {
             _module.args = {
-              pkgs = pkgsGenerator inputs.nixpkgs system;
-              mpkgs = pkgsGenerator inputs.nixpkgs-master system;
-              spkgs = pkgsGenerator inputs.nixpkgs-stable system;
+              inherit pkgs mpkgs spkgs;
+              mypkgs = inputs.nixpkgsOnFS or inputs.nixpkgs;
             } // specialArgs;
 
             inherit legacyPackages packages;
