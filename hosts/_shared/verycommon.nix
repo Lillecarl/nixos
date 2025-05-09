@@ -35,6 +35,7 @@ in
       NIXOS_OZONE_WL = "1"; # Use Wayland whenever we can
       PIP_DISABLE_PIP_VERSION_CHECK = "1"; # Disable pip version warnings
       FLAKE = flakeloc;
+      SYSSTR = pkgs.system;
       HOST = config.networking.hostName;
     };
 
