@@ -1,6 +1,6 @@
 function padd
     for package in $argv
-        for path in $(nix build nixpkgs#$package.out --print-out-paths --no-link)
+        for path in $(nix build --file $FLAKE "legacyPackages.$SYSSTR.$package.out" --print-out-paths --no-link)
             set bin "$path/bin"
             if ! test -d $bin
                 echo "$bin doesn't exist"
