@@ -47,6 +47,16 @@
               "${config.xdg.stateHome}/nix/profiles/home-manager/activate"
             ];
           }
+          # Restart app-blueman@autostart.service since it doesn't fail when
+          # niri dies
+          {
+            command = [
+              "systemctl"
+              "--user"
+              "restart"
+              "app-blueman@autostart.service"
+            ];
+          }
         ];
         input = {
           warp-mouse-to-focus = true;
