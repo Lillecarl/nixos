@@ -1,6 +1,10 @@
 let
-  # Our own patched flake-compat that evaluates impurely from disk
-  flake-compat = import ./flake-compat.nix;
-  flake = flake-compat { src = (builtins.toString ./.); };
+  npins = import ./npins;
+  flake-compat = import npins.flake-compat;
+  # flake-compat = import /home/lillecarl/Code/flake-compat;
+  flake = flake-compat {
+    src = (builtins.toString ./.);
+    copySourceTreeToStore = false;
+  };
 in
-  flake.outputs
+flake.outputs
