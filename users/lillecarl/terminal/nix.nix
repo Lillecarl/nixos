@@ -25,11 +25,11 @@ in
         warn-dirty = false;
         keep-going = true;
       };
-      registry = {
-        nixpkgs = {
-          flake = inputs.nixpkgs;
-        };
-      };
+      # registry = {
+      #   nixpkgs = {
+      #     flake = inputs.nixpkgs;
+      #   };
+      # };
     };
   };
 }
