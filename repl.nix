@@ -1,4 +1,4 @@
 let
-  flake = builtins.getFlake (builtins.getEnv "FLAKE");
+  flake = import ./default.nix;
 in
 flake // flake.repl
