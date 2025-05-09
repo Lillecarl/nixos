@@ -15,6 +15,7 @@
     ./foot.nix
     ./kitty.nix
     ./mako.nix
+    ./mpris.nix
     ./mpv.nix
     ./niri.nix
     ./obs.nix
