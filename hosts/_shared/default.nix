@@ -27,6 +27,7 @@ in
     ./hardware-configuration.nix
     ./kea.nix
     ./libvirt.nix
+    ./linkinputs.nix
     ./mosh.nix
     ./networking.nix
     ./niri.nix
@@ -59,17 +60,8 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    # Reference flake inputs in /etc. Prevents Nix collecting flake inputs as garbage.
-    # I find it weird this isn't the default behaviour
-    environment.etc = lib.mapAttrs' (key: val: {
-      name = "flakeinputs/${key}";
-      value = {
-        source = "${val}";
-      };
-    }) inputs;
-
     environment.enableAllTerminfo = true; # This installs a lot of terminals
-    environment.shellAliases = lib.mkForce {};
+    environment.shellAliases = lib.mkForce { }; # Don't install aliases I don't want thanks.
 
     boot = {
       kernelPackages = pkgs.linuxPackages_latest;
