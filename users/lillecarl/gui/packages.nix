@@ -9,6 +9,7 @@
     home.packages =
       with pkgs;
       [
+        stremio # Video player with plugins to fetch content from questionable sources
         bitwarden # Password manager
         xfce.ristretto # Image viewer
         pcmanfm # File manager
