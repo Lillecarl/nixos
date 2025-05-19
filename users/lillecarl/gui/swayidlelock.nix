@@ -48,6 +48,10 @@ in
           timeout = 300;
           command = lockScript;
         }
+        {
+          timeout = 1800;
+          command = "${lib.getExe pkgs.niri} msg action power-off-monitors";
+        }
       ];
     };
   };
