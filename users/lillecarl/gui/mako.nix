@@ -7,9 +7,7 @@
       settings = {
         anchor = "center";
         text-alignment = "center";
-      };
 
-      criteria = {
         "summary=\"Du presenterar för alla\"" = {
           invisible = 1;
         };
