@@ -9,7 +9,7 @@ function nix --wraps nix
     if test $command = build
         command nix build --no-link --print-out-paths --impure $argv
     else if test $command = repl && test -z "$argv"
-        command nix repl --file $FLAKE
+        command nix repl --file $FLAKE/repl.nix
     else if test $command = run
         command nix run --impure $argv
     else if test $command = getrev
