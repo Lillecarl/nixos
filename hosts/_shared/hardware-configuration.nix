@@ -27,6 +27,7 @@ in
         "vm.watermark_scale_factor" = 125;
         "vm.page-cluster" = 0;
         "vm.min_free_kbytes" = 151041; # 1% of RAM in nub
+        "vm.compaction_proactiveness" = lib.mkDefault 40;
       };
     };
 

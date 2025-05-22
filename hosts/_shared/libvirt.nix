@@ -104,6 +104,9 @@ in
                   if test $event = "prepare"
                     # Prepare kernel memory for gaming VM hugepages
 
+                    # Minimize background memory compation
+                    ${sysctl} -w vm.compation_proactiveness 1 
+
                     # Drop filesystem caches
                     echo 3 | ${sponge} /proc/sys/vm/drop_caches
 
@@ -138,6 +141,11 @@ in
                     ${systemctl} set-property --runtime -- kubernetes.scope AllowedCPUs=0-11
                     ${systemctl} set-property --runtime -- system.slice AllowedCPUs=0-11
                     ${systemctl} set-property --runtime -- user.slice AllowedCPUs=0-11
+
+                    # Enable background memory compation
+                    ${sysctl} -w vm.compaction_proactiveness ${
+                      builtins.toString config.boot.kernel.sysctl."vm.compaction_proactiveness"
+                    } 
                   end
                 '';
           };
@@ -158,6 +166,7 @@ in
           ];
         };
       };
+
     };
 
     # Relink libvirt hooks when they change
