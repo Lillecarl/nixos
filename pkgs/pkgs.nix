@@ -4,6 +4,7 @@ let
   python3Packages = {
     pyping = prev.python3Packages.callPackage ../pkgs/python3Packages/pyping { };
     qemu-qmp = prev.python3Packages.callPackage ../pkgs/python3Packages/qemu-qmp { };
+    konnect = prev.python3Packages.callPackage ../pkgs/python3Packages/konnect { };
   };
 
   grafanaPlugins = {
