@@ -1,9 +1,14 @@
 { pkgs, ... }:
+let
+  PULSE_SERVER = "unix:///run/pulse/native";
+in
 {
   # Restream webcam to virtual camera
   boot.kernelModules = [
     "v4l2loopback"
   ];
+  environment.variables = { inherit PULSE_SERVER; };
+  systemd.globalEnvironment = { inherit PULSE_SERVER; };
 
   # Enable PipeWire A/V daemon
   # replaces all other sound daemons
@@ -18,6 +23,24 @@
   };
 
   # RNNoise filtering for microphone input
+  services.pipewire.extraConfig.pipewire.jacksink = {
+    "context.objects" = [
+      {
+        name = "jacksink";
+        factory = "adapter";
+        args = {
+          "factory.name" = "support.null-audio-sink";
+          "node.name" = "jack";
+          "media.class" = "Audio/Sink";
+          "object.linger" = true;
+          "audio.position" = [
+            "FL"
+            "FR"
+          ];
+        };
+      }
+    ];
+  };
   services.pipewire.extraConfig.pipewire.libpipewire-module-filter-chain = {
     "context.modules" = [
       {
