@@ -171,17 +171,6 @@ in
       };
       # Enable Flatpak
       flatpak.enable = true;
-      # Enable PipeWire A/V daemon
-      # replaces all other sound daemons
-      pipewire = {
-        enable = true;
-        alsa.enable = true; # Required by: Audacity
-        jack.enable = true; # Required by: Qtractor
-        pulse.enable = true;
-        wireplumber.enable = true;
-        socketActivation = true;
-        systemWide = true;
-      };
       # Packages that can install udev rules
       udev.packages = [ ];
     };

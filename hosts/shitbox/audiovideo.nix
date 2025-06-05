@@ -5,6 +5,18 @@
     "v4l2loopback"
   ];
 
+  # Enable PipeWire A/V daemon
+  # replaces all other sound daemons
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true; # Required by: Audacity
+    jack.enable = true; # Required by: Qtractor
+    pulse.enable = true;
+    wireplumber.enable = true;
+    socketActivation = true;
+    systemWide = true;
+  };
+
   # RNNoise filtering for microphone input
   services.pipewire.extraConfig.pipewire.libpipewire-module-filter-chain = {
     "context.modules" = [
