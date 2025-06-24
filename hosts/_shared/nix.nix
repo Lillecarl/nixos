@@ -19,12 +19,6 @@ in
     };
   };
   config = lib.mkIf cfg.enable {
-    # Use switch-to-configuration Rust implementation
-    system.switch = {
-      enable = false;
-      enableNg = true;
-    };
-
     nix = {
       package = pkgs.lix;
       settings = {
