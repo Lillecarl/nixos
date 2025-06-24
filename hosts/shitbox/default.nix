@@ -10,6 +10,7 @@
     ./facter.nix
     ./hardware-configuration.nix
     ./home-assistant.nix
+    ./spotifyd.nix
     ./syncthing.nix
     ./wireguard.nix
   ];
