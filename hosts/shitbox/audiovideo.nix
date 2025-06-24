@@ -4,9 +4,9 @@ let
 in
 {
   # Restream webcam to virtual camera
-  boot.kernelModules = [
-    "v4l2loopback"
-  ];
+  # boot.kernelModules = [
+  #   "v4l2loopback"
+  # ];
   environment.variables = { inherit PULSE_SERVER; };
   systemd.globalEnvironment = { inherit PULSE_SERVER; };
 
@@ -21,26 +21,68 @@ in
     socketActivation = true;
     systemWide = true;
   };
-
-  # RNNoise filtering for microphone input
-  services.pipewire.extraConfig.pipewire.jacksink = {
-    "context.objects" = [
+  services.pipewire.extraConfig.pipewire.bufconf = {
+    "context.properties" = {
+      "default.clock.rate" = 48000;
+      "default.clock.quantum" = 1024;
+      "default.clock.min-quantum" = 32;
+      "default.clock.max-quantum" = 8192;
+    };
+  };
+  services.pipewire.extraConfig.pipewire.rtconfig = {
+    "context.modules" = [
       {
-        name = "jacksink";
-        factory = "adapter";
+        name = "libpipewire-module-rt";
         args = {
-          "factory.name" = "support.null-audio-sink";
-          "node.name" = "jack";
-          "media.class" = "Audio/Sink";
-          "object.linger" = true;
-          "audio.position" = [
-            "FL"
-            "FR"
-          ];
+          # Real-time priority (1-99, higher = more priority)
+          "rt.prio" = 20;
+
+          # Nice level for non-RT threads (-20 to 19, lower = higher priority)
+          "nice.level" = -11;
+
+          # RT time limits in microseconds (200ms = 200000)
+          # "rt.time.soft" = 200000;
+          # "rt.time.hard" = 200000;
+
+          # RT time limits as fraction of period (alternative to above)
+          "rt.time.soft" = -1; # Unlimited
+          "rt.time.hard" = -1; # Unlimited
+
+          # Use rtkit for acquiring RT privileges
+          "uclamp.min" = 0;
+          "uclamp.max" = 1024;
         };
+        # flags = [
+        #   "ifexists"
+        #   "nofail"
+        # ];
       }
     ];
   };
+
+  # rtkit to make pipewire schedule realtime
+  security.rtkit.enable = true;
+
+  # services.pipewire.extraConfig.pipewire.jacksink = {
+  #   "context.objects" = [
+  #     {
+  #       name = "jacksink";
+  #       factory = "adapter";
+  #       args = {
+  #         "factory.name" = "support.null-audio-sink";
+  #         "node.name" = "jack";
+  #         "media.class" = "Audio/Sink";
+  #         "object.linger" = true;
+  #         "audio.position" = [
+  #           "FL"
+  #           "FR"
+  #         ];
+  #       };
+  #     }
+  #   ];
+  # };
+
+  # RNNoise filtering for microphone input
   services.pipewire.extraConfig.pipewire.libpipewire-module-filter-chain = {
     "context.modules" = [
       {
