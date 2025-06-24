@@ -18,6 +18,7 @@ function rebuild-home
         --file $evalfile \
         $attrpath \
         --out-link $result \
+        --log-format internal-json -v \
         --impure \
         $XTRABUILDARGS &| tee $buildlog &| nom --json || begin
         echo "Failed to build $evalfile $attrpath"
