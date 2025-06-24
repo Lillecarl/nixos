@@ -1,9 +1,9 @@
-set -x fish_greeting ""
-set -x DIRENV_LOG_FORMAT ""
-set -x TZ Europe/Stockholm
-set -x MYDATE "+%y-%m-%d %H:%M:%S"
-set -x HOST $hostname
-set -x NERDFONTS
+set --export fish_greeting ""
+set --export DIRENV_LOG_FORMAT ""
+set --export TZ Europe/Stockholm
+set --export MYDATE "+%y-%m-%d %H:%M:%S"
+set --export HOST $hostname
+set --export NERDFONTS
 
 fish_vi_key_bindings
 
