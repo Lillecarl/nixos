@@ -22,7 +22,6 @@
   config = {
     ps.polkit.enable = false;
     ps.verycommon.enable = false;
-    ps.fail2ban.enable = false;
 
     networking.firewall.enable = lib.mkForce false;
 
