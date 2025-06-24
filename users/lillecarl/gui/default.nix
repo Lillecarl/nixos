@@ -20,7 +20,6 @@
     ./niri.nix
     ./obs.nix
     ./packages.nix
-    ./qutebrowser.nix
     ./rofi.nix
     ./swaybg.nix
     ./swayidlelock.nix
