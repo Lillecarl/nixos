@@ -6,6 +6,29 @@
   nixosConfig,
   ...
 }:
+let
+  spawnWrapper =
+    toString (pkgs.writeScript "niri-spawn-wrapper" # fish
+      ''
+        #! ${lib.getExe pkgs.fish}
+        if test -S /tmp/.X11-unix/X0
+          set --export DISPLAY :0
+        end
+
+        if test -S /run/user/1000/wayland-1
+          set --export WAYLAND_DISPLAY wayland-1
+        end
+
+        # Run args as command
+        $argv
+      '');
+  clipHistRofi =
+    toString (pkgs.writeScript "cliphistrofi" # fish
+      ''
+        #! ${lib.getExe pkgs.fish}
+        cliphist list | rofi -dmenu -i -matching fuzzy -p History | cliphist decode | wl-copy -n
+      '');
+in
 {
   imports = [
     inputs.niri.homeModules.niri
@@ -39,7 +62,7 @@
           }
           # Activate home-manager profile once niri has started, this has the
           # side-effect to relaunch all services that have failed if niri
-          # was stopped and units like waybar, avizo, swaync has failed. 
+          # was stopped and units like waybar, avizo, swaync has failed.
           {
             command = [
               "sh"
@@ -55,6 +78,12 @@
               "--user"
               "restart"
               "app-blueman@autostart.service"
+            ];
+          }
+          # Spawn xwayland-sattelite inside niri
+          {
+            command = [
+              (lib.getExe inputs.niri.packages.x86_64-linux.xwayland-satellite-unstable)
             ];
           }
         ];
@@ -213,21 +242,22 @@
 
           "Mod+T".action.spawn = [ "kitty" ];
           "Mod+D".action.spawn = [
+            spawnWrapper
             "rofi"
             "-show"
             "drun"
           ];
           "Mod+Tab".action.spawn = [
+            spawnWrapper
             "rofi"
             "-show"
             "window"
           ];
           "Mod+Ctrl+F".action.spawn = [ "firefox" ];
           "Ctrl+Alt+Delete".action.spawn = [ "swaylock" ];
-          "Ctrl+Alt+V".action.spawn = [
-            "sh"
-            "-c"
-            "cliphist list | wofi --dmenu | cliphist decode | wl-copy"
+          "Mod+V".action.spawn = [
+            spawnWrapper
+            clipHistRofi
           ];
 
           "XF86AudioRaiseVolume".action.spawn = [
