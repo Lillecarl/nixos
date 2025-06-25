@@ -7,6 +7,7 @@
 {
   imports = [
     ./alacritty.nix
+    ./audiovideo.nix
     ./avizo.nix
     ./chromium.nix
     ./cliphist.nix
@@ -30,4 +31,6 @@
     ./waybar.nix
     ./wlogout.nix
   ];
+
+  config = { };
 }
