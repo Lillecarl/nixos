@@ -28,6 +28,7 @@ in
     ./kea.nix
     ./libvirt.nix
     ./linkinputs.nix
+    ./dns.nix
     ./mosh.nix
     ./networking.nix
     ./niri.nix
