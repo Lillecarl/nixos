@@ -1,4 +1,5 @@
 {
+  lib,
   pkgs,
   self,
   ...
@@ -10,6 +11,7 @@
     ./facter.nix
     ./hardware-configuration.nix
     ./home-assistant.nix
+    ./k3s.nix
     ./spotifyd.nix
     ./syncthing.nix
     ./wireguard.nix
