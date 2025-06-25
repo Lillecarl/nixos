@@ -3,50 +3,13 @@ let
   samedisk =
     {
       disk,
-      index,
     }:
-    let
-      idx = toString index;
-    in
     {
       device = "/dev/disk/by-id/${disk}";
       type = "disk";
       content = {
         type = "gpt";
         partitions = {
-          mbr = {
-            start = "0";
-            end = "1MiB";
-            type = "EF02";
-          };
-          ESP = {
-            label = "ESP${idx}";
-            start = "1MiB";
-            end = "1GiB";
-            type = "EF00";
-            content = {
-              type = "filesystem";
-              format = "vfat";
-              mountpoint = "/boot${idx}/efi";
-              mountOptions = [
-                "sync"
-              ];
-            };
-          };
-          boot = {
-            label = "boot${idx}";
-            start = "1GiB";
-            end = "2GiB";
-            content = {
-              type = "filesystem";
-              format = "ext4";
-              mountpoint = "/boot${idx}";
-              mountOptions = [
-                "defaults"
-                "sync"
-              ];
-            };
-          };
           root = {
             label = "root";
             start = "2GiB";
@@ -62,14 +25,35 @@ let
 in
 {
   disk = {
-    # 1GiB boot, rest mdraid
+    main = {
+      type = "disk";
+      device = "/dev/disk/by-id/ata-INTEL_SSDSC2KG240G8_PHYG946500DC240AGN";
+      content = {
+        type = "gpt";
+        partitions = {
+          ESP = {
+            priority = 1;
+            name = "ESP";
+            start = "1M";
+            size = "2G";
+            type = "EF00";
+            content = {
+              type = "filesystem";
+              format = "vfat";
+              mountpoint = "/boot";
+              mountOptions = [
+                "umask=0077"
+              ];
+            };
+          };
+        };
+      };
+    };
     "disk1" = samedisk {
       disk = disk1;
-      index = "";
     };
     "disk2" = samedisk {
       disk = disk2;
-      index = 2;
     };
   };
   mdadm = {

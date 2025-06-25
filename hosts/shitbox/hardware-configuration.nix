@@ -6,7 +6,7 @@
 }:
 {
   boot = {
-    kernelPackages = lib.mkForce pkgs.linuxPackages_latest;
+    kernelPackages = lib.mkForce pkgs.linuxPackages;
     initrd.availableKernelModules = [
       "amdgpu"
       "vfio-pci"
@@ -49,7 +49,6 @@
     ];
 
     extraModulePackages = with config.boot.kernelPackages; [
-      v4l2loopback.out
       usbip
       turbostat
       cpupower
@@ -58,7 +57,7 @@
     loader = {
       efi = {
         canTouchEfiVariables = true;
-        efiSysMountPoint = "/boot/efi"; # ← use the same mount point here.
+        efiSysMountPoint = "/boot"; # ← use the same mount point here.
       };
       grub = {
         enable = true;
@@ -66,13 +65,6 @@
         inherit (config.disko.devices.disk.disk1) device;
         efiSupport = true;
         copyKernels = true;
-        mirroredBoots = [
-          {
-            devices = [ config.disko.devices.disk.disk2.device ];
-            path = "/boot2";
-            efiSysMountPoint = "/boot2/efi";
-          }
-        ];
       };
     };
   };
