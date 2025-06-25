@@ -1,0 +1,22 @@
+theme = "catppuccin-mocha"
+[editor]
+bufferline = "always"
+color-modes = true
+rulers = [80]
+true-color = true
+
+[editor.indent-guides]
+render = true
+
+[editor.lsp]
+display-inlay-hints = true
+display-messages = true
+
+[keys.insert]
+C-s = ":w"
+C-space = "completion"
+
+[keys.normal]
+C-s = ":w"
+X = "extend_line_above"
+

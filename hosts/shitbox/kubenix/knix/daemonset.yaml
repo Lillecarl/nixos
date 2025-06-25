@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: knix-hostpath
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: knix-hostpath
+  template:
+    metadata:
+      labels:
+        app: knix-hostpath
+    spec:
+      containers:
+      - name: sleeper
+        image: ubuntu
+        command: ["sleep", "infinity"]
+        volumeMounts:
+        - name: nix
+          mountPath: /nix
+      volumes:
+      - name: nix
+        hostPath:
+          path: /nix
+          type: Directory

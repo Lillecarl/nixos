@@ -1,0 +1,164 @@
+--- # ServiceAccount
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: knix
+  namespace: default
+--- # Container
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: nix
+  name: nix
+spec:
+  serviceAccountName: knix
+  initContainers:
+  - command:
+    - sh
+    - -c
+    - "sleep 5 && cp --verbose --archive --update=none /nix/* /nix2/"
+    image: nixpkgs/nix-flakes
+    name: init
+    volumeMounts:
+    - mountPath: /nix2
+      name: knix
+  containers:
+  - command:
+    - sh
+    - -c
+    # - "nix run nixpkgs#python3Packages.kopf run /etc/kopf/kopferator.py"
+    - "sleep infinity"
+    image: nixpkgs/nix-flakes
+    name: operator
+    # securityContext:
+    #   privileged: true
+    #   capabilities:
+    #     add:
+    #     - SYS_ADMIN
+    volumeMounts:
+    - mountPath: /nix
+      name: knix
+
+    - mountPath: /etc/kopf
+      name: kopferator
+      readOnly: false
+
+    - mountPath: /host
+      name: host
+  volumes:
+  - name: knix
+    hostPath:
+      path: /var/lib/knix/nix
+      type: DirectoryOrCreate
+  - name: host
+    hostPath:
+      path: /
+      type: DirectoryOrCreate
+  - name: kopferator
+    configMap:
+      name: kopferator
+  dnsPolicy: ClusterFirst
+  restartPolicy: Never
+--- # Operator code
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kopferator
+data:
+  kopferator.py: |
+    import kopf
+    import logging
+
+    @kopf.on.startup()
+    def config(settings: kopf.OperatorSettings, **_):
+        # Plain and simple local endpoint with an auto-generated certificate:
+        settings.admission.server = kopf.WebhookServer()
+
+    @kopf.on.mutate('pods')
+    def mount_nix(spec, patch, **_):
+        logging.log(spec)
+--- # Role
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: knix
+rules:
+- apiGroups: ["apiextensions.k8s.io"]
+  resources: ["customresourcedefinitions"]
+  verbs: ["get", "list", "watch"]
+--- # Binding
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: knix-binding
+subjects:
+- kind: ServiceAccount
+  name: knix
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: knix
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: expressions.knix.cool
+spec:
+  group: knix.cool
+  names:
+    kind: Expression
+    plural: expressions
+    singular: expression
+    shortNames:
+      - expr
+      - kx
+  scope: Namespaced
+  versions:
+    - name: v1
+      served: true
+      storage: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            data:
+              type: object
+              properties:
+                expr:
+                  type: string
+                  description: "Expression to be evaluated"
+              required:
+                - expr
+            status:
+              type: object
+              properties:
+                phase:
+                  type: string
+                  description: "Current phase of the resource (Pending, Running, Succeeded, Failed)"
+                message:
+                  type: string
+                  description: "Human-readable message indicating details about the current status"
+                result:
+                  type: string
+                  description: "Result (storePath) of the expression evaluation"
+                # lastEvaluatedTime:
+                #   type: string
+                #   format: date-time
+                #   description: "The time when the expression was last evaluated"
+      additionalPrinterColumns:
+        - name: Expression
+          type: string
+          jsonPath: .data.expr
+        - name: Status
+          type: string
+          jsonPath: .status.phase
+        # - name: Result
+        #   type: string
+        #   jsonPath: .status.result
+        # - name: Age
+        #   type: date
+        #   jsonPath: .metadata.creationTimestamp
+      subresources:
+        status: {}

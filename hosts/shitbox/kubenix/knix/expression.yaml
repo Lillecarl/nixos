@@ -1,0 +1,6 @@
+apiVersion: knix.cool/v1
+kind: Expression
+metadata:
+  name: hello
+data:
+  expr: "(import <nixpkgs> {}).hello"

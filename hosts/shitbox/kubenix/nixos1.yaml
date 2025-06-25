@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: nixos1
+  name: nixos1
+spec:
+  containers:
+  - args:
+    - "sleep"
+    - "3600"
+    image: nixpkgs/nix-flakes
+    name: nixos1
+    securityContext:
+      privileged: true
+      capabilities:
+        add:
+        - SYS_ADMIN
+    volumeMounts:
+    - mountPath: /host
+      name: knix
+    - mountPath: /nix
+      name: knix
+  volumes:
+  - name: host-root
+    hostPath:
+      path: /
+      type: DirectoryOrCreate
+  - name: knix
+    hostPath:
+      path: /var/lib/knix/nix
+      type: DirectoryOrCreate
+
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
