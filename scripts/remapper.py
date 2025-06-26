@@ -7,6 +7,7 @@ import json
 import os
 import sys
 import time
+from evdev.ecodes import KEY_KP1
 import sh
 import libvirt
 
@@ -15,8 +16,13 @@ from collections import defaultdict
 from datetime import datetime
 from enum import IntEnum, auto
 from pathlib import Path
-from sh import ddcutil, virsh  # type: ignore
+from sh import sh, ddcutil, virsh, volumectl  # type: ignore
+from functools import partial
 from signal import SIGINT, SIGTERM
+
+DOMNAME="win11-4"
+
+virsh2 = partial(sh.virsh, _async=True)
 
 pyprint = print
 
@@ -92,6 +98,7 @@ class Event(IntEnum):
     REL = 2  # Mouse or other relative event(s)
     MSC = 4
     LED = 17
+    REP = 20
 
 
 class Rel(IntEnum):
@@ -377,9 +384,20 @@ async def main():
     def get_input_device(name: str, verbose: bool = True):
         devices = [evdev.InputDevice(path) for path in evdev.list_devices()]
         for device in devices:
+            # if "event22" not in str(device.path):
+                # continue
+            if device.capabilities().get(Event.REP, None) is None:
+                # print(device.capabilities(verbose=True))
+                try:
+                    print(device.repeat)
+                except Exception as _:
+                    continue
             if device.name == name:
+            # if "event22" in str(device.path):
                 if verbose:
                     print(f"Found device: {device}")
+                    print(f"Capabilities: {device.capabilities(verbose=True)}")
+                    print(f"Props: {device.input_props(verbose=True)}")
                 return device
 
         if verbose:
@@ -550,19 +568,13 @@ async def main():
         global macropad_attach
         global inputevents
 
-        mdev = get_input_device("Drop Inc. The Key V2")
+        mdev = get_input_device("MOSART Semi. 2.4G Keyboard Mouse", True)
         if mdev is None:
             return
 
         with mdev.grab_context():
             print("Grabbing macropad")
             event: evdev.InputEvent
-
-            last_key_up_code = Keys.F24
-            last_key_up_time = time.time()
-
-            ddctask = None
-            usb_xtach_task = None
 
             async for event in mdev.async_read_loop():
                 base_path = "/home/lillecarl/Code/nixos/resources"
@@ -578,74 +590,37 @@ async def main():
 
                 print(f"event: {util.categorize(event)}")
                 print(f"Macropad active keys: {mdev.active_keys(verbose=True)}")
-                print(f"last_key_up_code: {last_key_up_code}, event.code: {event.code}")
-                print(
-                    f"last_key_up_time: {last_key_up_time} diff: {time.time() - last_key_up_time}"
-                )
 
-                if (
-                    True
-                    and any(e == Keys.LEFTCTRL for e in mdev.active_keys())
-                    and event.code == Keys.C
-                    and last_key_up_code == Keys.C
-                    and time.time() - last_key_up_time < 0.5
-                ):
-                    if macropad_attach:
-                        print("Attaching devices")
-
-                        async def attach():
-                            await attach_device(f"{base_path}/shitkeyboard.xml")
-                            await attach_device(f"{base_path}/steelseries-sensei.xml")
-                            await attach_device(f"{base_path}/glorious-mouse.xml")
-                            await attach_device(f"{base_path}/8bitdo.xml")
-                            await attach_device(f"{base_path}/8bitdo_idle.xml")
-                        if usb_xtach_task is None or usb_xtach_task.done():
-                            usb_xtach_task = loop.create_task(attach())
-                        macropad_attach = False
-                    else:
-                        print("Detaching devices")
-
-                        async def detach():
-                            await detach_device(f"{base_path}/shitkeyboard.xml")
-                            await detach_device(f"{base_path}/steelseries-sensei.xml")
-                            await detach_device(f"{base_path}/glorious-mouse.xml")
-                            await detach_device(f"{base_path}/8bitdo.xml")
-                            await detach_device(f"{base_path}/8bitdo_idle.xml")
-                        if usb_xtach_task is None or usb_xtach_task.done():
-                            usb_xtach_task = loop.create_task(detach())
-                        macropad_attach = True
-                elif (
-                    True
-                    and any(e == Keys.LEFTCTRL for e in mdev.active_keys())
-                    and event.code == Keys.V
-                    and last_key_up_code == Keys.V
-                    and time.time() - last_key_up_time < 0.5
-                ):
-                    if ddctask is None or ddctask.done():
-                        ddctask = loop.create_task(ddc_switch())
-                elif (
-                    True
-                    and any(e == Keys.V for e in mdev.active_keys())
-                    and event.code == Keys.LEFTCTRL
-                    and last_key_up_code == Keys.LEFTCTRL
-                    and time.time() - last_key_up_time < 0.5
-                ):
+                if any(e == Keys.KP0 for e in mdev.active_keys()) and event.code == Keys.KP1:
+                    print(f"Stopping {DOMNAME}")
+                    print(await virsh2("virsh", "stop", "--graceful", DOMNAME))
+                if any(e == Keys.KP0 for e in mdev.active_keys()) and event.code == Keys.KP2:
+                    print(f"Starting {DOMNAME}")
+                    loop.create_task(await virsh2("virsh", "start", DOMNAME))
+                elif event.code == Keys.KP1:
+                    await attach_device(f"{base_path}/shitkeyboard.xml")
+                    await attach_device(f"{base_path}/steelseries-sensei.xml")
+                    await attach_device(f"{base_path}/glorious-mouse.xml")
+                    await attach_device(f"{base_path}/8bitdo.xml")
+                    await attach_device(f"{base_path}/8bitdo_idle.xml")
+                elif event.code == Keys.KP2:
+                    await detach_device(f"{base_path}/shitkeyboard.xml")
+                    await detach_device(f"{base_path}/steelseries-sensei.xml")
+                    await detach_device(f"{base_path}/glorious-mouse.xml")
+                    await detach_device(f"{base_path}/8bitdo.xml")
+                    await detach_device(f"{base_path}/8bitdo_idle.xml")
+                elif event.code == Keys.KP4:
+                    loop.create_task(ddcutil_dp())
+                elif event.code == Keys.KP5:
+                    loop.create_task(ddcutil_hdmi())
+                elif event.code == Keys.KPPLUS:
+                    print("Raising volume")
+                    await volumectl("+", _async=True)
+                elif event.code == Keys.KPMINUS:
+                    print("Lowering volume")
+                    await volumectl("-", _async=True)
+                elif event.code == Keys.NUMLOCK:
                     cancel_all()
-                elif (
-                    True
-                    and any(e == Keys.V for e in mdev.active_keys())
-                    and event.code == Keys.C
-                    and last_key_up_code == Keys.C
-                    and time.time() - last_key_up_time < 0.5
-                ):
-                    if inputevents is not None:
-                        print("Stopping inputevents")
-                        inputevents.cancel()
-                    print("Starting inputevents")
-                    inputevents = loop.create_task(handle_input_events())
-
-                last_key_up_code = event.code
-                last_key_up_time = time.time()
 
     class VirshAction(IntEnum):
         ATTACH = auto()
