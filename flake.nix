@@ -2,12 +2,31 @@
   inputs = {
     # Direct inputs
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgsOnFS.url = "path:///home/lillecarl/Code/nixpkgs";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     nixpkgs-master.url = "github:NixOS/nixpkgs/master";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.05";
     nixos-facter-modules.url = "github:nix-community/nixos-facter-modules";
     ucodenix.url = "github:e-tho/ucodenix";
+    nixng = {
+      url = "github:nix-community/NixNG";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.treefmt-nix.follows = "treefmt-nix";
+    };
+    kubenix = {
+      url = "github:hall/kubenix/main";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-compat.follows = "";
+      };
+    };
+    terranix = {
+      url = "github:terranix/terranix/main";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-parts.follows = "flake-parts";
+        systems.follows = "nix-systems";
+      };
+    };
     nixpkgs-terraform-providers-bin = {
       url = "github:nix-community/nixpkgs-terraform-providers-bin";
       inputs.nixpkgs.follows = "nixpkgs";
