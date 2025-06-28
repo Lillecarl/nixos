@@ -20,33 +20,7 @@ in
   };
   config =
     {
-      services.rke2 = {
-        enable = false;
-        cni = "none";
-        role = "server";
-        cisHardening = false;
-        nodeName = "shitbox";
-        configPath = "/etc/rancher/rke2_config.yaml";
-      };
-      environment.etc."rancher/rke2_config.yaml".text = # yaml
-      ''
-        # Use external containerd
-        container-runtime-endpoint: /run/containerd/containerd.sock
-        # Kubernetes networking
-        cluster-cidr: 10.55.0.0/16
-        service-cidr: 10.56.0.0/16
-        cluster-domain: k8s.shitbox.lillecarl.com
-        # Disable all rke2 components so we can deploy them ourselves, we only
-        # need the control plane.
-        disable:
-          - rke2-helm-controller
-          - rke2-ingress-nginx
-          - rke2-metrics-server
-          - rke2-snapshot-controller
-          - rke2-snapshot-validation-webhook
-        # Cilium acts as kube-proxy
-        disable-kube-proxy: true
-      '';
+      # Require containerd when we use our own one.
       systemd.services.k3s.requires = [ "containerd.service" ];
       services.k3s = {
         enable = true;
