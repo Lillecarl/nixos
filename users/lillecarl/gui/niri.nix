@@ -336,6 +336,10 @@ in
             repeat = false;
             action.toggle-overview = [ ];
           };
+          "Alt+Tab" = {
+            repeat = false;
+            action.toggle-overview = [ ];
+          };
 
           "Mod+Q".action.close-window = [ ];
 
