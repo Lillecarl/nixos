@@ -5,6 +5,11 @@ set --export MYDATE "+%y-%m-%d %H:%M:%S"
 set --export HOST $hostname
 set --export NERDFONTS
 
+# Set DISPLAY if we have an X11 socket to use
+if test -S /tmp/.X11-unix/X0
+    set --export DISPLAY :0
+end
+
 fish_vi_key_bindings
 
 # trigger direnv before prompt is rendered
