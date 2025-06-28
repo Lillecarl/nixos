@@ -1,77 +1,32 @@
-#! /usr/bin/env python3
+#!/usr/bin/env python3
 
+import argparse
 import asyncio
-import evdev
-import grp
-import json
+import hashlib
+import logging
 import os
-import sys
 import time
-from evdev.ecodes import KEY_KP1
-import sh
-import libvirt
-
-from evdev import util
+from abc import ABC, abstractmethod
 from collections import defaultdict
-from datetime import datetime
 from enum import IntEnum, auto
-from pathlib import Path
-from sh import sh, ddcutil, virsh, volumectl  # type: ignore
 from functools import partial
-from signal import SIGINT, SIGTERM
+from pathlib import Path
+from typing import Callable, Dict, List, Optional, Sequence
 
-DOMNAME="win11-4"
+import evdev
+import sh
+import sys
+from evdev import ecodes
 
-virsh2 = partial(sh.virsh, _async=True)
+# Configuration
+DOMNAME = "win11-4"
+volumectl = partial(sh.volumectl, _async=True) # type: ignore
+ddcutil = partial(sh.ddcutil, _async=True) # type: ignore
+virsh = partial(sh.virsh, _async=True) # type: ignore
 
-pyprint = print
-
-headset_xml_path = os.environ.get("HEADSET_XML_PATH") or "./resources/logitech-g933.xml"
-gaming_mode: bool = False
-
-outevents = None
-macroevents = None
-inputevents = None
-main_task = None
-macropad_attach: bool = True
-
-
-async def ddcutil_getvcp():
-    for line in (
-        await ddcutil("--model=XWU-CBA", "getvcp", "0x60", "--brief", _async=True)
-    ).splitlines():
-        if line.startswith("VCP"):
-            return line
-
-
-async def ddcutil_hdmi():
-    print("Setting input to HDMI")
-    print(await ddcutil("--model=XWU-CBA", "setvcp", "0x60", "0x11", _async=True))
-
-
-async def ddcutil_dp():
-    print("Setting input to DP")
-    print(await ddcutil("--model=XWU-CBA", "setvcp", "0x60", "0x0f", _async=True))
-
-
-def dtime():
-    return datetime.now().strftime("%H:%M:%S.%f")
-
-
-def print(*args, **kwargs):
-    if "SYSTEMD_EXEC_PID" in os.environ.keys():
-        pyprint(*args, **kwargs, flush=True)
-    else:
-        pyprint(dtime(), *args, **kwargs)
-
-
-class Layer(IntEnum):
-    @staticmethod
-    def _generate_next_value_(name, start, count, last_values):
-        return 2 ** (count + 1)
-
-    NORMAL = auto()
-    NUMPAD = auto()
+# Set up logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
 
 
 class Action(IntEnum):
@@ -93,9 +48,9 @@ class State(IntEnum):
 
 
 class Event(IntEnum):
-    SYN = 0  # Synchronize event(s)
-    KEY = 1  # Keyboard or button event(s)
-    REL = 2  # Mouse or other relative event(s)
+    SYN = 0
+    KEY = 1
+    REL = 2
     MSC = 4
     LED = 17
     REP = 20
@@ -107,356 +62,188 @@ class Rel(IntEnum):
     SCROLLX = 6
     SCROLLY = 8
 
+class DeviceInfo:
+    """Information about an input device including unique hash"""
 
-class Keys(IntEnum):
-    RESERVED = 0
-    ESC = 1
-    N1 = 2
-    N2 = 3
-    N3 = 4
-    N4 = 5
-    N5 = 6
-    N6 = 7
-    N7 = 8
-    N8 = 9
-    N9 = 10
-    N0 = 11
-    MINUS = 12
-    EQUAL = 13
-    BACKSPACE = 14
-    TAB = 15
-    Q = 16
-    W = 17
-    E = 18
-    R = 19
-    T = 20
-    Y = 21
-    U = 22
-    I = 23
-    O = 24
-    P = 25
-    LEFTBRACE = 26
-    RIGHTBRACE = 27
-    ENTER = 28
-    LEFTCTRL = 29
-    A = 30
-    S = 31
-    D = 32
-    F = 33
-    G = 34
-    H = 35
-    J = 36
-    K = 37
-    L = 38
-    SEMICOLON = 39
-    APOSTROPHE = 40
-    GRAVE = 41
-    LEFTSHIFT = 42
-    BACKSLASH = 43
-    Z = 44
-    X = 45
-    C = 46
-    V = 47
-    B = 48
-    N = 49
-    M = 50
-    COMMA = 51
-    DOT = 52
-    SLASH = 53
-    RIGHTSHIFT = 54
-    KPASTERISK = 55
-    LEFTALT = 56
-    SPACE = 57
-    CAPSLOCK = 58
-    F1 = 59
-    F2 = 60
-    F3 = 61
-    F4 = 62
-    F5 = 63
-    F6 = 64
-    F7 = 65
-    F8 = 66
-    F9 = 67
-    F10 = 68
-    NUMLOCK = 69
-    SCROLLLOCK = 70
-    KP7 = 71
-    KP8 = 72
-    KP9 = 73
-    KPMINUS = 74
-    KP4 = 75
-    KP5 = 76
-    KP6 = 77
-    KPPLUS = 78
-    KP1 = 79
-    KP2 = 80
-    KP3 = 81
-    KP0 = 82
-    KPDOT = 83
+    def __init__(self, device: evdev.InputDevice):
+        self.device = device
+        self.name = device.name
+        self.path = device.path
+        self.capabilities = device.capabilities()
+        self.hash = self._generate_hash()
 
-    F11 = 87
-    F12 = 88
-    RO = 89
-    KPJPCOMMA = 95
-    KPENTER = 96
-    RIGHTCTRL = 97
-    KPSLASH = 98
-    SYSRQ = 99
-    RIGHTALT = 100
-    LINEFEED = 101
-    HOME = 102
-    UP = 103
-    PAGEUP = 104
-    LEFT = 105
-    RIGHT = 106
-    END = 107
-    DOWN = 108
-    PAGEDOWN = 109
-    INSERT = 110
-    DELETE = 111
-    MACRO = 112
-    MUTE = 113
-    VOLUMEDOWN = 114
-    VOLUMEUP = 115
-    POWER = 116
-    KPEQUAL = 117
-    KPPLUSMINUS = 118
-    PAUSE = 119
-    SCALE = 120
+    def _generate_hash(self) -> str:
+        """Generate unique hash from device name and capabilities"""
+        hasher = hashlib.sha256()
+        hasher.update(self.name.encode())
 
-    KPCOMMA = 121
-    HANGEUL = 122
-    HANGUEL = HANGEUL
-    HANJA = 123
-    YEN = 124
-    LEFTMETA = 125
-    RIGHTMETA = 126
-    COMPOSE = 127
+        # Sort capabilities for consistent hashing
+        cap_str = str(sorted(self.capabilities.items()))
+        hasher.update(cap_str.encode())
 
-    STOP = 128
-    AGAIN = 129
-    PROPS = 130
-    UNDO = 131
-    FRONT = 132
-    COPY = 133
-    OPEN = 134
-    PASTE = 135
-    FIND = 136
-    CUT = 137
-    HELP = 138
-    MENU = 139
-    CALC = 140
-    SETUP = 141
-    SLEEP = 142
-    WAKEUP = 143
-    FILE = 144
-    SENDFILE = 145
-    DELETEFILE = 146
-    XFER = 147
-    PROG1 = 148
-    PROG2 = 149
-    WWW = 150
-    MSDOS = 151
-    COFFEE = 152
-    SCREENLOCK = COFFEE
-    ROTATE_DISPLAY = 153
-    DIRECTION = ROTATE_DISPLAY
-    CYCLEWINDOWS = 154
-    MAIL = 155
-    BOOKMARKS = 156
-    COMPUTER = 157
-    BACK = 158
-    FORWARD = 159
-    CLOSECD = 160
-    EJECTCD = 161
-    EJECTCLOSECD = 162
-    NEXTSONG = 163
-    PLAYPAUSE = 164
-    PREVIOUSSONG = 165
-    STOPCD = 166
-    RECORD = 167
-    REWIND = 168
-    PHONE = 169
-    ISO = 170
-    CONFIG = 171
-    HOMEPAGE = 172
-    REFRESH = 173
-    EXIT = 174
-    MOVE = 175
-    EDIT = 176
-    SCROLLUP = 177
-    SCROLLDOWN = 178
-    KPLEFTPAREN = 179
-    KPRIGHTPAREN = 180
-    NEW = 181
-    REDO = 182
+        return hasher.hexdigest()[:16]  # Use first 16 chars for readability
 
-    F13 = 183
-    F14 = 184
-    F15 = 185
-    F16 = 186
-    F17 = 187
-    F18 = 188
-    F19 = 189
-    F20 = 190
-    F21 = 191
-    F22 = 192
-    F23 = 193
-    F24 = 194
-
-    PLAYCD = 200
-    PAUSECD = 201
-    PROG3 = 202
-    PROG4 = 203
-    ALL_APPLICATIONS = 204
-    DASHBOARD = ALL_APPLICATIONS
-    SUSPEND = 205
-    CLOSE = 206
-    PLAY = 207
-    FASTFORWARD = 208
-    BASSBOOST = 209
-    PRINT = 210
-    HP = 211
-    CAMERA = 212
-    SOUND = 213
-    QUESTION = 214
-    EMAIL = 215
-    CHAT = 216
-    SEARCH = 217
-    CONNECT = 218
-    FINANCE = 219
-    SPORT = 220
-    SHOP = 221
-    ALTERASE = 222
-    CANCEL = 223
-    BRIGHTNESSDOWN = 224
-    BRIGHTNESSUP = 225
-    MEDIA = 226
-
-    SWITCHVIDEOMODE = 227
-    KBDILLUMTOGGLE = 228
-    KBDILLUMDOWN = 229
-    KBDILLUMUP = 230
-
-    SEND = 231
-    REPLY = 232
-    FORWARDMAIL = 233
-    SAVE = 234
-    DOCUMENTS = 235
-
-    BATTERY = 236
-
-    BLUETOOTH = 237
-    WLAN = 238
-    UWB = 239
-
-    UNKNOWN = 240
-
-    VIDEO_NEXT = 241
-    VIDEO_PREV = 242
-    BRIGHTNESS_CYCLE = 243
-    BRIGHTNESS_AUTO = 244
-    BRIGHTNESS_ZERO = BRIGHTNESS_AUTO
-    DISPLAY_OFF = 245
-
-    WWAN = 246
-    WIMAX = WWAN
-    RFKILL = 247
-
-    MICMUTE = 248
+    def __str__(self):
+        return f"{self.name} ({self.hash}) - {self.path}"
 
 
-async def main():
-    debug: bool = os.getenv("INPUT_DEBUG", "false") in ["true", "yes", "1"]
-    device_name: str = os.getenv("INPUT_NAME", "")
-    hostname: str = os.getenv("hostname", "")
+class AsyncTaskQueue:
+    """Manages async tasks in a queue for processing"""
 
-    print(f"Debug: {'true' if debug else 'false'}")
-    print(f"Keyboard name: {device_name} (Case sensitive)")
+    def __init__(self, max_concurrent: int = 10):
+        self.queue = asyncio.Queue()
+        self.active_tasks = set()
+        self.max_concurrent = max_concurrent
+        self.running = False
 
-    try:
-        device_name = sys.argv[1]
-    except IndexError:
-        pass
+    async def start(self):
+        """Start the queue processor"""
+        self.running = True
+        asyncio.create_task(self._process_queue())
 
-    idev: evdev.InputDevice | None = None
+    async def stop(self):
+        """Stop the queue processor"""
+        self.running = False
+        for task in self.active_tasks:
+            task.cancel()
+        await asyncio.gather(*self.active_tasks, return_exceptions=True)
 
-    def get_input_device(name: str, verbose: bool = True):
-        devices = [evdev.InputDevice(path) for path in evdev.list_devices()]
-        for device in devices:
-            # if "event22" not in str(device.path):
-                # continue
-            if device.capabilities().get(Event.REP, None) is None:
-                # print(device.capabilities(verbose=True))
-                try:
-                    print(device.repeat)
-                except Exception as _:
+    async def add_task(self, coro_func: Callable, *args, **kwargs):
+        """Add a coroutine function to the queue"""
+        await self.queue.put((coro_func, args, kwargs))
+
+    async def _process_queue(self):
+        """Process tasks from the queue"""
+        while self.running:
+            try:
+                if len(self.active_tasks) >= self.max_concurrent:
+                    await asyncio.sleep(0.1)
                     continue
-            if device.name == name:
-            # if "event22" in str(device.path):
-                if verbose:
-                    print(f"Found device: {device}")
-                    print(f"Capabilities: {device.capabilities(verbose=True)}")
-                    print(f"Props: {device.input_props(verbose=True)}")
-                return device
 
-        if verbose:
-            print(f"Device {name} not found")
-            print("Available devices:")
+                try:
+                    coro_func, args, kwargs = await asyncio.wait_for(
+                        self.queue.get(), timeout=1.0
+                    )
+                except asyncio.TimeoutError:
+                    continue
 
-            for device in devices:
-                print(device)
+                task = asyncio.create_task(coro_func(*args, **kwargs))
+                self.active_tasks.add(task)
+                task.add_done_callback(self.active_tasks.discard)
 
+            except Exception as e:
+                logger.error(f"Error in queue processor: {e}")
+
+
+class DeviceManager:
+    """Manages input and output devices with hash-based identification"""
+
+    def __init__(self):
+        self.devices: List[DeviceInfo] = []
+        self._scan_devices()
+
+    def _scan_devices(self):
+        """Scan and catalog all available input devices"""
+        self.devices = []
+        for path in evdev.list_devices():
+            try:
+                device = evdev.InputDevice(path)
+                try:
+                    self.devices.append(DeviceInfo(device))
+                except Exception as e:
+                    logger.error(e)
+                    continue
+            except Exception as e:
+                logger.warning(f"Could not access device {path}: {e}")
+
+    def list_devices(self) -> List[DeviceInfo]:
+        """List all available devices with their hashes"""
+        return self.devices
+
+    def find_device_by_name(self, name: str) -> Optional[DeviceInfo]:
+        """Find device by exact name match"""
+        for device_info in self.devices:
+            if device_info.name == name:
+                return device_info
         return None
 
-    idev = get_input_device(device_name, verbose=True)
-    if idev is None:
-        return
+    def find_device_by_hash(self, device_hash: str) -> Optional[DeviceInfo]:
+        """Find device by hash"""
+        for device_info in self.devices:
+            if device_info.hash == device_hash:
+                return device_info
+        return None
 
-    # Copy all capabilities from the original device
-    all_capabilities: dict = defaultdict(set)
-    for ev_type, ev_codes in idev.capabilities().items():
-        all_capabilities[ev_type].update(ev_codes)
+    def find_device_by_partial_hash(self, partial_hash: str) -> List[DeviceInfo]:
+        """Find devices by partial hash match"""
+        matches = []
+        for device_info in self.devices:
+            if device_info.hash.startswith(partial_hash.lower()):
+                matches.append(device_info)
+        return matches
 
-    # Add scroll capailities
-    all_capabilities[Event.REL].add(Rel.MOUSEX)
-    all_capabilities[Event.REL].add(Rel.MOUSEY)
-    all_capabilities[Event.REL].add(Rel.SCROLLX)
-    all_capabilities[Event.REL].add(Rel.SCROLLY)
+    def create_virtual_device(self, input_device: evdev.InputDevice, name_suffix: str = "") -> evdev.UInput:
+        """Create virtual output device based on input device capabilities"""
+        all_capabilities = defaultdict(set)
 
-    del all_capabilities[Event.SYN]
+        for ev_type, ev_codes in input_device.capabilities().items():
+            all_capabilities[ev_type].update(ev_codes)
 
-    udev = evdev.UInput(events=all_capabilities, name="pykbd")
-    odev = evdev.InputDevice(udev.device.path)  # type: ignore
+        all_capabilities[ecodes.EV_REL].update([Rel.MOUSEX, Rel.MOUSEY, Rel.SCROLLX, Rel.SCROLLY])
 
-    print(f"Created device: {udev}")
-    print(udev.capabilities(verbose=True).keys())
+        if ecodes.EV_SYN in all_capabilities:
+            del all_capabilities[ecodes.EV_SYN]
 
-    Path("/dev/input/pykbd").unlink(missing_ok=True)
-    Path("/dev/input/pykbd").symlink_to(udev.device.path, False)  # type: ignore
+        device_name = f"pykbd{name_suffix}"
+        result: Dict[int, Sequence[int]] = {k: list(v) for k, v in all_capabilities.items()}
+        udev = evdev.UInput(events=result, name=device_name)
 
-    caps_esc_threshold = 0.5
+        symlink_path = f"/dev/input/{device_name}"
+        Path(symlink_path).unlink(missing_ok=True)
+        Path(symlink_path).symlink_to(udev.device.path, False)
 
-    keys_state = {}
+        logger.info(f"Created virtual device: {device_name} -> {udev.device.path}")
+        return udev
 
-    def in_key_active(key: Keys) -> bool:
-        return any(e == key for e in idev.active_keys())
 
-    def out_key_active(key: Keys) -> bool:
-        return any(e == key for e in odev.active_keys())
+class BaseEventRemapper(ABC):
+    """Base class for event remappers"""
 
-    def in_key_doubleclick(code) -> bool:
-        key_state = keys_state[code]
+    def __init__(self, device_info: DeviceInfo, task_queue: AsyncTaskQueue, name_suffix: str = ""):
+        self.device_info = device_info
+        self.input_device = device_info.device
+        self.task_queue = task_queue
+        self.keys_state = {}
+        self.debug = os.getenv("INPUT_DEBUG", "false") in ["true", "yes", "1"]
+        self.running = False
 
-        if time.time() - key_state[State.UPTIME] < 0.5:
-            return True
+        # Create device manager for this remapper
+        self.device_manager = DeviceManager()
+        self.output_device = self.device_manager.create_virtual_device(
+            self.input_device, name_suffix
+        )
 
-        return False
+    @abstractmethod
+    async def handle_event(self, event: evdev.InputEvent) -> bool:
+        """
+        Handle an input event. Return True if event was handled, False to pass through.
+        Must be implemented by subclasses.
+        """
+        pass
 
-    def update_key_state(event: evdev.InputEvent):
-        if keys_state.get(event.code) is None:
+    async def on_start(self):
+        """Called when remapper starts. Override for initialization."""
+        pass
+
+    async def on_stop(self):
+        """Called when remapper stops. Override for cleanup."""
+        pass
+
+    def update_key_state(self, event: evdev.InputEvent) -> Dict:
+        """Update internal key state tracking"""
+        if self.keys_state.get(event.code) is None:
             itime = time.time() - 60
-            keys_state[event.code] = {
+            self.keys_state[event.code] = {
                 State.VALUE: event.value,
                 State.DOWNTIME: itime,
                 State.HOLDTIME: itime,
@@ -464,9 +251,9 @@ async def main():
                 State.HOLDCOUNT: 0,
             }
 
-        key_state = keys_state[event.code]
-
+        key_state = self.keys_state[event.code]
         key_state[State.VALUE] = event.value
+
         if event.value == Action.DOWN:
             key_state[State.DOWNTIME] = event.timestamp()
         elif event.value == Action.HOLD:
@@ -476,388 +263,596 @@ async def main():
             key_state[State.UPTIME] = event.timestamp()
             key_state[State.HOLDCOUNT] = 0
 
-        keys_state[event.code] = key_state
         return key_state
 
-    def can_up(etype, code, value):
-        if value != Action.UP:
-            return True
-        return etype == Event.KEY and value == Action.UP and out_key_active(code)
-
-    def write_event(event: evdev.InputEvent, syn: bool = True):
-        if not can_up(event.type, event.code, event.value):
+    def write_event(self, event: evdev.InputEvent, syn: bool = True) -> bool:
+        """Write event to output device"""
+        if not self._can_write_up(event.type, event.code, event.value):
             return False
-        udev.write_event(event)
+
+        self.output_device.write_event(event)
         if syn:
-            udev.syn()
-        if debug:
-            print(f"Outputting: {evdev.categorize(event)}")
+            self.output_device.syn()
+
+        if self.debug:
+            logger.debug(f"[{self.device_info.hash}] Output: {evdev.categorize(event)}")
         return True
 
-    def write(etype, code, value):
-        return write_event(evdev.InputEvent(0, 0, etype, code, value))
+    def _can_write_up(self, etype, code, value) -> bool:
+        """Check if UP event can be written"""
+        if value != Action.UP:
+            return True
+        return etype == ecodes.EV_KEY and value == Action.UP and self._is_output_key_active(code)
 
-    def press(code):
-        write(Event.KEY, code, Action.DOWN)
+    def _is_input_key_active(self, key: int) -> bool:
+        """Check if key is active on input device"""
+        return any(e == key for e in self.input_device.active_keys())
 
-    def release(code):
-        write(Event.KEY, code, Action.UP)
+    def _is_output_key_active(self, key: int) -> bool:
+        """Check if key is active on output device"""
+        output_device = evdev.InputDevice(self.output_device.device.path)
+        return any(e == key for e in output_device.active_keys())
 
-    def bounce(code):
-        press(code)
-        release(code)
+    def press_key(self, code):
+        """Press key"""
+        self.write_event(evdev.InputEvent(0, 0, ecodes.EV_KEY, code, Action.DOWN))
 
-    while len(idev.active_keys()) > 0:
-        print("There are currently active keys, please release them before continuing")
-        print(f"Active input keys: {idev.active_keys(verbose=True)}")
-        time.sleep(1)
+    def release_key(self, code):
+        """Release key"""
+        self.write_event(evdev.InputEvent(0, 0, ecodes.EV_KEY, code, Action.UP))
 
-    idev.repeat = (250, 33)
-    print("Repeat settings: {}\n".format(idev.repeat))
+    def tap_key(self, code):
+        """Press and release key"""
+        self.press_key(code)
+        self.release_key(code)
 
-    class RemapperProtocol(asyncio.Protocol):
-        transport: asyncio.Transport
+    def release_all_output_keys(self):
+        """Release all currently active output keys"""
+        output_device = evdev.InputDevice(self.output_device.device.path)
+        active_keys = output_device.active_keys()
+        if active_keys:
+            logger.info(f"[{self.device_info.hash}] Releasing {len(active_keys)} stuck output keys")
+            for key_id in active_keys:
+                self.release_key(key_id)
 
-        def __init__(self, config):
-            self.wminfo = config
+    async def run(self):
+        """Main event processing loop"""
+        self.running = True
+        await self.on_start()
 
-        def write_data(self, data: str):
-            self.transport.write(data.encode())
-
-        def connection_made(self, transport):
-            self.transport = transport  # type: ignore
-            print("Connection established")
-            self.write_data("YOYO")
-
-        def data_received(self, data):
-            message = data.decode()
-            print(f"Received message: {message}")
-            # Can't set self.wminfo directly, it's a reference to the original dict
-            for k, v in json.loads(message).items():
-                self.wminfo[k] = v
-            self.write_data(message)
-            print("Echoed back")
-
-        def connection_lost(self, exc):
-            print("Connection lost")
-            exit(-1)
-
-    wminfo = {
-        "windowClass": "unset",
-        "windowTitle": "unset",
-    }
-
-    sockpath = "/tmp/pykbd.sock"
-    loop = asyncio.get_event_loop()
-    await loop.create_unix_server(lambda: RemapperProtocol(wminfo), path=sockpath)
-    os.chown(sockpath, 1, grp.getgrnam("uinput").gr_gid)
-    os.chmod(sockpath, 0o660)
-
-    # Check if we've forgot to release any keys when events are coming back in on our virtual device
-    async def handle_output_events():
-        async for _ in odev.async_read_loop():
-            in_active_keys = idev.active_keys()
-            out_active_keys = odev.active_keys()
-            if len(in_active_keys) == 0 and len(out_active_keys) > 0:
-                for id in out_active_keys:
-                    print(f"Releasing key {id} because input is empty")
-                    print(f"Output active keys: {odev.active_keys(verbose=True)}")
-                    release(id)
-
-    async def handle_macropad_input_events():
-        global macropad_attach
-        global inputevents
-
-        mdev = get_input_device("MOSART Semi. 2.4G Keyboard Mouse", True)
-        if mdev is None:
-            return
-
-        with mdev.grab_context():
-            print("Grabbing macropad")
-            event: evdev.InputEvent
-
-            async for event in mdev.async_read_loop():
-                base_path = "/home/lillecarl/Code/nixos/resources"
-
-                if event.type != Event.KEY:
-                    continue
-
-                if event.value == Action.HOLD:
-                    continue
-
-                if event.value != Action.UP:
-                    continue
-
-                print(f"event: {util.categorize(event)}")
-                print(f"Macropad active keys: {mdev.active_keys(verbose=True)}")
-
-                if any(e == Keys.KP0 for e in mdev.active_keys()) and event.code == Keys.KP1:
-                    print(f"Stopping {DOMNAME}")
-                    print(await virsh2("virsh", "stop", "--graceful", DOMNAME))
-                if any(e == Keys.KP0 for e in mdev.active_keys()) and event.code == Keys.KP2:
-                    print(f"Starting {DOMNAME}")
-                    loop.create_task(await virsh2("virsh", "start", DOMNAME))
-                elif event.code == Keys.KP1:
-                    await attach_device(f"{base_path}/shitkeyboard.xml")
-                    await attach_device(f"{base_path}/steelseries-sensei.xml")
-                    await attach_device(f"{base_path}/glorious-mouse.xml")
-                    await attach_device(f"{base_path}/8bitdo.xml")
-                    await attach_device(f"{base_path}/8bitdo_idle.xml")
-                elif event.code == Keys.KP2:
-                    await detach_device(f"{base_path}/shitkeyboard.xml")
-                    await detach_device(f"{base_path}/steelseries-sensei.xml")
-                    await detach_device(f"{base_path}/glorious-mouse.xml")
-                    await detach_device(f"{base_path}/8bitdo.xml")
-                    await detach_device(f"{base_path}/8bitdo_idle.xml")
-                elif event.code == Keys.KP4:
-                    loop.create_task(ddcutil_dp())
-                elif event.code == Keys.KP5:
-                    loop.create_task(ddcutil_hdmi())
-                elif event.code == Keys.KPPLUS:
-                    print("Raising volume")
-                    await volumectl("+", _async=True)
-                elif event.code == Keys.KPMINUS:
-                    print("Lowering volume")
-                    await volumectl("-", _async=True)
-                elif event.code == Keys.NUMLOCK:
-                    cancel_all()
-
-    class VirshAction(IntEnum):
-        ATTACH = auto()
-        DETACH = auto()
-
-    async def _virsh_set_device(vm: str, xml_path: str, action: VirshAction):
-        actionstr = "attach-device" if action == VirshAction.ATTACH else "detach-device"
         try:
-            await virsh(actionstr, vm, xml_path, "--live", _async=True)
-            print(f"{actionstr} {xml_path} to {vm}")
+            with self.input_device.grab_context():
+                logger.info(f"Started remapper for {self.device_info}")
+                async for event in self.input_device.async_read_loop():
+                    if not self.running:
+                        break
+
+                    try:
+                        # Let subclass handle the event
+                        handled = await self.handle_event(event)
+
+                        # If not handled, pass through
+                        if not handled:
+                            self.write_event(event)
+
+                    except Exception as e:
+                        logger.error(f"Error handling event: {e}")
+                        # Pass through on error
+                        self.write_event(event)
+
+        except asyncio.CancelledError:
+            logger.info(f"Remapper cancelled for {self.device_info}")
+        finally:
+            self.running = False
+            await self.on_stop()
+
+    async def stop(self):
+        """Stop the remapper"""
+        self.running = False
+        self.release_all_output_keys()
+
+
+class StandardKeyboardRemapper(BaseEventRemapper):
+    """Standard keyboard remapper with CapsLock->Ctrl and other common remappings"""
+
+    def __init__(self, device_info: DeviceInfo, task_queue: AsyncTaskQueue):
+        super().__init__(device_info, task_queue, "_standard")
+        self.gaming_mode = False
+        self.caps_esc_threshold = 0.5
+
+    async def handle_event(self, event: evdev.InputEvent) -> bool:
+        """Handle keyboard events with standard remapping"""
+        if event.type != ecodes.EV_KEY:
+            return False  # Pass through non-key events
+
+        # Exit combination: ESC + END
+        if (self._is_input_key_active(ecodes.KEY_ESC) and 
+            self._is_input_key_active(ecodes.KEY_END)):
+            await self.task_queue.add_task(self._shutdown)
+            return True
+
+        key_state = self.update_key_state(event)
+
+        if self.debug and (event.value != Action.HOLD or key_state[State.HOLDCOUNT] == 1):
+            logger.debug(f"[{self.device_info.hash}] Input: {evdev.categorize(event)}")
+
+        # Handle special combinations
+        if await self._handle_special_combinations(event, key_state):
+            return True
+
+        # Gaming mode - pass through all events
+        if self.gaming_mode:
+            return False
+
+        # Handle remapping
+        return await self._handle_remapping(event, key_state)
+
+    async def _handle_special_combinations(self, event: evdev.InputEvent, key_state: Dict) -> bool:
+        """Handle special key combinations"""
+        if (event.code == ecodes.KEY_SCROLLLOCK and event.value == Action.DOWN and
+            time.time() - key_state[State.UPTIME] < 0.5):
+
+            if self._is_input_key_active(ecodes.KEY_LEFTMETA):
+                self.gaming_mode = not self.gaming_mode
+                logger.info(f"[{self.device_info.hash}] Gaming mode: {'on' if self.gaming_mode else 'off'}")
+                return True
+
+        return False
+
+    async def _handle_remapping(self, event: evdev.InputEvent, key_state: Dict) -> bool:
+        """Handle key remapping logic"""
+        # CapsLock -> Ctrl, tap for Esc
+        if event.code == ecodes.KEY_CAPSLOCK:
+            event.code = ecodes.KEY_LEFTCTRL
+            self.write_event(event)
+
+            if (event.value == Action.UP and 
+                time.time() - key_state[State.DOWNTIME] < self.caps_esc_threshold):
+                self.tap_key(ecodes.KEY_ESC)
+            return True
+
+        # Caps + ESC -> CapsLock
+        if (event.code == ecodes.KEY_ESC and event.value == Action.DOWN and
+            self._is_input_key_active(ecodes.KEY_CAPSLOCK)):
+            self.tap_key(ecodes.KEY_CAPSLOCK)
+            return True
+
+        # Handle scroll/mouse movement with CapsLock
+        if self._is_input_key_active(ecodes.KEY_CAPSLOCK):
+            return self._handle_caps_combinations(event, key_state)
+
+        return False
+
+    def _handle_caps_combinations(self, event: evdev.InputEvent, key_state: Dict) -> bool:
+        """Handle CapsLock combination keys"""
+        if event.code not in [ecodes.KEY_H, ecodes.KEY_J, ecodes.KEY_K, ecodes.KEY_L, ecodes.KEY_SPACE]:
+            return False
+
+        distance = 1
+        if self._is_input_key_active(ecodes.KEY_SPACE):
+            distance = key_state[State.HOLDCOUNT]
+
+        mouse_event = None
+        if not self._is_input_key_active(ecodes.KEY_SPACE):
+            # Scroll mode
+            if event.code == ecodes.KEY_H:
+                mouse_event = (Rel.SCROLLX, -distance)
+            elif event.code == ecodes.KEY_J:
+                mouse_event = (Rel.SCROLLY, -distance)
+            elif event.code == ecodes.KEY_K:
+                mouse_event = (Rel.SCROLLY, distance)
+            elif event.code == ecodes.KEY_L:
+                mouse_event = (Rel.SCROLLX, distance)
+        else:
+            # Mouse movement mode
+            if event.code == ecodes.KEY_H:
+                mouse_event = (Rel.MOUSEX, -distance)
+            elif event.code == ecodes.KEY_J:
+                mouse_event = (Rel.MOUSEY, distance)
+            elif event.code == ecodes.KEY_K:
+                mouse_event = (Rel.MOUSEY, -distance)
+            elif event.code == ecodes.KEY_L:
+                mouse_event = (Rel.MOUSEX, distance)
+
+        if mouse_event:
+            # Release ctrl keys to avoid zooming
+            if not self._is_input_key_active(ecodes.KEY_LEFTCTRL):
+                self.release_key(ecodes.KEY_LEFTCTRL)
+            if not self._is_input_key_active(ecodes.KEY_RIGHTCTRL):
+                self.release_key(ecodes.KEY_RIGHTCTRL)
+
+            self.write_event(
+                evdev.InputEvent(0, 0, ecodes.EV_REL, mouse_event[0], mouse_event[1])
+            )
+            return True
+
+        if event.code == ecodes.KEY_SPACE:
+            return True
+
+        return False
+
+    async def _shutdown(self):
+        """Shutdown signal"""
+        logger.info(f"[{self.device_info.hash}] Shutdown requested")
+        await self.stop()
+
+
+class MacropadRemapper(BaseEventRemapper):
+    """Remapper for macropad devices"""
+
+    def __init__(self, device_info: DeviceInfo, task_queue: AsyncTaskQueue):
+        super().__init__(device_info, task_queue, "_macropad")
+
+    async def handle_event(self, event: evdev.InputEvent) -> bool:
+        """Handle macropad events"""
+        if event.type != ecodes.EV_KEY or event.value != Action.UP:
+            return True  # Consume all non-UP key events
+
+        await self._process_macropad_event(event)
+        return True  # Always consume macropad events
+
+    async def _process_macropad_event(self, event: evdev.InputEvent):
+        """Process macropad key events"""
+        active_keys = self.input_device.active_keys()
+
+        if ecodes.KEY_KP0 in active_keys:
+            if event.code == ecodes.KEY_KP1:
+                await self.task_queue.add_task(VMController.stop_vm, DOMNAME)
+            elif event.code == ecodes.KEY_KP2:
+                await self.task_queue.add_task(VMController.start_vm, DOMNAME)
+        elif event.code == ecodes.KEY_KP1:
+            await self.task_queue.add_task(self._attach_gaming_devices)
+        elif event.code == ecodes.KEY_KP2:
+            await self.task_queue.add_task(self._detach_gaming_devices)
+        elif event.code == ecodes.KEY_KP4:
+            await self.task_queue.add_task(DisplayController.set_dp)
+        elif event.code == ecodes.KEY_KP5:
+            await self.task_queue.add_task(DisplayController.set_hdmi)
+        elif event.code == ecodes.KEY_KPPLUS:
+            await self.task_queue.add_task(self._volume_up)
+        elif event.code == ecodes.KEY_KPMINUS:
+            await self.task_queue.add_task(self._volume_down)
+
+    async def _attach_gaming_devices(self):
+        """Attach gaming devices to VM"""
+        devices = [
+            "shitkeyboard.xml",
+            "steelseries-sensei.xml", 
+            "glorious-mouse.xml",
+            "8bitdo.xml",
+            "8bitdo_idle.xml"
+        ]
+        base_path = "/home/lillecarl/Code/nixos/resources"
+
+        for device in devices:
+            await VMController.attach_device(DOMNAME, f"{base_path}/{device}")
+
+    async def _detach_gaming_devices(self):
+        """Detach gaming devices from VM"""
+        devices = [
+            "shitkeyboard.xml",
+            "steelseries-sensei.xml",
+            "glorious-mouse.xml", 
+            "8bitdo.xml",
+            "8bitdo_idle.xml"
+        ]
+        base_path = "/home/lillecarl/Code/nixos/resources"
+
+        for device in devices:
+            await VMController.detach_device(DOMNAME, f"{base_path}/{device}")
+
+    async def _volume_up(self):
+        """Increase system volume"""
+        await volumectl("+")
+
+    async def _volume_down(self):
+        """Decrease system volume"""
+        await volumectl("-")
+
+
+class DisplayController:
+    """Handles display control operations"""
+
+    @staticmethod
+    async def get_vcp():
+        """Get current VCP value"""
+        try:
+            result = await ddcutil("--model=XWU-CBA", "getvcp", "0x60", "--brief")
+            for line in result.splitlines():
+                if line.startswith("VCP"):
+                    return line
+        except Exception as e:
+            logger.error(f"Failed to get VCP: {e}")
+        return None
+
+    @staticmethod
+    async def set_hdmi():
+        """Set display input to HDMI"""
+        try:
+            logger.info("Setting input to HDMI")
+            await ddcutil("--model=XWU-CBA", "setvcp", "0x60", "0x0f")
+        except Exception as e:
+            logger.error(f"Failed to set HDMI: {e}")
+
+    @staticmethod
+    async def set_dp():
+        """Set display input to DisplayPort"""
+        try:
+            logger.info("Setting input to DP")
+            await ddcutil("--model=XWU-CBA", "setvcp", "0x60", "0x11")
+        except Exception as e:
+            logger.error(f"Failed to set DP: {e}")
+
+    @staticmethod
+    async def switch_input():
+        """Switch display input between HDMI and DP"""
+        current_vcp = await DisplayController.get_vcp()
+        if current_vcp:
+            if "VCP 60 SNC x00" in current_vcp:
+                await DisplayController.set_dp()
+            elif "VCP 60 SNC x0f" in current_vcp:
+                await DisplayController.set_hdmi()
+
+
+class VMController:
+    """Handles VM operations"""
+
+    @staticmethod
+    async def attach_device(vm: str, xml_path: str):
+        """Attach device to VM"""
+        try:
+            await virsh("attach-device", vm, xml_path, "--live")
+            logger.info(f"Attached {xml_path} to {vm}")
         except sh.ErrorReturnCode as e:
-            print(f"Failed to {actionstr} {xml_path} to {vm}")
-            print(e.stderr.decode())
+            logger.error(f"Failed to attach {xml_path} to {vm}: {e.stderr.decode()}")
 
-    async def attach_device(xml_path: str):
-        await _virsh_set_device("win11-4", xml_path, VirshAction.ATTACH)
+    @staticmethod
+    async def detach_device(vm: str, xml_path: str):
+        """Detach device from VM"""
+        try:
+            await virsh("detach-device", vm, xml_path, "--live")
+            logger.info(f"Detached {xml_path} from {vm}")
+        except sh.ErrorReturnCode as e:
+            logger.error(f"Failed to detach {xml_path} from {vm}: {e.stderr.decode()}")
 
-    async def detach_device(xml_path: str):
-        await _virsh_set_device("win11-4", xml_path, VirshAction.DETACH)
+    @staticmethod
+    async def start_vm(vm: str):
+        """Start VM"""
+        try:
+            await virsh("start", vm)
+            logger.info(f"Started {vm}")
+        except sh.ErrorReturnCode as e:
+            logger.error(f"Failed to start {vm}: {e.stderr.decode()}")
 
-    async def ddc_switch():
-        ddcutil_current = str(await ddcutil_getvcp())
-        print(f"vcp: {ddcutil_current}")
-        if "VCP 60 SNC x00" in ddcutil_current:
-            await ddcutil_dp()
-        elif "VCP 60 SNC x0f" in ddcutil_current:
-            await ddcutil_hdmi()
+    @staticmethod
+    async def stop_vm(vm: str):
+        """Stop VM gracefully"""
+        try:
+            await virsh("shutdown", vm)
+            logger.info(f"Stopped {vm}")
+        except sh.ErrorReturnCode as e:
+            logger.error(f"Failed to stop {vm}: {e.stderr.decode()}")
 
-    async def handle_input_events():
-        global gaming_mode
-        idev = get_input_device(device_name, verbose=True)
-        if idev is None:
+
+class RemapperManager:
+    """Manages multiple remappers"""
+
+    def __init__(self):
+        self.device_manager = DeviceManager()
+        self.task_queue = AsyncTaskQueue()
+        self.remappers: List[BaseEventRemapper] = []
+        self.running = False
+        self.cleanup_task = None
+
+    async def initialize(self):
+        """Initialize the manager"""
+        await self.task_queue.start()
+
+    def list_devices(self):
+        """List all available devices"""
+        logger.info("Available devices:")
+        for device_info in self.device_manager.list_devices():
+            logger.info(f"  {device_info}")
+
+    def add_remapper(self, remapper: BaseEventRemapper):
+        """Add a remapper to be managed"""
+        self.remappers.append(remapper)
+
+    def create_standard_remapper(self, device_identifier: str) -> Optional[BaseEventRemapper]:
+        """Create a standard keyboard remapper for the given device"""
+        device_info = self._find_device(device_identifier)
+        if device_info:
+            return StandardKeyboardRemapper(device_info, self.task_queue)
+        return None
+
+    def create_macropad_remapper(self, device_identifier: str) -> Optional[BaseEventRemapper]:
+        """Create a macropad remapper for the given device"""
+        device_info = self._find_device(device_identifier)
+        if device_info:
+            return MacropadRemapper(device_info, self.task_queue)
+        return None
+
+    def _find_device(self, identifier: str) -> Optional[DeviceInfo]:
+        """Find device by name or hash"""
+        # Try exact hash match first
+        device_info = self.device_manager.find_device_by_hash(identifier)
+        if device_info:
+            return device_info
+
+        # Try partial hash match
+        matches = self.device_manager.find_device_by_partial_hash(identifier)
+        if len(matches) == 1:
+            return matches[0]
+        elif len(matches) > 1:
+            logger.error(f"Multiple devices match hash '{identifier}':")
+            for match in matches:
+                logger.error(f"  {match}")
+            return None
+
+        # Try name match
+        device_info = self.device_manager.find_device_by_name(identifier)
+        if device_info:
+            return device_info
+
+        logger.error(f"Device not found: {identifier}")
+        return None
+
+    async def run(self):
+        """Run all remappers"""
+        if not self.remappers:
+            logger.error("No remappers configured")
             return
 
-        # Grab the device to prevent other processes from reading it
-        with idev.grab_context():
-            event: evdev.InputEvent
-            async for event in idev.async_read_loop():
-                start_time = time.time()
-                udev.syn()
-                if event.type == Event.KEY:
-                    if in_key_active(Keys.ESC) and in_key_active(Keys.END):
-                        # ESC + END to exit, will ungrab since we're in a context manager
-                        for id in odev.active_keys():
-                            release(id)
+        self.running = True
 
-                        cancel_all()
+        # Start cleanup timer
+        self.cleanup_task = asyncio.create_task(self._cleanup_timer())
 
-                    key_state = update_key_state(event)
+        # Start all remappers
+        tasks = [asyncio.create_task(remapper.run()) for remapper in self.remappers]
+        tasks.append(self.cleanup_task)
 
-                    if debug and (
-                        event.value != Action.HOLD or key_state[State.HOLDCOUNT] == 1
-                    ):
-                        print(evdev.categorize(event))
-                        print(f"Input active keys: {idev.active_keys(verbose=True)}")
-                        print(f"Output active keys: {odev.active_keys(verbose=True)}")
-                        print(f"Active window name: {wminfo['windowTitle']}")
+        try:
+            await asyncio.gather(*tasks)
+        except asyncio.CancelledError:
+            logger.info("Remapper manager cancelled")
+        finally:
+            await self.cleanup()
 
-                    # Double click scroll lock to switch display input. While holding left meta, toggle gaming mode
-                    if (
-                        event.code == Keys.SCROLLLOCK
-                        and event.value == Action.DOWN
-                        and time.time() - key_state[State.UPTIME] < 0.5
-                    ):
-                        if in_key_active(Keys.LEFTMETA):
-                            gaming_mode = not gaming_mode
-                            print(f"Gaming mode: {'on' if gaming_mode else 'off'}")
-                        elif in_key_active(Keys.N1):
-                            pass  # Switch input of left BENQ display
-                        elif in_key_active(Keys.N2):
-                            pass  # Switch input of right BENQ display
-                        elif in_key_active(Keys.LEFTCTRL):
-                            press(Keys.RIGHTSHIFT)
-                        elif in_key_active(Keys.LEFTALT):
-                            vm = "win11-4"
-                            try:
-                                await virsh(
-                                    "detach-device",
-                                    vm,
-                                    headset_xml_path,
-                                    "--live",
-                                    _async=True,
-                                )
+    async def cleanup(self):
+        """Clean up all resources"""
+        self.running = False
 
-                                print(f"Detached {headset_xml_path} from {vm}")
-                                print("Waiting 5 seconds before attaching")
-                                await asyncio.sleep(5)
-                            except sh.ErrorReturnCode as e:
-                                print(f"Failed to detach {headset_xml_path} to {vm}")
-                                print(e.stderr.decode())
+        # Stop all remappers
+        for remapper in self.remappers:
+            await remapper.stop()
 
-                            try:
-                                await virsh(
-                                    "attach-device",
-                                    vm,
-                                    headset_xml_path,
-                                    "--live",
-                                    _async=True,
-                                )
-                                print(f"Attached {headset_xml_path} to {vm}")
-                            except sh.ErrorReturnCode as e:
-                                print(f"Failed to attach {headset_xml_path} to {vm}")
-                                print(e.stderr.decode())
-                        else:
-                            asyncio.create_task(ddc_switch())
+        # Stop cleanup timer
+        if self.cleanup_task:
+            self.cleanup_task.cancel()
 
-                        continue
+        await self.task_queue.stop()
 
-                    if gaming_mode:
-                        write_event(event)
-                        continue
-                    else:
-                        # Send CTRL if CAPSLOCK is pressed
-                        # Send ESC if CAPSLOCK is released within caps_esc_threshold
-                        if event.code == Keys.CAPSLOCK:
-                            event.code = Keys.LEFTCTRL
-                            write_event(event)
+    async def _cleanup_timer(self):
+        """Timer that runs every 10 seconds to release stuck keys"""
+        while self.running:
+            try:
+                await asyncio.sleep(10)
 
-                            if event.value == Action.UP:
-                                if (
-                                    time.time() - key_state[State.DOWNTIME]
-                                    < caps_esc_threshold
-                                ):
-                                    bounce(Keys.ESC)
+                if not self.running:
+                    break
 
-                            continue
+                # Check each remapper for stuck keys
+                for remapper in self.remappers:
+                    input_active = remapper.input_device.active_keys()
+                    output_device = evdev.InputDevice(remapper.output_device.device.path)
+                    output_active = output_device.active_keys()
 
-                        # Send capslock if CAPS + ESC is pressed
-                        elif (
-                            event.code == Keys.ESC
-                            and event.value == Action.DOWN
-                            and in_key_active(Keys.CAPSLOCK)
-                        ):
-                            bounce(Keys.CAPSLOCK)
+                    if len(input_active) == 0 and len(output_active) > 0:
+                        logger.warning(f"Timer cleanup for {remapper.device_info.hash}: releasing {len(output_active)} stuck keys")
+                        remapper.release_all_output_keys()
 
-                            continue
-
-                        # Allow scrolling with capslock + hjkl
-                        elif in_key_active(Keys.CAPSLOCK):
-                            distance = 1
-                            mouse_event = (None, None)
-
-                            if in_key_active(Keys.SPACE):
-                                distance = key_state[State.HOLDCOUNT]
-
-                            if not in_key_active(Keys.SPACE):
-                                if event.code == Keys.H:
-                                    mouse_event = (Rel.SCROLLX, -distance)
-                                elif event.code == Keys.J:
-                                    mouse_event = (Rel.SCROLLY, -distance)
-                                elif event.code == Keys.K:
-                                    mouse_event = (Rel.SCROLLY, distance)
-                                elif event.code == Keys.L:
-                                    mouse_event = (Rel.SCROLLX, distance)
-                            else:
-                                if event.code == Keys.H:
-                                    mouse_event = (Rel.MOUSEX, -distance)
-                                elif event.code == Keys.J:
-                                    mouse_event = (Rel.MOUSEY, distance)
-                                elif event.code == Keys.K:
-                                    mouse_event = (Rel.MOUSEY, -distance)
-                                elif event.code == Keys.L:
-                                    mouse_event = (Rel.MOUSEX, distance)
-
-                            if mouse_event != (None, None):
-                                # If we're not holding down input ctrl, release the output ctrl
-                                # else we'll be zooming in web browsers and such.
-                                if not in_key_active(Keys.LEFTCTRL):
-                                    release(Keys.LEFTCTRL)
-                                if not in_key_active(Keys.RIGHTCTRL):
-                                    release(Keys.RIGHTCTRL)
-                                write(Event.REL, mouse_event[0], mouse_event[1])
-                                continue
-                            if event.code == Keys.SPACE:
-                                continue
-
-                        # Map ALT (left or right) + åäö ( ['; ) to åäö
-                        elif in_key_active(Keys.RIGHTALT) or in_key_active(
-                            Keys.LEFTALT
-                        ):
-                            code = None
-
-                            if event.code == Keys.LEFTBRACE:
-                                code = Keys.W
-                            elif event.code == Keys.APOSTROPHE:
-                                code = Keys.A
-                            elif event.code == Keys.SEMICOLON:
-                                code = Keys.O
-
-                            if code is not None:
-                                event.code = code
-                                release(Keys.LEFTALT)
-                                press(Keys.RIGHTALT)
-                                write_event(event)
-                                release(Keys.RIGHTALT)
-                                continue
-
-                    if debug:
-                        print(f"Time to process event: {time.time() - start_time}")
-
-                # Pass any events we haven't handled to the virtual device
-                write_event(event)
-
-    global outevents
-    global macroevents
-    global inputevents
-    loop = asyncio.get_event_loop()
-    # Handle output events in a separate task
-    outevents = loop.create_task(handle_output_events())
-    macroevents = loop.create_task(handle_macropad_input_events())
-    inputevents = loop.create_task(handle_input_events())
-
-    while True:
-        await asyncio.sleep(1)
+            except asyncio.CancelledError:
+                break
+            except Exception as e:
+                logger.error(f"Error in cleanup timer: {e}")
 
 
-def cancel_all():
-    if outevents is not None:
-        outevents.cancel()
-    if macroevents is not None:
-        macroevents.cancel()
-    if inputevents is not None:
-        inputevents.cancel()
-    if main_task is not None:
-        main_task.cancel()
+def parse_args():
+    """Parse command line arguments"""
+    parser = argparse.ArgumentParser(
+        description="Keyboard remapper with device hash identification",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  %(prog)s list                           # List all available devices
+  %(prog)s "My Keyboard"                  # Use device by name
+  %(prog)s a1b2c3d4e5f6g7h8               # Use device by full hash
+  %(prog)s a1b2c3                        # Use device by partial hash
+  %(prog)s a1b2c3:standard               # Specify remapper type
+  %(prog)s "Keyboard 1" b4c5d6:macropad  # Multiple devices
+        """
+    )
 
+    parser.add_argument(
+        "devices",
+        nargs="*",
+        help="Device identifiers (name, hash, or partial hash) with optional :type suffix"
+    )
+
+    parser.add_argument(
+        "--list", "-l",
+        action="store_true",
+        help="List all available devices and exit"
+    )
+
+    parser.add_argument(
+        "--debug", "-d",
+        action="store_true",
+        help="Enable debug logging"
+    )
+
+    return parser.parse_args()
+
+
+async def main():
+    """Main entry point"""
+    args = parse_args()
+
+    if args.debug:
+        logging.getLogger().setLevel(logging.DEBUG)
+
+    manager = RemapperManager()
+
+    if args.list or not args.devices:
+        manager.list_devices()
+        return
+
+    await manager.initialize()
+
+    for spec in args.devices:
+        # Format: device_identifier[:type]
+        parts = spec.split(":")
+        device_id = parts[0]
+        remapper_type = parts[1] if len(parts) > 1 else "standard"
+
+        # if remapper_type == "standard":
+        #     remapper = manager.create_standard_remapper(device_id)
+        # elif remapper_type == "macropad":
+        #     remapper = manager.create_macropad_remapper(device_id)
+        # else:
+        #     logger.error(f"Unknown remapper type: {remapper_type}")
+        #     continue
+
+        remapper = manager.create_macropad_remapper(device_id) # Only start macropad
+
+        if remapper:
+            manager.add_remapper(remapper)
+            logger.info(f"Added {remapper_type} remapper for {device_id}")
+        else:
+            logger.error(f"Could not create remapper for {device_id}")
+
+    if not manager.remappers:
+        logger.error("No valid remappers created")
+        return
+
+    logger.info(f"Starting {len(manager.remappers)} remapper(s)")
+
+    try:
+        await manager.run()
+    except Exception as e:
+        logger.error(f"Application error: {e}")
+        raise
+    finally:
+        await manager.cleanup()
 
 if __name__ == "__main__":
-    loop = asyncio.get_event_loop()
-    main_task = asyncio.ensure_future(main())
-    if main_task is None:
-        exit(0)
-    for signal in [SIGINT, SIGTERM]:
-        loop.add_signal_handler(signal, cancel_all)
+    sys.dont_write_bytecode = True
     try:
-        loop.run_until_complete(main_task)
+        asyncio.run(main())
+    except KeyboardInterrupt:
+        logger.info("Interrupted by user")
     except asyncio.CancelledError:
-        print("Cancelled")
-    finally:
-        loop.close()
+        logger.info("Application cancelled")
+    except Exception as ex:
+        logger.info(ex)
