@@ -64,7 +64,10 @@ in
             in
             {
               "io.containerd.cri.v1.runtime".cni = cniConfig;
-              "io.containerd.grpc.v1.cri".cni = cniConfig;
+              "io.containerd.grpc.v1.cri" = {
+                cni = cniConfig;
+                containerd.runtimes.runc.options.SystemdCgroup = true;
+              };
             };
         };
       };
