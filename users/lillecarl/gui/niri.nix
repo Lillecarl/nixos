@@ -7,8 +7,8 @@
   ...
 }:
 let
-  spawnWrapper =
-    toString (pkgs.writeScript "niri-spawn-wrapper" # fish
+  spawnWrapper = toString (
+    pkgs.writeScript "niri-spawn-wrapper" # fish
       ''
         #! ${lib.getExe pkgs.fish}
         if test -S /tmp/.X11-unix/X0
@@ -21,13 +21,15 @@ let
 
         # Run args as command
         $argv
-      '');
-  clipHistRofi =
-    toString (pkgs.writeScript "cliphistrofi" # fish
+      ''
+  );
+  clipHistRofi = toString (
+    pkgs.writeScript "cliphistrofi" # fish
       ''
         #! ${lib.getExe pkgs.fish}
         cliphist list | rofi -dmenu -i -matching fuzzy -p History | cliphist decode | wl-copy -n
-      '');
+      ''
+  );
 in
 {
   imports = [
@@ -83,8 +85,44 @@ in
           # Spawn xwayland-sattelite inside niri
           {
             command = [
+              spawnWrapper
               (lib.getExe inputs.niri.packages.x86_64-linux.xwayland-satellite-unstable)
             ];
+          }
+          # Spawn Firefox
+          {
+            command = [
+              spawnWrapper
+              (lib.getExe config.programs.firefox.package)
+            ];
+          }
+          # Spawn Kitty
+          {
+            command = [
+              spawnWrapper
+              (lib.getExe config.programs.kitty.package)
+            ];
+          }
+          # Set display output to displayport
+          {
+            command = [
+              spawnWrapper
+              (lib.getExe pkgs.ddcutil)
+              "--model=XWU-CBA"
+              "setvcp"
+              "0x60"
+              "0x0f"
+            ];
+          }
+        ];
+        layer-rules = [
+          {
+            matches = [
+              {
+                namespace = "^wallpaper$";
+              }
+            ];
+            place-within-backdrop = true;
           }
         ];
         input = {
@@ -189,6 +227,7 @@ in
             throw "Unknown hostname, can't configure niri outputs";
 
         layout = {
+          background-color = "transparent";
           focus-ring = {
             enable = true;
             width = 2;
@@ -292,6 +331,11 @@ in
             "lightctl"
             "up"
           ];
+
+          "Mod+O" = {
+            repeat = false;
+            action.toggle-overview = [ ];
+          };
 
           "Mod+Q".action.close-window = [ ];
 
