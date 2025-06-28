@@ -33,6 +33,11 @@ in
       enableMasqueradeRouteSource = false;
       endpointRoutes.enabled = true;
       policyEnforcementMode = "never";
+      # Extra args for cilium-agent
+      extraArgs = [
+        "--devices=lo,enp+"
+        "--direct-routing-device=lo" # Since we use loopback nodeip
+      ];
 
       cluster = {
         name = "default";
