@@ -29,8 +29,6 @@ in
       enableDebugInfo = true;
     };
     security = {
-      # rtkit for pipewire? (Recommended on NixOS wiki)
-      rtkit.enable = true;
       # Pluggable Authentication Modules (PAM)
       pam.services =
         let
