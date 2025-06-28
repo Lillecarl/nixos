@@ -15,6 +15,7 @@
     ./spotifyd.nix
     ./syncthing.nix
     ./wireguard.nix
+    ./initrd.nix
   ];
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
