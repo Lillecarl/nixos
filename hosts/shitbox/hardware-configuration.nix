@@ -62,7 +62,7 @@
       grub = {
         enable = true;
         enableCryptodisk = true;
-        inherit (config.disko.devices.disk.disk1) device;
+        device = "nodev";
         efiSupport = true;
         copyKernels = true;
       };
