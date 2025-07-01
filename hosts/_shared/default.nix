@@ -30,7 +30,6 @@ in
     ./linkinputs.nix
     ./dns.nix
     ./mosh.nix
-    ./networking.nix
     ./niri.nix
     ./nix.nix
     ./noshell.nix

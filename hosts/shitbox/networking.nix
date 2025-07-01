@@ -19,7 +19,7 @@ in
         ip = "${first24}.1";
         network = "${first24}.0";
         mask = "24";
-        name = "br13";
+        name = "lobr";
       };
     };
     # Disable systemd-networkd-wait-online, we just want a bridge to add VM's to.
@@ -51,7 +51,9 @@ in
           ip protocol icmp icmp type { destination-unreachable, router-advertisement, time-exceeded, parameter-problem } accept comment "Allow icmpv4 identification"
         '';
       };
-      networkmanager.unmanaged = lib.attrNames config.systemd.network.netdevs;
+      networkmanager.unmanaged = (lib.attrNames config.systemd.network.netdevs) ++ [
+        "enp8s0"
+      ];
     };
 
     systemd.network = {
@@ -63,6 +65,33 @@ in
           netdevConfig = {
             Name = "dummy0";
             Kind = "dummy";
+          };
+        };
+        br0 = {
+          netdevConfig = {
+            Name = "br0";
+            Kind = "bridge";
+            MACAddress = "02:00:00:12:34:56";
+          };
+        };
+        br1 = {
+          netdevConfig = {
+            Name = "br1";
+            Kind = "bridge";
+            MACAddress = "02:00:00:12:34:58";
+          };
+        };
+        vxlan1 = {
+          netdevConfig = {
+            Kind = "vxlan";
+            Name = "vxlan1";
+          };
+          vxlanConfig = {
+            VNI = 1;
+            Local = "192.168.88.2";
+            Remote = "192.168.88.1";
+            DestinationPort = 4789;
+            Independent = true;
           };
         };
         ${config.lib.lobr.name} = {
@@ -82,13 +111,76 @@ in
           # br13 is our bridge for VM's
           bridge = [
             config.systemd.network.netdevs.${config.lib.lobr.name}.netdevConfig.Name
+            "br0"
           ];
+          networkConfig = {
+            IPv4Forwarding = false;
+            IPv6Forwarding = false;
+          };
+        };
+
+        br0 = {
+          matchConfig.Name = "br0";
+          address = [
+            "192.168.88.2/24"
+          ];
+          networkConfig = {
+            DHCP = "ipv4";
+          };
+        };
+        br1 = {
+          matchConfig.Name = "br1";
+          address = [
+            "192.168.89.2/24"
+          ];
+          networkConfig = {
+            DHCP = "ipv4";
+          };
+        };
+        vxlan1 = {
+          matchConfig.Name = "vxlan1";
+          address = [
+            "2001:470:28:f5::2/64"
+          ];
+          networkConfig = {
+            IPv6AcceptRA = false;
+            # VXLAN = "vxlan1";
+          };
+          routes = [
+            {
+              Destination = "::0";
+              Gateway = "2001:470:28:f5::1";
+            }
+          ];
+          linkConfig = {
+            MTUBytes = 1400;
+          };
+        };
+
+        enp8s0 = {
+          matchConfig.Name = "enp8s0";
+          bridge = [ "br0" ];
         };
 
         br13 = {
           matchConfig.Name = config.systemd.network.netdevs.${config.lib.lobr.name}.netdevConfig.Name;
           inherit (config.lib.lobr) name;
           address = [ "${config.lib.lobr.ip}/${config.lib.lobr.mask}" ];
+        };
+        loopback = {
+          matchConfig.Name = "lo";
+          addresses = [
+            {
+              Address = "127.0.0.1/8";
+            }
+            {
+              Address = "::1/128";
+            }
+            {
+              Address = "10.13.39.1/32";
+            }
+          ];
+          linkConfig.RequiredForOnline = false;
         };
       };
     };

@@ -16,6 +16,7 @@
     ./syncthing.nix
     ./wireguard.nix
     ./initrd.nix
+    ./networking.nix
   ];
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
