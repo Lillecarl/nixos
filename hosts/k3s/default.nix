@@ -14,6 +14,9 @@
     ./hardware-configuration.nix
     ./k3s.nix
     ./networking.nix
+    ./nodes.nix
+    ./nix.nix
+    ./frr.nix
   ];
 
   config = {

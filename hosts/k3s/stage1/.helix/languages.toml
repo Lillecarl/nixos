@@ -1,0 +1,23 @@
+[language-server.nixd]
+args = [
+  "--nixpkgs-worker-stderr=/home/lillecarl/.cache/helix/nixpkgs-worker.log",
+  "--option-worker-stderr=/home/lillecarl/.cache/helix",
+  "--nixpkgs-expr=(import /home/lillecarl/Code/nixos/repl.nix).pkgs",
+  "--nixos-options-expr=(import /home/lillecarl/Code/nixos/hosts/shitbox/kubenix/stage1/repl.nix).options"
+]
+
+# [language-server.nixd.config.nixpkgs]
+# expr = "(import /home/lillecarl/Code/nixos/repl.nix).pkgs"
+
+# [language-server.nixd.config.options.nixos]
+# # expr = "(import /home/lillecarl/Code/nixos/repl.nix).os.options"
+# expr = "(import /home/lillecarl/Code/nixos/hosts/shitbox/kubenix/stage1/repl.nix).options"
+
+# [language-server.nixd.config.options.home-manager]
+# expr = "(import /home/lillecarl/Code/nixos/repl.nix).home.options"
+
+# [language-server.nixd.config.options.kubenix]
+# expr = "(import /home/lillecarl/Code/nixos/hosts/shitbox/kubenix/stage1/repl.nix).options"
+
+# [language-server.nixd.config.diagnostic]
+# suppress = ["sema-extra-with"]
