@@ -64,6 +64,7 @@ prev.lib.filterAttrs
     pg_graphql = prev.callPackage ./pg_graphql.nix { };
     pg_jsonschema = prev.callPackage ./pg_jsonschema.nix { };
     pg_analytics = prev.callPackage ./pg_analytics.nix { };
+    writeJinja2 = prev.python3Packages.callPackage ./writeJinja2.nix { };
   }
 // (if flake then python3Packages else { })
 // (if flake then grafanaPlugins else { })
