@@ -21,45 +21,66 @@ in
   };
   config =
     let
-      peerLines = lib.pipe nodes.nodes [
-        (x: lib.filterAttrs (n: v: v.ASN != nodes.node.ASN) x)
-        (x: lib.mapAttrs (n: v: " neighbor ${v.ipv4Addr} peer-group fabric") x)
-        (x: lib.attrValues x)
-        (x: lib.concatStringsSep "\n" x)
-      ];
+      filteredNodes = lib.filterAttrs (n: v: v.ASN != nodes.node.ASN) nodes.nodes;
     in
     lib.mkIf cfg.enable {
+      networking.firewall.allowedTCPPorts = [ 179 ];
+      networking.firewall.allowedUDPPorts = [ 4789 ];
       services.frr = {
         bgpd.enable = true;
+        bfdd.enable = false;
 
-        config = # frr
-          ''
+        configFile = pkgs.writeSaneJinja2 {
+          name = "frr-config";
+          variables = {
+            inherit (config.networking) hostName;
+            inherit (nodes.node) ASN ipv4Addr;
+            inherit filteredNodes;
+          };
+          template = ''
             frr version 10.3.1
             frr defaults datacenter
-            hostname ${config.networking.hostName}
+            hostname {{ hostName }}
             log syslog informational
             service integrated-vtysh-config
             !
-            router bgp ${nodes.node.ASN}
-             bgp router-id ${nodes.node.ipv4Addr}
-             bgp cluster-id ${nodes.node.ipv4Addr}
+            route-map ALLOW-ALL permit 10
+            !
+            router bgp {{ ASN }}
+             bgp router-id {{ ipv4Addr }}
+             ! bgp cluster-id {{ ipv4Addr }}
              neighbor fabric peer-group
              neighbor fabric remote-as external
+             neighbor fabric ebgp-multihop 10
              neighbor fabric capability extended-nexthop
-            ${peerLines}
+             neighbor fabric soft-reconfiguration inbound
+             neighbor fabric update-source {{ ipv4Addr }}
+             neighbor fabric capability dynamic
+             neighbor fabric timers 3 9
+             no neighbor underlay capability extended-nexthop
+             {% for key, value in filteredNodes.items() %}
+             neighbor {{ value. ipv4Addr }} peer-group fabric
+             {% endfor %}
              !
              address-family ipv4 unicast
-              redistribute connected
               neighbor fabric activate
+              neighbor fabric route-map ALLOW-ALL in
+              neighbor fabric route-map ALLOW-ALL out
+              redistribute connected
+              redistribute static
              exit-address-family
              !
              address-family l2vpn evpn
               neighbor fabric activate
-              neighbor fabric route-reflector-client
+              neighbor fabric route-map ALLOW-ALL in
+              neighbor fabric route-map ALLOW-ALL out
               advertise-all-vni
+              advertise-svi-ip
+              advertise ipv4 unicast
              exit-address-family
             !
           '';
+        };
       };
     };
 }
