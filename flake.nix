@@ -12,6 +12,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.treefmt-nix.follows = "treefmt-nix";
     };
+    optnix = {
+      url = "github:water-sucks/optnix";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-compat.follows = "";
     kubenix = {
       url = "github:hall/kubenix/main";
       inputs = {

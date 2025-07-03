@@ -79,6 +79,7 @@
             nerdctl # containerd cli tool
             kubelogin-oidc # Kubernetes OIDC login
             forgejo-cli # CLI for Forgejo (Gitea fork, codeberg.org)
+            inputs.optnix.packages.${pkgs.system}.optnix # TUI Nix options searcher
             config.lib.pspkgs.cmctl # Cert-Manager
             config.lib.pspkgs.kubectl-cnpg # CloudnativePG
           ]

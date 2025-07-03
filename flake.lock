@@ -1044,6 +1044,27 @@
         "type": "github"
       }
     },
+    "optnix": {
+      "inputs": {
+        "flake-compat": [],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1751357878,
+        "narHash": "sha256-CAW36WFZhJj7t59iG5mfMR9MY0BIx2ZIFpDVGCgFjbA=",
+        "owner": "water-sucks",
+        "repo": "optnix",
+        "rev": "9445df9ced42339cec7eb3cff34adb47706e7669",
+        "type": "github"
+      },
+      "original": {
+        "owner": "water-sucks",
+        "repo": "optnix",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "agenix": "agenix",
@@ -1086,6 +1107,7 @@
         "noshell": "noshell",
         "nur": "nur",
         "nuschtosSearch": "nuschtosSearch",
+        "optnix": "optnix",
         "rust-overlay": "rust-overlay",
         "system-manager": "system-manager",
         "terranix": "terranix",
