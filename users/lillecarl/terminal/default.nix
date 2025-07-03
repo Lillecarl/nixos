@@ -63,12 +63,6 @@
       generateCaches = false;
     };
 
-    zellij = {
-      enable = false;
-
-      settings = { };
-    };
-
     rbw = {
       enable = true;
       settings = {
