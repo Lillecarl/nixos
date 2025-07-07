@@ -16,6 +16,7 @@ let
           imports = [
             kubenix.modules.k8s
             kubenix.modules.helm
+            kubenix.modules.submodule
             ./cilium.nix
             ./coredns.nix
             ./nginx.nix
@@ -31,6 +32,7 @@ let
         imports = [ ./terranix.nix ];
       };
       extraArgs = {
+        kubenixAttrs = kubenixEval.config.kubernetes.generated;
         kubenixJSON = kubenixEval.config.kubernetes.result;
         kubenixYAML = kubenixEval.config.kubernetes.resultYAML;
       };
@@ -44,6 +46,9 @@ let
     name = "config.tf.json";
     text = terranixJson;
   };
+  terranixJsonPackagePretty = pkgs.runCommandLocal "config.tf.json" { } ''
+    cat ${terranixJsonPackage} | ${lib.getExe pkgs.jq} > $out
+  '';
 in
 if repl then
   {
@@ -55,7 +60,7 @@ else
     ''
       #! ${pkgs.lib.getExe pkgs.fish}
       rm -f ./config.tf.json
-      cp ${terranixJsonPackage} ./config.tf.json
+      cp ${terranixJsonPackagePretty} ./config.tf.json
       if test -f ./config.tf.json
         ${lib.getExe pkgs.opentofu} $argv || return $status
       else

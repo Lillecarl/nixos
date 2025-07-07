@@ -9,7 +9,12 @@ let
   system = "aarch64-linux";
   # system = "x86_64-linux";
   nodes = {
-    gw1 = { inherit system; };
+    gw1 = {
+      inherit system;
+      extraModule = _:{
+        ps.k3s.enable = false;
+      };
+    };
     k3s1 = { inherit system; };
   };
 in
@@ -61,36 +66,39 @@ in
                 clusterDomain = "k8s.lillecarl.com";
               };
             }
-          ] ++ lib.optional (value.extraModule or false) value.extraModule;
+          ] ++ lib.optional (value.extraModule or null != null) value.extraModule;
           inherit specialArgs;
         }
       )
     ) nodes;
 
-    deploy.nodes.k3s1 = withSystem system (
-      { pkgs, ... }:
-      let
-        deployPkgs = import inputs.nixpkgs {
-          inherit system;
-          overlays = [
-            inputs.deploy-rs.overlays.default
-            (self: super: {
-              deploy-rs = {
-                inherit (pkgs) deploy-rs;
-                lib = super.deploy-rs.lib;
-              };
-            })
-          ];
-        };
-      in
-      {
-        hostname = "46.62.143.208";
-        profiles.system = {
-          user = "root";
-          sshUser = "root";
-          path = deployPkgs.deploy-rs.lib.activate.nixos self.nixosConfigurations.k3s1;
-        };
-      }
-    );
+    deploy.nodes = builtins.mapAttrs (
+      name: value:
+      withSystem system (
+        { pkgs, ... }:
+        let
+          deployPkgs = import inputs.nixpkgs {
+            inherit system;
+            overlays = [
+              inputs.deploy-rs.overlays.default
+              (self: super: {
+                deploy-rs = {
+                  inherit (pkgs) deploy-rs;
+                  lib = super.deploy-rs.lib;
+                };
+              })
+            ];
+          };
+        in
+        {
+          hostname = self.nixosConfigurations.${name}.config.ps.nodes.node.ipv4Addr;
+          profiles.system = {
+            user = "root";
+            sshUser = "root";
+            path = deployPkgs.deploy-rs.lib.activate.nixos self.nixosConfigurations.${name};
+          };
+        }
+      )
+    ) nodes;
   };
 }

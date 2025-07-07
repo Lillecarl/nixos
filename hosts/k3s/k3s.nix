@@ -33,11 +33,11 @@ in
       };
     };
   };
-  config = {
+  config = lib.mkIf cfg.enable {
     # Require containerd when we use our own one.
     systemd.services.k3s.requires = [ "containerd.service" ];
     services.k3s = {
-      enable = cfg.enable;
+      enable = true;
       clusterInit = true;
       token = "Cardstock9.Maximum.Sage";
 
@@ -60,9 +60,10 @@ in
         "--disable-kube-proxy" # Cilium
         "--flannel-backend=none" # Cilium
         "--disable-network-policy" # Cilium
-        # "--disable=servicelb" # Cilium
-        # # Make Hetzner Controller happy
-        # "--kubelet-arg=provider-id=hcloud://66552508" # Make this an option
+        "--disable=servicelb" # Cilium
+        # Use Hetzner CCM
+        "--kubelet-arg=cloud-provider=external"
+        "--kubelet-arg=provider-id=hcloud://66552508" # Make this an option
         # OIDC with Keycloak
         "--kube-apiserver-arg=oidc-issuer-url=https://keycloak.lillecarl.com/realms/master"
         "--kube-apiserver-arg=oidc-client-id=kubernetes"
@@ -79,13 +80,7 @@ in
         plugins =
           let
             cniConfig = {
-              # The NixOS module wants to set th
               bin_dir = lib.mkForce "/opt/cni/bin";
-              # bin_dir = lib.mkForce "";
-              # bin_dirs = [
-              #   "/opt/cni/bin"
-              #   "${pkgs.cni-plugins}/bin"
-              # ];
               conf_dir = "/etc/cni/net.d";
             };
           in

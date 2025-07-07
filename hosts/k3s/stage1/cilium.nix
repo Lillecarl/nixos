@@ -27,6 +27,9 @@ in
       k8sServicePort = "6443";
       tunnelProtocol = "geneve";
       routingMode = "tunnel";
+      # Automatic rollouts on configuration updates
+      rollOutCiliumPods = true;
+      # Enable host-scoped IPAM since we don't have BGP
 
       # defaultLBServiceIPAM = "lbipam"; # nodeipam | lbipam
       enableLBIPAM = false;
@@ -34,17 +37,19 @@ in
       # cni.chainingMode="portmap";
       # cni.customConf=true;
       # cni.configMap="cni-configuration";
-      ipMasqAgent.enable = true;
+      # ipMasqAgent.enable = true;
 
       # ipMasqAgent.config.nonMasqueradeCIDRs = "{10.0.0.0/8,172.16.0.0/12,192.168.0.0/16}";
       # ipMasqAgent.config.masqLinkLocal = false;
       # enableMasqueradeRouteSource = false;
-      # endpointRoutes.enabled = true;
+
+      # Enable use of per endpoint routes instead of routing via the cilium_host interface.
+      endpointRoutes.enabled = true;
       policyEnforcementMode = "never";
       # Extra args for cilium-agent
       extraArgs = [
-        # "--devices=lo,enp+"
-        # "--direct-routing-device=enp1s0"
+        "--devices=lo,enp+"
+        "--direct-routing-device=enp1s0"
       ];
 
       cluster = {
@@ -64,12 +69,12 @@ in
         enabled = true;
       };
       bpf = {
-        masquerade = false;
+        masquerade = true;
       };
-      # bgpControlPlane = {
-      #   enabled = true;
-      #   secretsNamespace.name = "cilium";
-      # };
+      bgpControlPlane = {
+        enabled = false;
+        secretsNamespace.name = "cilium";
+      };
       pmtuDiscovery.enabled = true;
     };
   };
