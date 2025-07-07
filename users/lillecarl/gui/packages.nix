@@ -35,6 +35,7 @@
         qbittorrent # OpenSource Qt Bittorrent client
         gimp # Photoshop alternative
         webcamoid # Webcam application
+        winbox4
       ]
       ++ (
         if config.programs.rbw.enable then
