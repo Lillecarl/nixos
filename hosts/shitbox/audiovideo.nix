@@ -59,6 +59,36 @@ in
       }
     ];
   };
+  services.pipewire.wireplumber.extraConfig = {
+    disable-webcam-mic = {
+      "monitor.alsa.rules" = [
+        {
+          matches = [
+            {
+              "device.name" = "alsa_input.usb-046d_HD_Pro_Webcam_C920_6B10B2DF-02.analog-stereo";
+            }
+          ];
+          actions = {
+            "update-props" = {
+              "device.disabled" = true;
+            };
+          };
+        }
+        {
+          matches = [
+            {
+              "device.name" = "alsa_card.usb-046d_HD_Pro_Webcam_C920_6B10B2DF-02";
+            }
+          ];
+          actions = {
+            "update-props" = {
+              "device.disabled" = true;
+            };
+          };
+        }
+      ];
+    };
+  };
 
   # rtkit to make pipewire schedule realtime
   security.rtkit.enable = true;
