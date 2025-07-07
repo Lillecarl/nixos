@@ -3,6 +3,7 @@
   config,
   pkgs,
   inputs,
+  flakeloc,
   ...
 }:
 let
@@ -30,6 +31,9 @@ in
       #     flake = inputs.nixpkgs;
       #   };
       # };
+      nixPath = [
+        "flake=${flakeloc}"
+      ];
     };
   };
 }
