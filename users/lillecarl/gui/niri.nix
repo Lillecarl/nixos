@@ -278,7 +278,6 @@ in
 
         binds = with config.lib.niri.actions; {
           "Mod+Shift+Slash".action = show-hotkey-overlay;
-
           "Mod+T".action.spawn = [ "kitty" ];
           "Mod+D".action.spawn = [
             spawnWrapper
@@ -286,7 +285,7 @@ in
             "-show"
             "drun"
           ];
-          "Mod+Tab".action.spawn = [
+          "Alt+Tab".action.spawn = [
             spawnWrapper
             "rofi"
             "-show"
@@ -336,10 +335,6 @@ in
             repeat = false;
             action.toggle-overview = [ ];
           };
-          "Alt+Tab" = {
-            repeat = false;
-            action.toggle-overview = [ ];
-          };
 
           "Mod+Q".action.close-window = [ ];
 
@@ -349,6 +344,10 @@ in
           "Mod+Right".action.focus-column-right = [ ];
           "Mod+H".action.focus-column-left = [ ];
           "Mod+L".action.focus-column-right = [ ];
+          "Mod+J".action.focus-window-down = [ ];
+          "Mod+K".action.focus-window-up = [ ];
+          "Mod+U".action.focus-workspace-down = [ ];
+          "Mod+I".action.focus-workspace-up = [ ];
 
           "Mod+Ctrl+Left".action.move-column-left = [ ];
           "Mod+Ctrl+Down".action.move-window-down = [ ];
@@ -358,9 +357,7 @@ in
           "Mod+Ctrl+L".action.move-column-right = [ ];
           "Mod+Ctrl+J".action.move-window-down-or-to-workspace-down = [ ];
           "Mod+Ctrl+K".action.move-window-up-or-to-workspace-up = [ ];
-
-          "Mod+J".action.focus-window-or-workspace-down = [ ];
-          "Mod+K".action.focus-window-or-workspace-up = [ ];
+          "Mod+Tab".action.focus-workspace-previous = [ ];
 
           "Mod+Home".action.focus-column-first = [ ];
           "Mod+End".action.focus-column-last = [ ];
