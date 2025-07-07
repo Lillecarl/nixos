@@ -1,0 +1,82 @@
+# Minimum score required for search matches
+min_score = 1
+# Debounce time for search, in ms
+debounce_time = 25
+# Default scope to use if not specified on the command line
+default_scope = ""
+# Formatter command to use for evaluated values, if available. Takes input on
+# stdin and outputs the formatted code back to stdout.
+formatter_cmd = "nixfmt"
+
+[scopes.host]
+description = "Current host"
+options-list-cmd = '''
+nix eval --impure --json --expr '
+let
+  fc = import /home/lillecarl/Code/nixos/repl.nix;
+  inherit (fc.os) options pkgs;
+  optionsList =
+    builtins.filter (v: v.visible && !v.internal)
+    (pkgs.lib.optionAttrSetToDocList options);
+in
+  optionsList
+'
+'''
+evaluator = """
+nix eval --impure --raw --expr '
+let
+  fc = import /home/lillecarl/Code/nixos/repl.nix;
+  inherit (fc.os) config pkgs;
+  inherit (pkgs) lib;
+in
+  lib.generators.toPretty { } config.{{ .Option }}
+'
+"""
+[scopes.home]
+description = "Current home"
+options-list-cmd = '''
+nix eval --impure --json --expr '
+let
+  fc = import /home/lillecarl/Code/nixos/repl.nix;
+  inherit (fc.home) options pkgs;
+  optionsList =
+    builtins.filter (v: v.visible && !v.internal)
+    (pkgs.lib.optionAttrSetToDocList options);
+in
+  optionsList
+'
+'''
+evaluator = """
+nix eval --impure --raw --expr '
+let
+  fc = import /home/lillecarl/Code/nixos/repl.nix;
+  inherit (fc.home) config pkgs;
+  inherit (pkgs) lib;
+in
+  lib.generators.toPretty { } config.{{ .Option }}
+'
+"""
+
+[scopes.gw1]
+# Description text, for command-line completion
+description = "Hetzner gateway nr 1"
+# A path to the options list file. Preferred over options-cmd
+options-list-file = ""
+# A command to run to generate the options list file. The list must be
+# printed on stdout.
+options-list-cmd = '''
+nix eval --file /home/lillecarl/Code/nixos nixosConfigurations.gw1 --json --apply 'input: let
+  inherit (input) options pkgs;
+
+  optionsList =
+    builtins.filter (v: v.visible && !v.internal)
+    (pkgs.lib.optionAttrSetToDocList options);
+in
+  optionsList'
+'''
+# Go template for what to run in order to evaluate the option. Optional, but
+# useful for previewing values.
+# The template MUST contain a single placeholder of "{{ .Option }}"
+# (without quotes) to fill in the option path to evaluate
+# The following is only an example to show how to use the placeholder..
+evaluator = "nix eval --json --file /home/lillecarl/Code/nixos nixosConfigurations.gw1.config.{{ .Option }}"
