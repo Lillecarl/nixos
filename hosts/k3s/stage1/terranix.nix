@@ -51,31 +51,31 @@ let
   kubenix_manifests = lib.listToAttrs (
     lib.map (manifest: {
       name = getKubernetesResourceName manifest;
-      value = manifest;
+      value = {
+        raw = manifest;
+        escaped = escapeStringsDeep manifest;
+      };
     }) kubenixAttrs.items
   );
 
-  kubectl_manifests = lib.pipe kubenix_manifests [
-    (x: lib.filterAttrs (name: value: value.kind != "Secret") x)
-    (
-      x:
-      lib.mapAttrs (
-        name: value:
-        let
-          escapedAttrs = escapeStringsDeep value;
-        in
-        escapedAttrs
-        // {
-          JSON = lib.strings.toJSON escapedAttrs;
-        }
-      ) x
-    )
-  ];
+  kubectl_manifests = lib.mapAttrs (
+    name: value: value.escaped // { JSON = lib.strings.toJSON value.escaped; }
+  ) kubenix_manifests;
 
   kubernetes_manifests = lib.pipe kubenix_manifests [
-    (x: lib.filterAttrs (name: value: value.kind == "Secret") x)
     (x: lib.mapAttrs (name: value: escapeStringsDeep value) x)
   ];
+
+  ignore_fields = {
+    "v1_cilium_secret_cilium-ca" = [
+      "data"
+      "data[*]"
+    ];
+    "v1_cilium_secret_hubble-server-certs" = [
+      "data"
+      "data[*]"
+    ];
+  };
 in
 {
   terraform = {
@@ -91,27 +91,6 @@ in
     };
   };
   provider.kubernetes.config_path = builtins.getEnv "KUBECONFIG";
-  locals.ignore_changes = {
-    "/api/v1/namespaces/cilium/secrets/cilium-ca" = [
-      "yaml_body"
-    ];
-    "/api/v1/namespaces/cilium/secrets/hubble-server-certs" = [
-      "yaml_body"
-    ];
-  };
-  locals.ignore_fields = {
-    "/api/v1/namespaces/cilium/secrets/cilium-ca" = [
-      "data"
-      "data.\"ca.crt\""
-      "data.\"ca.key\""
-    ];
-    "/api/v1/namespaces/cilium/secrets/hubble-server-certs" = [
-      "data"
-      "data.\"ca.crt\""
-      "data.\"tls.crt\""
-      "data.\"tls.key\""
-    ];
-  };
   # locals.kubectl_manifests = lib.mapAttrs (name: value:
   #   value.JSON
   # ) kubectl_manifests;
@@ -144,6 +123,7 @@ in
       #     ''file("${value.JSON}")'';
       yaml_body = value.JSON;
       server_side_apply = true;
+      ignore_fields = if lib.hasAttr name ignore_fields then ignore_fields.${name} else [ ];
       depends_on =
         let
           namespace = value.Namespace or null;
@@ -156,10 +136,19 @@ in
     }) kubectl_manifests)
   ];
 
-  resource.kubernetes_manifest = lib.mapAttrs (name: value: {
-    manifest = value;
-    lifecycle.ignore_changes = [
-      "manifest.data"
-    ];
-  }) kubernetes_manifests;
+  data.kubernetes_resource.example = {
+    api_version = "v1";
+    kind = "Secret";
+    metadata = {
+      name = "cilium-ca";
+      namespace = "cilium";
+    };
+  };
+
+  # resource.kubernetes_manifest = lib.mapAttrs (name: value: {
+  #   manifest = value;
+  #   lifecycle.ignore_changes = [
+  #     "manifest.data"
+  #   ];
+  # }) kubernetes_manifests;
 }
