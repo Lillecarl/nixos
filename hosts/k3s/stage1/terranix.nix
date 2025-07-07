@@ -6,6 +6,7 @@
   ...
 }:
 let
+  # Takes a k8s manifest and returns a string that can be used as tf resource name
   getKubernetesResourceName =
     manifest:
     let
@@ -22,30 +23,35 @@ let
     in
     attrName;
 
+  # Apply function to all strings in an attrset recursively through lists as well.
   mapStringsDeep =
-    f: value:
-    if builtins.isString value then
-      f value
-    else if builtins.isAttrs value then
-      lib.mapAttrs (name: mapStringsDeep f) value
-    else if builtins.isList value then
-      map (mapStringsDeep f) value
+    function: value:
+    if lib.isStringLike value then
+      function (toString value)
+    else if lib.isAttrs value then
+      lib.mapAttrs (name: mapStringsDeep function) value
+    else if lib.isList value then
+      map (mapStringsDeep function) value
     else
       value;
 
+  # Escapes strings so variables aren't interpolated with ${} and %{}
   tfEscapeString =
     value:
     lib.replaceStrings
       [
-        ("$" + "{") # Terraform will parse ${ as variable interpolation, same as Nix. Escaped as $${
-        "%{" # Terraform will parse %{ as variable interpolation, escaped is %%{
+        # Nix and tf shares this escape pattern
+        "\${"
+        # tf also interpolates %{}
+        "%{"
       ]
       [
-        ("$" + "$" + "{")
+        "$\${"
         "%%{"
       ]
       value;
 
+  # Escape
   escapeStringsDeep = attrs: mapStringsDeep tfEscapeString attrs;
 
   kubenix_manifests = lib.listToAttrs (
@@ -62,9 +68,7 @@ let
     name: value: value.escaped // { JSON = lib.strings.toJSON value.escaped; }
   ) kubenix_manifests;
 
-  kubernetes_manifests = lib.pipe kubenix_manifests [
-    (x: lib.mapAttrs (name: value: escapeStringsDeep value) x)
-  ];
+  kubernetes_manifests = lib.mapAttrs (name: value: value.escaped) kubenix_manifests;
 
   ignore_fields = {
     "v1_cilium_secret_cilium-ca" = [
@@ -102,19 +106,11 @@ in
   #   if lib.isString value then escape value else
   #   if lib.isList value then
   # ) kubectl_manifests;
-  locals.kubectl_manifests = mapStringsDeep (
-    value:
-    lib.replaceStrings
-      [
-        ("$" + "{") # Terraform will parse ${ as variable interpolation, same as Nix. Escaped as $${
-        "%{" # Terraform will parse %{ as variable interpolation, escaped is %%{
-      ]
-      [
-        ("$" + "$" + "{")
-        "%%{"
-      ]
-      value
-  ) kubectl_manifests;
+  locals.kubectl_manifests = kubectl_manifests;
+  locals.test = escapeStringsDeep {
+    asdf = "fdsa";
+    hello = pkgs.hello;
+  };
 
   resource.kubectl_manifest = lib.mkMerge [
     (lib.mapAttrs (name: value: {
@@ -135,20 +131,4 @@ in
         ];
     }) kubectl_manifests)
   ];
-
-  data.kubernetes_resource.example = {
-    api_version = "v1";
-    kind = "Secret";
-    metadata = {
-      name = "cilium-ca";
-      namespace = "cilium";
-    };
-  };
-
-  # resource.kubernetes_manifest = lib.mapAttrs (name: value: {
-  #   manifest = value;
-  #   lifecycle.ignore_changes = [
-  #     "manifest.data"
-  #   ];
-  # }) kubernetes_manifests;
 }
