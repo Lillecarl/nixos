@@ -126,7 +126,7 @@ in
           }
         ];
         input = {
-          warp-mouse-to-focus = true;
+          warp-mouse-to-focus.enable = true;
           focus-follows-mouse.enable = false;
 
           keyboard.xkb.layout = "eu,se";
