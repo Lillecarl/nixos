@@ -2,7 +2,7 @@
   self,
   inputs,
   withSystem,
-  #, flakeloc
+  #, repositoryLocation
   __curPos ? __curPos,
   ...
 }:
@@ -21,7 +21,7 @@ in
                 pkgs,
                 mpkgs,
                 spkgs,
-                flakeloc,
+                repositoryLocation,
                 ...
               }:
               inputs.home-manager.lib.homeManagerConfiguration {
@@ -30,7 +30,7 @@ in
                   inherit
                     self
                     inputs
-                    flakeloc
+                    repositoryLocation
                     mpkgs
                     spkgs
                     ;
@@ -74,7 +74,7 @@ in
               pkgs,
               mpkgs,
               spkgs,
-              flakeloc,
+              repositoryLocation,
               ...
             }:
             inputs.home-manager.lib.homeManagerConfiguration {
@@ -83,7 +83,7 @@ in
                 inherit
                   self
                   inputs
-                  flakeloc
+                  repositoryLocation
                   mpkgs
                   spkgs
                   ;
@@ -111,7 +111,7 @@ in
             pkgs,
             mpkgs,
             spkgs,
-            flakeloc,
+            repositoryLocation,
             ...
           }:
           inputs.home-manager.lib.homeManagerConfiguration {
@@ -120,7 +120,7 @@ in
               inherit
                 self
                 inputs
-                flakeloc
+                repositoryLocation
                 mpkgs
                 spkgs
                 ;

@@ -246,7 +246,7 @@
         ];
       };
 
-      flakeloc =
+      repositoryLocation =
         let
           loc = builtins.getEnv "FLAKE";
         in
@@ -274,7 +274,7 @@
 
       # Passed to flake-parts modules
       specialArgs = {
-        inherit flakeloc slib;
+        inherit repositoryLocation slib;
       };
     in
     inputs.flake-parts.lib.mkFlake

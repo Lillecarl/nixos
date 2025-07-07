@@ -1,7 +1,7 @@
 {
   lib,
   pkgs,
-  flakeloc,
+  repositoryLocation,
   self,
   config,
   nixosConfig,

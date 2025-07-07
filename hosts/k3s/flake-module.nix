@@ -26,7 +26,7 @@ in
         {
           config,
           pkgs,
-          flakeloc,
+          repositoryLocation,
           ...
         }:
         let
@@ -34,7 +34,7 @@ in
           specialArgs = {
             inherit
               inputs
-              flakeloc
+              repositoryLocation
               self
               ;
           };

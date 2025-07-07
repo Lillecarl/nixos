@@ -14,12 +14,12 @@ in
       {
         pkgs,
         mypkgs,
-        flakeloc,
+        repositoryLocation,
         ...
       }@ctx:
       let
         specialArgs = {
-          inherit inputs flakeloc self;
+          inherit inputs repositoryLocation self;
         };
       in
       mypkgs.lib.nixosSystem {

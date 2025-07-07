@@ -3,7 +3,7 @@
   config,
   pkgs,
   inputs,
-  flakeloc,
+  repositoryLocation,
   ...
 }:
 let
@@ -26,13 +26,8 @@ in
         warn-dirty = false;
         keep-going = true;
       };
-      # registry = {
-      #   nixpkgs = {
-      #     flake = inputs.nixpkgs;
-      #   };
-      # };
       nixPath = [
-        "flake=${flakeloc}"
+        "flake=${repositoryLocation}"
       ];
     };
   };

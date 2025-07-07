@@ -2,7 +2,7 @@
   lib,
   config,
   pkgs,
-  flakeloc,
+  repositoryLocation,
   ...
 }:
 let
@@ -34,7 +34,7 @@ in
       POWERSHELL_TELEMETRY_OPTOUT = "yes"; # No powershell telemetry
       NIXOS_OZONE_WL = "1"; # Use Wayland whenever we can
       PIP_DISABLE_PIP_VERSION_CHECK = "1"; # Disable pip version warnings
-      FLAKE = flakeloc;
+      FLAKE = repositoryLocation;
       SYSSTR = pkgs.system;
       HOST = config.networking.hostName;
     };

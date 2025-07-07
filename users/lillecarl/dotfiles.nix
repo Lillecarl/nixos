@@ -1,13 +1,13 @@
 {
   lib,
   pkgs,
-  flakeloc,
+  repositoryLocation,
   self,
   config,
   ...
 }:
 let
-  dotfilesPath = "${flakeloc}/users/lillecarl/dotfiles";
+  dotfilesPath = "${repositoryLocation}/users/lillecarl/dotfiles";
   fromTo = builtins.map (
     path:
     let

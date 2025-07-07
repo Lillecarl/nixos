@@ -36,12 +36,12 @@ in
           {
             config,
             pkgs,
-            flakeloc,
+            repositoryLocation,
             ...
           }:
           let
             specialArgs = {
-              inherit inputs flakeloc self;
+              inherit inputs repositoryLocation self;
             };
           in
           inputs.nixpkgs.lib.nixosSystem {
