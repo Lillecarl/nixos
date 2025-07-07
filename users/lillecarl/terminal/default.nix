@@ -18,10 +18,10 @@
     ./fish.nix
     ./git.nix
     ./glab.nix
-    ./gnome-keyring.nix
     ./gpg.nix
     ./helix.nix
     ./helix_fat.nix
+    ./keepassxc.nix
     ./krew.nix
     ./lsd.nix
     ./neovim.nix
@@ -44,9 +44,9 @@
     ./tmux.nix
     ./xonsh.nix
     ./xonsh_mod.nix
+    ./zellij.nix
     ./zoxide.nix
     ./zsh.nix
-    ./zellij.nix
   ];
 
   home = {

@@ -20,7 +20,7 @@ in
   config = lib.mkIf cfg.enable {
     services.gpg-agent = {
       enable = true;
-      enableSshSupport = false; # gnome-keyring
+      enableSshSupport = false; # ssh-agent + keepassxc
       enableExtraSocket = true;
       #pinentryPackage = pkgs.pinentry-qt;
       grabKeyboardAndMouse = false;
