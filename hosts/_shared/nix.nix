@@ -74,9 +74,9 @@ in
       #     flake = inputs.nixpkgs;
       #   };
       # };
-      # nixPath = [
-      #   "nixpkgs=${inputs.nixpkgs}"
-      # ];
+      nixPath = [
+        "nixpkgs=${inputs.nixpkgs.outPath}"
+      ];
       #registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
       #nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
 
