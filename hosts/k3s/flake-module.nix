@@ -15,7 +15,12 @@ let
         ps.k3s.enable = false;
       };
     };
-    k3s1 = { inherit system; };
+    k3s1 = {
+      system = "aarch64-linux";
+    };
+    k3s2 = {
+      system = "x86_64-linux";
+    };
   };
 in
 {
@@ -50,6 +55,13 @@ in
                   ipv4Addr = "46.62.143.208";
                   ipv6Addr = "2a01:4f9:c012:6632::1";
                   diskPath = "/dev/disk/by-path/pci-0000:06:00.0-scsi-0:0:0:1";
+                  ifName = "enp1s0";
+                  ASN = 65012;
+                };
+                k3s2 = {
+                  ipv4Addr = "37.27.255.65";
+                  ipv6Addr = "2a01:4f9:c012:e004::1";
+                  diskPath = "/dev/disk/by-path/pci-0000:06:00.0-scsi-0:0:0:0";
                   ifName = "enp1s0";
                   ASN = 65012;
                 };
