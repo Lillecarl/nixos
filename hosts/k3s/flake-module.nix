@@ -55,6 +55,7 @@ in
                 k3s1 = {
                   ipv4Addr = "46.62.143.208";
                   ipv6Addr = "2a01:4f9:c012:6632::1";
+                  diskPath = "/dev/disk/by-path/pci-0000:06:00.0-scsi-0:0:0:1";
                   ifName = "enp1s0";
                   ASN = 65012;
                 };

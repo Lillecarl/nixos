@@ -1,9 +1,10 @@
+{ config, ... }:
 {
   disko.devices = {
     disk = {
       local = {
         type = "disk";
-        device = "/dev/disk/by-path/pci-0000:06:00.0-scsi-0:0:0:1";
+        device = config.ps.nodes.node.diskPath;
         content = {
           type = "gpt";
           partitions = {

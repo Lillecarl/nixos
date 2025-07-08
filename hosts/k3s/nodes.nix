@@ -28,6 +28,10 @@ in
             description = "Primary IPv6 IP";
             type = lib.types.str;
           };
+          diskPath = lib.mkOption {
+            description = "Local disk path";
+            type = lib.types.str;
+          };
           ifName = lib.mkOption {
             description = "WAN interface name";
             type = lib.types.str;
