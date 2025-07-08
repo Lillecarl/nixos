@@ -11,7 +11,7 @@ let
   nodes = {
     gw1 = {
       inherit system;
-      extraModule = _:{
+      extraModule = _: {
         ps.k3s.enable = false;
       };
     };
@@ -46,12 +46,6 @@ in
             {
               networking.hostName = name;
               ps.nodes.nodes = {
-                gw1 = {
-                  ipv4Addr = "37.27.255.65";
-                  ipv6Addr = "2a01:4f9:c012:e004::1";
-                  ifName = "enp1s0";
-                  ASN = 65010;
-                };
                 k3s1 = {
                   ipv4Addr = "46.62.143.208";
                   ipv6Addr = "2a01:4f9:c012:6632::1";
