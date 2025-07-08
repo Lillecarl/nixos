@@ -14,13 +14,7 @@ let
         { kubenix, ... }:
         {
           imports = [
-            kubenix.modules.k8s
-            kubenix.modules.helm
-            kubenix.modules.submodule
-            ./cilium.nix
-            ./coredns.nix
-            ./nginx.nix
-            ./local-path-provisioner.nix
+            ./kubenix.nix
           ];
         };
     }
