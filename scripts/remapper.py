@@ -20,10 +20,16 @@ from evdev import ecodes
 
 # Configuration
 DOMNAME = "win11-4"
-volumectl = partial(sh.volumectl, _async=True) # type: ignore
-ddcutil = partial(sh.ddcutil, _async=True) # type: ignore
-virsh = partial(sh.virsh, _async=True) # type: ignore
 
+_shargs = {
+    "_async": True,
+    "_timeout": 5,
+    "_tee": True,
+}
+volumectl = partial(sh.volumectl, **_shargs)  # type: ignore
+ddcutil = partial(sh.ddcutil, **_shargs)  # type: ignore
+virsh = partial(sh.virsh, **_shargs)  # type: ignore
+lsusb = partial(sh.lsusb, **_shargs)  # type: ignore
 # Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
