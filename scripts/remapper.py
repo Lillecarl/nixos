@@ -591,9 +591,9 @@ class VMController:
         xml_path = await VMController.create_usbxml(vendorid, productid)
         try:
             await virsh(action, vm, xml_path, "--live")
-            logger.info(f"Attached {xml_path} to {vm}")
+            logger.info(f"{action} {xml_path} to {vm}")
         except sh.ErrorReturnCode as e:
-            logger.error(f"Failed to attach {xml_path} to {vm}: {e.stderr.decode()}")
+            logger.error(f"Failed to {action} {xml_path} to {vm}: {e.stderr.decode()}")
 
     @staticmethod
     async def attach_device(vm: str, vendorid: str, productid: str):
