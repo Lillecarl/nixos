@@ -6,6 +6,7 @@ import hashlib
 import logging
 import os
 import time
+import pygame
 from abc import ABC, abstractmethod
 from collections import defaultdict
 from enum import IntEnum, auto
@@ -30,6 +31,8 @@ volumectl = partial(sh.volumectl, **_shargs)  # type: ignore
 ddcutil = partial(sh.ddcutil, **_shargs)  # type: ignore
 virsh = partial(sh.virsh, **_shargs)  # type: ignore
 lsusb = partial(sh.lsusb, **_shargs)  # type: ignore
+wpctl = partial(sh.wpctl, **_shargs)  # type: ignore
+
 # Set up logging
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
@@ -441,6 +444,8 @@ class MacropadRemapper(BaseEventRemapper):
 
     def __init__(self, device_info: DeviceInfo, task_queue: AsyncTaskQueue):
         super().__init__(device_info, task_queue, "_macropad")
+        pygame.mixer.init()
+        pygame.mixer.music.load("/home/lillecarl/Documents/kbnotification.mp3")
 
     async def handle_event(self, event: evdev.InputEvent) -> bool:
         """Handle macropad events"""
@@ -454,7 +459,18 @@ class MacropadRemapper(BaseEventRemapper):
         """Process macropad key events"""
         active_keys = self.input_device.active_keys()
 
-        if ecodes.KEY_KP0 in active_keys:
+        if event.code == ecodes.KEY_KP0:
+            async def play_notification():
+                # await self.task_queue.add_task(self.attach_gaming_devices)
+                sysvolstr = await wpctl("get-volume", "@DEFAULT_AUDIO_SINK@")
+                sysvolmul = float(sysvolstr.split()[1])
+                outvolmul = 0.1 / max(sysvolmul / 2, 0.1)
+                logger.info(f"KP0: Playing notification. sysvolmul: {sysvolmul} outvolmul: {outvolmul}")
+                pygame.mixer.music.set_volume(outvolmul)
+                pygame.mixer.music.play()
+
+            await self.task_queue.add_task(play_notification)
+        elif ecodes.KEY_KP0 in active_keys:
             if event.code == ecodes.KEY_KP1:
                 await self.task_queue.add_task(VMController.stop_vm, DOMNAME)
             elif event.code == ecodes.KEY_KP2:
