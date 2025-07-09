@@ -472,13 +472,13 @@ class MacropadRemapper(BaseEventRemapper):
             await self.task_queue.add_task(play_notification)
         elif ecodes.KEY_KP0 in active_keys:
             if event.code == ecodes.KEY_KP1:
-                await self.task_queue.add_task(VMController.stop_vm, DOMNAME)
-            elif event.code == ecodes.KEY_KP2:
                 await self.task_queue.add_task(VMController.start_vm, DOMNAME)
+            elif event.code == ecodes.KEY_KP2:
+                await self.task_queue.add_task(VMController.stop_vm, DOMNAME)
         elif event.code == ecodes.KEY_KP1:
-            await self.task_queue.add_task(self._attach_gaming_devices)
+            await self.task_queue.add_task(self.attach_gaming_devices)
         elif event.code == ecodes.KEY_KP2:
-            await self.task_queue.add_task(self._detach_gaming_devices)
+            await self.task_queue.add_task(self.detach_gaming_devices)
         elif event.code == ecodes.KEY_KP4:
             await self.task_queue.add_task(DisplayController.set_dp)
         elif event.code == ecodes.KEY_KP5:
@@ -488,33 +488,31 @@ class MacropadRemapper(BaseEventRemapper):
         elif event.code == ecodes.KEY_KPMINUS:
             await self.task_queue.add_task(self._volume_down)
 
-    async def _attach_gaming_devices(self):
+    async def _set_gamingdevices(self, attach: bool):
         """Attach gaming devices to VM"""
         devices = [
-            "shitkeyboard.xml",
-            "steelseries-sensei.xml", 
-            "glorious-mouse.xml",
-            "8bitdo.xml",
-            "8bitdo_idle.xml"
+            ("2dc8", "310a"),  # 8bitdo
+            ("2dc8", "310c"),  # 8bitdo idle
+            ("1c4f", "0083"),  # shitkeyboard
+            ("258a", "0033"),  # glorious-mouse
         ]
-        base_path = "/home/lillecarl/Code/nixos/resources"
 
         for device in devices:
-            await VMController.attach_device(DOMNAME, f"{base_path}/{device}")
+            await self.task_queue.add_task(
+                VMController._set_device,
+                DOMNAME,
+                attach,
+                device[0],
+                device[1],
+            )
 
-    async def _detach_gaming_devices(self):
-        """Detach gaming devices from VM"""
-        devices = [
-            "shitkeyboard.xml",
-            "steelseries-sensei.xml",
-            "glorious-mouse.xml", 
-            "8bitdo.xml",
-            "8bitdo_idle.xml"
-        ]
-        base_path = "/home/lillecarl/Code/nixos/resources"
+    async def attach_gaming_devices(self):
+        """Attach gaming devices to VM"""
+        await self._set_gamingdevices(True)
 
-        for device in devices:
-            await VMController.detach_device(DOMNAME, f"{base_path}/{device}")
+    async def detach_gaming_devices(self):
+        """Attach gaming devices to VM"""
+        await self._set_gamingdevices(False)
 
     async def _volume_up(self):
         """Increase system volume"""
@@ -573,10 +571,26 @@ class VMController:
     """Handles VM operations"""
 
     @staticmethod
-    async def attach_device(vm: str, xml_path: str):
-        """Attach device to VM"""
+    async def create_usbxml(vendorid: str, productid: str):
+        xmlPath = Path(f"/tmp/{vendorid}:{productid}.xml")
+        xmlPath.write_text(
+            f"""
+<hostdev mode="subsystem" type="usb" managed="yes">
+  <source>
+    <vendor id="0x{vendorid}"/>
+    <product id="0x{productid}"/>
+  </source>
+</hostdev>
+""".lstrip()
+        )
+        return xmlPath
+
+    @staticmethod
+    async def _set_device(vm: str, attach: bool, vendorid: str, productid: str):
+        action = "attach-device" if attach else "detach-device"
+        xml_path = await VMController.create_usbxml(vendorid, productid)
         try:
-            await virsh("attach-device", vm, xml_path, "--live")
+            await virsh(action, vm, xml_path, "--live")
             logger.info(f"Attached {xml_path} to {vm}")
         except sh.ErrorReturnCode as e:
             logger.error(f"Failed to attach {xml_path} to {vm}: {e.stderr.decode()}")
