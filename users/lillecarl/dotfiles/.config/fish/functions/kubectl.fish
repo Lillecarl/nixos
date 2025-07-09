@@ -6,7 +6,7 @@ function kubectl --wraps=kubectl
     if test $command = list
         kubectl get pods \
             --all-namespaces=true \
-            --output=custom-columns=NAMESPACE:".metadata.namespace",NAME:".metadata.name",PHASE:".status.phase" \
+            --output=custom-columns=NAMESPACE:".metadata.namespace",NAME:".metadata.name",STATUS:".status.phase" \
             $args
     else if test $command = podclean
         set podlist (kubectl list --no-headers=true)
