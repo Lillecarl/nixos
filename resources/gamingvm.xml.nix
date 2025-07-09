@@ -110,8 +110,8 @@ in
         <address type='pci' domain='0x0000' bus='0x00' slot='0x1b' function='0x0'/>
       </sound>
       <audio id='1' type='pipewire' runtimeDir='/run'>
-        <input mixingEngine='no' streamName='win11input' latency='15000'/>
-        <output mixingEngine='no' streamName='win11output' latency='15000'/>
+        <input mixingEngine='no' streamName='vminput'/>
+        <output mixingEngine='no' streamName='vmoutput'/>
       </audio>
       <emulator>/run/libvirt/nix-emulators/qemu-system-x86_64</emulator>
       <disk type='block' device='disk'>
