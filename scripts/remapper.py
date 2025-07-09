@@ -428,58 +428,6 @@ class StandardKeyboardRemapper(BaseEventRemapper):
             self.tap_key(ecodes.KEY_CAPSLOCK)
             return True
 
-        # Handle scroll/mouse movement with CapsLock
-        if self._is_input_key_active(ecodes.KEY_CAPSLOCK):
-            return self._handle_caps_combinations(event, key_state)
-
-        return False
-
-    def _handle_caps_combinations(self, event: evdev.InputEvent, key_state: Dict) -> bool:
-        """Handle CapsLock combination keys"""
-        if event.code not in [ecodes.KEY_H, ecodes.KEY_J, ecodes.KEY_K, ecodes.KEY_L, ecodes.KEY_SPACE]:
-            return False
-
-        distance = 1
-        if self._is_input_key_active(ecodes.KEY_SPACE):
-            distance = key_state[State.HOLDCOUNT]
-
-        mouse_event = None
-        if not self._is_input_key_active(ecodes.KEY_SPACE):
-            # Scroll mode
-            if event.code == ecodes.KEY_H:
-                mouse_event = (Rel.SCROLLX, -distance)
-            elif event.code == ecodes.KEY_J:
-                mouse_event = (Rel.SCROLLY, -distance)
-            elif event.code == ecodes.KEY_K:
-                mouse_event = (Rel.SCROLLY, distance)
-            elif event.code == ecodes.KEY_L:
-                mouse_event = (Rel.SCROLLX, distance)
-        else:
-            # Mouse movement mode
-            if event.code == ecodes.KEY_H:
-                mouse_event = (Rel.MOUSEX, -distance)
-            elif event.code == ecodes.KEY_J:
-                mouse_event = (Rel.MOUSEY, distance)
-            elif event.code == ecodes.KEY_K:
-                mouse_event = (Rel.MOUSEY, -distance)
-            elif event.code == ecodes.KEY_L:
-                mouse_event = (Rel.MOUSEX, distance)
-
-        if mouse_event:
-            # Release ctrl keys to avoid zooming
-            if not self._is_input_key_active(ecodes.KEY_LEFTCTRL):
-                self.release_key(ecodes.KEY_LEFTCTRL)
-            if not self._is_input_key_active(ecodes.KEY_RIGHTCTRL):
-                self.release_key(ecodes.KEY_RIGHTCTRL)
-
-            self.write_event(
-                evdev.InputEvent(0, 0, ecodes.EV_REL, mouse_event[0], mouse_event[1])
-            )
-            return True
-
-        if event.code == ecodes.KEY_SPACE:
-            return True
-
         return False
 
     async def _shutdown(self):
@@ -840,7 +788,7 @@ async def main():
         #     logger.error(f"Unknown remapper type: {remapper_type}")
         #     continue
 
-        remapper = manager.create_macropad_remapper(device_id) # Only start macropad
+        remapper = manager.create_macropad_remapper(device_id)  # Only start macropad
 
         if remapper:
             manager.add_remapper(remapper)
@@ -861,6 +809,7 @@ async def main():
         raise
     finally:
         await manager.cleanup()
+
 
 if __name__ == "__main__":
     sys.dont_write_bytecode = True
