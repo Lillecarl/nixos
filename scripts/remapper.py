@@ -31,7 +31,9 @@ ddcutil = partial(sh.ddcutil, **_shargs)  # type: ignore
 virsh = partial(sh.virsh, **_shargs)  # type: ignore
 lsusb = partial(sh.lsusb, **_shargs)  # type: ignore
 # Set up logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+)
 logger = logging.getLogger(__name__)
 
 
@@ -67,6 +69,7 @@ class Rel(IntEnum):
     MOUSEY = 1
     SCROLLX = 6
     SCROLLY = 8
+
 
 class DeviceInfo:
     """Information about an input device including unique hash"""
@@ -188,20 +191,26 @@ class DeviceManager:
                 matches.append(device_info)
         return matches
 
-    def create_virtual_device(self, input_device: evdev.InputDevice, name_suffix: str = "") -> evdev.UInput:
+    def create_virtual_device(
+        self, input_device: evdev.InputDevice, name_suffix: str = ""
+    ) -> evdev.UInput:
         """Create virtual output device based on input device capabilities"""
         all_capabilities = defaultdict(set)
 
         for ev_type, ev_codes in input_device.capabilities().items():
             all_capabilities[ev_type].update(ev_codes)
 
-        all_capabilities[ecodes.EV_REL].update([Rel.MOUSEX, Rel.MOUSEY, Rel.SCROLLX, Rel.SCROLLY])
+        all_capabilities[ecodes.EV_REL].update(
+            [Rel.MOUSEX, Rel.MOUSEY, Rel.SCROLLX, Rel.SCROLLY]
+        )
 
         if ecodes.EV_SYN in all_capabilities:
             del all_capabilities[ecodes.EV_SYN]
 
         device_name = f"pykbd{name_suffix}"
-        result: Dict[int, Sequence[int]] = {k: list(v) for k, v in all_capabilities.items()}
+        result: Dict[int, Sequence[int]] = {
+            k: list(v) for k, v in all_capabilities.items()
+        }
         udev = evdev.UInput(events=result, name=device_name)
 
         symlink_path = f"/dev/input/{device_name}"
@@ -215,7 +224,9 @@ class DeviceManager:
 class BaseEventRemapper(ABC):
     """Base class for event remappers"""
 
-    def __init__(self, device_info: DeviceInfo, task_queue: AsyncTaskQueue, name_suffix: str = ""):
+    def __init__(
+        self, device_info: DeviceInfo, task_queue: AsyncTaskQueue, name_suffix: str = ""
+    ):
         self.device_info = device_info
         self.input_device = device_info.device
         self.task_queue = task_queue
@@ -288,7 +299,11 @@ class BaseEventRemapper(ABC):
         """Check if UP event can be written"""
         if value != Action.UP:
             return True
-        return etype == ecodes.EV_KEY and value == Action.UP and self._is_output_key_active(code)
+        return (
+            etype == ecodes.EV_KEY
+            and value == Action.UP
+            and self._is_output_key_active(code)
+        )
 
     def _is_input_key_active(self, key: int) -> bool:
         """Check if key is active on input device"""
@@ -317,7 +332,9 @@ class BaseEventRemapper(ABC):
         output_device = evdev.InputDevice(self.output_device.device.path)
         active_keys = output_device.active_keys()
         if active_keys:
-            logger.info(f"[{self.device_info.hash}] Releasing {len(active_keys)} stuck output keys")
+            logger.info(
+                f"[{self.device_info.hash}] Releasing {len(active_keys)} stuck output keys"
+            )
             for key_id in active_keys:
                 self.release_key(key_id)
 
@@ -372,38 +389,21 @@ class StandardKeyboardRemapper(BaseEventRemapper):
             return False  # Pass through non-key events
 
         # Exit combination: ESC + END
-        if (self._is_input_key_active(ecodes.KEY_ESC) and 
-            self._is_input_key_active(ecodes.KEY_END)):
+        if self._is_input_key_active(ecodes.KEY_ESC) and self._is_input_key_active(
+            ecodes.KEY_END
+        ):
             await self.task_queue.add_task(self._shutdown)
             return True
 
         key_state = self.update_key_state(event)
 
-        if self.debug and (event.value != Action.HOLD or key_state[State.HOLDCOUNT] == 1):
+        if self.debug and (
+            event.value != Action.HOLD or key_state[State.HOLDCOUNT] == 1
+        ):
             logger.debug(f"[{self.device_info.hash}] Input: {evdev.categorize(event)}")
-
-        # Handle special combinations
-        if await self._handle_special_combinations(event, key_state):
-            return True
-
-        # Gaming mode - pass through all events
-        if self.gaming_mode:
-            return False
 
         # Handle remapping
         return await self._handle_remapping(event, key_state)
-
-    async def _handle_special_combinations(self, event: evdev.InputEvent, key_state: Dict) -> bool:
-        """Handle special key combinations"""
-        if (event.code == ecodes.KEY_SCROLLLOCK and event.value == Action.DOWN and
-            time.time() - key_state[State.UPTIME] < 0.5):
-
-            if self._is_input_key_active(ecodes.KEY_LEFTMETA):
-                self.gaming_mode = not self.gaming_mode
-                logger.info(f"[{self.device_info.hash}] Gaming mode: {'on' if self.gaming_mode else 'off'}")
-                return True
-
-        return False
 
     async def _handle_remapping(self, event: evdev.InputEvent, key_state: Dict) -> bool:
         """Handle key remapping logic"""
@@ -412,14 +412,19 @@ class StandardKeyboardRemapper(BaseEventRemapper):
             event.code = ecodes.KEY_LEFTCTRL
             self.write_event(event)
 
-            if (event.value == Action.UP and 
-                time.time() - key_state[State.DOWNTIME] < self.caps_esc_threshold):
+            if (
+                event.value == Action.UP
+                and time.time() - key_state[State.DOWNTIME] < self.caps_esc_threshold
+            ):
                 self.tap_key(ecodes.KEY_ESC)
             return True
 
         # Caps + ESC -> CapsLock
-        if (event.code == ecodes.KEY_ESC and event.value == Action.DOWN and
-            self._is_input_key_active(ecodes.KEY_CAPSLOCK)):
+        if (
+            event.code == ecodes.KEY_ESC
+            and event.value == Action.DOWN
+            and self._is_input_key_active(ecodes.KEY_CAPSLOCK)
+        ):
             self.tap_key(ecodes.KEY_CAPSLOCK)
             return True
 
@@ -613,13 +618,14 @@ class VMController:
             logger.error(f"Failed to attach {xml_path} to {vm}: {e.stderr.decode()}")
 
     @staticmethod
-    async def detach_device(vm: str, xml_path: str):
+    async def attach_device(vm: str, vendorid: str, productid: str):
+        """Attach device to VM"""
+        return await VMController._set_device(vm, True, vendorid, productid)
+
+    @staticmethod
+    async def detach_device(vm: str, vendorid: str, productid: str):
         """Detach device from VM"""
-        try:
-            await virsh("detach-device", vm, xml_path, "--live")
-            logger.info(f"Detached {xml_path} from {vm}")
-        except sh.ErrorReturnCode as e:
-            logger.error(f"Failed to detach {xml_path} from {vm}: {e.stderr.decode()}")
+        return await VMController._set_device(vm, False, vendorid, productid)
 
     @staticmethod
     async def start_vm(vm: str):
@@ -664,14 +670,18 @@ class RemapperManager:
         """Add a remapper to be managed"""
         self.remappers.append(remapper)
 
-    def create_standard_remapper(self, device_identifier: str) -> Optional[BaseEventRemapper]:
+    def create_standard_remapper(
+        self, device_identifier: str
+    ) -> Optional[BaseEventRemapper]:
         """Create a standard keyboard remapper for the given device"""
         device_info = self._find_device(device_identifier)
         if device_info:
             return StandardKeyboardRemapper(device_info, self.task_queue)
         return None
 
-    def create_macropad_remapper(self, device_identifier: str) -> Optional[BaseEventRemapper]:
+    def create_macropad_remapper(
+        self, device_identifier: str
+    ) -> Optional[BaseEventRemapper]:
         """Create a macropad remapper for the given device"""
         device_info = self._find_device(device_identifier)
         if device_info:
@@ -751,11 +761,15 @@ class RemapperManager:
                 # Check each remapper for stuck keys
                 for remapper in self.remappers:
                     input_active = remapper.input_device.active_keys()
-                    output_device = evdev.InputDevice(remapper.output_device.device.path)
+                    output_device = evdev.InputDevice(
+                        remapper.output_device.device.path
+                    )
                     output_active = output_device.active_keys()
 
                     if len(input_active) == 0 and len(output_active) > 0:
-                        logger.warning(f"Timer cleanup for {remapper.device_info.hash}: releasing {len(output_active)} stuck keys")
+                        logger.warning(
+                            f"Timer cleanup for {remapper.device_info.hash}: releasing {len(output_active)} stuck keys"
+                        )
                         remapper.release_all_output_keys()
 
             except asyncio.CancelledError:
@@ -777,25 +791,21 @@ Examples:
   %(prog)s a1b2c3                        # Use device by partial hash
   %(prog)s a1b2c3:standard               # Specify remapper type
   %(prog)s "Keyboard 1" b4c5d6:macropad  # Multiple devices
-        """
+        """,
     )
 
     parser.add_argument(
         "devices",
         nargs="*",
-        help="Device identifiers (name, hash, or partial hash) with optional :type suffix"
+        help="Device identifiers (name, hash, or partial hash) with optional :type suffix",
     )
 
     parser.add_argument(
-        "--list", "-l",
-        action="store_true",
-        help="List all available devices and exit"
+        "--list", "-l", action="store_true", help="List all available devices and exit"
     )
 
     parser.add_argument(
-        "--debug", "-d",
-        action="store_true",
-        help="Enable debug logging"
+        "--debug", "-d", action="store_true", help="Enable debug logging"
     )
 
     return parser.parse_args()
