@@ -16,6 +16,7 @@
       url = "github:water-sucks/optnix";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-compat.follows = "";
+    };
     kubenix = {
       url = "github:hall/kubenix/main";
       inputs = {
@@ -264,7 +265,8 @@
       imports = [
         ./checks/flake-module.nix
         ./fmt/flake-module.nix
-        ./hosts/hetzner/flake-module.nix
+        # ./hosts/hetzner/flake-module.nix
+        ./hosts/k3s/flake-module.nix
         ./hosts/penguin/flake-module.nix
         ./hosts/shitbox/flake-module.nix
         ./repl/flake-module.nix
