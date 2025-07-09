@@ -211,8 +211,8 @@ in
         <address type='pci' domain='0x0000' bus='0x03' slot='0x00' function='0x0'/>
       </filesystem>
       <interface type='bridge'>
-        <mac address='52:54:00:29:5b:d6'/>
-        <source bridge='br13'/>
+        <mac address='02:00:00:12:34:57'/>
+        <source bridge='br0'/>
         <model type='virtio'/>
         <address type='pci' domain='0x0000' bus='0x01' slot='0x00' function='0x0'/>
       </interface>
