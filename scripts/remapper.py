@@ -618,7 +618,7 @@ class VMController:
     async def stop_vm(vm: str):
         """Stop VM gracefully"""
         try:
-            await virsh("shutdown", vm)
+            await virsh("destroy", "--graceful", vm)
             logger.info(f"Stopped {vm}")
         except sh.ErrorReturnCode as e:
             logger.error(f"Failed to stop {vm}: {e.stderr.decode()}")
