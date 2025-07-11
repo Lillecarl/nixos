@@ -1,0 +1,19 @@
+configVersion: v1
+kubernetes:
+- name: service
+  apiVersion: v1
+  kind: Service
+  group: state
+- name: slice
+  apiVersion: discovery.k8s.io/v1
+  kind: EndpointSlice
+  group: state
+- name: node
+  apiVersion: v1
+  kind: node
+  group: state
+schedule:
+- name: "every 10 seconds"
+  crontab: "*/10 * * * * *"
+  allowFailure: true
+  group: state
