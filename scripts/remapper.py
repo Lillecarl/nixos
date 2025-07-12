@@ -1,5 +1,33 @@
 #!/usr/bin/env python3
 
+"""
+Keyboard/Input Device Remapper
+
+This module provides a comprehensive input device remapping system that can:
+- Map keyboard keys to different keys (e.g., CapsLock -> Ctrl)
+- Handle macro pads with complex functions (VM control, display switching, etc.)
+- Create virtual output devices to avoid conflicts
+- Track device state and handle edge cases like stuck keys
+
+The system uses evdev for low-level input handling and creates virtual devices
+for output, allowing for complex remapping scenarios without interfering with
+the original input devices.
+
+Key Design Principles:
+1. Hash-based device identification for reliable device matching
+2. Async architecture for handling multiple devices simultaneously
+3. Pluggable remapper classes for different device types
+4. Comprehensive error handling and cleanup
+5. VM and display control integration for gaming/work switching
+
+Main Components:
+- DeviceManager: Scans and manages input devices
+- BaseEventRemapper: Abstract base class for all remappers
+- StandardKeyboardRemapper: Common keyboard remappings
+- MacropadRemapper: Complex macro functions
+- RemapperManager: Orchestrates multiple remappers
+"""
+
 import argparse
 import asyncio
 import hashlib
@@ -19,19 +47,25 @@ import sh
 import sys
 from evdev import ecodes
 
-# Configuration
+# Configuration - VM name for libvirt operations
 DOMNAME = "win11-4"
 
+# Common arguments for shell commands via sh library
+# _async: Run commands asynchronously
+# _timeout: 5 second timeout for commands
+# _tee: Print command output to stdout as well as capturing it
 _shargs = {
     "_async": True,
     "_timeout": 5,
     "_tee": True,
 }
-volumectl = partial(sh.volumectl, **_shargs)  # type: ignore
-ddcutil = partial(sh.ddcutil, **_shargs)  # type: ignore
-virsh = partial(sh.virsh, **_shargs)  # type: ignore
-lsusb = partial(sh.lsusb, **_shargs)  # type: ignore
-wpctl = partial(sh.wpctl, **_shargs)  # type: ignore
+
+# Pre-configured shell command wrappers for system control
+volumectl = partial(sh.volumectl, **_shargs)  # Volume control # type: ignore
+ddcutil = partial(sh.ddcutil, **_shargs)      # Display control via DDC/CI # type: ignore
+virsh = partial(sh.virsh, **_shargs)          # libvirt VM management # type: ignore
+lsusb = partial(sh.lsusb, **_shargs)          # USB device listing # type: ignore
+wpctl = partial(sh.wpctl, **_shargs)          # PipeWire control # type: ignore
 
 # Set up logging
 logging.basicConfig(
@@ -475,6 +509,10 @@ class MacropadRemapper(BaseEventRemapper):
                 await self.task_queue.add_task(VMController.start_vm, DOMNAME)
             elif event.code == ecodes.KEY_KP2:
                 await self.task_queue.add_task(VMController.stop_vm, DOMNAME)
+            elif event.code == ecodes.KEY_KPPLUS:
+                await self.task_queue.add_task(self.change_brightness, 10)
+            elif event.code == ecodes.KEY_KPMINUS:
+                await self.task_queue.add_task(self.change_brightness, -10)
         elif event.code == ecodes.KEY_KP1:
             await self.task_queue.add_task(self.attach_gaming_devices)
         elif event.code == ecodes.KEY_KP2:
@@ -521,6 +559,26 @@ class MacropadRemapper(BaseEventRemapper):
     async def _volume_down(self):
         """Decrease system volume"""
         await volumectl("-")
+
+    async def change_brightness(self, delta: int):
+        """Change display brightness by delta amount using ddcutil"""
+        try:
+            logger.info(f"Changing display brightness by {delta}")
+            # Get current brightness value
+            result = await ddcutil("-d", "1", "getvcp", "0x10", "--brief")
+            # Parse output: "VCP 10 C 50 100"
+            parts = result.strip().split()
+            current_value = int(parts[3])  # Current value is at index 3
+            max_value = int(parts[4])      # Max value is at index 4
+            
+            # Calculate new value within bounds
+            new_value = max(0, min(current_value + delta, max_value))
+            
+            # Set new brightness value
+            await ddcutil("-d", "1", "setvcp", "0x10", str(new_value))
+            logger.info(f"Brightness changed from {current_value} to {new_value}")
+        except Exception as e:
+            logger.error(f"Failed to change brightness: {e}")
 
 
 class DisplayController:
