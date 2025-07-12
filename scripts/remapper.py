@@ -564,19 +564,30 @@ class MacropadRemapper(BaseEventRemapper):
         """Change display brightness by delta amount using ddcutil"""
         try:
             logger.info(f"Changing display brightness by {delta}")
-            # Get current brightness value
-            result = await ddcutil("-d", "1", "getvcp", "0x10", "--brief")
+            # Get current brightness value for display 1
+            result = await ddcutil("--display", "1", "getvcp", "0x10", "--brief")
             # Parse output: "VCP 10 C 50 100"
             parts = result.strip().split()
             current_value = int(parts[3])  # Current value is at index 3
             max_value = int(parts[4])      # Max value is at index 4
             
-            # Calculate new value within bounds
+            # Calculate new value within bounds for display 1
             new_value = max(0, min(current_value + delta, max_value))
             
-            # Set new brightness value
-            await ddcutil("-d", "1", "setvcp", "0x10", str(new_value))
-            logger.info(f"Brightness changed from {current_value} to {new_value}")
+            # Set display 2 brightness to 25 more than display 1, respecting 100 maximum
+            display2_value = min(new_value + 25, 100)
+            
+            # Execute both setvcp commands concurrently
+            async def set_display(display_num: int, value: int):
+                await ddcutil("--display", str(display_num), "setvcp", "0x10", str(value))
+            
+            await asyncio.gather(
+                set_display(1, new_value),
+                set_display(2, display2_value)
+            )
+            
+            logger.info(f"Display 1 brightness changed from {current_value} to {new_value}")
+            logger.info(f"Display 2 brightness set to {display2_value}")
         except Exception as e:
             logger.error(f"Failed to change brightness: {e}")
 
