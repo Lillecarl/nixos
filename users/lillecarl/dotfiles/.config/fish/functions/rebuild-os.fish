@@ -83,6 +83,7 @@ function rebuild-os
         echo "Switch failed $profile/bin/switch-to-configuration switch"
         return 1
     end
+    sudo sync
 
     rm -rf $tempdir
 end
