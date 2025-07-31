@@ -494,6 +494,8 @@ class MacropadRemapper(BaseEventRemapper):
         active_keys = self.input_device.active_keys()
 
         if event.code == ecodes.KEY_KP0:
+            self.tap_key(ecodes.KEY_SPACE)
+            
             async def play_notification():
                 # await self.task_queue.add_task(self.attach_gaming_devices)
                 sysvolstr = await wpctl("get-volume", "@DEFAULT_AUDIO_SINK@")
