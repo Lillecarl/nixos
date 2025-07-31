@@ -6,11 +6,8 @@
   ...
 }:
 let
-  system = "aarch64-linux";
-  # system = "x86_64-linux";
   nodes = {
     gw1 = {
-      inherit system;
       extraModule = _: {
         ps.k3s.enable = false;
       };
@@ -19,7 +16,10 @@ let
       system = "aarch64-linux";
     };
     k3s2 = {
-      system = "x86_64-linux";
+      system = "aarch64-linux";
+    };
+    k3s3 = {
+      system = "aarch64-linux";
     };
   };
 in
@@ -27,7 +27,7 @@ in
   flake = {
     nixosConfigurations = builtins.mapAttrs (
       name: value:
-      withSystem (value.system or system) (
+      withSystem value.system (
         {
           config,
           pkgs,
@@ -61,7 +61,14 @@ in
                 k3s2 = {
                   ipv4Addr = "37.27.255.65";
                   ipv6Addr = "2a01:4f9:c012:e004::1";
-                  diskPath = "/dev/disk/by-path/pci-0000:06:00.0-scsi-0:0:0:0";
+                  diskPath = "/dev/disk/by-path/pci-0000:06:00.0-scsi-0:0:0:1";
+                  ifName = "enp1s0";
+                  ASN = 65012;
+                };
+                k3s3 = {
+                  ipv4Addr = "135.181.249.59";
+                  ipv6Addr = "2a01:4f9:c010:822e::1";
+                  diskPath = "/dev/disk/by-path/pci-0000:06:00.0-scsi-0:0:0:1";
                   ifName = "enp1s0";
                   ASN = 65012;
                 };
@@ -81,8 +88,8 @@ in
 
     deploy.nodes = builtins.mapAttrs (
       name: value:
-      withSystem system (
-        { pkgs, ... }:
+      withSystem value.system (
+        { pkgs, system, ... }:
         let
           deployPkgs = import inputs.nixpkgs {
             inherit system;
