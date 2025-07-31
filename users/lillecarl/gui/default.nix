@@ -27,7 +27,6 @@
     ./swaync.nix
     ./theme.nix
     ./udiskie.nix
-    ./vieb.nix
     ./waybar.nix
     ./wlogout.nix
   ];
