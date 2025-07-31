@@ -1,4 +1,3 @@
-variable "paths" { type = map(string) }
 data "kustomization_overlay" "this" {
   resources = [for file in tolist(fileset(path.module, "*.yaml")) : "${path.module}/${file}"]
   kustomize_options {

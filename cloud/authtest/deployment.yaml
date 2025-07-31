@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-echo
+  labels:
+    app: nginx-echo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-echo
+  template:
+    metadata:
+      labels:
+        app: nginx-echo
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: echo-config
+          mountPath: /usr/share/nginx/html
+      volumes:
+      - name: echo-config
+        configMap:
+          name: echo-config
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: oauthproxy
+  labels:
+    app: oauthproxy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: oauthproxy
+  template:
+    metadata:
+      labels:
+        app: oauthproxy
+    spec:
+      containers:
+      - name: oauthproxy
+        image: quay.io/oauth2-proxy/oauth2-proxy:latest
+        ports:
+        - containerPort: 80

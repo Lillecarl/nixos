@@ -46,3 +46,11 @@ output "oauthproxy_cookie_secret" {
   sensitive = true
   value     = random_password.oauthproxy_cookie_secret.result
 }
+resource "random_password" "postgrest_jwt_secret" {
+  length  = 32
+  special = false
+}
+output "postgrest_jwt_secret" {
+  sensitive = true
+  value     = random_password.postgrest_jwt_secret.result
+}

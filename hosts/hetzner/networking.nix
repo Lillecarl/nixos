@@ -3,10 +3,8 @@
   networking.useDHCP = false;
   networking.interfaces.enp1s0.useDHCP = false;
   networking.nameservers = [
-    "1.1.1.1"
-    "1.0.0.1"
-    "2606:4700:4700::1111"
-    "2606:4700:4700::1001"
+    "9.9.9.9"
+    "2620:fe::fe"
   ];
   systemd.network.enable = true;
   systemd.network.networks."30-wan" = {

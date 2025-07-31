@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: echo-config
+data:
+  index.html: |
+    <html>
+    <head>
+        <title>Nginx Echo Server</title>
+    </head>
+    <body>
+        <h1>Hello, Kubernetes!</h1>
+        <p>This is an Nginx echo server.</p>
+    </body>
+    </html>

@@ -12,6 +12,7 @@
     ../_shared
     ./configuration.nix
     ./disko.nix
+    ./facter.nix
     ./hardware-configuration.nix
     ./k3s.nix
     ./labels.nix

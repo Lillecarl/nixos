@@ -25,6 +25,15 @@ in
       clock24 = true;
       baseIndex = 1;
       escapeTime = 0;
+      customPaneNavigationAndResize = true;
+      disableConfirmationPrompt = true;
+      keyMode = "vi";
+      mouse = true;
+      newSession = true;
+      shell = lib.getExe config.programs.fish.package;
+      terminal = "screen-256color";
+      focusEvents = true;
+      tmuxp.enable = true;
 
       plugins = with pkgs.tmuxPlugins; [
         vim-tmux-navigator

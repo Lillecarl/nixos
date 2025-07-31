@@ -19,6 +19,8 @@ abbr -a tg terragrunt
 abbr -a tgp terragrunt plan
 abbr -a tga terragrunt apply
 abbr -a tgaa terragrunt apply -auto-approve
+abbr -a tfa tofu apply
+abbr -a tfaa tofu apply -auto-approve
 
 abbr -a grt 'cd (git root)'
 

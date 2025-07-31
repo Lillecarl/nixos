@@ -4,7 +4,7 @@ resource "keycloak_openid_client" "oauthproxy" {
   name      = "oauthproxy" # Visual name
 
   valid_redirect_uris = [
-    "https://oauthproxy.lillecarl.com/oauth2/callback",
+    "https://authtest.lillecarl.com/oauth2/callback",
   ]
 
   standard_flow_enabled        = true

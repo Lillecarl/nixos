@@ -21,7 +21,7 @@ external_secrets: prometheus-crd
 grafana-config: keycloak-config grafana-deploy
 #
 grafana-deploy: grafana-operator
-    @echo grafana-deploy
+#
 grafana-operator: prometheus-crd
     @echo grafana-operator
 hcloud-ccm: prometheus-crd
@@ -36,6 +36,10 @@ keycloak-config: keycloak-deploy
     @echo keycloak-config
 keycloak-deploy: prometheus-crd
     @echo keycloak-deploy
+kubernetes-dashboard: prometheus-crd
+    @echo kubernetes-dashboard
+local_path_provisioner: prometheus-crd
+    @echo local_path_provisioner
 mariadb_deploy: mariadb_operator
     @echo mariadb_deploy
 mariadb_operator: prometheus-crd
@@ -54,6 +58,8 @@ pg-cluster-config: cnpg
     @echo pg-cluster-config
 pgadmin4: pg-cluster-config
     @echo pgadmin4
+postgrest: pg-cluster-config keycloak-config
+    @echo postgrest
 prometheus: prometheus-crd
     @echo prometheus
 prometheus-crd: stage1 hosts
@@ -66,9 +72,15 @@ roundcube: pg-cluster-config prometheus-crd
 #
 stage1:
     @echo stage1
+supabase:
+#
 test:
 #
 vault: prometheus-crd
-    @echo vault
+#
 vault-root-config: vault
-    @echo vault-root-config
+#
+victoriametrics-operator: prometheus-crd
+    @echo victoriametrics-operator
+victoriametrics-k8s-stack: victoriametrics-operator grafana-operator
+    @echo victoriametrics-k8s-stack

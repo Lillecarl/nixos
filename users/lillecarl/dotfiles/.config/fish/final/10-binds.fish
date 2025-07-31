@@ -16,15 +16,15 @@ bind -M insert \e\[101\;6u edit_command_buffer
 bind -M visual \e\[101\;6u edit_command_buffer
 
 # bind / to atuin search with cursor position kept
-bind -M visual / '__call_keep_cursor_pos "_atuin_search"'
+# bind -M visual / '__call_keep_cursor_pos "_atuin_search"'
 
 # bind ctrl+r to atuin search with cursor position kept
-bind -M insert \cR '__call_keep_cursor_pos "_atuin_search"'
-bind -M visual \cR '__call_keep_cursor_pos "_atuin_search"'
+# bind -M insert \cR '__call_keep_cursor_pos "_atuin_search"'
+# bind -M visual \cR '__call_keep_cursor_pos "_atuin_search"'
 
 # bind ctrl+r to atuin session search with cursor position kept
-bind -M insert \e\[A '__call_keep_cursor_pos "_atuin_bind_up"'
-bind -M visual \e\[A '__call_keep_cursor_pos "_atuin_bind_up"'
+# bind -M insert \e\[A '__call_keep_cursor_pos "_atuin_bind_up"'
+# bind -M visual \e\[A '__call_keep_cursor_pos "_atuin_bind_up"'
 
 # bind ctrl+shift+d to scroll down
 bind -M insert \e\[100\;6u scrolldown

@@ -28,9 +28,11 @@ locals {
       tls         = true
       servicePort = "https"
       hostname    = "keycloak.lillecarl.com"
+      pathType    = "Prefix"
       annotations = {
-        "cert-manager.io/cluster-issuer"               = "letsencrypt-production"
-        "nginx.ingress.kubernetes.io/backend-protocol" = "HTTPS"
+        "cert-manager.io/cluster-issuer"                      = "letsencrypt-production"
+        "nginx.ingress.kubernetes.io/backend-protocol"        = "HTTPS"
+        "traefik.ingress.kubernetes.io/service.serversscheme" = "https"
       }
       ingressClassName = "nginx"
     }

@@ -1,0 +1,4 @@
+digraph {
+    "grafana-operator" -> "prometheus-crd" -> "stage1"
+    "grafana-deploy" -> "grafana-operator"
+}

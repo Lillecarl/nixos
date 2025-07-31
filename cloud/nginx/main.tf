@@ -5,6 +5,7 @@ locals {
       allowSnippetAnnotations = true
       service = {
         loadBalancerClass = "io.cilium/node"
+        # type = "ClusterIP"
       }
     }
   }

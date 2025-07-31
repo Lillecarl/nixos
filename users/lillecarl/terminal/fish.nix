@@ -18,7 +18,7 @@ in
     };
   };
   config = lib.mkIf cfg.enable {
-    programs.atuin.enableFishIntegration = true;
+    programs.atuin.enableFishIntegration = false;
     programs.starship.enableFishIntegration = true;
 
     programs.fish = {

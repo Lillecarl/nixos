@@ -30,6 +30,12 @@ prev.lib.filterAttrs
     # Inject grafanaPlugins
     grafanaPlugins = grafanaPlugins // prev.grafanaPlugins;
 
+    kitty = prev.kitty.overrideAttrs ({ doCheck = false; doInstallCheck = false; });
+
+    runc = prev.runc.overrideAttrs (oldAttrs: {
+      src = /home/lillecarl/Code/runc;
+    });
+
     typos-lsp = prev.callPackage ./typos-lsp.nix { };
     hl = prev.callPackage ./hl.nix { };
     one-small-step-for-vimkind = prev.callPackage ./one-small-step-for-vimkind.nix { };

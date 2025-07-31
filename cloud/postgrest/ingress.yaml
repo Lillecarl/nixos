@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: postgrest
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-staging
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: postgrest.lillecarl.com
+      http:
+        paths:
+          - backend:
+              service:
+                name: postgrest
+                port:
+                  number: 3000
+            path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - postgrest.lillecarl.com
+      secretName: tls

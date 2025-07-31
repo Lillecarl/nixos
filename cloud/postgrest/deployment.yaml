@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgrest
+  namespace: pg-cluster
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgrest
+  template:
+    metadata:
+      labels:
+        app: postgrest
+    spec:
+      containers:
+        - name: postgrest
+          image: quay.io/spacetrain/postgrest:latest
+          ports:
+            - containerPort: 3000
+            - containerPort: 3001
+          env:
+            - name: PGHOST
+              valueFrom:
+                secretKeyRef:
+                  name: postgrest-db
+                  key: host
+            - name: PGPORT
+              valueFrom:
+                secretKeyRef:
+                  name: postgrest-db
+                  key: port
+            - name: PGDATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: postgrest-db
+                  key: name
+            - name: PGUSER
+              valueFrom:
+                secretKeyRef:
+                  name: postgrest-db
+                  key: user
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgrest-db
+                  key: pass
+            - name: PGRST_JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: postgrest-jwt
+                  key: secret
+            - name: PGRST_ROLE_CLAIM_KEY
+              value: .resource_access.frontend.roles[0]
+            - name: PGRST_ADMIN_SERVER_PORT
+              value: 3001
+            - name: PGRST_DB_SCHEMAS
+              value: api
+            - name: PGRST_DB_ANON_ROLE
+              value: web_anon
+

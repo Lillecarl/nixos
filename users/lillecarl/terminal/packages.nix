@@ -176,7 +176,7 @@
             spdx = "MIT";
             hash = "sha256-crIluhHmsNBYYzXM57z/Hmyln8QNpnVzNf6AyXILT9c=";
             vendorHash = "sha256-LMN+me0hq/XKT2Z20tKSeM531o47ez0a6S0ojdNrbd0=";
-            homepage = "https://registry.opentofu.org/iwarapter/jwks";
+            homepage = "https://registry.terraform.io/providers/iwarapter/jwks";
           })
         ]
       ));

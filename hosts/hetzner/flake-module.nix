@@ -49,6 +49,10 @@ in
             modules = [
               {
                 networking.hostName = name;
+                ps.frr = {
+                  ASN = 65000;
+                  isHub = true;
+                };
                 ps.labels = data.labels;
                 lib.hetzAttrs = {
                   id = data.id;

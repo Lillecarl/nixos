@@ -8,18 +8,26 @@ spec:
     matchLabels:
       node-access: ssh
   ingress:
+    # "all", "world", "cluster", "host", "init", "ingress", "unmanaged", "remote-node", "health", "none", "kube-apiserver"
     - fromEntities:
         - cluster
+        - ingress
     - toPorts:
         - ports:
             - port: "22"
               protocol: TCP
             - port: "80"
               protocol: TCP
+            - port: "179"
+              protocol: TCP
             - port: "443"
               protocol: TCP
             - port: "6443"
               protocol: TCP
+            - port: "51820"
+              protocol: UDP
+            - port: "60001"
+              protocol: UDP
     - icmps:
         - fields:
             - type: EchoRequest

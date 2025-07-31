@@ -13,6 +13,7 @@ _: {
           pkgs.pre-commit
           (pkgs.python3.withPackages (
             ps: with ps; [
+              graphviz
               PyGithub
               deepmerge
               evdev

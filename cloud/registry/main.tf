@@ -7,6 +7,8 @@ locals {
   ids-this-stage1 = var.deploy ? data.kustomization_overlay.this.ids_prio[1] : []
   ids-this-stage2 = var.deploy ? data.kustomization_overlay.this.ids_prio[2] : []
   namespace       = "registry"
+  authAnnotations = {
+  }
   helm_values = {
     ui = {
       title             = "Container Registry"
@@ -16,9 +18,9 @@ locals {
       ingress = {
         enabled = true
         host    = "registry.lillecarl.com"
-        annotations = {
+        annotations = merge({
           "cert-manager.io/cluster-issuer" = "letsencrypt-staging"
-        }
+        }, local.authAnnotations)
         tls = [{
           secretName = "registry-tls"
           hosts      = ["registry.lillecarl.com"]
@@ -36,10 +38,10 @@ locals {
       ingress = {
         enabled = true
         host    = "registry.lillecarl.com"
-        annotations = {
+        annotations = merge({
           "cert-manager.io/cluster-issuer"              = "letsencrypt-staging"
           "nginx.ingress.kubernetes.io/proxy-body-size" = "2g"
-        }
+        }, local.authAnnotations)
         tls = [{
           secretName = "registry-tls"
           hosts      = ["registry.lillecarl.com"]
@@ -64,7 +66,7 @@ data "kustomization_overlay" "this" {
   }
   helm_charts {
     name          = "docker-registry-ui"
-    release_name  = "docker-registry-ui"
+    release_name  = "dru"
     namespace     = local.namespace
     include_crds  = true
     values_inline = yamlencode(local.helm_values)

@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    k8s-app: oauth2-proxy
+  name: oauth2-proxy
+  namespace: registry
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: oauth2-proxy
+  template:
+    metadata:
+      labels:
+        k8s-app: oauth2-proxy
+    spec:
+      containers:
+      - args:
+        - --provider=keycloak-oidc
+        - --redirect-url=https://registry.lillecarl.com/oauth2/callback
+        - --oidc-issuer-url=https://keycloak.lillecarl.com/realms/master
+        - --email-domain=lillecarl.com
+        - --code-challenge-method=S256
+        # - --client-id=registry
+        # - --client-secret=<your client's secret>
+        # - --allowed-role=<realm role name> // Optional, required realm role
+        # - --allowed-role=<client id>:<client role name> // Optional, required client role
+        # - --allowed-group=</group name>
+        env:
+        - name: OAUTH2_PROXY_CLIENT_ID
+          value: registry
+        - name: OAUTH2_PROXY_CLIENT_SECRET
+          value: Eic9W9tbQdkvTVgbmnPtTyP900cfeQga
+        - name: OAUTH2_PROXY_COOKIE_SECRET
+          value: dmqt1e7pLMipixeImVw5MA==
+        image: quay.io/oauth2-proxy/oauth2-proxy:latest
+        imagePullPolicy: Always
+        name: oauth2-proxy
+        ports:
+        - containerPort: 4180
+          protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    k8s-app: oauth2-proxy
+  name: oauth2-proxy
+  namespace: registry
+spec:
+  ports:
+  - name: http
+    port: 4180
+    protocol: TCP
+    targetPort: 4180
+  selector:
+    k8s-app: oauth2-proxy
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: oauth2-proxy
+  namespace: registry
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: registry.lillecarl.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: oauth2-proxy
+            port:
+              number: 4180
+  tls:
+  - hosts:
+    - registry.lillecarl.com
+    secretName: registry-tls

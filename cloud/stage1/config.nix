@@ -185,6 +185,18 @@ let
     version = "8.8.2";
     chartHash = "sha256-9bDAsBtUF7LwoqsfW45Gnu+yzQqrc6yskRzNcHavrYo=";
   };
+  victoria-metrics-operator-chart = downloadHelmChart {
+    repo = "https://victoriametrics.github.io/helm-charts/";
+    chart = "victoria-metrics-operator";
+    version = "0.40.4";
+    chartHash = "sha256-9XGt+xdBzE3H+PpLPxNG7xWxEqk1r3Vz4BxeCCSaYtI=";
+  };
+  victoria-metrics-k8s-stack-chart = downloadHelmChart {
+    repo = "https://victoriametrics.github.io/helm-charts/";
+    chart = "victoria-metrics-k8s-stack";
+    version = "0.33.3";
+    chartHash = "sha256-+j5y66e95oysbyvdt/Oj0zH1+YNjcy1maLc/JFKBQ4U=";
+  };
   charts = pkgs.symlinkJoin {
     name = "helm-chart-collection";
     paths = [
@@ -211,6 +223,8 @@ let
       mariadb_operator-chart
       nextcloud-chart
       grafana-chart
+      victoria-metrics-operator-chart
+      victoria-metrics-k8s-stack-chart
     ];
   };
 

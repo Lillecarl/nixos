@@ -1,6 +1,9 @@
 locals {
   realm_id = data.keycloak_realm.realm.id
 }
+output "realm_id" {
+  value = local.realm_id
+}
 data "http" "keycloak" {
   url = "https://keycloak.lillecarl.com"
   retry {
@@ -14,6 +17,17 @@ data "keycloak_realm" "realm" {
   depends_on = [
     data.http.keycloak
   ]
+}
+resource "keycloak_realm_keystore_hmac_generated" "keystore_hmac_generated" {
+  name     = "hmac-generated"
+  realm_id = data.keycloak_realm.realm.id
+
+  enabled = true
+  active  = true
+
+  priority    = 100
+  algorithm   = "HS256"
+  secret_size = 128
 }
 resource "keycloak_user" "lillecarl" {
   realm_id       = local.realm_id

@@ -16,7 +16,7 @@ spec:
                 port:
                   name: http
             path: /
-            pathType: ImplementationSpecific
+            pathType: Prefix
   tls:
     - hosts:
         - pgadmin.lillecarl.com

@@ -1,6 +1,3 @@
-variable "paths" { type = map(string) }
-variable "k8s_force" { type = bool }
-variable "deploy" { type = bool }
 locals {
   ids-this-stage0 = data.kustomization_overlay.this.ids_prio[0]
   ids-this-secrets = toset([
@@ -8,22 +5,24 @@ locals {
     "_/Secret/kube-system/hubble-server-certs",
   ])
   id-this-configmap = "_/ConfigMap/kube-system/cilium-config"
-  ids-this-stage1 = toset(var.deploy ? [
+  ids-this-stage1 = toset([
     for id in data.kustomization_overlay.this.ids_prio[1] :
     id if(
       !contains(local.ids-this-secrets, id) &&
       id != local.id-this-configmap
     )
-  ] : [])
-  ids-this-stage2 = var.deploy ? data.kustomization_overlay.this.ids_prio[2] : []
+  ])
+  ids-this-stage2 = data.kustomization_overlay.this.ids_prio[2]
   helm_values = {
+    l7proxy              = true
     kubeProxyReplacement = true
-    k8sServiceHost       = "65.21.63.133"
+    k8sServiceHost       = "127.0.0.1"
     k8sServicePort       = "6443"
     tunnelProtocol       = "geneve"
     routingMode          = "tunnel"
     cluster              = { name = "default" }
     nodeIPAM             = { enabled = true }
+    defaultLBServiceIPAM = "nodeipam"
     ipam = { operator = {
       clusterPoolIPv4PodCIDRList = "10.42.0.0/16"
       # clusterPoolIPv6PodCIDRList = "2a01:4f9:c01f:e028::/64"
@@ -31,10 +30,20 @@ locals {
     operator     = { replicas = 1 }
     hostFirewall = { enabled = true }
     ipv6         = { enabled = true }
-    bpf          = { masquerade = true }
+    bpf = {
+      masquerade        = true
+      hostLegacyRouting = true
+    }
     cgroup = {
       autoMount = { enabled = false }
       hostRoot  = "/sys/fs/cgroup"
+    }
+    ingressController = {
+      enabled          = false
+      loadbalancerMode = "shared"
+      service = {
+        loadBalancerClass = "io.cilium/node"
+      }
     }
   }
 }
@@ -42,18 +51,16 @@ data "kustomization_overlay" "this" {
   resources = [for file in tolist(fileset(path.module, "*.yaml")) : "${path.module}/${file}"]
   helm_charts {
     name          = "cilium"
-    release_name  = "cilium"
-    namespace     = "kube-system"
     include_crds  = true
     values_inline = yamlencode(local.helm_values)
   }
   helm_globals {
-    chart_home = var.paths.charts
+    chart_home = local.chartParentPath
   }
   kustomize_options {
     load_restrictor = "none"
     enable_helm     = true
-    helm_path       = var.paths.helm-path
+    helm_path       = local.helmBinPath
   }
 }
 resource "kubectl_manifest" "stage0" {
@@ -61,7 +68,6 @@ resource "kubectl_manifest" "stage0" {
   yaml_body  = data.kustomization_overlay.this.manifests[each.value]
   depends_on = []
 
-  force_conflicts   = var.k8s_force
   apply_only        = true
   server_side_apply = true
   wait              = true
@@ -78,7 +84,6 @@ resource "kubectl_manifest" "secrets" {
     ]
   }
 
-  force_conflicts   = var.k8s_force
   server_side_apply = true
   wait              = true
   timeouts { create = "1m" }
@@ -87,7 +92,7 @@ resource "kubectl_manifest" "configmap" {
   yaml_body  = data.kustomization_overlay.this.manifests[local.id-this-configmap]
   depends_on = [kubectl_manifest.stage0]
 
-  force_conflicts   = var.k8s_force
+  force_conflicts   = true
   server_side_apply = true
   wait              = true
   timeouts { create = "1m" }
@@ -97,7 +102,6 @@ resource "kubectl_manifest" "stage1" {
   yaml_body  = data.kustomization_overlay.this.manifests[each.value]
   depends_on = [kubectl_manifest.stage0]
 
-  force_conflicts   = var.k8s_force
   server_side_apply = true
   wait              = true
   timeouts { create = "1m" }
@@ -107,7 +111,6 @@ resource "kubectl_manifest" "stage2" {
   yaml_body  = data.kustomization_overlay.this.manifests[each.value]
   depends_on = [kubectl_manifest.stage1]
 
-  force_conflicts   = var.k8s_force
   server_side_apply = true
   wait              = true
   timeouts { create = "1m" }

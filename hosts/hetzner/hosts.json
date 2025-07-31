@@ -1,11 +1,1 @@
-{
-  "hetzner1": {
-    "id": "57619584",
-    "ipv4_address": "65.21.63.133",
-    "ipv6_address": "2a01:4f9:c012:1249::1",
-    "labels": {
-      "arch": "aarch64-linux",
-      "k8s_role": "server"
-    }
-  }
-}
+{"hetzner1":{"id":"57619584","ipv4_address":"65.21.63.133","ipv6_address":"2a01:4f9:c012:1249::1","labels":{"arch":"aarch64-linux","k8s_role":"server"}}}
