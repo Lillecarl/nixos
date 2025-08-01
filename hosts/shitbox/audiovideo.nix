@@ -10,6 +10,9 @@ in
   environment.variables = { inherit PULSE_SERVER; };
   systemd.globalEnvironment = { inherit PULSE_SERVER; };
 
+  # rtkit to make pipewire schedule realtime
+  security.rtkit.enable = true;
+
   # Enable PipeWire A/V daemon
   # replaces all other sound daemons
   services.pipewire = {
@@ -24,9 +27,16 @@ in
   services.pipewire.extraConfig.pipewire.bufconf = {
     "context.properties" = {
       "default.clock.rate" = 48000;
-      "default.clock.quantum" = 1024;
-      "default.clock.min-quantum" = 32;
-      "default.clock.max-quantum" = 8192;
+      "default.clock.quantum" = 256;
+      "default.clock.min-quantum" = 128;
+      "default.clock.max-quantum" = 2048;
+    };
+    "pulse.properties" = {
+      "pulse.min.req" = "128/48000";
+      "pulse.default.req" = "256/48000";
+      "pulse.max.req" = "2048/48000";
+      "pulse.min.quantum" = "128/48000";
+      "pulse.max.quantum" = "2048/48000";
     };
   };
   services.pipewire.extraConfig.pipewire.rtconfig = {
@@ -35,14 +45,10 @@ in
         name = "libpipewire-module-rt";
         args = {
           # Real-time priority (1-99, higher = more priority)
-          "rt.prio" = 20;
+          "rt.prio" = 88;
 
           # Nice level for non-RT threads (-20 to 19, lower = higher priority)
           "nice.level" = -11;
-
-          # RT time limits in microseconds (200ms = 200000)
-          # "rt.time.soft" = 200000;
-          # "rt.time.hard" = 200000;
 
           # RT time limits as fraction of period (alternative to above)
           "rt.time.soft" = -1; # Unlimited
@@ -89,9 +95,6 @@ in
       ];
     };
   };
-
-  # rtkit to make pipewire schedule realtime
-  security.rtkit.enable = true;
 
   # services.pipewire.extraConfig.pipewire.jacksink = {
   #   "context.objects" = [
