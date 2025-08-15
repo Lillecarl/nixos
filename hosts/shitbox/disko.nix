@@ -27,7 +27,7 @@ in
   disk = {
     main = {
       type = "disk";
-      device = "/dev/disk/by-id/ata-INTEL_SSDSC2KG240G8_PHYG946500DC240AGN";
+      device = "/dev/disk/by-id/usb-Samsung_Flash_Drive_FIT_0375425030006570-0:0";
       content = {
         type = "gpt";
         partitions = {
@@ -35,8 +35,9 @@ in
             priority = 1;
             name = "ESP";
             start = "1M";
-            size = "2G";
+            size = "10G";
             type = "EF00";
+            label = "USBEFI";
             content = {
               type = "filesystem";
               format = "vfat";
