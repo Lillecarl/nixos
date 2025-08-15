@@ -11,16 +11,16 @@ let
     pkgs.writeScript "niri-spawn-wrapper" # fish
       ''
         #! ${lib.getExe pkgs.fish}
-        if test -S /tmp/.X11-unix/X0
+        if !set -q DISPLAY && test -S /tmp/.X11-unix/X0
           set --export DISPLAY :0
         end
 
-        if test -S /run/user/1000/wayland-1
+        if !set -q WAYLAND_DISPLAY && test -S /run/user/1000/wayland-1
           set --export WAYLAND_DISPLAY wayland-1
         end
 
         # Run args as command
-        $argv
+        exec exec $argv
       ''
   );
   clipHistRofi = toString (
