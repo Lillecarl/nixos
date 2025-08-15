@@ -13,7 +13,10 @@ _: {
           pkgs.pre-commit
           (pkgs.python3.withPackages (
             ps: with ps; [
+              pybluez
+              jq
               pygame
+              pyzmq
               PyGithub
               deepmerge
               evdev
