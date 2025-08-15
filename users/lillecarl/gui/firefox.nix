@@ -22,7 +22,7 @@
       ];
 
       profiles = {
-        lillecarl = {
+        default = {
           id = 0;
           isDefault = true;
 
@@ -60,6 +60,7 @@
             };
           };
 
+          extensions.force = true;
           extensions.packages =
             with pkgs.nur.repos.rycee.firefox-addons;
             (
