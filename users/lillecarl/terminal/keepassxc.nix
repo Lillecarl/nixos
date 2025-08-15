@@ -20,6 +20,6 @@ in
     # Set ssh-agent auth socket path to where ssh-agent creates it
     home.sessionVariables.SSH_AUTH_SOCK = "$XDG_RUNTIME_DIR/ssh-agent";
     # Enable keepassxc
-    programs.keepassxc.enable.enable = true;
+    programs.keepassxc.enable = true;
   };
 }
