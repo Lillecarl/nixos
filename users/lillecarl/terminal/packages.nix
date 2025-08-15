@@ -14,6 +14,7 @@
       (
         if config.ps.terminal.mode == "fat" then
           [
+            claude-code # CLI AI assistant
             mimeo # Open files with the right program
             broot # A new way to see and navigate directory trees
             choose # A human-friendly and fast alternative to cut and (sometimes) awk
