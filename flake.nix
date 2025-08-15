@@ -47,7 +47,6 @@
       inputs = {
         flake-parts.follows = "flake-parts";
         nixpkgs.follows = "nixpkgs";
-        treefmt-nix.follows = "treefmt-nix";
       };
     };
     nixos-anywhere = {
@@ -220,7 +219,6 @@
       inputs.flake-parts.follows = "flake-parts";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.treefmt-nix.follows = "treefmt-nix";
-      inputs.nix-github-actions.follows = "nix-github-actions";
     };
   };
 
