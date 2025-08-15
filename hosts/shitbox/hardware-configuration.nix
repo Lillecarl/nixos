@@ -7,17 +7,18 @@
 {
   boot = {
     kernelPackages = lib.mkForce pkgs.linuxPackages;
-    initrd.availableKernelModules = [
-      "amdgpu"
-      "vfio-pci"
-    ];
     initrd.kernelModules = [
-      "amdgpu"
+      "i915"
       "vfio-pci"
     ];
     extraModprobeConfig = ''
       options vfio-pci ids=10de:2487,10de:228b
       options kvm ignore_msrs=1 report_ignored_msrs=0
+
+      # Force NVIDIA module to be loaded after vfio
+      softdep amdgpu pre: vfio vfio_pci vfio_iommu_type1 vfio_virqfd
+      softdep i915 pre: vfio vfio_pci vfio_iommu_type1 vfio_virqfd
+      softdep nvidia pre: vfio vfio_pci vfio_iommu_type1 vfio_virqfd
     '';
     blacklistedKernelModules = [
       "radeon"
@@ -27,10 +28,8 @@
       "nvidia_modeset"
     ];
     kernelModules = [
-      "drivetemp"
-      "nct6775"
+      "i915"
       "kvm-amd"
-      "wl"
       "vfio_virqfd"
       "vfio_pci"
       "vfio_iommu_type1"
@@ -39,6 +38,7 @@
       "dm_snapshot"
     ];
     kernelParams = [
+      "i915.enable_guc=2"
       "acpi_enforce_resources=lax"
       "amd_iommu=on"
       "iommu=pt"
