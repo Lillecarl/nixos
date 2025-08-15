@@ -285,7 +285,7 @@ in
             "-show"
             "drun"
           ];
-          "Alt+Tab".action.spawn = [
+          "Mod+Tab".action.spawn = [
             spawnWrapper
             "rofi"
             "-show"
@@ -357,7 +357,7 @@ in
           "Mod+Ctrl+L".action.move-column-right = [ ];
           "Mod+Ctrl+J".action.move-window-down-or-to-workspace-down = [ ];
           "Mod+Ctrl+K".action.move-window-up-or-to-workspace-up = [ ];
-          "Mod+Tab".action.focus-workspace-previous = [ ];
+          "Alt+Tab".action.focus-workspace-previous = [ ];
 
           "Mod+Home".action.focus-column-first = [ ];
           "Mod+End".action.focus-column-last = [ ];
