@@ -150,9 +150,5 @@ in
       # Packages that can install udev rules
       udev.packages = [ ];
     };
-    # Give applications 15 seconds to shut down when shutting down the computer
-    systemd.extraConfig = ''
-      DefaultTimeoutStopSec=15s
-    '';
   };
 }
