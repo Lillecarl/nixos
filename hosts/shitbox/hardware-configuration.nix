@@ -15,10 +15,10 @@
       options vfio-pci ids=10de:2487,10de:228b
       options kvm ignore_msrs=1 report_ignored_msrs=0
 
-      # Force NVIDIA module to be loaded after vfio
-      softdep amdgpu pre: vfio vfio_pci vfio_iommu_type1 vfio_virqfd
-      softdep i915 pre: vfio vfio_pci vfio_iommu_type1 vfio_virqfd
-      softdep nvidia pre: vfio vfio_pci vfio_iommu_type1 vfio_virqfd
+      # Force GPU modules to load after VFIO (?)
+      softdep amdgpu pre: vfio_pci
+      softdep i915 pre: vfio_pci
+      softdep nvidia pre: vfio_pci
     '';
     blacklistedKernelModules = [
       "radeon"
