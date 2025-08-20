@@ -7,6 +7,11 @@
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.05";
     nixos-facter-modules.url = "github:nix-community/nixos-facter-modules";
     ucodenix.url = "github:e-tho/ucodenix";
+    microvm = {
+      url = "github:microvm-nix/microvm.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
+    };
     nixng = {
       url = "github:nix-community/NixNG";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -265,6 +270,7 @@
         ./fmt/flake-module.nix
         # ./hosts/hetzner/flake-module.nix
         ./hosts/k3s/flake-module.nix
+        ./hosts/micro/flake-module.nix
         ./hosts/penguin/flake-module.nix
         ./hosts/shitbox/flake-module.nix
         ./repl/flake-module.nix
