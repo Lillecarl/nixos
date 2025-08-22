@@ -15,14 +15,37 @@ in
         micro1 = {
           lib.micro.mac = "02:47:8B:D3:F1:01";
           lib.micro.ip4 = "192.168.88.4";
+          services.kubeadm = {
+            advertiseAddress = "192.168.88.4";
+            masterAddress = "192.168.88.4";
+            roles = [
+              "init"
+              "worker"
+            ];
+          };
         };
         micro2 = {
           lib.micro.mac = "02:47:8B:D3:F1:02";
           lib.micro.ip4 = "192.168.88.5";
+          services.kubeadm = {
+            advertiseAddress = "192.168.88.5";
+            masterAddress = "192.168.88.4";
+            roles = [
+              "controlPlane"
+              "worker"
+            ];
+          };
         };
         micro3 = {
           lib.micro.mac = "02:47:8B:D3:F1:03";
           lib.micro.ip4 = "192.168.88.6";
+          services.kubeadm = {
+            advertiseAddress = "192.168.88.6";
+            masterAddress = "192.168.88.4";
+            roles = [
+              "worker"
+            ];
+          };
         };
       };
     in
@@ -31,7 +54,6 @@ in
         name: module:
         withSystem system (
           {
-            config,
             pkgs,
             repositoryLocation,
             ...

@@ -38,7 +38,6 @@ let
 
   kubeletConfigPath = "/var/lib/kubelet/config.yaml";
   kubeConfigPath = "/etc/kubernetes/kubelet.conf";
-  kubeadmInitPath = "/var/lib/kubelet/init";
 in
 {
   options.services.kubeadm =
@@ -52,13 +51,31 @@ in
     {
       enable = lib.options.mkEnableOption "kubeadm";
       package = lib.mkPackageOption pkgs "kubernetes" { };
+      # Default will be set to cfg.package.version
       kubernetesVersion = lib.mkOption {
         description = "Version of Kubernetes to deploy with kubeadm";
-        type = lib.types.str;
-        default = pkgs.kubernetes.version;
+        type = lib.types.nullOr lib.types.str;
+        default = null;
       };
       recommendedDefaults = lib.options.mkEnableOption "recommended kubeadm settings";
-      environmentFile = lib.mkOption {
+      advertiseAddress = lib.mkOption {
+        type = lib.types.str;
+        description = "Address to advertise to other nodes";
+      };
+      masterAddress = lib.mkOption {
+        type = lib.types.str;
+        description = "Address of an existing APIServer node";
+      };
+      certificateKey = lib.mkOption {
+        type = lib.types.str;
+        description = "Encryption key for uploading certificates to APIServer";
+      };
+      port = lib.mkOption {
+        type = lib.types.int;
+        default = 6443;
+        apply = builtins.toString;
+      };
+      secretsFile = lib.mkOption {
         description = ''
           Path to env file containing KUBEADM_TOKEN
         '';
@@ -74,8 +91,21 @@ in
           ]
         );
         description = ''
-          Kubernetes "roles" to run. Only one machine should have "init".
+          Kubernetes "roles" to run.
+          init = initialize Kubernetes cluster, also adds controlPlane
+          controlPlane = run controlplane services (scheduler, apiserver++)
+          worker = run cluster workloads (don't add controlPlane taints)
+
+          A node can we all three roles but one one node can be the init node.
         '';
+
+        # Apply function to ensure controlPlane is set for init node
+        apply =
+          roles:
+          lib.pipe roles [
+            (x: roles ++ lib.optional (lib.any (role: role == "init") roles) "controlPlane")
+            lib.unique
+          ];
       };
       cri = lib.mkOption {
         type = lib.types.enum [
@@ -105,7 +135,16 @@ in
   config =
     let
       kubeadm = lib.getExe' cfg.package "kubeadm";
-      criSocketPath = lib.replaceStrings [ "unix://" ] [ "" ] cfg.criSocket;
+      # Helpers to determine what actions to perform
+      isControlPlane = lib.any (role: role == "controlPlane") cfg.roles;
+      isInit = lib.any (role: role == "init") cfg.roles;
+      isWorker = lib.any (role: role == "worker") cfg.roles;
+      isContainerd = cfg.cri == "containerd";
+      isCrio = cfg.cri == "cri-o";
+      recursiveMkDefault = set: lib.mapAttrsRecursive (name: value: lib.mkDefault value) set;
+
+      initConfigImpure = "/etc/kubeadm/initConfig.yaml";
+      joinConfigImpure = "/etc/kubeadm/joinConfig.yaml";
 
       initConfig = toYAMLFile "initConfig" [
         cfg.clusterConfiguration
@@ -114,8 +153,10 @@ in
         cfg.kubeproxyConfiguration
       ];
       joinConfig = toYAMLFile "joinConfig" [
+        cfg.clusterConfiguration
         cfg.joinConfiguration
         cfg.kubeletConfiguration
+        cfg.kubeproxyConfiguration
       ];
       upgradeConfig = toYAMLFile "upgradeConfig" [
         cfg.upgradeConfiguration
@@ -128,54 +169,100 @@ in
       # Set types for the configuration sets
       (lib.mkIf cfg.enable {
         # Configure common settings
-        services.kubeadm = lib.mapAttrsRecursive (name: value: lib.mkDefault value) {
-          clusterConfiguration.apiVersion = "kubeadm.k8s.io/v1beta4";
-          clusterConfiguration.kind = "ClusterConfiguration";
-          clusterConfiguration.kubernetesVersion = cfg.kubernetesVersion;
+        services.kubeadm = recursiveMkDefault {
+          # Set Kubernetes version from cfg.package
+          kubernetesVersion = cfg.package.version;
 
-          initConfiguration.apiVersion = "kubeadm.k8s.io/v1beta4";
-          initConfiguration.kind = "InitConfiguration";
-          initConfiguration.nodeRegistration.name = config.networking.hostName;
-          initConfiguration.nodeRegistration.criSocket = cfg.criSocket;
+          clusterConfiguration = {
+            apiVersion = "kubeadm.k8s.io/v1beta4";
+            kind = "ClusterConfiguration";
+            kubernetesVersion = cfg.kubernetesVersion;
+            controlPlaneEndpoint = "${cfg.masterAddress}:${cfg.port}";
+            apiServer = {
+              certSANs = [
+                "192.168.88.4"
+                "192.168.88.5"
+              ];
+            };
+          };
 
-          joinConfiguration.apiVersion = "kubeadm.k8s.io/v1beta4";
-          joinConfiguration.kind = "JoinConfiguration";
+          initConfiguration = {
+            apiVersion = "kubeadm.k8s.io/v1beta4";
+            kind = "InitConfiguration";
+            nodeRegistration.name = config.networking.hostName;
+            nodeRegistration.criSocket = cfg.criSocket;
+            certificateKey = "\${KUBEADM_CERT_KEY}";
+            localAPIEndpoint = {
+              advertiseAddress = cfg.advertiseAddress;
+              bindPort = 6443;
+            };
+          };
 
-          resetConfiguration.apiVersion = "kubeadm.k8s.io/v1beta4";
-          resetConfiguration.kind = "ResetConfiguration";
-          resetConfiguration.criSocket = cfg.criSocket;
+          joinConfiguration = {
+            apiVersion = "kubeadm.k8s.io/v1beta4";
+            kind = "JoinConfiguration";
+            nodeRegistration.name = config.networking.hostName;
+            nodeRegistration.criSocket = cfg.criSocket;
+            discovery = {
+              bootstrapToken = {
+                token = "\${KUBEADM_TOKEN}";
+                apiServerEndpoint = "${cfg.masterAddress}:${cfg.port}";
+                unsafeSkipCAVerification = true;
+              };
+            };
+          };
 
-          upgradeConfiguration.apiVersion = "kubeadm.k8s.io/v1beta4";
-          upgradeConfiguration.kind = "UpgradeConfiguration";
-          upgradeConfiguration.apply.kubernetesVersion = cfg.kubernetesVersion;
-          upgradeConfiguration.diff.kubernetesVersion = cfg.kubernetesVersion;
-          upgradeConfiguration.plan.kubernetesVersion = cfg.kubernetesVersion;
+          resetConfiguration = {
+            apiVersion = "kubeadm.k8s.io/v1beta4";
+            kind = "ResetConfiguration";
+            criSocket = cfg.criSocket;
+          };
 
-          kubeletConfiguration.apiVersion = "kubelet.config.k8s.io/v1beta1";
-          kubeletConfiguration.kind = "KubeletConfiguration";
+          upgradeConfiguration = {
+            apiVersion = "kubeadm.k8s.io/v1beta4";
+            kind = "UpgradeConfiguration";
+            apply.kubernetesVersion = cfg.kubernetesVersion;
+            diff.kubernetesVersion = cfg.kubernetesVersion;
+            plan.kubernetesVersion = cfg.kubernetesVersion;
+          };
 
-          kubeproxyConfiguration.apiVersion = "kubeproxy.config.k8s.io/v1alpha1";
-          kubeproxyConfiguration.kind = "KubeProxyConfiguration";
+          kubeletConfiguration = {
+            apiVersion = "kubelet.config.k8s.io/v1beta1";
+            kind = "KubeletConfiguration";
+          };
+
+          kubeproxyConfiguration = {
+            apiVersion = "kubeproxy.config.k8s.io/v1alpha1";
+            kind = "KubeProxyConfiguration";
+          };
         };
       })
       # Skip marking node as control-plane if it has worker role
-      (lib.mkIf cfg.enable {
-        services.kubeadm.initConfiguration.skipPhases = (
-          lib.optional (lib.any (role: role == "worker") cfg.roles) "mark-control-plane"
-        );
-      })
+      (lib.mkIf cfg.enable (recursiveMkDefault {
+        services.kubeadm.initConfiguration.skipPhases = (lib.optional isWorker "mark-control-plane");
+      }))
+      (lib.mkIf (cfg.enable && isControlPlane) (recursiveMkDefault {
+        # Configure node as control-plane (run scheduler and APIserver)
+        services.kubeadm.joinConfiguration.controlPlane = {
+          certificateKey = "\${KUBEADM_CERT_KEY}";
+          localAPIEndpoint = {
+            advertiseAddress = cfg.advertiseAddress;
+            bindPort = 6443;
+          };
+        };
+      }))
       # Enable and configure containerd specific settings
-      (lib.mkIf (cfg.enable && cfg.cri == "containerd") {
+      (lib.mkIf (cfg.enable && isContainerd) (recursiveMkDefault {
         virtualisation.containerd.enable = true;
-        services.kubeadm.criSocket = lib.mkDefault "unix:///var/run/containerd/containerd.sock";
-        services.kubeadm.criServiceName = lib.mkDefault config.systemd.services.containerd.name;
-      })
+        services.kubeadm.criSocket = "unix:///var/run/containerd/containerd.sock";
+        services.kubeadm.criServiceName = config.systemd.services.containerd.name;
+      }))
       # Enable and configure cri-o specific settings
-      (lib.mkIf (cfg.enable && cfg.cri == "cri-o") {
+      (lib.mkIf (cfg.enable && isCrio) (recursiveMkDefault {
         virtualisation.cri-o.enable = true;
-        services.kubeadm.criSocket = lib.mkDefault "unix:///var/run/crio/crio.sock";
-        services.kubeadm.criServiceName = lib.mkDefault config.systemd.services.crio.name;
-      })
+        services.kubeadm.criSocket = "unix:///var/run/crio/crio.sock";
+        services.kubeadm.criServiceName = config.systemd.services.crio.name;
+      }))
       # CRI independent configuration
       (lib.mkIf (cfg.enable) {
         # Kubernetes requires IP forwarding, kubeadm preflight fails without
@@ -186,8 +273,8 @@ in
         environment.etc = {
           # Split configuration between files like kubeadm expects them
           # Prevents warnings and makes discovery easier
-          "kubeadm/initConfig.yaml".source = initConfig;
-          "kubeadm/joinConfig.yaml".source = joinConfig;
+          # "kubeadm/initConfig.yaml".source = initConfig;
+          # "kubeadm/joinConfig.yaml".source = joinConfig;
           "kubeadm/resetConfig.yaml".source = resetConfig;
           "kubeadm/upgradeConfig.yaml".source = upgradeConfig;
           # Configure crictl to target the configured CRI socket
@@ -229,9 +316,12 @@ in
           in
           with pkgs;
           [
+            envsubst
             htop
+
             kubernetes
             cri-tools
+            etcd
             kinit
             kjoin
             kreset
@@ -241,6 +331,7 @@ in
         # Required directories
         systemd.tmpfiles.rules = [
           "d /etc/kubernetes 0755 root root -"
+          "d /etc/kubernetes/manifests 0755 root root -"
           "d /var/lib/kubelet 0755 root root -"
           "d /var/lib/kubernetes 0755 root root -"
           "d /opt/cni/bin 0755 root root -"
@@ -248,24 +339,32 @@ in
 
         systemd.services.kubeadm =
           let
+            configScript = # bash
+              ''
+                source ${cfg.secretsFile}
+                export KUBEADM_TOKEN
+                export KUBEADM_CERT_KEY
+                envsubst < ${initConfig} > ${initConfigImpure}
+                envsubst < ${joinConfig} > ${joinConfigImpure}
+                chmod 600 /etc/kubeadm/initConfig.yaml
+                chmod 600 /etc/kubeadm/joinConfig.yaml
+              '';
             initScript = # bash
               ''
-                source ${cfg.environmentFile} || true
-
+                ${configScript}
                 if [[ ! -f ${kubeletConfigPath} ]]; then
                   echo "Kubeadm not initialized yet. Initializing..."
-                  kubeadm init "$@" --config=${initConfig} || exit 1
+                  kubeadm init "$@" --config=${initConfigImpure} --upload-certs || exit 1
                   exit 0
                 fi
               '';
 
             joinScript = # bash
               ''
-                source ${cfg.environmentFile} || true
-
+                ${configScript}
                 if [[ ! -f ${kubeletConfigPath} ]]; then
                   echo "Kubeadm not initialized yet. Initializing..."
-                  kubeadm join "$@" --config=${joinConfig} --token $KUBEADM_TOKEN || exit 1
+                  kubeadm join "$@" --config=${joinConfigImpure} || exit 1
                   exit 0
                 fi
               '';
@@ -280,11 +379,13 @@ in
             ];
             requires = [ cfg.criServiceName ];
 
-            script = initScript;
+            # Run init script if we have init role, else run join script
+            script = if isInit then initScript else joinScript;
 
             path = with pkgs; [
               kubernetes
               util-linux
+              envsubst
             ];
 
             serviceConfig = {
@@ -303,31 +404,15 @@ in
             util-linux
           ];
 
-          preStart = ''
-            echo "Checking kubeadm initialization state"
-
-            if [[ ! -f ${kubeConfigPath} ]]; then
-              echo "ERROR: ${kubeConfigPath} not found"
-              echo "Run 'kubeadm init' or 'kubeadm join' first"
-              exit 1
-            fi
-
-            if [[ ! -f ${kubeletConfigPath} ]]; then
-              echo "ERROR: ${kubeletConfigPath} not found"
-              echo "Run 'kubeadm init' or 'kubeadm join' first"
-              exit 1
-            fi
-
-            echo "Kubeadm initialization detected, starting kubelet..."
-          '';
-
           script = ''
             source /var/lib/kubelet/kubeadm-flags.env || true
-            source ${cfg.environmentFile} || true
+            source ${cfg.secretsFile} || true
+
             exec kubelet \
               $KUBELET_KUBEADM_ARGS \
               --config=${kubeletConfigPath} \
-              --kubeconfig=${kubeConfigPath}
+              --bootstrap-kubeconfig=/etc/kubernetes/bootstrap-kubelet.conf \
+              --kubeconfig=/etc/kubernetes/kubelet.conf
           '';
 
           unitConfig = {
