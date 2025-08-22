@@ -42,6 +42,7 @@ in
           services.kubeadm = {
             advertiseAddress = "192.168.88.6";
             masterAddress = "192.168.88.4";
+            cri = "cri-o";
             roles = [
               "worker"
             ];
