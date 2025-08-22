@@ -28,6 +28,10 @@
         KUBEADM_TOKEN=abcdef.0123456789abcdef
         KUBEADM_CERT_KEY=61ce66f6db90277e9a5fc42fabf223ce59dbc40dc91583d03a25bba4f328865f
       '';
+      ignorePreflightErrors = [
+        "Mem"
+        "Swap"
+      ];
       initConfiguration = {
         bootstrapTokens = [
           {
@@ -47,12 +51,7 @@
           "addon/kube-proxy"
           "addon/coredns"
         ];
-        nodeRegistration = {
-          ignorePreflightErrors = [
-            "Mem"
-            "Swap"
-          ];
-        };
+        nodeRegistration = { };
       };
       clusterConfiguration = {
         clusterName = "kubeadm-lab";

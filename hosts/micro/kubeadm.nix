@@ -75,6 +75,11 @@ in
         default = 6443;
         apply = builtins.toString;
       };
+      ignorePreflightErrors = lib.mkOption {
+        type = lib.types.listOf lib.types.str;
+        default = [ ];
+        description = "Kubeadm preflight errors to ignore";
+      };
       secretsFile = lib.mkOption {
         description = ''
           Path to env file containing KUBEADM_TOKEN
@@ -191,6 +196,7 @@ in
             kind = "InitConfiguration";
             nodeRegistration.name = config.networking.hostName;
             nodeRegistration.criSocket = cfg.criSocket;
+            nodeRegistration.ignorePreflightErrors = cfg.ignorePreflightErrors;
             certificateKey = "\${KUBEADM_CERT_KEY}";
             localAPIEndpoint = {
               advertiseAddress = cfg.advertiseAddress;
@@ -203,6 +209,7 @@ in
             kind = "JoinConfiguration";
             nodeRegistration.name = config.networking.hostName;
             nodeRegistration.criSocket = cfg.criSocket;
+            nodeRegistration.ignorePreflightErrors = cfg.ignorePreflightErrors;
             discovery = {
               bootstrapToken = {
                 token = "\${KUBEADM_TOKEN}";
