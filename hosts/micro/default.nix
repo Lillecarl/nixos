@@ -14,6 +14,7 @@
   ];
   config = {
     system.stateVersion = lib.trivial.release;
+    boot.kernelPackages = pkgs.linuxPackages_latest;
 
     networking.firewall.enable = false;
     services.openssh.enable = true;
@@ -89,7 +90,8 @@
       hypervisor = "qemu";
 
       vcpu = 4;
-      mem = 1900;
+      mem = 1024;
+      balloon = true;
 
       writableStoreOverlay = "/nix/.rw-store";
       storeOnDisk = false;
