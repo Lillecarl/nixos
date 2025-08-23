@@ -250,17 +250,7 @@
         ];
       };
 
-      repositoryLocation =
-        let
-          loc = builtins.getEnv "FLAKE";
-        in
-        if builtins.stringLength loc == 0 then
-          builtins.throw ''
-            FLAKE environment variable is 0 length or not set at all, please
-            set FLAKE to the repository root and evaluate with --impure
-          ''
-        else
-          loc;
+      repositoryLocation = (import ./lib/getEnv.nix) "FLAKE";
       slib = import ./lib {
         inherit (inputs.nixpkgs) lib;
         outPath = ./.;
