@@ -261,6 +261,7 @@
         # ./hosts/hetzner/flake-module.nix
         ./hosts/k3s/flake-module.nix
         ./hosts/micro/flake-module.nix
+        ./hosts/linvidia/flake-module.nix
         ./hosts/penguin/flake-module.nix
         ./hosts/shitbox/flake-module.nix
         ./repl/flake-module.nix
@@ -302,7 +303,8 @@
             _module.args = {
               inherit pkgs mpkgs spkgs;
               mypkgs = inputs.nixpkgsOnFS or inputs.nixpkgs;
-            } // specialArgs;
+            }
+            // specialArgs;
 
             inherit legacyPackages packages;
           };
