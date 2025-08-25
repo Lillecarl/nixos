@@ -28,6 +28,7 @@ in
         builders-use-substitutes = true;
         keep-going = true;
         warn-dirty = false;
+        allow-unsafe-native-code-during-evaluation = true;
 
         system-features = [
           "kvm"
