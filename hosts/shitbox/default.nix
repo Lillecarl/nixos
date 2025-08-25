@@ -2,10 +2,12 @@
   lib,
   pkgs,
   self,
+  inputs,
   ...
 }:
 {
   imports = [
+    inputs.microvm.nixosModules.host
     ./amdmicrocode.nix
     ./audiovideo.nix
     ./facter.nix
@@ -18,6 +20,9 @@
     ./initrd.nix
     ./networking.nix
   ];
+  microvm = {
+    autostart = [];
+  };
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   disko.devices = import ./disko.nix {
