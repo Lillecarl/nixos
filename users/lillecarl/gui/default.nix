@@ -12,6 +12,7 @@
     ./chromium.nix
     ./cliphist.nix
     ./eww.nix
+    ./vscode.nix
     ./firefox.nix
     ./foot.nix
     ./kitty.nix
