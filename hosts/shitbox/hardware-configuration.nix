@@ -6,7 +6,7 @@
 }:
 {
   boot = {
-    kernelPackages = lib.mkForce pkgs.linuxPackages;
+    kernelPackages = lib.mkForce pkgs.linuxPackages_latest;
     initrd.kernelModules = [
       "i915"
       "vfio-pci"
