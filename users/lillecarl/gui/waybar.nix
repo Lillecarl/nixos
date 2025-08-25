@@ -12,9 +12,6 @@ let
 in
 {
   config = lib.mkIf config.ps.gui.enable {
-    home.packages = [
-      pkgs.networkmanagerapplet # For nm-applet icons
-    ];
     catppuccin.waybar.enable = true;
 
     programs.waybar = {
