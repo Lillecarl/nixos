@@ -123,8 +123,6 @@ in
         enableSystemSlice = true;
         enableRootSlice = true;
       };
-      # Disable network-manager wait-online service that prohibits nixos-rebuild
-      services.NetworkManager-wait-online.enable = false;
     };
 
     services = {

@@ -34,7 +34,6 @@ in
             extraGroups = [
               "wheel"
               "libvirtd"
-              "networkmanager"
               "lxd"
               "flatpak"
               "adbusers"

@@ -22,8 +22,6 @@ in
         name = "lobr";
       };
     };
-    # Disable systemd-networkd-wait-online, we just want a bridge to add VM's to.
-    systemd.services.systemd-networkd-wait-online.enable = lib.mkForce false;
 
     networking = {
       nftables = {
@@ -51,13 +49,17 @@ in
           ip protocol icmp icmp type { destination-unreachable, router-advertisement, time-exceeded, parameter-problem } accept comment "Allow icmpv4 identification"
         '';
       };
-      networkmanager.unmanaged = (lib.attrNames config.systemd.network.netdevs) ++ [
-        "enp8s0"
-      ];
+
+      wireless = {
+        iwd = {
+          enable = true;
+        };
+      };
     };
 
     systemd.network = {
       enable = true;
+      wait-online.enable = false;
 
       netdevs = {
         # Dummy interface to add to bridge(s) that we always want up.
@@ -148,7 +150,7 @@ in
           };
           routes = [
             {
-              Destination = "::0";
+              # Destination = "::0";
               Gateway = "2001:470:28:f5::1";
             }
           ];

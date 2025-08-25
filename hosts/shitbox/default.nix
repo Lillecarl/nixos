@@ -34,13 +34,6 @@
     hostName = "shitbox";
     hostId = "43211234";
     useDHCP = false;
-    networkmanager = {
-      enable = true;
-      unmanaged = [
-        "virbr0"
-        "lxdbr0"
-      ];
-    };
   };
 
   hardware.graphics.enable = true;
