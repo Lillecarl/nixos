@@ -82,7 +82,7 @@ in
       };
       secretsFile = lib.mkOption {
         description = ''
-          Path to env file containing KUBEADM_TOKEN
+          Path to env file containing the following variables: KUBEADM_TOKEN, KUBEADM_CERT_KEY
         '';
         type = lib.types.nullOr lib.types.path;
         default = null;
@@ -315,7 +315,9 @@ in
             kreset = pkgs.writeShellScriptBin "kreset" ''
               sudo -E systemctl stop ${systemdCfg.kubeadm.name} ${systemdCfg.kubelet.name} ${cfg.criServiceName}
               sudo -E ${kubeadm} reset "$@" --config=${resetConfig}
-              # sudo -E systemctl start ${systemdCfg.kubeadm.name}
+              sudo -E crictl rm --force $(sudo crictl ps -aq) 2>/dev/null || true
+              sudo -E crictl rmi --prune 2>/dev/null || true
+              sudo -E systemctl start ${systemdCfg.kubeadm.name}
             '';
             kupgrade = pkgs.writeShellScriptBin "kupgrade" ''
               sudo -E ${kubeadm} upgrade "$@" --config=${upgradeConfig}
@@ -348,13 +350,17 @@ in
           let
             configScript = # bash
               ''
+                # Source secrets
                 source ${cfg.secretsFile}
+                # Export secrets
                 export KUBEADM_TOKEN
                 export KUBEADM_CERT_KEY
+                # Replace placeholders with secrets
                 envsubst < ${initConfig} > ${initConfigImpure}
                 envsubst < ${joinConfig} > ${joinConfigImpure}
-                chmod 600 /etc/kubeadm/initConfig.yaml
-                chmod 600 /etc/kubeadm/joinConfig.yaml
+                # Set permissions
+                chmod 700 /etc/kubeadm/initConfig.yaml
+                chmod 700 /etc/kubeadm/joinConfig.yaml
               '';
             initScript = # bash
               ''
