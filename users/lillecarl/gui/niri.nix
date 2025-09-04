@@ -40,12 +40,6 @@ in
     programs.niri = {
       enable = true;
 
-      package =
-        if (lib.isDerivation (nixosConfig.programs.niri.package ? null)) then
-          nixosConfig.programs.niri.package
-        else
-          pkgs.niri;
-
       settings = {
         spawn-at-startup = [
           # Start niri-session.target
@@ -67,8 +61,6 @@ in
           # was stopped and units like waybar, avizo, swaync has failed.
           {
             command = [
-              "sh"
-              "-c"
               "${config.xdg.stateHome}/nix/profiles/home-manager/activate"
             ];
           }
@@ -112,6 +104,15 @@ in
               "setvcp"
               "0x60"
               "0x0f"
+            ];
+          }
+          # Run
+          {
+            command = [
+              spawnWrapper
+              (lib.getExe' pkgs.kitty "kitten")
+              "desktop-ui"
+              "run-server"
             ];
           }
         ];
