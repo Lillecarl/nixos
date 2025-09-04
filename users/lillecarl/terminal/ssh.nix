@@ -15,11 +15,10 @@ in
   config = lib.mkIf cfg.enable {
     programs.ssh = lib.mkIf config.ps.terminal.enable {
       enable = true;
+      enableDefaultConfig = false;
 
-      forwardAgent = false;
-
-      serverAliveInterval = 10;
-      serverAliveCountMax = 6;
+      matchBlocks."*".serverAliveInterval = 10;
+      matchBlocks."*".serverAliveCountMax = 6;
 
       extraConfig = ''
         ConnectTimeout 5
