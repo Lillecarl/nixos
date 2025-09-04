@@ -33,6 +33,7 @@ in
     ./niri.nix
     ./nix.nix
     ./noshell.nix
+    ./openssl.nix
     ./openvpn.nix
     ./polkit.nix
     ./postgresql.nix
