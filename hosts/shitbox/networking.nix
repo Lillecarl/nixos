@@ -24,6 +24,8 @@ in
     };
 
     networking = {
+      dhcpcd.enable = false; # systemd-networkd does this for us
+
       nftables = {
         enable = true;
 
@@ -162,6 +164,7 @@ in
         enp8s0 = {
           matchConfig.Name = "enp8s0";
           bridge = [ "br0" ];
+          DHCP = "no";
         };
 
         br13 = {
