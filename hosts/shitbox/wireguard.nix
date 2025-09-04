@@ -1,7 +1,7 @@
-{ ... }:
+{ lib, ... }:
 {
   options = { };
-  config = {
+  config = lib.mkIf false {
     networking.wireguard.interfaces.hetzner1 = {
       mtu = 1280;
       allowedIPsAsRoutes = false;
