@@ -39,12 +39,9 @@ in
         experimental-features = [
           "auto-allocate-uids"
           "cgroups"
-          "nix-command"
-          "ca-derivations"
-          "flakes"
-          "impure-derivations"
-          "recursive-nix"
           "fetch-closure"
+          "flakes"
+          "nix-command"
         ];
 
         trusted-users = [
