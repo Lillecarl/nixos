@@ -2,7 +2,7 @@
 {
   config = lib.mkIf config.ps.gui.enable {
     services.mako = {
-      enable = true;
+      enable = false;
 
       settings = {
         anchor = "center";
