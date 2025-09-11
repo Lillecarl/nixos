@@ -25,7 +25,7 @@ in
         auto_sync = true;
         sync_frequency = "5m";
         sync_address = "https://api.atuin.sh";
-        search_mode = "fuzzy";
+        search_mode = "fulltext";
         style = "compact";
         inline_height = 25;
         show_preview = true;
