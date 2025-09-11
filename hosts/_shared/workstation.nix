@@ -128,8 +128,6 @@ in
     services = {
       # Enabled fwupd daemon, allows applications to update firmware
       fwupd.enable = true;
-      # enable tailscale daemon
-      tailscale.enable = true;
       # Local network autodiscovery services
       # required for chromecasting to work
       avahi = {
