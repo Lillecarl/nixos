@@ -44,6 +44,9 @@ in
               mountpoint = "/boot";
               mountOptions = [
                 "umask=0077"
+                "flush"
+                "noatime"
+                "errors=remount-ro"
               ];
             };
           };
