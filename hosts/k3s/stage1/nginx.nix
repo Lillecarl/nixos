@@ -8,7 +8,7 @@ let
   namespace = "nginx";
 in
 {
-  kubernetes.resources.namespaces.${namespace} = { };
+  kubernetes.api.resources.namespaces.${namespace} = { };
   kubernetes.helm.releases.nginx = {
     namespace = namespace;
 
@@ -21,8 +21,20 @@ in
 
     values = {
       controller.service.ipFamilyPolicy = "RequireDualStack";
-      # controller.service.loadBalancerClass = "io.cilium/node";
-      # controller.service.externalTrafficPolicy = "Local";
+      controller.service.loadBalancerClass = "ciliumNodeIPAM";
+      controller.replicaCount = 2;
+      controller.topologySpreadConstraints = [
+        {
+          maxSkew = 1;
+          topologyKey = "kubernetes.io/hostname";
+          whenUnsatisfiable = "ScheduleAnyway";
+          labelSelector.matchLabels = {
+            "app.kubernetes.io/name" = "ingress-nginx";
+            "app.kubernetes.io/instance" = "ingress-nginx";
+            "app.kubernetes.io/component" = "controller";
+          };
+        }
+      ];
     };
   };
 }

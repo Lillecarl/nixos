@@ -38,13 +38,14 @@ in
     systemd.services.k3s.requires = [ "containerd.service" ];
     services.k3s = {
       enable = true;
-      clusterInit = true;
       token = "Cardstock9.Maximum.Sage";
+      clusterInit = config.networking.hostName == "k3s1";
+      serverAddr = if config.networking.hostName != "k3s1" then "https://46.62.143.208:6443" else "";
 
       extraFlags = [
         "--container-runtime-endpoint /run/containerd/containerd.sock"
         # Networking
-        # "--node-external-ip=${lib.concatStringsSep "," cfg.externalNodeIPs}"
+        "--node-external-ip=${lib.concatStringsSep "," cfg.externalNodeIPs}"
         "--node-ip=${lib.concatStringsSep "," cfg.nodeIPs}"
         "--node-name=${config.networking.hostName}"
         "--cluster-cidr ${cfg.clusterCidr},fd8f:9936:bf27::/64"
@@ -56,6 +57,7 @@ in
         "--disable=local-storage" # Deploy ourselves
         "--disable=metrics-server" # Deploy ourselves
         # Disable k3s features
+        "--disable-cloud-controller" # Use Hetzner cloud controller
         "--disable-helm-controller" # We don't use Helm like this
         "--disable-kube-proxy" # Cilium
         "--flannel-backend=none" # Cilium
@@ -63,7 +65,7 @@ in
         "--disable=servicelb" # Cilium
         # Use Hetzner CCM
         "--kubelet-arg=cloud-provider=external"
-        "--kubelet-arg=provider-id=hcloud://66552508" # Make this an option
+        # "--kubelet-arg=provider-id=hcloud://66552508" # Make this an option
         # OIDC with Keycloak
         "--kube-apiserver-arg=oidc-issuer-url=https://keycloak.lillecarl.com/realms/master"
         "--kube-apiserver-arg=oidc-client-id=kubernetes"
@@ -101,7 +103,11 @@ in
       pkgs.cilium-cli
     ];
     # Allow remote access to k3s
-    networking.firewall.allowedTCPPorts = [ 6443 ];
+    networking.firewall.allowedTCPPorts = [
+      6443 # k8s apiserver
+      2379 # etcd
+      2380 # etcd
+    ];
     boot.kernel.sysctl = {
       # virtualisation.lxd.recommendedSysctlSettings
       "fs.inotify.max_queued_events" = 1048576;

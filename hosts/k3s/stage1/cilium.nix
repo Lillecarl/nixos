@@ -9,7 +9,7 @@ let
 in
 {
   # Create cilium namespace
-  kubernetes.resources.namespaces.${namespace} = { };
+  kubernetes.api.resources.namespaces.${namespace} = { };
   # Create helm release
   kubernetes.helm.releases.cilium = {
     namespace = namespace;
@@ -31,9 +31,9 @@ in
       rollOutCiliumPods = true;
       # Enable host-scoped IPAM since we don't have BGP
 
-      # defaultLBServiceIPAM = "lbipam"; # nodeipam | lbipam
+      defaultLBServiceIPAM = "none"; # nodeipam | lbipam | none
       enableLBIPAM = false;
-      nodeIPAM.enabled = false;
+      nodeIPAM.enabled = true;
       # cni.chainingMode="portmap";
       # cni.customConf=true;
       # cni.configMap="cni-configuration";

@@ -9,9 +9,9 @@ let
 in
 {
   # Create coredns namespace
-  kubernetes.resources.namespaces.${namespace} = { };
+  kubernetes.api.resources.namespaces.${namespace} = { };
   kubernetes.namespace = namespace;
-  kubernetes.resources.configMaps.coredns = {
+  kubernetes.api.resources.configMaps.coredns = {
     data.Corefile = ''
       .:53 {
           errors

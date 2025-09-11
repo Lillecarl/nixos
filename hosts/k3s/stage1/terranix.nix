@@ -10,8 +10,8 @@ let
   getKubernetesResourceName =
     manifest:
     let
-      apiVersion = lib.replaceStrings [ "/" "." ] [ "-" "" ] manifest.apiVersion;
-      # apiVersion = manifest.apiVersion;
+      namereplace = lib.replaceStrings [ "/" "." ":" ] [ "-" "" "" ];
+      apiVersion = manifest.apiVersion;
       kind = manifest.kind;
       name = manifest.metadata.name;
       namespace = manifest.metadata.namespace or "none";
@@ -21,7 +21,7 @@ let
         else
           lib.strings.toLower "${apiVersion}_${namespace}_${kind}_${name}";
     in
-    attrName;
+    namereplace attrName;
 
   # Apply function to all strings in an attrset recursively through lists as well.
   mapStringsDeep =
@@ -55,13 +55,19 @@ let
   escapeStringsDeep = attrs: mapStringsDeep tfEscapeString attrs;
 
   kubenix_manifests = lib.listToAttrs (
-    lib.map (manifest: {
-      name = getKubernetesResourceName manifest;
-      value = {
-        raw = manifest;
-        escaped = escapeStringsDeep manifest;
-      };
-    }) kubenixAttrs.items
+    lib.map (
+      rawmanifest:
+      let
+        manifest = lib.filterAttrsRecursive (name: value: name != "kubenix/hash") rawmanifest;
+      in
+      {
+        name = getKubernetesResourceName manifest;
+        value = {
+          raw = manifest;
+          escaped = lib.tf.escapeEscapeDeep manifest;
+        };
+      }
+    ) kubenixAttrs.items
   );
 
   kubectl_manifests = lib.mapAttrs (
@@ -95,18 +101,7 @@ in
     };
   };
   provider.kubernetes.config_path = builtins.getEnv "KUBECONFIG";
-  # locals.kubectl_manifests = lib.mapAttrs (name: value:
-  #   value.JSON
-  # ) kubectl_manifests;
-  # locals.kubectl_manifests = lib.mapAttrsRecursive (
-  #   name: value:
-  #   let
-  #     escape = value: lib.replaceStrings [ ("$" + "{") ] [ ("$" + "$" + "{") ] value;
-  #   in
-  #   if lib.isString value then escape value else
-  #   if lib.isList value then
-  # ) kubectl_manifests;
-  locals.kubectl_manifests = kubectl_manifests;
+  # locals.kubectl_manifests = kubectl_manifests;
   locals.test = escapeStringsDeep {
     asdf = "fdsa";
     hello = pkgs.hello;

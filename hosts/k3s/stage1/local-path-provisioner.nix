@@ -15,7 +15,7 @@ let
   };
 in
 {
-  kubernetes.resources.namespaces.${namespace} = { };
+  kubernetes.api.resources.namespaces.${namespace} = { };
   kubernetes.helm.releases.local-path-provisioner = {
     namespace = namespace;
 

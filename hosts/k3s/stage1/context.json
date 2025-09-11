@@ -1,0 +1,323 @@
+{
+  "node": [
+    {
+      "metadata": {
+        "name": "k3s1"
+      },
+      "addresses": [
+        {
+          "address": "46.62.143.208",
+          "type": "ExternalIP"
+        },
+        {
+          "address": "2a01:4f9:c012:6632::1",
+          "type": "ExternalIP"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "name": "k3s2"
+      },
+      "addresses": [
+        {
+          "address": "37.27.255.65",
+          "type": "ExternalIP"
+        },
+        {
+          "address": "2a01:4f9:c012:e004::1",
+          "type": "ExternalIP"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "name": "k3s3"
+      },
+      "addresses": [
+        {
+          "address": "135.181.249.59",
+          "type": "ExternalIP"
+        },
+        {
+          "address": "2a01:4f9:c010:822e::1",
+          "type": "ExternalIP"
+        }
+      ]
+    }
+  ],
+  "service": [
+    {
+      "metadata": {
+        "name": "cilium-envoy",
+        "namespace": "cilium",
+        "uid": "4b3a2657-6200-4016-8e93-c2b0a073d2d9"
+      },
+      "spec": {
+        "type": "ClusterIP",
+        "loadBalancerClass": null
+      },
+      "status": {
+        "loadBalancer": {}
+      }
+    },
+    {
+      "metadata": {
+        "name": "hubble-peer",
+        "namespace": "cilium",
+        "uid": "cc9d411d-0fd9-41b3-ba30-7912760b58a8"
+      },
+      "spec": {
+        "type": "ClusterIP",
+        "loadBalancerClass": null
+      },
+      "status": {
+        "loadBalancer": {}
+      }
+    },
+    {
+      "metadata": {
+        "name": "coredns",
+        "namespace": "coredns",
+        "uid": "2ef267f7-32a8-49a0-bdc8-0aeb9ef9fa7b"
+      },
+      "spec": {
+        "type": "ClusterIP",
+        "loadBalancerClass": null
+      },
+      "status": {
+        "loadBalancer": {}
+      }
+    },
+    {
+      "metadata": {
+        "name": "kubernetes",
+        "namespace": "default",
+        "uid": "35daed97-624b-48a3-bf15-3b74d72e8c5b"
+      },
+      "spec": {
+        "type": "ClusterIP",
+        "loadBalancerClass": null
+      },
+      "status": {
+        "loadBalancer": {}
+      }
+    },
+    {
+      "metadata": {
+        "name": "nginx-ingress-nginx-controller",
+        "namespace": "nginx",
+        "uid": "49efcb19-492d-4e74-aa7c-ef84e660c3b4"
+      },
+      "spec": {
+        "type": "LoadBalancer",
+        "loadBalancerClass": "ciliumNodeIPAM"
+      },
+      "status": {
+        "loadBalancer": {}
+      }
+    },
+    {
+      "metadata": {
+        "name": "nginx-ingress-nginx-controller-admission",
+        "namespace": "nginx",
+        "uid": "a5fc481a-23d1-4b20-b138-d7f08ddde6dd"
+      },
+      "spec": {
+        "type": "ClusterIP",
+        "loadBalancerClass": null
+      },
+      "status": {
+        "loadBalancer": {}
+      }
+    }
+  ],
+  "slice": [
+    {
+      "metadata": {
+        "name": "cilium-envoy-h22pv",
+        "namespace": "cilium",
+        "ownerReferences": [
+          {
+            "apiVersion": "v1",
+            "blockOwnerDeletion": true,
+            "controller": true,
+            "kind": "Service",
+            "name": "cilium-envoy",
+            "uid": "4b3a2657-6200-4016-8e93-c2b0a073d2d9"
+          }
+        ]
+      },
+      "endpoints": [
+        {
+          "addresses": [
+            "46.62.143.208"
+          ],
+          "nodeName": "k3s1"
+        },
+        {
+          "addresses": [
+            "37.27.255.65"
+          ],
+          "nodeName": "k3s2"
+        },
+        {
+          "addresses": [
+            "135.181.249.59"
+          ],
+          "nodeName": "k3s3"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "name": "hubble-peer-kchlp",
+        "namespace": "cilium",
+        "ownerReferences": [
+          {
+            "apiVersion": "v1",
+            "blockOwnerDeletion": true,
+            "controller": true,
+            "kind": "Service",
+            "name": "hubble-peer",
+            "uid": "cc9d411d-0fd9-41b3-ba30-7912760b58a8"
+          }
+        ]
+      },
+      "endpoints": [
+        {
+          "addresses": [
+            "46.62.143.208"
+          ],
+          "nodeName": "k3s1"
+        },
+        {
+          "addresses": [
+            "37.27.255.65"
+          ],
+          "nodeName": "k3s2"
+        },
+        {
+          "addresses": [
+            "135.181.249.59"
+          ],
+          "nodeName": "k3s3"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "name": "coredns-8n8d2",
+        "namespace": "coredns",
+        "ownerReferences": [
+          {
+            "apiVersion": "v1",
+            "blockOwnerDeletion": true,
+            "controller": true,
+            "kind": "Service",
+            "name": "coredns",
+            "uid": "2ef267f7-32a8-49a0-bdc8-0aeb9ef9fa7b"
+          }
+        ]
+      },
+      "endpoints": [
+        {
+          "addresses": [
+            "10.0.0.40"
+          ],
+          "nodeName": "k3s1"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "name": "nginx-ingress-nginx-controller-7vtv4",
+        "namespace": "nginx",
+        "ownerReferences": [
+          {
+            "apiVersion": "v1",
+            "blockOwnerDeletion": true,
+            "controller": true,
+            "kind": "Service",
+            "name": "nginx-ingress-nginx-controller",
+            "uid": "49efcb19-492d-4e74-aa7c-ef84e660c3b4"
+          }
+        ]
+      },
+      "endpoints": [
+        {
+          "addresses": [
+            "10.0.2.251"
+          ],
+          "nodeName": "k3s3"
+        },
+        {
+          "addresses": [
+            "10.0.2.127"
+          ],
+          "nodeName": "k3s3"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "name": "nginx-ingress-nginx-controller-8bcjg",
+        "namespace": "nginx",
+        "ownerReferences": [
+          {
+            "apiVersion": "v1",
+            "blockOwnerDeletion": true,
+            "controller": true,
+            "kind": "Service",
+            "name": "nginx-ingress-nginx-controller",
+            "uid": "49efcb19-492d-4e74-aa7c-ef84e660c3b4"
+          }
+        ]
+      },
+      "endpoints": [
+        {
+          "addresses": [
+            "fd00::29f"
+          ],
+          "nodeName": "k3s3"
+        },
+        {
+          "addresses": [
+            "fd00::282"
+          ],
+          "nodeName": "k3s3"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "name": "nginx-ingress-nginx-controller-admission-8sn4g",
+        "namespace": "nginx",
+        "ownerReferences": [
+          {
+            "apiVersion": "v1",
+            "blockOwnerDeletion": true,
+            "controller": true,
+            "kind": "Service",
+            "name": "nginx-ingress-nginx-controller-admission",
+            "uid": "a5fc481a-23d1-4b20-b138-d7f08ddde6dd"
+          }
+        ]
+      },
+      "endpoints": [
+        {
+          "addresses": [
+            "10.0.2.127"
+          ],
+          "nodeName": "k3s3"
+        },
+        {
+          "addresses": [
+            "10.0.2.251"
+          ],
+          "nodeName": "k3s3"
+        }
+      ]
+    }
+  ]
+}

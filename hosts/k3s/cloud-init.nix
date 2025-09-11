@@ -21,5 +21,8 @@ in
     services.cloud-init = {
       enable = true;
     };
+    environment.systemPackages = [
+      pkgs.cloud-init
+    ];
   };
 }

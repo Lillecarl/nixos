@@ -33,6 +33,7 @@
     environment.enableAllTerminfo = true;
     environment.systemPackages = [
       pkgs.gitui
+      pkgs.fish
     ];
     # Install LetsEncrypt staging as trusted root. This is "insecure" since LE
     # doesn't treat the staging keys with the same care as primary root keys.

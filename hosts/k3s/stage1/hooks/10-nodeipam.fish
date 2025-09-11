@@ -14,9 +14,11 @@ end
 set BASEDIR ../
 
 # Dev commands
-cat $BINDING_CONTEXT_PATH >$BASEDIR/context.json
-# env >$BASEDIR/variables.env
+cat $BINDING_CONTEXT_PATH >$BASEDIR/originalContext.json
+cat $BINDING_CONTEXT_PATH | ./lib/ff.jq >$BASEDIR/context.json
 
-cat $BINDING_CONTEXT_PATH | ./lib/filter.jq 2>>$BASEDIR/jq.log | jq >$BASEDIR/output.json
+env >$BASEDIR/variables.env
+
+# cat $BASEDIR/context.json | ./lib/filter.jq 2>>$BASEDIR/jq.log | jq >$BASEDIR/output.json
 
 # nix eval --json --file ./lib/filter.nix 2>>$BASEDIR/nix.log | jq >$BASEDIR/output.json
