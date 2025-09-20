@@ -115,7 +115,6 @@
     mozilla-addons-to-nix = {
       url = "sourcehut:~rycee/mozilla-addons-to-nix";
       inputs = {
-        flake-utils.follows = "flake-utils";
         nixpkgs.follows = "nixpkgs";
         pre-commit-hooks.follows = "git-hooks";
       };
