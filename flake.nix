@@ -2,9 +2,8 @@
   inputs = {
     # Direct inputs
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
-    nixpkgs-master.url = "github:NixOS/nixpkgs/master";
-    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.05";
     nixos-facter-modules.url = "github:nix-community/nixos-facter-modules";
     ucodenix.url = "github:e-tho/ucodenix";
     microvm = {
@@ -97,7 +96,7 @@
       url = "github:sodiboo/niri-flake";
       inputs = {
         nixpkgs.follows = "nixpkgs";
-        nixpkgs-stable.follows = "nixpkgs-stable";
+        nixpkgs-stable.follows = "nixpkgs";
       };
     };
     flake-parts = {
@@ -292,16 +291,13 @@
             pkgsGenerator = input: system: import input (pkgsSettings system);
 
             pkgs = pkgsGenerator inputs.nixpkgs system;
-            mpkgs = pkgsGenerator inputs.nixpkgs-master system;
-            spkgs = pkgsGenerator inputs.nixpkgs-stable system;
 
             legacyPackages = pkgs.extend (import ./pkgs);
             packages = import ./pkgs/pkgs.nix legacyPackages legacyPackages true;
           in
           {
             _module.args = {
-              inherit pkgs mpkgs spkgs;
-              mypkgs = inputs.nixpkgsOnFS or inputs.nixpkgs;
+              inherit pkgs;
             }
             // specialArgs;
 

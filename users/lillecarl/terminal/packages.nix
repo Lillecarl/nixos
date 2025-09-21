@@ -2,7 +2,6 @@
   lib,
   config,
   pkgs,
-  mpkgs,
   inputs,
   nixosConfig,
   ...

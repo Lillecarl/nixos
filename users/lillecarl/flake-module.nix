@@ -19,8 +19,6 @@ in
             withSystem "x86_64-linux" (
               {
                 pkgs,
-                mpkgs,
-                spkgs,
                 repositoryLocation,
                 ...
               }:
@@ -31,8 +29,6 @@ in
                     self
                     inputs
                     repositoryLocation
-                    mpkgs
-                    spkgs
                     ;
                   nixosConfig = self.nixosConfigurations.${sysName}.config;
                 };
@@ -72,8 +68,6 @@ in
           "lillecarl@penguin" = withSystem "aarch64-linux" (
             {
               pkgs,
-              mpkgs,
-              spkgs,
               repositoryLocation,
               ...
             }:
@@ -84,8 +78,6 @@ in
                   self
                   inputs
                   repositoryLocation
-                  mpkgs
-                  spkgs
                   ;
               };
               modules = [
@@ -109,8 +101,6 @@ in
         value = withSystem data.labels.arch (
           {
             pkgs,
-            mpkgs,
-            spkgs,
             repositoryLocation,
             ...
           }:
@@ -121,8 +111,6 @@ in
                 self
                 inputs
                 repositoryLocation
-                mpkgs
-                spkgs
                 ;
               nixosConfig = self.nixosConfigurations.${name}.config;
             };

@@ -23,7 +23,7 @@ in
     };
   };
   config = lib.mkIf cfg.enable {
-    environment.etc = lib.pipe inputs [
+    xdg.dataFile = lib.pipe inputs [
       # Don't link inputs listed in ps.linkinputs.ignoreInputs
       (x: lib.filterAttrs (key: val: !lib.any (x: x == key) cfg.ignoreInputs) x)
       (
