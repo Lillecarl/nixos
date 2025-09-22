@@ -6,13 +6,9 @@
 }:
 {
   config = lib.mkIf config.ps.gui.enable {
-    nixpkgs.config.permittedInsecurePackages = [
-      "qtwebengine-5.15.19" # Required by Stremio
-    ];
     home.packages =
       with pkgs;
       [
-        stremio # Video player with plugins to fetch content from questionable sources
         xfce.ristretto # Image viewer
         pcmanfm # File manager
         neovide # Neovim GUI
