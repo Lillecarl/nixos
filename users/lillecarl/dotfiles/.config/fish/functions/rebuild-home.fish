@@ -7,7 +7,7 @@ function rebuild-home
     # set fullflake "$FLAKE#homeConfigurations.\"$USER@$hostname\".activationPackage"
     set profile $HOME/.local/state/nix/profiles/home-manager
 
-    set -x HOME_MANAGER_BACKUP_EXT "$bak$(openssl rand -hex 2)"
+    set -x HOME_MANAGER_BACKUP_EXT "$bak$(tr -dc 'a-zA-Z0-9' < /dev/urandom | head -c 4)"
 
     echo "Building $evalfile $attrpath"
     echo "Into $result"
