@@ -20,6 +20,7 @@ in
     };
 
     values = {
+      controller.service.ipFamilyPolicy = "RequireDualStack";
       controller.service.loadBalancerClass = "io.cilium/node";
     };
   };

@@ -2,10 +2,10 @@
   repl ? false,
 }:
 let
-  fc = import ../../../../default.nix;
-  kubenix = import fc.inputs.kubenix;
-  terranixCore = "${fc.inputs.terranix}/core";
-  pkgs = fc.legacyPackages.${builtins.currentSystem};
+  flake = import ../../../../default.nix;
+  kubenix = import flake.inputs.kubenix;
+  terranixCore = "${flake.inputs.terranix}/core";
+  pkgs = flake.legacyPackages.${builtins.currentSystem};
   lib = pkgs.lib;
 
   kubenixEval = (
