@@ -10,7 +10,6 @@
         # Borders
         active_border_color = "#74c7ec";
         inactive_border_color = "#585b70";
-        border_width = 1.0;
         draw_minimal_borders = "no";
 
         inactive_text_alpha = 0.7;
