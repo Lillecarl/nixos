@@ -13,10 +13,7 @@
       (
         if config.ps.terminal.mode == "fat" then
           [
-            claude-code # CLI AI assistant
-            mimeo # Open files with the right program
-            broot # A new way to see and navigate directory trees
-            choose # A human-friendly and fast alternative to cut and (sometimes) awk
+            autossh # Auto ssh connect stuff
             direnv # Do stuff on cd.
             du-dust # A more intuitive version of du written in rust.
             duf # A better df alternative

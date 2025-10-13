@@ -51,6 +51,13 @@ in
           rulers = [ 80 ];
           bufferline = "always";
           color-modes = true;
+          file-picker.hidden = false;
+          gutters.layout = [
+            "diff"
+            "diagnostics"
+            "line-numbers"
+            "spacer"
+          ];
         };
         keys = {
           normal = {

@@ -31,11 +31,11 @@ in
       };
     };
 
-    zramSwap = {
-      enable = true;
-      memoryPercent = if config.networking.hostName == "nub" then 90 else 50;
-      priority = config.disko.devices.lvm_vg.pool.lvs.swap.content.priority * 2;
-      writebackDevice = "/dev/pool/${config.disko.devices.lvm_vg.pool.lvs.zram-writeback.name}";
-    };
+    # zramSwap = {
+    #   enable = true;
+    #   memoryPercent = if config.networking.hostName == "nub" then 90 else 50;
+    #   priority = config.disko.devices.lvm_vg.pool.lvs.swap.content.priority * 2;
+    #   writebackDevice = "/dev/pool/${config.disko.devices.lvm_vg.pool.lvs.zram-writeback.name}";
+    # };
   };
 }

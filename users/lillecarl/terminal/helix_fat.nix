@@ -21,12 +21,10 @@ in
       };
       extraPackages = [
         pkgs.stylua
-        pkgs.ansible-language-server
         pkgs.bash-language-server
-        pkgs.dockerfile-language-server-nodejs
+        pkgs.dockerfile-language-server
         pkgs.fish-lsp
         pkgs.helix-gpt
-        pkgs.nil
         pkgs.nixd
         pkgs.nixfmt-rfc-style
         pkgs.pyright

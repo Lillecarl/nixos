@@ -37,6 +37,9 @@ in
   ];
 
   config = lib.mkIf config.ps.gui.enable {
+    home.packages = with pkgs; [
+      dinit
+    ];
     programs.niri = {
       enable = true;
 

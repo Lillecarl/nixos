@@ -14,7 +14,7 @@ in
   };
   config = lib.mkIf cfg.enable {
     programs.awscli = {
-      enable = true;
+      enable = cfg.enable;
     };
   };
 }

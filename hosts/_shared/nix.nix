@@ -42,6 +42,7 @@ in
           "fetch-closure"
           "flakes"
           "nix-command"
+          "pipe-operator"
         ];
 
         trusted-users = [
@@ -73,7 +74,7 @@ in
       #   };
       # };
       nixPath = [
-        "nixpkgs=${inputs.nixpkgs.outPath}"
+        "nixpkgs=${inputs.nixpkgs-unstable.outPath}"
       ];
       #registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
       #nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;

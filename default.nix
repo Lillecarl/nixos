@@ -1,9 +1,9 @@
 let
   # flake-compat = import /home/lillecarl/Code/flake-compat;
-  flake-compat = import (builtins.fetchGit {
+  flake-compatish = import (builtins.fetchGit {
     url = "https://github.com/lillecarl/flake-compatish.git";
     ref = "main";
   });
-  flake = flake-compat ./.;
+  flake = flake-compatish ./.;
 in
 flake.outputs // { inherit (flake) impure; }
