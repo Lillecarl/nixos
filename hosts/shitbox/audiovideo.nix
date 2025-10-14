@@ -25,19 +25,19 @@ in
     systemWide = true;
   };
   services.pipewire.extraConfig.pipewire.bufconf = {
-    "context.properties" = {
-      "default.clock.rate" = 48000;
-      "default.clock.quantum" = 256;
-      "default.clock.min-quantum" = 128;
-      "default.clock.max-quantum" = 2048;
-    };
-    "pulse.properties" = {
-      "pulse.min.req" = "128/48000";
-      "pulse.default.req" = "256/48000";
-      "pulse.max.req" = "2048/48000";
-      "pulse.min.quantum" = "128/48000";
-      "pulse.max.quantum" = "2048/48000";
-    };
+    # "context.properties" = {
+    #   "default.clock.rate" = 48000;
+    #   "default.clock.quantum" = 256;
+    #   "default.clock.min-quantum" = 128;
+    #   "default.clock.max-quantum" = 2048;
+    # };
+    # "pulse.properties" = {
+    #   "pulse.min.req" = "128/48000";
+    #   "pulse.default.req" = "256/48000";
+    #   "pulse.max.req" = "2048/48000";
+    #   "pulse.min.quantum" = "128/48000";
+    #   "pulse.max.quantum" = "2048/48000";
+    # };
   };
   services.pipewire.extraConfig.pipewire.rtconfig = {
     "context.modules" = [
@@ -58,10 +58,10 @@ in
           "uclamp.min" = 0;
           "uclamp.max" = 1024;
         };
-        # flags = [
-        #   "ifexists"
-        #   "nofail"
-        # ];
+        flags = [
+          "ifexists"
+          "nofail"
+        ];
       }
     ];
   };
