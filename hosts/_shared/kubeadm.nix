@@ -37,7 +37,6 @@ let
       '';
 
   kubeletConfigPath = "/var/lib/kubelet/config.yaml";
-  kubeConfigPath = "/etc/kubernetes/kubelet.conf";
 in
 {
   options.services.kubeadm =
@@ -183,7 +182,7 @@ in
             kubernetesVersion = cfg.kubernetesVersion;
             controlPlaneEndpoint = "${cfg.masterAddress}:${cfg.port}";
             apiServer = {
-              certSANs = lib.uniqueStrings [
+              certSANs = lib.unique [
                 cfg.masterAddress
                 cfg.advertiseAddress
               ];
@@ -274,7 +273,8 @@ in
       }))
       # Enable and configure containerd specific settings
       (lib.mkIf (cfg.enable && isContainerd) {
-        virtualisation.containerd.settings.plugins."io.containerd.grpc.v1.cri".cni.bin_dir = lib.mkForce "/opt/cni/bin";
+        virtualisation.containerd.settings.plugins."io.containerd.grpc.v1.cri".cni.bin_dir =
+          lib.mkForce "/opt/cni/bin";
       })
       # Enable and configure cri-o specific settings
       (lib.mkIf (cfg.enable && isCrio) (recursiveMkDefault {
@@ -288,9 +288,28 @@ in
       }))
       # CRI independent configuration
       (lib.mkIf (cfg.enable) {
-        # Kubernetes requires IP forwarding
-        boot.kernel.sysctl."net.ipv4.ip_forward" = "1";
-        boot.kernel.sysctl."net.ipv6.ip_forward" = if config.networking.enableIPv6 then "1" else "0";
+        # Load kernel modules at boot
+        boot.kernelModules = [
+          "overlay"
+          "br_netfilter"
+        ];
+
+        # Sysctl parameters
+        boot.kernel.sysctl = {
+          "net.bridge.bridge-nf-call-iptables" = 1;
+          "net.bridge.bridge-nf-call-ip6tables" = 1;
+          "net.ipv4.ip_forward" = 1;
+          "net.ipv6.ip_forward" = if config.networking.enableIPv6 then "1" else "0";
+        };
+
+        # Install CNI binaries
+        system.activationScripts = {
+          cni-install = {
+            text = ''
+              ${lib.getExe pkgs.rsync} --recursive ${pkgs.cni-plugins}/bin/ /opt/cni/bin/
+            '';
+          };
+        };
 
         # Dump kubeadm config files in a easy-to-access location
         environment.etc = {
@@ -341,9 +360,6 @@ in
           in
           with pkgs;
           [
-            envsubst
-            htop
-
             kubernetes
             cri-tools
             etcd
@@ -386,7 +402,6 @@ in
                   kubeadm init "$@" --config=${initConfigImpure} --upload-certs || exit 1
                   exit 0
                 fi
-                systemctl start kubelet.service
               '';
 
             joinScript = # bash
@@ -397,7 +412,6 @@ in
                   kubeadm join "$@" --config=${joinConfigImpure} || exit 1
                   exit 0
                 fi
-                systemctl start kubelet.service
               '';
           in
           {
@@ -426,44 +440,35 @@ in
           };
 
         systemd.services.kubelet = {
-          enable = true;
-          description = "kubeadm kubelet";
-
-          path = with pkgs; [
-            kubernetes
-            util-linux
-          ];
-
-          script = ''
-            source /var/lib/kubelet/kubeadm-flags.env || true
-            source ${cfg.secretsFile} || true
-
-            exec kubelet \
-              $KUBELET_KUBEADM_ARGS \
-              --config=${kubeletConfigPath} \
-              --bootstrap-kubeconfig=/etc/kubernetes/bootstrap-kubelet.conf \
-              --kubeconfig=/etc/kubernetes/kubelet.conf
-          '';
+          description = "kubelet: The Kubernetes Node Agent";
+          wantedBy = [ "multi-user.target" ];
+          after = [ "network-online.target" ];
+          wants = [ "network-online.target" ];
+          requires = [ cfg.criServiceName ];
 
           unitConfig = {
-            ConditionPathExists = kubeletConfigPath;
+            ConditionPathExists = "/var/lib/kubelet/config.yaml";
           };
 
-          serviceConfig = {
-            Type = "notify";
-            Restart = "always";
-            RestartSec = "10s";
-            KillMode = "process";
-            OOMScoreAdjust = "-999";
-            CPUAccounting = true;
-            MemoryAccounting = true;
+          path = with pkgs; [
+            util-linuxMinimal
+          ];
 
-            # Security
-            NoNewPrivileges = false; # kubelet needs privileges
-            ProtectKernelTunables = false;
-            ProtectControlGroups = false;
-            ProtectSystem = false;
-            ProtectHome = false;
+          serviceConfig = {
+            EnvironmentFile = [
+              "-/var/lib/kubelet/kubeadm-flags.env"
+              "-/etc/sysconfig/kubelet"
+            ];
+            ExecStart = "${lib.getExe' pkgs.kubernetes "kubelet"} $KUBELET_KUBECONFIG_ARGS $KUBELET_CONFIG_ARGS $KUBELET_KUBEADM_ARGS $KUBELET_EXTRA_ARGS";
+            Restart = "always";
+            RestartSec = 1;
+            RestartMaxDelaySec = 60;
+            RestartSteps = 10;
+          };
+
+          environment = {
+            KUBELET_KUBECONFIG_ARGS = "--bootstrap-kubeconfig=/etc/kubernetes/bootstrap-kubelet.conf --kubeconfig=/etc/kubernetes/kubelet.conf";
+            KUBELET_CONFIG_ARGS = "--config=/var/lib/kubelet/config.yaml";
           };
         };
       })
