@@ -45,7 +45,6 @@
       initConfiguration = {
         # We deploy these ourselves
         skipPhases = [
-          "addon/kube-proxy"
           "addon/coredns"
         ];
         nodeRegistration = { };
