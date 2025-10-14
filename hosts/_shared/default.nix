@@ -26,6 +26,7 @@ in
     ./guix.nix
     ./hardware-configuration.nix
     ./kea.nix
+    ./kubeadm.nix
     ./libvirt.nix
     ./linkinputs.nix
     ./dns.nix

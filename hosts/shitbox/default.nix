@@ -19,10 +19,13 @@
     ./wireguard.nix
     ./initrd.nix
     ./networking.nix
+    ./kubeadm.nix
   ];
   microvm = {
     autostart = [];
   };
+  programs.nix-ld.enable = true;
+  programs.adb.enable = true;
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   disko.devices = import ./disko.nix {
