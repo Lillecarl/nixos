@@ -132,9 +132,6 @@ in
           "3.se.pool.ntp.org"
         ];
       };
-
-      # Enable the OpenSSH daemon.
-      openssh.enable = true;
     };
 
     security = {
