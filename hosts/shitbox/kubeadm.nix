@@ -30,6 +30,8 @@
         ];
       };
     };
+    # Allow communications over cni0 bridge
+    networking.firewall.trustedInterfaces = [ "cni0" ];
     services.kubeadm = {
       enable = true;
       roles = [ "init" ];
