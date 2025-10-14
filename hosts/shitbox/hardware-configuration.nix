@@ -69,9 +69,20 @@
     };
   };
 
+  hardware.graphics = {
+    enable = true;
+    extraPackages = with pkgs; [
+      intel-media-driver # Required for Arc GPUs
+      intel-vaapi-driver # Fallback
+    ];
+  };
+
   services.udev.extraRules = # udev
     ''
+      # Use kyber IO scheduler
       ACTION=="add|change", SUBSYSTEM=="block", ATTR{queue/scheduler}=="*kyber*", ATTR{queue/scheduler}="kyber"
+      # Disable USB wake for SINOWEALTH gaming mouse
+      SUBSYSTEM=="usb", ATTRS{idVendor}=="258a", ATTRS{idProduct}=="0033", ATTR{power/wakeup}="disabled"
     '';
 
   services.lvm.boot.thin.enable = true;

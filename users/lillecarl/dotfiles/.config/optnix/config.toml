@@ -8,6 +8,34 @@ default_scope = ""
 # stdin and outputs the formatted code back to stdout.
 formatter_cmd = "nixfmt"
 
+[scopes.kubenixtest]
+options-list-cmd = '''
+nix eval --impure --json --expr '
+let
+  kubenix = import (
+    builtins.fetchGit {
+      url = "https://github.com/hall/kubenix.git";
+      ref = "main";
+    }
+  );
+  pkgs = import kubenix.inputs.nixpkgs { };
+  evaluatedModules = (
+    kubenix.evalModules.x86_64-linux {
+      module =
+        { kubenix, ... }:
+        {
+          imports = [ kubenix.modules.k8s ];
+          kubernetes.resources.pods.example.spec.containers.nginx.image = "nginx";
+        };
+    }
+  );
+  optionsList = builtins.filter (v: v.visible && !v.internal) (
+    pkgs.lib.optionAttrSetToDocList evaluatedModules.options
+  );
+in
+optionsList
+'
+'''
 [scopes.host]
 description = "Current host"
 options-list-cmd = '''
@@ -80,3 +108,19 @@ in
 # (without quotes) to fill in the option path to evaluate
 # The following is only an example to show how to use the placeholder..
 evaluator = "nix eval --json --file /home/lillecarl/Code/nixos nixosConfigurations.gw1.config.{{ .Option }}"
+
+[scopes.kubenix]
+description = "kubenix option system"
+options-list-cmd = '''
+nix eval --impure --json --expr '
+let
+  fc = import /home/lillecarl/Code/nixos/hosts/k3s/stage1/repl.nix;
+  options = fc.kn.options;
+  pkgs = fc.pkgs;
+  optionsList =
+    builtins.filter (v: v.visible && !v.internal)
+    (pkgs.lib.optionAttrSetToDocList options);
+in
+  optionsList
+'
+'''

@@ -42,8 +42,8 @@ in
         };
       };
     };
-    systemd.user.tmpfiles.rules = [
-      "L ${config.home.homeDirectory}/.editorconfig - - - - /tmp/.editorconfig"
-    ];
+    # systemd.user.tmpfiles.rules = [
+    #   "L ${config.home.homeDirectory}/.editorconfig - - - - /tmp/.editorconfig"
+    # ];
   };
 }

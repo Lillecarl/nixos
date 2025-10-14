@@ -40,6 +40,7 @@
 
   # Networking, virbr0 is WAN iface
   networking = {
+    firewall.enable = lib.mkForce false;
     hostName = "shitbox";
     hostId = "43211234";
     useDHCP = false;
