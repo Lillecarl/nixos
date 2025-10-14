@@ -32,6 +32,10 @@ function rebuild-os
 
     nvd diff $profile $result
 
+    # Because unreliable USB bootloader
+    echo "Remounting /boot"
+    sudo umount /boot || return 1
+    sudo mount /boot || return 1
     echo "Installing profile"
     sudo \
         nix-env \
