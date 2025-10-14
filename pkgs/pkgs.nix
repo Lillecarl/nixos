@@ -65,6 +65,32 @@ prev.lib.filterAttrs
     pg_jsonschema = prev.callPackage ./pg_jsonschema.nix { };
     pg_analytics = prev.callPackage ./pg_analytics.nix { };
     writeJinja2 = prev.python3Packages.callPackage ./writeJinja2.nix { };
+    writeSaneJinja2 =
+      { ... }@inputs:
+      final.writeJinja2 (
+        inputs
+        // {
+          environment = (inputs.environment or { }) // {
+            lstrip_blocks = true;
+            trim_blocks = true;
+          };
+        }
+      );
+    writeJinja3 = final.writeJinja2.override (p: {
+      environment = (p.environment or { }) // {
+        lstrip_blocks = true;
+        trim_blocks = true;
+      };
+    });
+    opencode = prev.opencode.overrideAttrs rec {
+      version = "0.2.27";
+      src = prev.fetchFromGitHub {
+        owner = "sst";
+        repo = "opencode";
+        tag = "v${version}";
+        sha256 = "sha256-nVjvcPL4s6xvlyR3NMXISl2Kaypwjk8QdvBnLc7c/E0=";
+      };
+    };
   }
 // (if flake then python3Packages else { })
 // (if flake then grafanaPlugins else { })
