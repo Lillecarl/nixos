@@ -13,7 +13,6 @@ in
     nixosConfigurations.shitbox = withSystem system (
       {
         pkgs,
-        mypkgs,
         repositoryLocation,
         ...
       }@ctx:
@@ -22,7 +21,7 @@ in
           inherit inputs repositoryLocation self;
         };
       in
-      mypkgs.lib.nixosSystem {
+      inputs.nixpkgs.lib.nixosSystem {
         inherit pkgs;
         modules =
           [
@@ -37,6 +36,7 @@ in
               ps.kerneltune.enable = true;
               ps.acme.enable = true;
               ps.secrets.enable = true;
+              ps.k3s.enable = false;
             }
             inputs.agenix.nixosModules.default
             inputs.disko.nixosModules.disko
