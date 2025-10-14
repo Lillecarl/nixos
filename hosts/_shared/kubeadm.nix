@@ -306,7 +306,7 @@ in
         system.activationScripts = {
           cni-install = {
             text = ''
-              ${lib.getExe pkgs.rsync} --recursive ${pkgs.cni-plugins}/bin/ /opt/cni/bin/
+              ${lib.getExe pkgs.rsync} --mkpath --recursive ${pkgs.cni-plugins}/bin/ /opt/cni/bin/
             '';
           };
         };
