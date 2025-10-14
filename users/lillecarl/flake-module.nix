@@ -53,6 +53,7 @@ in
                       ps.editors.mode = "fat";
                       ps.podman.enable = false;
                       ps.gui.enable = true;
+                      ps.awscli.enable = false; # broken atm
                     }
                   ];
               }
@@ -122,7 +123,6 @@ in
                 ps.terminal.mode = "fat";
                 ps.editors.mode = "fat";
                 ps.podman.enable = false;
-                ps.awscli.enable = false; # broken atm
               }
             ];
           }
