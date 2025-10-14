@@ -26,6 +26,7 @@
   };
   programs.nix-ld.enable = true;
   programs.adb.enable = true;
+
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   disko.devices = import ./disko.nix {
@@ -89,9 +90,7 @@
     OVMFFull
     numactl
     looking-glass-client
-    barrier
     libarchive
-    discord
 
     # Hardware management
     smartmontools
