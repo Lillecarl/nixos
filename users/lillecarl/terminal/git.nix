@@ -75,23 +75,24 @@ in
 
     home.packages =
       if config.ps.terminal.mode == "fat" then
-        [
-          pkgs.gh # GitHub CLI
-          pkgs.glab # Gitlab CLI
+        with pkgs;[
+          gh # GitHub CLI
+          glab # Gitlab CLI
 
-          pkgs.git-imerge # Interactive merge, rebase
-          pkgs.git-open # Open git repo in browser
-          pkgs.tig # TUI tool to see branches and commit log graph
+          git-imerge # Interactive merge, rebase
+          git-open # Open git repo in browser
+          git-instafix # Pick staged changes into previous commits
+          tig # TUI tool to see branches and commit log graph
 
           # untested
-          pkgs.git-gone # Remove stale branches
-          pkgs.git-trim # Remove merged branches
-          pkgs.git-sync # Sync
-          pkgs.git-fire # push everything
-          pkgs.git-recent
-          pkgs.git-absorb
-          pkgs.git-ignore
-          pkgs.gitflow
+          git-gone # Remove stale branches
+          git-trim # Remove merged branches
+          git-sync # Sync
+          git-fire # push everything
+          git-recent
+          git-absorb
+          git-ignore
+          gitflow
         ]
       else
         [ ];
