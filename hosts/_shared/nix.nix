@@ -29,6 +29,7 @@ in
         keep-going = true;
         warn-dirty = false;
         allow-unsafe-native-code-during-evaluation = true;
+        sandbox = "relaxed";
 
         system-features = [
           "kvm"
