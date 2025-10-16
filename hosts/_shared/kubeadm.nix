@@ -333,12 +333,6 @@ in
               ];
         };
 
-        # Configure KUBECONFIG to use what kubeadm gives us by default.
-        # Requires superuser permissions when invoking kubectl
-        environment.sessionVariables = {
-          KUBECONFIG = "/etc/kubernetes/admin.conf";
-        };
-
         environment.systemPackages =
           let
             kinit = pkgs.writeShellScriptBin "kinit" ''
