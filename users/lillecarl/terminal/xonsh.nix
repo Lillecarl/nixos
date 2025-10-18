@@ -1,12 +1,14 @@
 {
+  config,
+  lib,
   ...
 }:
 {
   programs.xonsh = {
     enable = true;
-
-    extraOptions = ''
-      # Test
-    '';
+    extraConfig = # xonsh
+      ''
+        execx($(${lib.getExe config.programs.starship.package} init xonsh))
+      '';
   };
 }

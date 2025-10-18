@@ -11,14 +11,9 @@ in
   meta.maintainers = [ lib.maintainers.lillecarl ];
 
   options.programs.xonsh = {
-    enable = lib.mkEnableOption "Enable Xonsh shell";
+    enable = lib.mkEnableOption "xonsh";
 
-    package = lib.mkOption {
-      type = lib.types.package;
-      default = pkgs.xonsh;
-      defaultText = lib.literalExpression "pkgs.xonsh";
-      description = "Package providing {command}`xonsh`.";
-    };
+    package = lib.mkPackageOption pkgs "xonsh" { };
 
     extraPackages = lib.mkOption {
       type = lib.types.listOf lib.types.package;
@@ -26,9 +21,9 @@ in
       description = "List of Python packages to add to Xonsh";
     };
 
-    extraOptions = lib.mkOption {
+    extraConfig = lib.mkOption {
       type = lib.types.lines;
-      default = null;
+      default = "";
       description = "Lines to add to Xonsh RC file";
     };
   };
@@ -41,15 +36,14 @@ in
         if cfg.extraPackages == [ ] then
           cfg.package
         else
-          cfg.package.override ({ extraPackages = cfg.extraPackages; });
+          cfg.package.override { extraPackages = cfg.extraPackages; };
     in
-    {
+    lib.mkIf cfg.enable {
       home.packages = [
         package
       ];
       xdg.configFile."xonsh/rc.xsh" = {
-        enable = cfg.extraOptions != null;
-        text = cfg.extraOptions;
+        text = cfg.extraConfig;
       };
     };
 }
