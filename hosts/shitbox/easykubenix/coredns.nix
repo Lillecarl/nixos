@@ -1,7 +1,7 @@
 {
   config,
+  pkgs,
   lib,
-  helm,
   ...
 }:
 let
@@ -61,7 +61,7 @@ in
     helm.releases.${moduleName} = {
       namespace = cfg.namespace;
 
-      chart = helm.fetch {
+      chart = pkgs.fetchHelm {
         repo = "https://coredns.github.io/helm";
         chart = "coredns";
         version = "1.44.3";
