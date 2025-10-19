@@ -309,6 +309,12 @@ in
               ${lib.getExe pkgs.rsync} --mkpath --recursive ${pkgs.cni-plugins}/bin/ /opt/cni/bin/
             '';
           };
+          etcd-chattr = {
+            text = ''
+              ${lib.getExe' pkgs.coreutils "mkdir"} --parents /var/lib/etcd
+              ${lib.getExe' pkgs.e2fsprogs "chattr"} -R +C /var/lib/etcd || ${lib.getExe' pkgs.coreutils "true"}
+            '';
+          };
         };
 
         # Dump kubeadm config files in a easy-to-access location
