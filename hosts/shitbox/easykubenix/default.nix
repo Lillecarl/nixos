@@ -21,6 +21,8 @@ easykubenix {
   inherit pkgs;
   modules = [
     ./coredns.nix
+    ./lpp.nix
+    ./metallb.nix
     (
       { config, ... }:
       {
@@ -29,6 +31,8 @@ easykubenix {
           clusterDomain = "ksb.lillecarl.com";
           clusterIP = "10.133.0.10";
         };
+        local-path-provisioner.enable = true;
+        metal-lb.enable = true;
       }
     )
   ];
