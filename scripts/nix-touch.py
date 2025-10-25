@@ -9,19 +9,12 @@ and its dependencies, effectively marking them as "recently used" for GC purpose
 import argparse
 import sqlite3
 import sys
-import tempfile
-import stat
-import shutil
+import os
+from sqlite3 import Connection
 from pathlib import Path
 
 
-class NixTouchError(Exception):
-    """Base exception for nix-touch operations"""
-
-    pass
-
-
-def get_runtime_deps(db_path: str, store_path: str) -> list[str]:
+def get_runtime_deps(conn: Connection, store_path: str) -> list[str]:
     """Get store path and all runtime dependencies"""
 
     sql = """
@@ -40,11 +33,10 @@ def get_runtime_deps(db_path: str, store_path: str) -> list[str]:
     WHERE v.id IN (SELECT DISTINCT id FROM closure);
     """
 
-    with sqlite3.connect(f"file:{db_path}", uri=True) as conn:
-        return [row[0] for row in conn.execute(sql, (store_path,)).fetchall()]
+    return [row[0] for row in conn.execute(sql, (store_path,)).fetchall()]
 
 
-def get_runtime_and_build_deps(db_path: str, store_path: str) -> list[str]:
+def get_runtime_and_build_deps(conn: Connection, store_path: str) -> list[str]:
     """Get store path, runtime deps, and build dependencies"""
 
     sql = """
@@ -82,11 +74,10 @@ def get_runtime_and_build_deps(db_path: str, store_path: str) -> list[str]:
     WHERE v.id IN (SELECT DISTINCT id FROM closure);
     """
 
-    with sqlite3.connect(f"file:{db_path}", uri=True) as conn:
-        return [row[0] for row in conn.execute(sql, (store_path,)).fetchall()]
+    return [row[0] for row in conn.execute(sql, (store_path,)).fetchall()]
 
 
-def touch_paths(db_path: str, paths: list[str]) -> int:
+def touch_paths(conn: Connection, paths: list[str]) -> int:
     """Update registration time for list of store paths"""
 
     if not paths:
@@ -98,16 +89,12 @@ def touch_paths(db_path: str, paths: list[str]) -> int:
     WHERE path = ?;
     """
 
-    with sqlite3.connect(db_path) as conn:
-        conn.execute("BEGIN TRANSACTION")
+    with conn:
         conn.executemany(sql, [(path,) for path in paths])
-        conn.execute("COMMIT")
-        # executemany doesn't give reliable rowcount, so return the input count
-        # since we know each path exists (already validated)
-        return len(paths)
+    return len(paths)
 
 
-def validate_store_path(db_path: str, store_path: str) -> str:
+def validate_store_path(conn: Connection, store_path: str) -> str:
     """Validate and resolve store path"""
     # Resolve symlinks like ./result
     if Path(store_path).is_symlink():
@@ -116,44 +103,40 @@ def validate_store_path(db_path: str, store_path: str) -> str:
             store_path = str(resolved)
 
     if not store_path.startswith("/nix/store/"):
-        raise NixTouchError(f"Invalid store path: {store_path}")
+        raise Exception(f"Invalid store path: {store_path}")
 
-    # Check if exists in database (read-only)
-    with sqlite3.connect(f"file:{db_path}", uri=True) as conn:
-        exists = conn.execute(
-            "SELECT 1 FROM ValidPaths WHERE path = ?", (store_path,)
-        ).fetchone()
-        if not exists:
-            raise NixTouchError(f"Store path not found in database: {store_path}")
+    exists = conn.execute(
+        "SELECT 1 FROM ValidPaths WHERE path = ?", (store_path,)
+    ).fetchone()
+    if not exists:
+        raise Exception(f"Store path not found in database: {store_path}")
 
     return store_path
 
 
-def show_path_info(db_path: str, store_path: str):
+def show_path_info(conn: Connection, store_path: str):
     """Show information about store path"""
-    with sqlite3.connect(f"file:{db_path}", uri=True) as conn:
-        result = conn.execute(
-            """
-            SELECT path, hash, registrationTime, deriver, narSize
-            FROM ValidPaths WHERE path = ?
-        """,
-            (store_path,),
-        ).fetchone()
+    result = conn.execute(
+        """
+        SELECT registrationTime
+        FROM ValidPaths WHERE path = ?
+    """,
+        (store_path,),
+    ).fetchone()
 
-        if not result:
-            print(f"No information found for {store_path}")
-            return
+    if not result:
+        print(f"No information found for {store_path}")
+        return
 
-        path, hash_val, reg_time, deriver, nar_size = result
-        import time
+    reg_time = result[0]
+    import time
 
-        reg_date = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(reg_time))
+    reg_date = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(reg_time))
 
-        print(f"Store path: {path}")
-        print(f"Hash: {hash_val}")
-        print(f"Registration time: {reg_date}")
-        print(f"Size: {nar_size} bytes" if nar_size else "Size: unknown")
-        print(f"Deriver: {deriver}" if deriver else "Deriver: none")
+    print(f"Path: {store_path}")
+    print(f"Registration time: {reg_date}")
+    print(f"Runtime deps: {len(get_runtime_deps(conn, store_path))}")
+    print(f"Buildtime deps: {len(get_runtime_and_build_deps(conn, store_path))}")
 
 
 def main():
@@ -163,7 +146,6 @@ def main():
 Examples:
   %(prog)s /nix/store/abc123-hello-1.0          # Touch runtime dependencies
   %(prog)s ./result --build-deps                # Touch build + runtime deps
-  %(prog)s /nix/store/xyz --dry-run            # Show what would be touched
   %(prog)s /nix/store/xyz --info               # Show path information
         """,
         formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -174,59 +156,39 @@ Examples:
         "--build-deps", action="store_true", help="Also touch build-time dependencies"
     )
     parser.add_argument(
-        "--dry-run", action="store_true", help="Show count without making changes"
-    )
-    parser.add_argument(
         "--info", action="store_true", help="Show path information and exit"
     )
-    parser.add_argument(
-        "--db-path", default="/nix/var/nix/db/db.sqlite", help="Path to Nix database"
-    )
-    parser.add_argument("--verbose", "-v", action="store_true", help="Verbose output")
 
     args = parser.parse_args()
 
     try:
-        db_path = args.db_path
-        if not Path(db_path).exists():
-            raise NixTouchError(f"Nix database not found: {db_path}")
+        db_path = Path(os.environ.get("NIX_STATE_DIR", "/nix/var/nix")) / "db/db.sqlite"
+        if not db_path.exists():
+            raise Exception(f"Nix database not found: {db_path}")
 
-        with tempfile.TemporaryDirectory() as tmpdir:
-            if args.dry_run or args.info:
-                copy_path = Path(tmpdir).joinpath("db.sqlite")
-                shutil.copy2(db_path, copy_path)
-                db_path = str(copy_path)
-
-            store_path = validate_store_path(db_path, args.store_path)
+        if os.geteuid() == 0:
+            db_uri = f"file:{db_path}?mode=rwc&immutable=0"
+        else:
+            db_uri = f"file:{db_path}?mode=ro&immutable=1"  # This could fail
+        with sqlite3.connect(db_uri, uri=True) as conn:
+            store_path = validate_store_path(conn, args.store_path)
 
             if args.info:
-                show_path_info(db_path, store_path)
+                show_path_info(conn, store_path)
                 return
 
-            if args.verbose:
-                mode = (
-                    "runtime + build deps" if args.build_deps else "runtime deps only"
-                )
-                print(f"Processing {store_path} ({mode})")
-
-            # Get paths to touch (read-only operation)
-            if args.build_deps:
-                paths = get_runtime_and_build_deps(db_path, store_path)
+            if os.geteuid() != 0:
+                print("Touching requires superpowers")
             else:
-                paths = get_runtime_deps(db_path, store_path)
+                if args.build_deps:
+                    paths = get_runtime_and_build_deps(conn, store_path)
+                else:
+                    paths = get_runtime_deps(conn, store_path)
 
-            if args.dry_run:
-                print(f"Would update registration time for {len(paths)} store paths")
-            else:
-                count = touch_paths(db_path, paths)
+                count = touch_paths(conn, paths)
                 print(f"Updated registration time for {count} store paths")
 
-                if args.verbose:
-                    print(
-                        "Use 'nix-collect-garbage --delete-older-than Xd' for LRU cleanup"
-                    )
-
-    except NixTouchError as e:
+    except Exception as e:
         print(f"Error: {e}", file=sys.stderr)
         sys.exit(1)
     except KeyboardInterrupt:
