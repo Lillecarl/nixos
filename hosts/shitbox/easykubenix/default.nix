@@ -23,6 +23,7 @@ easykubenix {
     ./coredns.nix
     ./lpp.nix
     ./metallb.nix
+    ./cert-manager.nix
     (
       { config, ... }:
       {
@@ -33,6 +34,7 @@ easykubenix {
         };
         local-path-provisioner.enable = true;
         metal-lb.enable = true;
+        cert-manager.enable = true;
       }
     )
   ];
