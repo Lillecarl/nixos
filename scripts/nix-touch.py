@@ -14,7 +14,7 @@ from sqlite3 import Connection
 from pathlib import Path
 
 
-def get_runtime_deps(conn: Connection, store_path: str) -> list[str]:
+def get_runtime_deps(conn: Connection, storePath: Path) -> list[Path]:
     """Get store path and all runtime dependencies"""
 
     sql = """
@@ -33,10 +33,10 @@ def get_runtime_deps(conn: Connection, store_path: str) -> list[str]:
     WHERE v.id IN (SELECT DISTINCT id FROM closure);
     """
 
-    return [row[0] for row in conn.execute(sql, (store_path,)).fetchall()]
+    return [Path(row[0]) for row in conn.execute(sql, (str(storePath),)).fetchall()]
 
 
-def get_runtime_and_build_deps(conn: Connection, store_path: str) -> list[str]:
+def get_runtime_and_build_deps(conn: Connection, storePath: Path) -> list[Path]:
     """Get store path, runtime deps, and build dependencies"""
 
     sql = """
@@ -74,10 +74,10 @@ def get_runtime_and_build_deps(conn: Connection, store_path: str) -> list[str]:
     WHERE v.id IN (SELECT DISTINCT id FROM closure);
     """
 
-    return [row[0] for row in conn.execute(sql, (store_path,)).fetchall()]
+    return [Path(row[0]) for row in conn.execute(sql, (str(storePath),)).fetchall()]
 
 
-def touch_paths(conn: Connection, paths: list[str]) -> int:
+def touch_paths(conn: Connection, paths: list[Path]) -> int:
     """Update registration time for list of store paths"""
 
     if not paths:
@@ -90,42 +90,42 @@ def touch_paths(conn: Connection, paths: list[str]) -> int:
     """
 
     with conn:
-        conn.executemany(sql, [(path,) for path in paths])
+        conn.executemany(sql, [(str(path),) for path in paths])
     return len(paths)
 
 
-def validate_store_path(conn: Connection, store_path: str) -> str:
+def validate_store_path(conn: Connection, storePath: Path) -> Path:
     """Validate and resolve store path"""
     # Resolve symlinks like ./result
-    if Path(store_path).is_symlink():
-        resolved = Path(store_path).resolve()
+    if Path(storePath).is_symlink():
+        resolved = Path(storePath).resolve()
         if str(resolved).startswith("/nix/store/"):
-            store_path = str(resolved)
+            storePath = resolved
 
-    if not store_path.startswith("/nix/store/"):
-        raise Exception(f"Invalid store path: {store_path}")
+    if not storePath.is_relative_to(Path("/nix/store")):
+        raise Exception(f"Invalid store path: {storePath}")
 
     exists = conn.execute(
-        "SELECT 1 FROM ValidPaths WHERE path = ?", (store_path,)
+        "SELECT 1 FROM ValidPaths WHERE path = ?", (str(storePath),)
     ).fetchone()
     if not exists:
-        raise Exception(f"Store path not found in database: {store_path}")
+        raise Exception(f"Store path not found in database: {storePath}")
 
-    return store_path
+    return storePath
 
 
-def show_path_info(conn: Connection, store_path: str):
+def show_path_info(conn: Connection, storePath: Path):
     """Show information about store path"""
     result = conn.execute(
         """
         SELECT registrationTime
         FROM ValidPaths WHERE path = ?
     """,
-        (store_path,),
+        (str(storePath),),
     ).fetchone()
 
     if not result:
-        print(f"No information found for {store_path}")
+        print(f"No information found for {storePath}")
         return
 
     reg_time = result[0]
@@ -133,10 +133,10 @@ def show_path_info(conn: Connection, store_path: str):
 
     reg_date = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(reg_time))
 
-    print(f"Path: {store_path}")
+    print(f"Path: {storePath}")
     print(f"Registration time: {reg_date}")
-    print(f"Runtime deps: {len(get_runtime_deps(conn, store_path))}")
-    print(f"Buildtime deps: {len(get_runtime_and_build_deps(conn, store_path))}")
+    print(f"Runtime deps: {len(get_runtime_deps(conn, storePath))}")
+    print(f"Buildtime deps: {len(get_runtime_and_build_deps(conn, storePath))}")
 
 
 def main():
@@ -169,16 +169,18 @@ Examples:
         if os.geteuid() == 0:
             db_uri = f"file:{db_path}?mode=rwc&immutable=0"
         else:
-            db_uri = f"file:{db_path}?mode=ro&immutable=1"  # This could fail
+            # Setting immutable can fail spectacularly (read invalid data) but
+            # it won't corrupt the database so it doesn't really matter
+            db_uri = f"file:{db_path}?mode=ro&immutable=1"
         with sqlite3.connect(db_uri, uri=True) as conn:
-            store_path = validate_store_path(conn, args.store_path)
+            store_path = validate_store_path(conn, Path(args.store_path))
 
             if args.info:
                 show_path_info(conn, store_path)
                 return
 
             if os.geteuid() != 0:
-                print("Touching requires superpowers")
+                print("Touching requires Super Cow Powers!")
             else:
                 if args.build_deps:
                     paths = get_runtime_and_build_deps(conn, store_path)
@@ -187,15 +189,8 @@ Examples:
 
                 count = touch_paths(conn, paths)
                 print(f"Updated registration time for {count} store paths")
-
     except Exception as e:
-        print(f"Error: {e}", file=sys.stderr)
-        sys.exit(1)
-    except KeyboardInterrupt:
-        print("\nAborted", file=sys.stderr)
-        sys.exit(1)
-    except Exception as e:
-        print(f"Unexpected error: {e}", file=sys.stderr)
+        print(f"Error: {e.with_traceback}")
         sys.exit(1)
 
 
