@@ -54,7 +54,7 @@ in
 
       wireless = {
         iwd = {
-          enable = true;
+          # enable = true;
         };
       };
     };
