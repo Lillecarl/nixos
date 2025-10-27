@@ -2,8 +2,8 @@
 """
 nix-touch: Update Nix store path registration times for LRU garbage collection
 
-This tool updates the registrationTime field in the Nix database for a store path
-and its dependencies, effectively marking them as "recently used" for GC purposes.
+This tool updates the registrationTime field in the Nix database for store paths
+and their dependencies, effectively marking them as "recently used" for GC purposes.
 """
 
 import argparse
@@ -14,13 +14,16 @@ from sqlite3 import Connection
 from pathlib import Path
 
 
-def get_runtime_deps(conn: Connection, storePath: Path) -> list[Path]:
-    """Get store path and all runtime dependencies"""
+def get_runtime_deps(conn: Connection, storePaths: list[Path]) -> list[Path]:
+    """Get store paths and all their runtime dependencies"""
+    if not storePaths:
+        return []
 
-    sql = """
+    placeholders = ", ".join("?" for _ in storePaths)
+    sql = f"""
     WITH RECURSIVE closure(id) AS (
-        -- Start with the target store path
-        SELECT id FROM ValidPaths WHERE path = ?
+        -- Start with the target store paths
+        SELECT id FROM ValidPaths WHERE path IN ({placeholders})
 
         UNION
 
@@ -33,16 +36,20 @@ def get_runtime_deps(conn: Connection, storePath: Path) -> list[Path]:
     WHERE v.id IN (SELECT DISTINCT id FROM closure);
     """
 
-    return [Path(row[0]) for row in conn.execute(sql, (str(storePath),)).fetchall()]
+    params = [str(p) for p in storePaths]
+    return [Path(row[0]) for row in conn.execute(sql, params).fetchall()]
 
 
-def get_runtime_and_build_deps(conn: Connection, storePath: Path) -> list[Path]:
-    """Get store path, runtime deps, and build dependencies"""
+def get_runtime_and_build_deps(conn: Connection, storePaths: list[Path]) -> list[Path]:
+    """Get store paths, their runtime deps, and their build dependencies"""
+    if not storePaths:
+        return []
 
-    sql = """
+    placeholders = ", ".join("?" for _ in storePaths)
+    sql = f"""
     WITH RECURSIVE closure(id) AS (
-        -- Start with the target store path
-        SELECT id FROM ValidPaths WHERE path = ?
+        -- Start with the target store paths
+        SELECT id FROM ValidPaths WHERE path IN ({placeholders})
 
         UNION
 
@@ -74,12 +81,12 @@ def get_runtime_and_build_deps(conn: Connection, storePath: Path) -> list[Path]:
     WHERE v.id IN (SELECT DISTINCT id FROM closure);
     """
 
-    return [Path(row[0]) for row in conn.execute(sql, (str(storePath),)).fetchall()]
+    params = [str(p) for p in storePaths]
+    return [Path(row[0]) for row in conn.execute(sql, params).fetchall()]
 
 
 def touch_paths(conn: Connection, paths: list[Path]) -> int:
     """Update registration time for list of store paths"""
-
     if not paths:
         return 0
 
@@ -94,49 +101,78 @@ def touch_paths(conn: Connection, paths: list[Path]) -> int:
     return len(paths)
 
 
-def validate_store_path(conn: Connection, storePath: Path) -> Path:
-    """Validate and resolve store path"""
-    # Resolve symlinks like ./result
-    if Path(storePath).is_symlink():
-        resolved = Path(storePath).resolve()
-        if str(resolved).startswith("/nix/store/"):
-            storePath = resolved
+def validate_store_paths(conn: Connection, storePaths: list[Path]) -> list[Path]:
+    """Validate and resolve a list of store paths."""
+    validated_paths = []
+    invalid_paths = []
 
-    if not storePath.is_relative_to(Path("/nix/store")):
-        raise Exception(f"Invalid store path: {storePath}")
+    for p in storePaths:
+        path = p.resolve()
 
-    exists = conn.execute(
-        "SELECT 1 FROM ValidPaths WHERE path = ?", (str(storePath),)
-    ).fetchone()
-    if not exists:
-        raise Exception(f"Store path not found in database: {storePath}")
+        if not path.is_relative_to(Path("/nix/store")):
+            invalid_paths.append(f"Invalid store path: {p} ({path})")
+            continue
 
-    return storePath
+        exists = conn.execute(
+            "SELECT 1 FROM ValidPaths WHERE path = ?", (str(path),)
+        ).fetchone()
+        if not exists:
+            invalid_paths.append(f"Store path not found in database: {p}")
+            continue
+
+        validated_paths.append(path)
+
+    if invalid_paths:
+        raise Exception("\n".join(invalid_paths))
+
+    return validated_paths
 
 
-def show_path_info(conn: Connection, storePath: Path):
-    """Show information about store path"""
-    result = conn.execute(
-        """
-        SELECT registrationTime
-        FROM ValidPaths WHERE path = ?
-    """,
-        (str(storePath),),
-    ).fetchone()
-
-    if not result:
-        print(f"No information found for {storePath}")
-        return
-
-    reg_time = result[0]
+def show_paths_info(conn: Connection, storePaths: list[Path]):
+    """Show aggregated information about store paths"""
     import time
 
-    reg_date = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(reg_time))
+    # Show registration time only for a single path for clarity
+    if len(storePaths) == 1:
+        storePath = storePaths[0]
+        result = conn.execute(
+            "SELECT registrationTime FROM ValidPaths WHERE path = ?", (str(storePath),)
+        ).fetchone()
 
-    print(f"Path: {storePath}")
-    print(f"Registration time: {reg_date}")
-    print(f"Runtime deps: {len(get_runtime_deps(conn, storePath))}")
-    print(f"Buildtime deps: {len(get_runtime_and_build_deps(conn, storePath))}")
+        if result:
+            reg_time = result[0]
+            reg_date = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(reg_time))
+            print(f"Path: {storePath}")
+            print(f"Registration time: {reg_date}")
+
+    # Aggregated dependency counts
+    runtime_deps = get_runtime_deps(conn, storePaths)
+    build_deps = get_runtime_and_build_deps(conn, storePaths)
+
+    print(f"Total unique runtime deps: {len(runtime_deps)}")
+    print(f"Total unique buildtime deps: {len(build_deps)}")
+
+
+def get_db_uri(db_path: Path) -> str:
+    if os.geteuid() == 0:
+        return f"file:{db_path}?mode=rwc&immutable=0"
+    else:
+        # For non-root, first try a standard read-only connection.
+        db_uri = f"file:{db_path}?mode=ro"
+        try:
+            # Test the connection to see if it works without immutable.
+            # We need to run a query against a table to trigger wal and shm
+            # creation
+            with sqlite3.connect(db_uri, uri=True) as testConn:
+                testConn.execute("SELECT 1 FROM ValidPaths LIMIT 1;")
+                pass
+        except Exception:
+            # If there are no existing -wal and -shm files SQLite tries to
+            # create them even in "ro" mode, but it also means the DB is in a
+            # consistent state(?) so we can open immutable and have the latest
+            # data
+            db_uri = f"file:{db_path}?mode=ro&immutable=1"
+        return db_uri
 
 
 def main():
@@ -144,19 +180,16 @@ def main():
         description="Update Nix store path registration times for LRU garbage collection",
         epilog="""
 Examples:
-  %(prog)s /nix/store/abc123-hello-1.0          # Touch runtime dependencies
-  %(prog)s ./result --build-deps                # Touch build + runtime deps
-  %(prog)s /nix/store/xyz --info               # Show path information
+  %(prog)s /nix/store/abc-hello /nix/store/def-world # Touch runtime dependencies for multiple paths
+  %(prog)s ./result --build-deps                     # Touch build + runtime deps
+  %(prog)s /nix/store/xyz                            # Show path information
         """,
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
 
-    parser.add_argument("store_path", help="Nix store path to touch")
+    parser.add_argument("store_paths", nargs="+", help="Nix store path(s) to touch")
     parser.add_argument(
         "--build-deps", action="store_true", help="Also touch build-time dependencies"
-    )
-    parser.add_argument(
-        "--info", action="store_true", help="Show path information and exit"
     )
 
     args = parser.parse_args()
@@ -166,31 +199,25 @@ Examples:
         if not db_path.exists():
             raise Exception(f"Nix database not found: {db_path}")
 
-        if os.geteuid() == 0:
-            db_uri = f"file:{db_path}?mode=rwc&immutable=0"
-        else:
-            # Setting immutable can fail spectacularly (read invalid data) but
-            # it won't corrupt the database so it doesn't really matter
-            db_uri = f"file:{db_path}?mode=ro&immutable=1"
-        with sqlite3.connect(db_uri, uri=True) as conn:
-            store_path = validate_store_path(conn, Path(args.store_path))
-
-            if args.info:
-                show_path_info(conn, store_path)
-                return
+        with sqlite3.connect(get_db_uri(db_path), uri=True) as conn:
+            validated_paths = validate_store_paths(
+                conn, [Path(p) for p in args.store_paths]
+            )
 
             if os.geteuid() != 0:
-                print("Touching requires Super Cow Powers!")
+                show_paths_info(conn, validated_paths)
+                sys.exit(0)
             else:
                 if args.build_deps:
-                    paths = get_runtime_and_build_deps(conn, store_path)
+                    paths = get_runtime_and_build_deps(conn, validated_paths)
                 else:
-                    paths = get_runtime_deps(conn, store_path)
+                    paths = get_runtime_deps(conn, validated_paths)
 
                 count = touch_paths(conn, paths)
-                print(f"Updated registration time for {count} store paths")
+                print(f"Updated registration time for {count} store paths.")
+
     except Exception as e:
-        print(f"Error: {e.with_traceback}")
+        print(f"Error: {e}", file=sys.stderr)
         sys.exit(1)
 
 
