@@ -20,37 +20,14 @@ in
   config = lib.mkIf cfg.enable {
     programs.git = {
       enable = true;
-      userName = config.ps.info.name;
-      userEmail = "git@${config.ps.info.emailDomain}";
 
-      lfs.enable = config.ps.terminal.mode == "fat";
-
-      signing = {
-        key = "3916387439FCDA33";
-        signByDefault = false;
-      };
-
-      aliases = {
-        # leading exclamation mark(!) makes git run shell commands
-        root = "rev-parse --show-toplevel";
-      };
-
-      ignores = [
-        ".privrc"
-      ];
-
-      includes =
-        let
-          work = path: {
-            condition = "gitdir:${path}/";
-            path = config.xdg.configFile."git/work".source;
-          };
-        in
-        [
-          (work "~/Work")
-        ];
-
-      extraConfig = {
+      settings = {
+        user.email = "git@${config.ps.info.emailDomain}";
+        user.name = config.ps.info.name;
+        alias = {
+          # leading exclamation mark(!) makes git run shell commands
+          root = "rev-parse --show-toplevel";
+        };
         advice.diverging = false;
         branch.sort = "-committerdate";
         column.ui = "auto";
@@ -67,6 +44,28 @@ in
         tag.sort = "version:refname";
         trim.bases = "master,main,develop";
       };
+
+      lfs.enable = config.ps.terminal.mode == "fat";
+
+      signing = {
+        key = "3916387439FCDA33";
+        signByDefault = false;
+      };
+
+      ignores = [
+        ".privrc"
+      ];
+
+      includes =
+        let
+          work = path: {
+            condition = "gitdir:${path}/";
+            path = config.xdg.configFile."git/work".source;
+          };
+        in
+        [
+          (work "~/Work")
+        ];
     };
 
     programs.gitui = {
@@ -75,7 +74,8 @@ in
 
     home.packages =
       if config.ps.terminal.mode == "fat" then
-        with pkgs;[
+        with pkgs;
+        [
           gh # GitHub CLI
           glab # Gitlab CLI
 
