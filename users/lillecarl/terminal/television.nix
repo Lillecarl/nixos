@@ -19,7 +19,6 @@ in
 
       settings = {
         ui = {
-          theme = "catppuccin";
           input_bar_position = "bottom";
         };
       };
