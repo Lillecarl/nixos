@@ -88,7 +88,6 @@
   services.lvm.boot.thin.enable = true;
 
   hardware = {
-    enableAllFirmware = true;
     i2c.enable = true;
     cpu.amd.updateMicrocode = true;
   };
