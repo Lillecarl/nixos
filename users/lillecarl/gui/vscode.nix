@@ -13,6 +13,7 @@ in
     };
   };
   config = lib.mkIf cfg.enable {
+    catppuccin.vscode.profiles.default.enable = false;
     programs.vscode = {
       enable = true;
       package = pkgs.vscode.fhsWithPackages (ps: with ps; [
