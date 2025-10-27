@@ -1,16 +1,38 @@
-#! /usr/bin/env python3
+#!/usr/bin/env python3
+import argparse
 import sqlite3
 import subprocess
-import logging
-from argparse import ArgumentParser
+import os
+import sys
+from sqlite3 import Connection
 from datetime import datetime, timedelta
 from pathlib import Path
 
-logger = logging.getLogger(__name__)
+
+def get_db_uri(db_path: Path) -> str:
+    """Determines the correct SQLite connection URI based on user privileges."""
+    if os.geteuid() == 0:
+        return f"file:{db_path}?mode=rwc&immutable=0"
+    else:
+        # For non-root, first try a standard read-only connection.
+        db_uri = f"file:{db_path}?mode=ro"
+        try:
+            # Test the connection to see if it works without immutable.
+            # We need to run a query against a table to trigger wal and shm
+            # creation if the user has write permissions in the directory.
+            with sqlite3.connect(db_uri, uri=True) as testConn:
+                testConn.execute("SELECT 1 FROM ValidPaths LIMIT 1;")
+        except sqlite3.OperationalError:
+            # If the above fails, it's likely due to permissions.
+            # Fall back to an immutable connection which doesn't need to
+            # create temporary files.
+            db_uri = f"file:{db_path}?mode=ro&immutable=1"
+        return db_uri
 
 
 def get_dead_paths() -> list[str]:
     """Get list of dead store paths from nix-store."""
+    print("Finding dead paths with 'nix-store --gc --print-dead'...")
     result = subprocess.run(
         ["nix-store", "--gc", "--print-dead"],
         capture_output=True,
@@ -20,84 +42,91 @@ def get_dead_paths() -> list[str]:
     return [line.strip() for line in result.stdout.splitlines()]
 
 
-def get_old_paths(
-    dead_paths: list[str],
-    days: int,
-    db_path: Path = Path("/nix/var/nix/db/db.sqlite"),
-) -> list[str]:
-    """Filter dead paths to those older than specified days."""
+def get_old_paths(conn: Connection, dead_paths: list[str], seconds: int) -> list[str]:
+    """Filter dead paths to those older than specified seconds."""
     if not dead_paths:
         return []
 
-    cutoff_time = int((datetime.now() - timedelta(days=days)).timestamp())
+    cutoff_time = int((datetime.now() - timedelta(seconds=seconds)).timestamp())
 
-    with sqlite3.connect(db_path) as conn:
-        cursor = conn.cursor()
-        cursor.execute("CREATE TEMP TABLE DeadPaths (path TEXT PRIMARY KEY)")
-        cursor.executemany(
-            "INSERT INTO DeadPaths VALUES (?)", [(p,) for p in dead_paths]
-        )
+    cursor = conn.cursor()
+    # Use a temporary table for performance with large numbers of dead paths.
+    cursor.execute("CREATE TEMP TABLE DeadPaths (path TEXT PRIMARY KEY)")
+    cursor.executemany("INSERT INTO DeadPaths VALUES (?)", [(p,) for p in dead_paths])
 
-        cursor.execute(
-            """
-            SELECT vp.path
-            FROM ValidPaths vp
-            INNER JOIN DeadPaths dp ON vp.path = dp.path
-            WHERE vp.registrationTime < ?
-            """,
-            (cutoff_time,),
-        )
+    cursor.execute(
+        """
+        SELECT vp.path
+        FROM ValidPaths vp
+        INNER JOIN DeadPaths dp ON vp.path = dp.path
+        WHERE vp.registrationTime < ?
+        """,
+        (cutoff_time,),
+    )
 
-        return [row[0] for row in cursor.fetchall()]
+    return [row[0] for row in cursor.fetchall()]
 
 
 def delete_paths(paths: list[str], dry_run: bool = False) -> None:
     """Delete specified store paths."""
     if not paths:
-        logger.info("No paths to delete")
+        print("No old paths to delete.")
         return
 
-    logger.info(f"{'Would delete' if dry_run else 'Deleting'} {len(paths)} paths")
+    action = "Would delete" if dry_run else "Deleting"
+    print(f"{action} {len(paths)} paths...")
 
     if dry_run:
         for path in paths:
             print(path)
         return
 
+    # Use nix-store --delete for the actual deletion
     subprocess.run(
         ["nix-store", "--delete", *paths],
         check=True,
         capture_output=True,
         text=True,
     )
-    logger.info(f"Successfully deleted {len(paths)} paths")
+    print(f"Successfully deleted {len(paths)} paths.")
 
 
 def main() -> None:
-    parser = ArgumentParser(description="Delete old dead Nix store paths")
-    parser.add_argument("days", type=int, help="Delete paths older than this many days")
-    parser.add_argument(
-        "--dry-run", action="store_true", help="Print paths without deleting"
+    parser = argparse.ArgumentParser(
+        description="Delete dead Nix store paths older than a specified time.",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
     )
     parser.add_argument(
-        "--db-path",
-        type=Path,
-        default=Path("/nix/var/nix/db/db.sqlite"),
-        help="Path to Nix database",
+        "seconds", type=int, help="Delete paths older than this many seconds"
+    )
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Print paths that would be deleted without deleting them.",
     )
     args = parser.parse_args()
 
-    logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
+    try:
+        db_path = Path(os.environ.get("NIX_STATE_DIR", "/nix/var/nix")) / "db/db.sqlite"
+        if not db_path.exists():
+            raise Exception(f"Nix database not found: {db_path}")
 
-    logger.info(f"Finding dead paths older than {args.days} days")
+        is_dry_run = args.dry_run or os.geteuid() != 0
 
-    dead_paths = get_dead_paths()
-    logger.info(f"Found {len(dead_paths)} dead paths")
+        with sqlite3.connect(get_db_uri(db_path), uri=True) as conn:
+            dead_paths = get_dead_paths()
+            print(f"Found {len(dead_paths)} total dead paths.")
 
-    old_paths = get_old_paths(dead_paths, args.days, args.db_path)
-    logger.info(f"Found {len(old_paths)} paths older than {args.days} days")
+            old_paths = get_old_paths(conn, dead_paths, args.seconds)
+            print(
+                f"Found {len(old_paths)} dead paths older than {args.seconds} seconds."
+            )
 
-    delete_paths(old_paths, args.dry_run)
+            delete_paths(old_paths, is_dry_run)
+
+    except Exception as e:
+        print(f"Error: {e}", file=sys.stderr)
+        sys.exit(1)
 
 
 if __name__ == "__main__":
