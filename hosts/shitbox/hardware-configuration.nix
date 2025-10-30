@@ -36,6 +36,7 @@
       "vfio"
       "dm_thin_pool"
       "dm_snapshot"
+      "nct6775" # ROG STRIX B550-F GAMING WIFI II
     ];
     kernelParams = [
       "i915.enable_guc=2"
