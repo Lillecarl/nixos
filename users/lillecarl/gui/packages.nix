@@ -20,7 +20,7 @@
         signal-desktop # Signal messenger, useful to copy-paste stuff to your phone
         gpa # GUI for PGP
         google-chrome # Only use this when websites are stupid
-        tor-browser-bundle-bin # Tor browser
+        tor-browser # Tor browser
         libreoffice # Office suite
         kdiff3 # Well know diffing tool
         gparted # GUI partition manager

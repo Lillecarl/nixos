@@ -15,7 +15,7 @@
           [
             autossh # Auto ssh connect stuff
             direnv # Do stuff on cd.
-            du-dust # A more intuitive version of du written in rust.
+            dust # A more intuitive version of du written in rust.
             duf # A better df alternative
             envsubst # Templating with environment variables, commonly used with k8s
             eza # Better ls
