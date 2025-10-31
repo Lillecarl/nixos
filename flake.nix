@@ -242,9 +242,9 @@
         overlays = [
           (import ./lib/overlay.nix inputs.self.outPath)
           (import ./pkgs)
-          # inputs.nix-snapshotter.overlays.default
           inputs.nixgl.overlay
           inputs.nur.overlays.default
+          inputs.niri.overlays.niri
         ];
       };
 

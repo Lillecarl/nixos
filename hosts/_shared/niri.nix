@@ -12,7 +12,7 @@ in
   options.ps = {
     ${modName} = {
       enable = lib.mkOption {
-        default = false;
+        default = true;
         description = "Whether to enable ${modName}.";
       };
     };
@@ -20,7 +20,7 @@ in
   config = lib.mkIf cfg.enable {
     programs.niri = {
       enable = true;
-      package = pkgs.niri;
+      package = pkgs.niri-unstable;
     };
   };
 }
