@@ -25,19 +25,19 @@ in
     xdg = {
       portal = {
         enable = true;
-        wlr.enable = false;
+        # wlr.enable = false;
 
-        extraPortals = [
-          pkgs.xdg-desktop-portal-gtk
-          pkgs.xdg-desktop-portal-gnome
-        ];
-        config = {
-          common = {
-            default = [
-              "gtk"
-            ];
-          };
-        };
+        # extraPortals = [
+        #   pkgs.xdg-desktop-portal-gtk
+        #   pkgs.xdg-desktop-portal-gnome
+        # ];
+        # config = {
+        #   common = {
+        #     default = [
+        #       "gtk"
+        #     ];
+        #   };
+        # };
       };
     };
   };
