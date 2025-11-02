@@ -22,10 +22,23 @@
     ./kubeadm.nix
   ];
   microvm = {
-    autostart = [];
+    autostart = [ ];
   };
   programs.nix-ld.enable = true;
   programs.adb.enable = true;
+  programs.ssh.extraConfig = # ssh
+    ''
+      Host 192.168.88.20
+        User nix
+        IdentityFile /tmp/id_ed25519
+      Host *.nix-builders.nix-csi.svc.ksb.lillecarl.com
+        HostName %h
+        User nix
+        IdentityFile /tmp/id_ed25519
+        ProxyJump 192.168.88.20
+        HostKeyAlias nix-csi-builder
+        StrictHostKeyChecking accept-new
+    '';
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
