@@ -1,0 +1,13 @@
+env oredditc host="^https://old.reddit.com/r/.*/comments/"
+env oreddit host="^https://old.reddit.com/"
+env reddit host="https://reddit.com"
+env kagis host="^https://kagi.com/search.*"
+env youtube host="^https://youtube.com/.*"
+map <defaultf> LinkHints.activate
+
+map f runKey expect={"oredditc":"<oredditcf>","oreddit":"<oredditf>","reddit":"<redditf>","kagis":"<kagisf>","youtube":"<youtubef>"} keys="<defaultf>"
+map <oredditcf> LinkHints.activate exclude=".noncollapsed,.sitetable,.author,.userTagLink,.bylink,.noCtrlF,.embed-comment,.reportbtn,.save-button\u0020a"
+map <oredditf> LinkHints.activate exclude=".sitetable,.thing,.noCtrlF,.save-button\u0020a,.reportbtn,.post-crosspost-button,.domain\u0020a,.subreddit,.userTagLink,.post-sharing-button,.thumbnail,.author,#sr-header-area\u0020*,#header-bottom-right\u0020*,.side\u0020*,.linkflairlabel,.voteWeight"
+map <redditf> LinkHints.activate exclude=".shreddit-post-container,span,div,button" match="button"
+map <kagisf> LinkHints.activate match=".__sri-title\u0020a" exclude="._0_rank-icons"
+map <youtubef> LinkHints.activate match="#content"
