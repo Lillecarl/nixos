@@ -17,7 +17,7 @@ _: {
               jq
               pygame
               pyzmq
-              PyGithub
+              pygithub
               deepmerge
               evdev
               fuse
