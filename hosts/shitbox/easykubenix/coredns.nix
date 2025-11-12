@@ -33,6 +33,7 @@ in
     kubernetes.resources.${cfg.namespace}.ConfigMap.coredns = {
       data.Corefile = ''
         .:53 {
+            log
             errors
             health {
                lameduck 5s
@@ -40,17 +41,15 @@ in
             ready
             kubernetes ${cfg.clusterDomain} in-addr.arpa ip6.arpa {
                pods insecure
+               endpoint_pod_names
                fallthrough in-addr.arpa ip6.arpa
                ttl 30
             }
             prometheus :9153
-            forward . 9.9.9.9 {
+            forward . 1.1.1.1 {
                max_concurrent 1000
             }
-            cache 30 {
-               disable success ${cfg.clusterDomain}
-               disable denial ${cfg.clusterDomain}
-            }
+            cache 30
             loop
             reload
             loadbalance
