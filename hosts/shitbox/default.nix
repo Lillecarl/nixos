@@ -29,16 +29,48 @@
   programs.ssh.extraConfig = # ssh
     ''
       Host 192.168.88.20
+        Port 2222
         User nix
-        IdentityFile /tmp/id_ed25519
-      Host *.nix-builders.nix-csi.svc.ksb.lillecarl.com
+        IdentityFile /etc/lillecarl/ed25519-local
+        HostKeyAlias nix-csi-builder
+        StrictHostKeyChecking accept-new
+      Host *.nix-builders
         HostName %h
         User nix
-        IdentityFile /tmp/id_ed25519
+        IdentityFile /etc/lillecarl/ed25519-local
         ProxyJump 192.168.88.20
         HostKeyAlias nix-csi-builder
         StrictHostKeyChecking accept-new
+
+      Host nixbuild.lillecarl.com
+        Port 2222
+        User nix
+        IdentityFile /etc/lillecarl/ed25519-hetzkube
+        HostKeyAlias hetzkube
+        StrictHostKeyChecking accept-new
+      Host *.hetzkube
+        HostName %h
+        User nix
+        IdentityFile /etc/lillecarl/ed25519-hetzkube
+        ProxyJump nixbuild.lillecarl.com
+        HostKeyAlias hetzkube
+        StrictHostKeyChecking accept-new
+
+      # nixbuild
+      Host eu.nixbuild.net
+        PubkeyAcceptedKeyTypes ssh-ed25519
+        ServerAliveInterval 60
+        IPQoS throughput
+        IdentityFile /etc/nixbuild
+        KexAlgorithms diffie-hellman-group1-sha1,diffie-hellman-group14-sha1,diffie-hellman-group14-sha256,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,diffie-hellman-group-exchange-sha1,diffie-hellman-group-exchange-sha256,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,curve25519-sha256,curve25519-sha256@libssh.org,sntrup761x25519-sha512,sntrup761x25519-sha512@openssh.com,mlkem768x25519-sha256
     '';
+
+  programs.ssh.knownHosts = {
+    nixbuild = {
+      hostNames = [ "eu.nixbuild.net" ];
+      publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPIQCZc54poJ8vqawd8TraNryQeJnvH1eLpIDgbiqymM";
+    };
+  };
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
