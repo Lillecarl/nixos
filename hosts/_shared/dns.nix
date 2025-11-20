@@ -13,10 +13,22 @@ in
     };
   };
   config = lib.mkIf cfg.enable {
-    networking.nameservers = [ "127.0.0.1" ];
-    services.resolved.enable = false;
-    services.unbound = {
+    networking.nameservers = [ "9.9.9.9" ];
+    services.resolved = {
       enable = true;
+
+      dnssec = "allow-downgrade";
+      dnsovertls = "opportunistic";
+
+      fallbackDns = [
+        "1.1.1.1"
+        "1.0.0.1"
+        "2606:4700:4700::1111"
+        "2606:4700:4700::1001"
+      ];
+    };
+    services.unbound = {
+      enable = false;
       group = "users";
 
       settings = {
