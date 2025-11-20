@@ -11,34 +11,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
     };
-    nixng = {
-      url = "github:nix-community/NixNG";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.treefmt-nix.follows = "treefmt-nix";
-    };
     optnix = {
       url = "github:water-sucks/optnix";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-compat.follows = "";
-    };
-    kubenix = {
-      url = "github:hall/kubenix/main";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-compat.follows = "";
-      };
-    };
-    terranix = {
-      url = "github:terranix/terranix/main";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-parts.follows = "flake-parts";
-        systems.follows = "nix-systems";
-      };
-    };
-    nixpkgs-terraform-providers-bin = {
-      url = "github:nix-community/nixpkgs-terraform-providers-bin";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
     catppuccin-nix = {
       url = "github:catppuccin/nix";
@@ -53,25 +29,6 @@
         nixpkgs.follows = "nixpkgs";
       };
     };
-    nixos-anywhere = {
-      url = "github:nix-community/nixos-anywhere";
-      inputs = {
-        disko.follows = "disko";
-        flake-parts.follows = "flake-parts";
-        nixpkgs.follows = "nixpkgs";
-        treefmt-nix.follows = "treefmt-nix";
-      };
-    };
-    system-manager = {
-      url = "github:numtide/system-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    deploy-rs = {
-      url = "github:serokell/deploy-rs";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.utils.follows = "flake-utils";
-      inputs.flake-compat.follows = "flake-compat";
-    };
     nixgl = {
       url = "github:nix-community/nixGL";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -84,13 +41,6 @@
     noshell = {
       url = "github:viperML/noshell";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-    # Get this working with newer k3s and go versions
-    nix-snapshotter = {
-      url = "github:pdtpartners/nix-snapshotter";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-parts.follows = "flake-parts";
-      inputs.flake-compat.follows = "flake-compat";
     };
     niri = {
       url = "github:sodiboo/niri-flake";
