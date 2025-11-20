@@ -57,6 +57,11 @@
 
   xdg.enable = true;
 
+  # flatpak xdg openuri portal
+  # systemd.user.settings.Manager.DefaultEnvironment = {
+  #   PATH = "/run/wrappers/bin:/home/%u/.nix-profile/bin:/nix/profile/bin:/home/%u/.local/state/nix/profile/bin:/etc/profiles/per-user/%u/bin:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin";
+  # };
+
   programs = lib.mkIf (config.ps.terminal.mode == "fat") {
     man = {
       enable = true;
