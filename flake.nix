@@ -72,11 +72,8 @@
       url = "github:nix-community/lanzaboote";
       inputs = {
         crane.follows = "crane";
-        flake-parts.follows = "flake-parts";
         nixpkgs.follows = "nixpkgs";
-        pre-commit-hooks-nix.follows = "git-hooks";
         rust-overlay.follows = "rust-overlay";
-        flake-compat.follows = "flake-compat";
       };
     };
     catppuccin-qt5ct = {
