@@ -21,6 +21,7 @@
     ./gpg.nix
     ./helix.nix
     ./helix_fat.nix
+    ./jj.nix
     ./keepassxc.nix
     ./krew.nix
     ./lsd.nix
