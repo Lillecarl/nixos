@@ -26,7 +26,7 @@ in
         enable = true;
         settings = {
           ui.diff-editor = ":builtin";
-          git.private-commits = "'''description(glob:'private:*')'''";
+          git.private-commits = "description(glob:'private:*')";
         }
         // {
           inherit (gitSettings) user;
@@ -34,7 +34,16 @@ in
       };
     programs.jjui = {
       enable = true;
-      settings = { };
+      settings = {
+        keys.preview.scroll_up = [
+          "ctrl+p"
+          "ctrl+k"
+        ];
+        keys.preview.scroll_down = [
+          "ctrl+n"
+          "ctrl+j"
+        ];
+      };
     };
   };
 }

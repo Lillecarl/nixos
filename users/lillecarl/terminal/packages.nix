@@ -63,7 +63,7 @@
             ncdu # NCurses disk usage, like du but with a UI
             progress # Coreutils Progress Viewer
             # opentofu # FLOSS Terraform
-            config.lib.pspkgs.opentofu
+            #config.lib.pspkgs.opentofu
             deploy-rs # Nix deploy tool
             waypipe # Wayland over SSH mostly for wl-clipboard
             kubectl # Kubernetes CLI
@@ -76,7 +76,7 @@
             nerdctl # containerd cli tool
             kubelogin-oidc # Kubernetes OIDC login
             forgejo-cli # CLI for Forgejo (Gitea fork, codeberg.org)
-            inputs.optnix.packages.${pkgs.system}.optnix # TUI Nix options searcher
+            optnix # nix option searcher
             config.lib.pspkgs.cmctl # Cert-Manager
             config.lib.pspkgs.kubectl-cnpg # CloudnativePG
           ]
@@ -122,7 +122,7 @@
           hash = "sha256-+bKU6WLemn0y8yp+qLUKmhA2cSqVZOrzXNiwkwx0+Nk=";
         };
 
-        vendorHash = "sha256-6YecOYHBGZoAj9sUzYFN3MOsa7m5/jMBrOZrdvZTfao=";
+        vendorHash = "sha256-dD8AOEUdo+eLwV5aLrZUqWFKXRor0cV1vZ1HdQcQ+90=";
         doCheck = false;
         postInstall = ''
           # Link as kubectl plugin
@@ -178,10 +178,9 @@
           })
         ]
       ));
-    lib.pspkgs.fish4 = (pkgs.callPackage "${inputs.nixpkgs-fish}/pkgs/by-name/fi/fish/package.nix" { });
-    xdg.dataFile.tfplugins = {
-      source = "${config.lib.pspkgs.opentofu}/libexec/terraform-providers";
-      recursive = true;
-    };
+#    xdg.dataFile.tfplugins = {
+#      source = "${config.lib.pspkgs.opentofu}/libexec/terraform-providers";
+#      recursive = true;
+#    };
   };
 }

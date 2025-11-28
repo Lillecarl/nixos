@@ -41,7 +41,7 @@ in
         # Required because terraform-ls uses the terraform binary from path
         # to format documents.
         (pkgs.stdenv.mkDerivation {
-          name = "tofu-wrapper";
+          name = "terratofu";
           phases = "installPhase";
           installPhase = ''
             mkdir -p $out/bin
@@ -51,6 +51,9 @@ in
       ];
 
       languages = {
+        # language-server.nixd = {
+        #   config.formatting.command = [ (lib.getExe pkgs.nixfmt-rfc-style) ];
+        # };
         language-server.nil = {
           config = {
             nil = {
@@ -84,51 +87,34 @@ in
             };
           };
         };
-        #language-server.luals = {
-        #  command = "${lib.getExe pkgs.lua-language-server}";
-        #};
-        #language-server.pylsp = {
-        #  command = lib.getExe pkgs.python3Packages.python-lsp-server;
-        #};
-        #language-server.yamlls = {
-        #  command = lib.getExe pkgs.yaml-language-server;
-        #};
-
+        language-server.ruff = {
+          command = lib.getExe pkgs.ruff;
+          args = [ "server" ];
+        };
         language = [
           {
             name = "nix";
             language-servers = [
-              "nil"
-              "gpt"
+              "nixd"
             ];
-            # auto-pairs = {
-            #   "'''" = "'''";
-            #   "(" = ")";
-            #   "[" = "]";
-            #   "\"" = "\"";
-            #   "`" = "`";
-            #   "{" = "}";
-            # };
           }
           {
             name = "fish";
             language-servers = [
               "fish-lsp"
-              "gpt"
             ];
           }
           {
             name = "toml";
             language-servers = [
               "taplo"
-              "gpt"
             ];
           }
           {
             name = "python";
             language-servers = [
               "pyright"
-              "gpt"
+              "ruff"
             ];
           }
           # { name = "lua"; language-servers = [ "luals" "gpt" ]; }
